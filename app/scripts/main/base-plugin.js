@@ -222,7 +222,7 @@ EkstepEditor.basePlugin = Class.extend({
     updateAttributes: function () {
     },
     getPluginConfig: function () {
-        return this.manifest.config;
+        return this.manifest.editor.config;
     },
     updateContextMenu: function () {
         
