@@ -1,0 +1,4 @@
+app/preview
+app/bower_components
+/node_modules
+plugins

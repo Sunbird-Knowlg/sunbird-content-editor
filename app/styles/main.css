@@ -1,0 +1,3827 @@
+/* line 376, ./icons/*.png */
+.icons-sprite, .icons-activity-search, .icons-add-slide, .icons-align, .icons-assessment-create, .icons-assessment, .icons-bold, .icons-bring-front, .icons-circle, .icons-close, .icons-color, .icons-comment, .icons-delete-slide, .icons-delete, .icons-duplicate-slide, .icons-edit-item, .icons-flashcard, .icons-font, .icons-hotspot, .icons-image, .icons-italics, .icons-launch, .icons-link, .icons-mandatory, .icons-modal-close, .icons-popup-keyword, .icons-preview, .icons-rectangle, .icons-reorder, .icons-rounded-rectangle, .icons-save, .icons-scribblepad, .icons-search, .icons-send-back, .icons-shapes, .icons-sound-grey, .icons-sound, .icons-style, .icons-text, .icons-undo, .icons-up, .icons-upload, .icons-video {
+  background-image: url('../images/./icons-s3c534d2ee0.png');
+  background-repeat: no-repeat;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-activity-search {
+  background-position: 0 0;
+  height: 16px;
+  width: 16px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-add-slide {
+  background-position: 0 -26px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-align {
+  background-position: 0 -60px;
+  height: 68px;
+  width: 85px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-assessment-create {
+  background-position: 0 -138px;
+  height: 90px;
+  width: 114px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-assessment {
+  background-position: 0 -238px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-bold {
+  background-position: 0 -272px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-bring-front {
+  background-position: 0 -306px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-circle {
+  background-position: 0 -340px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-close {
+  background-position: 0 -374px;
+  height: 12px;
+  width: 12px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-color {
+  background-position: 0 -396px;
+  height: 14px;
+  width: 14px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-comment {
+  background-position: 0 -420px;
+  height: 76px;
+  width: 75px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-delete-slide {
+  background-position: 0 -506px;
+  height: 16px;
+  width: 16px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-delete {
+  background-position: 0 -532px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-duplicate-slide {
+  background-position: 0 -566px;
+  height: 16px;
+  width: 16px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-edit-item {
+  background-position: 0 -592px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-flashcard {
+  background-position: 0 -626px;
+  height: 82px;
+  width: 92px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-font {
+  background-position: 0 -718px;
+  height: 68px;
+  width: 86px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-hotspot {
+  background-position: 0 -796px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-image {
+  background-position: 0 -830px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-italics {
+  background-position: 0 -864px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-launch {
+  background-position: 0 -898px;
+  height: 76px;
+  width: 75px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-link {
+  background-position: 0 -984px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-mandatory {
+  background-position: 0 -1018px;
+  height: 16px;
+  width: 16px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-modal-close {
+  background-position: 0 -1044px;
+  height: 16px;
+  width: 16px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-popup-keyword {
+  background-position: 0 -1070px;
+  height: 68px;
+  width: 86px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-preview {
+  background-position: 0 -1148px;
+  height: 76px;
+  width: 75px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-rectangle {
+  background-position: 0 -1234px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-reorder {
+  background-position: 0 -1268px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-rounded-rectangle {
+  background-position: 0 -1302px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-save {
+  background-position: 0 -1336px;
+  height: 76px;
+  width: 74px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-scribblepad {
+  background-position: 0 -1422px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-search {
+  background-position: 0 -1456px;
+  height: 21px;
+  width: 20px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-send-back {
+  background-position: 0 -1487px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-shapes {
+  background-position: 0 -1521px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-sound-grey {
+  background-position: 0 -1555px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-sound {
+  background-position: 0 -1589px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-style {
+  background-position: 0 -1623px;
+  height: 68px;
+  width: 86px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-text {
+  background-position: 0 -1701px;
+  height: 24px;
+  width: 24px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-undo {
+  background-position: 0 -1735px;
+  height: 68px;
+  width: 86px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-up {
+  background-position: 0 -1813px;
+  height: 5px;
+  width: 8px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-upload {
+  background-position: 0 -1828px;
+  height: 47px;
+  width: 85px;
+}
+
+/* line 84, ../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/utilities/sprites/_base.scss */
+.icons-video {
+  background-position: 0 -1885px;
+  height: 68px;
+  width: 88px;
+}
+
+/* line 1, scss/partials/_karaoke.scss */
+#AudioSync {
+  width: 100%;
+  height: 290px;
+  z-index: 12;
+  border-left: 0;
+  border-right: 0;
+  background: #FFF;
+  margin-top: 20px;
+  left: 0;
+}
+
+/* line 12, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 17, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper #syncBox {
+  background-color: #ffffff;
+  width: 95%;
+  float: left;
+  margin-left: 20px;
+  margin-top: 10px;
+  -moz-box-shadow: inset 0 0 10px #000000;
+  -webkit-box-shadow: inset 0 0 10px #9e9e9e;
+  box-shadow: inset 0 0 10px #a09a9a;
+}
+
+/* line 28, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper #syncBox #syncBar {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid #000;
+}
+
+/* line 34, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper #syncBox #syncBar #slideTbl {
+  height: 100px;
+}
+
+/* line 38, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper #syncBox #syncBar #slideTbl .slideStep {
+  width: 20px;
+  border-left: 1px solid blue;
+  display: inline-block;
+  height: 100px;
+  float: left;
+  background-color: #ECDD25;
+  cursor: pointer;
+}
+
+/* line 48, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper #syncBox #syncBar #slideTbl .played {
+  background-color: orange;
+  border-left: 1px solid orangered;
+}
+
+/* line 53, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper #syncBox #syncBar #slideTbl .stepTop {
+  text-align: center;
+  width: 100%;
+  float: left;
+  font-size: 10px;
+}
+
+/* line 60, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper #syncBox #syncBar #slideTbl .stepMiddle {
+  vertical-align: middle;
+  margin-top: 40px;
+  float: left;
+  font-size: 13px;
+  text-align: center;
+  width: 100%;
+  font-weight: bold;
+}
+
+/* line 70, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper #syncBox #syncBar #slideTbl .dragActive {
+  border: 1px dotted #000000;
+}
+
+/* line 74, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper #syncBox .startTime {
+  float: left;
+  font-weight: bold;
+}
+
+/* line 79, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper #syncBox .endTime {
+  float: right;
+  font-weight: bold;
+}
+
+/* line 84, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper #syncBox .timeHeader {
+  float: left;
+}
+
+/* line 88, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper .title {
+  font-size: 20px;
+  color: red;
+  text-align: center;
+  padding: 10px;
+}
+
+/* line 95, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper #audio-drag-handle {
+  position: absolute;
+  left: -2px;
+  top: -3PX;
+  z-index: 9999;
+  opacity: 1;
+  cursor: pointer;
+}
+
+/* line 104, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper #audio-drag-handle i {
+  background: url("../images/editor.png") no-repeat -157px -210px !important;
+  width: 32px;
+  height: 32px;
+}
+
+/* line 110, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper .syncClose {
+  position: absolute;
+  right: -7px;
+  top: -7px;
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+}
+
+/* line 119, scss/partials/_karaoke.scss */
+#AudioSync #syncWrapper .syncClose i {
+  background: url("../images/editor.png") no-repeat -214px -210px;
+  width: 22px;
+  height: 22px;
+}
+
+/* line 125, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader {
+  cursor: pointer;
+  border: 1px solid;
+  height: 74px;
+}
+
+/* line 131, scss/partials/_karaoke.scss */
+#syncMark {
+  font-size: 15px;
+  position: relative;
+  left: 42%;
+}
+
+/* line 137, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader .btn {
+  margin-left: 10px;
+}
+
+/* line 141, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader #syncStart,
+#AudioSync #syncHeader #stopAudio {
+  padding: 20px;
+  margin: 4px 20px 0px 20px;
+  min-width: 98px;
+  float: left;
+  display: inline-block;
+}
+
+/* line 150, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader #stopAudio {
+  display: none;
+}
+
+/* line 154, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader #sync-play,
+#AudioSync #syncHeader #sync-pause,
+#AudioSync #syncHeader .sync-play-disable {
+  display: none;
+  background: url("../images/editor.png") no-repeat -210px -57px;
+  margin-left: 23px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  top: -23px;
+}
+
+/* line 169, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader #sync-pause {
+  background-position: -209px -11px;
+  display: none;
+}
+
+/* line 174, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader #sync-play {
+  background-position: -209px -110px;
+  display: none;
+}
+
+/* line 179, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader .sync-play-disable {
+  background-position: -210px -57px;
+  display: inline-block;
+  cursor: not-allowed;
+}
+
+/* line 185, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader #tdSlider {
+  background: #EEE;
+  padding: 6px 15px;
+  display: inline-block;
+  margin-left: 1%;
+}
+@media screen and (min-width: 1024px) {
+  /* line 185, scss/partials/_karaoke.scss */
+  #AudioSync #syncHeader #tdSlider {
+    margin-left: 10%;
+  }
+}
+@media screen and (min-width: 1180px) {
+  /* line 185, scss/partials/_karaoke.scss */
+  #AudioSync #syncHeader #tdSlider {
+    margin-left: 21.5%;
+  }
+}
+
+/* line 198, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader #tdSlider #syncSlider {
+  margin-top: 10px;
+}
+
+/* line 202, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader #tdSlider .ui-slider-legend {
+  margin-top: 10px;
+}
+
+/* line 206, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader #tdSlider .ui-slider-legend p {
+  float: left;
+  font-size: 10px;
+  color: #000;
+  margin-bottom: 6px;
+  font-size: 13px;
+}
+
+/* line 214, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader #tdSlider .ui-slider-legend p:nth-child(1) {
+  text-align: left;
+  color: orange;
+}
+
+/* line 219, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader #tdSlider .ui-slider-legend p:nth-child(2) {
+  text-align: center;
+}
+
+/* line 223, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader #tdSlider .ui-slider-legend p:nth-child(3) {
+  text-align: right;
+}
+
+/* line 227, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader .highlight-parent {
+  position: absolute;
+  display: inline-block;
+  background: #EEE;
+  padding: 15px 15px;
+  right: 1px;
+  width: 150px;
+}
+
+/* line 236, scss/partials/_karaoke.scss */
+.highlight-parent span {
+  position: relative;
+  top: -10px;
+  left: 3px;
+}
+
+/* line 242, scss/partials/_karaoke.scss */
+#AudioSync #syncHeader .highlight-parent #pick-hcolor {
+  width: 40px;
+  height: 40px;
+  background-color: #FF0;
+}
+
+/* line 248, scss/partials/_karaoke.scss */
+#AudioSync #transliterate {
+  display: inline-table;
+  margin-top: 0px;
+  width: 24px;
+  height: 24px;
+  margin-left: -5px;
+  vertical-align: 2px;
+  background: url("../images/translate.png") no-repeat;
+  border: none;
+}
+
+/* line 259, scss/partials/_karaoke.scss */
+#AudioSync .croaker {
+  margin-top: -20px;
+}
+
+/* line 263, scss/partials/_karaoke.scss */
+#AudioSync #translateText {
+  display: inline-table;
+  margin-top: -20px;
+  border: none;
+  border-radius: 3px;
+}
+
+/* line 270, scss/partials/_karaoke.scss */
+#AudioSync #recordIt,
+#AudioSync #transliterateText {
+  background-color: #FFF;
+  border: 1px solid #C0C0C0;
+  border-radius: 3px;
+  padding: 1.5px 3px;
+  font-weight: bold;
+  color: #444;
+  vertical-align: top;
+}
+
+/* line 281, scss/partials/_karaoke.scss */
+#main-text-block {
+  border: 2px dotted #2DA1DC;
+  padding: 10px;
+}
+
+/* line 286, scss/partials/_karaoke.scss */
+.read-along-instructions {
+  text-align: center;
+  display: inline-block;
+  width: 100%;
+  margin: 10px 0px 20px;
+}
+
+/* line 293, scss/partials/_karaoke.scss */
+.highlight-color-picker {
+  width: 120px;
+}
+
+/* line 297, scss/partials/_karaoke.scss */
+.highlight-color-picker .picker {
+  height: 15px;
+  margin-right: 4px;
+}
+
+/* line 302, scss/partials/_karaoke.scss */
+.highlight-color-picker .color-reset {
+  width: 100%;
+  height: 25px;
+  margin-top: 10px;
+}
+
+/*! jQuery UI - v1.11.4 - 2016-07-08
+* http://jqueryui.com
+* Includes: core.css, draggable.css, slider.css, theme.css
+* To view and modify this theme, visit http://jqueryui.com/themeroller/
+* Copyright jQuery Foundation and other contributors; Licensed MIT */
+/* Layout helpers
+----------------------------------*/
+/* line 11, scss/partials/_jquery.ui.customize.scss */
+.ui-helper-hidden {
+  display: none;
+}
+
+/* line 15, scss/partials/_jquery.ui.customize.scss */
+.ui-helper-hidden-accessible {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+/* line 26, scss/partials/_jquery.ui.customize.scss */
+.ui-helper-reset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  line-height: 1.3;
+  text-decoration: none;
+  font-size: 100%;
+  list-style: none;
+}
+
+/* line 37, scss/partials/_jquery.ui.customize.scss */
+.ui-helper-clearfix:before,
+.ui-helper-clearfix:after {
+  content: "";
+  display: table;
+  border-collapse: collapse;
+}
+
+/* line 44, scss/partials/_jquery.ui.customize.scss */
+.ui-helper-clearfix:after {
+  clear: both;
+}
+
+/* line 48, scss/partials/_jquery.ui.customize.scss */
+.ui-helper-clearfix {
+  min-height: 0;
+  /* support: IE7 */
+}
+
+/* line 53, scss/partials/_jquery.ui.customize.scss */
+.ui-helper-zfix {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  opacity: 0;
+  filter: Alpha(Opacity=0);
+  /* support: IE8 */
+}
+
+/* line 64, scss/partials/_jquery.ui.customize.scss */
+.ui-front {
+  z-index: 100;
+}
+
+/* Interaction Cues
+----------------------------------*/
+/* line 72, scss/partials/_jquery.ui.customize.scss */
+.ui-state-disabled {
+  cursor: default !important;
+}
+
+/* Icons
+----------------------------------*/
+/* states and images */
+/* line 83, scss/partials/_jquery.ui.customize.scss */
+.ui-icon {
+  display: block;
+  text-indent: -99999px;
+  overflow: hidden;
+  background-repeat: no-repeat;
+}
+
+/* Misc visuals
+----------------------------------*/
+/* Overlays */
+/* line 97, scss/partials/_jquery.ui.customize.scss */
+.ui-widget-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* line 105, scss/partials/_jquery.ui.customize.scss */
+.ui-draggable-handle {
+  -ms-touch-action: none;
+  touch-action: none;
+}
+
+/* line 110, scss/partials/_jquery.ui.customize.scss */
+.ui-slider {
+  position: relative;
+  text-align: left;
+}
+
+/* line 115, scss/partials/_jquery.ui.customize.scss */
+.ui-slider .ui-slider-handle {
+  position: absolute;
+  z-index: 2;
+  width: 1.2em;
+  height: 1.2em;
+  cursor: default;
+  -ms-touch-action: none;
+  touch-action: none;
+}
+
+/* line 125, scss/partials/_jquery.ui.customize.scss */
+.ui-slider .ui-slider-range {
+  position: absolute;
+  z-index: 1;
+  font-size: .7em;
+  display: block;
+  border: 0;
+  background-position: 0 0;
+}
+
+/* support: IE8 - See #6727 */
+/* line 137, scss/partials/_jquery.ui.customize.scss */
+.ui-slider.ui-state-disabled .ui-slider-handle,
+.ui-slider.ui-state-disabled .ui-slider-range {
+  filter: inherit;
+}
+
+/* line 142, scss/partials/_jquery.ui.customize.scss */
+.ui-slider-horizontal {
+  height: .8em;
+}
+
+/* line 146, scss/partials/_jquery.ui.customize.scss */
+.ui-slider-horizontal .ui-slider-handle {
+  top: -.3em;
+  margin-left: -.6em;
+}
+
+/* line 151, scss/partials/_jquery.ui.customize.scss */
+.ui-slider-horizontal .ui-slider-range {
+  top: 0;
+  height: 100%;
+}
+
+/* line 156, scss/partials/_jquery.ui.customize.scss */
+.ui-slider-horizontal .ui-slider-range-min {
+  left: 0;
+}
+
+/* line 160, scss/partials/_jquery.ui.customize.scss */
+.ui-slider-horizontal .ui-slider-range-max {
+  right: 0;
+}
+
+/* line 164, scss/partials/_jquery.ui.customize.scss */
+.ui-slider-vertical {
+  width: .8em;
+  height: 100px;
+}
+
+/* line 169, scss/partials/_jquery.ui.customize.scss */
+.ui-slider-vertical .ui-slider-handle {
+  left: -.3em;
+  margin-left: 0;
+  margin-bottom: -.6em;
+}
+
+/* line 175, scss/partials/_jquery.ui.customize.scss */
+.ui-slider-vertical .ui-slider-range {
+  left: 0;
+  width: 100%;
+}
+
+/* line 180, scss/partials/_jquery.ui.customize.scss */
+.ui-slider-vertical .ui-slider-range-min {
+  bottom: 0;
+}
+
+/* line 184, scss/partials/_jquery.ui.customize.scss */
+.ui-slider-vertical .ui-slider-range-max {
+  top: 0;
+}
+
+/* Component containers
+----------------------------------*/
+/* line 192, scss/partials/_jquery.ui.customize.scss */
+.ui-widget {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 1.1em;
+}
+
+/* line 197, scss/partials/_jquery.ui.customize.scss */
+.ui-widget .ui-widget {
+  font-size: 1em;
+}
+
+/* line 201, scss/partials/_jquery.ui.customize.scss */
+.ui-widget input,
+.ui-widget select,
+.ui-widget textarea,
+.ui-widget button {
+  font-family: Verdana, Arial, sans-serif;
+  font-size: 1em;
+}
+
+/* line 209, scss/partials/_jquery.ui.customize.scss */
+.ui-widget-content {
+  border: 1px solid #aaaaaa;
+  background: #ffffff;
+  color: #222222;
+}
+
+/* line 215, scss/partials/_jquery.ui.customize.scss */
+.ui-widget-content a {
+  color: #222222;
+}
+
+/* line 219, scss/partials/_jquery.ui.customize.scss */
+.ui-widget-header {
+  border: 1px solid #aaaaaa;
+  background: #cccccc url("images/ui-bg_highlight-soft_75_cccccc_1x100.png") 50% 50% repeat-x;
+  color: #222222;
+  font-weight: bold;
+}
+
+/* line 226, scss/partials/_jquery.ui.customize.scss */
+.ui-widget-header a {
+  color: #222222;
+}
+
+/* Interaction states
+----------------------------------*/
+/* line 234, scss/partials/_jquery.ui.customize.scss */
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default {
+  border: 1px solid #d3d3d3;
+  background: #e6e6e6 url("images/ui-bg_glass_75_e6e6e6_1x400.png") 50% 50% repeat-x;
+  font-weight: normal;
+  color: #555555;
+}
+
+/* line 243, scss/partials/_jquery.ui.customize.scss */
+.ui-state-default a,
+.ui-state-default a:link,
+.ui-state-default a:visited {
+  color: #555555;
+  text-decoration: none;
+}
+
+/* line 250, scss/partials/_jquery.ui.customize.scss */
+.ui-state-hover,
+.ui-widget-content .ui-state-hover,
+.ui-widget-header .ui-state-hover,
+.ui-state-focus,
+.ui-widget-content .ui-state-focus,
+.ui-widget-header .ui-state-focus {
+  border: 1px solid #999999;
+  background: #dadada url("images/ui-bg_glass_75_dadada_1x400.png") 50% 50% repeat-x;
+  font-weight: normal;
+  color: #212121;
+}
+
+/* line 262, scss/partials/_jquery.ui.customize.scss */
+.ui-state-hover a,
+.ui-state-hover a:hover,
+.ui-state-hover a:link,
+.ui-state-hover a:visited,
+.ui-state-focus a,
+.ui-state-focus a:hover,
+.ui-state-focus a:link,
+.ui-state-focus a:visited {
+  color: #212121;
+  text-decoration: none;
+}
+
+/* line 274, scss/partials/_jquery.ui.customize.scss */
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active {
+  border: 1px solid #aaaaaa;
+  background: #ffffff url("images/ui-bg_glass_65_ffffff_1x400.png") 50% 50% repeat-x;
+  font-weight: normal;
+  color: #212121;
+}
+
+/* line 283, scss/partials/_jquery.ui.customize.scss */
+.ui-state-active a,
+.ui-state-active a:link,
+.ui-state-active a:visited {
+  color: #212121;
+  text-decoration: none;
+}
+
+/* Interaction Cues
+----------------------------------*/
+/* line 294, scss/partials/_jquery.ui.customize.scss */
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight {
+  border: 1px solid #fcefa1;
+  background: #fbf9ee url("images/ui-bg_glass_55_fbf9ee_1x400.png") 50% 50% repeat-x;
+  color: #363636;
+}
+
+/* line 302, scss/partials/_jquery.ui.customize.scss */
+.ui-state-highlight a,
+.ui-widget-content .ui-state-highlight a,
+.ui-widget-header .ui-state-highlight a {
+  color: #363636;
+}
+
+/* line 308, scss/partials/_jquery.ui.customize.scss */
+.ui-state-error,
+.ui-widget-content .ui-state-error,
+.ui-widget-header .ui-state-error {
+  border: 1px solid #cd0a0a;
+  background: #fef1ec url("images/ui-bg_glass_95_fef1ec_1x400.png") 50% 50% repeat-x;
+  color: #cd0a0a;
+}
+
+/* line 316, scss/partials/_jquery.ui.customize.scss */
+.ui-state-error a,
+.ui-widget-content .ui-state-error a,
+.ui-widget-header .ui-state-error a {
+  color: #cd0a0a;
+}
+
+/* line 322, scss/partials/_jquery.ui.customize.scss */
+.ui-state-error-text,
+.ui-widget-content .ui-state-error-text,
+.ui-widget-header .ui-state-error-text {
+  color: #cd0a0a;
+}
+
+/* line 328, scss/partials/_jquery.ui.customize.scss */
+.ui-priority-primary,
+.ui-widget-content .ui-priority-primary,
+.ui-widget-header .ui-priority-primary {
+  font-weight: bold;
+}
+
+/* line 334, scss/partials/_jquery.ui.customize.scss */
+.ui-priority-secondary,
+.ui-widget-content .ui-priority-secondary,
+.ui-widget-header .ui-priority-secondary {
+  opacity: .7;
+  filter: Alpha(Opacity=70);
+  /* support: IE8 */
+  font-weight: normal;
+}
+
+/* line 343, scss/partials/_jquery.ui.customize.scss */
+.ui-state-disabled,
+.ui-widget-content .ui-state-disabled,
+.ui-widget-header .ui-state-disabled {
+  opacity: .35;
+  filter: Alpha(Opacity=35);
+  /* support: IE8 */
+  background-image: none;
+}
+
+/* line 352, scss/partials/_jquery.ui.customize.scss */
+.ui-state-disabled .ui-icon {
+  filter: Alpha(Opacity=35);
+  /* support: IE8 - See #6059 */
+}
+
+/* Icons
+----------------------------------*/
+/* states and images */
+/* line 364, scss/partials/_jquery.ui.customize.scss */
+.ui-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* line 369, scss/partials/_jquery.ui.customize.scss */
+.ui-icon,
+.ui-widget-content .ui-icon {
+  background-image: url("images/ui-icons_222222_256x240.png");
+}
+
+/* line 374, scss/partials/_jquery.ui.customize.scss */
+.ui-widget-header .ui-icon {
+  background-image: url("images/ui-icons_222222_256x240.png");
+}
+
+/* line 378, scss/partials/_jquery.ui.customize.scss */
+.ui-state-default .ui-icon {
+  background-image: url("images/ui-icons_888888_256x240.png");
+}
+
+/* line 382, scss/partials/_jquery.ui.customize.scss */
+.ui-state-hover .ui-icon,
+.ui-state-focus .ui-icon {
+  background-image: url("images/ui-icons_454545_256x240.png");
+}
+
+/* line 387, scss/partials/_jquery.ui.customize.scss */
+.ui-state-active .ui-icon {
+  background-image: url("images/ui-icons_454545_256x240.png");
+}
+
+/* line 391, scss/partials/_jquery.ui.customize.scss */
+.ui-state-highlight .ui-icon {
+  background-image: url("images/ui-icons_2e83ff_256x240.png");
+}
+
+/* line 395, scss/partials/_jquery.ui.customize.scss */
+.ui-state-error .ui-icon,
+.ui-state-error-text .ui-icon {
+  background-image: url("images/ui-icons_cd0a0a_256x240.png");
+}
+
+/* positioning */
+/* line 403, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-blank {
+  background-position: 16px 16px;
+}
+
+/* line 407, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-carat-1-n {
+  background-position: 0 0;
+}
+
+/* line 411, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-carat-1-ne {
+  background-position: -16px 0;
+}
+
+/* line 415, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-carat-1-e {
+  background-position: -32px 0;
+}
+
+/* line 419, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-carat-1-se {
+  background-position: -48px 0;
+}
+
+/* line 423, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-carat-1-s {
+  background-position: -64px 0;
+}
+
+/* line 427, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-carat-1-sw {
+  background-position: -80px 0;
+}
+
+/* line 431, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-carat-1-w {
+  background-position: -96px 0;
+}
+
+/* line 435, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-carat-1-nw {
+  background-position: -112px 0;
+}
+
+/* line 439, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-carat-2-n-s {
+  background-position: -128px 0;
+}
+
+/* line 443, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-carat-2-e-w {
+  background-position: -144px 0;
+}
+
+/* line 447, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-triangle-1-n {
+  background-position: 0 -16px;
+}
+
+/* line 451, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-triangle-1-ne {
+  background-position: -16px -16px;
+}
+
+/* line 455, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-triangle-1-e {
+  background-position: -32px -16px;
+}
+
+/* line 459, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-triangle-1-se {
+  background-position: -48px -16px;
+}
+
+/* line 463, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-triangle-1-s {
+  background-position: -64px -16px;
+}
+
+/* line 467, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-triangle-1-sw {
+  background-position: -80px -16px;
+}
+
+/* line 471, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-triangle-1-w {
+  background-position: -96px -16px;
+}
+
+/* line 475, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-triangle-1-nw {
+  background-position: -112px -16px;
+}
+
+/* line 479, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-triangle-2-n-s {
+  background-position: -128px -16px;
+}
+
+/* line 483, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-triangle-2-e-w {
+  background-position: -144px -16px;
+}
+
+/* line 487, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrow-1-n {
+  background-position: 0 -32px;
+}
+
+/* line 491, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrow-1-ne {
+  background-position: -16px -32px;
+}
+
+/* line 495, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrow-1-e {
+  background-position: -32px -32px;
+}
+
+/* line 499, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrow-1-se {
+  background-position: -48px -32px;
+}
+
+/* line 503, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrow-1-s {
+  background-position: -64px -32px;
+}
+
+/* line 507, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrow-1-sw {
+  background-position: -80px -32px;
+}
+
+/* line 511, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrow-1-w {
+  background-position: -96px -32px;
+}
+
+/* line 515, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrow-1-nw {
+  background-position: -112px -32px;
+}
+
+/* line 519, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrow-2-n-s {
+  background-position: -128px -32px;
+}
+
+/* line 523, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrow-2-ne-sw {
+  background-position: -144px -32px;
+}
+
+/* line 527, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrow-2-e-w {
+  background-position: -160px -32px;
+}
+
+/* line 531, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrow-2-se-nw {
+  background-position: -176px -32px;
+}
+
+/* line 535, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowstop-1-n {
+  background-position: -192px -32px;
+}
+
+/* line 539, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowstop-1-e {
+  background-position: -208px -32px;
+}
+
+/* line 543, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowstop-1-s {
+  background-position: -224px -32px;
+}
+
+/* line 547, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowstop-1-w {
+  background-position: -240px -32px;
+}
+
+/* line 551, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthick-1-n {
+  background-position: 0 -48px;
+}
+
+/* line 555, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthick-1-ne {
+  background-position: -16px -48px;
+}
+
+/* line 559, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthick-1-e {
+  background-position: -32px -48px;
+}
+
+/* line 563, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthick-1-se {
+  background-position: -48px -48px;
+}
+
+/* line 567, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthick-1-s {
+  background-position: -64px -48px;
+}
+
+/* line 571, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthick-1-sw {
+  background-position: -80px -48px;
+}
+
+/* line 575, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthick-1-w {
+  background-position: -96px -48px;
+}
+
+/* line 579, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthick-1-nw {
+  background-position: -112px -48px;
+}
+
+/* line 583, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthick-2-n-s {
+  background-position: -128px -48px;
+}
+
+/* line 587, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthick-2-ne-sw {
+  background-position: -144px -48px;
+}
+
+/* line 591, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthick-2-e-w {
+  background-position: -160px -48px;
+}
+
+/* line 595, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthick-2-se-nw {
+  background-position: -176px -48px;
+}
+
+/* line 599, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthickstop-1-n {
+  background-position: -192px -48px;
+}
+
+/* line 603, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthickstop-1-e {
+  background-position: -208px -48px;
+}
+
+/* line 607, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthickstop-1-s {
+  background-position: -224px -48px;
+}
+
+/* line 611, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowthickstop-1-w {
+  background-position: -240px -48px;
+}
+
+/* line 615, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowreturnthick-1-w {
+  background-position: 0 -64px;
+}
+
+/* line 619, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowreturnthick-1-n {
+  background-position: -16px -64px;
+}
+
+/* line 623, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowreturnthick-1-e {
+  background-position: -32px -64px;
+}
+
+/* line 627, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowreturnthick-1-s {
+  background-position: -48px -64px;
+}
+
+/* line 631, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowreturn-1-w {
+  background-position: -64px -64px;
+}
+
+/* line 635, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowreturn-1-n {
+  background-position: -80px -64px;
+}
+
+/* line 639, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowreturn-1-e {
+  background-position: -96px -64px;
+}
+
+/* line 643, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowreturn-1-s {
+  background-position: -112px -64px;
+}
+
+/* line 647, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowrefresh-1-w {
+  background-position: -128px -64px;
+}
+
+/* line 651, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowrefresh-1-n {
+  background-position: -144px -64px;
+}
+
+/* line 655, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowrefresh-1-e {
+  background-position: -160px -64px;
+}
+
+/* line 659, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrowrefresh-1-s {
+  background-position: -176px -64px;
+}
+
+/* line 663, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrow-4 {
+  background-position: 0 -80px;
+}
+
+/* line 667, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-arrow-4-diag {
+  background-position: -16px -80px;
+}
+
+/* line 671, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-extlink {
+  background-position: -32px -80px;
+}
+
+/* line 675, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-newwin {
+  background-position: -48px -80px;
+}
+
+/* line 679, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-refresh {
+  background-position: -64px -80px;
+}
+
+/* line 683, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-shuffle {
+  background-position: -80px -80px;
+}
+
+/* line 687, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-transfer-e-w {
+  background-position: -96px -80px;
+}
+
+/* line 691, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-transferthick-e-w {
+  background-position: -112px -80px;
+}
+
+/* line 695, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-folder-collapsed {
+  background-position: 0 -96px;
+}
+
+/* line 699, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-folder-open {
+  background-position: -16px -96px;
+}
+
+/* line 703, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-document {
+  background-position: -32px -96px;
+}
+
+/* line 707, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-document-b {
+  background-position: -48px -96px;
+}
+
+/* line 711, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-note {
+  background-position: -64px -96px;
+}
+
+/* line 715, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-mail-closed {
+  background-position: -80px -96px;
+}
+
+/* line 719, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-mail-open {
+  background-position: -96px -96px;
+}
+
+/* line 723, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-suitcase {
+  background-position: -112px -96px;
+}
+
+/* line 727, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-comment {
+  background-position: -128px -96px;
+}
+
+/* line 731, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-person {
+  background-position: -144px -96px;
+}
+
+/* line 735, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-print {
+  background-position: -160px -96px;
+}
+
+/* line 739, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-trash {
+  background-position: -176px -96px;
+}
+
+/* line 743, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-locked {
+  background-position: -192px -96px;
+}
+
+/* line 747, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-unlocked {
+  background-position: -208px -96px;
+}
+
+/* line 751, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-bookmark {
+  background-position: -224px -96px;
+}
+
+/* line 755, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-tag {
+  background-position: -240px -96px;
+}
+
+/* line 759, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-home {
+  background-position: 0 -112px;
+}
+
+/* line 763, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-flag {
+  background-position: -16px -112px;
+}
+
+/* line 767, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-calendar {
+  background-position: -32px -112px;
+}
+
+/* line 771, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-cart {
+  background-position: -48px -112px;
+}
+
+/* line 775, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-pencil {
+  background-position: -64px -112px;
+}
+
+/* line 779, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-clock {
+  background-position: -80px -112px;
+}
+
+/* line 783, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-disk {
+  background-position: -96px -112px;
+}
+
+/* line 787, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-calculator {
+  background-position: -112px -112px;
+}
+
+/* line 791, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-zoomin {
+  background-position: -128px -112px;
+}
+
+/* line 795, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-zoomout {
+  background-position: -144px -112px;
+}
+
+/* line 799, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-search {
+  background-position: -160px -112px;
+}
+
+/* line 803, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-wrench {
+  background-position: -176px -112px;
+}
+
+/* line 807, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-gear {
+  background-position: -192px -112px;
+}
+
+/* line 811, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-heart {
+  background-position: -208px -112px;
+}
+
+/* line 815, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-star {
+  background-position: -224px -112px;
+}
+
+/* line 819, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-link {
+  background-position: -240px -112px;
+}
+
+/* line 823, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-cancel {
+  background-position: 0 -128px;
+}
+
+/* line 827, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-plus {
+  background-position: -16px -128px;
+}
+
+/* line 831, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-plusthick {
+  background-position: -32px -128px;
+}
+
+/* line 835, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-minus {
+  background-position: -48px -128px;
+}
+
+/* line 839, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-minusthick {
+  background-position: -64px -128px;
+}
+
+/* line 843, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-close {
+  background-position: -80px -128px;
+}
+
+/* line 847, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-closethick {
+  background-position: -96px -128px;
+}
+
+/* line 851, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-key {
+  background-position: -112px -128px;
+}
+
+/* line 855, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-lightbulb {
+  background-position: -128px -128px;
+}
+
+/* line 859, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-scissors {
+  background-position: -144px -128px;
+}
+
+/* line 863, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-clipboard {
+  background-position: -160px -128px;
+}
+
+/* line 867, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-copy {
+  background-position: -176px -128px;
+}
+
+/* line 871, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-contact {
+  background-position: -192px -128px;
+}
+
+/* line 875, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-image {
+  background-position: -208px -128px;
+}
+
+/* line 879, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-video {
+  background-position: -224px -128px;
+}
+
+/* line 883, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-script {
+  background-position: -240px -128px;
+}
+
+/* line 887, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-alert {
+  background-position: 0 -144px;
+}
+
+/* line 891, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-info {
+  background-position: -16px -144px;
+}
+
+/* line 895, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-notice {
+  background-position: -32px -144px;
+}
+
+/* line 899, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-help {
+  background-position: -48px -144px;
+}
+
+/* line 903, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-check {
+  background-position: -64px -144px;
+}
+
+/* line 907, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-bullet {
+  background-position: -80px -144px;
+}
+
+/* line 911, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-radio-on {
+  background-position: -96px -144px;
+}
+
+/* line 915, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-radio-off {
+  background-position: -112px -144px;
+}
+
+/* line 919, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-pin-w {
+  background-position: -128px -144px;
+}
+
+/* line 923, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-pin-s {
+  background-position: -144px -144px;
+}
+
+/* line 927, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-play {
+  background-position: 0 -160px;
+}
+
+/* line 931, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-pause {
+  background-position: -16px -160px;
+}
+
+/* line 935, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-seek-next {
+  background-position: -32px -160px;
+}
+
+/* line 939, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-seek-prev {
+  background-position: -48px -160px;
+}
+
+/* line 943, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-seek-end {
+  background-position: -64px -160px;
+}
+
+/* line 947, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-seek-start {
+  background-position: -80px -160px;
+}
+
+/* ui-icon-seek-first is deprecated, use ui-icon-seek-start instead */
+/* line 954, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-seek-first {
+  background-position: -80px -160px;
+}
+
+/* line 958, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-stop {
+  background-position: -96px -160px;
+}
+
+/* line 962, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-eject {
+  background-position: -112px -160px;
+}
+
+/* line 966, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-volume-off {
+  background-position: -128px -160px;
+}
+
+/* line 970, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-volume-on {
+  background-position: -144px -160px;
+}
+
+/* line 974, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-power {
+  background-position: 0 -176px;
+}
+
+/* line 978, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-signal-diag {
+  background-position: -16px -176px;
+}
+
+/* line 982, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-signal {
+  background-position: -32px -176px;
+}
+
+/* line 986, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-battery-0 {
+  background-position: -48px -176px;
+}
+
+/* line 990, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-battery-1 {
+  background-position: -64px -176px;
+}
+
+/* line 994, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-battery-2 {
+  background-position: -80px -176px;
+}
+
+/* line 998, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-battery-3 {
+  background-position: -96px -176px;
+}
+
+/* line 1002, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circle-plus {
+  background-position: 0 -192px;
+}
+
+/* line 1006, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circle-minus {
+  background-position: -16px -192px;
+}
+
+/* line 1010, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circle-close {
+  background-position: -32px -192px;
+}
+
+/* line 1014, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circle-triangle-e {
+  background-position: -48px -192px;
+}
+
+/* line 1018, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circle-triangle-s {
+  background-position: -64px -192px;
+}
+
+/* line 1022, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circle-triangle-w {
+  background-position: -80px -192px;
+}
+
+/* line 1026, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circle-triangle-n {
+  background-position: -96px -192px;
+}
+
+/* line 1030, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circle-arrow-e {
+  background-position: -112px -192px;
+}
+
+/* line 1034, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circle-arrow-s {
+  background-position: -128px -192px;
+}
+
+/* line 1038, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circle-arrow-w {
+  background-position: -144px -192px;
+}
+
+/* line 1042, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circle-arrow-n {
+  background-position: -160px -192px;
+}
+
+/* line 1046, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circle-zoomin {
+  background-position: -176px -192px;
+}
+
+/* line 1050, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circle-zoomout {
+  background-position: -192px -192px;
+}
+
+/* line 1054, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circle-check {
+  background-position: -208px -192px;
+}
+
+/* line 1058, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circlesmall-plus {
+  background-position: 0 -208px;
+}
+
+/* line 1062, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circlesmall-minus {
+  background-position: -16px -208px;
+}
+
+/* line 1066, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-circlesmall-close {
+  background-position: -32px -208px;
+}
+
+/* line 1070, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-squaresmall-plus {
+  background-position: -48px -208px;
+}
+
+/* line 1074, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-squaresmall-minus {
+  background-position: -64px -208px;
+}
+
+/* line 1078, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-squaresmall-close {
+  background-position: -80px -208px;
+}
+
+/* line 1082, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-grip-dotted-vertical {
+  background-position: 0 -224px;
+}
+
+/* line 1086, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-grip-dotted-horizontal {
+  background-position: -16px -224px;
+}
+
+/* line 1090, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-grip-solid-vertical {
+  background-position: -32px -224px;
+}
+
+/* line 1094, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-grip-solid-horizontal {
+  background-position: -48px -224px;
+}
+
+/* line 1098, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-gripsmall-diagonal-se {
+  background-position: -64px -224px;
+}
+
+/* line 1102, scss/partials/_jquery.ui.customize.scss */
+.ui-icon-grip-diagonal-se {
+  background-position: -80px -224px;
+}
+
+/* Misc visuals
+----------------------------------*/
+/* Corner radius */
+/* line 1113, scss/partials/_jquery.ui.customize.scss */
+.ui-corner-all,
+.ui-corner-top,
+.ui-corner-left,
+.ui-corner-tl {
+  border-top-left-radius: 4px;
+}
+
+/* line 1120, scss/partials/_jquery.ui.customize.scss */
+.ui-corner-all,
+.ui-corner-top,
+.ui-corner-right,
+.ui-corner-tr {
+  border-top-right-radius: 4px;
+}
+
+/* line 1127, scss/partials/_jquery.ui.customize.scss */
+.ui-corner-all,
+.ui-corner-bottom,
+.ui-corner-left,
+.ui-corner-bl {
+  border-bottom-left-radius: 4px;
+}
+
+/* line 1134, scss/partials/_jquery.ui.customize.scss */
+.ui-corner-all,
+.ui-corner-bottom,
+.ui-corner-right,
+.ui-corner-br {
+  border-bottom-right-radius: 4px;
+}
+
+/* Overlays */
+/* line 1144, scss/partials/_jquery.ui.customize.scss */
+.ui-widget-overlay {
+  background: #aaaaaa;
+  opacity: .3;
+  filter: Alpha(Opacity=30);
+  /* support: IE8 */
+}
+
+/* line 1151, scss/partials/_jquery.ui.customize.scss */
+.ui-widget-shadow {
+  margin: -8px 0 0 -8px;
+  padding: 8px;
+  background: #aaaaaa;
+  opacity: .3;
+  filter: Alpha(Opacity=30);
+  /* support: IE8 */
+  border-radius: 8px;
+}
+
+/* line 8, scss/main.scss */
+.browsehappy {
+  margin: 0.2em 0;
+  padding: 0.2em 0;
+  color: #000000;
+  background: #CCCCCC;
+}
+
+/* line 15, scss/main.scss */
+body {
+  color: #333;
+  font-family: 'Open Sans', sans-serif;
+}
+
+/* line 20, scss/main.scss */
+i[class^="icons-"] {
+  display: inline-block;
+}
+
+/* line 24, scss/main.scss */
+.inputText {
+  -moz-border-radius: 15px;
+  border-radius: 15px;
+  border: solid 2px black !important;
+  font-size: 15px !important;
+  padding-left: 10px !important;
+  font-weight: bold !important;
+  padding-right: 5px;
+  z-index: 1000;
+  text-align: center;
+}
+
+/* line 36, scss/main.scss */
+.main-view {
+  outline: none;
+}
+/* line 38, scss/main.scss */
+.main-view i {
+  display: inline-block;
+}
+
+/* line 43, scss/main.scss */
+[ng-click],
+[data-ng-click],
+[x-ng-click] {
+  cursor: pointer;
+}
+
+/* line 49, scss/main.scss */
+.toolbar-container {
+  background-color: #808080;
+}
+
+/* line 53, scss/main.scss */
+.toolbar-widget {
+  z-index: 5;
+  margin-bottom: 0;
+  border: none;
+  min-height: 36px !important;
+}
+/* line 58, scss/main.scss */
+.toolbar-widget .toolbar {
+  position: relative;
+  background-color: #808080;
+}
+/* line 62, scss/main.scss */
+.toolbar-widget .toolbar-label {
+  position: relative;
+  top: 10px;
+  float: left;
+  margin: 0 5px 0 10px;
+  color: #FFFFFF;
+}
+/* line 69, scss/main.scss */
+.toolbar-widget button,
+.toolbar-widget .btn {
+  float: left;
+  position: relative;
+  min-width: 45px;
+  padding: 8px 5px 4px;
+  border: none;
+  background: transparent;
+  line-height: 0;
+}
+/* line 78, scss/main.scss */
+.toolbar-widget button:hover, .toolbar-widget button:focus,
+.toolbar-widget .btn:hover,
+.toolbar-widget .btn:focus {
+  outline: none;
+  background: transparent;
+  box-shadow: none;
+}
+/* line 84, scss/main.scss */
+.toolbar-widget button span,
+.toolbar-widget .btn span {
+  display: inline-block;
+  position: relative;
+  top: 1px;
+  width: 100%;
+  font-size: 8px;
+  color: #FFFFFF;
+  text-transform: uppercase;
+}
+/* line 94, scss/main.scss */
+.toolbar-widget .dropdown {
+  float: left;
+  display: inline-block;
+}
+/* line 98, scss/main.scss */
+.toolbar-widget .dropdown:hover .dropdown-menu {
+  display: block;
+}
+/* line 103, scss/main.scss */
+.toolbar-widget .dropdown-menu {
+  width: 140px;
+  min-width: 140px;
+  margin: 0;
+  padding: 5px;
+  background: #454545;
+  border-bottom: none;
+}
+/* line 110, scss/main.scss */
+.toolbar-widget .dropdown-menu.dropdown-large {
+  width: 245px;
+  min-width: 245px;
+}
+/* line 114, scss/main.scss */
+.toolbar-widget .dropdown-menu.at-color-palette {
+  width: 190px;
+  background: #FFFFFF;
+}
+/* line 118, scss/main.scss */
+.toolbar-widget .dropdown-menu .btn,
+.toolbar-widget .dropdown-menu button {
+  width: 100%;
+  margin-left: 0 !important;
+  padding: 5px;
+}
+/* line 123, scss/main.scss */
+.toolbar-widget .dropdown-menu .btn i,
+.toolbar-widget .dropdown-menu button i {
+  float: left;
+}
+/* line 126, scss/main.scss */
+.toolbar-widget .dropdown-menu .btn span,
+.toolbar-widget .dropdown-menu button span {
+  float: left;
+  width: auto;
+  padding: 12px 0 0 10px;
+}
+/* line 133, scss/main.scss */
+.toolbar-widget .at-color-palette-title {
+  margin-bottom: 5px;
+}
+/* line 136, scss/main.scss */
+.toolbar-widget .at-color-swatches {
+  float: left;
+}
+/* line 139, scss/main.scss */
+.toolbar-widget .at-color-swatches button:hover {
+  outline: 1px dotted #000000;
+}
+/* line 144, scss/main.scss */
+.toolbar-widget .btn-color-picker {
+  float: left;
+  width: 100%;
+  margin: 5px 0;
+}
+/* line 148, scss/main.scss */
+.toolbar-widget .btn-color-picker:hover {
+  background: #EEEEEE;
+}
+/* line 152, scss/main.scss */
+.toolbar-widget .object-audio-dropdown {
+  width: 175px;
+  padding: 5px 0;
+}
+/* line 155, scss/main.scss */
+.toolbar-widget .object-audio-dropdown .stage-audio-name {
+  color: #FFFFFF;
+}
+/* line 158, scss/main.scss */
+.toolbar-widget .object-audio-dropdown .fa-remove {
+  color: #FFFFFF;
+}
+/* line 161, scss/main.scss */
+.toolbar-widget .object-audio-dropdown .divider {
+  margin: 6px 0 7px;
+}
+/* line 165, scss/main.scss */
+.toolbar-widget .btn-group {
+  float: left;
+  height: 36px;
+}
+/* line 169, scss/main.scss */
+.toolbar-widget .toolbar-color-picker {
+  display: inline-block;
+  position: relative;
+  top: 1px;
+  width: 24px;
+  margin-bottom: 6px;
+  height: 19px;
+}
+/* line 177, scss/main.scss */
+.toolbar-widget .add-new-object,
+.toolbar-widget .edit-object {
+  position: relative;
+  height: 36px;
+}
+/* line 182, scss/main.scss */
+.toolbar-widget .add-new-object {
+  background: #5A5A5A;
+}
+/* line 186, scss/main.scss */
+.toolbar-widget .edit-object .btn-group {
+  border-right: 1px solid #6D6D6D;
+}
+/* line 188, scss/main.scss */
+.toolbar-widget .edit-object .btn-group.no-border {
+  border: none;
+}
+/* line 193, scss/main.scss */
+.toolbar-widget #currentFont ,#style, #size{
+  float: left;
+  min-width: 150px;
+  width: 150px;
+  height: 24px;
+  vertical-align: bottom;
+  -webkit-appearance: menulist-button;
+}
+/* line 201, scss/main.scss */
+.toolbar-widget #currentFontSize {
+  float: left;
+  width: 50px;
+  min-width: 50px;
+  height: 34px;
+  vertical-align: bottom;
+  -webkit-appearance: menulist-button;
+}
+/* line 209, scss/main.scss */
+.toolbar-widget .toolbar-hotspot {
+  float: left;
+  margin: 7px 10px 0 10px;
+}
+/* line 212, scss/main.scss */
+.toolbar-widget .toolbar-hotspot input {
+  float: left;
+  width: 175px;
+  min-width: 175px;
+  height: 32px;
+  min-height: 32px;
+  padding: 5px 10px;
+}
+/* line 221, scss/main.scss */
+.toolbar-widget .text-middle-line {
+  text-align: center;
+}
+/* line 223, scss/main.scss */
+.toolbar-widget .text-middle-line span {
+  font-size: 11px;
+  display: inline-block;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.74);
+}
+/* line 229, scss/main.scss */
+.toolbar-widget .text-middle-line span:before,
+.toolbar-widget .text-middle-line span:after {
+  position: absolute;
+  top: 12px;
+  display: block;
+  width: 35%;
+  height: 1px;
+  content: ' ';
+  border-top: 1px solid #808080;
+}
+/* line 239, scss/main.scss */
+.toolbar-widget .text-middle-line span:before {
+  left: 25px;
+}
+/* line 242, scss/main.scss */
+.toolbar-widget .text-middle-line span:after {
+  right: 25px;
+}
+/* line 246, scss/main.scss */
+.toolbar-widget .text-middle-line.caption-toolbar-right span:before {
+  left: 7px;
+  width: 33%;
+}
+/* line 250, scss/main.scss */
+.toolbar-widget .text-middle-line.caption-toolbar-right span:after {
+  right: 7px;
+  width: 33%;
+}
+/* line 256, scss/main.scss */
+.toolbar-widget .at-color-btn {
+  width: 16px !important;
+  height: 16px !important;
+  min-width: auto !important;
+  margin: 0 2px 2px 0;
+}
+/* line 261, scss/main.scss */
+.toolbar-widget .at-color-btn.at-main-color-btn {
+  margin: 0px 2px 8px 0;
+}
+
+/* line 268, scss/main.scss */
+.modal-color-picker .modal-content {
+  float: none;
+  width: 240px;
+  height: auto;
+  margin: auto;
+  overflow: hidden;
+}
+/* line 275, scss/main.scss */
+.modal-color-picker .close-colorpicker {
+  display: none;
+}
+/* line 278, scss/main.scss */
+.modal-color-picker input {
+  width: 170px;
+  min-width: 170px;
+}
+/* line 282, scss/main.scss */
+.modal-color-picker .color-picker-container {
+  position: relative;
+  width: 170px;
+  height: 175px;
+  margin: 0 auto;
+}
+/* line 288, scss/main.scss */
+.modal-color-picker .color-picker-actions {
+  width: 170px;
+  margin: 15px auto 0;
+  text-align: center;
+}
+/* line 293, scss/main.scss */
+.modal-color-picker .colorpicker {
+  position: relative !important;
+  top: 10px !important;
+  left: 10px !important;
+  display: block !important;
+}
+/* line 298, scss/main.scss */
+.modal-color-picker .colorpicker .dropdown-menu {
+  display: block !important;
+}
+/* line 300, scss/main.scss */
+.modal-color-picker .colorpicker .dropdown-menu::after, .modal-color-picker .colorpicker .dropdown-menu::before {
+  display: none;
+}
+
+/* line 308, scss/main.scss */
+.main-container {
+  padding: 0;
+}
+
+/* line 312, scss/main.scss */
+#main-container {
+  display: table;
+  width: 100%;
+  height: 560px;
+  table-layout: fixed;
+}
+
+/* line 319, scss/main.scss */
+.main-container-wrapper {
+  display: table-row;
+}
+
+/* line 323, scss/main.scss */
+#sidebar-left,
+#sidebar-right,
+#center-container {
+  display: table-cell;
+  height: 560px;
+  vertical-align: top;
+}
+
+/* line 331, scss/main.scss */
+.sidebar-wrapper {
+  display: inline-block;
+  overflow-y: auto;
+  width: 100%;
+  max-height: 100%;
+  height: 100%;
+}
+
+/* line 339, scss/main.scss */
+#sidebar-left {
+  width: 240px;
+  position: relative;
+  background-color: #CCCCCC;
+}
+/* line 343, scss/main.scss */
+#sidebar-left #thumbnailParentBox {
+  padding: 25px 0 40px;
+}
+/* line 347, scss/main.scss */
+#sidebar-left .stage-thumbnail .stage-thumbnail-wrapper {
+  position: relative;
+  width: 160px;
+  height: 90px;
+  margin: 0 auto 20px;
+}
+/* line 353, scss/main.scss */
+#sidebar-left .stage-thumbnail .index-block,
+#sidebar-left .stage-thumbnail .index-block-active {
+  position: absolute;
+  bottom: 0;
+  left: 5px;
+  line-height: 1;
+  color: #808080;
+}
+/* line 361, scss/main.scss */
+#sidebar-left .stage-thumbnail .index-block-active {
+  color: #000000;
+}
+/* line 364, scss/main.scss */
+#sidebar-left .stage-thumbnail .thumbnail-actions {
+  position: absolute;
+  display: none;
+  width: 100%;
+}
+/* line 368, scss/main.scss */
+#sidebar-left .stage-thumbnail:hover .thumbnail-actions {
+  display: block;
+}
+/* line 371, scss/main.scss */
+#sidebar-left .stage-thumbnail .thumbnail-actions .icons-duplicate-slide {
+  position: absolute;
+  left: -25px;
+  bottom: -92px;
+}
+/* line 376, scss/main.scss */
+#sidebar-left .stage-thumbnail .thumbnail-actions .icons-delete-slide {
+  position: absolute;
+  left: -25px;
+  bottom: -68px;
+}
+/* line 382, scss/main.scss */
+#sidebar-left .stage-thumbnail canvas {
+  position: relative;
+  display: block;
+  float: left;
+  width: 150px;
+  height: 95px;
+  cursor: pointer;
+  background-color: white;
+}
+/* line 390, scss/main.scss */
+#sidebar-left .stage-thumbnail.stage-active canvas {
+  border: 1px solid #2DA1DC;
+}
+#sidebar-left .stage-thumbnail.stage-active img {
+  border: 1px solid #2DA1DC;
+}
+/* line 393, scss/main.scss */
+#sidebar-left .stage-thumbnail:hover canvas {
+  border: 2px solid #2DA1DC;
+}
+/* line 398, scss/main.scss */
+#sidebar-left .manage-thumbnails {
+  position: static;
+  text-align: center;
+  width: 240px;
+  height: 50px;
+  margin-top: -25px;
+  background: #CCCCCC;
+  z-index: 1;
+}
+/* line 406, scss/main.scss */
+#sidebar-left .manage-thumbnails.fix-add-thumbnails {
+  position: absolute;
+  bottom: 0;
+  -moz-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+}
+/* line 411, scss/main.scss */
+#sidebar-left .manage-thumbnails .icons-add-slide {
+  position: relative;
+  top: 10px;
+}
+/* line 415, scss/main.scss */
+#sidebar-left .manage-thumbnails .dropdown {
+  position: relative;
+  left: 30px;
+  top: -22px;
+}
+/* line 420, scss/main.scss */
+#sidebar-left .manage-thumbnails .dropdown.open .dropdown-toggle {
+  box-shadow: none;
+  background: #FFF;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+}
+/* line 426, scss/main.scss */
+#sidebar-left .manage-thumbnails .dropdown .btn {
+  padding: 0 6px;
+  outline: none;
+  background: transparent;
+}
+/* line 430, scss/main.scss */
+#sidebar-left .manage-thumbnails .dropdown .btn .caret {
+  position: relative;
+  top: 2px;
+  color: #808080;
+  border-right: 6px solid transparent;
+  border-top: 6px solid;
+  border-left: 6px solid transparent;
+  border-bottom: 6px solid transparent;
+}
+/* line 438, scss/main.scss */
+#sidebar-left .manage-thumbnails .dropdown.open .btn .caret {
+  top: -4px;
+  border-top: 6px solid transparent;
+  border-bottom: 6px solid;
+}
+/* line 446, scss/main.scss */
+#sidebar-left .manage-thumbnails .dropdown-menu {
+  top: -80px;
+  left: -100px;
+  border: none;
+}
+/* line 450, scss/main.scss */
+#sidebar-left .manage-thumbnails .dropdown-menu i {
+  padding-right: 7px;
+}
+/* line 455, scss/main.scss */
+#sidebar-left .add-stage {
+  width: 100%;
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+/* line 462, scss/main.scss */
+#sidebar-left .sortable-ghost {
+  border: solid 2px #458B00;
+  margin: 0 auto;
+}
+
+/* line 468, scss/main.scss */
+#sidebar-right {
+  position: relative;
+  width: 250px;
+  -moz-transition: 0.4s;
+  -o-transition: 0.4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-left: 1px solid #E1E1E1;
+  background-color: #E6E6E6;
+}
+/* line 474, scss/main.scss */
+#sidebar-right.collapsed {
+  width: 30px;
+  -moz-transition: 0.4s;
+  -o-transition: 0.4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  background-color: #CCCCCC;
+  border-bottom: 1px solid #D9D9D9;
+}
+/* line 479, scss/main.scss */
+#sidebar-right.collapsed > i {
+  -moz-transform: rotateY(180deg);
+  -ms-transform: rotateY(180deg);
+  -webkit-transform: rotateY(180deg);
+  transform: rotateY(180deg);
+}
+/* line 483, scss/main.scss */
+#sidebar-right > i {
+  position: absolute;
+  right: 9px;
+  top: 20px;
+  z-index: 999;
+  cursor: pointer;
+}
+/* line 491, scss/main.scss */
+#sidebar-right .word-net > h2 {
+  font-size: 16px;
+  margin: 0 0 15px 0;
+  padding: 15px 15px 15px 20px;
+  color: #B3B3B3;
+  border-bottom: 1px solid #8C8C8C;
+}
+/* line 499, scss/main.scss */
+#sidebar-right .keywords {
+  float: left;
+  width: 100%;
+  padding-right: 10px;
+}
+/* line 504, scss/main.scss */
+#sidebar-right .keyword-labels {
+  display: inline-block;
+  float: left;
+  margin: 0 0 10px 10px;
+  padding: 5px 10px;
+  background: #CCCCCC;
+}
+/* line 510, scss/main.scss */
+#sidebar-right .keyword-labels.selected, #sidebar-right .keyword-labels.active, #sidebar-right .keyword-labels:hover {
+  outline: 2px solid #85C225;
+}
+/* line 515, scss/main.scss */
+#sidebar-right .keyword-labels.selected {
+  -webkit-animation: pulse 1s ease infinite;
+  -moz-animation: pulse 1s ease infinite;
+  -ms-animation: pulse 1s ease infinite;
+  -o-animation: pulse 1s ease infinite;
+  animation: pulse 1s ease infinite;
+}
+/* line 522, scss/main.scss */
+#sidebar-right .keyword-labels button {
+  padding: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+/* line 529, scss/main.scss */
+#sidebar-right .keywords-mappings {
+  position: relative;
+  float: left;
+  clear: both;
+  width: 100%;
+  margin: 0 4px 20px 4px;
+  padding: 15px 15px 15px 20px;
+  border-radius: 15px;
+  background: #FFFFFF;
+}
+/* line 538, scss/main.scss */
+#sidebar-right .keywords-mappings .icons-up {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: block;
+}
+/* line 544, scss/main.scss */
+#sidebar-right .keywords-mappings .equivalent-words {
+  clear: both;
+}
+/* line 547, scss/main.scss */
+#sidebar-right .keywords-mappings article {
+  float: left;
+  width: 100%;
+  margin-top: 10px;
+  border-top: 1px solid #D2D2D2;
+}
+/* line 552, scss/main.scss */
+#sidebar-right .keywords-mappings article > h5 {
+  margin: 15px 0 10px;
+  text-transform: uppercase;
+}
+/* line 557, scss/main.scss */
+#sidebar-right .keywords-mappings label {
+  display: inline-block;
+  float: left;
+  margin: 0 5px 5px 0;
+  padding: 0 5px;
+  background: #E7E7E7;
+}
+/* line 565, scss/main.scss */
+#sidebar-right .add-popup {
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+  margin: 10px auto 0;
+  padding: 5px 20px;
+  color: #FFFFFF;
+  border: none;
+  outline: none;
+  background: #87C036;
+}
+/* line 576, scss/main.scss */
+#sidebar-right .sidebar-collapse-panel {
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+  margin-top: 50px;
+  font-size: 12px;
+  color: #4D4D4D;
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* line 468, scss/main.scss */
+  #sidebar-right {
+    z-index: 999;
+  }
+}
+
+/* line 587, scss/main.scss */
+#center-container {
+  padding: 0 0 20px;
+  background: #FFFFFF;
+}
+/* line 590, scss/main.scss */
+#center-container .editor-container {
+  position: relative;
+  width: 726px;
+  margin: 0 auto;
+}
+
+/* line 597, scss/main.scss */
+#canvas-wrapper {
+  border: 3px solid #C8C8C8;
+  outline: none;
+  width: 726px;
+  height: 411px;
+  margin-top: 20px;
+}
+
+/* line 604, scss/main.scss */
+.editor-embedded-audio {
+  margin-top: 15px;
+}
+
+/* line 608, scss/main.scss */
+.footer {
+  border-top: none;
+}
+
+/* line 612, scss/main.scss */
+#gameArea {
+  line-height: 0.75;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 720px;
+  max-width: 720px;
+  max-height: 405px;
+  margin: 0 auto;
+}
+
+/* line 623, scss/main.scss */
+#gameCanvas {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 628, scss/main.scss */
+.asset-container {
+  overflow-y: auto;
+  height: 375px;
+}
+
+/* line 634, scss/main.scss */
+.flashcard-container .checkbox {
+  margin-bottom: 8px;
+}
+
+/* line 640, scss/main.scss */
+.modal-editor .modal-header {
+  background: #FFFFFF;
+  height: 50px;
+  padding: 0;
+}
+/* line 644, scss/main.scss */
+.modal-editor .modal-header h2 {
+  font-size: 18px;
+  font-weight: normal;
+  line-height: 1;
+  float: left;
+  margin: 16px 2px 15px;
+  color: #4C4C4C;
+  margin-left: 28px;
+}
+/* line 653, scss/main.scss */
+.modal-editor .modal-header #title {
+  margin: 5px;
+  border: 0px transparent;
+}
+/* line 657, scss/main.scss */
+.modal-editor .modal-header .fa-pencil {
+  position: relative;
+  bottom: 34px;
+  left: 192px;
+  color: #b9b9b9;
+}
+/* line 663, scss/main.scss */
+.modal-editor .modal-header .modal-close {
+  float: right;
+  position: relative;
+  top: 18px;
+  margin: 0px 30px;
+}
+/* line 668, scss/main.scss */
+.modal-editor .modal-header .modal-close i {
+  display: inline-block;
+}
+/* line 673, scss/main.scss */
+.modal-editor .modal-content {
+  float: left;
+  width: 100%;
+}
+/* line 677, scss/main.scss */
+.modal-editor .modal-footer {
+  border-top: none;
+}
+/* line 680, scss/main.scss */
+.modal-editor form {
+  margin: 20px 0 0 100px;
+}
+/* line 682, scss/main.scss */
+.modal-editor form .form-control {
+  max-width: 200px;
+}
+/* line 685, scss/main.scss */
+.modal-editor form .progress {
+  line-height: 15px;
+  position: relative;
+  top: 25px;
+  left: 10px;
+  display: inline-block;
+  width: 100px;
+  border: 3px groove #CCCCCC;
+}
+/* line 693, scss/main.scss */
+.modal-editor form .progress div {
+  font-size: smaller;
+  width: 0;
+  background: #1BF11D;
+}
+/* line 700, scss/main.scss */
+.modal-editor label {
+  font-size: 14px;
+}
+/* line 703, scss/main.scss */
+.modal-editor .btn-ok {
+  font-size: 18px;
+  line-height: 1;
+  padding: 10px 15px;
+  cursor: pointer;
+  color: #FFFFFF;
+  border: none;
+  background-color: #87c036;
+}
+/* line 711, scss/main.scss */
+.modal-editor input[disabled].btn-ok, .modal-editor button[disabled].btn-ok {
+  background-color: rgba(135, 192, 54, 0.3);
+  cursor: not-allowed;
+}
+/* line 715, scss/main.scss */
+.modal-editor .btn-ok:focus {
+  outline: none;
+}
+/* line 719, scss/main.scss */
+.modal-editor .select-asset {
+  font-weight: bold;
+  padding: 10px 90px;
+}
+/* line 723, scss/main.scss */
+.modal-editor .checkbox {
+  padding-left: 0;
+}
+/* line 725, scss/main.scss */
+.modal-editor .checkbox label::before {
+  display: none;
+}
+/* line 728, scss/main.scss */
+.modal-editor .checkbox input[type="checkbox"] {
+  display: inline-block !important;
+  margin-right: 5px !important;
+  opacity: 1;
+}
+/* line 734, scss/main.scss */
+.modal-editor button[disabled] {
+  cursor: not-allowed;
+  border: none;
+}
+
+/* line 740, scss/main.scss */
+.page-not-found {
+  font-weight: bold;
+  width: 250px;
+  margin: 0 auto;
+}
+
+/* line 746, scss/main.scss */
+.error {
+  color: #cc0000;
+}
+
+/* line 750, scss/main.scss */
+.success {
+  color: #008000;
+}
+
+/* Modal preview */
+/* line 758, scss/main.scss */
+.modal-preview .modal-content {
+  border: 0;
+  background-color: transparent;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+/* line 767, scss/main.scss */
+.frame-modal-preview .preview-frame {
+  position: absolute;
+  z-index: 1;
+  top: 124px;
+  left: 217px;
+  width: 100%;
+  height: 451px;
+  background: url("../images/editor-frame.png") no-repeat 0 0;
+  background-size: 902px 451px;
+}
+/* line 777, scss/main.scss */
+.frame-modal-preview .frame-modal-content {
+  position: relative;
+  z-index: 999;
+  width: 720px;
+  margin: 0 auto;
+}
+/* line 782, scss/main.scss */
+.frame-modal-preview .frame-modal-content .modal-body {
+  position: relative;
+  top: 149px;
+  left: 19px;
+  width: 720px;
+  height: 405px;
+  margin: 0;
+  padding: 0;
+  background: #FFFFFF;
+}
+/* line 791, scss/main.scss */
+.frame-modal-preview .frame-modal-content .modal-body .loader {
+  position: absolute;
+  z-index: 1051;
+  top: 190px;
+  left: 325px;
+  text-align: center;
+}
+
+/* line 802, scss/main.scss */
+.modal-lg {
+  width: 900px !important;
+}
+
+@media screen and (min-width: 768px) {
+  /* line 807, scss/main.scss */
+  .modal-dialog {
+    width: 100%;
+  }
+
+  /* line 810, scss/main.scss */
+  .modal-xlg {
+    width: 700px;
+  }
+}
+@media screen and (min-width: 992px) {
+  /* line 816, scss/main.scss */
+  .modal-xlg {
+    width: 900px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  /* line 822, scss/main.scss */
+  .modal-xlg {
+    width: 1100px;
+  }
+}
+@media screen and (min-width: 1400px) {
+  /* line 828, scss/main.scss */
+  .modal-xlg {
+    width: 1200px;
+  }
+}
+/* line 833, scss/main.scss */
+.valign-middle {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+/* end Modal preview */
+/* line 841, scss/main.scss */
+.manage-editor {
+  height: 31px;
+  margin-top: 15px;
+  /*Switch*/
+  /* Rounded sliders */
+}
+/* line 844, scss/main.scss */
+.manage-editor .btn-group {
+  top: -7px;
+  left: -2px;
+}
+/* line 848, scss/main.scss */
+.manage-editor .stage-audio-toggle {
+  background: transparent;
+  box-shadow: none;
+}
+/* line 851, scss/main.scss */
+.manage-editor .stage-audio-toggle i {
+  position: relative;
+  top: 6px;
+  left: 5px;
+}
+/* line 856, scss/main.scss */
+.manage-editor .stage-audio-toggle.dropdown-toggle {
+  box-shadow: none;
+  padding: 5px 0 0 0;
+}
+/* line 860, scss/main.scss */
+.manage-editor .stage-audio-toggle .caret {
+  position: relative;
+  left: 2px;
+  color: #525252;
+}
+/* line 866, scss/main.scss */
+.manage-editor .audio-toggle-title {
+  padding-left: 5px;
+  font-size: 13px;
+  color: #AFAFAF;
+}
+/* line 871, scss/main.scss */
+.manage-editor .dropdown-menu {
+  border: 1px solid #D7D7D7;
+  width: 175px;
+  margin-top: -1px;
+}
+/* line 876, scss/main.scss */
+.manage-editor .stage-controls {
+  float: right;
+}
+/* line 878, scss/main.scss */
+.manage-editor .stage-controls > div {
+  float: left;
+  position: relative;
+  top: 5px;
+  margin-left: 15px;
+}
+/* line 883, scss/main.scss */
+.manage-editor .stage-controls > div span {
+  position: relative;
+  top: -10px;
+  margin-right: 8px;
+}
+/* line 891, scss/main.scss */
+.manage-editor .switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 20px;
+}
+/* line 897, scss/main.scss */
+.manage-editor .switch input {
+  display: none;
+}
+/* line 900, scss/main.scss */
+.manage-editor .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+/* line 911, scss/main.scss */
+.manage-editor .slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+/* line 922, scss/main.scss */
+.manage-editor input:checked + .slider {
+  background-color: #2196F3;
+}
+/* line 925, scss/main.scss */
+.manage-editor input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+/* line 928, scss/main.scss */
+.manage-editor input:checked + .slider:before {
+  -moz-transform: translateX(10px);
+  -ms-transform: translateX(10px);
+  -webkit-transform: translateX(10px);
+  transform: translateX(10px);
+}
+/* line 932, scss/main.scss */
+.manage-editor .slider.round {
+  border-radius: 20px;
+}
+/* line 935, scss/main.scss */
+.manage-editor .slider.round:before {
+  border-radius: 50%;
+}
+
+/* line 940, scss/main.scss */
+.audio-play {
+  position: absolute;
+  width: 500px;
+  top: 7px;
+  /*Switch*/
+  /* Rounded sliders */
+}
+/* line 945, scss/main.scss */
+.audio-play .message {
+  color: green;
+}
+/* line 948, scss/main.scss */
+.audio-play .switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 20px;
+}
+/* line 954, scss/main.scss */
+.audio-play .switch input {
+  display: none;
+}
+/* line 957, scss/main.scss */
+.audio-play .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+/* line 968, scss/main.scss */
+.audio-play .slider:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+/* line 979, scss/main.scss */
+.audio-play input:checked + .slider {
+  background-color: #2196F3;
+}
+/* line 982, scss/main.scss */
+.audio-play input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+/* line 985, scss/main.scss */
+.audio-play input:checked + .slider:before {
+  -moz-transform: translateX(10px);
+  -ms-transform: translateX(10px);
+  -webkit-transform: translateX(10px);
+  transform: translateX(10px);
+}
+/* line 989, scss/main.scss */
+.audio-play .slider.round {
+  border-radius: 20px;
+}
+/* line 992, scss/main.scss */
+.audio-play .slider.round:before {
+  border-radius: 50%;
+}
+/* line 995, scss/main.scss */
+.audio-play label {
+  margin-bottom: -5px !important;
+}
+
+/* line 1000, scss/main.scss */
+.stage-audio-wrapper {
+  position: relative;
+  display: inline-block;
+  float: left;
+  width: 100%;
+  height: 30px;
+  padding: 0 5px 0 10px;
+}
+/* line 1007, scss/main.scss */
+.stage-audio-wrapper i {
+  position: relative;
+  top: 1px;
+}
+/* line 1011, scss/main.scss */
+.stage-audio-wrapper .stage-audio-play {
+  display: inline-block;
+  position: absolute;
+  top: -1px;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  z-index: 3;
+  cursor: pointer;
+}
+/* line 1021, scss/main.scss */
+.stage-audio-wrapper .stage-audio-name {
+  position: absolute;
+  left: 40px;
+  cursor: pointer;
+  z-index: 1;
+  color: #AFAFAF;
+}
+/* line 1027, scss/main.scss */
+.stage-audio-wrapper .stage-audio-name span {
+  font-size: 9px;
+}
+/* line 1031, scss/main.scss */
+.stage-audio-wrapper .fa-remove {
+  position: absolute;
+  right: 5px;
+  top: 6px;
+  color: #AFAFAF;
+  font-size: 10px;
+}
+
+/* line 1040, scss/main.scss */
+.read-along-title {
+  position: relative;
+}
+/* line 1042, scss/main.scss */
+.read-along-title .read-along-audio-wrapper {
+  position: absolute;
+  width: 200px;
+  top: 15px;
+  right: 0;
+  z-index: 2;
+}
+/* line 1048, scss/main.scss */
+.read-along-title .read-along-audio-wrapper .icons-sound-grey {
+  display: inline-block;
+}
+/* line 1051, scss/main.scss */
+.read-along-title .read-along-audio-wrapper .stage-audio-name,
+.read-along-title .read-along-audio-wrapper .fa-remove {
+  color: #808080;
+}
+/* line 1055, scss/main.scss */
+.read-along-title .read-along-audio-wrapper .fa-remove {
+  font-size: 14px;
+  top: 2px;
+}
+
+/* line 1062, scss/main.scss */
+.save-modal {
+  height: 85px;
+}
+
+/* line 1066, scss/main.scss */
+.at-loader {
+  position: absolute;
+  z-index: 1051;
+  top: 5%;
+  left: 45%;
+  text-align: center;
+}
+
+/* line 1075, scss/main.scss */
+.item-activity .modal-dialog {
+  width: 100%;
+}
+/* line 1078, scss/main.scss */
+.item-activity .modal-content {
+  height: 590px;
+  overflow: hidden;
+}
+/* line 1081, scss/main.scss */
+.item-activity .modal-content .modal-body {
+  height: 505px;
+  overflow-y: scroll;
+}
+/* line 1084, scss/main.scss */
+.item-activity .modal-content .modal-body.read-along-container {
+  padding: 20px;
+  height: 455px;
+}
+/* line 1090, scss/main.scss */
+.item-activity .assessment-counts {
+  float: left;
+  position: relative;
+  top: 15px;
+  right: 5px;
+}
+/* line 1095, scss/main.scss */
+.item-activity .assessment-counts .cart-counts {
+  display: inline-block;
+  position: absolute;
+  top: -6px;
+  left: 15px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  padding: 2px 2px 2px 1px;
+  background: #D5541B;
+  border: 1px solid #FFF;
+  color: #FFF;
+  text-align: center;
+  font-size: 8px;
+}
+/* line 1110, scss/main.scss */
+.item-activity .assessment-counts .activity-settings-triangle {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid black;
+}
+
+/* line 1120, scss/main.scss */
+.item-activity-container {
+  float: left;
+  width: 100%;
+  padding: 0;
+  overflow: hidden !important;
+}
+/* line 1126, scss/main.scss */
+.item-activity-container .filters-tab span {
+  position: relative;
+  top: -2px;
+  margin-right: 10px;
+  padding-bottom: 5px;
+  font-size: 12px;
+  color: #9b9b9b;
+}
+/* line 1133, scss/main.scss */
+.item-activity-container .filters-tab span.active {
+  color: #2DA1DC;
+  border-bottom: 2px solid #2DA1DC;
+}
+/* line 1139, scss/main.scss */
+.item-activity-container .item-activity-filters {
+  margin: 0px 30px 10px;
+}
+/* line 1141, scss/main.scss */
+.item-activity-container .item-activity-filters .form-group {
+  float: left;
+  margin-right: 15px;
+}
+/* line 1144, scss/main.scss */
+.item-activity-container .item-activity-filters .form-group input {
+  border: 1px solid #CFCFCF;
+}
+/* line 1146, scss/main.scss */
+.item-activity-container .item-activity-filters .form-group.has-error input {
+  border-color: #b94a48;
+}
+/* line 1150, scss/main.scss */
+.item-activity-container .item-activity-filters .form-group label {
+  float: left;
+  padding: 7px 10px 0 0;
+  color: #848484;
+  font-size: 13px;
+}
+/* line 1156, scss/main.scss */
+.item-activity-container .item-activity-filters .form-group select {
+  float: left;
+  width: auto;
+  border-color: #C8C8C8;
+  width: 150px;
+  min-width: 150px;
+  color: #0093dd;
+  font-weight: 600;
+}
+/* line 1167, scss/main.scss */
+.item-activity-container .item-activity-settings {
+  overflow: hidden;
+  margin: 0 0 10px;
+  padding: 15px 30px 23px;
+  background: #F0F0F0;
+}
+/* line 1172, scss/main.scss */
+.item-activity-container .item-activity-settings h6 {
+  font-weight: bold;
+  color: #4C4C4C;
+}
+/* line 1176, scss/main.scss */
+.item-activity-container .item-activity-settings .item-settings-form {
+  padding-left: 20px;
+}
+/* line 1179, scss/main.scss */
+.item-activity-container .item-activity-settings .total-marks {
+  min-width: 75px !important;
+  width: 75px !important;
+}
+/* line 1183, scss/main.scss */
+.item-activity-container .item-activity-settings .display-total-count {
+  font-style: italic;
+  position: relative;
+  top: 6px;
+  padding-left: 7px;
+  color: #D4D4D4;
+}
+/* line 1190, scss/main.scss */
+.item-activity-container .item-activity-settings input[type="checkbox"] {
+  float: left;
+  top: 10px;
+  margin-right: 10px !important;
+  display: block !important;
+}
+/* line 1197, scss/main.scss */
+.item-activity-container .filters-container {
+  padding: 8px 10px 4px 18px;
+  background: #f1f1f1;
+  overflow: hidden;
+}
+/* line 1202, scss/main.scss */
+.item-activity-container .search-questions {
+  position: relative;
+}
+/* line 1204, scss/main.scss */
+.item-activity-container .search-questions input {
+  padding-right: 30px;
+}
+/* line 77, scss/partials/_base.scss */
+.item-activity-container .search-questions input.placeholder {
+  text-align: center;
+  font-style: italic;
+}
+/* line 80, scss/partials/_base.scss */
+.item-activity-container .search-questions input:-moz-placeholder {
+  text-align: center;
+  font-style: italic;
+}
+/* line 83, scss/partials/_base.scss */
+.item-activity-container .search-questions input::-moz-placeholder {
+  text-align: center;
+  font-style: italic;
+}
+/* line 86, scss/partials/_base.scss */
+.item-activity-container .search-questions input:-ms-input-placeholder {
+  text-align: center;
+  font-style: italic;
+}
+/* line 89, scss/partials/_base.scss */
+.item-activity-container .search-questions input::-webkit-input-placeholder {
+  text-align: center;
+  font-style: italic;
+}
+/* line 1211, scss/main.scss */
+.item-activity-container .search-questions i {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+}
+/* line 1218, scss/main.scss */
+.item-activity-container .search-question-filters {
+  float: left;
+  padding: 20px 0 0 8px;
+}
+/* line 1222, scss/main.scss */
+.item-activity-container .activity-items {
+  float: left;
+  width: 100%;
+  min-height: 84px;
+  margin: 0;
+  color: #4A8BCD;
+  border-bottom: 1px solid #cccccc;
+}
+/* line 1229, scss/main.scss */
+.item-activity-container .activity-items h4 {
+  font-size: 18px;
+  font-weight: normal;
+}
+/* line 1233, scss/main.scss */
+.item-activity-container .activity-items.active {
+  background: #E6E6E6;
+}
+/* line 1237, scss/main.scss */
+.item-activity-container .create-question {
+  width: 310px;
+  text-align: center;
+  margin: 25px auto;
+  font-size: 18px;
+  color: #A7A7A7;
+}
+/* line 1243, scss/main.scss */
+.item-activity-container .create-question.no-items {
+  margin: 0 auto;
+}
+/* line 1247, scss/main.scss */
+.item-activity-container .activity-items-info {
+  font-family: Helvetica;
+  color: #757575;
+}
+/* line 1252, scss/main.scss */
+.item-activity-container .activity-shuffle span {
+  padding: 0 10px;
+}
+/* line 1256, scss/main.scss */
+.item-activity-container .item-template-content {
+  overflow: hidden;
+  margin: 0px 30px 30px;
+}
+/* line 1260, scss/main.scss */
+.item-activity-container .manage-activity {
+  clear: both;
+  float: none;
+  overflow: hidden;
+  width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #E6E6E6;
+}
+/* line 1267, scss/main.scss */
+.item-activity-container .manage-activity .items-length {
+  float: left;
+}
+/* line 1269, scss/main.scss */
+.item-activity-container .manage-activity .items-length span {
+  padding-top: 8px;
+  text-transform: uppercase;
+  float: left;
+  font-size: 12px;
+  color: #9b9b9b;
+}
+/* line 1277, scss/main.scss */
+.item-activity-container .manage-activity .cart-length {
+  padding: 8px 10px 0 0;
+  font-size: 12px;
+  color: #a3a3a3;
+}
+/* line 1282, scss/main.scss */
+.item-activity-container .manage-activity .add-more-items {
+  margin-right: 8px;
+}
+/* line 1286, scss/main.scss */
+.item-activity-container .activity-items-container {
+  float: left;
+  width: 50%;
+  height: 310px;
+  overflow-y: scroll;
+}
+/* line 1292, scss/main.scss */
+.item-activity-container .activity-questions {
+  float: left;
+  width: 60%;
+  padding-left: 15px;
+}
+/* line 1297, scss/main.scss */
+.item-activity-container .activity-actions {
+  float: right;
+  width: 40%;
+  margin-top: 15px;
+  padding-right: 20px;
+  text-align: right;
+}
+/* line 1303, scss/main.scss */
+.item-activity-container .activity-actions a {
+  position: relative;
+  top: 10px;
+  right: 12px;
+}
+/* line 1309, scss/main.scss */
+.item-activity-container .activity-preview {
+  float: left;
+  position: relative;
+  width: 50%;
+}
+/* line 1313, scss/main.scss */
+.item-activity-container .activity-preview > span {
+  top: 140px;
+  right: 90px;
+}
+/* line 1317, scss/main.scss */
+.item-activity-container .activity-preview #itemIframe,
+.item-activity-container .activity-preview .itemIframeMessages {
+  position: relative;
+  float: right;
+  width: 430px;
+  height: 320px;
+  margin: 3px 0 0 8px;
+  border: 2px solid #E4E4E4;
+  z-index: 5;
+}
+/* line 1327, scss/main.scss */
+.item-activity-container .activity-preview .itemIframeMessages {
+  position: absolute;
+  right: 0;
+  padding: 110px 20px;
+  background: #FFFFFF;
+  text-align: center;
+  font-weight: bold;
+  z-index: 10;
+}
+
+@-moz-keyframes pulse {
+  0% {
+    -moz-transform: scale(1);
+    transform: scale(1);
+  }
+  25% {
+    -moz-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  50% {
+    -moz-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -moz-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@-webkit-keyframes pulse {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  25% {
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  50% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes pulse {
+  0% {
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  25% {
+    -moz-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
+  }
+  50% {
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  100% {
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+/*Text Editor*/
+/* line 1357, scss/main.scss */
+.editablePage {
+  display: none;
+}
+
+/* line 1361, scss/main.scss */
+.authoring-tool-editor {
+  position: relative;
+}
+
+/* line 1365, scss/main.scss */
+.texteditor-popover {
+  position: absolute;
+  width: 720px;
+  height: 405px;
+  background: #FFF;
+  top: 3px;
+  left: 3px;
+  z-index: 4;
+}
+/* line 1373, scss/main.scss */
+.texteditor-popover .texteditor-content {
+  width: 405px;
+  margin: 10px 0 0 15px;
+}
+/* line 1377, scss/main.scss */
+.texteditor-popover .editor-maxLength-msg {
+  position: absolute;
+  top: 45px;
+}
+/* line 1381, scss/main.scss */
+.texteditor-popover .texteditor-options {
+  text-align: right;
+}
+/* line 1383, scss/main.scss */
+.texteditor-popover .texteditor-options .character-limit {
+  float: left;
+  position: relative;
+  top: -6px;
+  color: #C1C1C1;
+  font-size: 12px;
+}
+/* line 1390, scss/main.scss */
+.texteditor-popover .texteditor-options button:nth-child(1) {
+  margin-right: 5px;
+}
+/* line 1394, scss/main.scss */
+.texteditor-popover #authoringTextEditor, #authoringTextEditor {
+  border: 2px solid #2DA1DC;
+  width: 478px;
+  height: 265px;
+  margin-bottom: 10px;
+  background: #fff;
+  font-size: 16px;
+  line-height: 26px;
+}
+/* line 1402, scss/main.scss */
+.texteditor-popover #authoringTextEditor.ng-invalid-maxlength {
+  border: 2px solid #FF0000;
+}
+
+/* line 1409, scss/main.scss */
+.teacher-instructions h6 {
+  text-transform: uppercase;
+  margin: 20px 0 10px;
+  color: #777373;
+}
+/* line 1414, scss/main.scss */
+.teacher-instructions textarea {
+  min-height: 50px;
+  height: 50px;
+}
+
+/* line 1420, scss/main.scss */
+.at-btn {
+  font-size: 13px;
+  padding: 5px 18px;
+  text-transform: uppercase;
+}
+
+/* line 1426, scss/main.scss */
+.at-btn-ok {
+  background-color: #2DA1DC;
+  color: #FFFFFF;
+}
+/* line 1429, scss/main.scss */
+button[disabled].at-btn-ok {
+  background-color: rgba(45, 161, 220, 0.5);
+  cursor: not-allowed;
+  border: none;
+  color: #FFF;
+}
+/* line 1435, scss/main.scss */
+.at-btn-ok:hover {
+  color: #FFFFFF;
+}
+/* line 1438, scss/main.scss */
+.at-btn-ok:focus {
+  outline: none;
+}
+
+/* line 1443, scss/main.scss */
+.at-btn-lined {
+  padding: 4px 15px;
+  background-color: transparent;
+  border: 2px solid #3BA5DE;
+  color: #3BA5DE;
+}
+/* line 1448, scss/main.scss */
+.at-btn-lined:hover {
+  color: #3BA5DE;
+}
+/* line 1451, scss/main.scss */
+.at-btn-lined:focus {
+  outline: none;
+}
+
+/* line 1456, scss/main.scss */
+.modal-confirmation {
+  width: 600px;
+  margin: 0 auto;
+}
+
+/* line 1461, scss/main.scss */
+#previewContentIframe {
+  border: none;
+}
+
+/*# sourceMappingURL=main.css.map */
+
+.menu-icon {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 6px;
+  margin-top: 3px;
+}
+
+.fa:hover {
+  color: #3899ec;
+}
+.plugin-toolbar-container {
+    position: absolute;
+    z-index: 2;
+    top: 0px;
+    left: 759px;
+    width: 200px;
+    border-radius: 36px;
+    display: none;
+    padding: 10px;
+    border-radius: 8px;
+    background: #999999;
+}
+
+.plugin-toolbar-select {
+    width: 130px;
+    min-width: 100px;
+}

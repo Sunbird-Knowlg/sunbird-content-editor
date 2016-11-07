@@ -1,0 +1,16 @@
+{
+    "plugins": {
+        "org.ekstep.config": "1.0",
+        "org.ekstep.stage": "1.0",
+        "org.ekstep.text": "1.0",
+        "org.ekstep.shape": "1.0",
+        "org.ekstep.delete": "1.0",
+        "org.ekstep.reorder": "1.0",
+        "org.ekstep.hotspot": "1.0",
+        "org.ekstep.font": "1.0",
+        "org.ekstep.scribblepad": "1.0",
+        "org.ekstep.copypaste": "1.0",
+        "org.ekstep.image": "1.0",
+        "com.ilimi.composite-shape-text": "1.0"
+    }
+}

@@ -1,0 +1,24 @@
+<div ng-switch on="menu.type">
+    <div ng-class="{'dropdown' : menu.submenu }" role="group">
+        <button type="button" class="dropdown-toggle btn {{menu.selected === true ? 'selected' : ''}}" title="{{menu.toolTip}}" data-original-title="{{menu.toolTip}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="fireEvent(menu.onclick)" ng-switch-when="image">
+            <img ng-src="{{menu.iconImage}}" ng-if="menu.iconImage" id="{{menu.id}}" />
+        </button>
+        <button type="button" class="dropdown-toggle btn {{menu.selected === true ? 'selected' : ''}}" title="{{menu.toolTip}}" data-original-title="{{menu.toolTip}}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ng-click="fireEvent(menu.onclick)" ng-switch-when="icon">
+            <i class="{{menu.iconClass}}" ng-if="menu.iconClass" style="{{menu.iconStyle}}" id="{{menu.id}}"></i>
+        </button>
+        <button type="button" class="dropdown-toggle btn {{menu.selected === true ? 'selected' : ''}}" title="{{menu.toolTip}}" data-original-title="{{menu.toolTip}}" data-toggle="tooltip" aria-haspopup="true" aria-expanded="false" ng-switch-when="select">
+            <select style="{{menu.iconStyle}}" id="{{menu.id}}" ng-change="fireEvent(menu.onchange)" ng-model="options[menu.id]" ng-options="option for option  in menu.options" class="plugin-toolbar-select">
+                <option value="">Select {{menu.title}}</option>
+            </select>
+        </button>
+        <ul class="dropdown-menu" ng-if="menu.submenu">
+            <button type="button" class="tool-text btn {{menu.selected === true ? 'selected' : ''}}" ng-repeat="dd in menu.submenu" ng-click="fireEvent(dd.onclick)">
+                <div ng-switch on="dd.type">
+                    <img ng-src="{{dd.iconImage}}" ng-if="dd.iconImage" class="pull-left" id="{{menu.id}}" ng-switch-when="image" />
+                    <i class="{{dd.iconClass}}" ng-if="dd.iconClass" style="{{dd.iconStyle}}" id="{{dd.id}}" ng-switch-when="icon"></i>
+                    <span>{{dd.title}}</span>
+                </div>
+            </button>
+        </ul>
+    </div>
+</div>

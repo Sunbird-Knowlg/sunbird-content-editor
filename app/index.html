@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="styles/open-sans.css" />
+    <link rel="stylesheet" href="styles/bootstrap.css" />
+    <link rel="stylesheet" href="styles/template.css" />
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild -->
+    <!-- Not need for AT on Community Portal. Needed only on localhost -->
+    <style>
+    .community-portal-remove {
+        background: #DEDEDE;
+        height: 81px;
+        text-align: right;
+    }
+    
+    .community-portal-remove {
+        display: none;
+    }
+    
+    .community-portal-remove {
+        display: block;
+    }
+    
+    .community-portal-remove i {
+        display: inline-block;
+        cursor: pointer;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container community-portal-remove">
+        <i class="fa fa-tablet fa-2x" aria-hidden="true" style="padding-right: 15px; padding-top: 37px;" data-toggle="modal" data-target="#preview-modal" onclick="window.EkstepEditor.previewContent()"></i>
+        <i class="fa fa-floppy-o fa-2x" aria-hidden="true" onclick="window.EkstepEditor.saveECML()"></i>
+    </div>
+    <!-- End of localhost only code-->
+    <div ng-app="editorApp">
+        <div ng-controller="MainCtrl" id="editorContainer">
+            <!--[if lte IE 8]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+            <!-- Application content -->
+            <header>
+                <div class="navbar navbar-default toolbar-widget" role="navigation">
+                    <div class="container toolbar-container">
+                        <div class="toolbar">
+                            <div class="row">
+                                <section class="add-new-object pull-left btn-group">
+                                    <div ng-repeat="menu in menus" style="display: block" class="pull-left" ng-include="'templates/toolbar.html'">
+                                    </div>
+                                </section>
+                                <section class="edit-object pull-left">
+                                    <!--<div class="row text-middle-line caption-toolbar-right"-->
+                                    <!--ng-show="hasActiveObject() || isObjectSelected('textbox') || isHotspot()">-->
+                                    <!--<span>EDIT {{getConvertedObjName(currentObj)}}</span>-->
+                                    <!--</div>-->
+                                    <div class="pull-left">
+                                        <div class="btn-group">
+                                            <div ng-repeat="menu in contextMenus" style="display: block" class="pull-left" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="container main-container">
+                <section id="main-container">
+                    <div class="main-container-wrapper">
+                        <aside id="sidebar-left">
+                            <div class="sidebar-wrapper">
+                                <div id="thumbnailParentBox">
+                                    <div ng-repeat="stage in stages" class="stage-thumbnail {{stage.isSelected ? 'stage-active' : '' }}" ng-click="fireEvent(stage.onclick)">
+                                        <div class="stage-thumbnail-wrapper">
+                                            <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" style="height: 90px; width: 160px">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </aside>
+                        <section id="center-container">
+                            <button id="toolbarHiddenButton" style="position: fixed; z-index: 0; opacity: 0"></button>
+                            <div id="toolbar-options" class="hidden"><a href="#" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show"><i class="{{toolbar.iconClass}}"></i></a></div>
+                            <div class="editor-container">
+                                <div class="authoring-tool-editor">
+                                    <div id="canvas-wrapper">
+                                        <canvas id="canvas" width="720px" height="405px"></canvas>
+                                    </div>
+                                </div>
+                                <div class="teacher-instructions">
+                                    <h6>Teacher Instructions:</h6>
+                                    <textarea class="form-control" ng-model="notes" name="notes" placeholder="Enter any instructions here..." ng-keypress="setTeacherInstructions()"></textarea>
+                                </div>
+                                <div id="plugin-toolbar-container" class="plugin-toolbar-container">
+                                    <ul class="list-group">
+                                        <li ng-repeat="menu in pluginConfig" class="list-group-item" ng-include="'templates/toolbar.html'"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </section>
+                        <aside id="sidebar-right" ng-class="isRightBarCollapsed ? 'collapsed' : ''">
+                            <i class="icons-close" ng-class="isRightBarCollapsed ? 'right-sidebar-open' : 'right-sidebar-close'" ng-click="isRightBarCollapsed = !isRightBarCollapsed"></i>
+                        </aside>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+    <!--preview-modal-->
+    <div id="preview-modal" class="modal fade">
+        <div class="frame-modal-preview">
+            <div class="preview-frame"></div>
+            <div class="frame-modal-content">
+                <div class="modal-body">
+                    <iframe id="previewContentIframe" width=100% height=100%></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--preview-modal-->
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/fabric/dist/fabric.min.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/x2js/index.js"></script>
+    <script src="bower_components/eventbus/index.js"></script>
+    <script src="bower_components/uuid/index.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/main/class.js"></script>
+    <script src="scripts/main/ekstep-editor.js"></script>
+    <script src="scripts/main/base-plugin.js"></script>
+    <script src="scripts/manager/event-manager.js"></script>
+    <script src="scripts/manager/plugin-manager.js"></script>
+    <script src="scripts/manager/stage-manager.js"></script>
+    <script src="scripts/manager/toolbar-manager.js"></script>
+    <script src="scripts/main/ekstep-editor-api.js"></script>
+    <script src="scripts/service/iservice.js"></script>
+    <script src="scripts/service/content-service.js"></script>
+    <script src="scripts/service/base-http-service.js"></script>
+    <script src="scripts/service/base-configURL-service.js"></script>
+    <script src="scripts/main/preview-content.js"></script>
+    <script src="scripts/angular/controller/main.js"></script>
+    <!-- endbuild -->
+</body>
+
+</html>

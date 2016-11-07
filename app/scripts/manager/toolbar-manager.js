@@ -1,0 +1,51 @@
+EkstepEditor.toolbarManager = new (Class.extend({
+    menuItems: [],
+    contextMenuItems: [],
+    scope: undefined,
+    setScope: function(scope) {
+        this.scope = scope;
+    },
+    registerMenu: function(menu) {
+        if(!_.isObject(_.find(this.menuItems, {id: menu.id}))) {
+            this.menuItems.push(menu);
+        }
+    },
+    registerContextMenu: function(menu) {
+        if(!_.isObject(_.find(this.contextMenuItems, {id: menu.id}))) {
+            this.contextMenuItems.push(menu);
+        }
+    },
+    resetContextMenu: function() {
+        _.forEach(this.contextMenuItems, function(cmenu) {
+            cm.state = 'HIDE';
+            cm.selected = false;
+        });
+    },
+    updateContextMenu: function(menus) {
+        var instance = this;
+        _.forEach(menus, function(cmenu) {
+            instance._updateContextMenu(cmenu.id, cmenu);
+        });
+        this.scope.safeApply(function () {
+            instance.scope.contextMenus = instance.contextMenuItems;
+            EkstepEditor.jQuery(document).ready(function() {
+                _.forEach(instance.scope.menus, function(value) {
+                    EkstepEditor.jQuery("#" + value.id).parent().tooltip();
+                });
+                _.forEach(instance.scope.contextMenus, function(value) {
+                    EkstepEditor.jQuery("#" + value.id).parent().tooltip();
+                });
+            })
+        });
+    },
+    _updateContextMenu: function(menuId, props) {
+        //console.log('menu', menuId, 'props', props);
+        var menu = _.find(this.contextMenuItems, {id: menuId});
+        _.forIn(props, function(value, key) {
+            if(key != 'data') {
+                menu[key] = value;
+                EkstepEditor.eventManager.dispatchEvent(menuId + ':' + key, props.data);
+            }
+        });
+    }
+}));
