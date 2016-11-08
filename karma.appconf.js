@@ -36,6 +36,8 @@ module.exports = function(config) {
             'app/scripts/manager/stage-manager.js',
             'app/scripts/manager/toolbar-manager.js',
             'app/scripts/angular/controller/main.js',
+            'app/scripts/service/iservice.js',
+            'app/scripts/service/content-service.js',
             'app/test/**/*.js'
         ],
 
