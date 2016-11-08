@@ -3,16 +3,12 @@ EkstepEditor.contentService = EkstepEditor.iService.extend({
     initService: function(config) {
         if (config) this.content[config.contentId] = {};
     },
-    saveContent: function(data, contentId, versionKey) {
-        console.log("content saved", data);
-        contentId = _.isUndefined(contentId) ? EkstepEditor.contentId : contentId;
+    saveContent: function(data, contentId, versionKey) {        
         this.content[contentId] = _.isUndefined(this.content[contentId]) ? {} : this.content[contentId];
-        this.content[contentId].data = _.isUndefined(data) ? this.content[contentId].data : data;
+        this.content[contentId].data = _.isUndefined(data) ? this.content[contentId].data : JSON.stringify(data);
         this.content[contentId].versionKey = _.isUndefined(versionKey) ? this.content[contentId].versionKey : versionKey;
-
     },
-    getContent: function(contentId) {
-        contentId = contentId ? contentId : EkstepEditor.contentId;
-        return _.cloneDeep(this.content[contentId]);
+    getContent: function() {        
+        return JSON.parse(this.content[contentId].data);
     }
 });
