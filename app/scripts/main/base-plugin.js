@@ -38,6 +38,7 @@ EkstepEditor.basePlugin = Class.extend({
     initPlugin: function() {
         this.newInstance(this.data);
         this.registerFabricEvents();
+        if(this.editorObj) this.editorObj.set({id: this.id});
         if (this.parent) this.parent.addChild(this);
     },
     registerMenu: function() {
