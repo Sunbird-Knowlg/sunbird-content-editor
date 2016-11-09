@@ -11,7 +11,8 @@
         "x2js": "./libs/xml2json.js",
         "eventbus": "./libs/eventbus.min.js",
         "uuid": "./libs/uuid-v4.min.js",
-        "async": "*"
+        "async": "*",
+        "angular-bootstrap": "^2.2.0"
     },
     "appPath": "app",
     "moduleName": "editorApp",
