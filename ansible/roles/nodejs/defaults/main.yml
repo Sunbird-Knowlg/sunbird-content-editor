@@ -1,0 +1,5 @@
+---
+role_nodejs_nvm_version: v0.29.0
+role_nodejs_nvm_user: "{{ ansible_ssh_user }}"
+role_nodejs_nvm_destination: "/home/{{ role_nodejs_nvm_user }}/.nvm"
+role_nodejs_version: 6.3.0

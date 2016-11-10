@@ -1,0 +1,8 @@
+[test]
+54.254.252.172 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/ekstep/keys/learning-platform
+
+[test:vars]
+user = ubuntu
+
+[all:children]
+test

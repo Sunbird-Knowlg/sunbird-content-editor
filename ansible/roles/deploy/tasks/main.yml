@@ -1,0 +1,5 @@
+- name: Copy editor.tgz zip file
+  copy: src=editor.tgz dest=/home/{{user}} owner={{user}} group={{user}} mode=0774
+  
+- name: Unarchive script
+  unarchive: src=/home/{{user}}/editor.tgz dest=/home/{{user}}/ copy=no owner={{user}} group={{user}} mode=0774 creates=/home/{{user}}/editor
