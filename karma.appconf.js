@@ -35,6 +35,12 @@ module.exports = function(config) {
             'app/scripts/manager/plugin-manager.js',
             'app/scripts/manager/stage-manager.js',
             'app/scripts/manager/toolbar-manager.js',
+            'app/scripts/main/ekstep-editor-api.js',
+            'app/scripts/service/iservice.js',
+            'app/scripts/service/content-service.js',
+            'app/scripts/service/base-http-service.js',
+            'app/scripts/service/base-configURL-service.js',
+            'app/scripts/main/preview-content.js',
             'app/scripts/angular/controller/main.js',
             'app/test/**/*.js'
         ],
@@ -91,7 +97,7 @@ module.exports = function(config) {
 
         coverageReporter: {
             reporters: [
-                { type: 'html', dir: 'coverage/' },                                
+                { type: 'html', dir: 'coverage/' },
                 { type: 'text-summary' }
             ],
         }
