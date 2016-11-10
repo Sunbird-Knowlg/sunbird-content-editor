@@ -4,18 +4,11 @@ EkstepEditor.basePlugin = Class.extend({
     children: [],
     manifest: undefined,
     editorObj: undefined,
+    editorData: undefined,
     data: undefined,
-    attributes: {
-        x: 0,
-        y: 0,
-        w: 0,
-        h: 0,
-        scaleX: 1,
-        scaleY: 1,
-        visible: true,
-        editable: true
-    },
+    attributes: {x: 0, y: 0, w: 0, h: 0, visible: true, editable: true},
     config: undefined,
+    events: undefined,
     metadata: [],
     init: function(manifest, data, parent) {
         this.manifest = manifest;
@@ -25,18 +18,18 @@ EkstepEditor.basePlugin = Class.extend({
             console.log(manifest.id + " plugin initialized");
         } else {
             this.editorObj = undefined;
-            this.data = data;
+            this.editorData = data;
             this.children = [];
-            this.id = this.data.id || UUID();
+            this.id = this.editorData.id || UUID();
             this.parent = parent;
-            if (this.data && this.data.props) this.data.props.id = this.id;
-            this.attributes = { x: 0, y: 0, w: 0, h: 0, scaleX: 1, scaleY: 1,visible: true, editable: true};
+            if (this.editorData && this.editorData.props) this.editorData.props.id = this.id;
+            this.attributes = { x: 0, y: 0, w: 0, h: 0, visible: true, editable: true };
             this.config = undefined;
             this.metadata = [];
         }
     },
     initPlugin: function() {
-        this.newInstance(this.data);
+        this.newInstance(this.editorData);
         this.registerFabricEvents();
         if(this.editorObj) this.editorObj.set({id: this.id});
         if (this.parent) this.parent.addChild(this);
@@ -175,8 +168,8 @@ EkstepEditor.basePlugin = Class.extend({
     transformDimensions: function(obj) {
         obj.x = parseFloat(((obj.x / 720) * 100).toFixed(2));
         obj.y = parseFloat(((obj.y / 405) * 100).toFixed(2));
-        obj.w = parseFloat((((obj.w * obj.scaleX) / 720) * 100).toFixed(2));
-        obj.h = parseFloat((((obj.h * obj.scaleY) / 405) * 100).toFixed(2));
+        obj.w = parseFloat(((obj.w / 720) * 100).toFixed(2));
+        obj.h = parseFloat(((obj.h / 405) * 100).toFixed(2));
     },
     reverseTransformDimensions: function (obj) {
         obj.x = obj.x * (720 / 100);
@@ -184,43 +177,67 @@ EkstepEditor.basePlugin = Class.extend({
         obj.w = obj.w * (720 / 100);
         obj.h = obj.h * (405 / 100);
     },
+    setConfig: function(data) {
+        this.config = data;
+    },
+    setData: function(data) {
+        this.data = data;
+    },
+    setAttributes: function(attr) {
+        _.merge(this.attributes, attr);
+    },
+    addEvent: function(event) {
+        if(_.isUndefined(this.events)) this.events = [];
+        this.events.push(event);
+    },
+    getEvents: function() {
+        return this.events;
+    },
+    getConfig: function() {
+        return this.config;
+    },
+    getData: function() {
+        return this.data;
+    },
+    getAttributes: function() {
+        return this.attributes;
+    },
     toECML: function () {
-        this.updateAttributes()
-        var attr = _.clone(this.attributes); 
+        var attr = _.clone(this.getAttributes()); 
         this.transformDimensions(attr);
-        if(this.data) {
+        if(!_.isUndefined(this.getData())) {
             attr.data = {
-                "__cdata": JSON.stringify(this.data)
+                "__cdata": JSON.stringify(this.getData())
             };
         }
-        if(this.config) {
+        if(!_.isUndefined(this.getConfig())) {
             attr.config = {
-                "__cdata": JSON.stringify(this.config)
+                "__cdata": JSON.stringify(this.getConfig())
             };
         }
-        if(this.children) {
-            attr.children = [];
-            _.forEach(this.children, function (child) {
-                attr[child.type] = attr[child.type] || []; 
-                attr[child.type].push(child.toECML());
-            });
+        if(!_.isUndefined(this.getEvents())) {
+            attr.config = {
+                "__cdata": JSON.stringify(this.getEvents())
+            };
         }
         return attr;
     },
     fromECML: function(data) {
         this.attributes = data;
-        reverseTransformDimensions(this.attributes);
-        if(this.attributes.data) {
+        if(!_.isUndefined(this.attributes.data)) {
             this.data = JSON.parse(this.attributes.data.__cdata);
             delete this.attributes.data;
         }
-        if(this.attributes.config) {
+        if(!_.isUndefined(this.attributes.config)) {
             this.config = JSON.parse(this.attributes.config.__cdata);
             delete this.attributes.config;
         }
+        if(!_.isUndefined(this.attributes.event)) {
+            this.events = JSON.parse(this.attributes.event.__cdata);
+            delete this.attributes.event;
+        }
+        this.reverseTransformDimensions(this.attributes);
         this.render();
-    },
-    updateAttributes: function () {
     },
     getPluginConfig: function () {
         return this.manifest.editor.config;

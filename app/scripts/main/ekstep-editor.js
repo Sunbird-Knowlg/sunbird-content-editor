@@ -16,6 +16,7 @@ window.EkstepEditor = editor;
 EkstepEditor.config = {
 	defaultSettings: '/config/editorSettings.json',
 	pluginRepo: '/plugins',
+    corePlugins: ["text", "audio", "div", "hotspot", "image", "shape", "scribble", "htext"]
 }
 
 EkstepEditor.loadResource = function(url, dataType, callback) {
@@ -52,7 +53,8 @@ EkstepEditor.loadExternalResource = function(type, pluginId, pluginVer, src) {
     }
 }
 
-EkstepEditor.init = function(userSettings) {
+EkstepEditor.init = function(userSettings, absURL) {
+    EkstepEditor.config.absURL = absURL;
     EkstepEditor.loadResource(EkstepEditor.config.defaultSettings, 'json', function(err, data) {
         if (err) {
             alert('Unable to load editor - could not load editor settings');
@@ -62,10 +64,4 @@ EkstepEditor.init = function(userSettings) {
             });
         }
     });
-    EkstepEditor.contentId = "do_10096674"; //angular.injector(["ng"]).get("$location").search().contentId || $window.contentId;
-    EkstepEditorAPI.contentService = new EkstepEditor.contentService({ contentId: EkstepEditor.contentId });
 }
-
-EkstepEditor.saveECML = function() {
-    EkstepEditorAPI.contentService.saveContent(EkstepEditor.stageManager.saveContent());
-};

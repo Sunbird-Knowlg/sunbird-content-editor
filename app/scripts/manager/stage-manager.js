@@ -1,4 +1,4 @@
-EkstepEditor.stageManager = new(Class.extend({
+EkstepEditor.stageManager = new (Class.extend({
     stages: [],
     currentStage: undefined,
     canvas: undefined,
@@ -65,12 +65,29 @@ EkstepEditor.stageManager = new(Class.extend({
             'type': pluginType
         }
     },
-    saveContent: function() {
-        var content = { "theme": { "id": "theme", "version": 0.2, "startStage": this.stages[0].id, "stage": [] } };
+    toECML: function() {
+        var content = { theme: { id: "theme", version: 0.2, startStage: this.stages[0].id, stage: [], manifest: {media: []}}};
         _.forEach(this.stages, function(stage) {
-            content.theme.stage.push(stage.toECML());
-            //content.theme.manifest.push(stage.getMedia());
+            var stageBody = stage.toECML();
+            _.forEach(stage.children, function(child) {
+                var id = child.manifest.shortId || child.manifest.id;
+                if(_.isUndefined(stageBody[id])) stageBody[id] = [];
+                stageBody[id].push(child.toECML());
+                if(_.indexOf(EkstepEditor.config.corePlugins, id) != 1) {
+                    if(!_.isUndefined(child.manifest.renderer) && !_.isUndefined(child.manifest.renderer.main)) {
+                        content.theme.manifest.media.push({
+                            id: id, 
+                            src: EkstepEditor.config.absURL + EkstepEditor.relativeURL(child.manifest.id, child.manifest.ver, child.manifest.renderer.main),
+                            type: "plugin"
+                        });
+                    }
+                }
+            });
+            content.theme.stage.push(stageBody);
         })
         return content;
+    },
+    fromECML: function(contentBody) {
+
     }
 }));

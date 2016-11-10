@@ -15,7 +15,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             }
         };
         EkstepEditor.toolbarManager.setScope($scope);
-        EkstepEditor.init();
+        EkstepEditor.init(null, $location.absUrl());
         $scope.menus = EkstepEditor.toolbarManager.menuItems;
         $scope.contextMenus = EkstepEditor.toolbarManager.contextMenuItems;
         $scope.stages = EkstepEditor.stageManager.stages;
@@ -24,9 +24,20 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             if (event) EkstepEditor.eventManager.dispatchEvent(event.id, event.data);
         };
 
-        EkstepEditor.contentId ="do_10096674"; //$location.search().contentId || $window.contentId;
-        EkstepEditorAPI.contentService = new EkstepEditor.contentService({ contentId: EkstepEditor.contentId});
-        // Instantiate with blank stage
-        EkstepEditor.eventManager.dispatchEvent('stage:create', {});
+        $scope.previewContent = function() {
+            var contentBody = EkstepEditor.stageManager.toECML();
+            // Invoke preview from there. Should be simple call
+        }
+
+        $scope.saveContent = function() {
+            var contentBody = EkstepEditor.stageManager.toECML();
+            console.info(contentBody); // For debugging
+        }
+        EkstepEditor.contentService.getContent("do_10096674", function(err, content) {
+            if(_.isUndefined(content.stage)) {
+                // Instantiate with blank stage
+                EkstepEditor.eventManager.dispatchEvent('stage:create', {});        
+            }
+        });
     }
 ]);
