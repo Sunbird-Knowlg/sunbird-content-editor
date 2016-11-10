@@ -42,6 +42,8 @@ module.exports = function(config) {
             'app/scripts/service/base-configURL-service.js',
             'app/scripts/main/preview-content.js',
             'app/scripts/angular/controller/main.js',
+            'app/scripts/service/iservice.js',
+            'app/scripts/service/content-service.js',
             'app/test/**/*.js'
         ],
 
