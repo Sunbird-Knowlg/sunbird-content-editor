@@ -1,6 +1,11 @@
 - name: Copy zip file to server
   copy: src=content-editor.zip dest=/home/{{user}}/ owner={{user}} group={{user}} mode=0774
 
+- name: Create Content-Editor directory
+  file: path=/home/{{user}}/Content-Editor owner={{user}} group={{user}} state=directory
+
+# create /home/{{user}}/Content-Editor folder
+
 # - name: stop node server
 #   command: forever stop app.js
 #   args:
