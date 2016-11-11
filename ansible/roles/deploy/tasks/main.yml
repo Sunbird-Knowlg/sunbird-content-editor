@@ -7,7 +7,7 @@
 #     chdir: /home/{{user}}/Content-Editor
   
 - name: Unarchive script
-  unarchive: src=/home/{{user}}/content-editor.zip dest=/home/{{user}}/Content-Editor/ copy=no owner={{user}} group={{user}} mode=0774 creates=/home/{{user}}/Content-Editor
+  unarchive: src=/home/{{user}}/content-editor.zip dest=/home/{{user}}/Content-Editor/ copy=no owner={{user}} group={{user}} mode=0774
 
 # - name: start node server
 #   command: forever start app.js
