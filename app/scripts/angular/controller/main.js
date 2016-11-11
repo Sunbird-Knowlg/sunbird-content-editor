@@ -31,7 +31,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         $scope.saveContent = function() {
             var contentBody = EkstepEditor.stageManager.toECML();
-            console.info(contentBody); // For debugging
+            $http.post('ecml', {data: contentBody}).then(function(resp) {
+                console.info(resp.data);
+            });
         }
         EkstepEditor.contentService.getContent("do_10096674", function(err, content) {
             if(_.isUndefined(content.stage)) {
