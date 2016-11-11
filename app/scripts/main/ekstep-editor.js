@@ -6,21 +6,21 @@ window.fabric.Object.prototype.toObject = (function(toObject) {
     };
 })(window.fabric.Object.prototype.toObject);
 
-var ekstep_editor = function(){};
+var ekstep_editor = function() {};
 ekstep_editor.prototype.jQuery = function() {
-	return window.$;
+    return window.$;
 }();
 var editor = new ekstep_editor();
 window.EkstepEditor = editor;
 
 EkstepEditor.config = {
-	defaultSettings: '/config/editorSettings.json',
-	pluginRepo: '/plugins',
+    defaultSettings: 'config/editorSettings.json',
+    pluginRepo: '/plugins',
     corePlugins: ["text", "audio", "div", "hotspot", "image", "shape", "scribble", "htext"]
 }
 
 EkstepEditor.loadResource = function(url, dataType, callback) {
-	EkstepEditor.jQuery.ajax({
+    EkstepEditor.jQuery.ajax({
         async: false,
         url: url,
         dataType: dataType
