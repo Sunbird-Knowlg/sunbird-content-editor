@@ -199,8 +199,8 @@ EkstepEditor.basePlugin = Class.extend({
     getData: function() {
         return this.data;
     },
-    getAttributes: function() {
-        return this.attributes;
+    getAttributes: function() {         
+        return _.omit(this.attributes, ['top', 'left', 'width', 'height']);
     },
     toECML: function () {
         var attr = _.clone(this.getAttributes()); 

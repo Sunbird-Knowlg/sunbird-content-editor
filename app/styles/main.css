@@ -2935,10 +2935,10 @@ i[class^="icons-"] {
 /* line 782, scss/main.scss */
 .frame-modal-preview .frame-modal-content .modal-body {
   position: relative;
-  top: 149px;
+  top: 130px;
   left: 19px;
   width: 720px;
-  height: 405px;
+  height: 403px;
   margin: 0;
   padding: 0;
   background: #FFFFFF;

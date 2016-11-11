@@ -42,13 +42,13 @@
 </head>
 
 <body>
-    <div class="container community-portal-remove">
-        <i class="fa fa-tablet fa-2x" aria-hidden="true" style="padding-right: 15px; padding-top: 37px;" data-toggle="modal" data-target="#preview-modal" onclick="window.EkstepEditor.previewContent()"></i>
-        <i class="fa fa-floppy-o fa-2x" aria-hidden="true" onclick="window.EkstepEditor.saveECML()"></i>
-    </div>
     <!-- End of localhost only code-->
     <div ng-app="editorApp" ng-strict-di>
         <div ng-controller="MainCtrl" id="editorContainer">
+            <div class="container community-portal-remove">
+                <i class="fa fa-tablet fa-2x" aria-hidden="true" style="padding-right: 15px; padding-top: 37px;" ng-click="previewContent();"></i>
+                <i class="fa fa-floppy-o fa-2x" aria-hidden="true" ng-click="window.EkstepEditor.saveECML()"></i>
+            </div>
             <!--[if lte IE 8]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
