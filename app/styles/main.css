@@ -3812,16 +3812,32 @@ button[disabled].at-btn-ok {
     position: absolute;
     z-index: 2;
     top: 0px;
-    left: 759px;
+    left: 765px;
     width: 200px;
-    border-radius: 36px;
     display: none;
-    padding: 10px;
     border-radius: 8px;
-    background: #999999;
 }
 
 .plugin-toolbar-select {
     width: 130px;
     min-width: 100px;
+}
+.plugin-toolbar-header{
+    color: #FFFFFF;
+    background-color: #808080;
+    border-top-right-radius: 8px !important;
+    border-top-left-radius: 8px !important;
+}
+.plugin-toolbar-draggable {
+    cursor:move;
+}
+#plugin-toolbar-container .list-group-item:last-child{
+    border-bottom-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    min-height: 60px;
+}
+.config-icon-btn{
+    border-radius: 10px !important;
+    margin: 3px;
+    outline: none !important;
 }
