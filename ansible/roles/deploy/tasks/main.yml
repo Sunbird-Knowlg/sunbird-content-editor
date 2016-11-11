@@ -1,10 +1,10 @@
 - name: Copy editor.tgz zip file
   copy: src=editor.tgz dest=/home/{{user}}/ owner={{user}} group={{user}} mode=0774
 
-- name: stop node server
-  command: forever stop app.js
-  args:
-    chdir: /home/{{user}}/Content-Editor
+# - name: stop node server
+#   command: forever stop app.js
+#   args:
+#     chdir: /home/{{user}}/Content-Editor
   
 - name: Unarchive script
   unarchive: src=/home/{{user}}/editor.tgz dest=/home/{{user}}/Content-Editor copy=no owner={{user}} group={{user}} mode=0774 creates=/home/{{user}}/Content-Editor
