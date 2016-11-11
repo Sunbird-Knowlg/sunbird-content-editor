@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('editorApp', []);
-angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$window',
+angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http','$location', '$q','$window',
     function($scope, $timeout, $http, $location, $q, $window) {
         
         $scope.safeApply = function(fn) {
@@ -25,7 +25,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         };
 
         $scope.previewContent = function() {
-            var contentBody = EkstepEditor.stageManager.toECML();
+            //var contentBody = EkstepEditor.stageManager.toECML();
+            EkstepEditor.preview_content();
             // Invoke preview from there. Should be simple call
         }
 
