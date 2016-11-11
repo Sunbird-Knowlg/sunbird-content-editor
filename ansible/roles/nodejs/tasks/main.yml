@@ -1,0 +1,79 @@
+---
+- name: Install NVM dependencies
+  apt:
+    pkg={{ item }}
+    state=present
+    update_cache=yes
+    cache_valid_time=3600
+  with_items:
+    - git
+    - curl
+    - build-essential
+    - libssl-dev
+    - python-dev
+    - python-pip
+    - zip
+  become:
+    yes
+ 
+- name: Install NVM
+  git:
+    repo=https://github.com/creationix/nvm.git
+    dest={{ role_nodejs_nvm_destination }}
+    version={{ role_nodejs_nvm_version }}
+  become:
+    yes
+  become_user:
+    "{{ role_nodejs_nvm_user }}"
+ 
+- name: Sourcing NVM in ~/.profile, ~/.bashrc and ~/.zshrc
+  lineinfile:
+    dest={{ item }}
+    line="source {{ role_nodejs_nvm_destination }}/nvm.sh"
+    create=yes
+  with_items:
+    - ~/.profile
+    - ~/.bashrc
+    - ~/.zshrc
+  become:
+    yes
+  become_user:
+    "{{ role_nodejs_nvm_user }}"
+ 
+- name: Set NODEJS Environment Path and Executable Path in variables as fact
+  set_fact:
+    ROLE_NODEJS_ENVIRONMENT_PATH: "{{ ansible_env.PATH }}:{{ role_nodejs_nvm_destination }}/versions/node/v{{ role_nodejs_version }}/bin"
+    ROLE_NODEJS_EXCUTABLE_PATH: "{{ role_nodejs_nvm_destination }}/versions/node/v{{ role_nodejs_version }}/bin"
+ 
+- name: "Debug ROLE_NODEJS's fact {{ ROLE_NODEJS_ENVIRONMENT_PATH }}"
+  debug:
+    msg="{{ ROLE_NODEJS_ENVIRONMENT_PATH }}"
+ 
+- name: "Debug ROLE_NODEJS's fact {{ ROLE_NODEJS_EXCUTABLE_PATH }}"
+  debug:
+    msg="{{ ROLE_NODEJS_EXCUTABLE_PATH }}"
+ 
+- name: Install {{ role_nodejs_version }}
+  command:
+    sudo -iu {{ role_nodejs_nvm_user }} nvm install {{ role_nodejs_version }}
+  register:
+    nvm_install_result
+  changed_when:
+    "'v{{ role_nodejs_version }} is already installed.' not in nvm_install_result.stderr"
+ 
+- name: Check if {{ role_nodejs_version }} is the default node version
+  shell:
+    sudo -iu {{ role_nodejs_nvm_user }} nvm ls | grep -e 'default -> {{ role_nodejs_version }}'
+  register:
+    nvm_check_default
+  changed_when:
+    nvm_check_default.rc == 1
+  failed_when:
+    False
+ 
+- name: Set default node version to {{ role_nodejs_version }}
+  command:
+    sudo -iu {{ role_nodejs_nvm_user }} nvm alias default {{ role_nodejs_version }}
+  when:
+    nvm_check_default.rc == 1
+ 

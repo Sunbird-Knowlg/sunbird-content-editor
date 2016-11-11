@@ -105,14 +105,27 @@ module.exports = function(grunt) {
                     { dest: 'preview/dev/', cwd: 'app/preview/', action: 'download' }
                 ]
             }
-        }
+        },
+
+        compress: {
+            main: {
+                options: {
+                    archive: 'ansible/editor.tgz',
+                    mode: 'tgz'
+                },
+                files: [
+                    { src: ['**'] }
+                ]
+            }
+        },
 
     });
 
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-aws-s3');
-    
+    grunt.loadNpmTasks('grunt-contrib-compress');
+
     grunt.registerTask('serve', 'Compile then start a connect web server', function(target) {
         console.log("from serve", target);
         if (target === 'staging' || target === "production") {

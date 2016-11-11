@@ -1,0 +1,5 @@
+{
+  "plugins": {
+    "org.ekstep.testplugin": "1.0"
+  }
+}
