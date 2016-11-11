@@ -47,7 +47,7 @@
         <div ng-controller="MainCtrl" id="editorContainer">
             <div class="container community-portal-remove">
                 <i class="fa fa-tablet fa-2x" aria-hidden="true" style="padding-right: 15px; padding-top: 37px;" ng-click="previewContent();"></i>
-                <i class="fa fa-floppy-o fa-2x" aria-hidden="true" ng-click="window.EkstepEditor.saveECML()"></i>
+                <i class="fa fa-floppy-o fa-2x" aria-hidden="true" ng-click="saveContent()"></i>
             </div>
             <!--[if lte IE 8]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -142,7 +142,6 @@
     <script src="scripts/main/ekstep-editor-api.js"></script>
     <script src="scripts/service/iservice.js"></script>
     <script src="scripts/service/content-service.js"></script>
-    <script src="scripts/service/base-http-service.js"></script>
     <script src="scripts/service/base-configURL-service.js"></script>
     <script src="scripts/service/popupWindow-service.js"></script>
     <script src="scripts/main/preview-content.js"></script>

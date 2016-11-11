@@ -2,7 +2,6 @@ var builder = require('xmlbuilder');
 var _ = require('lodash');
 
 exports.buildECML = function(req, res) {
-	console.log('req.body', req.body);
 	var data = req.body.data;
 	var xml = builder.create('theme');
 	start(data.theme, xml);
