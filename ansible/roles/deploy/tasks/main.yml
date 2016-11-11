@@ -4,11 +4,11 @@
 - name: Create Content-Editor directory
   file: path=/home/{{user}}/Content-Editor owner={{user}} group={{user}} state=directory
 
-- name: status of node server
+- name: Status of AT Service
   command: forever list
   register: forever_status
 
-- name: stop node server
+- name: Stop AT Service
   command: forever stop app.js
   when: "forever_status.stdout.find('No forever processes running') == -1"
   args:
@@ -27,7 +27,7 @@
   args:
     chdir: /home/{{user}}/Content-Editor/app
 
-- name: start node server
+- name: Start AT Service
   command: forever start app.js
   args:
     chdir: /home/{{user}}/Content-Editor  
