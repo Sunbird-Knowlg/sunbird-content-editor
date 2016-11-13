@@ -1,8 +1,8 @@
 - name: Copy zip file to server
-  copy: src=content-editor.zip dest=/home/{{user}}/ owner={{user}} group={{user}} mode=0774
+  copy: src=content-editor.zip dest={{user_home}}/ owner={{user}} group={{user}} mode=0774
 
 - name: Create Content-Editor directory
-  file: path=/home/{{user}}/Content-Editor owner={{user}} group={{user}} state=directory
+  file: path={{at_home}} owner={{user}} group={{user}} state=directory
 
 - name: Status of AT Service
   command: forever list
@@ -12,10 +12,10 @@
   command: forever stop app.js
   when: "forever_status.stdout.find('No forever processes running') == -1"
   args:
-    chdir: /home/{{user}}/Content-Editor
+    chdir: {{at_home}}
   
 - name: Unarchive zip file
-  unarchive: src=/home/{{user}}/content-editor.zip dest=/home/{{user}}/Content-Editor/ copy=no owner={{user}} group={{user}} mode=0774
+  unarchive: src={{user_home}}/content-editor.zip dest={{at_home}}/ copy=no owner={{user}} group={{user}} mode=0774
 
 - name: Install npm packages
   command: "npm install"
@@ -25,9 +25,9 @@
 - name: Install bower packages
   command: "bower install"
   args:
-    chdir: /home/{{user}}/Content-Editor/app
+    chdir: {{at_home}}/content-editor
 
 - name: Start AT Service
   command: forever start app.js
   args:
-    chdir: /home/{{user}}/Content-Editor  
+    chdir: {{at_home}}

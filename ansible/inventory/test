@@ -3,6 +3,8 @@
 
 [test:vars]
 user = ubuntu
+user_home = /home/ubuntu
+at_home = {{ user_home }}/Content-Editor
 
 [all:children]
 test
