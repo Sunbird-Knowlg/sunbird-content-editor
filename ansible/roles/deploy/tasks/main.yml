@@ -1,5 +1,5 @@
 - name: Copy zip file to server
-  copy: src=content-editor.zip dest={{user_home}}/ owner={{user}} group={{user}} mode=0774
+  copy: src=content-editor.zip dest={{ user_home}}/ owner={{user}} group={{user}} mode=0774
 
 - name: Create Content-Editor directory
   file: path={{at_home}} owner={{user}} group={{user}} state=directory
@@ -20,14 +20,14 @@
 - name: Install npm packages
   command: "npm install"
   args:
-    chdir: /home/{{user}}/Content-Editor
+    chdir: {{ at_home }}
 
 - name: Install bower packages
   command: "bower install"
   args:
-    chdir: {{at_home}}/content-editor
+    chdir: {{ at_home }}/content-editor
 
 - name: Start AT Service
   command: forever start app.js
   args:
-    chdir: {{at_home}}
+    chdir: {{ at_home }}
