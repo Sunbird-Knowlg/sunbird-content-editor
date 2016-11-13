@@ -110,8 +110,7 @@ module.exports = function(grunt) {
         compress: {
             main: {
                 options: {
-                    archive: 'ansible/editor.tgz',
-                    mode: 'tgz'
+                    archive: 'ansible/content-editor.zip'
                 },
                 files: [
                     { src: ['**'] }

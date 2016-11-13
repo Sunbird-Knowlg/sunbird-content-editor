@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('editorApp', []);
-angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$window',
+angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http','$location', '$q','$window',
     function($scope, $timeout, $http, $location, $q, $window) {
         
         $scope.safeApply = function(fn) {
@@ -25,13 +25,16 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         };
 
         $scope.previewContent = function() {
-            var contentBody = EkstepEditor.stageManager.toECML();
+            //var contentBody = EkstepEditor.stageManager.toECML();
+            EkstepEditor.preview_content();
             // Invoke preview from there. Should be simple call
         }
 
         $scope.saveContent = function() {
             var contentBody = EkstepEditor.stageManager.toECML();
-            console.info(contentBody); // For debugging
+            $http.post('ecml', {data: contentBody}).then(function(resp) {
+                console.info(resp.data);
+            });
         }
         EkstepEditor.contentService.getContent("do_10096674", function(err, content) {
             if(_.isUndefined(content.stage)) {

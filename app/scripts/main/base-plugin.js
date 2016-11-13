@@ -69,9 +69,6 @@ EkstepEditor.basePlugin = Class.extend({
                         inst.attributes.w = inst.editorObj.getWidth();
                         inst.attributes.h = inst.editorObj.getHeight();
                     }
-                    _.forEach(inst.children, function(child) {
-                        EkstepEditorAPI.getCanvas().add(child.editorObj);
-                    });
                 },
                 removed: function(options, event) {
                     var inst = EkstepEditorAPI.getPluginInstance(this.id);
@@ -159,8 +156,8 @@ EkstepEditor.basePlugin = Class.extend({
         this.doPaste(copy);
         if (this.parent) this.parent.addChild(this);
     },
-    render: function () {
-        
+    render: function (canvas) { // Complex plugins and templates should override this if necessary
+        canvas.add(this.editorObj);
     },
     getMeta: function () {
         
@@ -180,11 +177,26 @@ EkstepEditor.basePlugin = Class.extend({
     setConfig: function(data) {
         this.config = data;
     },
+    getConfig: function() {
+        return this.config;
+    },
     setData: function(data) {
         this.data = data;
     },
+    getData: function() {
+        return this.data;
+    },
     setAttributes: function(attr) {
         _.merge(this.attributes, attr);
+    },
+    getAttributes: function() {         
+        return _.omit(this.attributes, ['top', 'left', 'width', 'height']);
+    },
+    setAttribute: function(key, value) {
+        this.attributes[key] = value;
+    },
+    getAttribute: function(key) {         
+        return this.attributes[key];
     },
     addEvent: function(event) {
         if(_.isUndefined(this.events)) this.events = [];
@@ -192,15 +204,6 @@ EkstepEditor.basePlugin = Class.extend({
     },
     getEvents: function() {
         return this.events;
-    },
-    getConfig: function() {
-        return this.config;
-    },
-    getData: function() {
-        return this.data;
-    },
-    getAttributes: function() {
-        return this.attributes;
     },
     toECML: function () {
         var attr = _.clone(this.getAttributes()); 

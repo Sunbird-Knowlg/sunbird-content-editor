@@ -38,14 +38,22 @@ EkstepEditor.stageManager = new (Class.extend({
         }
     },
     selectStage: function(event, data) {
-        if (this.currentStage) {
+        if (_.isUndefined(this.currentStage)) {
+            this.currentStage = _.find(this.stages, { id: data.stageId });
+            this.currentStage.isSelected = true;
+            this.currentStage.render(this.canvas);
+        } else {
             this.currentStage.isSelected = false;
             EkstepEditor.eventManager.dispatchEvent('stage:unselect', { stageId: this.currentStage.id });
+            this.canvas.clear();
+            this.currentStage = _.find(this.stages, { id: data.stageId });
+            this.currentStage.isSelected = true;
+            this.canvas.off("object:added");
+            this.currentStage.render(this.canvas);
+            this.canvas.on("object:added", function(options, event) {
+                EkstepEditor.stageManager.dispatchObjectEvent('added', options, event);
+            });
         }
-        this.canvas.clear();
-        this.currentStage = _.find(this.stages, { id: data.stageId });
-        this.currentStage.isSelected = true;
-        this.currentStage.render(this.canvas);
     },
     addStage: function(stage) {
         this.stages.push(stage);

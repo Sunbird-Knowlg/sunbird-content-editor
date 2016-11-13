@@ -76,4 +76,16 @@
     sudo -iu {{ role_nodejs_nvm_user }} nvm alias default {{ role_nodejs_version }}
   when:
     nvm_check_default.rc == 1
- 
+
+- name: install npm
+  apt:  pkg=npm state=present
+
+- name: Install required node packages
+  npm:
+    name: "{{ item }}"
+    global: yes
+    state: latest
+  with_items:
+    - grunt-cli
+    - bower
+    - forever
