@@ -25,7 +25,7 @@
 - name: Install bower packages
   command: "bower install"
   args:
-    chdir: /home/{{user}}/Content-Editor/app
+    chdir: /home/{{user}}/Content-Editor/content-editor
 
 - name: Start AT Service
   command: forever start app.js
