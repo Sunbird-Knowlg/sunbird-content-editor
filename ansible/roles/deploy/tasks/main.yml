@@ -17,17 +17,17 @@
 - name: Unarchive zip file
   unarchive: src={{user_home}}/content-editor.zip dest={{at_home}}/ copy=no owner={{user}} group={{user}} mode=0774
 
-- name: Install npm packages
-  command: "npm install"
-  args:
-    chdir: {{ at_home }}
+# - name: Install npm packages
+#   command: "npm install"
+#   args:
+#     chdir: {{ at_home }}
 
-- name: Install bower packages
-  command: "bower install"
-  args:
-    chdir: {{ at_home }}/content-editor
+# - name: Install bower packages
+#   command: "bower install"
+#   args:
+#     chdir: {{ at_home }}/content-editor
 
-- name: Start AT Service
-  command: forever start app.js
-  args:
-    chdir: {{ at_home }}
+# - name: Start AT Service
+#   command: forever start app.js
+#   args:
+#     chdir: {{ at_home }}
