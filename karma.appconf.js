@@ -26,6 +26,7 @@ module.exports = function(config) {
             'app/bower_components/lodash/dist/lodash.min.js',
             'app/bower_components/uuid/index.js',
             'app/bower_components/angular-mocks/angular-mocks.js',
+            'app/bower_components/jasmine-jquery/lib/jasmine-jquery.js',
             // endbower
             'app/scripts/main/class.js',
             'app/scripts/main/ekstep-editor.js',
@@ -44,7 +45,9 @@ module.exports = function(config) {
             'app/scripts/angular/controller/main.js',
             'app/scripts/service/iservice.js',
             'app/scripts/service/content-service.js',
-            'app/test/**/*.js'
+            'app/test/**/*.js',
+            // fixtures
+            {pattern: 'app/test/config/*.json', watched: true, served: true, included: false}
         ],
 
 
