@@ -4,7 +4,7 @@
 [test:vars]
 user=ubuntu
 user_home=/home/ubuntu
-at_home=/home/ubuntu/Content-Editor
+at_home={{user_home}}/AuthoringTool
 
 [all:children]
 test

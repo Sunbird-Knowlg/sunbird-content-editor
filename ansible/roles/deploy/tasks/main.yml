@@ -1,7 +1,15 @@
+- name: Status of AuthoringTool directory
+  stat: path={{at_home}}
+  register: directory_status
+
+- name: Remove AuthoringTool directory 
+  file: state=absent path={{at_home}}
+  when: directory_status.stat.exists
+
 - name: Copy zip file to server
   copy: src=content-editor.zip dest={{user_home}}/ owner={{user}} group={{user}} mode=0774
 
-- name: Create Content-Editor directory
+- name: Create AuthoringTool directory
   file: path={{at_home}} owner={{user}} group={{user}} state=directory
 
 - name: Status of AT Service

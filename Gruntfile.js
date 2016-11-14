@@ -118,12 +118,20 @@ module.exports = function(grunt) {
             }
         },
 
+        rename: {
+            main: {
+                files: [
+                    { src: ['app'], dest: 'content-editor' },
+                ]
+            }
+        }
     });
 
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-aws-s3');
     grunt.loadNpmTasks('grunt-contrib-compress');
+    grunt.loadNpmTasks('grunt-contrib-rename');
 
     grunt.registerTask('serve', 'Compile then start a connect web server', function(target) {
         console.log("from serve", target);
