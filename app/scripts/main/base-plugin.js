@@ -247,5 +247,11 @@ EkstepEditor.basePlugin = Class.extend({
     },
     updateContextMenu: function () {
         
+    },
+    reConfig: function () {
+        
+    },
+    onConfigChange: function () {
+        
     }
 });
