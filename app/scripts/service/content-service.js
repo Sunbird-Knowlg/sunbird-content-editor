@@ -10,29 +10,27 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
     getContentMeta: function(id) {
         return this.content[id];
     },
-    saveContent: function(dataType, contentId, body, callback) {
-        var instance = this,
-            ECMLBuilder = new window.ECMLBuilder(),
-            contentBody = (dataType === 'xml') ? body : false || (dataType === 'json') ? ECMLBuilder.buildECML(EkstepEditor.stageManager.toECML()) : false,
+    saveContent: function(contentId, body, callback) {
+        var instance = this,                        
             versionKey = instance.content[contentId].versionKey;
 
-        if (contentId && versionKey && contentBody) {
+        if (contentId && versionKey && body) {
             var requestObj = {
                 request: {
                     content: {
-                        body: contentBody,
-                        versionKey: instance.content[contentId].versionKey
+                        body: body,
+                        versionKey: versionKey
                     }
                 }
             };
 
-            console.log("save content: ", contentBody);
+            console.log("save content: ", requestObj);
 
             instance.http.patch(EkstepEditor.configService.learningServiceBaseUrl + 'v2/content/' + contentId, requestObj)
                 .then(function success(response) {
                     console.log("success response", response);
-                    callback(null, response);
                     instance.setContentMeta(contentId, response.data.result.versionKey);
+                    callback(null, response);                    
                 }, function error(response) {
                     callback(response, null);
                 });
