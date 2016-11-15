@@ -15,7 +15,7 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             // bower:js
-            'app/bower_components/jquery/dist/jquery.js',
+            'node_modules/jquery/dist/jquery.js',
             'app/bower_components/angular/angular.js',
             'app/bower_components/bootstrap/dist/js/bootstrap.js',
             'app/bower_components/fabric/dist/fabric.min.js',
@@ -47,7 +47,7 @@ module.exports = function(config) {
             'app/scripts/service/content-service.js',
             'app/test/**/*.js',
             // fixtures
-            {pattern: 'app/test/config/*.json', watched: true, served: true, included: false}
+            {pattern: 'app/test/**/*.json', watched: true, served: true, included: false}
         ],
 
 
