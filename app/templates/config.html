@@ -1,0 +1,29 @@
+<div ng-switch on="menu.type">
+    <div title="{{menu.toolTip}}" data-original-title="{{menu.toolTip}}" ng-click="fireEvent(menu.onclick)" ng-switch-when="icon">
+        <label ng-if="menu.title">{{menu.title}}</label>
+        <div>
+            <i class="{{menu.iconClass}}" ng-if="menu.iconClass" style="{{menu.iconStyle}}" id="{{menu.id}}"></i>
+        </div>
+    </div>
+    <div title="{{menu.toolTip}}" data-original-title="{{menu.toolTip}}" ng-switch-when="colorpicker">
+        <label ng-if="menu.title">{{menu.title}}</label>
+        <div class="{{menu.iconClass}}" ng-if="menu.iconClass" style="{{menu.iconStyle}}  min-width: 20px; min-height: 20px;" id="{{menu.id}}" ng-click="fireEvent(menu.onclick)" ></div>
+    </div>
+    <div title="{{menu.toolTip}}" data-original-title="{{menu.toolTip}}" ng-switch-when="select">
+        <label ng-if="menu.title">{{menu.title}}</label>
+        <select style="{{menu.iconStyle}}" id="{{menu.id}}" ng-change="fireEvent(menu.onchange)" ng-model="options[menu.id]" ng-options="option for option  in menu.options" class="plugin-toolbar-select">
+            <option value="">Select {{menu.title}}</option>
+        </select>
+    </div>
+    <div ng-switch-default>
+        <span ng-if="menu.title">{{menu.title}}</span>
+    </div>
+    <div class="btn-group" ng-if="menu.submenu">
+        <button type="button" class="btn config-icon-btn" ng-repeat="dd in menu.submenu" ng-click="fireEvent(dd.onclick)" id="{{dd.id}}">
+            <div ng-switch on="dd.type">
+                <span ng-if="dd.text" id="{{menu.id}}" ng-switch-when="text" class="{{dd.textClass}}" style="{{dd.textStyle}}">{{dd.text}}</span>
+                <i class="{{dd.iconClass}}" ng-if="dd.iconClass" style="{{dd.iconStyle}}" ng-switch-when="icon"></i>
+            </div>
+        </button>
+    </div>
+</div>
