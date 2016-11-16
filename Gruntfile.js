@@ -124,6 +124,15 @@ module.exports = function(grunt) {
                     { src: ['app'], dest: 'content-editor' },
                 ]
             }
+        },
+
+        jsdoc : {
+            dist : {
+                src: ['app/scripts/**/*.js', 'plugins/**/*.js', 'README.md'],
+                options: {
+                    destination: 'docs'
+                }
+            }
         }
     });
 
@@ -132,6 +141,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-aws-s3');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-rename');
+    grunt.loadNpmTasks('grunt-jsdoc');
 
     grunt.registerTask('serve', 'Compile then start a connect web server', function(target) {
         console.log("from serve", target);
@@ -147,5 +157,7 @@ module.exports = function(grunt) {
         'connect:livereload',
         'watch'
     ]);
+
+    grunt.registerTask('default', ['jsdoc']);
 
 };

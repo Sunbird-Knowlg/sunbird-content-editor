@@ -1,4 +1,11 @@
 /**
+ * BasePlugin class
+ * @class EkstepEditor.basePlugin
+ * @constructor
+ * @param {object} manifest
+ * @param {object} data
+ * @param {object} parent
+ * @return {EkstepEditor.basePlugin} thisArg
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
 EkstepEditor.basePlugin = Class.extend({
