@@ -7,9 +7,8 @@ window.fabric.Object.prototype.toObject = (function(toObject) {
 })(window.fabric.Object.prototype.toObject);
 
 var ekstep_editor = function() {};
-ekstep_editor.prototype.jQuery = function() {
-    return window.$;
-}();
+ekstep_editor.prototype.jQuery = window.$;
+ekstep_editor.prototype._ = window._;
 var editor = new ekstep_editor();
 window.EkstepEditor = editor;
 

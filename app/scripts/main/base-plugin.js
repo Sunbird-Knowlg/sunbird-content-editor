@@ -115,6 +115,9 @@ EkstepEditor.basePlugin = Class.extend({
             });
         }
     },
+    loadResource: function(src, dataType, cb) {
+        EkstepEditorAPI.loadPluginResource(this.manifest.id, this.manifest.ver, src, dataType, cb);
+    },
     remove: function() {
         this.parent.removeChild(this);
         delete EkstepEditor.pluginManager.pluginInstances[this.id];

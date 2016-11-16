@@ -25,7 +25,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         };
 
         $scope.previewContent = function() {
-            EkstepEditor.eventManager.dispatchEvent("atpreview:show");
+            EkstepEditor.eventManager.dispatchEvent("atpreview:show", {contentBody: EkstepEditor.stageManager.toECML()});
         }
 
         $scope.saveContent = function() {

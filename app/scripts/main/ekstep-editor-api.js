@@ -1,4 +1,6 @@
 window.EkstepEditorAPI = {
+    jQuery: EkstepEditor.jQuery,
+    _: EkstepEditor._,
     addEventListener: function(type, callback, scope) {
         EkstepEditor.eventManager.addEventListener(type, callback, scope);
     },
@@ -7,6 +9,19 @@ window.EkstepEditorAPI = {
     },
     removeEventListener: function(type, callback, scope) {
 
+    },
+    loadPluginResource: function(pluginId, pluginVer, src, dataType, callback) {
+        EkstepEditor.loadPluginResource(pluginId, pluginVer, src, dataType, callback);
+    },
+    getService: function(serviceId) {
+        switch(serviceId) {
+            case 'popup': 
+                return EkstepEditor.popupService;
+                break;
+            case 'content':
+                return EkstepEditor.contentService;
+                break
+        }
     },
     getAngularScope: function() {
         return EkstepEditor.toolbarManager.scope;

@@ -1,4 +1,4 @@
-EkstepEditor.popupService = EkstepEditor.iService.extend({
+EkstepEditor.popupService = new (EkstepEditor.iService.extend({
     initService: function() {
         this.$uibModal = angular.injector(['ng', 'ui.bootstrap']).get('$uibModal');
     },
@@ -10,4 +10,4 @@ EkstepEditor.popupService = EkstepEditor.iService.extend({
             return this.$uibModal.open(options);
         }
     }
-});
+}));

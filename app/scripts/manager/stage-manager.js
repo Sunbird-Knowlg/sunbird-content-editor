@@ -74,6 +74,7 @@ EkstepEditor.stageManager = new (Class.extend({
         }
     },
     toECML: function() {
+        var instance = this;
         var content = { theme: { id: "theme", version: 0.2, startStage: this.stages[0].id, stage: [], manifest: {media: []}}};
         _.forEach(this.stages, function(stage) {
             var stageBody = stage.toECML();
@@ -81,21 +82,46 @@ EkstepEditor.stageManager = new (Class.extend({
                 var id = child.manifest.shortId || child.manifest.id;
                 if(_.isUndefined(stageBody[id])) stageBody[id] = [];
                 stageBody[id].push(child.toECML());
-                if(_.indexOf(EkstepEditor.config.corePlugins, id) != 1) {
-                    if(!_.isUndefined(child.manifest.renderer) && !_.isUndefined(child.manifest.renderer.main)) {
-                        content.theme.manifest.media.push({
-                            id: id, 
-                            src: EkstepEditor.config.absURL + EkstepEditor.relativeURL(child.manifest.id, child.manifest.ver, child.manifest.renderer.main),
-                            type: "plugin"
-                        });
-                    }
-                }
+                instance.updateContentManifest(content, id, child.manifest);
             });
             content.theme.stage.push(stageBody);
         })
         return content;
     },
+    updateContentManifest: function(content, id, pluginManifest) {
+        if(_.indexOf(EkstepEditor.config.corePlugins, id) == 1) {
+            return;
+        }
+        if(_.isUndefined(pluginManifest.renderer) || _.isUndefined(pluginManifest.renderer.main)) {
+            return;
+        }
+        var manifestEntry = _.find(content.theme.manifest.media, {id: id});
+        if(_.isUndefined(manifestEntry)) {
+            content.theme.manifest.media.push({
+                id: id,
+                ver: pluginManifest.ver,
+                src: EkstepEditor.config.absURL + EkstepEditor.relativeURL(pluginManifest.id, pluginManifest.ver, pluginManifest.renderer.main),
+                type: "plugin"
+            });
+        }
+    },
     fromECML: function(contentBody) {
+        // Load all plugins
+        var plugins = _.filter(contentBody.theme.manifest.media, {type: 'plugin'});
+        _.forEach(plugins, function(plugin) {
+            EkstepEditor.pluginManager.loadPlugin(plugin.id, plugin.ver);
+        });
 
+        //  Before: 
+        //      1. create dummy canvas
+        //      2. TelemetryPlugin.disable()
+        //  For each stage
+        //      1. Clear dummy canvas
+        //      2. Create stage plugin
+        //      3. Sort data in stage by 'z-index'
+        //      4. For each object invoke either plugin or unsupported plugin with the data
+        //  After:
+        //      1. TelemetryPlugin.enable()
+        
     }
 }));
