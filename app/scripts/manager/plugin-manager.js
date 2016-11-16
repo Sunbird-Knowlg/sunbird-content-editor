@@ -16,7 +16,7 @@ EkstepEditor.pluginManager = new (Class.extend({
         if(this.plugins[pluginId + '@' + pluginVer]) {
             console.log('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded');
         } else {
-            EkstepEditor.loadPluginResource(pluginId, pluginVer, '/manifest.json', 'json', function(err, data) {
+            EkstepEditor.loadPluginResource(pluginId, pluginVer, 'manifest.json', 'json', function(err, data) {
                 if(err) {
                     console.error('Unable to find plugin manifest for ' + pluginId);
                 } else {
@@ -27,7 +27,7 @@ EkstepEditor.pluginManager = new (Class.extend({
     },
     loadPluginByManifest: function(manifest) {
         var instance = this;
-        EkstepEditor.loadPluginResource(manifest.id, manifest.ver, '/' + manifest.editor.main, 'text', function(err, data) {
+        EkstepEditor.loadPluginResource(manifest.id, manifest.ver, manifest.editor.main, 'text', function(err, data) {
             if (err) {
                 console.error('Unable to load plugin js', manifest.editor.main);
             } else {

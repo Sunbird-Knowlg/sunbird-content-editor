@@ -6,7 +6,7 @@ describe('editorApp', function () {
 
         EkstepEditor.config = {
             defaultSettings: 'base/app/test/config/editorSettings.json',
-            pluginRepo: '/base/app/test/plugins',
+            pluginRepo: 'http://localhost:9876/base/app/test/plugins',
             //corePlugins: ["testplugin"]
         }
     });
@@ -20,9 +20,23 @@ describe('editorApp', function () {
 
     // Suite for testing an individual piece of our feature.
     describe('load the controller', function () {
-        it("should load the app", function(){
-            console.log("MainCtrl spec");
-        })
+
+        it("should call the fire event", function(){
+            spyOn($scope,"fireEvent").and.callThrough();
+            var eventMock = {
+                id:"testplugin:create",
+                data:{
+                  "left": 100,
+                  "top": 100,
+                  "fill": "rgb(255,0,0)",
+                  "width": 100,
+                  "height": 100,
+                  "opacity": 0.4 
+              }
+          }
+          $scope.fireEvent(eventMock);
+          expect($scope.fireEvent).toHaveBeenCalled();
+      })
 
     });
 });

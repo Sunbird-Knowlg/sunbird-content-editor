@@ -10,6 +10,7 @@
         "org.ekstep.scribblepad": "1.0",
         "org.ekstep.copypaste": "1.0",
         "org.ekstep.image": "1.0",
-        "org.ekstep.atpreview": "1.0"
+        "org.ekstep.atpreview": "1.0",
+        "org.ekstep.imagebrowser": "1.0"
     }
 }

@@ -1,19 +1,52 @@
-EkstepEditor.contentService = new (EkstepEditor.iService.extend({
+EkstepEditor.contentService = new(EkstepEditor.iService.extend({
     content: {},
-    config: undefined,
-    initService: function(config) {
-        if (config) {
-            this.content[config.contentId] = {};
-            this.config = config;
+    initService: function() {},
+    setContentMeta: function(id, versionKey) {
+        if (id) {
+            this.content[id] = _.isUndefined(this.content[id]) ? {} : this.content[id];
+            this.content[id].versionKey = _.isUndefined(versionKey) ? this.content[id].versionKey : versionKey;
         }
     },
-    saveContent: function(data, versionKey) {
-        var id = this.config.contentId;
-        this.content[id].data = _.isUndefined(data) ? this.content[id].data : JSON.stringify(data);
-        this.content[id].versionKey = _.isUndefined(versionKey) ? this.content[id].versionKey : versionKey;
+    getContentMeta: function(id) {
+        return this.content[id];
     },
-    getContent: function(contentId, cb) {
-        // TODO: Fetch content from server and invoke the callback
-        cb(null, {});
+    saveContent: function(contentId, body, callback) {
+        var instance = this,                        
+            versionKey = instance.content[contentId].versionKey;
+
+        if (contentId && versionKey && body) {
+            var requestObj = {
+                request: {
+                    content: {
+                        body: body,
+                        versionKey: versionKey
+                    }
+                }
+            };
+
+            console.log("save content: ", requestObj);
+
+            instance.http.patch(EkstepEditor.configService.learningServiceBaseUrl + 'v2/content/' + contentId, requestObj)
+                .then(function success(response) {
+                    console.log("success response", response);
+                    instance.setContentMeta(contentId, response.data.result.versionKey);
+                    callback(null, response);                    
+                }, function error(response) {
+                    callback(response, null);
+                });
+        }
+    },
+    getContent: function(contentId, callback) {
+        var instance = this;
+        if (contentId) {
+            var metaDataFields = "body,editorState,templateId,languageCode,template,gradeLevel,status,concepts,versionKey";
+            instance.http.get(EkstepEditor.configService.learningServiceBaseUrl + 'v2/content/' + contentId + "?fields=" + metaDataFields)
+                .then(function success(response) {
+                    instance.setContentMeta(contentId, response.data.result.content.versionKey);
+                    callback(null, response);
+                }, function error(response) {
+                    callback(response, null);
+                });
+        }
     }
 }));

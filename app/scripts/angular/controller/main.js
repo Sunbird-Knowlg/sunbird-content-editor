@@ -30,15 +30,16 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         $scope.saveContent = function() {
             var contentBody = EkstepEditor.stageManager.toECML();
-            $http.post('ecml', {data: contentBody}).then(function(resp) {
-                console.info(resp.data);
+            EkstepEditor.contentService.saveContent("do_10096922", contentBody, function(err, resp) {
+                //TODO: call popup service to show success message
             });
         }
-        EkstepEditor.contentService.getContent("do_10096674", function(err, content) {
-            if(_.isUndefined(content.stage)) {
+        EkstepEditor.contentService.getContent("do_10096922", function(err, response) {            
+            if (err) {} // popup failure message
+            //else if (_.isUndefined(response.data.result.content.body)) {
                 // Instantiate with blank stage
-                EkstepEditor.eventManager.dispatchEvent('stage:create', {});        
-            }
+                EkstepEditor.eventManager.dispatchEvent('stage:create', {});
+            //}
         });
     }
 ]);
