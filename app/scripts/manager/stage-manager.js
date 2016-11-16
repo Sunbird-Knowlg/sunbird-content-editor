@@ -11,12 +11,11 @@ EkstepEditor.stageManager = new (Class.extend({
         fabric.Object.prototype.lockScalingFlip = true;
         fabric.Object.prototype.hasRotatingPoint = false;
         this.canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true });
-        this.registerEvents();
         console.log("Stage manager initialized");
     },
     registerEvents: function() {
         var instance = this;
-        EkstepEditor.eventManager.addEventListener("stage:select", this.selectStage, this);
+        //EkstepEditor.eventManager.addEventListener("stage:select", this.selectStage, this);
         this.canvas.on("object:modified", function(options, event) {
             EkstepEditor.stageManager.dispatchObjectEvent('modified', options, event);
         });
@@ -60,6 +59,7 @@ EkstepEditor.stageManager = new (Class.extend({
     },
     addStage: function(stage) {
         this.stages.push(stage);
+        this.selectStage(null, { stageId: stage.id });
         EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stage.id });
     },
     deleteStage: function(stageId) {
@@ -96,7 +96,6 @@ EkstepEditor.stageManager = new (Class.extend({
         var instance = this;
         var size = this.stages.length;
         _.forEach(this.stages, function(stage, index) {
-            console.log('index', index);
             if(index != 0) {
                 stage.addParam('previous', instance.stages[index-1].id);
             }
@@ -128,7 +127,30 @@ EkstepEditor.stageManager = new (Class.extend({
         _.forEach(plugins, function(plugin) {
             EkstepEditor.pluginManager.loadPlugin(plugin.id, plugin.ver);
         });
-
+        var stages = _.isArray(contentBody.theme.stage) ? contentBody.theme.stage : [contentBody.theme.stage];
+        _.forEach(stages, function(stage, index) {
+            var stageInstance = EkstepEditorAPI.instantiatePlugin(EkstepEditor.config.corePluginMapping['stage'], stage);
+            _.forIn(stage, function(value, key) {
+                if(!_.isString(value) && !_.isNumber(value)) {
+                    var pluginId = EkstepEditor.config.corePluginMapping[key] || key;
+                    if(_.isArray(value)) {
+                        _.forEach(value, function(pluginData) {
+                            var pluginInstance = EkstepEditorAPI.instantiatePlugin(pluginId, pluginData, stageInstance);
+                            if(_.isUndefined(pluginInstance)) {
+                                console.log('Unable to instantiate', key);
+                            }
+                        });
+                    } else {
+                        var pluginInstance = EkstepEditorAPI.instantiatePlugin(pluginId, value, stageInstance);
+                        if(_.isUndefined(pluginInstance)) {
+                            console.log('Unable to instantiate', key);
+                        }
+                    }
+                    delete stage[key];
+                }
+            });
+        });
+        this.selectStage(null, { stageId: contentBody.theme.startStage });
         //  Before: 
         //      1. create dummy canvas
         //      2. TelemetryPlugin.disable()

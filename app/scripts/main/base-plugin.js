@@ -20,27 +20,24 @@ EkstepEditor.basePlugin = Class.extend({
     config: undefined,
     events: undefined,
     params: undefined,
-    metadata: [],
     init: function(manifest, data, parent) {
         this.manifest = manifest;
         if (arguments.length == 1) {
             this.registerMenu();
             this.initialize();
+            EkstepEditorAPI.addEventListener(this.manifest.id + ":create", this.create, this);
             console.log(manifest.id + " plugin initialized");
         } else {
-            this.editorObj = undefined;
+            this.editorObj = undefined, this.config = undefined, this.events = undefined, this.attributes = {x: 0, y: 0, w: 0, h: 0}, this.params = undefined, this.data = undefined;
             this.editorData = data;
             this.children = [];
             this.id = this.editorData.id || UUID();
             this.parent = parent;
-            if (this.editorData && this.editorData.props) this.editorData.props.id = this.id;
-            this.attributes = { x: 0, y: 0, w: 0, h: 0, visible: true, editable: true };
-            this.config = undefined;
-            this.metadata = [];
         }
     },
     initPlugin: function() {
-        this.newInstance(this.editorData);
+        this.fromECML(this.editorData);
+        this.newInstance();
         this.registerFabricEvents();
         if(this.editorObj) this.editorObj.set({id: this.id});
         if (this.parent) this.parent.addChild(this);
@@ -79,6 +76,8 @@ EkstepEditor.basePlugin = Class.extend({
                         inst.attributes.y = inst.editorObj.getTop();
                         inst.attributes.w = inst.editorObj.getWidth();
                         inst.attributes.h = inst.editorObj.getHeight();
+                        if(_.isFunction(inst.editorObj.getRx))
+                            inst.attributes.r = inst.editorObj.getRx();
                     }
                 },
                 removed: function(options, event) {
@@ -104,6 +103,8 @@ EkstepEditor.basePlugin = Class.extend({
                         inst.attributes.y = inst.editorObj.getTop();
                         inst.attributes.w = inst.editorObj.getWidth();
                         inst.attributes.h = inst.editorObj.getHeight();
+                        if(_.isFunction(inst.editorObj.getRx))
+                            inst.attributes.r = inst.editorObj.getRx();
                     }
                     inst.changed(inst, options, event)
                 },
@@ -133,8 +134,8 @@ EkstepEditor.basePlugin = Class.extend({
         this.parent.removeChild(this);
         delete EkstepEditor.pluginManager.pluginInstances[this.id];
     },
-    create: function(data) {
-        EkstepEditor.pluginManager.invoke(this.manifest.id + '@' + this.manifest.ver, data, EkstepEditor.stageManager.currentStage);
+    create: function(event, data) {
+        EkstepEditorAPI.instantiatePlugin(this.manifest.id + '@' + this.manifest.ver, _.clone(data), EkstepEditor.stageManager.currentStage);
     },
     addChild: function(plugin) {
         this.children.push(plugin);
@@ -181,12 +182,14 @@ EkstepEditor.basePlugin = Class.extend({
         obj.y = parseFloat(((obj.y / 405) * 100).toFixed(2));
         obj.w = parseFloat(((obj.w / 720) * 100).toFixed(2));
         obj.h = parseFloat(((obj.h / 405) * 100).toFixed(2));
+        obj.r = parseFloat(((obj.r / 405) * 100).toFixed(2));
     },
     percentToPixel: function (obj) {
         obj.x = obj.x * (720 / 100);
         obj.y = obj.y * (405 / 100);
         obj.w = obj.w * (720 / 100);
         obj.h = obj.h * (405 / 100);
+        obj.r = obj.r * (405 / 100);
     },
     setConfig: function(data) {
         this.config = data;
@@ -274,7 +277,16 @@ EkstepEditor.basePlugin = Class.extend({
             delete this.attributes.param;   
         }
         this.percentToPixel(this.attributes);
-        this.render();
+    },
+    convertToFabric: function(data) {
+        var retData = _.clone(data);
+        if(data.x) retData.left = data.x;
+        if(data.y) retData.top = data.y;
+        if(data.w) retData.width = data.w;
+        if(data.h) retData.height = data.h;
+        if(data.radius) retData.rx = data.radius;
+        if(data.color) retData.fill = data.color;
+        return retData;
     },
     getPluginConfig: function () {
         return this.manifest.editor.config;

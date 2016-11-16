@@ -64,13 +64,13 @@ EkstepEditor.pluginManager = new (Class.extend({
     },
     invoke: function(id, data, parent, override) {
         var instance = this;
-        var p;
+        var p = undefined;
         var plugin = this.plugins[id];
-        var pluginClass = override ? plugin.p.extend(override) : plugin.p;
-        var pluginManifest = plugin.m;
         if (!plugin) {
             this.addError('No plugin found for - ' + id);
         } else {
+            var pluginClass = override ? plugin.p.extend(override) : plugin.p;
+            var pluginManifest = plugin.m;
             if (_.isArray(data)) {
                 data.forEach(function(d) {
                     p = new pluginClass(pluginManifest, d, parent);

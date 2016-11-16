@@ -19,7 +19,13 @@ EkstepEditor.config = {
     baseURL: 'https://dev.ekstep.in',
     defaultSettings: 'config/editorSettings.json',
     pluginRepo: '/plugins',
-    corePlugins: ["text", "audio", "div", "hotspot", "image", "shape", "scribble", "htext"]
+    corePlugins: ["text", "audio", "div", "hotspot", "image", "shape", "scribble", "htext"],
+    corePluginMapping: {
+        "text": "org.ekstep.text@1.0", 
+        "image": "org.ekstep.image@1.0", 
+        "shape": "org.ekstep.shape@1.0",
+        "stage": "org.ekstep.stage@1.0"
+    }
 }
 
 EkstepEditor.loadResource = function(url, dataType, callback) {

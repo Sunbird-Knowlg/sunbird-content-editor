@@ -44,7 +44,7 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
             instance.http.get(this.serviceURL + 'v2/content/' + contentId + "?fields=" + metaDataFields)
                 .then(function success(response) {
                     instance.setContentMeta(contentId, response.data.result.content.versionKey);
-                    callback(null, response);
+                    callback(null, response.data.result.content.body);
                 }, function error(response) {
                     callback(response, null);
                 });

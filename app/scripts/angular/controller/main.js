@@ -29,6 +29,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         $scope.previewContent = function() {
             EkstepEditor.eventManager.dispatchEvent("atpreview:show", {contentBody: EkstepEditor.stageManager.toECML()});
+            $http.post('ecml', {data: EkstepEditor.stageManager.toECML()}).then(function(resp) {
+                console.info('ECML', resp.data);
+            });
         }
 
         $scope.saveContent = function() {
@@ -37,12 +40,27 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 //TODO: call popup service to show success message
             });
         }
-        EkstepEditor.contentService.getContent("do_10096922", function(err, response) {   
-            if (err) {} // popup failure message
-            //else if (_.isUndefined(response.data.result.content.body)) {
-                // Instantiate with blank stage
-            EkstepEditor.eventManager.dispatchEvent('stage:create', {});
-            //}
+        /*
+        EkstepEditor.contentService.getContent("do_10096922", function(err, contentBody) {   
+            if (err) {
+                console.error('Unable to get content');
+            } 
+            if(_.isUndefined(contentBody)) {
+                EkstepEditor.eventManager.dispatchEvent('stage:create', {});
+            } else {
+                EkstepEditor.stageManager.fromECML(contentBody);
+            }          
+            EkstepEditor.stageManager.registerEvents();
+        });*/
+        EkstepEditor.stageManager.registerEvents();
+        EkstepEditor.eventManager.dispatchEvent('stage:create', {});
+        /*
+        $http.get('test.ecml').then(function(response) {
+            var x2js = new X2JS({attributePrefix: 'none'});
+            var data = x2js.xml_str2json(response.data);
+            EkstepEditor.stageManager.fromECML(data);
+            EkstepEditor.stageManager.registerEvents();
         });
+        */
     }
 ]);
