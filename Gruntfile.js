@@ -106,14 +106,14 @@ module.exports = function(grunt) {
                 ]
             }
         },
-
+        // this is only used for deployment
         compress: {
             main: {
                 options: {
                     archive: 'ansible/content-editor.zip'
                 },
                 files: [
-                    { src: ['content-editor/**', 'plugins/**', 'server/**', '*', '!node_modules', '!ansible'] }
+                    { src: ['content-editor/**', 'content-plugins/**', 'server/**', '*', '!node_modules', '!ansible'] }
                 ]
             }
         },
