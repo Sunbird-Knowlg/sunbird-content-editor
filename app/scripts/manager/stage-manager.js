@@ -79,7 +79,8 @@ EkstepEditor.stageManager = new (Class.extend({
     toECML: function() {
         var instance = this;
         var content = { theme: { id: "theme", version: 0.2, startStage: this.stages[0].id, stage: [], manifest: {media: []}}};
-        _.forEach(this.stages, function(stage) {
+        this.setNavigationalParams();
+        _.forEach(this.stages, function(stage, index) {
             var stageBody = stage.toECML();
             _.forEach(stage.children, function(child) {
                 var id = child.manifest.shortId || child.manifest.id;
@@ -90,6 +91,19 @@ EkstepEditor.stageManager = new (Class.extend({
             content.theme.stage.push(stageBody);
         })
         return content;
+    },
+    setNavigationalParams: function() {
+        var instance = this;
+        var size = this.stages.length;
+        _.forEach(this.stages, function(stage, index) {
+            console.log('index', index);
+            if(index != 0) {
+                stage.addParam('previous', instance.stages[index-1].id);
+            }
+            if(index < (size-1)) {
+                stage.addParam('next', instance.stages[index+1].id);
+            }
+        });
     },
     updateContentManifest: function(content, id, pluginManifest) {
         if(_.indexOf(EkstepEditor.config.corePlugins, id) == 1) {

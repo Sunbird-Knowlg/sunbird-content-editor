@@ -35,6 +35,9 @@ window.EkstepEditorAPI = {
     getCurrentStage: function() {
         return EkstepEditor.stageManager.currentStage;
     },
+    refreshStages: function() {
+        EkstepEditor.toolbarManager.scope.safeApply(function() {EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages;});
+    },
     getCurrentObject: function() {
         var activeObj = EkstepEditor.stageManager.canvas.getActiveObject();
         if (!activeObj) return false;

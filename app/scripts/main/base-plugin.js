@@ -19,6 +19,7 @@ EkstepEditor.basePlugin = Class.extend({
     attributes: {x: 0, y: 0, w: 0, h: 0, visible: true, editable: true},
     config: undefined,
     events: undefined,
+    params: undefined,
     metadata: [],
     init: function(manifest, data, parent) {
         this.manifest = manifest;
@@ -175,13 +176,13 @@ EkstepEditor.basePlugin = Class.extend({
     getMeta: function () {
         
     },
-    transformDimensions: function(obj) {
+    pixelToPercent: function(obj) {
         obj.x = parseFloat(((obj.x / 720) * 100).toFixed(2));
         obj.y = parseFloat(((obj.y / 405) * 100).toFixed(2));
         obj.w = parseFloat(((obj.w / 720) * 100).toFixed(2));
         obj.h = parseFloat(((obj.h / 405) * 100).toFixed(2));
     },
-    reverseTransformDimensions: function (obj) {
+    percentToPixel: function (obj) {
         obj.x = obj.x * (720 / 100);
         obj.y = obj.y * (405 / 100);
         obj.w = obj.w * (720 / 100);
@@ -218,9 +219,16 @@ EkstepEditor.basePlugin = Class.extend({
     getEvents: function() {
         return this.events;
     },
+    addParam: function(key, value) {
+        if(_.isUndefined(this.params)) this.params = {};
+        this.params[key] = value;
+    },
+    getParams: function() {
+        return this.params;
+    },
     toECML: function () {
         var attr = _.clone(this.getAttributes()); 
-        this.transformDimensions(attr);
+        this.pixelToPercent(attr);
         if(!_.isUndefined(this.getData())) {
             attr.data = {
                 "__cdata": JSON.stringify(this.getData())
@@ -236,9 +244,16 @@ EkstepEditor.basePlugin = Class.extend({
                 "__cdata": JSON.stringify(this.getEvents())
             };
         }
+        if(!_.isUndefined(this.getParams())) {
+            attr.param = [];
+            _.forIn(this.getParams(), function(value, key) {
+                attr.param.push({name: key, value: value});
+            });
+        }
         return attr;
     },
     fromECML: function(data) {
+        var instance = this;
         this.attributes = data;
         if(!_.isUndefined(this.attributes.data)) {
             this.data = JSON.parse(this.attributes.data.__cdata);
@@ -252,7 +267,13 @@ EkstepEditor.basePlugin = Class.extend({
             this.events = JSON.parse(this.attributes.event.__cdata);
             delete this.attributes.event;
         }
-        this.reverseTransformDimensions(this.attributes);
+        if(!_.isUndefined(this.attributes.param)) {
+            _.forEach(this.attributes.param, function(param) {
+                instance.addParam(param.name, param.value);
+            })
+            delete this.attributes.param;   
+        }
+        this.percentToPixel(this.attributes);
         this.render();
     },
     getPluginConfig: function () {

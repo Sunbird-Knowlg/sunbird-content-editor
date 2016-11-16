@@ -41,7 +41,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             if (err) {} // popup failure message
             //else if (_.isUndefined(response.data.result.content.body)) {
                 // Instantiate with blank stage
-                // EkstepEditor.eventManager.dispatchEvent('stage:create', {});
+            EkstepEditor.eventManager.dispatchEvent('stage:create', {});
             //}
         });
     }
