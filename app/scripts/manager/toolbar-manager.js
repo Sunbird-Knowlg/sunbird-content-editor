@@ -1,3 +1,6 @@
+/**
+ * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
+ */
 EkstepEditor.toolbarManager = new (Class.extend({
     menuItems: [],
     contextMenuItems: [],

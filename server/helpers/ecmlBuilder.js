@@ -1,3 +1,6 @@
+/**
+ * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
+ */
 var builder = require('xmlbuilder');
 var _ = require('lodash');
 

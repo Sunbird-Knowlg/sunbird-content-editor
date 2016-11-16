@@ -1,3 +1,6 @@
+/**
+ * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
+ */
 window.EkstepEditorAPI = {
     jQuery: EkstepEditor.jQuery,
     _: EkstepEditor._,

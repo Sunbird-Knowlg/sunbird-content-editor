@@ -1,3 +1,6 @@
+/**
+ * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
+ */
 EkstepEditor.stageManager = new (Class.extend({
     stages: [],
     currentStage: undefined,

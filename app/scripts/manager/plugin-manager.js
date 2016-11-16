@@ -1,3 +1,6 @@
+/**
+ * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
+ */
 EkstepEditor.pluginManager = new (Class.extend({
     plugins: {},
     pluginObjs: {},

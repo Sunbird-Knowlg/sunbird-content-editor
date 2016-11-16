@@ -3,7 +3,7 @@
  * configure deployable services at runtime from their orchestrator. This can
  * also provide authentication, interceptor capabilities.
  *
- * @author Santhosh Vasabhaktula
+ * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
 var ecmlBuilder = require('../helpers/ecmlBuilder');
 var request = require('request');

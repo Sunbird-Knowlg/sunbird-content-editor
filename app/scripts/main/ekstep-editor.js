@@ -1,3 +1,6 @@
+/**
+ * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
+ */
 window.fabric.Object.prototype.toObject = (function(toObject) {
     return function() {
         return window.fabric.util.object.extend(toObject.call(this), {

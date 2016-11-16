@@ -1,3 +1,6 @@
+/**
+ * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
+ */
 EkstepEditor.eventManager = new (Class.extend({
 	addEventListener: function(type, callback, scope) {
 		EventBus.addEventListener(type, callback, scope)

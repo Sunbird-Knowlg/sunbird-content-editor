@@ -1,3 +1,6 @@
+/**
+ * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
+ */
 EkstepEditor.basePlugin = Class.extend({
     id: undefined,
     parent: undefined,
