@@ -1,4 +1,5 @@
 EkstepEditor.contentService = new(EkstepEditor.iService.extend({
+    serviceURL: EkstepEditor.config.baseURL + '/api/learning/',
     content: {},
     initService: function() {},
     setContentMeta: function(id, versionKey) {
@@ -26,7 +27,7 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
 
             console.log("save content: ", requestObj);
 
-            instance.http.patch(EkstepEditor.configService.learningServiceBaseUrl + 'v2/content/' + contentId, requestObj)
+            instance.http.patch(this.serviceURL + 'v2/content/' + contentId, requestObj)
                 .then(function success(response) {
                     console.log("success response", response);
                     instance.setContentMeta(contentId, response.data.result.versionKey);
@@ -40,7 +41,7 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
         var instance = this;
         if (contentId) {
             var metaDataFields = "body,editorState,templateId,languageCode,template,gradeLevel,status,concepts,versionKey";
-            instance.http.get(EkstepEditor.configService.learningServiceBaseUrl + 'v2/content/' + contentId + "?fields=" + metaDataFields)
+            instance.http.get(this.serviceURL + 'v2/content/' + contentId + "?fields=" + metaDataFields)
                 .then(function success(response) {
                     instance.setContentMeta(contentId, response.data.result.content.versionKey);
                     callback(null, response);
@@ -48,5 +49,13 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
                     callback(response, null);
                 });
         }
+    },
+    getContentMetadata: function(contentId, callback) {
+        this.http.get(this.serviceURL + 'v2/content/' + contentId)
+            .then(function success(response) {
+                callback(null, response);
+            }, function error(response) {
+                callback(response, null);
+            });
     }
 }));

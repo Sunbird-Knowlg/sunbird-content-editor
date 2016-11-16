@@ -34,11 +34,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 //TODO: call popup service to show success message
             });
         }
-        EkstepEditor.contentService.getContent("do_10096922", function(err, response) {            
+        EkstepEditor.contentService.getContent("do_10096922", function(err, response) {   
             if (err) {} // popup failure message
             //else if (_.isUndefined(response.data.result.content.body)) {
                 // Instantiate with blank stage
-                EkstepEditor.eventManager.dispatchEvent('stage:create', {});
+                // EkstepEditor.eventManager.dispatchEvent('stage:create', {});
             //}
         });
     }

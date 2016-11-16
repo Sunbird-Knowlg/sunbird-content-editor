@@ -13,6 +13,7 @@ var editor = new ekstep_editor();
 window.EkstepEditor = editor;
 
 EkstepEditor.config = {
+    baseURL: 'https://dev.ekstep.in',
     defaultSettings: 'config/editorSettings.json',
     pluginRepo: '/plugins',
     corePlugins: ["text", "audio", "div", "hotspot", "image", "shape", "scribble", "htext"]
@@ -32,7 +33,6 @@ EkstepEditor.loadResource = function(url, dataType, callback) {
 
 EkstepEditor.loadPluginResource = function(pluginId, pluginVer, src, dataType, callback) {
     // TODO: Enhance to use plugin version too
-    console.log("loadPluginResource::url::" + EkstepEditor.config.pluginRepo + '/' + pluginId + '-' + pluginVer + '/' + src);
     EkstepEditor.loadResource(EkstepEditor.config.pluginRepo + '/' + pluginId + '-' + pluginVer + '/' + src, dataType, callback);
 }
 
