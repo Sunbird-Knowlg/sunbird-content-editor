@@ -303,5 +303,13 @@ EkstepEditor.basePlugin = Class.extend({
     },
     onConfigChange: function (key, value) {
         this.addConfig(key, value);
+    },
+    getHelp: function () {
+        
+    },
+    getProperties: function () {
+        var props = _.omitBy(_.clone(this.attributes), _.isObject);
+        props = _.omitBy(_.clone(this.attributes), _.isNaN);
+        return props;
     }
 });
