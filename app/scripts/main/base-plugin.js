@@ -21,7 +21,7 @@ EkstepEditor.basePlugin = Class.extend({
     events: undefined,
     params: undefined,
     init: function(manifest, data, parent) {
-        this.manifest = manifest;
+        this.manifest = _.cloneDeep(manifest);
         if (arguments.length == 1) {
             this.registerMenu();
             this.initialize();
@@ -194,6 +194,10 @@ EkstepEditor.basePlugin = Class.extend({
     setConfig: function(data) {
         this.config = data;
     },
+    addConfig: function(key, value) {
+        if(_.isUndefined(this.config)) this.config = {};
+        this.config[key] = value;
+    },
     getConfig: function() {
         return this.config;
     },
@@ -297,7 +301,7 @@ EkstepEditor.basePlugin = Class.extend({
     reConfig: function () {
         
     },
-    onConfigChange: function () {
-        
+    onConfigChange: function (key, value) {
+        this.addConfig(key, value);
     }
 });
