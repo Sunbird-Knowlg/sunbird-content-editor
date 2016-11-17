@@ -9,11 +9,11 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
         }
     },
     getContentMeta: function(id) {
-        return this.content[id];
+        return this.content[id] || {};
     },
     saveContent: function(contentId, body, callback) {
         var instance = this,
-            versionKey = instance.content[contentId].contentMeta.versionKey;
+            versionKey = instance.content[contentId] && instance.content[contentId].contentMeta.versionKey;
 
         if (contentId && versionKey && body) {
             var requestObj = {
@@ -24,29 +24,36 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
                     }
                 }
             };
-            console.log("save content: ", requestObj);
 
-            instance.http.patch(this.serviceURL + 'v2/content/' + contentId, requestObj, {}, serviceCallback);
+            var headers = {
+                "headers": {
+                    "content-type": "application/json",
+                    "user-id": "ATTool"
+                }
+            }
 
-            function serviceCallback(err, res) {                
+            instance.http.patch(this.serviceURL + 'v2/content/' + contentId, requestObj, headers, serviceCallback);
+
+            function serviceCallback(err, res) {
                 if (res) {
-                    instance.content[contentId].contentMeta.versionKey=res.data.result.versionKey;                    
+                    instance.content[contentId].contentMeta.versionKey = res.data.result.versionKey;
                 }
                 callback(err, res);
             }
         }
     },
     getContent: function(contentId, callback) {
-        var instance = this;        
-        if (contentId) {            
+        var instance = this;
+        if (contentId) {
             instance.http.get(this.serviceURL + 'v2/content/' + contentId, {}, serviceCallback);
-            function serviceCallback(err, res) {                
+
+            function serviceCallback(err, res) {
                 if (res) {
-                    instance.setContentMeta(contentId, res.data.result.content);                    
+                    instance.setContentMeta(contentId, res.data.result.content);
                 }
                 callback(err, res.data.result.content.body);
             };
-                
+
         }
     }
 }));
