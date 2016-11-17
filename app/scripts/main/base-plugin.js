@@ -309,7 +309,7 @@ EkstepEditor.basePlugin = Class.extend({
     },
     getProperties: function () {
         var props = _.omitBy(_.clone(this.attributes), _.isObject);
-        props = _.omitBy(_.clone(this.attributes), _.isNaN);
+        props = _.omitBy(props, _.isNaN);
         return props;
     }
 });
