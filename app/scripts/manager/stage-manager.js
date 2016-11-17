@@ -15,7 +15,7 @@ EkstepEditor.stageManager = new (Class.extend({
     },
     registerEvents: function() {
         var instance = this;
-        //EkstepEditor.eventManager.addEventListener("stage:select", this.selectStage, this);
+        EkstepEditor.eventManager.addEventListener("stage:select", this.selectStage, this);
         this.canvas.on("object:modified", function(options, event) {
             EkstepEditor.stageManager.dispatchObjectEvent('modified', options, event);
         });

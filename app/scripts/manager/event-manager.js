@@ -9,6 +9,6 @@ EkstepEditor.eventManager = new (Class.extend({
 		EventBus.dispatch(type, target, data);
 	},
 	removeEventListener: function(type, callback, scope) {
-
+		EventBus.removeEventListener(type, callback, scope);
 	}
 }));

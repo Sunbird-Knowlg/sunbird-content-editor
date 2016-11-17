@@ -24,7 +24,9 @@ EkstepEditor.config = {
         "text": "org.ekstep.text@1.0", 
         "image": "org.ekstep.image@1.0", 
         "shape": "org.ekstep.shape@1.0",
-        "stage": "org.ekstep.stage@1.0"
+        "stage": "org.ekstep.stage@1.0",
+        "hotspot": "org.ekstep.hotspot@1.0",
+        "scribble": "org.ekstep.scribblepad@1.0"
     }
 }
 
