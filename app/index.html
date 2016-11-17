@@ -47,7 +47,9 @@
         <div ng-controller="MainCtrl" id="editorContainer">
             <div class="container community-portal-remove">
                 <i class="fa fa-tablet fa-2x" aria-hidden="true" style="padding-right: 15px; padding-top: 37px;" ng-click="previewContent();"></i>
-                <i class="fa fa-floppy-o fa-2x" aria-hidden="true" ng-click="saveContent()"></i>
+                <button class="btn btn-primary" ng-disabled="!contentId">
+                    <i class="fa fa-floppy-o fa-2x" aria-hidden="true" ng-disabled='contentId' ng-click="saveContent()"></i>
+                </button>
             </div>
             <!--[if lte IE 8]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
