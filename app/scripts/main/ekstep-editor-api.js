@@ -88,5 +88,8 @@ window.EkstepEditorAPI = {
         var data = plugin.getCopy();
         var newPlugin = EkstepEditorAPI.instantiatePlugin(plugin.manifest.id + '@' + plugin.manifest.ver, plugin.manifest.initdata || {});
         newPlugin.paste(data, plugin.parent);
+    },
+    globalContext: {
+        contentId: undefined
     }
 }

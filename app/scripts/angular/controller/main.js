@@ -6,7 +6,8 @@
 angular.module('editorApp', []);
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http','$location', '$q','$window',
     function($scope, $timeout, $http, $location, $q, $window) {
-        
+        EkstepEditorAPI.globalContext.contentId = $location.search().contentId;
+
         $scope.safeApply = function(fn) {
             var phase = this.$root.$$phase;
             if (phase == '$apply' || phase == '$digest') {
@@ -29,26 +30,27 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         $scope.previewContent = function() {
             EkstepEditor.eventManager.dispatchEvent("atpreview:show", {contentBody: EkstepEditor.stageManager.toECML()});
-            $http.post('ecml', {data: EkstepEditor.stageManager.toECML()}).then(function(resp) {
+            /*$http.post('ecml', {data: EkstepEditor.stageManager.toECML()}).then(function(resp) {
                 console.info('ECML', resp.data);
-            });
+            });*/
         }
 
         $scope.saveContent = function() {
             var contentBody = EkstepEditor.stageManager.toECML();
-            EkstepEditor.contentService.saveContent("do_10096922", contentBody, function(err, resp) {
+            EkstepEditor.contentService.saveContent(EkstepEditorAPI.globalContext.contentId, contentBody, function(err, resp) {
                 //TODO: call popup service to show success message
             });
         }
-        /*
-        EkstepEditor.contentService.getContent("do_10096922", function(err, contentBody) {   
+        
+        /*EkstepEditor.contentService.getContent(EkstepEditorAPI.globalContext.contentId, function(err, contentBody) {   
             if (err) {
                 console.error('Unable to get content');
             } 
             if(_.isUndefined(contentBody)) {
                 EkstepEditor.eventManager.dispatchEvent('stage:create', {});
+                EkstepEditorAPI.refreshStages();
             } else {
-                EkstepEditor.stageManager.fromECML(contentBody);
+                EkstepEditor.stageManager.fromECML(contentBody);                
             }          
             EkstepEditor.stageManager.registerEvents();
         });*/
