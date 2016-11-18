@@ -105,10 +105,18 @@
                                     </div>
                                 </div>
                                 <div id="plugin-toolbar-container" class="plugin-toolbar-container">
-                                    <ul class="list-group">
+                                    <ul class="list-group" ng-show="showPluginConfig">
                                         <li class="list-group-item plugin-toolbar-header">Configuration</li>
                                         <li ng-repeat="config in pluginConfig" class="list-group-item" ng-include="'templates/config.html'"></li>
                                     </ul>
+                                    <div id="pluginHelpContainer" ng-show="showPluginHelp">
+                                        <ul class="list-group">
+                                            <li class="list-group-item plugin-toolbar-header">Help</li>
+                                            <li id="pluginHelp" class="list-group-item"></li>
+                                        </ul>
+                                    </div>
+                                    <div id="pluginPropertyContainer" ng-show="showPluginProperty" ng-include="'templates/properties.html'">
+                                    </div>
                                 </div>
                             </div>
                         </section>

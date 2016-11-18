@@ -3811,9 +3811,9 @@ button[disabled].at-btn-ok {
 .plugin-toolbar-container {
     position: absolute;
     z-index: 2;
-    top: 0px;
-    left: 765px;
-    width: 200px;
+    top: 12px;
+    left: 465px;
+    min-width: 200px;
     display: none;
     border-radius: 8px;
 }

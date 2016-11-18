@@ -1,0 +1,19 @@
+<ul class="list-group">
+    <li class="list-group-item plugin-toolbar-header">Properties</li>
+    <li id="pluginProperties" class="list-group-item">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="(propKey, propValue) in pluginProperties">
+                    <td>{{propKey}}</td>
+                    <td>{{propValue}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </li>
+</ul>
