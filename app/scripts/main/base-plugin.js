@@ -281,8 +281,12 @@ EkstepEditor.basePlugin = Class.extend({
             this.config = JSON.parse(this.attributes.config.__cdata);
             delete this.attributes.config;
         }
+        if(!_.isUndefined(this.attributes.events)) {
+            //this.events = JSON.parse(this.attributes.event.__cdata);
+            delete this.attributes.events;
+        }
         if(!_.isUndefined(this.attributes.event)) {
-            this.events = JSON.parse(this.attributes.event.__cdata);
+            //this.events = JSON.parse(this.attributes.event.__cdata);
             delete this.attributes.event;
         }
         if(!_.isUndefined(this.attributes.param)) {
