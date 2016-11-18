@@ -51,7 +51,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             if(_.isUndefined(contentBody)) {
                 EkstepEditor.eventManager.dispatchEvent('stage:create', {});
             } else {
-                EkstepEditor.stageManager.fromECML(contentBody);
+                EkstepEditor.stageManager.fromECML(JSON.parse(contentBody));
             }
             EkstepEditor.stageManager.registerEvents();
         });

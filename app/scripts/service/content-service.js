@@ -45,7 +45,8 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
     getContent: function(contentId, callback) {
         var instance = this;
         if (contentId) {
-            instance.http.get(this.serviceURL + 'v2/content/' + contentId, {}, serviceCallback);
+            var metaDataFields = "body,editorState,templateId,languageCode,template,gradeLevel,status,concepts,versionKey";
+            instance.http.get(this.serviceURL + 'v2/content/' + contentId + "?fields=" + metaDataFields, {}, serviceCallback);
 
             function serviceCallback(err, res) {
                 if (res) {
