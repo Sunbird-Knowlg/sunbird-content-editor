@@ -42,7 +42,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     alert('Content saved successfully');
                 }
             });
-        }
+        }        
         
         EkstepEditor.contentService.getContent(EkstepEditorAPI.globalContext.contentId, function(err, contentBody) {
             if (err) {
@@ -54,15 +54,14 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 EkstepEditor.stageManager.fromECML(contentBody);
             }
             EkstepEditor.stageManager.registerEvents();
-        });
+        });/**/
 
         /*
         $http.get('test.ecml').then(function(response) {
             var x2js = new X2JS({attributePrefix: 'none'});
             var data = x2js.xml_str2json(response.data);
             EkstepEditor.stageManager.fromECML(data);
-            EkstepEditor.stageManager.registerEvents();
-        });
-        */
+        });*/
+        
     }
 ]);

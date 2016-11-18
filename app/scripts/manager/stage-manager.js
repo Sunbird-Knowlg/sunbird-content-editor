@@ -14,7 +14,6 @@ EkstepEditor.stageManager = new (Class.extend({
         console.log("Stage manager initialized");
     },
     registerEvents: function() {
-        console.log('Register canvas events....')
         var instance = this;
         EkstepEditor.eventManager.addEventListener("stage:select", this.selectStage, this);
         this.canvas.on("object:modified", function(options, event) {
@@ -44,6 +43,7 @@ EkstepEditor.stageManager = new (Class.extend({
         if (_.isUndefined(this.currentStage)) {
             this.currentStage = _.find(this.stages, { id: data.stageId });
             this.currentStage.isSelected = true;
+            this.currentStage.setCanvas(this.canvas);
             this.currentStage.render(this.canvas);
         } else {
             this.currentStage.isSelected = false;
@@ -52,6 +52,7 @@ EkstepEditor.stageManager = new (Class.extend({
             this.currentStage = _.find(this.stages, { id: data.stageId });
             this.currentStage.isSelected = true;
             this.canvas.off("object:added");
+            this.currentStage.setCanvas(this.canvas);
             this.currentStage.render(this.canvas);
             this.canvas.on("object:added", function(options, event) {
                 EkstepEditor.stageManager.dispatchObjectEvent('added', options, event);
@@ -81,6 +82,7 @@ EkstepEditor.stageManager = new (Class.extend({
         var instance = this;
         var content = { theme: { id: "theme", version: 0.2, startStage: this.stages[0].id, stage: [], manifest: {media: []}}};
         this.setNavigationalParams();
+        var mediaMap = {};
         _.forEach(this.stages, function(stage, index) {
             var stageBody = stage.toECML();
             _.forEach(stage.children, function(child) {
@@ -88,10 +90,19 @@ EkstepEditor.stageManager = new (Class.extend({
                 if(_.isUndefined(stageBody[id])) stageBody[id] = [];
                 stageBody[id].push(child.toECML());
                 instance.updateContentManifest(content, id, child.manifest);
+                instance.addMediaToMediaMap(mediaMap, child.getMedia());
             });
             content.theme.stage.push(stageBody);
         })
+        content.theme.manifest.media = _.concat(content.theme.manifest.media, _.values(mediaMap));
         return content;
+    },
+    addMediaToMediaMap: function(mediaMap, media) {
+        if(_.isObject(media)) {
+            _.forIn(media, function(value, key) {
+                mediaMap[key] = value;
+            });
+        }
     },
     setNavigationalParams: function() {
         var instance = this;
@@ -124,44 +135,51 @@ EkstepEditor.stageManager = new (Class.extend({
     },
     fromECML: function(contentBody) {
         // Load all plugins
+        contentBody.theme.manifest.media = _.isArray(contentBody.theme.manifest.media) ? contentBody.theme.manifest.media : [contentBody.theme.manifest.media];
         var plugins = _.filter(contentBody.theme.manifest.media, {type: 'plugin'});
         _.forEach(plugins, function(plugin) {
             EkstepEditor.pluginManager.loadPlugin(plugin.id, plugin.ver);
         });
+        _.forEach(contentBody.theme.manifest.media, function(media) {
+            if(media.type !== 'plugin') {
+                EkstepEditor.mediaManager.addMedia(media);
+            }
+        });
+
         var stages = _.isArray(contentBody.theme.stage) ? contentBody.theme.stage : [contentBody.theme.stage];
         _.forEach(stages, function(stage, index) {
+            var canvas = new fabric.Canvas(stage.id, { backgroundColor: "#FFFFFF", preserveObjectStacking: true, width: 720, height: 405 });
             var stageInstance = EkstepEditorAPI.instantiatePlugin(EkstepEditor.config.corePluginMapping['stage'], stage);
-            _.forIn(stage, function(value, key) {
-                if(!_.isString(value) && !_.isNumber(value)) {
-                    var pluginId = EkstepEditor.config.corePluginMapping[key] || key;
-                    if(_.isArray(value)) {
-                        _.forEach(value, function(pluginData) {
-                            var pluginInstance = EkstepEditorAPI.instantiatePlugin(pluginId, pluginData, stageInstance);
-                            if(_.isUndefined(pluginInstance)) {
-                                console.log('Unable to instantiate', key);
-                            }
-                        });
-                    } else {
-                        var pluginInstance = EkstepEditorAPI.instantiatePlugin(pluginId, value, stageInstance);
-                        if(_.isUndefined(pluginInstance)) {
-                            console.log('Unable to instantiate', key);
-                        }
-                    }
-                    delete stage[key];
+            stageInstance.setCanvas(canvas);
+            var pluginCount = 0;
+            var props = _.pickBy(stage, _.isObject);
+            var plugins = [];
+            _.forIn(props, function(values, key) {
+                values = _.isArray(values) ? values : [values];
+                _.forEach(values, function(value) {
+                    plugins.push({id: key, 'z-index': value['z-index'], data: value});
+                });
+                delete stage[key];
+            })
+            
+            _.forIn(_.sortBy(plugins, 'z-index'), function(plugin) {
+                var pluginId = EkstepEditor.config.corePluginMapping[plugin.id] || plugin.id;
+                
+                var pluginInstance = EkstepEditorAPI.instantiatePlugin(pluginId, plugin.data, stageInstance);
+                if(_.isUndefined(pluginInstance)) {
+                    console.log('Unable to instantiate', plugin.id);
+                } else {
+                    pluginCount++;
                 }
             });
+
+            var cb = (index == 0) ? function() {
+                EkstepEditor.stageManager.registerEvents();
+                EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stage.id });
+            } : function() {};
+            stageInstance.destroyOnLoad(pluginCount, canvas, cb);
+
         });
-        this.selectStage(null, { stageId: contentBody.theme.startStage });
-        //  Before: 
-        //      1. create dummy canvas
-        //      2. TelemetryPlugin.disable()
-        //  For each stage
-        //      1. Clear dummy canvas
-        //      2. Create stage plugin
-        //      3. Sort data in stage by 'z-index'
-        //      4. For each object invoke either plugin or unsupported plugin with the data
-        //  After:
-        //      1. TelemetryPlugin.enable()
         
     }
 }));

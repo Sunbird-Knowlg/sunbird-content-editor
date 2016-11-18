@@ -237,12 +237,12 @@ EkstepEditor.basePlugin = Class.extend({
     getParams: function() {
         return this.params;
     },
-    addMedia: function(key, value) {
-        if(_.isUndefined(this.params)) this.params = {};
-        this.params[key] = value;
+    addMedia: function(media) {
+        if(_.isUndefined(this.media)) this.media = {};
+        this.media[media.id] = media;
     },
-    getParams: function() {
-        return this.params;
+    getMedia: function() {
+        return this.media;
     },
     toECML: function () {
         var attr = _.clone(this.getAttributes()); 
@@ -290,6 +290,17 @@ EkstepEditor.basePlugin = Class.extend({
                 instance.addParam(param.name, param.value);
             })
             delete this.attributes.param;   
+        }
+        if(!_.isUndefined(this.attributes.asset)) {
+            if(!_.isUndefined(this.attributes.assetMedia)) {
+                instance.addMedia(this.attributes.assetMedia);
+                delete this.attributes.assetMedia;
+            } else {
+                var media = EkstepEditor.mediaManager.getMedia(this.attributes.asset);
+                if(!_.isUndefined(media)) {
+                    instance.addMedia(media);
+                }
+            }
         }
         this.percentToPixel(this.attributes);
     },
