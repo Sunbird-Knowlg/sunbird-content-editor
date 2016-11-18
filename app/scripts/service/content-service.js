@@ -45,14 +45,14 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
     getContent: function(contentId, callback) {
         var instance = this;
         if (contentId) {
-            instance.http.get(this.serviceURL + 'v2/content/' + contentId, {}, serviceCallback);
-
-            function serviceCallback(err, res) {
-                if (res) {
-                    instance.setContentMeta(contentId, res.data.result.content);
-                }
+            var metaDataFields = "?fields=body,editorState,templateId,languageCode,template,gradeLevel,status,concepts,versionKey";
+            instance.http.get(this.serviceURL + 'v2/content/' + contentId + metaDataFields, {}, function(err,res){
                 callback(err, res.data.result.content.body);
-            };
+            });
+            //get content meta for preview
+            instance.http.get(this.serviceURL + 'v2/content/' + contentId, {}, function(err, res){
+                if(res) instance.setContentMeta(contentId, res.data.result.content);
+            });
         } else {
             callback(null, undefined);
         }
