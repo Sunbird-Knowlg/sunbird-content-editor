@@ -4,6 +4,10 @@
 window.EkstepEditorAPI = {
     jQuery: EkstepEditor.jQuery,
     _: EkstepEditor._,
+    globalContext: {
+        contentId: undefined,
+        useProxyForURL: true
+    },
     addEventListener: function(type, callback, scope) {
         EkstepEditor.eventManager.addEventListener(type, callback, scope);
     },
@@ -88,8 +92,5 @@ window.EkstepEditorAPI = {
         var data = plugin.getCopy();
         var newPlugin = EkstepEditorAPI.instantiatePlugin(plugin.manifest.id + '@' + plugin.manifest.ver, plugin.manifest.initdata || {});
         newPlugin.paste(data, plugin.parent);
-    },
-    globalContext: {
-        contentId: undefined
     }
 }

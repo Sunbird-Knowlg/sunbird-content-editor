@@ -20,6 +20,7 @@ EkstepEditor.basePlugin = Class.extend({
     config: undefined,
     events: undefined,
     params: undefined,
+    media: undefined,
     init: function(manifest, data, parent) {
         this.manifest = _.cloneDeep(manifest);
         if (arguments.length == 1) {
@@ -28,7 +29,7 @@ EkstepEditor.basePlugin = Class.extend({
             EkstepEditorAPI.addEventListener(this.manifest.id + ":create", this.create, this);
             console.log(manifest.id + " plugin initialized");
         } else {
-            this.editorObj = undefined, this.config = undefined, this.events = undefined, this.attributes = {x: 0, y: 0, w: 0, h: 0}, this.params = undefined, this.data = undefined;
+            this.editorObj = undefined, this.config = undefined, this.events = undefined, this.attributes = {x: 0, y: 0, w: 0, h: 0}, this.params = undefined, this.data = undefined, this.media = undefined;
             this.editorData = data;
             this.children = [];
             this.id = this.editorData.id || UUID();
@@ -38,6 +39,9 @@ EkstepEditor.basePlugin = Class.extend({
     initPlugin: function() {
         this.fromECML(this.editorData);
         this.newInstance();
+        this.postInit();
+    },
+    postInit: function() {
         this.registerFabricEvents();
         if(this.editorObj) this.editorObj.set({id: this.id});
         if (this.parent) this.parent.addChild(this);
@@ -227,6 +231,13 @@ EkstepEditor.basePlugin = Class.extend({
         return this.events;
     },
     addParam: function(key, value) {
+        if(_.isUndefined(this.params)) this.params = {};
+        this.params[key] = value;
+    },
+    getParams: function() {
+        return this.params;
+    },
+    addMedia: function(key, value) {
         if(_.isUndefined(this.params)) this.params = {};
         this.params[key] = value;
     },
