@@ -30,13 +30,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         $scope.previewContent = function() {
             EkstepEditor.eventManager.dispatchEvent("atpreview:show", { contentBody: EkstepEditor.stageManager.toECML() });
-            /*$http.post('ecml', {data: EkstepEditor.stageManager.toECML()}).then(function(resp) {
+            $http.post('ecml', {data: EkstepEditor.stageManager.toECML()}).then(function(resp) {
                 console.info('ECML', resp.data);
-            });*/
-        };
-
-        if (!EkstepEditorAPI.globalContext.contentId) {
-            EkstepEditor.eventManager.dispatchEvent('stage:create', {});
+            });
         };
 
         $scope.saveContent = function(){
@@ -47,14 +43,13 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 }
             });
         }
-
+        
         EkstepEditor.contentService.getContent(EkstepEditorAPI.globalContext.contentId, function(err, contentBody) {
             if (err) {
                 console.error('Unable to get content');
             }
             if(_.isUndefined(contentBody)) {
                 EkstepEditor.eventManager.dispatchEvent('stage:create', {});
-                EkstepEditorAPI.refreshStages();
             } else {
                 EkstepEditor.stageManager.fromECML(contentBody);
             }

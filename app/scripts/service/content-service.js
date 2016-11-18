@@ -53,7 +53,8 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
                 }
                 callback(err, res.data.result.content.body);
             };
-
+        } else {
+            callback(null, undefined);
         }
     }
 }));
