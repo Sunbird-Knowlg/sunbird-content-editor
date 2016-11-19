@@ -3,9 +3,9 @@
  */
 'use strict';
 
-angular.module('editorApp', []);
-angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window',
-    function($scope, $timeout, $http, $location, $q, $window) {
+angular.module('editorApp', ['ui.bootstrap']);
+angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$uibModal',
+    function($scope, $timeout, $http, $location, $q, $window, $uibModal) {        
         EkstepEditorAPI.globalContext.contentId = $location.search().contentId;
         $scope.contentId = EkstepEditorAPI.globalContext.contentId;
         $scope.safeApply = function(fn) {
@@ -56,6 +56,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             EkstepEditor.stageManager.registerEvents();
         });/**/
 
+        EkstepEditorAPI.getService('popup').initService($uibModal);
+        
         /*
         $http.get('test.ecml').then(function(response) {
             var x2js = new X2JS({attributePrefix: 'none'});

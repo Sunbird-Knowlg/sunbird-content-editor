@@ -1,13 +1,16 @@
 EkstepEditor.popupService = new(EkstepEditor.iService.extend({
-    initService: function() {
-        this.$uibModal = angular.injector(['ng', 'ui.bootstrap']).get('$uibModal');
+    $uibModal: undefined,
+    initService: function(instance) {
+        this.$uibModal = instance;
     },
-    open: function(options) {
-        if (options) {
-            options.template = _.isUndefined(options.modal_header) ? "" : '<div class=\"modal-header\">' + options.modal_header + '<\/div>';
-            options.template += _.isUndefined(options.modal_content) ? "" : '<div class=\"modal-body\">' + options.modal_content + '<\/div>';
-            options.template += _.isUndefined(options.modal_footer) ? "" : '<div class=\"modal-footer\">' + options.modal_footer + '<\/div>';
-            return this.$uibModal.open(options);
+    open: function(options, callback) {
+        if (options && options.template) {
+            var popuptemplateHolder = "<script type=\"text\/ng-template\" id=\"popuptemplate\">" + options.template + "<\/script>";
+            EkstepEditor.jQuery('#popuptemplate').remove();
+            EkstepEditor.jQuery('#editorContainer').append(popuptemplateHolder);
+            this.$uibModal.open(options).rendered.then(function() {
+                EkstepEditorAPI.dispatchEvent('popupservice:fire', callback);
+            });
         }
     }
 }));
