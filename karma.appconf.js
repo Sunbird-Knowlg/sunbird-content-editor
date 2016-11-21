@@ -27,6 +27,7 @@ module.exports = function(config) {
             'app/bower_components/uuid/index.js',
             'app/bower_components/angular-mocks/angular-mocks.js',
             'app/bower_components/jasmine-jquery/lib/jasmine-jquery.js',
+            'app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js',
             // endbower
             'app/scripts/main/class.js',
             'app/scripts/main/ekstep-editor.js',
@@ -35,16 +36,14 @@ module.exports = function(config) {
             'app/scripts/manager/event-manager.js',
             'app/scripts/manager/plugin-manager.js',
             'app/scripts/manager/stage-manager.js',
-            'app/scripts/manager/toolbar-manager.js',
-            'app/scripts/main/ekstep-editor-api.js',
+            'app/scripts/manager/toolbar-manager.js',            
             'app/scripts/service/iservice.js',
             'app/scripts/service/content-service.js',
             'app/scripts/service/base-http-service.js',
             'app/scripts/service/base-configURL-service.js',
             'app/scripts/main/preview-content.js',
-            'app/scripts/angular/controller/main.js',
-            'app/scripts/service/iservice.js',
-            'app/scripts/service/content-service.js',
+            'app/scripts/angular/controller/main.js',            
+            'app/scripts/service/popup-service.js',
             'app/test/**/*.js',
             // fixtures
             {pattern: 'app/test/**/*.json', watched: true, served: true, included: false}
