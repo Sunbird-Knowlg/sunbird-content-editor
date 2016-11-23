@@ -52,13 +52,13 @@ module.exports = function(config) {
 
 
         // list of files to exclude
-        exclude: [],
+        exclude: ['plugins/**/test/**/*','plugins/**/libs/**','plugins/coverage/**'],
 
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'plugins/**/!(libs)/*.js': 'coverage',
+            'plugins/**/*.js': ['coverage']
         },
 
 
