@@ -15,7 +15,7 @@ module.exports = function(config) {
         // list of files / patterns to load in the browser
         files: [
             // bower:js
-            'app/bower_components/jquery/dist/jquery.js',
+            'node_modules/jquery/dist/jquery.js',
             'app/bower_components/angular/angular.js',
             'app/bower_components/bootstrap/dist/js/bootstrap.js',
             'app/bower_components/fabric/dist/fabric.min.js',
@@ -26,6 +26,8 @@ module.exports = function(config) {
             'app/bower_components/lodash/dist/lodash.min.js',
             'app/bower_components/uuid/index.js',
             'app/bower_components/angular-mocks/angular-mocks.js',
+            'app/bower_components/jasmine-jquery/lib/jasmine-jquery.js',
+            'app/bower_components/angular-bootstrap/ui-bootstrap.min.js',
             // endbower
             'app/scripts/main/class.js',
             'app/scripts/main/ekstep-editor.js',
@@ -40,9 +42,12 @@ module.exports = function(config) {
             'app/scripts/service/content-service.js',
             'app/scripts/service/base-http-service.js',
             'app/scripts/service/base-configURL-service.js',
+            'app/scripts/service/popup-service.js',
             'app/scripts/main/preview-content.js',
             'app/scripts/angular/controller/main.js',
-            'plugins/**/*.js'
+            'plugins/**/*.js',
+            // fixtures
+            {pattern: 'plugins/**/*.json', watched: true, served: true, included: false}
         ],
 
 
@@ -53,7 +58,8 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'plugins/**/*.js': ['coverage']
+            'plugins/**/*.js': ['coverage'],
+            'plugins/**/!(libs)*.js': ['coverage'],
         },
 
 

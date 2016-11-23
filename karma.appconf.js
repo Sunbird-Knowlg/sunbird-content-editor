@@ -45,8 +45,10 @@ module.exports = function(config) {
             'app/scripts/angular/controller/main.js',            
             'app/scripts/service/popup-service.js',
             'app/test/**/*.js',
+            'plugins/org.ekstep.stage-1.0/**/*.js',
             // fixtures
-            {pattern: 'app/test/**/*.json', watched: true, served: true, included: false}
+            {pattern: 'app/test/**/*.json', watched: true, served: true, included: false},
+            {pattern: 'plugins/org.ekstep.stage-1.0/**/*.json', watched: true, served: true, included: false}
         ],
 
 
@@ -57,9 +59,9 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'app/scripts/**/*.js': ['coverage']
+            'app/scripts/**/*.js': ['coverage'],
+            'plugins/org.ekstep.stage-1.0/**/*.js': ['coverage']
         },
-
 
         // test results reporter to use
         // possible values: 'dots', 'progress'

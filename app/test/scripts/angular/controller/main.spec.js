@@ -6,7 +6,7 @@ describe('editorApp', function () {
 
         EkstepEditor.config = {
             defaultSettings: 'base/app/test/config/editorSettings.json',
-            pluginRepo: 'http://localhost:9876/base/app/test/plugins',
+            pluginRepo: 'http://localhost:9876/base/plugins',
             //corePlugins: ["testplugin"]
         }
     });
