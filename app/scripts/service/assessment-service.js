@@ -4,24 +4,24 @@ EkstepEditor.assessmentService = new(EkstepEditor.iService.extend({
     requestHeaders: {
         "headers": {
             "content-type": "application/json",
-            "user-id": "ilimi"
+            "user-id": "content-editor"
         }
     },
     templateHeaders: {
         "headers": {
             "content-type": "application/json",
-            "user-id": "rayuluv"
+            "user-id": "content-editor"
         }
     },
     initService: function() {},
     getLanguages: function(callback) {
-        this.getFromService(this.learningURL + '/v1/language', this.requestHeaders, callback);
+        this.getFromService(this.learningURL + 'v1/language', this.requestHeaders, callback);
     },
     getDefinations: function(callback) {
-        this.getFromService(this.learningURL + '/taxonomy/domain/definition/AssessmentItem', this.requestHeaders, callback);
+        this.getFromService(this.learningURL + 'taxonomy/domain/definition/AssessmentItem', this.requestHeaders, callback);
     },
     getResourceBundles: function(callback) {
-        this.getFromService(this.learningURL + '/v2/config/resourcebundles/en', this.requestHeaders, callback);
+        this.getFromService(this.learningURL + 'v2/config/resourcebundles/en', this.requestHeaders, callback);
     },
     getQuestions: function(data, callback) {
         this.postFromService(this.searchURL + 'v2/search', data, this.requestHeaders, callback);
