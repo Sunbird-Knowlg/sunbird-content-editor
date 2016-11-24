@@ -235,6 +235,7 @@ EkstepEditor.basePlugin = Class.extend({
     },
     toECML: function () {
         var attr = _.clone(this.getAttributes()); 
+        attr.id = this.id;
         this.pixelToPercent(attr);
         if(!_.isUndefined(this.getData())) {
             attr.data = {

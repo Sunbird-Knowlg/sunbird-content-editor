@@ -19,7 +19,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             }
         };
         EkstepEditor.toolbarManager.setScope($scope);
-        EkstepEditor.init(null, $location.absUrl());
+        EkstepEditor.init(null, $location.protocol() + '://' + $location.host() + ':' + $location.port());
         $scope.menus = EkstepEditor.toolbarManager.menuItems;
         $scope.contextMenus = EkstepEditor.toolbarManager.contextMenuItems;
         $scope.stages = EkstepEditor.stageManager.stages;
