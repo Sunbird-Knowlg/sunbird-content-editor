@@ -162,18 +162,7 @@ EkstepEditor.basePlugin = Class.extend({
         return this.editorObj;
     },
     getCopy: function() {
-        return this.doCopy();
-    },
-    doPaste: function(copy) {
-        this.editorObj = fabric.util.object.clone(copy);
-        this.editorObj.set("id", this.id);
-        this.editorObj.set("top", copy.top + 10);
-        this.editorObj.set("left", copy.top + 10);
-    },
-    paste: function(copy) {
-        this.parent = EkstepEditorAPI.getCurrentStage();
-        this.doPaste(copy);
-        if (this.parent) this.parent.addChild(this);
+        return this.toECML();
     },
     render: function (canvas) { // Complex plugins and templates should override this if necessary
         canvas.add(this.editorObj);

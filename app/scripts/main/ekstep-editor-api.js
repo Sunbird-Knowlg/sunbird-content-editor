@@ -90,7 +90,10 @@ window.EkstepEditorAPI = {
     },
     cloneInstance: function(plugin) {
         var data = plugin.getCopy();
-        var newPlugin = EkstepEditorAPI.instantiatePlugin(plugin.manifest.id + '@' + plugin.manifest.ver, plugin.manifest.initdata || {});
-        newPlugin.paste(data, plugin.parent);
+        if(plugin.parent.id == EkstepEditorAPI.getCurrentStage().id) {
+            data.x = data.x + 2;
+            data.y = data.y + 2;
+        }
+        EkstepEditorAPI.instantiatePlugin(plugin.manifest.id + '@' + plugin.manifest.ver, data, EkstepEditorAPI.getCurrentStage());
     }
 }
