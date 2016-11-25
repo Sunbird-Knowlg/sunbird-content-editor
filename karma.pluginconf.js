@@ -47,12 +47,14 @@ module.exports = function(config) {
             'app/scripts/angular/controller/main.js',
             'plugins/**/*.js',
             // fixtures
-            {pattern: 'plugins/**/*.json', watched: true, served: true, included: false}
+            {pattern: 'plugins/**/*.json', watched: true, served: true, included: false},
+            {pattern: 'plugins/**/*.md', watched: true, served: true, included: false},
+            {pattern: 'plugins/**/*.css', watched: true, served: true, included: false}
         ],
 
 
         // list of files to exclude
-        exclude: ['plugins/coverage/**'],
+        exclude: ['plugins/coverage/**', 'plugins/**/renderer/**'],
 
 
         // preprocess matching files before serving them to the browser
