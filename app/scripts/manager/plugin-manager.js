@@ -10,13 +10,13 @@ EkstepEditor.pluginManager = new (Class.extend({
         console.log("Plugin manager initialized");
     },
     registerPlugin: function(manifest, plugin) {
-        this.plugins[manifest.id + '@' + manifest.ver] = {p: plugin, m: manifest};
+        this.plugins[manifest.id] = {p: plugin, m: manifest};
         var p = new plugin(manifest); // Initialize plugin
         this.pluginObjs[manifest.id] = p;
     },
     loadPlugin: function(pluginId, pluginVer) {
         var instance = this;
-        if(this.plugins[pluginId + '@' + pluginVer]) {
+        if(this.plugins[pluginId]) {
             console.log('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded');
         } else {
             EkstepEditor.loadPluginResource(pluginId, pluginVer, 'manifest.json', 'json', function(err, data) {

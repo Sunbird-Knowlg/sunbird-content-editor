@@ -94,6 +94,6 @@ window.EkstepEditorAPI = {
             data.x = data.x + 2;
             data.y = data.y + 2;
         }
-        EkstepEditorAPI.instantiatePlugin(plugin.manifest.id + '@' + plugin.manifest.ver, data, EkstepEditorAPI.getCurrentStage());
+        EkstepEditorAPI.instantiatePlugin(plugin.manifest.id, data, EkstepEditorAPI.getCurrentStage());
     }
 }

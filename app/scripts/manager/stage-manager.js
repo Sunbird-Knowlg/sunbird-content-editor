@@ -1,7 +1,7 @@
 /**
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
-EkstepEditor.stageManager = new (Class.extend({
+EkstepEditor.stageManager = new(Class.extend({
     stages: [],
     currentStage: undefined,
     canvas: undefined,
@@ -30,6 +30,12 @@ EkstepEditor.stageManager = new (Class.extend({
         });
         this.canvas.on("object:removed", function(options, event) {
             EkstepEditor.stageManager.dispatchObjectEvent('removed', options, event);
+        });
+        this.canvas.on("object:moving", function(options, event) {
+            EkstepEditor.stageManager.dispatchObjectEvent('moving', options, event);
+        });
+        this.canvas.on("object:scaling", function(options, event) {
+            EkstepEditor.stageManager.dispatchObjectEvent('scaling', options, event);
         });
     },
     dispatchObjectEvent: function(eventType, options, event) {
@@ -80,14 +86,14 @@ EkstepEditor.stageManager = new (Class.extend({
     },
     toECML: function() {
         var instance = this;
-        var content = { theme: { id: "theme", version: 0.2, startStage: this.stages[0].id, stage: [], manifest: {media: []}}};
+        var content = { theme: { id: "theme", version: 0.2, startStage: this.stages[0].id, stage: [], manifest: { media: [] } } };
         this.setNavigationalParams();
         var mediaMap = {};
         _.forEach(this.stages, function(stage, index) {
             var stageBody = stage.toECML();
             _.forEach(stage.children, function(child) {
                 var id = child.manifest.shortId || child.manifest.id;
-                if(_.isUndefined(stageBody[id])) stageBody[id] = [];
+                if (_.isUndefined(stageBody[id])) stageBody[id] = [];
                 stageBody[id].push(child.toECML());
                 instance.updateContentManifest(content, id, child.manifest);
                 instance.addMediaToMediaMap(mediaMap, child.getMedia());
@@ -98,7 +104,7 @@ EkstepEditor.stageManager = new (Class.extend({
         return content;
     },
     addMediaToMediaMap: function(mediaMap, media) {
-        if(_.isObject(media)) {
+        if (_.isObject(media)) {
             _.forIn(media, function(value, key) {
                 mediaMap[key] = value;
             });
@@ -108,23 +114,23 @@ EkstepEditor.stageManager = new (Class.extend({
         var instance = this;
         var size = this.stages.length;
         _.forEach(this.stages, function(stage, index) {
-            if(index != 0) {
-                stage.addParam('previous', instance.stages[index-1].id);
+            if (index != 0) {
+                stage.addParam('previous', instance.stages[index - 1].id);
             }
-            if(index < (size-1)) {
-                stage.addParam('next', instance.stages[index+1].id);
+            if (index < (size - 1)) {
+                stage.addParam('next', instance.stages[index + 1].id);
             }
         });
     },
     updateContentManifest: function(content, id, pluginManifest) {
-        if(_.indexOf(EkstepEditor.config.corePlugins, id) == 1) {
+        if (_.indexOf(EkstepEditor.config.corePlugins, id) == 1) {
             return;
         }
-        if(_.isUndefined(pluginManifest.renderer) || _.isUndefined(pluginManifest.renderer.main)) {
+        if (_.isUndefined(pluginManifest.renderer) || _.isUndefined(pluginManifest.renderer.main)) {
             return;
         }
-        var manifestEntry = _.find(content.theme.manifest.media, {id: id});
-        if(_.isUndefined(manifestEntry)) {
+        var manifestEntry = _.find(content.theme.manifest.media, { id: id });
+        if (_.isUndefined(manifestEntry)) {
             content.theme.manifest.media.push({
                 id: id,
                 ver: pluginManifest.ver,
@@ -136,12 +142,12 @@ EkstepEditor.stageManager = new (Class.extend({
     fromECML: function(contentBody) {
         // Load all plugins
         contentBody.theme.manifest.media = _.isArray(contentBody.theme.manifest.media) ? contentBody.theme.manifest.media : [contentBody.theme.manifest.media];
-        var plugins = _.filter(contentBody.theme.manifest.media, {type: 'plugin'});
+        var plugins = _.filter(contentBody.theme.manifest.media, { type: 'plugin' });
         _.forEach(plugins, function(plugin) {
             EkstepEditor.pluginManager.loadPlugin(plugin.id, plugin.ver);
         });
         _.forEach(contentBody.theme.manifest.media, function(media) {
-            if(media.type !== 'plugin') {
+            if (media.type !== 'plugin') {
                 EkstepEditor.mediaManager.addMedia(media);
             }
         });
@@ -157,16 +163,16 @@ EkstepEditor.stageManager = new (Class.extend({
             _.forIn(props, function(values, key) {
                 values = _.isArray(values) ? values : [values];
                 _.forEach(values, function(value) {
-                    plugins.push({id: key, 'z-index': value['z-index'], data: value});
+                    plugins.push({ id: key, 'z-index': value['z-index'], data: value });
                 });
                 delete stage[key];
             })
-            
+
             _.forIn(_.sortBy(plugins, 'z-index'), function(plugin) {
                 var pluginId = EkstepEditor.config.corePluginMapping[plugin.id] || plugin.id;
-                
+
                 var pluginInstance = EkstepEditorAPI.instantiatePlugin(pluginId, plugin.data, stageInstance);
-                if(_.isUndefined(pluginInstance)) {
+                if (_.isUndefined(pluginInstance)) {
                     console.log('Unable to instantiate', plugin.id);
                 } else {
                     pluginCount++;
@@ -180,6 +186,6 @@ EkstepEditor.stageManager = new (Class.extend({
             stageInstance.destroyOnLoad(pluginCount, canvas, cb);
 
         });
-        
+
     }
 }));

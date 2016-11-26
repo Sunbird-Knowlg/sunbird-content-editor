@@ -139,7 +139,7 @@ EkstepEditor.basePlugin = Class.extend({
         delete EkstepEditor.pluginManager.pluginInstances[this.id];
     },
     create: function(event, data) {
-        EkstepEditorAPI.instantiatePlugin(this.manifest.id + '@' + this.manifest.ver, _.clone(data), EkstepEditor.stageManager.currentStage);
+        EkstepEditorAPI.instantiatePlugin(this.manifest.id, _.clone(data), EkstepEditor.stageManager.currentStage);
     },
     addChild: function(plugin) {
         this.children.push(plugin);
@@ -333,5 +333,8 @@ EkstepEditor.basePlugin = Class.extend({
         var props = _.omitBy(_.clone(this.attributes), _.isObject);
         props = _.omitBy(props, _.isNaN);
         return props;
+    },
+    renderConfig: function () {
+      
     }
 });
