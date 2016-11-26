@@ -1,4 +1,4 @@
-angular.module('editorApp').controller('popupController', ['$scope','$uibModalInstance', 'data', function($scope, $uibModalInstance, data) {
+angular.module('editorApp').controller('popupController', ['$scope','$uibModalInstance', 'data', '$sce', function($scope, $uibModalInstance, data, $sce) {
     var $ctrl = this,
         args = Array.prototype.slice.call(arguments);
 
