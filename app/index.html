@@ -13,6 +13,7 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/semantic/dist/semantic.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -37,6 +38,10 @@
     .community-portal-remove i {
         display: inline-block;
         cursor: pointer;
+    }
+    
+    .attachmentHolder {
+        margin-top: 5px;
     }
     </style>
 </head>
@@ -118,6 +123,8 @@
                                     <div id="pluginPropertyContainer" ng-show="showPluginProperty" ng-include="'templates/properties.html'">
                                     </div>
                                 </div>
+                                <div id="attachmentHolder" class="attachmentHolder" ng-show="attachmentHolder.show" ng-include="'templates/attachmentHolder.html'">
+                                </div>
                             </div>
                         </section>
                         <aside id="sidebar-right" ng-class="isRightBarCollapsed ? 'collapsed' : ''">
@@ -139,7 +146,8 @@
     <script src="bower_components/x2js/index.js"></script>
     <script src="bower_components/eventbus/index.js"></script>
     <script src="bower_components/uuid/index.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>    
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/semantic/dist/semantic.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
