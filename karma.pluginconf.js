@@ -46,10 +46,13 @@ module.exports = function(config) {
             'app/scripts/main/preview-content.js',
             'app/scripts/angular/controller/main.js',
             'plugins/**/*.js',
+            'app/scripts/service/assessment-service.js',
             // fixtures
-            {pattern: 'plugins/**/*.json', watched: true, served: true, included: false},
-            {pattern: 'plugins/**/*.md', watched: true, served: true, included: false},
-            {pattern: 'plugins/**/*.css', watched: true, served: true, included: false}
+            { pattern: 'plugins/**/*.json', watched: true, served: true, included: false },
+            { pattern: 'plugins/**/*.md', watched: true, served: true, included: false },
+            { pattern: 'plugins/**/*.css', watched: true, served: true, included: false },
+            { pattern: 'plugins/**/*.html', watched: true, served: true, included: false },
+            { pattern: 'app/preview/**', watched: true, served: true, included: false }
         ],
 
 
@@ -62,7 +65,9 @@ module.exports = function(config) {
         preprocessors: {
             'plugins/**/!(libs)/*.js': ['coverage']
         },
-
+        proxies: {
+            '/plugins/': '/base/plugins/'
+        },
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
