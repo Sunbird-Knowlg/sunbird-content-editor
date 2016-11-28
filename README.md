@@ -1,13 +1,19 @@
 # Content-Editor
 
+System requirements:
+Node 6.3.1 or above (LTS) (Download from https://nodejs.org/en/)
+Chrome latest
+
 Setup instructions
 
     1. Clone Content-Editor and Content-Plugins repo in the same directory
     2. Change to Content-Editor directory (`cd Content-Editor`)
     3. Run NPM (`npm install`)
-    4. Change to app directory and run bower (`cd app && bower install`)
-    5. Start grunt server from Content-Editor root directory (`grunt serve`)
+    4. Change to app directory and run bower install (`cd app && bower install`)
+    5. Start node app from Content-Editor root directory (`node app.js`)
+    6. Open http://localhost:3000/app/ in Chrome
 
-This will launch the browser with Content-Editor. Check the chrome console to make sure there are no errors and you are ready!!
+Check the chrome console to make sure there are no errors and you are ready!!
 
-Take a look inside plugins(symbolic link) and review couple of existing plugins files and structure of each. 
+Take a look inside plugins(symbolic link) and review couple of existing plugins files and structure of each.
+Hint: You can start with Shape plugin.
