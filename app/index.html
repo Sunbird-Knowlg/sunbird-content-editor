@@ -6,9 +6,9 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="styles/open-sans.css" />
-    <link rel="stylesheet" href="styles/bootstrap.css" />
-    <link rel="stylesheet" href="styles/template.css" />
+    <!-- <link rel="stylesheet" href="styles/open-sans.css" />
+    <link rel="stylesheet" href="styles/bootstrap.css" /> -->
+    <!-- <link rel="stylesheet" href="styles/template.css" /> -->
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
@@ -16,9 +16,10 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
+    <!-- <link rel="stylesheet" href="styles/main.css"> -->
     <!-- endbuild -->
     <!-- Not need for AT on Community Portal. Needed only on localhost -->
+    <link rel="stylesheet" href="bower_components/semantic/dist/semantic.min.css">
     <style>
     .community-portal-remove {
         background: #DEDEDE;
@@ -55,7 +56,7 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
             <!-- Application content -->
-            <header>
+            <!-- <header>
                 <div class="navbar navbar-default toolbar-widget" role="navigation">
                     <div class="container toolbar-container">
                         <div class="toolbar">
@@ -64,12 +65,12 @@
                                     <div ng-repeat="menu in menus" style="display: block" class="pull-left" ng-include="'templates/toolbar.html'">
                                     </div>
                                 </section>
-                                <section class="edit-object pull-left">
-                                    <!--<div class="row text-middle-line caption-toolbar-right"-->
-                                    <!--ng-show="hasActiveObject() || isObjectSelected('textbox') || isHotspot()">-->
-                                    <!--<span>EDIT {{getConvertedObjName(currentObj)}}</span>-->
-                                    <!--</div>-->
-                                    <div class="pull-left">
+                                <section class="edit-object pull-left"> -->
+            <!--<div class="row text-middle-line caption-toolbar-right"-->
+            <!--ng-show="hasActiveObject() || isObjectSelected('textbox') || isHotspot()">-->
+            <!--<span>EDIT {{getConvertedObjName(currentObj)}}</span>-->
+            <!--</div>-->
+            <!-- <div class="pull-left">
                                         <div class="btn-group">
                                             <div ng-repeat="menu in contextMenus" style="display: block" class="pull-left" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'">
                                             </div>
@@ -80,66 +81,59 @@
                         </div>
                     </div>
                 </div>
-            </header>
-            <div class="container main-container">
-                <section id="main-container">
-                    <div class="main-container-wrapper">
-                        <aside id="sidebar-left">
-                            <div class="sidebar-wrapper">
-                                <div id="thumbnailParentBox">
-                                    <div ng-repeat="stage in stages" class="stage-thumbnail {{stage.isSelected ? 'stage-active' : '' }}" ng-click="fireEvent(stage.onclick)">
-                                        <div class="stage-thumbnail-wrapper">
-                                            <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" style="height: 90px; width: 160px">
-                                        </div>
-                                    </div>
-                                </div>
+            </header> -->
+            <div class="ui grid bottom attached">
+                <div class="row">
+                    <div class="ui three wide column grey">
+                        <div ng-repeat="stage in stages" class="ui centered raised link card {{stage.isSelected ? 'blue' : '' }}" ng-click="fireEvent(stage.onclick)">
+                            <div class="image">
+                                <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" />
                             </div>
-                        </aside>
-                        <section id="center-container">
-                            <button id="toolbarHiddenButton" style="position: fixed; z-index: 0; opacity: 0"></button>
-                            <div id="toolbar-options" class="hidden"><a href="#" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show"><i class="{{toolbar.iconClass}}"></i></a></div>
-                            <div class="editor-container">
-                                <div class="authoring-tool-editor">
-                                    <div id="canvas-wrapper">
-                                        <canvas id="canvas" width="720px" height="405px"></canvas>
-                                    </div>
-                                </div>
-                                <div id="plugin-toolbar-container" class="plugin-toolbar-container">
-                                    <ul class="list-group" ng-show="showPluginConfig">
-                                        <li class="list-group-item plugin-toolbar-header">Configuration</li>
-                                        <li ng-repeat="config in pluginConfig" class="list-group-item" ng-include="'templates/config.html'"></li>
-                                    </ul>
-                                    <div id="pluginHelpContainer" ng-show="showPluginHelp">
-                                        <ul class="list-group">
-                                            <li class="list-group-item plugin-toolbar-header">Help</li>
-                                            <li id="pluginHelp" class="list-group-item"></li>
-                                        </ul>
-                                    </div>
-                                    <div id="pluginPropertyContainer" ng-show="showPluginProperty" ng-include="'templates/properties.html'">
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-                        <aside id="sidebar-right" ng-class="isRightBarCollapsed ? 'collapsed' : ''">
-                            <i class="icons-close" ng-class="isRightBarCollapsed ? 'right-sidebar-open' : 'right-sidebar-close'" ng-click="isRightBarCollapsed = !isRightBarCollapsed"></i>
-                        </aside>
+                        </div>
                     </div>
-                </section>
+                    <div class="ui nine wide column">
+                        <button id="toolbarHiddenButton" style="position: fixed; z-index: 0; opacity: 0"></button>
+                        <div id="toolbar-options" class="hidden"><a href="#" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show"><i class="{{toolbar.iconClass}}"></i></a></div>
+                        <div class="editor-container">
+                            <div class="authoring-tool-editor">
+                                <div id="canvas-wrapper">
+                                    <canvas style="margin: 2em; border: 2px solid #DDDDDD" id="canvas" width="720px" height="405px"></canvas>
+                                </div>
+                            </div>
+                            <div id="plugin-toolbar-container" class="plugin-toolbar-container">
+                                <ul class="list-group" ng-show="showPluginConfig">
+                                    <li class="list-group-item plugin-toolbar-header">Configuration</li>
+                                    <li ng-repeat="config in pluginConfig" class="list-group-item" ng-include="'templates/config.html'"></li>
+                                </ul>
+                                <div id="pluginHelpContainer" ng-show="showPluginHelp">
+                                    <ul class="list-group">
+                                        <li class="list-group-item plugin-toolbar-header">Help</li>
+                                        <li id="pluginHelp" class="list-group-item"></li>
+                                    </ul>
+                                </div>
+                                <div id="pluginPropertyContainer" ng-show="showPluginProperty" ng-include="'templates/properties.html'">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui four wide column">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script> -->
     <script src="bower_components/fabric/dist/fabric.min.js"></script>
     <script src="bower_components/lodash/lodash.js"></script>
     <script src="bower_components/x2js/index.js"></script>
     <script src="bower_components/eventbus/index.js"></script>
     <script src="bower_components/uuid/index.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>    
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/semantic/dist/semantic.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->

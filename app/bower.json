@@ -12,7 +12,8 @@
     "eventbus": "./libs/eventbus.min.js",
     "uuid": "./libs/uuid-v4.min.js",
     "async": "*",
-    "angular-bootstrap": "^2.2.0"    
+    "angular-bootstrap": "^2.2.0",
+    "semantic": "^2.2.6"
   },
   "appPath": "app",
   "moduleName": "editorApp",
