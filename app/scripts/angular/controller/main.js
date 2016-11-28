@@ -42,7 +42,16 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     alert('Content saved successfully');
                 }
             });
-        }        
+        }    
+
+        $scope.loadAndInitPlugin = function() {
+            if(_.isString($scope.pluginId)) {
+                var loaded = EkstepEditor.pluginManager.loadAndInitPlugin($scope.pluginId);
+                if(loaded === 1) {
+                    alert($scope.pluginId + ' not found');
+                }
+            }
+        }    
         
         EkstepEditor.contentService.getContent(EkstepEditorAPI.globalContext.contentId, function(err, contentBody) {
             if (err) {
@@ -54,16 +63,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 EkstepEditor.stageManager.fromECML(JSON.parse(contentBody));
             }
             EkstepEditor.stageManager.registerEvents();
-        });/**/
+        });
 
         EkstepEditorAPI.getService('popup').initService($uibModal);
-        
-        /*
-        $http.get('test.ecml').then(function(response) {
-            var x2js = new X2JS({attributePrefix: 'none'});
-            var data = x2js.xml_str2json(response.data);
-            EkstepEditor.stageManager.fromECML(data);
-        });*/
-        
     }
 ]);

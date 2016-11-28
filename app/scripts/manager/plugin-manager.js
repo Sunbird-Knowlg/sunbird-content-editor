@@ -14,6 +14,19 @@ EkstepEditor.pluginManager = new (Class.extend({
         var p = new plugin(manifest); // Initialize plugin
         this.pluginObjs[manifest.id] = p;
     },
+    loadAndInitPlugin: function(pluginFQName) {
+        var index = pluginFQName.lastIndexOf('-');
+        var pluginId = pluginFQName.substr(0, index);
+        var version = pluginFQName.substr(index + 1);
+        this.loadPlugin(pluginId, version);
+        if(this.isDefined(pluginId)) {
+            var pluginManifest = this.getPluginManifest(pluginId);
+            this.invoke(pluginId, pluginManifest.editor['init-data'] || {}, EkstepEditorAPI.getCurrentStage());
+            return 0;
+        } else {
+            return 1;
+        }
+    },
     loadPlugin: function(pluginId, pluginVer) {
         var instance = this;
         if(this.plugins[pluginId]) {
@@ -90,6 +103,14 @@ EkstepEditor.pluginManager = new (Class.extend({
     },
     getPluginInstance: function(id) {
         return this.pluginInstances[id];
+    },
+    getPluginManifest: function(id) {
+        var plugin = this.plugins[id];
+        if (plugin) {
+            return plugin.m;
+        } else {
+            return undefined;
+        }
     },
     addError: function(error) {
         this.errors.push(error);

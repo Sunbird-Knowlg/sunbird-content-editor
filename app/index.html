@@ -13,7 +13,6 @@
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="bower_components/semantic/dist/semantic.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -81,6 +80,11 @@
                                         </div>
                                     </div>
                                 </section>
+                                <section class="edit-object pull-right">
+                                    <a href="#" ng-click="loadAndInitPlugin()" style="text-decoration: none; color: white"><i class="fa fa-arrow-circle-right fa-2x" style="margin-top: 4px;margin-right: 5px;margin-left: 5px;"></i></a>
+                                    <input type="text" placeholder="org.ekstep.shape-1.0" class="pull-left" style="min-height: 30px;height: 30px;margin-top: 3px;" ng-model="pluginId"/>
+                                    
+                                </section>
                             </div>
                         </div>
                     </div>
@@ -147,7 +151,6 @@
     <script src="bower_components/eventbus/index.js"></script>
     <script src="bower_components/uuid/index.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script src="bower_components/semantic/dist/semantic.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
