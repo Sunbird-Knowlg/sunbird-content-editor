@@ -5,6 +5,7 @@
 user=ubuntu
 user_home=/home/ubuntu
 at_home={{user_home}}/AuthoringTool
+s3_location=ekstep-public/dev
 
 [all:children]
 test

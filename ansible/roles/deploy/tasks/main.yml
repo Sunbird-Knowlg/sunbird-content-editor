@@ -9,6 +9,9 @@
 - name: Copy zip file to server
   copy: src=content-editor.zip dest={{user_home}}/ owner={{user}} group={{user}} mode=0774
 
+- name: Copy plugins into S3 bucket
+  command: "aws s3 cp {{at_home}}/content-plugins s3://{{s3_location}}/content-plugins/ --recursive"
+
 - name: Create AuthoringTool directory
   file: path={{at_home}} owner={{user}} group={{user}} state=directory
 
