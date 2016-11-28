@@ -45,7 +45,7 @@
   lineinfile: dest=.aws/credentials line='aws_secret_access_key={{ lookup('env', 'lp_aws_secret_access_key') }}' insertafter=EOF state=present  create=yes
 
 - name: Copy plugins into S3 bucket
-  command: "aws s3 cp {{at_home}}/content-plugins s3://{{s3_location}}/content-plugins/ --recursive public-read"
+  command: "aws s3 cp {{at_home}}/content-plugins s3://{{s3_location}}/content-plugins/ --recursive --acl public-read"
 
 - name: Install npm packages
   command: "npm install"
