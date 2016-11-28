@@ -17,5 +17,5 @@ Setup instructions
 
 Check the chrome console to make sure there are no errors and you are ready!!
 
-Take a look inside plugins(symbolic link) and review couple of existing plugins files and structure of each.
+Take a look inside plugins(symbolic link) and review couple of existing plugins files and structure of each.  
 Hint: You can start with Shape plugin.
