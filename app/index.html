@@ -86,13 +86,13 @@
             <div class="ui icon menu">
                 <span  ng-repeat="menu in menus" ng-include="'templates/toolbar.html'">
                 </span>
-                <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'"></span>
+                <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
             </div>
             <div class="ui grid bottom attached">
                 <div class="row">
                     <div class="ui three wide column grey">
                         <div ng-repeat="stage in stages" class="ui centered raised link card {{stage.isSelected ? 'blue' : '' }}" ng-click="fireEvent(stage.onclick)">
-                            <div class="ui image small">
+                            <div class="ui image">
                                 <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" />
                             </div>
                         </div>

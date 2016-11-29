@@ -15,6 +15,7 @@ EkstepEditor.toolbarManager = new(Class.extend({
         //TODO: should be moved if possible
         $(document).ready(function() {
             $(".ui.dropdown").dropdown();
+            $(".popup-item").popup();
         });
     },
     registerContextMenu: function(menu) {
@@ -43,6 +44,10 @@ EkstepEditor.toolbarManager = new(Class.extend({
             //         EkstepEditor.jQuery("#" + value.id).parent().tooltip();
             //     });
             // })
+        });
+        $(document).ready(function() {
+            $(".ui.dropdown").dropdown();
+            $(".popup-item").popup();
         });
 
     },
