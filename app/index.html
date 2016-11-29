@@ -11,15 +11,16 @@
     <!-- <link rel="stylesheet" href="styles/template.css" /> -->
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
+    <link rel="stylesheet" href="styles/content-editor.css" />
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="bower_components/semantic/dist/semantic.min.css">
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <!-- <link rel="stylesheet" href="styles/main.css"> -->
     <!-- endbuild -->
     <!-- Not need for AT on Community Portal. Needed only on localhost -->
-    <link rel="stylesheet" href="bower_components/semantic/dist/semantic.min.css">
     <style>
     .community-portal-remove {
         background: #DEDEDE;
@@ -45,7 +46,7 @@
 <body>
     <!-- End of localhost only code-->
     <div ng-app="editorApp" ng-strict-di>
-        <div ng-controller="MainCtrl" id="editorContainer">
+        <div ng-controller="MainCtrl" id="editorContainer" class="ui fluid container">
             <div class="container community-portal-remove">
                 <i class="fa fa-tablet fa-2x" aria-hidden="true" style="padding-right: 15px; padding-top: 37px;" ng-click="previewContent();"></i>
                 <span ng-disabled="!contentId">
@@ -82,11 +83,16 @@
                     </div>
                 </div>
             </header> -->
+            <div class="ui icon menu">
+                <span  ng-repeat="menu in menus" ng-include="'templates/toolbar.html'">
+                </span>
+                <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'"></span>
+            </div>
             <div class="ui grid bottom attached">
                 <div class="row">
                     <div class="ui three wide column grey">
                         <div ng-repeat="stage in stages" class="ui centered raised link card {{stage.isSelected ? 'blue' : '' }}" ng-click="fireEvent(stage.onclick)">
-                            <div class="image">
+                            <div class="ui image small">
                                 <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" />
                             </div>
                         </div>
@@ -97,7 +103,7 @@
                         <div class="editor-container">
                             <div class="authoring-tool-editor">
                                 <div id="canvas-wrapper">
-                                    <canvas style="margin: 2em; border: 2px solid #DDDDDD" id="canvas" width="720px" height="405px"></canvas>
+                                    <canvas id="canvas" class="at-canvas" width="720px" height="405px"></canvas>
                                 </div>
                             </div>
                             <div id="plugin-toolbar-container" class="plugin-toolbar-container">
@@ -116,7 +122,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="ui four wide column">
+                    <div class="ui four wide column grey">
                     </div>
                 </div>
             </div>
@@ -148,8 +154,8 @@
     <script src="scripts/main/ekstep-editor-api.js"></script>
     <script src="scripts/service/iservice.js"></script>
     <script src="scripts/service/content-service.js"></script>
-    <script src="scripts/service/popup-service.js"></script>    
-    <script src="scripts/angular/controller/main.js"></script>    
+    <script src="scripts/service/popup-service.js"></script>
+    <script src="scripts/angular/controller/main.js"></script>
     <script src="scripts/angular/controller/popup-controller.js"></script>
     <script src="scripts/service/assessment-service.js"></script>
     <!-- endbuild -->
