@@ -107,6 +107,7 @@ EkstepEditor.stageManager = new(Class.extend({
         if (_.isObject(media)) {
             _.forIn(media, function(value, key) {
                 mediaMap[key] = value;
+                value.src = value.src.replace('https://ekstep-public.s3-ap-southeast-1.amazonaws.com/', 'https://dev.ekstep.in/assets/public/')
             });
         }
     },
