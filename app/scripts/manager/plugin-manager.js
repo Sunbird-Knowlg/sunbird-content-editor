@@ -21,7 +21,7 @@ EkstepEditor.pluginManager = new (Class.extend({
         this.loadPlugin(pluginId, version);
         if(this.isDefined(pluginId)) {
             var pluginManifest = this.getPluginManifest(pluginId);
-            this.invoke(pluginId, pluginManifest.editor['init-data'] || {}, EkstepEditorAPI.getCurrentStage());
+            this.invoke(pluginId, _.cloneDeep(pluginManifest.editor['init-data'] || {}), EkstepEditorAPI.getCurrentStage());
             return 0;
         } else {
             return 1;

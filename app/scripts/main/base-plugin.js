@@ -45,6 +45,7 @@ EkstepEditor.basePlugin = Class.extend({
         this.registerFabricEvents();
         if(this.editorObj) this.editorObj.set({id: this.id});
         if (this.parent) this.parent.addChild(this);
+        if(this.parent && this.parent.type !== 'stage') EkstepEditorAPI.dispatchEvent('object:modified', { id: this.id });
     },
     registerMenu: function() {
         var instance = this;
@@ -233,6 +234,18 @@ EkstepEditor.basePlugin = Class.extend({
     getMedia: function() {
         return this.media;
     },
+    getRendererDimensions: function() {
+        var attr = this.getAttributes();
+        var dims = {
+            x: attr.x,
+            y: attr.y,
+            w: attr.w,
+            h: attr.h,
+            r: attr.r
+        }
+        this.pixelToPercent(dims);
+        return dims;
+    },
     toECML: function () {
         var attr = _.clone(this.getAttributes()); 
         attr.id = this.id;
@@ -264,11 +277,11 @@ EkstepEditor.basePlugin = Class.extend({
         var instance = this;
         this.attributes = data;
         if(!_.isUndefined(this.attributes.data)) {
-            this.data = JSON.parse(this.attributes.data.__cdata);
+            this.data = this.attributes.data.__cdata ? JSON.parse(this.attributes.data.__cdata) : this.attributes.data;
             delete this.attributes.data;
         }
         if(!_.isUndefined(this.attributes.config)) {
-            this.config = JSON.parse(this.attributes.config.__cdata);
+            this.config = this.attributes.config.__cdata ? JSON.parse(this.attributes.config.__cdata) : this.attributes.config;
             delete this.attributes.config;
         }
         if(!_.isUndefined(this.attributes.events)) {
