@@ -23,8 +23,7 @@
     <!-- Not need for AT on Community Portal. Needed only on localhost -->
     <style>
     .community-portal-remove {
-        background: #DEDEDE;
-        height: 81px;
+        height: 50px;
         text-align: right;
     }
     
@@ -47,57 +46,29 @@
     <!-- End of localhost only code-->
     <div ng-app="editorApp" ng-strict-di>
         <div ng-controller="MainCtrl" id="editorContainer" class="ui fluid container">
-            <div class="container community-portal-remove">
-                <i class="fa fa-tablet fa-2x" aria-hidden="true" style="padding-right: 15px; padding-top: 37px;" ng-click="previewContent();"></i>
-                <span ng-disabled="!contentId">
-                    <i class="fa fa-floppy-o fa-2x" aria-hidden="true" ng-disabled='contentId' ng-click="saveContent()" ng-disabled="!contentId"></i>
-                </span>
-            </div>
-            <!--[if lte IE 8]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-            <!-- Application content -->
-            <!-- <header>
-                <div class="navbar navbar-default toolbar-widget" role="navigation">
-                    <div class="container toolbar-container">
-                        <div class="toolbar">
-                            <div class="row">
-                                <section class="add-new-object pull-left btn-group">
-                                    <div ng-repeat="menu in menus" style="display: block" class="pull-left" ng-include="'templates/toolbar.html'">
-                                    </div>
-                                </section>
-                                <section class="edit-object pull-left"> -->
-            <!--<div class="row text-middle-line caption-toolbar-right"-->
-            <!--ng-show="hasActiveObject() || isObjectSelected('textbox') || isHotspot()">-->
-            <!--<span>EDIT {{getConvertedObjName(currentObj)}}</span>-->
-            <!--</div>-->
-            <!-- <div class="pull-left">
-                                        <div class="btn-group">
-                                            <div ng-repeat="menu in contextMenus" style="display: block" class="pull-left" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </header> -->
             <div class="ui icon menu">
                 <span  ng-repeat="menu in menus" ng-include="'templates/toolbar.html'">
                 </span>
                 <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
+                <div class="right menu community-portal-remove">
+                    <a class="item"  ng-click="previewContent();">
+                        <i class="tablet large icon" ></i>
+                    </a>
+                    <a class="item"  ng-click="previewContent();" ng-click="saveContent()" ng-disabled="!contentId">
+                        <i class="save large icon" ></i>
+                    </a>
+                </div>
             </div>
             <div class="ui grid bottom attached">
                 <div class="row">
-                    <div class="ui three wide column grey">
+                    <div class="ui three wide column">
                         <div ng-repeat="stage in stages" class="ui centered raised link card {{stage.isSelected ? 'blue' : '' }}" ng-click="fireEvent(stage.onclick)">
                             <div class="ui image">
                                 <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" />
                             </div>
                         </div>
                     </div>
-                    <div class="ui nine wide column">
+                    <div class="ui nine wide column at-center-container">
                         <button id="toolbarHiddenButton" style="position: fixed; z-index: 0; opacity: 0"></button>
                         <div id="toolbar-options" class="hidden"><a href="#" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show"><i class="{{toolbar.iconClass}}"></i></a></div>
                         <div class="editor-container">
@@ -122,7 +93,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="ui four wide column grey">
+                    <div class="ui four wide column">
                     </div>
                 </div>
             </div>

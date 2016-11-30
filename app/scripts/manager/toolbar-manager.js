@@ -14,8 +14,10 @@ EkstepEditor.toolbarManager = new(Class.extend({
         }
         //TODO: should be moved if possible
         $(document).ready(function() {
-            $(".ui.dropdown").dropdown();
-            $(".popup-item").popup();
+            setTimeout(function() {
+                $(".ui.dropdown").dropdown();
+                $(".popup-item").popup();
+            }, 1000)
         });
     },
     registerContextMenu: function(menu) {
