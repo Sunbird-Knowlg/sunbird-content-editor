@@ -26,8 +26,8 @@
   unarchive: src={{user_home}}/content-editor.zip dest={{at_home}} copy=no owner={{user}} group={{user}} mode=0774
 
 - name: Pip install awscli
-  pip: name=awscli state=latest
-  sudo: yes
+  pip: name=awscli state=present
+  become: yes
 
 - name: Create .aws
   file: path={{ item.path }} state={{ item.state }}
