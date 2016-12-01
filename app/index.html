@@ -47,15 +47,15 @@
     <div ng-app="editorApp" ng-strict-di>
         <div ng-controller="MainCtrl" id="editorContainer" class="ui fluid container">
             <div class="ui icon menu">
-                <span  ng-repeat="menu in menus" ng-include="'templates/toolbar.html'">
+                <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'">
                 </span>
                 <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
                 <div class="right menu community-portal-remove">
-                    <a class="item"  ng-click="previewContent();">
-                        <i class="tablet large icon" ></i>
+                    <a class="item" ng-click="previewContent();">
+                        <i class="tablet large icon"></i>
                     </a>
-                    <a class="item"  ng-click="previewContent();" ng-click="saveContent()" ng-disabled="!contentId">
-                        <i class="save large icon" ></i>
+                    <a class="item" ng-click="previewContent();" ng-click="saveContent()" ng-disabled="!contentId">
+                        <i class="save large icon"></i>
                     </a>
                 </div>
             </div>
@@ -77,59 +77,82 @@
                                     <canvas id="canvas" class="at-canvas" width="720px" height="405px"></canvas>
                                 </div>
                             </div>
-                            <div id="plugin-toolbar-container" class="plugin-toolbar-container">
-                                <ul class="list-group" ng-show="showPluginConfig">
-                                    <li class="list-group-item plugin-toolbar-header">Configuration</li>
-                                    <li ng-repeat="config in pluginConfig" class="list-group-item" ng-include="'templates/config.html'"></li>
-                                </ul>
-                                <div id="pluginHelpContainer" ng-show="showPluginHelp">
-                                    <ul class="list-group">
-                                        <li class="list-group-item plugin-toolbar-header">Help</li>
-                                        <li id="pluginHelp" class="list-group-item"></li>
-                                    </ul>
-                                </div>
-                                <div id="pluginPropertyContainer" ng-show="showPluginProperty" ng-include="'templates/properties.html'">
+                            <div id="plugin-toolbar-container" class="plugin-toolbar-container hide">
+                                <div class="ui shape" id="pluginToolbarShape">
+                                    <div class="sides">
+                                        <div class="side pluginConfig" id="pluginConfig">
+                                            <div class="ui card">
+                                                <div class="content at config properties">
+                                                    <div class="ui header at config properties">Configuration</div>
+                                                </div>
+                                                <div class="content">
+                                                    <span ng-repeat="config in pluginConfig" ng-include="'templates/config.html'"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="side pluginProperties" id="pluginProperties">
+                                            <div class="ui card">
+                                                <div class="content at config properties">
+                                                    <div class="ui header at config properties">Properties</div>
+                                                </div>
+                                                <div class="content">
+                                                    <div id="pluginPropertyContainer" ng-include="'templates/properties.html'">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="side pluginHelpContent" id="pluginHelpContent">
+                                            <div class="ui card">
+                                                <div class="content at config properties">
+                                                    <div class="ui header at config properties">Help</div>
+                                                </div>
+                                                <div class="content">
+                                                    <div id="pluginHelp" class="ui message">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="ui four wide column">
+                        <div class="ui four wide column">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <!-- <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script> -->
-    <script src="bower_components/fabric/dist/fabric.min.js"></script>
-    <script src="bower_components/lodash/lodash.js"></script>
-    <script src="bower_components/x2js/index.js"></script>
-    <script src="bower_components/eventbus/index.js"></script>
-    <script src="bower_components/uuid/index.js"></script>
-    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <script src="bower_components/semantic/dist/semantic.min.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="scripts/main/class.js"></script>
-    <script src="scripts/main/ekstep-editor.js"></script>
-    <script src="scripts/main/base-plugin.js"></script>
-    <script src="scripts/manager/event-manager.js"></script>
-    <script src="scripts/manager/plugin-manager.js"></script>
-    <script src="scripts/manager/stage-manager.js"></script>
-    <script src="scripts/manager/toolbar-manager.js"></script>
-    <script src="scripts/manager/media-manager.js"></script>
-    <script src="scripts/main/ekstep-editor-api.js"></script>
-    <script src="scripts/service/iservice.js"></script>
-    <script src="scripts/service/content-service.js"></script>
-    <script src="scripts/service/popup-service.js"></script>
-    <script src="scripts/angular/controller/main.js"></script>
-    <script src="scripts/angular/controller/popup-controller.js"></script>
-    <script src="scripts/service/assessment-service.js"></script>
-    <!-- endbuild -->
+        <!-- build:js(.) scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <!-- <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script> -->
+        <script src="bower_components/fabric/dist/fabric.min.js"></script>
+        <script src="bower_components/lodash/lodash.js"></script>
+        <script src="bower_components/x2js/index.js"></script>
+        <script src="bower_components/eventbus/index.js"></script>
+        <script src="bower_components/uuid/index.js"></script>
+        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+        <script src="bower_components/semantic/dist/semantic.min.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/main/class.js"></script>
+        <script src="scripts/main/ekstep-editor.js"></script>
+        <script src="scripts/main/base-plugin.js"></script>
+        <script src="scripts/manager/event-manager.js"></script>
+        <script src="scripts/manager/plugin-manager.js"></script>
+        <script src="scripts/manager/stage-manager.js"></script>
+        <script src="scripts/manager/toolbar-manager.js"></script>
+        <script src="scripts/manager/media-manager.js"></script>
+        <script src="scripts/main/ekstep-editor-api.js"></script>
+        <script src="scripts/service/iservice.js"></script>
+        <script src="scripts/service/content-service.js"></script>
+        <script src="scripts/service/popup-service.js"></script>
+        <script src="scripts/angular/controller/main.js"></script>
+        <script src="scripts/angular/controller/popup-controller.js"></script>
+        <script src="scripts/service/assessment-service.js"></script>
+        <!-- endbuild -->
 </body>
 
 </html>

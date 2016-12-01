@@ -1,18 +1,26 @@
 <div ng-switch on="config.dataType">
-    <div title="{{config.description}}" data-original-title="{{config.description}}" ng-switch-when="colorpicker">
-        <label ng-if="config.title">{{config.title}}</label>
-        <div class="jscolor" style="width:20px;height:20px; min-width: 20px; min-height: 20px;" id="{{config.propertyName}}" ng-click="fireEvent({'id':'colorpicker:show', 'data': {}})"></div>
+    <div class="ui divider" ng-if="$index != 0"></div>
+    <div class="ui form" ng-switch-when="colorpicker">
+        <div class="field">
+            <label ng-if="config.title">{{config.title}}</label>
+            <div class="jscolor" style="width:20px;height:20px; min-width: 20px; min-height: 20px;" id="{{config.propertyName}}" ng-click="fireEvent({'id':'colorpicker:show', 'data': {}})"></div>
+        </div>
     </div>
-    <div title="{{config.description}}" data-original-title="{{config.description}}" ng-switch-when="input">
-        <label ng-if="config.title">{{config.title}}</label>
-        <input type="{{config.valueType || text}}" ng-model="configData[config.propertyName]" />
+    <div class="ui form" ng-switch-when="input">
+        <div class="field">
+            <label ng-if="config.title">{{config.title}}</label>
+            <input type="{{config.valueType || text}}" placeholder="{{config.placeholder}}" ng-model="configData[config.propertyName]" />
+        </div>
     </div>
-    <div title="{{config.description}}" data-original-title="{{config.description}}" ng-switch-when="select">
-        <label ng-if="config.title">{{config.title}}</label>
-        <select ng-model="configData[config.propertyName]" ng-options="val for val in config.range"></select>
+    <div class="ui form" ng-switch-when="select">
+        <div class="field">
+            <label ng-if="config.title">{{config.title}}</label>
+            <select class="ui dropdown" ng-model="configData[config.propertyName]" ng-options="val for val in config.range">
+            </select>
+        </div>
     </div>
-    <div class="btn-group" ng-switch-when="group">
-        <button type="button" class="btn config-icon-btn {{configData[dd.propertyName] ? 'btn-primary': ''}}" ng-repeat="dd in config.config" ng-click="configData[dd.propertyName] = !configData[dd.propertyName]">
+    <div class="ui icon buttons" ng-switch-when="group">
+        <button class="ui button {{configData[dd.propertyName] ? 'primary': ''}}" ng-repeat="dd in config.config" ng-click="configData[dd.propertyName] = !configData[dd.propertyName]" data-tooltip="{{dd.toolTip}}">
             <div ng-switch on="dd.dataType">
                 <span ng-if="dd.text" ng-switch-when="text" class="{{dd.textClass}}" style="{{dd.textStyle}}">{{dd.text}}</span>
                 <i class="{{dd.iconClass}} " ng-if="dd.iconClass" style="{{dd.iconStyle}}" ng-switch-when="icon"></i>
