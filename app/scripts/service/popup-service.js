@@ -8,15 +8,16 @@ EkstepEditor.popupService = new(EkstepEditor.iService.extend({
         }, this);
 
         EkstepEditorAPI.addEventListener('popupservice:controller:load', function(event, data) {
-            thisObj.callback.apply(data.controller, data.args);
+            thisObj.callback && thisObj.callback.apply(data.controller, data.args);
         }, this);
     },
     open: function(options, callback) {
         if (options && options.template) {
             this.callback = callback;
+            options.data = _.isUndefined(options.data) ? {} : options.data;
             $(".ui.modal").remove();
             EkstepEditor.jQuery('#popuptemplate').append(options.template);
-            this.modal(options.data);
+            this.modal && this.modal(options.data);
         }
     }
 }));

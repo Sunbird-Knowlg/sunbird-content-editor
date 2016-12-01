@@ -1,8 +1,6 @@
-angular.module('editorApp').controller('popupController', ['$scope', '$sce', '$compile', '$document', function($scope, $sce, $compile, $document) {
-    var $ctrl = this,
-        args;
+angular.module('editorApp').controller('popupController', ['$scope', '$compile', '$document', '$injector', function($scope, $compile, $document, $injector) {
+    var args = [this, $injector];
 
-    args = [$ctrl, $scope];
     EkstepEditorAPI.dispatchEvent('popupModal:show', semanticModal);
 
     function semanticModal(data) {
@@ -11,7 +9,7 @@ angular.module('editorApp').controller('popupController', ['$scope', '$sce', '$c
             onShow: function() {
                 args.push(data);
                 EkstepEditorAPI.dispatchEvent('popupservice:controller:load', {
-                    controller: $ctrl,
+                    controller: args[0],
                     args: args
                 });
             },
