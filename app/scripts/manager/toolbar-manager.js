@@ -17,7 +17,7 @@ EkstepEditor.toolbarManager = new(Class.extend({
             setTimeout(function() {
                 $(".ui.dropdown").dropdown();
                 $(".popup-item").popup();
-            }, 1000)
+            }, 500)
         });
     },
     registerContextMenu: function(menu) {

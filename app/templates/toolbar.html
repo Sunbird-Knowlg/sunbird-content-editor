@@ -5,21 +5,21 @@
             <img class="ui mini image {{menu.iconClass}}" ng-src="{{menu.iconImage}}" ng-if="menu.iconImage" id="{{menu.id}}" ng-switch-when="image">
         </a> 
     </span>
-    <div class="menu" ng-if="menu.submenu">
-        <div class="ui dropdown item popup-item"  data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="top center">
-            <i class="{{menu.iconClass}}" ng-if="menu.iconClass" style="{{menu.iconStyle}}" id="{{menu.id}}" ng-switch-when="icon" ng-click="fireEvent(menu.onclick)"></i>
-            <div class="menu">
-                <a class="item" ng-repeat="dd in menu.submenu" ng-click="fireEvent(dd.onclick)" ng-switch on="dd.type">
-                    <span ng-switch-when="icon">
+<div class="menu" ng-if="menu.submenu">
+    <div class="ui dropdown item popup-item" data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="top center">
+        <i class="{{menu.iconClass}}" ng-if="menu.iconClass" style="{{menu.iconStyle}}" id="{{menu.id}}" ng-switch-when="icon" ng-click="fireEvent(menu.onclick)"></i>
+        <div class="menu">
+            <a class="item" ng-repeat="dd in menu.submenu" ng-click="fireEvent(dd.onclick)" ng-switch on="dd.type">
+                <span ng-switch-when="icon">
                         <i class="{{dd.iconClass}}" ng-if="dd.iconClass" style="{{dd.iconStyle}}" id="{{dd.id}}"></i>
-                        <span ng-if="dd.title">{{dd.title}}</span>    
-                    </span>
-                    <span ng-switch-when="image">
+                        <span ng-if="dd.title">{{dd.title}}</span>
+                </span>
+                <span ng-switch-when="image">
                         <img class="ui mini spaced image at-dd-image-icon {{dd.iconClass}}" ng-src="{{dd.iconImage}}" ng-if="dd.iconImage" id="{{dd.id}}">
-                        <span ng-if="dd.title">{{dd.title}}</span> 
-                    </span>
-                 </a>       
-            </div>
+                        <span ng-if="dd.title">{{dd.title}}</span>
+                </span>
+            </a>
         </div>
     </div>
+</div>
 </span>
