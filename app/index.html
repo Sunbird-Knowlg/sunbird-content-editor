@@ -75,6 +75,13 @@
                                     <canvas id="canvas" class="at-canvas" width="720px" height="405px"></canvas>
                                 </div>
                             </div>
+                            <div id="toolbarOptions" class="hide toolbar-options">
+                                <div class="ui compact icon menu">
+                                    <a class="item" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show">
+                                        <i class="{{toolbar.iconClass}}"></i>
+                                    </a>
+                                </div>
+                            </div>
                             <div id="plugin-toolbar-container" class="plugin-toolbar-container hide">
                                 <div class="ui shape" id="pluginToolbarShape">
                                     <div class="sides">
