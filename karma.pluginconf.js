@@ -28,6 +28,7 @@ module.exports = function(config) {
             'app/bower_components/angular-mocks/angular-mocks.js',
             'app/bower_components/jasmine-jquery/lib/jasmine-jquery.js',
             'app/bower_components/angular-bootstrap/ui-bootstrap.min.js',
+            'app/bower_components/semantic/dist/semantic.js',
             // endbower
             'app/scripts/main/class.js',
             'app/scripts/main/ekstep-editor.js',
@@ -37,7 +38,6 @@ module.exports = function(config) {
             'app/scripts/manager/plugin-manager.js',
             'app/scripts/manager/stage-manager.js',
             'app/scripts/manager/toolbar-manager.js',
-            'app/scripts/main/ekstep-editor-api.js',
             'app/scripts/service/iservice.js',
             'app/scripts/service/content-service.js',
             'app/scripts/service/base-http-service.js',
