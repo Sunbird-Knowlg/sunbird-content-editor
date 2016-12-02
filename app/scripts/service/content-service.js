@@ -19,7 +19,7 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
             var requestObj = {
                 request: {
                     content: {
-                        body: body,
+                        body: JSON.stringify(body),
                         versionKey: versionKey
                     }
                 }
