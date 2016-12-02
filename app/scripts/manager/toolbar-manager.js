@@ -15,8 +15,8 @@ EkstepEditor.toolbarManager = new(Class.extend({
         //TODO: should be moved if possible
         $(document).ready(function() {
             setTimeout(function() {
-                $(".ui.dropdown").dropdown();
-                $(".popup-item").popup();
+                EkstepEditor.jQuery(".ui.dropdown").dropdown();
+                EkstepEditor.jQuery(".popup-item").popup();
             }, 500)
         });
     },
@@ -48,8 +48,8 @@ EkstepEditor.toolbarManager = new(Class.extend({
             // })
         });
         $(document).ready(function() {
-            $(".ui.dropdown").dropdown();
-            $(".popup-item").popup();
+            EkstepEditor.jQuery(".ui.dropdown").dropdown();
+            EkstepEditor.jQuery(".popup-item").popup();
         });
 
     },
