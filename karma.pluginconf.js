@@ -45,8 +45,9 @@ module.exports = function(config) {
             'app/scripts/service/popup-service.js',
             'app/scripts/main/preview-content.js',
             'app/scripts/angular/controller/main.js',
+            'app/scripts/angular/controller/popup-controller.js',
             'plugins/**/*.js',
-            'app/scripts/service/assessment-service.js',
+            'app/scripts/service/assessment-service.js',            
             // fixtures
             { pattern: 'plugins/**/*.json', watched: true, served: true, included: false },
             { pattern: 'plugins/**/*.md', watched: true, served: true, included: false },
