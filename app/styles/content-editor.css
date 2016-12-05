@@ -3,20 +3,21 @@ CSS file for Content Editor
 */
 
 html,
-body{
-  height: 100%;
-}
-.maincontainer{
-  height: 90%;
+body {
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.02);
 }
 
-.wrapper{
-  height: 100%;
+.maincontainer {
+    height: 90%;
+}
+
+.wrapper {
+    height: 100%;
 }
 
 .at-canvas {
     border: 1px solid grey;
-    
 }
 
 .at-dd-image-icon {
@@ -33,17 +34,31 @@ body{
     width: 20px !important;
     height: 20px !important;
 }
-.at-context-menu{
-  background-color: #dddddd;
-}
-.at-inverted{
-  filter: invert(100%);
-}
-.at-center-container{
-  border-right: 1px solid #ddd;
-  border-left: 1px solid #ddd;
+
+.at-context-menu {
+    background-color: #dddddd;
 }
 
-.ui.grid{
-  min-height: 100%;
+.at-inverted {
+    filter: invert(100%);
+}
+
+.at-center-container {
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+
+.ui.grid {
+    min-height: 100%;
+}
+
+.canvas-container {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    vertical-align: middle;
+    margin-top: 20px;
+}
+.grid-center-container{
+  padding: 0px !important;
 }
