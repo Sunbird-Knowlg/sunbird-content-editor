@@ -11,10 +11,11 @@
     <!-- <link rel="stylesheet" href="styles/template.css" /> -->
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
-    <link rel="stylesheet" href="styles/content-editor.css" />
+    
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="styles/semantic.min.css">
+    <link rel="stylesheet" href="styles/content-editor.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -42,10 +43,10 @@
     </style>
 </head>
 
-<body>
+<body class="ui fluid container">
     <!-- End of localhost only code-->
-    <div ng-app="editorApp" ng-strict-di>
-        <div ng-controller="MainCtrl" id="editorContainer" class="ui fluid container">
+    <div ng-app="editorApp" class="maincontainer" ng-strict-di>
+        <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
             <div class="ui icon menu">
                 <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'">
                 </span>
@@ -59,7 +60,7 @@
                     </a>
                 </div>
             </div>
-            <div class="ui grid bottom attached">
+            <div class="ui grid bottom attached celled">
                 <div class="row">
                     <div class="ui three wide column">
                         <div ng-repeat="stage in stages" class="ui centered raised link card {{stage.isSelected ? 'blue' : '' }}" ng-click="fireEvent(stage.onclick)">
@@ -68,8 +69,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="ui nine wide column at-center-container">
-                        <div class="editor-container">
+                    <div class="ui nine wide column">
+                        <div class="editor-container centered">
                             <div class="authoring-tool-editor">
                                 <div id="canvas-wrapper">
                                     <canvas id="canvas" class="at-canvas" width="720px" height="405px"></canvas>
@@ -114,14 +115,14 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="ui four wide column">
-                        </div>
-                        <div id="toolbar-options" class="hide toolbar-options">
-                            <div class="ui compact icon menu">
-                                <a class="item" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show">
-                                    <i class="{{toolbar.iconClass}}"></i>
-                                </a>
-                            </div>
+                    </div>
+                    <div class="ui four wide column">
+                    </div>
+                    <div id="toolbar-options" class="hide toolbar-options">
+                        <div class="ui compact icon menu">
+                            <a class="item" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show">
+                                <i class="{{toolbar.iconClass}}"></i>
+                            </a>
                         </div>
                     </div>
                 </div>

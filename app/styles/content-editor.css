@@ -1,9 +1,22 @@
 /*
 CSS file for Content Editor
 */
+
+html,
+body{
+  height: 100%;
+}
+.maincontainer{
+  height: 90%;
+}
+
+.wrapper{
+  height: 100%;
+}
+
 .at-canvas {
     border: 1px solid grey;
-    margin: -6px;
+    
 }
 
 .at-dd-image-icon {
@@ -29,4 +42,8 @@ CSS file for Content Editor
 .at-center-container{
   border-right: 1px solid #ddd;
   border-left: 1px solid #ddd;
+}
+
+.ui.grid{
+  min-height: 100%;
 }
