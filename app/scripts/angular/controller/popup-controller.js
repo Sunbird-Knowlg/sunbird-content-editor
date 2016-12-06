@@ -15,6 +15,9 @@ angular.module('editorApp').controller('popupController', ['$scope', '$compile',
             },
             onHide: function() {
 
+            },
+            dimmerSettings: {
+                opacity: 0.4
             }
         }).modal('show');
     };
