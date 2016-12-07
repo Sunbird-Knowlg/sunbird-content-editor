@@ -2,7 +2,7 @@
  var chug = require('gulp-chug');
  var clean = require('gulp-clean');
  
- gulp.task('sematic-ui-build', function() {
+ gulp.task('setup', function() {
      gulp.src('semantic/dist', { read: false }).pipe(clean())
      gulp.src(['app/config/theme.config']).pipe(gulp.dest('semantic/src/'))
      gulp.src('semantic/gulpfile.js')
