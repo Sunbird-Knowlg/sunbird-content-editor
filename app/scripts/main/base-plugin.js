@@ -322,12 +322,17 @@ EkstepEditor.basePlugin = Class.extend({
     },
     getHelp: function (cb) {
         var helpText = "Help is not available."
-        this.loadResource(this.manifest.editor.help.src, this.manifest.editor.help.dataType, function (err, help) {
-            if (!err) {
-                helpText = help;
-                cb(helpText);
-            }
-        });
+        try {
+            this.loadResource(this.manifest.editor.help.src, this.manifest.editor.help.dataType, function(err, help) {
+                if (!err) {
+                    helpText = help;
+                    cb(helpText);
+                }
+            });
+        } catch (e) {
+            console.log(e)
+            cb(helpText);
+        }
     },
     getProperties: function () {
         var props = _.omitBy(_.clone(this.attributes), _.isObject);
