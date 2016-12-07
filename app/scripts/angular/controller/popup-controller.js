@@ -1,5 +1,6 @@
 angular.module('editorApp').controller('popupController', ['$scope', '$compile', '$document', '$injector', function($scope, $compile, $document, $injector) {
-    var args = [this, $injector];
+    var args = [],
+        ctrl = this;
 
     EkstepEditorAPI.dispatchEvent('popupModal:show', semanticModal);
 
@@ -7,14 +8,11 @@ angular.module('editorApp').controller('popupController', ['$scope', '$compile',
         $compile($document.find('.ui.modal'))($scope);
         $('.ui.modal').modal({
             onShow: function() {
-                args.push(data);
+                args = [ctrl, $injector, data];
                 EkstepEditorAPI.dispatchEvent('popupservice:controller:load', {
                     controller: args[0],
                     args: args
                 });
-            },
-            onHide: function() {
-
             },
             dimmerSettings: {
                 opacity: 0.4
