@@ -46,51 +46,46 @@
     <!-- End of localhost only code-->
     <div ng-app="editorApp" class="maincontainer" ng-strict-di>
         <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
-            <div class="ui middle aligned" style="height: 40px;">
-                <div>
-                    <i class="university icon"></i>Content Editor
-                </div>
+            <div class="ui masthead vertical segment" style="background: #ffffff;">
+                <h1 class="ui header" style="padding-left: 15px">Untitled Lesson</h1>
             </div>
-            <div class="ui icon menu" style="margin-bottom: 0; margin-top: 0;">
+            <div class="ui large icon menu" style="margin-bottom: 0; margin-top: 0;background: #EEEEEE;">
                 <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'">
                 </span>
                 <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
                 <div class="right menu community-portal-remove">
                     <a class="item popup-item disabled" data-content="Send for Review" data-variation="tiny inverted">
-                        <i class="openid large icon"></i>
+                        <i class="openid icon"></i>
                     </a>
                     <a class="item popup-item disabled" data-content="Download" data-variation="tiny inverted">
-                        <i class="download large icon"></i>
+                        <i class="download icon"></i>
                     </a>
                     <a class="item popup-item" ng-click="previewContent();" data-content="Preview" data-variation="tiny inverted">
-                        <i class="tablet large icon"></i>
+                        <i class="tablet icon"></i>
                     </a>
                     <a class="item popup-item" ng-click="saveContent()" ng-disabled="!contentId" data-content="Save Progress" data-variation="tiny inverted">
-                        <i class="save large icon"></i>
+                        <i class="save icon"></i>
                     </a>
                     <a class="item popup-item disabled" data-content="Close" data-variation="tiny inverted">
-                        <i class="remove large icon"></i>
+                        <i class="remove icon"></i>
                     </a>
                 </div>
             </div>
-            <div class="ui grid bottom attached celled" style="margin: 0;">
+            <div class="ui grid bottom attached celled" style="margin: 0;background: #EEEEEE;">
                 <div class="row">
                     <div class="ui three wide column">
-                        <div class="leftsidebar">
-                            <div ng-repeat="stage in stages" class="ui centered raised link card {{stage.isSelected ? 'blue' : '' }}" ng-click="fireEvent(stage.onclick)">
-                                <div class="ui image">
-                                    <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" />
+                        <div ng-repeat="stage in stages" class="ui centered raised card segment" ng-click="fireEvent(stage.onclick)" style="width: 213.33px;height: 120px;border-radius: 0px;">
+                            <div class="ui fluid image">
+                                <div class="ui blue ribbon label" ng-if="stage.isSelected">
+                                    <i class="trash outline icon"></i> <i class="clone icon"></i>
                                 </div>
+                                <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" />
                             </div>
                         </div>
                     </div>
-                    <div class="ui nine wide column grid-center-container">
-                        <div class="editor-container centered">
-                            <div class="authoring-tool-editor">
-                                <div id="canvas-wrapper">
-                                    <canvas id="canvas" class="at-canvas" width="720px" height="405px"></canvas>
-                                </div>
-                            </div>
+                    <div class="ui nine wide column">
+                        <div id="canvas-wrapper" >
+                            <canvas id="canvas" class="ui card centered raised" width="720px" height="405px" style="margin: 0; border-radius: 0px; background: none"></canvas>
                         </div>
                     </div>
                     <div class="ui four wide column">

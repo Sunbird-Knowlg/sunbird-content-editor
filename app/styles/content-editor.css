@@ -5,7 +5,6 @@ CSS file for Content Editor
 html,
 body {
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.02);
 }
 
 .maincontainer {
@@ -63,3 +62,6 @@ body {
     padding: 0px !important;
 }
 
+.masthead {
+    min-height: 40px;
+}
