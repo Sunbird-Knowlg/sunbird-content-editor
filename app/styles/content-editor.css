@@ -57,8 +57,9 @@ body {
     margin-right: auto;
     margin-left: auto;
     vertical-align: middle;
-    margin-top: 20px;
 }
-.grid-center-container{
-  padding: 0px !important;
+
+.grid-center-container {
+    padding: 0px !important;
 }
+
