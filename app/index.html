@@ -77,7 +77,8 @@
                         <div ng-repeat="stage in stages" class="ui centered raised card segment" ng-click="fireEvent(stage.onclick)" style="width: 213.33px;height: 120px;border-radius: 0px;">
                             <div class="ui fluid image">
                                 <div class="ui blue ribbon label" ng-if="stage.isSelected">
-                                    <i class="trash outline icon"></i> <i class="clone icon"></i>
+                                    <a href="#"><i class="trash outline icon"></i></a> 
+                                    <a href="#"><i class="clone icon"></i></a>
                                 </div>
                                 <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" />
                             </div>
