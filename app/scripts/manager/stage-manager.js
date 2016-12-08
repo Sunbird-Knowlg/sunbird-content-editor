@@ -14,6 +14,7 @@ EkstepEditor.stageManager = new(Class.extend({
         fabric.Object.prototype.padding = 1;
         fabric.Object.prototype.borderColor = "#1A98FA";
         fabric.Object.prototype.cornerColor = "#1A98FA";
+        //fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
         this.canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true });
         console.log("Stage manager initialized");
     },

@@ -39,7 +39,6 @@
         display: inline-block;
         cursor: pointer;
     }
-
     </style>
     <script type="text/javascript">
     (function() {
@@ -52,7 +51,6 @@
         var head = document.getElementsByTagName("head")[0];
         head.appendChild(trial);
     })();
-
     </script>
 </head>
 
@@ -125,26 +123,26 @@
                     </div>
                     <div class="ui four wide column">
                     </div>
-                    <div id="toolbar-options" class="hide toolbar-options">
-                        <div class="ui compact icon menu">
-                            <a class="item" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show">
-                                <i class="{{toolbar.iconClass}}"></i>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
             <div id="toolbarOptions" class="hide toolbarOptions">
-                <div class="ui compact icon menu">
-                    <a class="item" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show">
-                        <i class="{{toolbar.iconClass}}"></i>
+                <div class="ui mini compact icon menu">
+                    <a class="item" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show" style="padding: 6px;">
+                        <i class="large {{toolbar.iconClass}}"></i>
                     </a>
                 </div>
             </div>
-            <div class="ui card" id="plugin-toolbar-container" ng-show="showConfigContainer" ng-style="configStyle">
+            <div class="ui raised card" id="plugin-toolbar-container" ng-show="showConfigContainer" ng-style="configStyle">
                 <div class="content at config properties">
-                    <div class="ui header config-header">{{configHeaderText}} <i class="remove icon config-close-icon" ng-click="showConfigContainer = false;"></i></div>
+                    <div class="ui header config-header">{{configHeaderText}}
+                        <!-- <div class="ui circular icon button" ng-click="showConfigContainer = false;">
+                            <i class="close icon "></i>
+                        </div> -->
+
+                    </div>
+                    <i class="close large icon config-close-icon inverted" ng-click="showConfigContainer = false;"></i>
                 </div>
+                <!-- config-close-icon -->
                 <div class="content config-toolbar-content">
                     <span ng-repeat="config in pluginConfig" ng-include="'templates/config.html'" ng-show="configHeaderText === 'Configuration'"></span>
                     <div id="pluginPropertyContainer" ng-include="'templates/properties.html'" ng-show="configHeaderText === 'Properties'">
@@ -155,38 +153,38 @@
             </div>
             <div ng-controller="popupController as $ctrl" id="popuptemplate"></div>
         </div>
-        <!-- build:js(.) scripts/vendor.js -->
-        <!-- bower:js -->
-        <script src="bower_components/jquery/dist/jquery.js"></script>
-        <script src="bower_components/angular/angular.js"></script>
-        <!-- <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script> -->
-        <script src="bower_components/fabric/dist/fabric.min.js"></script>
-        <script src="bower_components/lodash/lodash.js"></script>
-        <script src="bower_components/x2js/index.js"></script>
-        <script src="bower_components/eventbus/index.js"></script>
-        <script src="bower_components/uuid/index.js"></script>
-        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-        <!-- endbower -->
-        <!-- endbuild -->
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="libs/semantic.min.js"></script>
-        <script src="scripts/main/class.js"></script>
-        <script src="scripts/main/ekstep-editor.js"></script>
-        <script src="scripts/main/base-plugin.js"></script>
-        <script src="scripts/manager/event-manager.js"></script>
-        <script src="scripts/manager/plugin-manager.js"></script>
-        <script src="scripts/manager/stage-manager.js"></script>
-        <script src="scripts/manager/toolbar-manager.js"></script>
-        <script src="scripts/manager/media-manager.js"></script>
-        <script src="scripts/main/ekstep-editor-api.js"></script>
-        <script src="scripts/service/iservice.js"></script>
-        <script src="scripts/service/content-service.js"></script>
-        <script src="scripts/service/popup-service.js"></script>
-        <script src="scripts/angular/controller/main.js"></script>
-        <script src="scripts/angular/controller/popup-controller.js"></script>
-        <script src="scripts/service/assessment-service.js"></script>
-        <!-- endbuild -->
+    </div>
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <!-- <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script> -->
+    <script src="bower_components/fabric/dist/fabric.min.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
+    <script src="bower_components/x2js/index.js"></script>
+    <script src="bower_components/eventbus/index.js"></script>
+    <script src="bower_components/uuid/index.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="libs/semantic.min.js"></script>
+    <script src="scripts/main/class.js"></script>
+    <script src="scripts/main/ekstep-editor.js"></script>
+    <script src="scripts/main/base-plugin.js"></script>
+    <script src="scripts/manager/event-manager.js"></script>
+    <script src="scripts/manager/plugin-manager.js"></script>
+    <script src="scripts/manager/stage-manager.js"></script>
+    <script src="scripts/manager/toolbar-manager.js"></script>
+    <script src="scripts/manager/media-manager.js"></script>
+    <script src="scripts/main/ekstep-editor-api.js"></script>
+    <script src="scripts/service/iservice.js"></script>
+    <script src="scripts/service/content-service.js"></script>
+    <script src="scripts/service/popup-service.js"></script>
+    <script src="scripts/angular/controller/main.js"></script>
+    <script src="scripts/angular/controller/popup-controller.js"></script>
+    <script src="scripts/service/assessment-service.js"></script>
+    <!-- endbuild -->
 </body>
 
 </html>
-
