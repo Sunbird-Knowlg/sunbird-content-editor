@@ -82,6 +82,41 @@ body {
     height: 75px;
     border-radius: 0px !important;
 }
-.thumbnail-ribbon{
+
+.thumbnail-ribbon {
     top: 0.4rem !important;
+}
+
+.content-title {
+    font-size: 18px;
+    padding: 5px !important;
+    border: 1px white solid !important;
+    border-radius: 0px !important;
+}
+
+.content-title:hover {
+    border: 1px rgba(0, 0, 0, 0.08) solid !important;
+}
+
+.content-masterhead {
+    background: #ffffff !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.content-logo {
+    width: 50px !important;
+    position: relative;
+    margin-left: 15px !important;
+}
+
+.content-concept-label {
+    margin-left: 6px;
+    font-size: 13px;
+    color: grey;
+}
+
+.content-type-label {
+    font-size: 20px;
+    color: grey;
 }
