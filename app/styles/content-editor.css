@@ -126,7 +126,9 @@ body {
     width: 720px !important;
     border-radius: 0px !important;
     margin-top: 25px !important;
-    margin-left: 25px !important;
-    margin-right: 25px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    vertical-align: middle !important;
+    display: block;
     font-size: 15px !important;
 }
