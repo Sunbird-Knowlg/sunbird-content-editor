@@ -65,3 +65,23 @@ body {
 .masthead {
     min-height: 40px;
 }
+
+.stage-number {
+    position: relative;
+    right: 16px;
+    top: -29px;
+    font-size: 10px;
+}
+
+.thumbnail-container {
+    padding-left: 10px;
+}
+
+.thumbnail {
+    width: 136px !important;
+    height: 75px;
+    border-radius: 0px !important;
+}
+.thumbnail-ribbon{
+    top: 0.4rem !important;
+}
