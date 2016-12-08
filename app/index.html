@@ -100,7 +100,7 @@
                 <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'">
                 </span>
                 <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
-                <div class="right menu community-portal-remove">
+                <div class="right menu">
                     <a class="item popup-item disabled" data-content="Send for Review" data-variation="tiny inverted">
                         <i class="openid icon"></i>
                     </a>
@@ -120,18 +120,21 @@
             </div>
             <div class="ui grid bottom attached celled" style="margin: 0;background: #EEEEEE;">
                 <div class="row">
-                    <div class="ui three wide column">
-                        <div ng-repeat="stage in stages" class="ui centered raised card segment" ng-click="fireEvent(stage.onclick)" style="width: 213.33px;height: 120px;border-radius: 0px;">
-                            <div class="ui fluid image">
-                                <div class="ui blue ribbon label" ng-if="stage.isSelected">
-                                    <i class="trash outline icon"></i> <i class="clone icon"></i>
+                    <div class="ui two wide column">
+                        <div ng-repeat="stage in stages" class="thumbnail-container">
+                            <div class="ui centered raised card segment thumbnail" ng-click="fireEvent(stage.onclick)">
+                                <div class="ui fluid image">
+                                    <div class="ui blue mini ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
+                                        <i class="trash outline icon"></i> <i class="clone icon"></i>
+                                    </div>
+                                    <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" />
                                 </div>
-                                <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" />
                             </div>
+                            <span class="left floated stage-number" >{{$index+1}}</span>
                         </div>
                     </div>
-                    <div class="ui nine wide column">
-                        <div id="canvas-wrapper" >
+                    <div class="ui ten wide column">
+                        <div id="canvas-wrapper">
                             <canvas id="canvas" class="ui card centered raised" width="720px" height="405px" style="margin: 0; border-radius: 0px; background: none"></canvas>
                         </div>
                     </div>
