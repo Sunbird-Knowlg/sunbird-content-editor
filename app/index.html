@@ -60,34 +60,32 @@
         <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
             <div class="ui masthead vertical segment content-masterhead">
                 <div class="ui grid">
-                    <div class="sixteen column row">
-                        <div class="one wide column">
-                            <img class="ui mini image content-logo" src="images/content-logo.png">
+                    <div class="one wide column">
+                        <img class="ui mini image content-logo" src="images/content-logo.png">
+                    </div>
+                    <div class="three wide column">
+                        <div class="ui input">
+                            <input class="content-title" input="text" placeholder="click here to add title" ng-modal="content_title">
+                            <label class="content-type-label"> | Story</label>
                         </div>
-                        <div class="four wide column">
-                            <div class="ui input">
-                                <input class="content-title" input="text" placeholder="click here to add title" ng-modal="content_title">
-                                <label class="content-type-label"> | Story</label>
-                            </div>
-                            <div class="row">
-                                <label class="content-concept-label">Receptive Vocabulary</label>
-                                <a href='#'> & 2more</a>
-                            </div>
+                        <div class="row">
+                            <label class="content-concept-label">Receptive Vocabulary</label>
+                            <a href='#'> & 2more</a>
                         </div>
-                        <div class="right floated row " style="position: fixed;right: 5px;top: 29px;">
-                            <button class="ui tiny icon button" ng-click="previewContent();">
-                                <i class="tablet icon"></i> Preview
-                            </button>
-                            <button class="ui tiny icon button disabled">
-                                <i class="download icon "></i> Download
-                            </button>
-                            <button class="ui tiny icon button" ng-click="saveContent()" ng-disabled="!contentId">
-                                <i class="save icon"></i> Save
-                            </button>
-                            <button class="ui tiny icon button disabled">
-                                <i class="remove icon"></i> Close
-                            </button>
-                        </div>
+                    </div>
+                    <div class="right floated three wide column">
+                        <button class="ui tiny icon button" ng-click="previewContent();">
+                            <i class="tablet icon"></i> Preview
+                        </button>
+                        <button class="ui tiny icon button disabled">
+                            <i class="download icon "></i> Download
+                        </button>
+                        <button class="ui tiny icon button" ng-click="saveContent()" ng-disabled="!contentId">
+                            <i class="save icon"></i> Save
+                        </button>
+                        <button class="ui tiny icon button disabled">
+                            <i class="remove icon"></i> Close
+                        </button>
                     </div>
                 </div>
             </div>
