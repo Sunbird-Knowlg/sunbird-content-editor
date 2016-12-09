@@ -124,7 +124,7 @@
                 </div>
             </div>
             <div id="toolbarOptions" class="hide toolbarOptions">
-                <div class="ui mini compact icon menu">
+                <div class="ui mini compact icon menu configmenu">
                     <a class="item" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show" style="padding: 6px;">
                         <i class="large {{toolbar.iconClass}}"></i>
                     </a>
@@ -133,9 +133,6 @@
             <div class="ui raised card" id="plugin-toolbar-container" ng-show="showConfigContainer" ng-style="configStyle">
                 <div class="content at config properties">
                     <div class="ui header config-header">{{configHeaderText}}
-                        <!-- <div class="ui circular icon button" ng-click="showConfigContainer = false;">
-                            <i class="close icon "></i>
-                        </div> -->
                     </div>
                     <div ng-click="showConfigContainer = false;" class="config-close-icon" style="color:'white';">X</div>
                 </div>
