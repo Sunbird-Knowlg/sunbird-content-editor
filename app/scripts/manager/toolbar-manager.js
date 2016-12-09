@@ -13,7 +13,7 @@ EkstepEditor.toolbarManager = new(Class.extend({
             this.menuItems.push(menu);
         }
         //TODO: should be moved if possible
-        $(document).ready(function() {
+        EkstepEditor.jQuery(document).ready(function() {
             setTimeout(function() {
                 EkstepEditor.jQuery(".ui.dropdown").dropdown();
                 EkstepEditor.jQuery(".popup-item").popup();
@@ -47,7 +47,7 @@ EkstepEditor.toolbarManager = new(Class.extend({
             //     });
             // })
         });
-        $(document).ready(function() {
+        EkstepEditor.jQuery(document).ready(function() {
             EkstepEditor.jQuery(".ui.dropdown").dropdown();
             EkstepEditor.jQuery(".popup-item").popup();
         });
