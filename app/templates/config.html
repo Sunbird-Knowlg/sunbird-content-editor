@@ -19,10 +19,10 @@
             </select>
         </div>
     </div>
-     <div class="ui form" ng-switch-when="assetbrowser">
+     <div class="ui form" ng-switch-when="imagebrowser">
         <div class="field">
             <label ng-if="config.title">{{config.title}}</label>
-            <i class="browser icon" ng-click="fireEvent({'id':'org.ekstep.config:invoke', 'data': {'type': config.dataType}})"></i>
+            <i class="browser icon link" ng-click="fireEvent({'id':'org.ekstep.config:invoke', 'data': {'type': config.dataType}})"></i>
         </div>
     </div>
     <div class="ui icon buttons" ng-switch-when="group">
