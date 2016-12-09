@@ -20,6 +20,9 @@
     "grunt-jsdoc": "2.1.0",
     "grunt-karma": "2.0.0",
     "grunt-run": "^0.6.0",
+    "gulp": "^3.9.1",
+    "gulp-chug": "^0.5.1",
+    "gulp-clean": "^0.3.2",
     "jasmine": "2.5.2",
     "jasmine-core": "2.5.2",
     "jquery": "3.1.1",
@@ -28,7 +31,8 @@
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "1.0.2",
     "karma-phantomjs-launcher": "1.0.2",
-    "phantomjs": "2.1.7"
+    "phantomjs": "2.1.7",
+    "semantic-ui": "^2.2.6"
   },
   "scripts": {
     "plugintest": "karma start karma.pluginconf.js",

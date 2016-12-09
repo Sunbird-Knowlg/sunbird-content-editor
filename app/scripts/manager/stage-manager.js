@@ -7,9 +7,14 @@ EkstepEditor.stageManager = new(Class.extend({
     canvas: undefined,
     init: function() {
         var instance = this;
-        fabric.Object.prototype.transparentCorners = true;
+        fabric.Object.prototype.transparentCorners = false;
         fabric.Object.prototype.lockScalingFlip = true;
         fabric.Object.prototype.hasRotatingPoint = false;
+        fabric.Object.prototype.cornerSize = 6;
+        fabric.Object.prototype.padding = 1;
+        fabric.Object.prototype.borderColor = "#1A98FA";
+        fabric.Object.prototype.cornerColor = "#1A98FA";
+        //fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
         this.canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true });
         console.log("Stage manager initialized");
     },

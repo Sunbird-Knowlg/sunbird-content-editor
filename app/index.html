@@ -6,23 +6,24 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="styles/open-sans.css" />
-    <link rel="stylesheet" href="styles/bootstrap.css" />
-    <link rel="stylesheet" href="styles/template.css" />
+    <!-- <link rel="stylesheet" href="styles/open-sans.css" />
+    <link rel="stylesheet" href="styles/bootstrap.css" /> -->
+    <!-- <link rel="stylesheet" href="styles/template.css" /> -->
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="styles/semantic.min.css">
+    <link rel="stylesheet" href="styles/content-editor.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-    <link rel="stylesheet" href="styles/main.css">
+    <!-- <link rel="stylesheet" href="styles/main.css"> -->
     <!-- endbuild -->
     <!-- Not need for AT on Community Portal. Needed only on localhost -->
     <style>
     .community-portal-remove {
-        background: #DEDEDE;
-        height: 81px;
+        height: 50px;
         text-align: right;
     }
     
@@ -38,113 +39,126 @@
         display: inline-block;
         cursor: pointer;
     }
-    
-    .attachmentHolder {
-        margin-top: 5px;
-    }
     </style>
+    <script type="text/javascript">
+    (function() {
+        var path = '//easy.myfonts.net/v2/js?sid=10263(font-family=Helvetica+Neue+45+Light)&sid=10265(font-family=Helvetica+Neue+65+Medium)&sid=10269(font-family=Helvetica+Neue+25+UltraLight)&key=mNu8sO6Q3f',
+            protocol = ('https:' == document.location.protocol ? 'https:' : 'http:'),
+            trial = document.createElement('script');
+        trial.type = 'text/javascript';
+        trial.async = true;
+        trial.src = protocol + path;
+        var head = document.getElementsByTagName("head")[0];
+        head.appendChild(trial);
+    })();
+    </script>
 </head>
 
-<body>
+<body class="ui fluid container">
     <!-- End of localhost only code-->
-    <div ng-app="editorApp" ng-strict-di>
-        <div ng-controller="MainCtrl" id="editorContainer">
-            <div class="container community-portal-remove">
-                <i class="fa fa-tablet fa-2x" aria-hidden="true" style="padding-right: 15px; padding-top: 37px;" ng-click="previewContent();"></i>
-                <span ng-disabled="!contentId">
-                    <i class="fa fa-floppy-o fa-2x" aria-hidden="true" ng-disabled='contentId' ng-click="saveContent()" ng-disabled="!contentId"></i>
-                </span>
-            </div>
-            <!--[if lte IE 8]>
-            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-        <![endif]-->
-            <!-- Application content -->
-            <header>
-                <div class="navbar navbar-default toolbar-widget" role="navigation">
-                    <div class="container toolbar-container">
-                        <div class="toolbar">
-                            <div class="row">
-                                <section class="add-new-object pull-left btn-group">
-                                    <div ng-repeat="menu in menus" style="display: block" class="pull-left" ng-include="'templates/toolbar.html'">
-                                    </div>
-                                </section>
-                                <section class="edit-object pull-left">
-                                    <!--<div class="row text-middle-line caption-toolbar-right"-->
-                                    <!--ng-show="hasActiveObject() || isObjectSelected('textbox') || isHotspot()">-->
-                                    <!--<span>EDIT {{getConvertedObjName(currentObj)}}</span>-->
-                                    <!--</div>-->
-                                    <div class="pull-left">
-                                        <div class="btn-group">
-                                            <div ng-repeat="menu in contextMenus" style="display: block" class="pull-left" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </section>
-                                <section class="edit-object pull-right">
-                                    <a href="#" ng-click="loadAndInitPlugin()" style="text-decoration: none; color: white"><i class="fa fa-arrow-circle-right fa-2x" style="margin-top: 4px;margin-right: 5px;margin-left: 5px;"></i></a>
-                                    <input type="text" placeholder="org.ekstep.shape-1.0" class="pull-left" style="min-height: 30px;height: 30px;margin-top: 3px;" ng-model="pluginId"/>
-                                    
-                                </section>
+    <div ng-app="editorApp" class="maincontainer" ng-strict-di>
+        <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
+            <div class="ui masthead vertical segment content-masterhead">
+                <div class="ui grid">
+                    <div class="sixteen column row">
+                        <div class="one wide column">
+                            <img class="ui mini image content-logo" src="images/content-logo.png">
+                        </div>
+                        <div class="four wide column">
+                            <div class="ui input">
+                                <input class="content-title" input="text" placeholder="click here to add title" ng-modal="content_title">
+                                <label class="content-type-label"> | Story</label>
                             </div>
+                            <div class="row">
+                                <label class="content-concept-label">Receptive Vocabulary</label>
+                                <a href='#'> & 2more</a>
+                            </div>
+                        </div>
+                        <div class="right floated row " style="position: fixed;right: 5px;top: 29px;">
+                            <button class="ui tiny icon button" ng-click="previewContent();">
+                                <i class="tablet icon"></i> Preview
+                            </button>
+                            <button class="ui tiny icon button disabled">
+                                <i class="download icon "></i> Download
+                            </button>
+                            <button class="ui tiny icon button" ng-click="saveContent()" ng-disabled="!contentId">
+                                <i class="save icon"></i> Save
+                            </button>
+                            <button class="ui tiny icon button disabled">
+                                <i class="remove icon"></i> Close
+                            </button>
                         </div>
                     </div>
                 </div>
-            </header>
-            <div class="container main-container">
-                <section id="main-container">
-                    <div class="main-container-wrapper">
-                        <aside id="sidebar-left">
-                            <div class="sidebar-wrapper">
-                                <div id="thumbnailParentBox">
-                                    <div ng-repeat="stage in stages" class="stage-thumbnail {{stage.isSelected ? 'stage-active' : '' }}" ng-click="fireEvent(stage.onclick)">
-                                        <div class="stage-thumbnail-wrapper">
-                                            <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" style="height: 90px; width: 160px">
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </aside>
-                        <section id="center-container">
-                            <button id="toolbarHiddenButton" style="position: fixed; z-index: 0; opacity: 0"></button>
-                            <div id="toolbar-options" class="hidden"><a href="#" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show"><i class="{{toolbar.iconClass}}"></i></a></div>
-                            <div class="editor-container">
-                                <div class="authoring-tool-editor">
-                                    <div id="canvas-wrapper">
-                                        <canvas id="canvas" width="720px" height="405px"></canvas>
-                                    </div>
-                                </div>
-                                <div id="plugin-toolbar-container" class="plugin-toolbar-container">
-                                    <ul class="list-group" ng-show="showPluginConfig">
-                                        <li class="list-group-item plugin-toolbar-header">Configuration</li>
-                                        <li ng-repeat="config in pluginConfig" class="list-group-item" ng-include="'templates/config.html'"></li>
-                                    </ul>
-                                    <div id="pluginHelpContainer" ng-show="showPluginHelp">
-                                        <ul class="list-group">
-                                            <li class="list-group-item plugin-toolbar-header">Help</li>
-                                            <li id="pluginHelp" class="list-group-item"></li>
-                                        </ul>
-                                    </div>
-                                    <div id="pluginPropertyContainer" ng-show="showPluginProperty" ng-include="'templates/properties.html'">
-                                    </div>
-                                </div>
-                                <div id="attachmentHolder" class="attachmentHolder" ng-show="attachmentHolder.show" ng-include="'templates/attachmentHolder.html'">
-                                </div>
-                            </div>
-                        </section>
-                        <aside id="sidebar-right" ng-class="isRightBarCollapsed ? 'collapsed' : ''">
-                            <i class="icons-close" ng-class="isRightBarCollapsed ? 'right-sidebar-open' : 'right-sidebar-close'" ng-click="isRightBarCollapsed = !isRightBarCollapsed"></i>
-                        </aside>
-                    </div>
-                </section>
             </div>
+            <div class="ui icon menu" style="margin-bottom: 0; margin-top: 0;background: #EEEEEE;">
+                <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'">
+                </span>
+                <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
+            </div>
+            <div class="ui grid bottom attached celled" style="margin: 0;background: #EEEEEE;">
+                <div class="row">
+                    <div class="ui two wide column">
+                        <div ng-repeat="stage in stages" class="thumbnail-container">
+                            <div class="ui centered raised card segment thumbnail" ng-click="fireEvent(stage.onclick)">
+                                <div class="ui fluid image">
+                                    <div class="ui blue mini ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
+                                        <i class="trash outline icon"></i> <i class="clone icon"></i>
+                                    </div>
+                                    <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" />
+                                </div>
+                            </div>
+                            <span class="left floated stage-number">{{$index+1}}</span>
+                        </div>
+                    </div>
+                    <div class="ui seven wide column">
+                        <div id="canvas-wrapper">
+                            <canvas id="canvas" class="ui card centered raised" width="720px" height="405px" style="margin: 0; border-radius: 0px; background: none"></canvas>
+                        </div>
+                        <div class="row">
+                            <div class="ui form">
+                                <textarea class="content-teacher-comments" rows="2" placeholder="Teacher Instructions..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ui three wide column">
+                    </div>
+                </div>
+            </div>
+            <div id="toolbarOptions" class="hide toolbarOptions">
+                <div class="ui mini compact icon menu">
+                    <a class="item" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show" style="padding: 6px;">
+                        <i class="large {{toolbar.iconClass}}"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ui raised card" id="plugin-toolbar-container" ng-show="showConfigContainer" ng-style="configStyle">
+                <div class="content at config properties">
+                    <div class="ui header config-header">{{configHeaderText}}
+                        <!-- <div class="ui circular icon button" ng-click="showConfigContainer = false;">
+                            <i class="close icon "></i>
+                        </div> -->
+
+                    </div>
+                    <i class="close large icon config-close-icon inverted" ng-click="showConfigContainer = false;"></i>
+                </div>
+                <!-- config-close-icon -->
+                <div class="content config-toolbar-content">
+                    <span ng-repeat="config in pluginConfig" ng-include="'templates/config.html'" ng-show="configHeaderText === 'Configuration'"></span>
+                    <div id="pluginPropertyContainer" ng-include="'templates/properties.html'" ng-show="configHeaderText === 'Properties'">
+                    </div>
+                    <div id="pluginHelpContent" class="ui message" ng-show="configHeaderText === 'Help'">
+                    </div>
+                </div>
+            </div>
+            <div ng-controller="popupController as $ctrl" id="popuptemplate"></div>
         </div>
     </div>
-
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <!-- <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script> -->
     <script src="bower_components/fabric/dist/fabric.min.js"></script>
     <script src="bower_components/lodash/lodash.js"></script>
     <script src="bower_components/x2js/index.js"></script>
@@ -154,9 +168,9 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="libs/semantic.min.js"></script>
     <script src="scripts/main/class.js"></script>
     <script src="scripts/main/ekstep-editor.js"></script>
-    <script src="config/devAPIurl.js"></script>
     <script src="scripts/main/base-plugin.js"></script>
     <script src="scripts/manager/event-manager.js"></script>
     <script src="scripts/manager/plugin-manager.js"></script>
@@ -166,8 +180,8 @@
     <script src="scripts/main/ekstep-editor-api.js"></script>
     <script src="scripts/service/iservice.js"></script>
     <script src="scripts/service/content-service.js"></script>
-    <script src="scripts/service/popup-service.js"></script>    
-    <script src="scripts/angular/controller/main.js"></script>    
+    <script src="scripts/service/popup-service.js"></script>
+    <script src="scripts/angular/controller/main.js"></script>
     <script src="scripts/angular/controller/popup-controller.js"></script>
     <script src="scripts/service/assessment-service.js"></script>
     <!-- endbuild -->

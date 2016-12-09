@@ -28,6 +28,9 @@ window.EkstepEditorAPI = {
             case 'content':
                 return EkstepEditor.contentService;
                 break
+            case 'assessmentService':
+                return EkstepEditor.assessmentService;
+                break;
         }
     },
     getAngularScope: function() {
@@ -90,6 +93,7 @@ window.EkstepEditorAPI = {
     },
     cloneInstance: function(plugin) {
         var data = plugin.getCopy();
+        delete data.id; // delete id not to get duplicate pluginInstances
         if(plugin.parent.id == EkstepEditorAPI.getCurrentStage().id) {
             data.x = data.x + 2;
             data.y = data.y + 2;

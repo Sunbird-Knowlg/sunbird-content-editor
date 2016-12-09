@@ -1,0 +1,134 @@
+/*
+CSS file for Content Editor
+*/
+
+html,
+body {
+    height: 100%;
+}
+
+.maincontainer {
+    height: 90%;
+}
+
+.wrapper {
+    height: 100%;
+}
+
+.at-canvas {
+    border: 1px solid grey;
+}
+
+.at-dd-image-icon {
+    width: 17px !important;
+    height: 17px !important;
+}
+
+.at-menu-item {
+    width: 52.52px !important;
+    height: 42px !important;
+}
+
+.at-menu-image-item > .ui.image {
+    width: 20px !important;
+    height: 20px !important;
+}
+
+.at-context-menu {
+    background-color: #dddddd;
+}
+
+.at-inverted {
+    filter: invert(100%);
+}
+
+.at-center-container {
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+}
+
+.ui.grid {
+    min-height: 100%;
+}
+
+.canvas-container {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    vertical-align: middle;
+}
+
+.grid-center-container {
+    padding: 0px !important;
+}
+
+.masthead {
+    min-height: 40px;
+}
+
+.stage-number {
+    position: relative;
+    right: 16px;
+    top: -29px;
+    font-size: 10px;
+}
+
+.thumbnail-container {
+    padding-left: 10px;
+}
+
+.thumbnail {
+    width: 160px !important;
+    height: 90px;
+    border-radius: 0px !important;
+}
+
+.thumbnail-ribbon {
+    top: 0.4rem !important;
+}
+
+.content-title {
+    font-size: 18px;
+    padding: 5px !important;
+    border: 1px white solid !important;
+    border-radius: 0px !important;
+}
+
+.content-title:hover {
+    border: 1px rgba(0, 0, 0, 0.08) solid !important;
+}
+
+.content-masterhead {
+    background: #ffffff !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+}
+
+.content-logo {
+    width: 50px !important;
+    position: relative;
+    margin-left: 15px !important;
+}
+
+.content-concept-label {
+    margin-left: 6px;
+    font-size: 13px;
+    color: grey;
+}
+
+.content-type-label {
+    margin-top: 8px;
+    font-size: 13px;
+    color: grey;
+}
+
+.content-teacher-comments {
+    width: 720px !important;
+    border-radius: 0px !important;
+    margin-top: 25px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    vertical-align: middle !important;
+    display: block;
+    font-size: 15px !important;
+}
