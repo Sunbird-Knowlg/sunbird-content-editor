@@ -113,22 +113,30 @@
                         <div id="canvas-wrapper">
                             <canvas id="canvas" class="ui card centered raised" width="720px" height="405px" style="margin: 0; border-radius: 0px; background: none"></canvas>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="ui form">
                                 <textarea class="content-teacher-comments" rows="2" placeholder="Teacher Instructions..."></textarea>
                             </div>
                         </div>
+                        -->
                     </div>
                     <div class="ui three wide column">
                     </div>
                 </div>
             </div>
             <div id="toolbarOptions" class="hide toolbarOptions">
+                <div class="ui horizontal list">
+                    <div class="item config-toolbar" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show">
+                        <i class="large {{toolbar.iconClass}}"></i>
+                    </div>
+                </div>
+                <!-- 
                 <div class="ui mini compact icon menu configmenu">
                     <a class="item" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show" style="padding: 6px;">
                         <i class="large {{toolbar.iconClass}}"></i>
                     </a>
                 </div>
+                -->
             </div>
             <div class="ui raised card" id="plugin-toolbar-container" ng-show="showConfigContainer" ng-style="configStyle">
                 <div class="content at config properties">

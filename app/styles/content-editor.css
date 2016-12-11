@@ -132,3 +132,34 @@ body {
     display: block;
     font-size: 15px !important;
 }
+
+.config-toolbar {
+    box-sizing: border-box;
+    height: 32px;
+    background: linear-gradient(to bottom, white 0%, #eeeeee 100%);
+    box-shadow: 0 2px 6px 0 rgba(22, 45, 61, 0.55);
+    border-radius: 16px;
+    min-width: 32px;
+    cursor: pointer;
+    position: relative;
+    color: #2d4150;
+    line-height: 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 0 -5px 0 0;
+    padding: 0;
+    font-size: 15px;
+    list-style: none;
+    vertical-align: top;
+}
+
+.config-toolbar:hover {
+    color: #3797EA;
+}
+
+.ui.horizontal.list>.item.config-toolbar>i.icon {
+    margin-left: 4px;
+    margin-top: 4px;
+    font-size: 19px !important;
+}
