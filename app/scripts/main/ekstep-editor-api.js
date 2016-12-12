@@ -99,5 +99,8 @@ window.EkstepEditorAPI = {
             data.y = data.y + 2;
         }
         EkstepEditorAPI.instantiatePlugin(plugin.manifest.id, data, EkstepEditorAPI.getCurrentStage());
+    },
+    getAllStages: function(){
+        return EkstepEditor.stageManager.stages;
     }
 }

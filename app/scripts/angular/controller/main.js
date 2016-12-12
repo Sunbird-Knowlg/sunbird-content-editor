@@ -58,7 +58,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 console.error('Unable to get content');
             }
             if(_.isUndefined(contentBody)) {
-                EkstepEditor.eventManager.dispatchEvent('stage:create', {});
+                EkstepEditor.eventManager.dispatchEvent('stage:create', {"position": "beginning"});
             } else {
                 EkstepEditor.stageManager.fromECML(JSON.parse(contentBody));
             }
