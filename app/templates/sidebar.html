@@ -1,0 +1,14 @@
+<div class="ui styled fluid accordion">
+    <div class="title" ng-click="showKeywords = !showKeywords" ng-class="showKeywords ? 'active': '' ">
+        <i class="dropdown icon"></i>Keywords
+    </div>
+    <div class="content {{showKeywords ? 'active': ''}}">
+        <p></p>
+    </div>
+    <div class="title" ng-click="showTodo = !showTodo" ng-class="showTodo ? 'active': '' ">
+        <i class="dropdown icon"></i>Todo
+    </div>
+    <div class="content {{showTodo ? 'active': ''}}">
+        <p></p>
+    </div>
+</div>
