@@ -3,28 +3,30 @@
         <i class="dropdown icon"></i>Keywords
     </div>
     <div class="content {{showKeywords ? 'active': ''}}">
-        <div class="ui relaxed horizontal list">
-          <div class="item">
-            <div class="content">
-              <a class="header">Eat</a>
-            </div>
-          </div>
-          <div class="item">
-            <div class="content">
-              <a class="header">Eye</a>
-            </div>
-          </div>
-          <div class="item">
-            <div class="content">
-              <a class="header">An</a>
-            </div>
-          </div>
-        </div>
+        <a class="ui grey label large">Eat</a>
+        <a class="ui grey label large">Leg</a>
+        <a class="ui grey label large">Eye</a>
+        <a class="ui grey label large">Cat</a>
+        <a class="ui grey label large">Tiger</a>
     </div>
     <div class="title" ng-click="showTodo = !showTodo" ng-class="showTodo ? 'active': '' ">
         <i class="dropdown icon"></i>Todo
     </div>
     <div class="content {{showTodo ? 'active': ''}}">
-        <p>No record found.</p>
+        <div class="ui cards">
+            <div class="card">
+                <div class="content">
+                    <div class="header">Reported Issues</div>
+                    <div class="description">No record found.</div>
+                </div>
+            </div>
+        </div>
+        <div class="ui cards">
+            <div class="card">
+                <div class="content">
+                    <div class="header">Resolved Issues</div>
+                    <div class="description">No record found.</div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
