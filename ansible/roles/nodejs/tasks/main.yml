@@ -89,3 +89,4 @@
     - grunt-cli
     - bower
     - forever
+    - gulp-cli
