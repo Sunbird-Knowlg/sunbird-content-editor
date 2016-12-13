@@ -17,6 +17,8 @@ EkstepEditor.stageManager = new(Class.extend({
         //fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
         this.canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true });
         console.log("Stage manager initialized");
+        EkstepEditor.eventManager.addEventListener("stage:delete", this.deleteStage, this);
+        EkstepEditor.eventManager.addEventListener("stage:duplicate", this.duplicateStage, this);
     },
     registerEvents: function() {
         var instance = this;
@@ -75,11 +77,32 @@ EkstepEditor.stageManager = new(Class.extend({
         this.selectStage(null, { stageId: stage.id });
         EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stage.id });
     },
-    deleteStage: function(stageId) {
+    deleteStage: function(event, data) {
+        var currentStage = _.find(this.stages, { id: data.stageId });
+        this.deleteStageInstances(currentStage);
+        this.stages.splice(this.getStageIndex(currentStage), 1);
+        if (this.stages.length === 0) {
 
+            EkstepEditorAPI.dispatchEvent('stage:create', { "position": "beginning" });
+        }
     },
-    duplicateStage: function(stageId) {
-
+    deleteStageInstances: function(stage) {        
+        _.forEach(_.clone(stage.canvas.getObjects()), function(obj) {
+            stage.canvas.remove(obj);
+        });
+    },
+    getStageIndex: function(stage) {
+        return EkstepEditorAPI.getAllStages().findIndex(function(obj) {
+            return obj.id === stage.id
+        });
+    },
+    duplicateStage: function(event, data) {
+        var currentStage = _.find(this.stages, { id: data.stageId });        
+        var stage = this.stages[this.getStageIndex(currentStage)];
+        EkstepEditorAPI.dispatchEvent('stage:create', {"position": "afterCurrent"});
+        _.forEach(stage.children, function(plugin){
+           EkstepEditorAPI.cloneInstance(plugin); 
+        });        
     },
     getObjectMeta: function(options) {
         var pluginId = (options && options.target) ? options.target.id : '';
@@ -120,7 +143,8 @@ EkstepEditor.stageManager = new(Class.extend({
         var instance = this;
         var size = this.stages.length;
         _.forEach(this.stages, function(stage, index) {
-            if (index != 0) {
+            stage.deleteParam();
+            if (index !== 0) {
                 stage.addParam('previous', instance.stages[index - 1].id);
             }
             if (index < (size - 1)) {
