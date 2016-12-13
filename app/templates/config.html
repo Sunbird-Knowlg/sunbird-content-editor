@@ -3,7 +3,7 @@
     <div class="ui form" ng-switch-when="colorpicker">
         <div class="field">
             <label ng-if="config.title">{{config.title}}</label>
-            <div class="jscolor" style="width:20px;height:20px; min-width: 20px; min-height: 20px;" id="{{config.propertyName}}" ng-click="fireEvent({'id':'colorpicker:show', 'data': {}})"></div>
+            <div class="jscolor" style="width:25px;height:25px; min-width: 20px; min-height: 20px;border-radius: 5px;border: 1px solid rgba(49, 38, 38, 0.34);" id="{{config.propertyName}}" ng-click="fireEvent({'id':'colorpicker:show', 'data': {}})"></div>
         </div>
     </div>
     <div class="ui form" ng-switch-when="input">
@@ -19,7 +19,7 @@
             </select>
         </div>
     </div>
-     <div class="ui form" ng-switch-when="imagebrowser">
+    <div class="ui form" ng-switch-when="imagebrowser">
         <div class="field">
             <label ng-if="config.title">{{config.title}}</label>
             <i class="browser icon link" ng-click="fireEvent({'id':'org.ekstep.config:invoke', 'data': {'type': config.dataType}})"></i>
@@ -33,4 +33,14 @@
             </div>
         </button>
     </div>
-</div>
+    <div class="ui form" ng-switch-when="rangeslider">
+        <div class="field">
+            <label ng-if="config.title">{{config.title}}</label>
+            <div>
+            <div class="ui label right floated" >
+                 {{configData[config.propertyName]}}{{config.labelSuffix}}
+            </div>  
+                <input type="range" id="{{config.propertyName}}" min="{{config.minimumValue}}" max="{{config.maximumValue}}"  value="{{config.defaultValue}}" class="config-slider" ng-model="configData[config.propertyName]">
+            </div>
+        </div>
+    </div>
