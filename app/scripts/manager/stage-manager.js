@@ -73,9 +73,7 @@ EkstepEditor.stageManager = new(Class.extend({
         }
     },
     addStage: function(stage) {
-        this.stages.push(stage);
-        this.selectStage(null, { stageId: stage.id });
-        EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stage.id });
+        this.addStagetoPosition(stage, stage.attributes.position);
     },
     deleteStage: function(event, data) {
         var currentStage = _.find(this.stages, { id: data.stageId });
@@ -217,5 +215,35 @@ EkstepEditor.stageManager = new(Class.extend({
 
         });
 
+    },
+    addStagetoPosition: function(stage, position) {
+        var allStages = EkstepEditorAPI.getAllStages(),
+            currentIndex,
+            positionAltered = false;
+
+        switch (position) {
+            case "beginning":
+                allStages.unshift(stage);
+                positionAltered = true;
+                break;
+            case "end":
+                allStages.push(stage);
+                positionAltered = true;
+                break;
+            case "afterCurrent":
+            case "beforeCurrent":
+                currentIndex = this.getStageIndex(EkstepEditorAPI.getCurrentStage());
+                if (position === "afterCurrent" && currentIndex >= 0) allStages.splice(currentIndex + 1, 0, stage) && (positionAltered = true);
+                if (position === "beforeCurrent" && currentIndex >= 0) allStages.splice(currentIndex, 0, stage) && (positionAltered = true);
+                break;
+            default:
+                allStages.push(stage) && (positionAltered = true);
+                break;
+        };
+
+        if (positionAltered) {
+            EkstepEditor.stageManager.selectStage(null, { stageId: stage.id });
+            EkstepEditorAPI.dispatchEvent('stage:select', { stageId: stage.id });
+        }
     }
 }));
