@@ -86,8 +86,9 @@
             <div class="ui grid bottom attached celled" style="margin: 0;background: #EEEEEE;">
                 <div class="row">
                     <div class="ui two wide column">
-                        <div ng-repeat="stage in stages track by $index" class="thumbnail-container">
+                        <div ng-repeat="stage in stages track by $index" class="thumbnail-container" style="margin-bottom: 20px">
                             <div class="ui centered raised card segment thumbnail" ng-click="fireEvent(stage.onclick)">
+                                <span class="stage-number">{{$index+1}}</span>
                                 <div class="ui fluid image">
                                     <div class="ui blue mini ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
                                         <i class="trash outline icon"></i> <i class="clone icon"></i>
@@ -95,7 +96,6 @@
                                     <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" />
                                 </div>
                             </div>
-                            <span class="left floated stage-number">{{$index+1}}</span>
                         </div>
                     </div>
                     <div class="ui seven wide column">
