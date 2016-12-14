@@ -66,5 +66,14 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         });
 
         EkstepEditorAPI.getService('popup').initService($uibModal);
+
+        $scope.thumbnail_dropped = function(dragEl, dropEl) {
+            var drop = EkstepEditor.jQuery('#' + dropEl);
+            var drag = EkstepEditor.jQuery('#' + dragEl);
+            EkstepEditor.stageManager.onStageDragDrop(drag.attr('data-id'), drop.attr('data-id'));
+            setTimeout(function() {
+                EkstepEditorAPI.refreshStages();
+            }, 1000);
+        }
     }
 ]);

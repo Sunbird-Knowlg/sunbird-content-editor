@@ -245,5 +245,17 @@ EkstepEditor.stageManager = new(Class.extend({
             EkstepEditor.stageManager.selectStage(null, { stageId: stage.id });
             EkstepEditorAPI.dispatchEvent('stage:select', { stageId: stage.id });
         }
+    },
+    onStageDragDrop: function(srcStageId, destStageId) {
+        var srcIdx = this.getStageIndexById(srcStageId);
+        var destIdx = this.getStageIndexById(destStageId);
+        var src = this.stages[srcIdx];        
+        this.stages[srcIdx] = this.stages[destIdx];
+        this.stages[destIdx] = src;        
+    },
+    getStageIndexById: function(stageId) {
+        return _.findIndex(this.stages, function(stage){
+           return stage.id == stageId; 
+        });
     }
 }));

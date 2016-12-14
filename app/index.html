@@ -103,7 +103,7 @@
                                     <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
                                         <i class="trash outline icon link" ng-click="fireEvent(stage.ondelete)"></i> <i class="clone icon link" ng-click="fireEvent(stage.duplicate)"></i>
                                     </div>
-                                    <img id="img-{{stage.id}}" src="{{stage.thumbnail}}" />
+                                    <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="thumbnail_dropped(dragEl, dropEl)"/>
                                 </div>
                             </div>
                             <span class="left floated stage-number">{{$index+1}}</span>
@@ -186,6 +186,8 @@
     <script src="scripts/service/popup-service.js"></script>
     <script src="scripts/angular/controller/main.js"></script>
     <script src="scripts/angular/controller/popup-controller.js"></script>
+    <script src="scripts/angular/directive/draggable-directive.js"></script>
+    <script src="scripts/angular/directive/droppable-directive.js"></script>
     <script src="scripts/service/assessment-service.js"></script>
     <script src="config/devAPIurl.js"></script>
     <script src="scripts/service/asset-service.js"></script>
