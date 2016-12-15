@@ -39,9 +39,9 @@ EkstepEditor.basePlugin = Class.extend({
             this.config = {opacity: 100, strokeWidth: 1, stroke: "rgba(255, 255, 255, 0)"};
         }
         if (this.configManifest === undefined) {
-            this.loadResource('../../app/config/baseManifest.json', 'json', function(err, baseManifest) {
+            this.loadResource('../../app/config/baseConfigManifest.json', 'json', function(err, baseConfigManifest) {
                 if (!err) {
-                    instance.configManifest = baseManifest.editor.configManifest;
+                    instance.configManifest = baseConfigManifest;
                 }
             });
         }
