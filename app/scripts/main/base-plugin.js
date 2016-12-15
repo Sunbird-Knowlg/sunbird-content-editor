@@ -23,6 +23,7 @@ EkstepEditor.basePlugin = Class.extend({
     media: undefined,
     configManifest: undefined,
     init: function(manifest, data, parent) {
+      var instance = this;
         this.manifest = _.cloneDeep(manifest);
         if (arguments.length == 1) {
             this.registerMenu();
@@ -37,12 +38,12 @@ EkstepEditor.basePlugin = Class.extend({
             this.parent = parent;
             this.config = { opacity: 100, strokeWidth: 1, stroke: "rgba(255, 255, 255, 0)" };
         }
-        if (!EkstepEditor.configManifest) {
-            EkstepEditor.loadConfigManifest(function() {
-                this.configManifest = _.clone(EkstepEditor.configManifest, true);
+        if (!EkstepEditor.baseConfigManifest) {
+            EkstepEditor.loadBaseConfigManifest(function() {
+                instance.configManifest = _.clone(EkstepEditor.baseConfigManifest, true);
             })
         } else {
-            this.configManifest = _.clone(EkstepEditor.configManifest, true);
+            this.configManifest = _.clone(EkstepEditor.baseConfigManifest, true);
         }
     },
     initPlugin: function() {

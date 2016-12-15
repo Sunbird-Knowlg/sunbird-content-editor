@@ -28,7 +28,7 @@ EkstepEditor.config = {
         "hotspot": "org.ekstep.hotspot",
         "scribble": "org.ekstep.scribblepad"
     },
-    configManifest: "config/baseConfigManifest.json"
+    baseConfigManifest: "config/baseConfigManifest.json"
 }
 
 EkstepEditor.loadResource = function(url, dataType, callback) {
@@ -78,14 +78,14 @@ EkstepEditor.init = function(userSettings, absURL) {
     });
 }
 
-EkstepEditor.loadConfigManifest = function (cb) {
-    EkstepEditor.loadResource(EkstepEditor.config.configManifest, 'json', function(err, data) {
-        EkstepEditor.configManifest = [];
+EkstepEditor.loadBaseConfigManifest = function (cb) {
+    EkstepEditor.loadResource(EkstepEditor.config.baseConfigManifest, 'json', function(err, data) {
+        EkstepEditor.baseConfigManifest = [];
         if (err) {
-            console.log('Unable to load configManifest');
+            console.log('Unable to load baseConfigManifest');
         } else {
-            EkstepEditor.configManifest = data;
+            EkstepEditor.baseConfigManifest = data;
         }
-        cb(EkstepEditor.configManifest)
+        cb(EkstepEditor.baseConfigManifest)
     });
 }
