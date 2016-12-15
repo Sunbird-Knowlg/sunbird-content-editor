@@ -27,7 +27,8 @@ EkstepEditor.config = {
         "stage": "org.ekstep.stage",
         "hotspot": "org.ekstep.hotspot",
         "scribble": "org.ekstep.scribblepad"
-    }
+    },
+    baseConfigManifest: "config/baseConfigManifest.json"
 }
 
 EkstepEditor.loadResource = function(url, dataType, callback) {
@@ -74,5 +75,17 @@ EkstepEditor.init = function(userSettings, absURL) {
                 EkstepEditor.pluginManager.loadPlugin(key, value);
             });
         }
+    });
+}
+
+EkstepEditor.loadBaseConfigManifest = function (cb) {
+    EkstepEditor.loadResource(EkstepEditor.config.baseConfigManifest, 'json', function(err, data) {
+        EkstepEditor.baseConfigManifest = [];
+        if (err) {
+            console.log('Unable to load baseConfigManifest');
+        } else {
+            EkstepEditor.baseConfigManifest = data;
+        }
+        cb(EkstepEditor.baseConfigManifest)
     });
 }

@@ -13,6 +13,7 @@
         "org.ekstep.atpreview": "1.0",        
         "org.ekstep.assessment": "1.0",
         "org.ekstep.assetbrowser": "1.0",
-        "org.ekstep.templatebrowser": "1.0"
+        "org.ekstep.templatebrowser": "1.0",
+        "org.ekstep.colorpicker": "1.0"
     }
 }
