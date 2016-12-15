@@ -23,7 +23,6 @@ EkstepEditor.basePlugin = Class.extend({
     media: undefined,
     configManifest: undefined,
     init: function(manifest, data, parent) {
-        var instance = this;
         this.manifest = _.cloneDeep(manifest);
         if (arguments.length == 1) {
             this.registerMenu();
@@ -36,14 +35,14 @@ EkstepEditor.basePlugin = Class.extend({
             this.children = [];
             this.id = this.editorData.id || UUID();
             this.parent = parent;
-            this.config = {opacity: 100, strokeWidth: 1, stroke: "rgba(255, 255, 255, 0)"};
+            this.config = { opacity: 100, strokeWidth: 1, stroke: "rgba(255, 255, 255, 0)" };
         }
-        if (this.configManifest === undefined) {
-            this.loadResource('../../app/config/baseConfigManifest.json', 'json', function(err, baseConfigManifest) {
-                if (!err) {
-                    instance.configManifest = baseConfigManifest;
-                }
-            });
+        if (!EkstepEditor.configManifest) {
+            EkstepEditor.loadConfigManifest(function() {
+                this.configManifest = _.clone(EkstepEditor.configManifest, true);
+            })
+        } else {
+            this.configManifest = _.clone(EkstepEditor.configManifest, true);
         }
     },
     initPlugin: function() {
@@ -53,9 +52,9 @@ EkstepEditor.basePlugin = Class.extend({
     },
     postInit: function() {
         this.registerFabricEvents();
-        if(this.editorObj) this.editorObj.set({id: this.id});
+        if (this.editorObj) this.editorObj.set({ id: this.id });
         if (this.parent) this.parent.addChild(this);
-        if(this.parent && this.parent.type !== 'stage') EkstepEditorAPI.dispatchEvent('object:modified', { id: this.id });
+        if (this.parent && this.parent.type !== 'stage') EkstepEditorAPI.dispatchEvent('object:modified', { id: this.id });
     },
     registerMenu: function() {
         var instance = this;
@@ -91,7 +90,7 @@ EkstepEditor.basePlugin = Class.extend({
                         inst.attributes.y = inst.editorObj.getTop();
                         inst.attributes.w = inst.editorObj.getWidth();
                         inst.attributes.h = inst.editorObj.getHeight();
-                        if(_.isFunction(inst.editorObj.getRx))
+                        if (_.isFunction(inst.editorObj.getRx))
                             inst.attributes.r = inst.editorObj.getRx();
                     }
                 },
@@ -118,7 +117,7 @@ EkstepEditor.basePlugin = Class.extend({
                         inst.attributes.y = inst.editorObj.getTop();
                         inst.attributes.w = inst.editorObj.getWidth();
                         inst.attributes.h = inst.editorObj.getHeight();
-                        if(_.isFunction(inst.editorObj.getRx))
+                        if (_.isFunction(inst.editorObj.getRx))
                             inst.attributes.r = inst.editorObj.getRx();
                     }
                     inst.changed(inst, options, event)
@@ -175,11 +174,11 @@ EkstepEditor.basePlugin = Class.extend({
     getCopy: function() {
         return this.toECML();
     },
-    render: function (canvas) { // Complex plugins and templates should override this if necessary
+    render: function(canvas) { // Complex plugins and templates should override this if necessary
         canvas.add(this.editorObj);
     },
-    getMeta: function () {
-        
+    getMeta: function() {
+
     },
     pixelToPercent: function(obj) {
         obj.x = parseFloat(((obj.x / 720) * 100).toFixed(2));
@@ -188,7 +187,7 @@ EkstepEditor.basePlugin = Class.extend({
         obj.h = parseFloat(((obj.h / 405) * 100).toFixed(2));
         obj.r = parseFloat(((obj.r / 405) * 100).toFixed(2));
     },
-    percentToPixel: function (obj) {
+    percentToPixel: function(obj) {
         obj.x = obj.x * (720 / 100);
         obj.y = obj.y * (405 / 100);
         obj.w = obj.w * (720 / 100);
@@ -199,7 +198,7 @@ EkstepEditor.basePlugin = Class.extend({
         this.config = data;
     },
     addConfig: function(key, value) {
-        if(_.isUndefined(this.config)) this.config = {};
+        if (_.isUndefined(this.config)) this.config = {};
         this.config[key] = value;
     },
     getConfig: function() {
@@ -214,31 +213,31 @@ EkstepEditor.basePlugin = Class.extend({
     setAttributes: function(attr) {
         _.merge(this.attributes, attr);
     },
-    getAttributes: function() {         
+    getAttributes: function() {
         return _.omit(this.attributes, ['top', 'left', 'width', 'height']);
     },
     setAttribute: function(key, value) {
         this.attributes[key] = value;
     },
-    getAttribute: function(key) {         
+    getAttribute: function(key) {
         return this.attributes[key];
     },
     addEvent: function(event) {
-        if(_.isUndefined(this.events)) this.events = [];
+        if (_.isUndefined(this.events)) this.events = [];
         this.events.push(event);
     },
     getEvents: function() {
         return this.events;
     },
     addParam: function(key, value) {
-        if(_.isUndefined(this.params)) this.params = {};
+        if (_.isUndefined(this.params)) this.params = {};
         this.params[key] = value;
     },
     getParams: function() {
         return this.params;
     },
     addMedia: function(media) {
-        if(_.isUndefined(this.media)) this.media = {};
+        if (_.isUndefined(this.media)) this.media = {};
         this.media[media.id] = media;
     },
     getMedia: function() {
@@ -256,29 +255,29 @@ EkstepEditor.basePlugin = Class.extend({
         this.pixelToPercent(dims);
         return dims;
     },
-    toECML: function () {
-        var attr = _.clone(this.getAttributes()); 
+    toECML: function() {
+        var attr = _.clone(this.getAttributes());
         attr.id = this.id;
         this.pixelToPercent(attr);
-        if(!_.isUndefined(this.getData())) {
+        if (!_.isUndefined(this.getData())) {
             attr.data = {
                 "__cdata": JSON.stringify(this.getData())
             };
         }
-        if(!_.isUndefined(this.getConfig())) {
+        if (!_.isUndefined(this.getConfig())) {
             attr.config = {
                 "__cdata": JSON.stringify(this.getConfig())
             };
         }
-        if(!_.isUndefined(this.getEvents())) {
+        if (!_.isUndefined(this.getEvents())) {
             attr.config = {
                 "__cdata": JSON.stringify(this.getEvents())
             };
         }
-        if(!_.isUndefined(this.getParams())) {
+        if (!_.isUndefined(this.getParams())) {
             attr.param = [];
             _.forIn(this.getParams(), function(value, key) {
-                attr.param.push({name: key, value: value});
+                attr.param.push({ name: key, value: value });
             });
         }
         return attr;
@@ -286,35 +285,35 @@ EkstepEditor.basePlugin = Class.extend({
     fromECML: function(data) {
         var instance = this;
         this.attributes = data;
-        if(!_.isUndefined(this.attributes.data)) {
+        if (!_.isUndefined(this.attributes.data)) {
             this.data = this.attributes.data.__cdata ? JSON.parse(this.attributes.data.__cdata) : this.attributes.data;
             delete this.attributes.data;
         }
-        if(!_.isUndefined(this.attributes.config)) {
+        if (!_.isUndefined(this.attributes.config)) {
             this.config = this.attributes.config.__cdata ? JSON.parse(this.attributes.config.__cdata) : this.attributes.config;
             delete this.attributes.config;
         }
-        if(!_.isUndefined(this.attributes.events)) {
+        if (!_.isUndefined(this.attributes.events)) {
             //this.events = JSON.parse(this.attributes.event.__cdata);
             delete this.attributes.events;
         }
-        if(!_.isUndefined(this.attributes.event)) {
+        if (!_.isUndefined(this.attributes.event)) {
             //this.events = JSON.parse(this.attributes.event.__cdata);
             delete this.attributes.event;
         }
-        if(!_.isUndefined(this.attributes.param)) {
+        if (!_.isUndefined(this.attributes.param)) {
             _.forEach(this.attributes.param, function(param) {
                 instance.addParam(param.name, param.value);
             })
-            delete this.attributes.param;   
+            delete this.attributes.param;
         }
-        if(!_.isUndefined(this.attributes.asset)) {
-            if(!_.isUndefined(this.attributes.assetMedia)) {
+        if (!_.isUndefined(this.attributes.asset)) {
+            if (!_.isUndefined(this.attributes.assetMedia)) {
                 instance.addMedia(this.attributes.assetMedia);
                 delete this.attributes.assetMedia;
             } else {
                 var media = EkstepEditor.mediaManager.getMedia(this.attributes.asset);
-                if(!_.isUndefined(media)) {
+                if (!_.isUndefined(media)) {
                     instance.addMedia(media);
                 }
             }
@@ -332,7 +331,7 @@ EkstepEditor.basePlugin = Class.extend({
         return retData;
     },
     getPluginConfig: function() {
-        if (!this.manifest.editor.configManifest) { this.manifest.editor.configManifest = [];}
+        if (!this.manifest.editor.configManifest) { this.manifest.editor.configManifest = []; }
         var configManifest = this.manifest.editor.configManifest
         if (this.configManifest) {
             configManifest = _.concat(this.manifest.editor.configManifest, this.configManifest)
@@ -348,14 +347,14 @@ EkstepEditor.basePlugin = Class.extend({
     onConfigChange: function(key, value) {
         this.addConfig(key, value);
         var currentInstace = EkstepEditorAPI.getCurrentObject();
-        if (currentInstace.config === undefined) {currentInstace.config = {}}
+        if (currentInstace.config === undefined) { currentInstace.config = {} }
         switch (key) {
             case 'opacity':
-                currentInstace.editorObj.setOpacity(value/100);
-                currentInstace.attributes.opacity = value/100;
+                currentInstace.editorObj.setOpacity(value / 100);
+                currentInstace.attributes.opacity = value / 100;
                 currentInstace.config.opacity = value;
                 break;
-            case 'strokeWidth':    
+            case 'strokeWidth':
                 value = parseInt(value);
                 currentInstace.editorObj.set('strokeWidth', value);
                 currentInstace.attributes['stroke-width'] = value;
@@ -365,7 +364,7 @@ EkstepEditor.basePlugin = Class.extend({
             case 'stroke':
                 currentInstace.editorObj.setStroke(value);
                 currentInstace.attributes.stroke = value;
-                currentInstace.config.stroke = value;    
+                currentInstace.config.stroke = value;
                 break;
         }
         EkstepEditorAPI.render();
@@ -385,12 +384,12 @@ EkstepEditor.basePlugin = Class.extend({
             cb(helpText);
         }
     },
-    getProperties: function () {
+    getProperties: function() {
         var props = _.omitBy(_.clone(this.attributes), _.isObject);
         props = _.omitBy(props, _.isNaN);
         return props;
     },
-    renderConfig: function () {
-      
+    renderConfig: function() {
+
     }
 });
