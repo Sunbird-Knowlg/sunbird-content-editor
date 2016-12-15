@@ -1,0 +1,42 @@
+{
+    "id": "org.ekstep.base",
+    "ver": "1.0",
+    "author": "Santhosh Vasabhaktula",
+    "title": "base Plugin",
+    "description": "",
+    "publishedDate": "",
+    "editor": {
+        "menu": [],
+        "configManifest": [{
+            "propertyName": "opacity",
+            "title": "Transparency",
+            "description": "Set the transparency for element",
+            "dataType": "rangeslider",
+            "labelSuffix": "%",
+            "required": true,
+            "defaultValue": 100,
+            "minimumValue": 0,
+            "maximumValue": 100
+        },{
+            "propertyName": "stroke",
+            "title": "Border Color",
+            "description": "Set the border color for element",
+            "dataType": "colorpicker",
+            "required": true,
+            "defaultValue": "rgba(255, 255, 255, 0)"
+        }, {
+            "propertyName": "strokeWidth",
+            "title": "Border Thickness",
+            "description": "Set the border thickness for element",
+            "dataType": "rangeslider",
+            "required": true,
+            "defaultValue": 1,
+            "minimumValue": 0,
+            "maximumValue": 24
+        }],
+        "help": {
+            "src": "editor/help.md",
+            "dataType": "text"
+        }
+    }
+}

@@ -16,12 +16,14 @@ EkstepEditor.basePlugin = Class.extend({
     editorObj: undefined,
     editorData: undefined,
     data: undefined,
-    attributes: {x: 0, y: 0, w: 0, h: 0, visible: true, editable: true},
+    attributes: { x: 0, y: 0, w: 0, h: 0, visible: true, editable: true },
     config: undefined,
     events: undefined,
     params: undefined,
     media: undefined,
+    configManifest: undefined,
     init: function(manifest, data, parent) {
+        var instance = this;
         this.manifest = _.cloneDeep(manifest);
         if (arguments.length == 1) {
             this.registerMenu();
@@ -29,11 +31,19 @@ EkstepEditor.basePlugin = Class.extend({
             EkstepEditorAPI.addEventListener(this.manifest.id + ":create", this.create, this);
             console.log(manifest.id + " plugin initialized");
         } else {
-            this.editorObj = undefined, this.config = undefined, this.events = undefined, this.attributes = {x: 0, y: 0, w: 0, h: 0}, this.params = undefined, this.data = undefined, this.media = undefined;
+            this.editorObj = undefined, this.events = undefined, this.attributes = { x: 0, y: 0, w: 0, h: 0 }, this.params = undefined, this.data = undefined, this.media = undefined;
             this.editorData = data;
             this.children = [];
             this.id = this.editorData.id || UUID();
             this.parent = parent;
+            this.config = {opacity: 100, strokeWidth: 1, stroke: "rgba(255, 255, 255, 0)"};
+        }
+        if (this.configManifest === undefined) {
+            this.loadResource('../../app/config/baseManifest.json', 'json', function(err, baseManifest) {
+                if (!err) {
+                    instance.configManifest = baseManifest.editor.configManifest;
+                }
+            });
         }
     },
     initPlugin: function() {
@@ -313,27 +323,55 @@ EkstepEditor.basePlugin = Class.extend({
     },
     convertToFabric: function(data) {
         var retData = _.clone(data);
-        if(data.x) retData.left = data.x;
-        if(data.y) retData.top = data.y;
-        if(data.w) retData.width = data.w;
-        if(data.h) retData.height = data.h;
-        if(data.radius) retData.rx = data.radius;
-        if(data.color) retData.fill = data.color;
+        if (data.x) retData.left = data.x;
+        if (data.y) retData.top = data.y;
+        if (data.w) retData.width = data.w;
+        if (data.h) retData.height = data.h;
+        if (data.radius) retData.rx = data.radius;
+        if (data.color) retData.fill = data.color;
         return retData;
     },
-    getPluginConfig: function () {
-        return this.manifest.editor.config;
+    getPluginConfig: function() {
+        if (!this.manifest.editor.configManifest) { this.manifest.editor.configManifest = [];}
+        var configManifest = this.manifest.editor.configManifest
+        if (this.configManifest) {
+            configManifest = _.concat(this.manifest.editor.configManifest, this.configManifest)
+        }
+        return configManifest
     },
-    updateContextMenu: function () {
-        
+    updateContextMenu: function() {
+
     },
-    reConfig: function () {
-        
+    reConfig: function() {
+
     },
-    onConfigChange: function (key, value) {
+    onConfigChange: function(key, value) {
         this.addConfig(key, value);
+        var currentInstace = EkstepEditorAPI.getCurrentObject();
+        if (currentInstace.config === undefined) {currentInstace.config = {}}
+        switch (key) {
+            case 'opacity':
+                currentInstace.editorObj.setOpacity(value/100);
+                currentInstace.attributes.opacity = value/100;
+                currentInstace.config.opacity = value;
+                break;
+            case 'strokeWidth':    
+                value = parseInt(value);
+                currentInstace.editorObj.set('strokeWidth', value);
+                currentInstace.attributes['stroke-width'] = value;
+                currentInstace.attributes['strokeWidth'] = value;
+                currentInstace.config.strokeWidth = value;
+                break;
+            case 'stroke':
+                currentInstace.editorObj.setStroke(value);
+                currentInstace.attributes.stroke = value;
+                currentInstace.config.stroke = value;    
+                break;
+        }
+        EkstepEditorAPI.render();
+        EkstepEditorAPI.dispatchEvent('object:modified', { target: EkstepEditorAPI.getEditorObject() });
     },
-    getHelp: function (cb) {
+    getHelp: function(cb) {
         var helpText = "Help is not available."
         try {
             this.loadResource(this.manifest.editor.help.src, this.manifest.editor.help.dataType, function(err, help) {
