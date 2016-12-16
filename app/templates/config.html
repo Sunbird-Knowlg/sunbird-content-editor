@@ -44,3 +44,12 @@
             </div>
         </div>
     </div>
+    <div class="ui form" ng-switch-when="boolean">
+        <div class="field">
+        <label ng-if="config.title">{{config.title}}</label>
+            <div class="ui toggle checkbox">
+                <input name="{{config.propertyName}}" type="checkbox" ng-model="configData[config.propertyName]" ng-init="configData[config.propertyName] = configData[config.propertyName] || config.defaultValue">
+                <label></label>
+            </div>
+        </div>
+    </div>    
