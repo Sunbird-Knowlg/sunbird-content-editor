@@ -73,16 +73,16 @@ EkstepEditor.stageManager = new(Class.extend({
         }
     },
     addStage: function(stage) {
-        this.addStagetoPosition(stage, stage.attributes.position);
+        this.addStageAt(stage, stage.attributes.position);
     },
     deleteStage: function(event, data) {
         var currentStage = _.find(this.stages, { id: data.stageId });
         this.deleteStageInstances(currentStage);
         this.stages.splice(this.getStageIndex(currentStage), 1);
         if (this.stages.length === 0) {
-
-            EkstepEditorAPI.dispatchEvent('stage:create', { "position": "beginning" });
+            EkstepEditorAPI.dispatchEvent('stage:create', { "position": "next" });
         }
+        EkstepEditorAPI.dispatchEvent('stage:delete', { stageId: data.stageId });
     },
     deleteStageInstances: function(stage) {        
         _.forEach(_.clone(stage.canvas.getObjects()), function(obj) {
@@ -101,6 +101,7 @@ EkstepEditor.stageManager = new(Class.extend({
         _.forEach(stage.children, function(plugin){
            EkstepEditorAPI.cloneInstance(plugin); 
         });        
+        EkstepEditorAPI.dispatchEvent('stage:duplicate', { stageId: data.stageId });
     },
     getObjectMeta: function(options) {
         var pluginId = (options && options.target) ? options.target.id : '';
@@ -216,56 +217,56 @@ EkstepEditor.stageManager = new(Class.extend({
         });
 
     },
-    addStagetoPosition: function(stage, position) {
-        var allStages = EkstepEditorAPI.getAllStages(),
-            currentIndex,
+    addStageAt: function(stage, position) {
+        var currentIndex,
             positionAltered = false;
 
         switch (position) {
             case "beginning":
-                allStages.unshift(stage);
+                this.stages.unshift(stage);
                 positionAltered = true;
                 break;
             case "end":
-                allStages.push(stage);
+            case "next":
+                this.stages.push(stage);
                 positionAltered = true;
                 break;
             case "afterCurrent":
             case "beforeCurrent":
                 currentIndex = this.getStageIndex(EkstepEditorAPI.getCurrentStage());
-                if (position === "afterCurrent" && currentIndex >= 0) allStages.splice(currentIndex + 1, 0, stage) && (positionAltered = true);
-                if (position === "beforeCurrent" && currentIndex >= 0) allStages.splice(currentIndex, 0, stage) && (positionAltered = true);
+                if (position === "afterCurrent" && currentIndex >= 0) this.stages.splice(currentIndex + 1, 0, stage) && (positionAltered = true);
+                if (position === "beforeCurrent" && currentIndex >= 0) this.stages.splice(currentIndex, 0, stage) && (positionAltered = true);
                 break;
             default:
-                allStages.push(stage) && (positionAltered = true);
+                this.stages.push(stage) && (positionAltered = true);
                 break;
         };
 
         if (positionAltered) {
-            EkstepEditor.stageManager.selectStage(null, { stageId: stage.id });
+            this.selectStage(null, { stageId: stage.id });
             EkstepEditorAPI.dispatchEvent('stage:select', { stageId: stage.id });
+            EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id });
         }
     },
     onStageDragDrop: function(srcStageId, destStageId) {
         var srcIdx = this.getStageIndexById(srcStageId);
-        var destIdx = this.getStageIndexById(destStageId);        
+        var destIdx = this.getStageIndexById(destStageId);
         if (srcIdx < destIdx) {
             var src = this.stages[srcIdx];
-            for (var i = srcIdx; i <= destIdx; i++) {                
+            for (var i = srcIdx; i <= destIdx; i++) {
                 this.stages[i] = this.stages[i + 1];
-                if(i === destIdx) this.stages[destIdx] = src;
+                if (i === destIdx) this.stages[destIdx] = src;
             }
         }
-        if (srcIdx > destIdx) {           
+        if (srcIdx > destIdx) {
             var src = this.stages[srcIdx];
-            for (var i = srcIdx; i >= destIdx; i--) {                
+            for (var i = srcIdx; i >= destIdx; i--) {
                 this.stages[i] = this.stages[i - 1];
-                if(i === destIdx) this.stages[destIdx] = src;
+                if (i === destIdx) this.stages[destIdx] = src;
             }
         }
-        
-        
 
+        EkstepEditorAPI.dispatchEvent('stage:reorder', { stageId: srcStageId, fromIndex: srcIdx, toIndex: destIdx });
     },
     getStageIndexById: function(stageId) {
         return _.findIndex(this.stages, function(stage){
