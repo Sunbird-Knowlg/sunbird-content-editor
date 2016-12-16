@@ -71,9 +71,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             var drop = EkstepEditor.jQuery('#' + dropEl);
             var drag = EkstepEditor.jQuery('#' + dragEl);
             EkstepEditor.stageManager.onStageDragDrop(drag.attr('data-id'), drop.attr('data-id'));
-            setTimeout(function() {
-                EkstepEditorAPI.refreshStages();
-            }, 1000);
+            EkstepEditorAPI.refreshStages();
         }
     }
 ]);

@@ -248,10 +248,24 @@ EkstepEditor.stageManager = new(Class.extend({
     },
     onStageDragDrop: function(srcStageId, destStageId) {
         var srcIdx = this.getStageIndexById(srcStageId);
-        var destIdx = this.getStageIndexById(destStageId);
-        var src = this.stages[srcIdx];        
-        this.stages[srcIdx] = this.stages[destIdx];
-        this.stages[destIdx] = src;        
+        var destIdx = this.getStageIndexById(destStageId);        
+        if (srcIdx < destIdx) {
+            var src = this.stages[srcIdx];
+            for (var i = srcIdx; i <= destIdx; i++) {                
+                this.stages[i] = this.stages[i + 1];
+                if(i === destIdx) this.stages[destIdx] = src;
+            }
+        }
+        if (srcIdx > destIdx) {           
+            var src = this.stages[srcIdx];
+            for (var i = srcIdx; i >= destIdx; i--) {                
+                this.stages[i] = this.stages[i - 1];
+                if(i === destIdx) this.stages[destIdx] = src;
+            }
+        }
+        
+        
+
     },
     getStageIndexById: function(stageId) {
         return _.findIndex(this.stages, function(stage){
