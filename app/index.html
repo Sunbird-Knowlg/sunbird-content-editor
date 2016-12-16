@@ -62,18 +62,18 @@
                             <a href='#'> & 2more</a>
                         </div>
                     </div>
-                    <div class="right floated three wide column bottom aligned">
-                        <button class="ui tiny icon button" ng-click="previewContent();">
-                            <i class="tablet icon"></i> Preview
+                    <div class="right floated four wide column bottom aligned">
+                        <button class="ui tiny icon button disabled right floated">
+                            <i class="remove icon"></i> Close
                         </button>
-                        <button class="ui tiny icon button disabled">
-                            <i class="download icon "></i> Download
-                        </button>
-                        <button class="ui tiny icon button" ng-click="saveContent()" ng-disabled="!contentId">
+                        <button class="ui tiny icon button right floated" ng-click="saveContent()" ng-disabled="!contentId">
                             <i class="save icon"></i> Save
                         </button>
-                        <button class="ui tiny icon button disabled">
-                            <i class="remove icon"></i> Close
+                        <button class="ui tiny icon button right floated" ng-click="previewContent();">
+                            <i class="tablet icon"></i> Preview
+                        </button>
+                        <button class="ui tiny icon button disabled right floated">
+                            <i class="download icon "></i> Download
                         </button>
                     </div>
                 </div>
