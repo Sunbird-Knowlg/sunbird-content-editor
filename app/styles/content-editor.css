@@ -163,3 +163,7 @@ body {
     margin-top: 4px;
     font-size: 19px !important;
 }
+
+.ngdialog.ngdialog-theme-default {
+    padding-top: 80px !important;
+}

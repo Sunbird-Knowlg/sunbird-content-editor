@@ -3,9 +3,9 @@
  */
 'use strict';
 
-angular.module('editorApp', ['ui.bootstrap']);
+angular.module('editorApp', ['ui.bootstrap', 'ngDialog', 'oc.lazyLoad']);
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window',
-    function($scope, $timeout, $http, $location, $q, $window) {        
+    function($scope, $timeout, $http, $location, $q, $window) {
         EkstepEditorAPI.globalContext.contentId = $location.search().contentId;
         $scope.contentId = EkstepEditorAPI.globalContext.contentId;
         $scope.safeApply = function(fn) {
