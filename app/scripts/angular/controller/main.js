@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('editorApp', ['ui.bootstrap']);
+angular.module('editorApp', []);
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window',
     function($scope, $timeout, $http, $location, $q, $window) {        
         EkstepEditorAPI.globalContext.contentId = $location.search().contentId;
@@ -59,10 +59,15 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             }
             if(_.isUndefined(contentBody)) {
                 EkstepEditor.eventManager.dispatchEvent('stage:create', {"position": "beginning"});
+                EkstepEditor.stageManager.registerEvents();
             } else {
                 EkstepEditor.stageManager.fromECML(JSON.parse(contentBody));
             }
-            EkstepEditor.stageManager.registerEvents();
-        });        
+        });
+
+        $scope.onStageDragDrop = function(dragEl, dropEl) {
+            EkstepEditor.stageManager.onStageDragDrop(EkstepEditor.jQuery('#' + dragEl).attr('data-id'), EkstepEditor.jQuery('#' + dropEl).attr('data-id'));
+            EkstepEditorAPI.refreshStages();
+        }
     }
 ]);

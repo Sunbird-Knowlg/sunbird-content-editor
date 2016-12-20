@@ -234,6 +234,9 @@ EkstepEditor.basePlugin = Class.extend({
         if (_.isUndefined(this.params)) this.params = {};
         this.params[key] = value;
     },
+    deleteParam: function(){
+        if(!_.isUndefined(this.params)) delete this.params;
+    },
     getParams: function() {
         return this.params;
     },

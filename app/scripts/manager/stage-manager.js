@@ -17,6 +17,8 @@ EkstepEditor.stageManager = new(Class.extend({
         //fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
         this.canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true });
         console.log("Stage manager initialized");
+        EkstepEditor.eventManager.addEventListener("stage:delete", this.deleteStage, this);
+        EkstepEditor.eventManager.addEventListener("stage:duplicate", this.duplicateStage, this);
     },
     registerEvents: function() {
         var instance = this;
@@ -71,15 +73,35 @@ EkstepEditor.stageManager = new(Class.extend({
         }
     },
     addStage: function(stage) {
-        this.stages.push(stage);
-        this.selectStage(null, { stageId: stage.id });
-        EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stage.id });
+        this.addStageAt(stage, stage.attributes.position);
     },
-    deleteStage: function(stageId) {
-
+    deleteStage: function(event, data) {
+        var currentStage = _.find(this.stages, { id: data.stageId });
+        this.deleteStageInstances(currentStage);
+        this.stages.splice(this.getStageIndex(currentStage), 1);
+        if (this.stages.length === 0) {
+            EkstepEditorAPI.dispatchEvent('stage:create', { "position": "next" });
+        }
+        EkstepEditorAPI.dispatchEvent('stage:afterdelete', { stageId: data.stageId });
     },
-    duplicateStage: function(stageId) {
-
+    deleteStageInstances: function(stage) {        
+        _.forEach(_.clone(stage.canvas.getObjects()), function(obj) {
+            stage.canvas.remove(obj);
+        });
+    },
+    getStageIndex: function(stage) {
+        return EkstepEditorAPI.getAllStages().findIndex(function(obj) {
+            return obj.id === stage.id
+        });
+    },
+    duplicateStage: function(event, data) {
+        var currentStage = _.find(this.stages, { id: data.stageId });        
+        var stage = this.stages[this.getStageIndex(currentStage)];
+        EkstepEditorAPI.dispatchEvent('stage:create', {"position": "afterCurrent"});
+        _.forEach(stage.children, function(plugin){
+           EkstepEditorAPI.cloneInstance(plugin); 
+        });        
+        EkstepEditorAPI.dispatchEvent('stage:afterduplicate', { stageId: data.stageId });
     },
     getObjectMeta: function(options) {
         var pluginId = (options && options.target) ? options.target.id : '';
@@ -120,7 +142,8 @@ EkstepEditor.stageManager = new(Class.extend({
         var instance = this;
         var size = this.stages.length;
         _.forEach(this.stages, function(stage, index) {
-            if (index != 0) {
+            stage.deleteParam();
+            if (index !== 0) {
                 stage.addParam('previous', instance.stages[index - 1].id);
             }
             if (index < (size - 1)) {
@@ -193,5 +216,61 @@ EkstepEditor.stageManager = new(Class.extend({
 
         });
 
+    },
+    addStageAt: function(stage, position) {
+        var currentIndex,
+            positionAltered = false;
+
+        switch (position) {
+            case "beginning":
+                this.stages.unshift(stage);
+                positionAltered = true;
+                break;
+            case "end":
+            case "next":
+                this.stages.push(stage);
+                positionAltered = true;
+                break;
+            case "afterCurrent":
+            case "beforeCurrent":
+                currentIndex = this.getStageIndex(EkstepEditorAPI.getCurrentStage());
+                if (position === "afterCurrent" && currentIndex >= 0) this.stages.splice(currentIndex + 1, 0, stage) && (positionAltered = true);
+                if (position === "beforeCurrent" && currentIndex >= 0) this.stages.splice(currentIndex, 0, stage) && (positionAltered = true);
+                break;
+            default:
+                this.stages.push(stage) && (positionAltered = true);
+                break;
+        };
+
+        if (positionAltered) {
+            this.selectStage(null, { stageId: stage.id });
+            EkstepEditorAPI.dispatchEvent('stage:select', { stageId: stage.id });
+            EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id });
+        }
+    },
+    onStageDragDrop: function(srcStageId, destStageId) {
+        var srcIdx = this.getStageIndexById(srcStageId);
+        var destIdx = this.getStageIndexById(destStageId);
+        if (srcIdx < destIdx) {
+            var src = this.stages[srcIdx];
+            for (var i = srcIdx; i <= destIdx; i++) {
+                this.stages[i] = this.stages[i + 1];
+                if (i === destIdx) this.stages[destIdx] = src;
+            }
+        }
+        if (srcIdx > destIdx) {
+            var src = this.stages[srcIdx];
+            for (var i = srcIdx; i >= destIdx; i--) {
+                this.stages[i] = this.stages[i - 1];
+                if (i === destIdx) this.stages[destIdx] = src;
+            }
+        }
+
+        EkstepEditorAPI.dispatchEvent('stage:reorder', { stageId: srcStageId, fromIndex: srcIdx, toIndex: destIdx });
+    },
+    getStageIndexById: function(stageId) {
+        return _.findIndex(this.stages, function(stage){
+           return stage.id == stageId; 
+        });
     }
 }));
