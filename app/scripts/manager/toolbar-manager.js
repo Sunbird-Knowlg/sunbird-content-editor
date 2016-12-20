@@ -38,14 +38,6 @@ EkstepEditor.toolbarManager = new(Class.extend({
         });
         this.scope.safeApply(function() {
             instance.scope.contextMenus = instance.contextMenuItems;
-            // EkstepEditor.jQuery(document).ready(function() {
-            //     _.forEach(instance.scope.menus, function(value) {
-            //         EkstepEditor.jQuery("#" + value.id).parent().tooltip();
-            //     });
-            //     _.forEach(instance.scope.contextMenus, function(value) {
-            //         EkstepEditor.jQuery("#" + value.id).parent().tooltip();
-            //     });
-            // })
         });
         EkstepEditor.jQuery(document).ready(function() {
             EkstepEditor.jQuery(".ui.dropdown").dropdown();
