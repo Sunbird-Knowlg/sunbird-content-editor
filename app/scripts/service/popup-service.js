@@ -1,23 +1,14 @@
-EkstepEditor.popupService = new(EkstepEditor.iService.extend({
-    callback: undefined,
+EkstepEditor.popupService = new(EkstepEditor.iService.extend({    
     modal: undefined,
-    initService: function() {
-        var thisObj = this;
-        EkstepEditorAPI.addEventListener('popupModal:show', function(event, callback) {
-            thisObj.modal = callback;
-        }, this);
-
-        EkstepEditorAPI.addEventListener('popupservice:controller:load', function(event, data) {
-            thisObj.callback && thisObj.callback.apply(data.controller, data.args);
-        }, this);
+    initService: function(modalCallback) {
+        this.modal = modalCallback;
     },
     open: function(options, callback) {
-        if (options && options.template) {
-            this.callback = callback;
+        if (options && options.template) {            
             options.data = _.isUndefined(options.data) ? {} : options.data;
             $(".ui.modal").remove();
             EkstepEditor.jQuery('#popuptemplate').append(options.template);
-            this.modal && this.modal(options.data);
+            this.modal && this.modal(options.data, callback);
         }
     }
 }));

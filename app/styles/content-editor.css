@@ -47,7 +47,7 @@ body {
     border-left: 1px solid #ddd;
 }
 
-.ui.grid {
+#mainContainerGrid.ui.grid {
     min-height: 100%;
 }
 
@@ -67,10 +67,10 @@ body {
 }
 
 .stage-number {
-    position: relative;
-    right: 16px;
-    top: -29px;
-    font-size: 10px;
+    position: absolute;
+    left: -10px;
+    bottom: 0;
+    font-size: 13px;
 }
 
 .thumbnail-container {

@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="styles/semantic.min.css">
     <link rel="stylesheet" href="styles/content-editor.css" />
+    <link rel="stylesheet" type="text/css" href="styles/MyFontsWebfontsKit.css">
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -40,18 +41,6 @@
         cursor: pointer;
     }
     </style>
-    <script type="text/javascript">
-    (function() {
-        var path = '//easy.myfonts.net/v2/js?sid=10263(font-family=Helvetica+Neue+45+Light)&sid=10265(font-family=Helvetica+Neue+65+Medium)&sid=10269(font-family=Helvetica+Neue+25+UltraLight)&key=mNu8sO6Q3f',
-            protocol = ('https:' == document.location.protocol ? 'https:' : 'http:'),
-            trial = document.createElement('script');
-        trial.type = 'text/javascript';
-        trial.async = true;
-        trial.src = protocol + path;
-        var head = document.getElementsByTagName("head")[0];
-        head.appendChild(trial);
-    })();
-    </script>
 </head>
 
 <body class="ui fluid container">
@@ -59,7 +48,7 @@
     <div ng-app="editorApp" class="maincontainer" ng-strict-di>
         <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
             <div class="ui masthead vertical segment content-masterhead">
-                <div class="ui grid">
+                <div id="mainContainerGrid" class="ui grid">
                     <div class="one wide column">
                         <img class="ui mini image content-logo" src="images/content-logo.png">
                     </div>
@@ -73,18 +62,18 @@
                             <a href='#'> & 2more</a>
                         </div>
                     </div>
-                    <div class="right floated three wide column bottom aligned">
-                        <button class="ui tiny icon button" ng-click="previewContent();">
-                            <i class="tablet icon"></i> Preview
+                    <div class="right floated four wide column bottom aligned">
+                        <button class="ui tiny icon button disabled right floated">
+                            <i class="remove icon"></i> Close
                         </button>
-                        <button class="ui tiny icon button disabled">
-                            <i class="download icon "></i> Download
-                        </button>
-                        <button class="ui tiny icon button" ng-click="saveContent()" ng-disabled="!contentId">
+                        <button class="ui tiny icon button right floated" ng-click="saveContent()" ng-disabled="!contentId">
                             <i class="save icon"></i> Save
                         </button>
-                        <button class="ui tiny icon button disabled">
-                            <i class="remove icon"></i> Close
+                        <button class="ui tiny icon button right floated" ng-click="previewContent();">
+                            <i class="tablet icon"></i> Preview
+                        </button>
+                        <button class="ui tiny icon button disabled right floated">
+                            <i class="download icon "></i> Download
                         </button>
                     </div>
                 </div>
@@ -97,8 +86,9 @@
             <div class="ui grid bottom attached celled" style="margin: 0;background: #EEEEEE;">
                 <div class="row">
                     <div class="ui two wide column">
-                        <div ng-repeat="stage in stages track by $index" class="thumbnail-container">
+                        <div ng-repeat="stage in stages track by $index" class="thumbnail-container" style="margin-bottom: 20px">
                             <div class="ui centered raised card segment thumbnail" ng-click="fireEvent(stage.onclick)">
+                                <span class="stage-number">{{$index+1}}</span>
                                 <div class="ui fluid image">
                                     <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
                                         <i class="trash outline icon link" ng-click="fireEvent(stage.ondelete)"></i> <i class="clone icon link" ng-click="fireEvent(stage.duplicate)"></i>
@@ -106,7 +96,6 @@
                                     <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)"/>
                                 </div>
                             </div>
-                            <span class="left floated stage-number">{{$index+1}}</span>
                         </div>
                     </div>
                     <div class="ui seven wide column">

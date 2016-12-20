@@ -11,7 +11,7 @@ EkstepEditor.stageManager = new(Class.extend({
         fabric.Object.prototype.lockScalingFlip = true;
         fabric.Object.prototype.hasRotatingPoint = false;
         fabric.Object.prototype.cornerSize = 6;
-        fabric.Object.prototype.padding = 1;
+        fabric.Object.prototype.padding = 2;
         fabric.Object.prototype.borderColor = "#1A98FA";
         fabric.Object.prototype.cornerColor = "#1A98FA";
         //fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
@@ -82,7 +82,7 @@ EkstepEditor.stageManager = new(Class.extend({
         if (this.stages.length === 0) {
             EkstepEditorAPI.dispatchEvent('stage:create', { "position": "next" });
         }
-        EkstepEditorAPI.dispatchEvent('stage:delete', { stageId: data.stageId });
+        EkstepEditorAPI.dispatchEvent('stage:afterdelete', { stageId: data.stageId });
     },
     deleteStageInstances: function(stage) {        
         _.forEach(_.clone(stage.canvas.getObjects()), function(obj) {
@@ -101,7 +101,7 @@ EkstepEditor.stageManager = new(Class.extend({
         _.forEach(stage.children, function(plugin){
            EkstepEditorAPI.cloneInstance(plugin); 
         });        
-        EkstepEditorAPI.dispatchEvent('stage:duplicate', { stageId: data.stageId });
+        EkstepEditorAPI.dispatchEvent('stage:afterduplicate', { stageId: data.stageId });
     },
     getObjectMeta: function(options) {
         var pluginId = (options && options.target) ? options.target.id : '';

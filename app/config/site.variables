@@ -2,6 +2,6 @@
      User Global Variables
 *******************************/
 @columnCount: 12;
-@headerFont        : 'Helvetica Neue 45 Light', Arial, Helvetica, sans-serif;
-@pageFont          : 'Helvetica Neue 45 Light', Arial, Helvetica, sans-serif;
+@headerFont        : 'HelveticaNeueLTStd-Lt', Helvetica, Arial, sans-serif;
+@pageFont          : 'HelveticaNeueLTStd-Lt', Helvetica, Arial, sans-serif;
 @fontSmoothing     : antialiased;
