@@ -48,7 +48,7 @@
     <div ng-app="editorApp" class="maincontainer" ng-strict-di>
         <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
             <div class="ui masthead vertical segment content-masterhead">
-                <div id="mainContainerGrid" class="ui grid">
+                <div class="ui grid">
                     <div class="one wide column">
                         <img class="ui mini image content-logo" src="images/content-logo.png">
                     </div>
@@ -83,7 +83,7 @@
                 </span>
                 <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
             </div>
-            <div class="ui grid bottom attached celled" style="margin: 0;background: #EEEEEE;">
+            <div id="mainContainerGrid" class="ui grid bottom attached celled" style="margin: 0;background: #EEEEEE;">
                 <div class="row">
                     <div class="ui two wide column">
                         <div ng-repeat="stage in stages track by $index" class="thumbnail-container" style="margin-bottom: 20px">
