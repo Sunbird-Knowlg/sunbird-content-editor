@@ -93,7 +93,7 @@
                                     <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
                                         <i class="trash outline icon link" ng-click="fireEvent(stage.ondelete)"></i> <i class="clone icon link" ng-click="fireEvent(stage.duplicate)"></i>
                                     </div>
-                                    <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)"/>
+                                    <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)" />
                                 </div>
                             </div>
                         </div>
@@ -136,8 +136,13 @@
                 </div>
                 <!-- config-close-icon -->
                 <div class="content config-toolbar-content">
-                    <span ng-repeat="config in pluginConfig" ng-include="'templates/config.html'" ng-show="configHeaderText === 'Configuration'"></span>
-                    <div id="pluginPropertyContainer" ng-include="'templates/properties.html'" ng-show="configHeaderText === 'Properties'">
+                    <div ng-show="configHeaderText === 'Configuration'">
+                        <span ng-repeat="config in pluginConfig" ng-include="'templates/config.html'">
+                    </span>
+                        <span ng-include="'templates/properties.html'" ></span>
+                    </div>
+                    <div id="pluginEventsContainer" ng-show="configHeaderText === 'Events'">
+                    Events
                     </div>
                     <div id="pluginHelpContent" class="ui message" ng-show="configHeaderText === 'Help'">
                     </div>
@@ -181,8 +186,6 @@
     <script src="config/devAPIurl.js"></script>
     <script src="scripts/service/asset-service.js"></script>
     <script src="scripts/service/concept-service.js"></script>
-
-
     <!-- endbuild -->
 </body>
 
