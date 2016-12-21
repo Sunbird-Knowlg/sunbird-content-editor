@@ -50,7 +50,7 @@
         <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
             <div class="ui masthead vertical segment content-masterhead">
                 <div class="ui grid">
-                    <div class="one wide column">
+                    <div class="one column" style="width:auto;">
                         <img class="ui mini image content-logo" src="images/content-logo.png">
                     </div>
                     <div class="three wide column" style="padding-left: 0px">
@@ -63,19 +63,21 @@
                             <a href='#'> & 2more</a>
                         </div>
                     </div>
-                    <div class="right floated four wide column bottom aligned">
-                        <button class="ui tiny icon button disabled right floated">
+                    <div class="right floated four wide column bottom aligned"
+                         style="padding-right: 20px;">
+                        <!-- <button class="ui tiny icon button disabled right floated">
                             <i class="icon-close icon"></i> Close
-                        </button>
-                        <button class="ui tiny icon button right floated secondary" ng-click="saveContent()" ng-disabled="!contentId">
+                        </button> -->
+                        <button class="ui tiny icon button right floated secondary" ng-click="saveContent()" ng-disabled="!contentId" 
+                        style="margin-left: 5px;">
                             <i class="icon-save icon"></i> Save
                         </button>
                         <button class="ui tiny icon button right floated primary" ng-click="previewContent();">
                             <i class="icon-preview icon"></i> Preview
                         </button>
-                        <button class="ui tiny icon button disabled right floated">
+                        <!-- <button class="ui tiny icon button disabled right floated">
                             <i class="icon-download icon "></i> Download
-                        </button>
+                        </button> -->
                     </div>
                 </div>
             </div>
