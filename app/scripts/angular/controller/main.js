@@ -13,6 +13,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
     function($scope, $timeout, $http, $location, $q, $window) {
         EkstepEditorAPI.globalContext.contentId = $location.search().contentId || $window.contentId;
         $scope.contentId = EkstepEditorAPI.globalContext.contentId;
+        $scope.stageAttachments = {};
         $scope.safeApply = function(fn) {
             var phase = this.$root.$$phase;
             if (phase == '$apply' || phase == '$digest') {
