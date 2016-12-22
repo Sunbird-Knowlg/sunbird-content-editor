@@ -234,6 +234,9 @@ EkstepEditor.basePlugin = Class.extend({
         if (_.isUndefined(this.params)) this.params = {};
         this.params[key] = value;
     },
+    deleteParam: function(){
+        if(!_.isUndefined(this.params)) delete this.params;
+    },
     getParams: function() {
         return this.params;
     },
@@ -331,7 +334,7 @@ EkstepEditor.basePlugin = Class.extend({
         if (data.color) retData.fill = data.color;
         return retData;
     },
-    getPluginConfig: function() {
+    getConfigManifest: function() {
         if (!this.manifest.editor.configManifest) { this.manifest.editor.configManifest = []; }
         var configManifest = this.manifest.editor.configManifest
         if (this.configManifest) {

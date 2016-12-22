@@ -3,11 +3,17 @@
  */
 'use strict';
 
-angular.module('editorApp', ['ui.bootstrap', 'ngDialog', 'oc.lazyLoad']);
+angular.module('editorApp', ['ngDialog', 'oc.lazyLoad']).config(['$locationProvider', function($locationProvider) {
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+}]);
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window',
     function($scope, $timeout, $http, $location, $q, $window) {
-        EkstepEditorAPI.globalContext.contentId = $location.search().contentId;
+        EkstepEditorAPI.globalContext.contentId = $location.search().contentId || $window.contentId;
         $scope.contentId = EkstepEditorAPI.globalContext.contentId;
+        $scope.stageAttachments = {};
         $scope.safeApply = function(fn) {
             var phase = this.$root.$$phase;
             if (phase == '$apply' || phase == '$digest') {
@@ -59,10 +65,15 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             }
             if(_.isUndefined(contentBody)) {
                 EkstepEditor.eventManager.dispatchEvent('stage:create', {"position": "beginning"});
+                EkstepEditor.stageManager.registerEvents();
             } else {
                 EkstepEditor.stageManager.fromECML(JSON.parse(contentBody));
             }
-            EkstepEditor.stageManager.registerEvents();
-        });        
+        });
+
+        $scope.onStageDragDrop = function(dragEl, dropEl) {
+            EkstepEditor.stageManager.onStageDragDrop(EkstepEditor.jQuery('#' + dragEl).attr('data-id'), EkstepEditor.jQuery('#' + dropEl).attr('data-id'));
+            EkstepEditorAPI.refreshStages();
+        }
     }
 ]);
