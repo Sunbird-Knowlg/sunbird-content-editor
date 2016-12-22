@@ -6,22 +6,13 @@
     <title></title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <!-- <link rel="stylesheet" href="styles/open-sans.css" />
-    <link rel="stylesheet" href="styles/bootstrap.css" /> -->
-    <!-- <link rel="stylesheet" href="styles/template.css" /> -->
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-    <!-- build:css(.) styles/vendor.css -->
-    <!-- bower:css -->
+    <!-- inject:css -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
     <link rel="stylesheet" href="styles/semantic.min.css">
     <link rel="stylesheet" href="styles/content-editor.css" />
     <link rel="stylesheet" type="text/css" href="styles/MyFontsWebfontsKit.css">
     <link rel="stylesheet" type="text/css" href="styles/iconfont.css">
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:css(.tmp) styles/main.css -->
-    <!-- <link rel="stylesheet" href="styles/main.css"> -->
-    <!-- endbuild -->
+    <!-- endinject -->
     <!-- Not need for AT on Community Portal. Needed only on localhost -->
     <style>
     .community-portal-remove {
@@ -152,21 +143,15 @@
             <div ng-controller="popupController as $ctrl" id="popuptemplate"></div>
         </div>
     </div>
-    <!-- build:js(.) scripts/vendor.js -->
-    <!-- bower:js -->
+     <!-- inject:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <!-- <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script> -->
     <script src="bower_components/fabric/dist/fabric.min.js"></script>
     <script src="bower_components/lodash/lodash.js"></script>
     <script src="bower_components/x2js/index.js"></script>
     <script src="bower_components/eventbus/index.js"></script>
     <script src="bower_components/uuid/index.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
-    <!-- build:js({.tmp,app}) scripts/scripts.js -->
-    <script src="libs/semantic.min.js"></script>
     <script src="scripts/main/class.js"></script>
     <script src="scripts/main/ekstep-editor.js"></script>
     <script src="scripts/main/base-plugin.js"></script>
@@ -184,12 +169,10 @@
     <script src="scripts/angular/directive/draggable-directive.js"></script>
     <script src="scripts/angular/directive/droppable-directive.js"></script>
     <script src="scripts/service/assessment-service.js"></script>
-    <script src="config/devAPIurl.js"></script>
     <script src="scripts/service/asset-service.js"></script>
     <script src="scripts/service/concept-service.js"></script>
-
-
-    <!-- endbuild -->
+    <!-- endinject -->
+    <script src="config/devAPIurl.js"></script>
 </body>
 
 </html>

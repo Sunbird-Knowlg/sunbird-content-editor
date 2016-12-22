@@ -130,7 +130,6 @@ module.exports = function(grunt) {
         rename: {
             main: {
                 files: [
-                    { src: ['app/index_min.html'], dest: 'app/index.html' },
                     { src: ['app'], dest: 'content-editor' },
                 ]
             }

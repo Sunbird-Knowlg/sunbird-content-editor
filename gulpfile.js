@@ -6,6 +6,7 @@
  var stripDebug = require('gulp-strip-debug');
  var mainBowerFiles = require('gulp-main-bower-files');
  var gulpFilter = require('gulp-filter');
+ var inject = require('gulp-inject');
 
  gulp.task('setup', function() {
      gulp.src('semantic/dist', { read: false }).pipe(clean())
@@ -66,7 +67,7 @@
 
 
  gulp.task('minifyJsBower', function() {
-     var filterJS = gulpFilter('app/bower_components/**/*.js', { restore: true });
+     var filterJS = gulpFilter(['app/bower_components/**/*.js', 'libs/semantic.min.js'], { restore: true });
      return gulp.src('app/bower.json')
          .pipe(mainBowerFiles())
          .pipe(filterJS)
@@ -112,6 +113,13 @@
          })
          .pipe(gulp.dest('app/dist/styles'));
  });
+
+ gulp.task('inject', function () {
+  var target = gulp.src('app/index.html');
+  var sources = gulp.src(['app/dist/scripts/*.js', 'app/dist/styles/*.css'], {read: false});
+  return target.pipe(inject(sources))
+    .pipe(gulp.dest('./app'));
+});
 
 
  gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copy']);
