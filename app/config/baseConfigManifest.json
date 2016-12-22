@@ -1,5 +1,18 @@
-[
-  {
+[{
+    "propertyName": "playable",
+    "title": "Auto play",
+    "description": "Set the element's playability",
+    "dataType": "boolean",
+    "required": true,
+    "defaultValue": false
+}, {
+    "propertyName": "visible",
+    "title": "Visible",
+    "description": "Set the element's Visibility",
+    "dataType": "boolean",
+    "required": true,
+    "defaultValue": true
+}, {
     "propertyName": "opacity",
     "title": "Transparency",
     "description": "Set the transparency for element",
@@ -9,16 +22,14 @@
     "defaultValue": 100,
     "minimumValue": 0,
     "maximumValue": 100
-  },
-  {
+}, {
     "propertyName": "stroke",
     "title": "Border Color",
     "description": "Set the border color for element",
     "dataType": "colorpicker",
     "required": true,
     "defaultValue": "rgba(255, 255, 255, 0)"
-  },
-  {
+}, {
     "propertyName": "strokeWidth",
     "title": "Border Thickness",
     "description": "Set the border thickness for element",
@@ -27,5 +38,4 @@
     "defaultValue": 1,
     "minimumValue": 0,
     "maximumValue": 24
-  }
-]
+}]

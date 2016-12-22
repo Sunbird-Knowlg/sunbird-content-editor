@@ -21,8 +21,8 @@ window.EkstepEditorAPI = {
         EkstepEditor.loadPluginResource(pluginId, pluginVer, src, dataType, callback);
     },
     getService: function(serviceId) {
-        switch(serviceId) {
-            case 'popup': 
+        switch (serviceId) {
+            case 'popup':
                 return EkstepEditor.popupService;
                 break;
             case 'content':
@@ -43,7 +43,7 @@ window.EkstepEditorAPI = {
         return EkstepEditor.stageManager.currentStage;
     },
     refreshStages: function() {
-        EkstepEditor.toolbarManager.scope.safeApply(function() {EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages;});
+        EkstepEditor.toolbarManager.scope.safeApply(function() { EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages; });
     },
     getCurrentObject: function() {
         var activeObj = EkstepEditor.stageManager.canvas.getActiveObject();
@@ -94,13 +94,26 @@ window.EkstepEditorAPI = {
     cloneInstance: function(plugin) {
         var data = plugin.getCopy();
         delete data.id; // delete id not to get duplicate pluginInstances
-        if(plugin.parent.id == EkstepEditorAPI.getCurrentStage().id) {
+        if (plugin.parent.id == EkstepEditorAPI.getCurrentStage().id) {
             data.x = data.x + 2;
             data.y = data.y + 2;
         }
         EkstepEditorAPI.instantiatePlugin(plugin.manifest.id, data, EkstepEditorAPI.getCurrentStage());
     },
-    getAllStages: function(){
+    getAllStages: function() {
         return EkstepEditor.stageManager.stages;
+    },
+    getAllPluginInstanceIds: function(id) {
+        var pluginInstanceIds = [];
+        var pluginInstances = EkstepEditorAPI._.clone(EkstepEditor.stageManager.currentStage.children, true);
+        if (id) {
+            EkstepEditorAPI._.remove(pluginInstances, function(pi) {
+                return pi.id === id;
+            })
+        }
+        EkstepEditorAPI._.forEach(pluginInstances, function (pi) {
+          pluginInstanceIds.push(pi.id);
+        })
+        return pluginInstanceIds;
     }
 }

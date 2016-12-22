@@ -31,12 +31,12 @@ EkstepEditor.basePlugin = Class.extend({
             EkstepEditorAPI.addEventListener(this.manifest.id + ":create", this.create, this);
             console.log(manifest.id + " plugin initialized");
         } else {
-            this.editorObj = undefined, this.events = undefined, this.attributes = { x: 0, y: 0, w: 0, h: 0 }, this.params = undefined, this.data = undefined, this.media = undefined;
+            this.editorObj = undefined, this.events = undefined, this.attributes = { x: 0, y: 0, w: 0, h: 0, visible: true }, this.params = undefined, this.data = undefined, this.media = undefined;
             this.editorData = data;
             this.children = [];
             this.id = this.editorData.id || UUID();
             this.parent = parent;
-            this.config = { opacity: 100, strokeWidth: 1, stroke: "rgba(255, 255, 255, 0)" };
+            this.config = { opacity: 100, strokeWidth: 1, stroke: "rgba(255, 255, 255, 0)", playable: false, visible: true };
         }
         if (!EkstepEditor.baseConfigManifest) {
             EkstepEditor.loadBaseConfigManifest(function() {
@@ -274,9 +274,10 @@ EkstepEditor.basePlugin = Class.extend({
             };
         }
         if (!_.isUndefined(this.getEvents())) {
-            attr.config = {
-                "__cdata": JSON.stringify(this.getEvents())
-            };
+            // attr.config = {
+            //     "__cdata": JSON.stringify(this.getEvents())
+            // };
+            attr.events = this.getEvents();
         }
         if (!_.isUndefined(this.getParams())) {
             attr.param = [];
@@ -370,6 +371,14 @@ EkstepEditor.basePlugin = Class.extend({
                 currentInstace.attributes.stroke = value;
                 currentInstace.config.stroke = value;
                 break;
+            case 'playable':
+                currentInstace.attributes.playable = value;
+                currentInstace.config.playable = value;
+                break;
+            case 'visible':
+                currentInstace.attributes.visible = value;
+                currentInstace.config.visible = value;
+                break;      
         }
         EkstepEditorAPI.render();
         EkstepEditorAPI.dispatchEvent('object:modified', { target: EkstepEditorAPI.getEditorObject() });
