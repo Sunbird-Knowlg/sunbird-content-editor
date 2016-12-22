@@ -76,11 +76,6 @@
   args:
     chdir: "{{at_home}}"
 
-- name: Install bower packages
-  command: "bower install"
-  args:
-    chdir: "{{at_home}}/content-editor"
-
 - name: Start AT Service
   command: forever start app.js
   args:
