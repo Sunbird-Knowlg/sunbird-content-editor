@@ -1,18 +1,15 @@
-angular.module('editorApp').controller('popupController', ['$scope', '$compile', '$document', '$injector', function($scope, $compile, $document, $injector) {
-    var ctrl = this; 
-
-    function semanticModal(data, callback) {        
-        $compile($document.find('.ui.modal'))($scope);
-        $('.ui.modal').modal({
-            onShow: function() {                
-                callback.apply(ctrl, [ctrl, $injector, data]);
-            },
-            dimmerSettings: {
-                opacity: 0.4
-            }
-        }).modal('show');
+angular.module('editorApp').controller('popupController', ['ngDialog', '$ocLazyLoad', function(ngDialog, $ocLazyLoad) {
+    function loadNgModules(templatePath, controllerPath) {
+        $ocLazyLoad.load([
+            { type: 'html', path: templatePath },
+            { type: 'js', path: controllerPath }
+        ]);
     };
 
-    EkstepEditor.popupService.initService(semanticModal);
+    function openModal(config) {
+        if (config) ngDialog.open(config);
+    };
+
+    EkstepEditorAPI.getService('popup').initService(loadNgModules, openModal);
 
 }]);

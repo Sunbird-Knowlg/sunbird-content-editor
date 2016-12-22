@@ -1,14 +1,12 @@
 EkstepEditor.popupService = new(EkstepEditor.iService.extend({    
-    modal: undefined,
-    initService: function(modalCallback) {
-        this.modal = modalCallback;
+    initService: function(loadNgModules, openModal) {        
+        this.loadNgModules = loadNgModules;
+        this.openModal = openModal;
     },
-    open: function(options, callback) {
-        if (options && options.template) {            
-            options.data = _.isUndefined(options.data) ? {} : options.data;
-            $(".ui.modal").remove();
-            EkstepEditor.jQuery('#popuptemplate').append(options.template);
-            this.modal && this.modal(options.data, callback);
-        }
+    loadNgModules: function(templatePath, controllerPath) {
+        this.loadNgModules && this.loadNgModules(templatePath, controllerPath);
+    },
+    open: function(config){
+        this.openModal && this.openModal(config);
     }
 }));

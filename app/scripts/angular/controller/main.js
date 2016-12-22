@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('editorApp', []).config(['$locationProvider', function($locationProvider) {
+angular.module('editorApp', ['ngDialog', 'oc.lazyLoad']).config(['$locationProvider', function($locationProvider) {
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
