@@ -40,7 +40,7 @@
              }
          }))
          .pipe(stripDebug())
-         .pipe(gulp.dest('app/dist/scripts'));
+         .pipe(gulp.dest('dist/scripts'));
  });
 
  gulp.task('minifyCSS', function() {
@@ -62,7 +62,7 @@
                  return m && m.join('\n') + '\n' || '';
              }
          }))
-         .pipe(gulp.dest('app/dist/styles'));
+         .pipe(gulp.dest('dist/styles'));
  });
 
 
@@ -83,7 +83,7 @@
                  return m && m.join('\n') + '\n' || '';
              }
          }))
-         .pipe(gulp.dest('app/dist/scripts'));
+         .pipe(gulp.dest('dist/scripts'));
  });
 
  gulp.task('minifyCssBower', function() {
@@ -103,23 +103,30 @@
                  return m && m.join('\n') + '\n' || '';
              }
          }))
-         .pipe(gulp.dest('app/dist/styles'));
+         .pipe(gulp.dest('dist/styles'));
  });
 
 
- gulp.task('copy', function() {
+ gulp.task('copyfonts', function() {
      return gulp.src(['app/styles/themes/**/*', 'app/styles/webfonts/**/*', 'app/styles/fonts/*'], {
              base: 'app/styles/'
          })
-         .pipe(gulp.dest('app/dist/styles'));
+         .pipe(gulp.dest('dist/styles'));
+ });
+ gulp.task('copyFiles', function() {
+     return gulp.src(['app/templates/**/*', 'app/images/content-logo.png', 'app/config/*.json', 'app/config/*.js', 'app/index.html'], {
+             base: 'app/'
+         })
+         .pipe(gulp.dest('dist'));
  });
 
- gulp.task('inject', function () {
-  var target = gulp.src('app/index.html');
-  var sources = gulp.src(['app/dist/scripts/*.js', 'app/dist/styles/*.css'], {read: false});
-  return target.pipe(inject(sources))
-    .pipe(gulp.dest('./app'));
-});
+ gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyFiles']);
 
+ gulp.task('inject', ['minify'], function() {
+     var target = gulp.src('dist/index.html');
+     var sources = gulp.src(['dist/scripts/*.js', 'dist/styles/*.css'], { read: false });
+     return target.pipe(inject(sources, { ignorePath: 'dist/', addRootSlash: false }))
+         .pipe(gulp.dest('./dist'));
+ });
 
- gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copy']);
+ gulp.task('build', ['minify', 'inject']);
