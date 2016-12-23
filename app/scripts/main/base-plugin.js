@@ -170,13 +170,13 @@ EkstepEditor.basePlugin = Class.extend({
     moving: function(instance, options, event) {},
     skewing: function(instance, options, event) {},
     doCopy: function() {
-        if (this.editorObj) return this.editorObj;
+        return this.editorObj;
     },
     getCopy: function() {
         return this.toECML();
     },
     render: function(canvas) { // Complex plugins and templates should override this if necessary
-        if (this.editorObj) canvas.add(this.editorObj);
+        canvas.add(this.editorObj);
     },
     getMeta: function() {
 
