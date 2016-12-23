@@ -12,7 +12,8 @@ EkstepEditor.mediaManager = new (Class.extend({
 		return this.mediaMap[asset];
 	},    
 	getMediaOriginURL: function(src) {
-		var url = EkstepEditor.serviceURL;
-    return src.replace(url.aws_s3, url.baseURL + url.assetReverseProxyUrl);
+		var assetReverseProxyUrl = "/assets/public/";
+    var aws_s3 = "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/";
+    return src.replace(aws_s3, EkstepEditor.config.baseURL + assetReverseProxyUrl);
   }
 }));

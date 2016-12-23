@@ -16,7 +16,7 @@ var editor = new ekstep_editor();
 window.EkstepEditor = editor;
 
 EkstepEditor.config = {
-    baseURL: 'https://dev.ekstep.in/api', // In dev and qa - "/api"
+    baseURL: 'https://dev.ekstep.in',
     defaultSettings: 'config/editorSettings.json',
     pluginRepo: '/plugins',
     corePlugins: ["text", "audio", "div", "hotspot", "image", "shape", "scribble", "htext"],
