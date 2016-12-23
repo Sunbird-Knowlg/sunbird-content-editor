@@ -376,7 +376,7 @@ EkstepEditor.basePlugin = Class.extend({
                 currentInstace.config.playable = value;
                 break;
             case 'visible':
-                currentInstace.attributes.visible = value;
+                currentInstace.attributes.visible = value ? "true":"false";
                 currentInstace.config.visible = value;
                 break;      
         }
