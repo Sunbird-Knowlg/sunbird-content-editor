@@ -71,6 +71,7 @@ EkstepEditor.stageManager = new(Class.extend({
                 EkstepEditor.stageManager.dispatchObjectEvent('added', options, event);
             });
         }
+        EkstepEditorAPI.dispatchEvent('stage:afterselect', { stageId: data.stageId });
     },
     addStage: function(stage) {
         this.addStageAt(stage, stage.attributes.position);

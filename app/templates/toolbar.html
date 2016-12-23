@@ -12,7 +12,7 @@
             <a class="item" ng-repeat="dd in menu.submenu" ng-click="fireEvent(dd.onclick)" ng-switch on="dd.type">
                 <span ng-switch-when="icon">
                         <i class="{{dd.iconClass}}" ng-if="dd.iconClass" style="{{dd.iconStyle}}" id="{{dd.id}}"></i>
-                        <span ng-if="dd.title">{{dd.title}}</span>
+                        <span ng-if="dd.title" style="font-weight: lighter;">{{dd.title}}</span>
                 </span>
                 <span ng-switch-when="image">
                         <img class="ui mini spaced image at-dd-image-icon {{dd.iconClass}}" ng-src="{{dd.iconImage}}" ng-if="dd.iconImage" id="{{dd.id}}">

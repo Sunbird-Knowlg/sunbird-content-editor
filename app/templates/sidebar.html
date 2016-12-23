@@ -13,20 +13,30 @@
         <i class="dropdown icon"></i>Todo
     </div>
     <div class="content {{showTodo ? 'active': ''}}">
-        <div class="ui cards">
-            <div class="card">
+                <div class="title" ng-click="showReportedTodos = !showReportedTodos" ng-class="showReportedTodos ? '': 'active' ">
+                        <i class="dropdown icon"></i>Reported Issues
+                </div>
+                <div class="content {{showReportedTodos ? '': 'active'}}">
+                        <div class="ui cards">
                 <div class="content">
-                    <div class="header todo-header">Reported Issues</div>
-                    <div class="description"><div id="pageLevelTodos"></div></div>
+                                        <div class="description">
+                                                <div id="pageLevelTodos"></div>
+                                        </div>
                 </div>
             </div>
         </div>
-        <div class="ui cards">
+         <div class="title" ng-click="showResolvedTodos = !showResolvedTodos" ng-class="showResolvedTodos ? 'active': '' ">
+                        <i class="dropdown icon"></i>Resolved Issues
+                </div>
+                <div class="content {{showResolvedTodos ? 'active': ''}}">
+                        <div class="ui cards">
             <div class="card">
                 <div class="content">
-                    <div class="header todo-header">Resolved Issues</div>
-                   <div class="description"><div class="ui relaxed divided list" id="pageLevelResolvedTodos"></div></div>
+                                        <div class="description">
+                                                <div id="pageLevelResolvedTodos"></div>
+                                        </div>
                 </div>
             </div>
         </div>
+                </div>
     </div>

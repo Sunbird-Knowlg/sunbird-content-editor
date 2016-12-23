@@ -1,0 +1,74 @@
+---
+- hosts: "release"
+  tasks:
+  - name: Status of AuthoringTool directory
+    stat: path={{at_home}}
+    register: directory_status
+
+  - name: Remove AuthoringTool directory 
+    file: state=absent path={{at_home}}
+    when: directory_status.stat.exists
+
+  - name: Copy zip file to server
+    copy: src=content-editor.zip dest={{user_home}}/ owner={{user}} group={{user}} mode=0774
+
+  - name: Create AuthoringTool directory
+    file: path={{at_home}} owner={{user}} group={{user}} state=directory
+
+  - name: Unarchive zip file
+    unarchive: src={{user_home}}/content-editor.zip dest={{at_home}} copy=no owner={{user}} group={{user}} mode=0774
+
+  - name: Pip install awscli
+    pip: name=awscli state=present
+    become: yes
+
+  - name: Delete credentials
+    become: yes
+    file: path=.aws/credentials state=absent
+
+  - name: Create .aws
+    file: path={{ item.path }} state={{ item.state }} owner={{user}} group={{user}}
+    with_items:
+      - { path: '.aws', state: 'directory' }
+      - { path: 'credentials', state: 'touch' }
+   
+  - name: Update .aws/credentials
+    lineinfile: dest=.aws/credentials line='[default]'  state=present insertafter=EOF create=yes
+   
+  - name: Update access_key from env var
+    lineinfile: dest=.aws/credentials line='aws_access_key_id={{ lookup('env', 'lp_aws_access_key_id') }}'  insertafter=EOF state=present create=yes
+
+  - name: Update secret_key from env var 
+    lineinfile: dest=.aws/credentials line='aws_secret_access_key={{ lookup('env', 'lp_aws_secret_access_key') }}' insertafter=EOF state=present  create=yes
+
+  - name: Delete plugins from S3 bucket
+    command: "aws s3 rm s3://{{s3_location}}/content-plugins/{{ item }}/ --recursive"
+    with_items:
+      - org.ekstep.assessment-1.0
+      - org.ekstep.assessmentbrowser-1.0
+      - org.ekstep.assetbrowser-1.0
+      - org.ekstep.atpreview-1.0
+      - org.ekstep.colorpicker-1.0
+      - org.ekstep.config-1.0
+      - org.ekstep.copypaste-1.0
+      - org.ekstep.delete-1.0
+      - org.ekstep.hollowcircle-1.0
+      - org.ekstep.hotspot-1.0
+      - org.ekstep.image-1.0
+      - org.ekstep.reorder-1.0
+      - org.ekstep.scribblepad-1.0
+      - org.ekstep.shape-1.0
+      - org.ekstep.stage-1.0
+      - org.ekstep.stagedecorator-1.0
+      - org.ekstep.text-1.0
+    become: yes
+
+  - name: Copy plugins into S3 bucket
+    command: "aws s3 cp {{at_home}}/content-plugins s3://{{s3_location}}/content-plugins/ --recursive --acl public-read"
+    become: yes
+
+  - name: Install npm packages
+    command: "npm install"
+    args:
+      chdir: "{{at_home}}"
+  
