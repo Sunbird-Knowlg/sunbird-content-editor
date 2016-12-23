@@ -26,7 +26,7 @@
     file: path=.aws/credentials state=absent
 
   - name: Create .aws
-    file: path={{ item.path }} state={{ item.state }}
+    file: path={{ item.path }} state={{ item.state }} owner={{user}} group={{user}}
     with_items:
       - { path: '.aws', state: 'directory' }
       - { path: 'credentials', state: 'touch' }
