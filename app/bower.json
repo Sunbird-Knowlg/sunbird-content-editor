@@ -12,7 +12,6 @@
     "eventbus": "./libs/eventbus.min.js",
     "uuid": "./libs/uuid-v4.min.js",
     "async": "*",
-    "angular-bootstrap": "^2.2.0",
     "semantic": "^2.2.6",
     "ng-dialog": "^0.6.4",
     "oclazyload": "^1.0.9"
