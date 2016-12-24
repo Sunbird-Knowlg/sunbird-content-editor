@@ -1,19 +1,42 @@
 ---
 - hosts: "release"
   tasks:
-  - name: Status of AuthoringTool directory
-    stat: path={{at_home}}
-    register: directory_status
+        - name: Status of AuthoringTool directory
+          stat: path={{at_home}}
+          register: directory_status
 
-  - name: Remove AuthoringTool directory 
-    file: state=absent path={{at_home}}
-    when: directory_status.stat.exists
+        - name: Remove AuthoringTool directory 
+          file: state=absent path={{at_home}}
+          when: directory_status.stat.exists
 
-  - name: Copy zip file to server
-    copy: src=content-editor.zip dest={{user_home}}/ owner={{user}} group={{user}} mode=0774
+        - name: Copy zip file to server
+          copy: src=content-editor.zip dest={{user_home}}/ owner={{user}} group={{user}} mode=0774
 
-  - name: Create AuthoringTool directory
-    file: path={{at_home}} owner={{user}} group={{user}} state=directory
+        - name: Create AuthoringTool directory
+          file: path={{at_home}} owner={{user}} group={{user}} state=directory
+  
+        - name: Unarchive zip file
+          unarchive: src={{user_home}}/content-editor.zip dest={{at_home}} copy=no owner={{user}} group={{user}} mode=0774
 
-  - name: Unarchive zip file
-    unarchive: src={{user_home}}/content-editor.zip dest={{at_home}} copy=no owner={{user}} group={{user}} mode=0774
+        - name: Status of plugins directory
+          stat: path={{plugins_home}}
+          register: directory_status
+
+        - name: Remove plugins directory 
+          file: state=absent path={{plugins_home}}
+          when: directory_status.stat.exists
+
+        - name: Copy zip file to server
+          copy: src=content-plugins.zip dest={{user_home}}/ owner={{user}} group={{user}} mode=0774
+
+        - name: Create plugins directory
+          file: path={{plugins_home}} owner={{user}} group={{user}} state=directory
+  
+        - name: Unarchive zip file
+          unarchive: src={{user_home}}/content-plugins.zip dest={{plugins_home}} copy=no owner={{user}} group={{user}} mode=0774
+      
+        - name: copy the script
+          copy: src=s3_copy.sh dest=/home/ubuntu owner=ubuntu group=ubuntu mode="u+rw,g+wx,o+rwx"
+
+        - name: run the script
+          shell: sh s3_copy.sh
