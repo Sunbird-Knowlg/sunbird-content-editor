@@ -41,7 +41,7 @@
              }
          }))
          .pipe(stripDebug())
-         .pipe(gulp.dest('dist/scripts'));
+         .pipe(gulp.dest('content-editor/scripts'));
  });
 
  gulp.task('minifyCSS', function() {
@@ -63,7 +63,7 @@
                  return m && m.join('\n') + '\n' || '';
              }
          }))
-         .pipe(gulp.dest('dist/styles'));
+         .pipe(gulp.dest('content-editor/styles'));
  });
 
 
@@ -84,7 +84,7 @@
                  return m && m.join('\n') + '\n' || '';
              }
          }))
-         .pipe(gulp.dest('dist/scripts'));
+         .pipe(gulp.dest('content-editor/scripts'));
  });
 
  gulp.task('minifyCssBower', function() {
@@ -104,7 +104,7 @@
                  return m && m.join('\n') + '\n' || '';
              }
          }))
-         .pipe(gulp.dest('dist/styles'));
+         .pipe(gulp.dest('content-editor/styles'));
  });
 
 
@@ -112,26 +112,26 @@
      return gulp.src(['app/styles/themes/**/*', 'app/styles/webfonts/**/*', 'app/styles/fonts/*'], {
              base: 'app/styles/'
          })
-         .pipe(gulp.dest('dist/styles'));
+         .pipe(gulp.dest('content-editor/styles'));
  });
  gulp.task('copyFiles', function() {
      return gulp.src(['app/templates/**/*', 'app/images/content-logo.png', 'app/config/*.json', 'app/config/*.js', 'app/index.html'], {
              base: 'app/'
          })
-         .pipe(gulp.dest('dist'));
+         .pipe(gulp.dest('content-editor'));
  });
 
  gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyFiles']);
 
  gulp.task('inject', ['minify'], function() {
-     var target = gulp.src('dist/index.html');
-     var sources = gulp.src(['dist/scripts/*.js', 'dist/styles/*.css'], { read: false });
-     return target.pipe(inject(sources, { ignorePath: 'dist/', addRootSlash: false }))
-         .pipe(gulp.dest('./dist'));
+     var target = gulp.src('content-editor/index.html');
+     var sources = gulp.src(['content-editor/scripts/*.js', 'content-editor/styles/*.css'], { read: false });
+     return target.pipe(inject(sources, { addRootSlash: false }))
+         .pipe(gulp.dest('./content-editor'));
  });
 
  gulp.task('zip', ['minify', 'inject'], function () {
-    return gulp.src('dist/**')
+    return gulp.src('content-editor/**')
         .pipe(zip('content-editor.zip'))
         .pipe(gulp.dest('ansible'));
  });
