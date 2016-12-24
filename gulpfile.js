@@ -7,6 +7,7 @@
  var mainBowerFiles = require('gulp-main-bower-files');
  var gulpFilter = require('gulp-filter');
  var inject = require('gulp-inject');
+ const zip = require('gulp-zip');
 
  gulp.task('setup', function() {
      gulp.src('semantic/dist', { read: false }).pipe(clean())
@@ -129,4 +130,10 @@
          .pipe(gulp.dest('./dist'));
  });
 
- gulp.task('build', ['minify', 'inject']);
+ gulp.task('zip', ['minify', 'inject'], function () {
+    return gulp.src('dist/**')
+        .pipe(zip('dist.zip'))
+        .pipe(gulp.dest('ansible'));
+ });
+
+ gulp.task('build', ['minify', 'inject', 'zip']);
