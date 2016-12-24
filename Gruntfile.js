@@ -113,7 +113,7 @@ module.exports = function(grunt) {
                     archive: 'ansible/content-editor.zip'
                 },
                 files: [
-                    { src: ['dist/**',
+                    { src: ['content-editor/**', 
                             'content-plugins/**', 
                             'server/**', '*', 
                             '!node_modules', 
