@@ -132,7 +132,7 @@
 
  gulp.task('zip', ['minify', 'inject'], function () {
     return gulp.src('dist/**')
-        .pipe(zip('dist.zip'))
+        .pipe(zip('content-editor.zip'))
         .pipe(gulp.dest('ansible'));
  });
 
