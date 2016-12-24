@@ -113,12 +113,7 @@ module.exports = function(grunt) {
                     archive: 'ansible/content-editor.zip'
                 },
                 files: [
-                    { src: ['content-editor/config/**', 
-                            'content-editor/dist/**',
-                            'content-editor/images/**',
-                            'content-editor/libs/**',
-                            'content-editor/templates/**',
-                            'content-editor/*.html', 
+                    { src: ['dist/**',
                             'content-plugins/**', 
                             'server/**', '*', 
                             '!node_modules', 
@@ -130,7 +125,7 @@ module.exports = function(grunt) {
         rename: {
             main: {
                 files: [
-                    { src: ['app'], dest: 'content-editor' },
+                    { src: ['dist'], dest: 'content-editor' },
                 ]
             }
         },
