@@ -115,5 +115,24 @@ window.EkstepEditorAPI = {
           pluginInstanceIds.push(pi.id);
         })
         return pluginInstanceIds;
+    },
+    getAllPluginInstanceByTypes: function (id, types, includeFlag) {
+      var pluginInstances = EkstepEditorAPI._.clone(EkstepEditor.stageManager.currentStage.children, true);
+       if (id) {
+            EkstepEditorAPI._.remove(pluginInstances, function(pi) {
+                return pi.id === id;
+            })
+        }
+      if (types && types.length && includeFlag === true) {
+          _.remove(pluginInstances, function (pi) {
+            return (_.indexOf(types, pi.manifest.id) === -1)
+          });
+      }
+      if (types && types.length && includeFlag === false) {
+           _.remove(pluginInstances, function (pi) {
+            return (_.indexOf(types, pi.manifest.id) > -1)
+          });
+      }
+      return pluginInstances;
     }
 }
