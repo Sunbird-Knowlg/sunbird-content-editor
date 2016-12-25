@@ -3,11 +3,17 @@
  */
 'use strict';
 
-angular.module('editorApp', []);
+angular.module('editorApp', ['ngDialog', 'oc.lazyLoad']).config(['$locationProvider', function($locationProvider) {
+    $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+    });
+}]);
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window',
-    function($scope, $timeout, $http, $location, $q, $window) {        
-        EkstepEditorAPI.globalContext.contentId = $location.search().contentId;
+    function($scope, $timeout, $http, $location, $q, $window) {
+        EkstepEditorAPI.globalContext.contentId = $location.search().contentId || $window.contentId;
         $scope.contentId = EkstepEditorAPI.globalContext.contentId;
+        $scope.stageAttachments = {};
         $scope.safeApply = function(fn) {
             var phase = this.$root.$$phase;
             if (phase == '$apply' || phase == '$digest') {

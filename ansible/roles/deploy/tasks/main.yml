@@ -29,6 +29,9 @@
   pip: name=awscli state=present
   become: yes
 
+- name: Delete credentials
+  file: path=.aws/credentials state=absent
+
 - name: Create .aws
   file: path={{ item.path }} state={{ item.state }}
   with_items:
@@ -72,11 +75,6 @@
   command: "npm install"
   args:
     chdir: "{{at_home}}"
-
-- name: Install bower packages
-  command: "bower install"
-  args:
-    chdir: "{{at_home}}/content-editor"
 
 - name: Start AT Service
   command: forever start app.js
