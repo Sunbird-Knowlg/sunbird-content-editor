@@ -12,19 +12,13 @@
     <div id="addActionForm">
         <form class="ui form">
             <div class="field">
-                <select class="ui  dropdown" ng-model="selectedActionType" id="actionTypeDropdown">
+                <select class="ui  dropdown" ng-model="selectedActionType" id="actionTypeDropdown" ng-options="key as value for (key , value) in allActionsList">
                     <option value="">select action</option>
-                    <option value="show">Show</option>
-                    <option value="hide">Hide</option>
-                    <option value="play">Play</option>
-                    <option value="pause">Pause</option>
-                    <option value="stop">Stop</option>
-                    <option value="link">Link To</option>
 
                 </select>
             </div>
             <div class="field">
-                <select class="ui  dropdown" ng-model="selectedActionTarget" ng-options="pi as pi for pi in pluginInstanceIds" id="actionTargetDropdown">
+                <select class="ui  dropdown" ng-model="selectedActionTarget" ng-options="pi as pi for pi in actionTargetObjects" id="actionTargetDropdown">
                     <option value="">select target</option>
                 </select>
             </div>

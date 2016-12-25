@@ -18,7 +18,7 @@ EkstepEditor.basePlugin = Class.extend({
     data: undefined,
     attributes: { x: 0, y: 0, w: 0, h: 0, visible: true, editable: true },
     config: undefined,
-    events: undefined,
+    event: undefined,
     params: undefined,
     media: undefined,
     configManifest: undefined,
@@ -31,7 +31,7 @@ EkstepEditor.basePlugin = Class.extend({
             EkstepEditorAPI.addEventListener(this.manifest.id + ":create", this.create, this);
             console.log(manifest.id + " plugin initialized");
         } else {
-            this.editorObj = undefined, this.events = undefined, this.attributes = { x: 0, y: 0, w: 0, h: 0, visible: true }, this.params = undefined, this.data = undefined, this.media = undefined;
+            this.editorObj = undefined, this.event = undefined, this.attributes = { x: 0, y: 0, w: 0, h: 0, visible: true }, this.params = undefined, this.data = undefined, this.media = undefined;
             this.editorData = data;
             this.children = [];
             this.id = this.editorData.id || UUID();
@@ -224,11 +224,11 @@ EkstepEditor.basePlugin = Class.extend({
         return this.attributes[key];
     },
     addEvent: function(event) {
-        if (_.isUndefined(this.events)) this.events = [];
-        this.events.push(event);
+        if (_.isUndefined(this.event)) this.event = [];
+        this.event.push(event);
     },
     getEvents: function() {
-        return this.events;
+        return this.event;
     },
     addParam: function(key, value) {
         if (_.isUndefined(this.params)) this.params = {};
@@ -277,7 +277,7 @@ EkstepEditor.basePlugin = Class.extend({
             // attr.config = {
             //     "__cdata": JSON.stringify(this.getEvents())
             // };
-            attr.events = this.getEvents();
+            attr.event = this.getEvents();
         }
         if (!_.isUndefined(this.getParams())) {
             attr.param = [];
@@ -304,6 +304,7 @@ EkstepEditor.basePlugin = Class.extend({
         }
         if (!_.isUndefined(this.attributes.event)) {
             //this.events = JSON.parse(this.attributes.event.__cdata);
+            this.event = this.attributes.event;
             delete this.attributes.event;
         }
         if (!_.isUndefined(this.attributes.param)) {
