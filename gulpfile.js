@@ -126,7 +126,7 @@
  gulp.task('inject', ['minify'], function() {
      var target = gulp.src('content-editor/index.html');
      var sources = gulp.src(['content-editor/scripts/*.js', 'content-editor/styles/*.css'], { read: false });
-     return target.pipe(inject(sources, { addRootSlash: false }))
+     return target.pipe(inject(sources, { ignorePath: 'content-editor/',addRootSlash: false }))
          .pipe(gulp.dest('./content-editor'));
  });
 
