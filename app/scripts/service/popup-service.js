@@ -6,7 +6,7 @@ EkstepEditor.popupService = new(EkstepEditor.iService.extend({
     loadNgModules: function(templatePath, controllerPath) {
         this.loadNgModules && this.loadNgModules(templatePath, controllerPath);
     },
-    open: function(config){
-        this.openModal && this.openModal(config);
+    open: function(config, callback){
+        this.openModal && this.openModal(config, callback);
     }
 }));
