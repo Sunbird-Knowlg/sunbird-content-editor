@@ -13,7 +13,7 @@
           copy: src=content-editor.zip dest={{user_home}}/ owner={{user}} group={{user}} mode=0774
 
         - name: Create AuthoringTool directory
-          file: path={{at_home}} owner={{user}} group={{user}} state=directory
+          file: path={{at_home}} owner={{server_runs_as}} group={{server_runs_as}} state=directory
   
         - name: Unarchive zip file
           unarchive: src={{user_home}}/content-editor.zip dest={{at_home}} copy=no owner={{user}} group={{user}} mode=0774
