@@ -39,4 +39,5 @@
           copy: src=s3_copy.sh dest=/home/ubuntu owner=ubuntu group=ubuntu mode="u+rw,g+wx,o+rwx"
 
         - name: run the script
-          shell: sh s3_copy.sh
+          remote_user: ubuntu
+          shell: s3_copy.sh
