@@ -103,21 +103,8 @@ window.EkstepEditorAPI = {
     getAllStages: function() {
         return EkstepEditor.stageManager.stages;
     },
-    getAllPluginInstanceIds: function(id) {
-        var pluginInstanceIds = [];
-        var pluginInstances = EkstepEditorAPI._.clone(EkstepEditor.stageManager.currentStage.children, true);
-        if (id) {
-            EkstepEditorAPI._.remove(pluginInstances, function(pi) {
-                return pi.id === id;
-            })
-        }
-        EkstepEditorAPI._.forEach(pluginInstances, function (pi) {
-          pluginInstanceIds.push(pi.id);
-        })
-        return pluginInstanceIds;
-    },
     getAllPluginInstanceByTypes: function (id, types, includeFlag) {
-      var pluginInstances = EkstepEditorAPI._.clone(EkstepEditor.stageManager.currentStage.children, true);
+      var pluginInstances = EkstepEditor.stageManager.currentStage.children;
        if (id) {
             EkstepEditorAPI._.remove(pluginInstances, function(pi) {
                 return pi.id === id;
