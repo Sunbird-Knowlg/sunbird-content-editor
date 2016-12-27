@@ -104,7 +104,7 @@ window.EkstepEditorAPI = {
         return EkstepEditor.stageManager.stages;
     },
     getAllPluginInstanceByTypes: function (id, types, includeFlag) {
-      var pluginInstances = EkstepEditor.stageManager.currentStage.children;
+      var pluginInstances = _.clone(EkstepEditor.stageManager.currentStage.children);
        if (id) {
             EkstepEditorAPI._.remove(pluginInstances, function(pi) {
                 return pi.id === id;
