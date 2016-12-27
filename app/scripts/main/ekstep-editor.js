@@ -26,7 +26,9 @@ EkstepEditor.config = {
         "shape": "org.ekstep.shape",
         "stage": "org.ekstep.stage",
         "hotspot": "org.ekstep.hotspot",
-        "scribble": "org.ekstep.scribblepad"
+        "scribble": "org.ekstep.scribblepad",
+        "htext": "org.ekstep.htext",
+        "audio": "org.ekstep.audio"
     },
     baseConfigManifest: "config/baseConfigManifest.json"
 }

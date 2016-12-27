@@ -1,5 +1,5 @@
 [{
-    "propertyName": "playable",
+    "propertyName": "autoplay",
     "title": "Auto play",
     "description": "Set the element's playability",
     "dataType": "boolean",

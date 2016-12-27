@@ -19,6 +19,7 @@ EkstepEditor.basePlugin = Class.extend({
     attributes: { x: 0, y: 0, w: 0, h: 0, visible: true, editable: true },
     config: undefined,
     event: undefined,
+    events: undefined,
     params: undefined,
     media: undefined,
     configManifest: undefined,
@@ -36,7 +37,7 @@ EkstepEditor.basePlugin = Class.extend({
             this.children = [];
             this.id = this.editorData.id || UUID();
             this.parent = parent;
-            this.config = { opacity: 100, strokeWidth: 1, stroke: "rgba(255, 255, 255, 0)", playable: false, visible: true };
+            this.config = { opacity: 100, strokeWidth: 1, stroke: "rgba(255, 255, 255, 0)", autoplay: false, visible: true };
         }
         if (!EkstepEditor.baseConfigManifest) {
             EkstepEditor.loadBaseConfigManifest(function() {
@@ -340,7 +341,10 @@ EkstepEditor.basePlugin = Class.extend({
         if (!this.manifest.editor.configManifest) { this.manifest.editor.configManifest = []; }
         var configManifest = this.manifest.editor.configManifest
         if (this.configManifest) {
-            configManifest = _.concat(this.manifest.editor.configManifest, this.configManifest)
+            configManifest = _.clone(_.concat(this.manifest.editor.configManifest, this.configManifest),true);
+        }
+        if (!(this.manifest.editor.playable && this.manifest.editor.playable === true)) {
+          _.remove(configManifest, function (cm) {return cm.propertyName === 'autoplay'})
         }
         return configManifest
     },
@@ -372,9 +376,9 @@ EkstepEditor.basePlugin = Class.extend({
                 currentInstace.attributes.stroke = value;
                 currentInstace.config.stroke = value;
                 break;
-            case 'playable':
-                currentInstace.attributes.playable = value;
-                currentInstace.config.playable = value;
+            case 'autoplay':
+                currentInstace.attributes.autoplay = value;
+                currentInstace.config.autoplay = value;
                 break;
             case 'visible':
                 currentInstace.attributes.visible = value;
