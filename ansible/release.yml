@@ -40,4 +40,4 @@
 
         - name: run the script
           remote_user: ubuntu
-          shell: s3_copy.sh
+          shell: sh s3_copy.sh
