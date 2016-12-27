@@ -139,17 +139,23 @@
                     <div ng-click="showConfigContainer = false;" class="config-close-icon" style="color:'white';">X</div>
                 </div>
                 <!-- config-close-icon -->
-                <div class="content config-toolbar-content">
-                    <span ng-repeat="config in pluginConfig" ng-include="'templates/config.html'" ng-show="configHeaderText === 'Configuration'"></span>
-                    <div id="pluginPropertyContainer" ng-include="'templates/properties.html'" ng-show="configHeaderText === 'Properties'">
+                <div class="content">
+                    <div ng-show="configHeaderText === 'Configuration'" class="config-toolbar-content">
+                        <span ng-repeat="config in pluginConfig" ng-include="'templates/config.html'">
+                    </span>
+                        <span ng-include="'templates/properties.html'" ></span>
                     </div>
-                    <div id="pluginHelpContent" class="ui message" ng-show="configHeaderText === 'Help'">
+                    <div id="pluginEventsContainer" ng-show="configHeaderText === 'Actions'" class="action-config-container">
+                        <span ng-include="'templates/events.html'" ></span>
+                    </div>
+                    <div id="pluginHelpContent" class="ui message config-toolbar-content" ng-show="configHeaderText === 'Help'">
                     </div>
                 </div>
             </div>
             <div ng-controller="popupController as $ctrl" id="popuptemplate"></div>
         </div>
     </div>
+    <div id="objectPointer" style="display: none;border: 1px dashed black;"></div>
      <!-- inject:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
