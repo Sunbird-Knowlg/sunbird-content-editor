@@ -3,7 +3,6 @@
 
 [release:vars]
 user=ubuntu
-ansible_become=true
 ansible_ssh_user=ubuntu
 user_home=/var/www/release.ekstep.in/public
 at_home={{user_home}}/content-editor
