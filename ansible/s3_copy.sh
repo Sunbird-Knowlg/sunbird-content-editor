@@ -1,5 +1,5 @@
 #!/bin/sh
-AWS_CONFIG_FILE="~/.aws/credentials"
+AWS_CONFIG_FILE="~/.aws/config"
 
 aws s3 rm s3://ekstep-public/release/content-plugins/org.ekstep.assessment-1.0/ --recursive
 aws s3 rm s3://ekstep-public/release/content-plugins/org.ekstep.assessment-1.0/ --recursive
