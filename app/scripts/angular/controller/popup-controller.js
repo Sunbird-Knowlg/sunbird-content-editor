@@ -6,7 +6,8 @@ angular.module('editorApp').controller('popupController', ['ngDialog', '$ocLazyL
         ]);
     };
 
-    function openModal(config) {
+    function openModal(config, callback) {
+        if (config && callback) config.preCloseCallback = callback;
         if (config) ngDialog.open(config);
     };
 
