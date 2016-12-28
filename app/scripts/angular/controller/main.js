@@ -87,9 +87,25 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 EkstepEditor.eventManager.dispatchEvent('stage:create', {"position": "beginning"});
                 EkstepEditor.stageManager.registerEvents();
             } else {                
-                EkstepEditorAPI.dispatchEvent("migrationTask:start", JSON.parse(contentBody));                
+                var parsedBody = $scope.parseContentBody(contentBody);                
+                if(parsedBody) EkstepEditorAPI.dispatchEvent("migrationTask:start",parsedBody);
+                console.log('contentBody', parsedBody);
             }
         });
+
+        $scope.convertToJSON = function(contentBody) {
+            var x2js = new X2JS({ attributePrefix: 'none', enableToStringFunc: false });
+            return x2js.xml_str2json(contentBody);
+        }
+
+        $scope.parseContentBody = function(contentBody){
+            try{
+                contentBody = JSON.parse(contentBody);                
+            }catch(e){
+                contentBody = $scope.convertToJSON(contentBody);                
+            }
+            return contentBody;
+        }
 
         $scope.onStageDragDrop = function(dragEl, dropEl) {
             EkstepEditor.stageManager.onStageDragDrop(EkstepEditor.jQuery('#' + dragEl).attr('data-id'), EkstepEditor.jQuery('#' + dropEl).attr('data-id'));
