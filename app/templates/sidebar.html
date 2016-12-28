@@ -42,14 +42,15 @@
     </div>
     <div class="row">
         <div class="ui styled accordion">
-            <div class="active title" ng-click="showInstructions = !showInstructions" ng-class="showInstructions ? 'active': '' ">
+            <div class="title" ng-click="showInstructions = !showInstructions" ng-class="showInstructions ? 'active': '' ">
                 <i class="dropdown icon"></i>Teacher Instructions
             </div>
-            <div class="content active">
+            <div class="content {{showInstructions ? 'active': ''}}">
                 <div class="ui form">
                     <div class="field">
-                        <label>Teacher Instructions</label>
-                        <textarea rows="6"></textarea>
+                        <label>{{currentStage.id}}</label>
+                        <textarea rows="6" ng-maxlength="1000" ng-model="currentStage.params.instructions">
+                        </textarea>
                     </div>
                 </div>
             </div>
