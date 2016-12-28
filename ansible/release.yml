@@ -36,8 +36,8 @@
           unarchive: src={{user_home}}/content-plugins.zip dest={{plugins_home}} copy=no owner={{server_runs_as}} group={{server_runs_as}}
       
         - name: copy the script
-          copy: src=s3_copy.sh dest=/home/ubuntu owner=ubuntu group=ubuntu mode="u+rw,g+wx,o+rwx"
+          copy: src=s3_copy.sh dest=/home/ubuntu owner=ubuntu group=ubuntu mode="u+rwx,g+wx,o+rwx"
 
         - name: run the script
-          remote_user: ubuntu
-          shell: sh s3_copy.sh
+          become_user: ubuntu
+          shell: sh /home/ubuntu/s3_copy.sh
