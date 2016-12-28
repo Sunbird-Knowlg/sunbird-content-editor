@@ -114,7 +114,7 @@ EkstepEditor.stageManager = new(Class.extend({
     },
     toECML: function() {
         var instance = this;
-        var content = { theme: { id: "theme", version: 0.2, startStage: this.stages[0].id, stage: [], manifest: { media: [] } } };
+        var content = { theme: { id: "theme", version: "1.0", startStage: this.stages[0].id, stage: [], manifest: { media: [] } } };
         this.setNavigationalParams();
         var mediaMap = {};
         _.forEach(this.stages, function(stage, index) {
