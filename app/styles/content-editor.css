@@ -172,3 +172,22 @@ body {
     left: 85px;
     top: 51px;
 }
+
+#geniecontrols {
+  border: 3px solid #C8C8C8;
+  outline: none;
+  width: 726px;
+  height: 411px;
+  margin-top: 20px;
+  position: absolute;
+}
+
+#geniecontrolsimage {
+  outline: none;
+  border: none;
+  width: 720px;
+  height: 405px; 
+  background: none;
+  pointer-events: none;
+  position: absolute;
+}

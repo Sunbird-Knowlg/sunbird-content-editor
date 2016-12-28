@@ -1,5 +1,48 @@
-<div class="ui styled fluid accordion">
-    <div class="title" ng-click="showKeywords = !showKeywords" ng-class="showKeywords ? 'active': '' ">
+<div class="ui padded grid">
+    <!-- <div class=" row">
+        <div class="ui toggle checkbox">
+            <input type="checkbox" ng-model="showGenieControls" ng-click="toggleGenieControl()">
+            <label>Show Genie Controls</label>
+        </div>
+    </div> -->
+    <div class=" row">
+        <div class="ui styled accordion">
+            <div id="todoplugin" class="title" ng-click="showTodo = !showTodo" ng-class="showTodo ? 'active': '' ">
+                <i class="dropdown icon"></i>Todo
+            </div>
+            <div class="content {{showTodo ? 'active': ''}}">
+                <div class="title" ng-click="showReportedTodos = !showReportedTodos" ng-class="showReportedTodos ? '': 'active' ">
+                    <i class="dropdown icon"></i>Reported Issues
+                </div>
+                <div class="content {{showReportedTodos ? '': 'active'}}">
+                    <div class="ui cards">
+                        <div class="content">
+                            <div class="description">
+                                <div id="pageLevelTodos">No Todo</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="title" ng-click="showResolvedTodos = !showResolvedTodos" ng-class="showResolvedTodos ? 'active': '' ">
+                    <i class="dropdown icon"></i>Resolved Issues
+                </div>
+                <div class="content {{showResolvedTodos ? 'active': ''}}">
+                    <div class="ui cards">
+                        <div class="card">
+                            <div class="content">
+                                <div class="description">
+                                    <div id="pageLevelResolvedTodos">No Issues</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- <div class="title" ng-click="showKeywords = !showKeywords" ng-class="showKeywords ? 'active': '' ">
         <i class="dropdown icon"></i>Keywords
     </div>
     <div class="content {{showKeywords ? 'active': ''}}">
@@ -8,35 +51,5 @@
         <a class="ui grey label large">Eye</a>
         <a class="ui grey label large">Cat</a>
         <a class="ui grey label large">Tiger</a>
-    </div>
-    <div class="title" ng-click="showTodo = !showTodo" ng-class="showTodo ? 'active': '' ">
-        <i class="dropdown icon"></i>Todo
-    </div>
-    <div class="content {{showTodo ? 'active': ''}}">
-                <div class="title" ng-click="showReportedTodos = !showReportedTodos" ng-class="showReportedTodos ? '': 'active' ">
-                        <i class="dropdown icon"></i>Reported Issues
-                </div>
-                <div class="content {{showReportedTodos ? '': 'active'}}">
-                        <div class="ui cards">
-                <div class="content">
-                                        <div class="description">
-                                                <div id="pageLevelTodos"></div>
-                                        </div>
-                </div>
-            </div>
-        </div>
-         <div class="title" ng-click="showResolvedTodos = !showResolvedTodos" ng-class="showResolvedTodos ? 'active': '' ">
-                        <i class="dropdown icon"></i>Resolved Issues
-                </div>
-                <div class="content {{showResolvedTodos ? 'active': ''}}">
-                        <div class="ui cards">
-            <div class="card">
-                <div class="content">
-                                        <div class="description">
-                                                <div id="pageLevelResolvedTodos"></div>
-                                        </div>
-                </div>
-            </div>
-        </div>
-                </div>
-    </div>
+    </div> -->
+

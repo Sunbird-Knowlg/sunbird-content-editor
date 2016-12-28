@@ -19,6 +19,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             contentConcepts: "No concepts selected",
             contentType: ""
         };
+        $scope.showGenieControls = false;
         $scope.stageAttachments = {};
         $scope.safeApply = function(fn) {
             var phase = this.$root.$$phase;
@@ -63,6 +64,19 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     alert($scope.pluginId + ' not found');
                 }
             }
+        }
+
+        $scope.toggleGenieControl = function(){
+            if(!$scope.showGenieControls){
+                //Position the transparent image correctly on top of image
+                var canvasOffset = EkstepEditorAPI.jQuery('#canvas').offset();
+                EkstepEditorAPI.jQuery('#geniecontrolsimage').css({
+                    "top": canvasOffset.top,
+                    "left": canvasOffset.left,
+                    "position":'absolute'
+                });
+            }
+            $scope.showGenieControls = !$scope.showGenieControls;
         }    
         
         EkstepEditor.contentService.getContent(EkstepEditorAPI.globalContext.contentId, function(err, contentBody) {
