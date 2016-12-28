@@ -68,7 +68,7 @@
 
 
  gulp.task('minifyJsBower', function() {
-     var filterJS = gulpFilter(['app/bower_components/**/*.js', 'libs/semantic.min.js'], { restore: true });
+     var filterJS = gulpFilter(['app/bower_components/**/*.js', 'libs/semantic.min.js', 'libs/lame.min.js'], { restore: true });
      return gulp.src('app/bower.json')
          .pipe(mainBowerFiles())
          .pipe(filterJS)
@@ -115,7 +115,7 @@
          .pipe(gulp.dest('content-editor/styles'));
  });
  gulp.task('copyFiles', function() {
-     return gulp.src(['app/templates/**/*', 'app/images/content-logo.png', 'app/config/*.json', 'app/config/*.js', 'app/index.html'], {
+     return gulp.src(['app/templates/**/*', 'app/images/content-logo.png', 'app/images/geniecontrols.png', 'app/config/*.json', 'app/config/*.js', 'app/index.html'], {
              base: 'app/'
          })
          .pipe(gulp.dest('content-editor'));
