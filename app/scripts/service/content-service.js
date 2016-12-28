@@ -47,6 +47,17 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
         if (contentId) {
             var metaDataFields = "?fields=body,editorState,templateId,languageCode,template,gradeLevel,status,concepts,versionKey";
             instance.http.get(this.serviceURL + 'v2/content/' + contentId + metaDataFields, {}, function(err,res){
+                if (!err && resp.statusText == "OK") {
+                    var concepts = EkstepEditorAPI._.size(resp.data.result.content.concepts) <= 1 ? resp.data.result.content.concepts[0].name : resp.data.result.content.concepts[0].name+' & '+ EkstepEditorAPI._.size(resp.data.result.content.concept-service)+' more';
+                    var angScope = EkstepEditorAPI.getAngularScope();
+                    angScope.contentDetails = {
+                        contentTitle: resp.data.result.content.name,
+                        contentImage: resp.data.result.content.appIcon,
+                        contentType: '|'+resp.data.result.content.contentType,
+                        contentConcepts: concepts
+                    };
+                    EkstepEditorAPI.getAngularScope().safeApply();
+                }
                 callback(err, res.data.result.content.body);
             });
             //get content meta for preview

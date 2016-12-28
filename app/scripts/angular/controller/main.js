@@ -13,6 +13,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
     function($scope, $timeout, $http, $location, $q, $window) {
         EkstepEditorAPI.globalContext.contentId = $location.search().contentId || $window.contentId;
         $scope.contentId = EkstepEditorAPI.globalContext.contentId;
+        $scope.contentDetails = {
+            contentTitle: "Untitled Content",
+            contentImage: "/images/com_ekcontent/default-images/default-content.png",
+            contentConcepts: "No concepts selected",
+            contentType: ""
+        };
         $scope.stageAttachments = {};
         $scope.safeApply = function(fn) {
             var phase = this.$root.$$phase;

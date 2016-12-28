@@ -49,17 +49,20 @@
             <div class="ui masthead vertical segment content-masterhead">
                 <div class="ui grid">
                     <div class="one column" style="width:auto;">
-                        <img class="ui mini image content-logo" src="images/content-logo.png">
+                        <img class="ui mini image content-logo" ng-src="{{contentDetails.contentImage}}">
                     </div>
                     <div class="three wide column" style="padding-left: 0px">
                         <div class="ui input">
-                            <input class="content-title" input="text" placeholder="click here to add title" ng-modal="content_title">
-                            <label class="content-type-label"> | Story</label>
+                            <label class="content-title">{{contentDetails.contentTitle}}</label>
+                            <label class="content-type-label">{{contentDetails.contentType}}</label>
+                            <a class="btn at-btn at-btn-ok" href="/index.php?option=com_ekcontent&view=contentForm&tmpl=component&identifier={{EkstepEditorAPI.globalContext.contentId}}" target="_blank">
+                            <i class="edit icon"></i>
+                            </a>
                         </div>
                         <div class="row">
-                            <label class="content-concept-label">Receptive Vocabulary</label>
-                            <a href='#'> & 2more</a>
+                            <label class="content-concept-label">{{contentDetails.contentConcepts}}</label>
                         </div>
+
                     </div>
                     <div class="right floated four wide column bottom aligned"
                          style="padding-right: 20px;">
