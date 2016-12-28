@@ -1,6 +1,6 @@
 'use strict';
 
-EkstepEditor.scribblemigration_task = new(Class.extend({
+EkstepEditor.migration.scribblemigration_task = new(Class.extend({
     init: function() {
         console.log('scribble migration task initialized');
     },

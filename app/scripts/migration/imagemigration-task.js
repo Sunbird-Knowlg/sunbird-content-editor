@@ -1,6 +1,6 @@
 'use strict';
 
-EkstepEditor.imagemigration_task = new(Class.extend({
+EkstepEditor.migration.imagemigration_task = new(Class.extend({
     init: function() {
         console.log('image migration initialized');
     },
