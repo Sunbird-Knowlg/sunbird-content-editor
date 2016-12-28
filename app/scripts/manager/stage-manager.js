@@ -120,7 +120,7 @@ EkstepEditor.stageManager = new(Class.extend({
         _.forEach(this.stages, function(stage, index) {
             var stageBody = stage.toECML();
             _.forEach(stage.children, function(child) {
-                var id = child.manifest.shortId || child.manifest.id;
+                var id = child.getManifestId();
                 if (_.isUndefined(stageBody[id])) stageBody[id] = [];
                 stageBody[id].push(child.toECML());
                 instance.updateContentManifest(content, id, child.manifest);
@@ -204,6 +204,7 @@ EkstepEditor.stageManager = new(Class.extend({
                 var pluginInstance = EkstepEditorAPI.instantiatePlugin(pluginId, plugin.data, stageInstance);
                 if (_.isUndefined(pluginInstance)) {
                     console.log('Unable to instantiate', plugin.id);
+                    EkstepEditorAPI.dispatchEvent("org.ekstep.unsupported:create",{data: plugin});
                 } else {
                     pluginCount++;
                 }

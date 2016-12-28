@@ -409,5 +409,8 @@ EkstepEditor.basePlugin = Class.extend({
     },
     renderConfig: function() {
 
+    },
+    getManifestId: function () {
+      return (this.manifest.shortId || this.manifest.id);
     }
 });
