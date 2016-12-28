@@ -174,12 +174,14 @@ body {
 }
 
 #geniecontrols {
-  border: 3px solid #C8C8C8;
+  border: none;
   outline: none;
   width: 726px;
   height: 411px;
   margin-top: 20px;
-  position: absolute;
+  position: fixed;
+  display:none;
+  pointer-events: none;
 }
 
 #geniecontrolsimage {

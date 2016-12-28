@@ -1,10 +1,10 @@
 <div class="ui padded grid">
-    <!-- <div class=" row">
+    <div class=" row">
         <div class="ui toggle checkbox">
             <input type="checkbox" ng-model="showGenieControls" ng-click="toggleGenieControl()">
             <label>Show Genie Controls</label>
         </div>
-    </div> -->
+    </div>
     <div class="row">
         <div class="ui styled accordion">
             <div id="todoplugin" class="title" ng-click="showTodo = !showTodo" ng-class="showTodo ? 'active': '' ">
@@ -48,7 +48,7 @@
             <div class="content {{showInstructions ? 'active': ''}}">
                 <div class="ui form">
                     <div class="field">
-                        <label>{{currentStage.id}}</label>
+                        <label></label>
                         <textarea rows="6" ng-maxlength="1000" ng-model="currentStage.params.instructions">
                         </textarea>
                     </div>
