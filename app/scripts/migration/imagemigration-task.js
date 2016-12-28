@@ -9,7 +9,7 @@ EkstepEditor.imagemigration_task = new(Class.extend({
     	var deferred = EkstepEditor.$q.defer();
         var instance = this;
         _.forEach(contentbody.theme.stage, function(stage, index) {
-            if (stage.image.length) stage[instance.id] = stage.image;            
+            if (stage.image && stage.image.length) stage[instance.id] = stage.image;            
             if (stage.image) delete stage.image;
             if (contentbody.theme.stage.length === index + 1) deferred.resolve(contentbody);
         });
