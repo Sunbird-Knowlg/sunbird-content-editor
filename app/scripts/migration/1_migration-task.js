@@ -13,10 +13,10 @@ EkstepEditor.migration = new(Class.extend({
             EkstepEditor.migration[instance.tasks[0]].migrate(contentbody)
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[1]].migrate(content)})
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[2]].migrate(content)})
-                .then(function(content) {return EkstepEditor.migration[instance.tasks[3]].migrate(content)})
+                .then(function(content) {return EkstepEditor.migration[instance.tasks[3]].migrate(content)})                
                 .then(function(content) {
                     console.info('Migration task completed!');
-                    instance.setNewVersion(content);
+                    instance.setNewVersion(content);                    
                     EkstepEditor.stageManager.fromECML(content);
                 });
         }
