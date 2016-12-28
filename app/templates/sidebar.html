@@ -5,7 +5,7 @@
             <label>Show Genie Controls</label>
         </div>
     </div> -->
-    <div class=" row">
+    <div class="row">
         <div class="ui styled accordion">
             <div id="todoplugin" class="title" ng-click="showTodo = !showTodo" ng-class="showTodo ? 'active': '' ">
                 <i class="dropdown icon"></i>Todo
@@ -40,7 +40,21 @@
             </div>
         </div>
     </div>
-</div>
+    <div class="row">
+        <div class="ui styled accordion">
+            <div class="active title" ng-click="showInstructions = !showInstructions" ng-class="showInstructions ? 'active': '' ">
+                <i class="dropdown icon"></i>Teacher Instructions
+            </div>
+            <div class="content active">
+                <div class="ui form">
+                    <div class="field">
+                        <label>Teacher Instructions</label>
+                        <textarea rows="6"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <!-- <div class="title" ng-click="showKeywords = !showKeywords" ng-class="showKeywords ? 'active': '' ">
         <i class="dropdown icon"></i>Keywords
