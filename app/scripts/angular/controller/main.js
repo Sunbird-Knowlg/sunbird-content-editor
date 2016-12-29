@@ -11,7 +11,8 @@ angular.module('editorApp', ['ngDialog', 'oc.lazyLoad']).config(['$locationProvi
 }]);
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window',
     function($scope, $timeout, $http, $location, $q, $window) {
-        EkstepEditorAPI.globalContext.contentId = $location.search().contentId || $window.context.contentId;
+        EkstepEditorAPI.globalContext.contentId = $location.search().contentId;
+        if (_.isUndefined(EkstepEditorAPI.globalContext.contentId)) {EkstepEditorAPI.globalContext.contentId = (($window.context && $window.context.content_id) ? $window.context.content_id : undefined)}
         $scope.contentId = EkstepEditorAPI.globalContext.contentId;
         $scope.contentDetails = {
             contentTitle: "Untitled Content",
@@ -19,7 +20,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             contentConcepts: "No concepts selected",
             contentType: ""
         };
-        $scope.userDetails = !EkstepEditorAPI._.isUndefined(window.contetInfo)? window.contetInfo.user : undefined;
+        $scope.userDetails = !EkstepEditorAPI._.isUndefined(window.context)? window.context.user : undefined;
         EkstepEditorAPI.jQuery('.browse.item.at')
          .popup({
          on: 'click',setFluidWidth:false,
