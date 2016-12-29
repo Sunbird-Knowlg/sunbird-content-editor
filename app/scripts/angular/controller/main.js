@@ -11,7 +11,7 @@ angular.module('editorApp', ['ngDialog', 'oc.lazyLoad']).config(['$locationProvi
 }]);
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window',
     function($scope, $timeout, $http, $location, $q, $window) {
-        EkstepEditorAPI.globalContext.contentId = $location.search().contentId || $window.contentId;
+        EkstepEditorAPI.globalContext.contentId = $location.search().contentId || $window.context.contentId;
         $scope.contentId = EkstepEditorAPI.globalContext.contentId;
         $scope.contentDetails = {
             contentTitle: "Untitled Content",
@@ -19,6 +19,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             contentConcepts: "No concepts selected",
             contentType: ""
         };
+        $scope.userDetails = !EkstepEditorAPI._.isUndefined(window.contetInfo)? window.contetInfo.user : undefined;
+        EkstepEditorAPI.jQuery('.browse.item.at')
+         .popup({
+         on: 'click',setFluidWidth:false,
+         position   : 'bottom right'
+        });
         $scope.showGenieControls = false;
         $scope.stageAttachments = {};
         $scope.safeApply = function(fn) {

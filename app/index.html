@@ -63,10 +63,34 @@
                     </div>
                     <div class="right floated four wide column bottom aligned"
                          style="padding-right: 20px;">
+                         <div id="userprofile" ng-show="userDetails.id">
+							<div class="browse item at username">
+								{{userDetails.name}}
+								<i class="dropdown icon"></i>
+							</div>
+							<div class="ui fluid popup bottom right transition hidden user-details-container">
+								<div class="ui divided items">
+									<div class="item">
+										<div class="ui tiny circular image user-avtar">
+											<img src="{{userDetails.avtar}}">
+										</div>
+										<div class="middle aligned content" style="text-align: left;">
+											<span class="header">{{userDetails.name}}</span>
+											<div class="meta">
+												<span>{{userDetails.email}}</span>
+											</div>
+											<div class="extra">
+												<a class="ui tiny button " href="{{userDetails.logout}}">logout</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
                         <!-- <button class="ui tiny icon button disabled right floated">
                             <i class="icon-close icon"></i> Close
                         </button> -->
-                        <button class="ui tiny icon button right floated secondary" ng-click="saveContent()" ng-disabled="!contentId" 
+                        <button class="ui tiny icon button right floated secondary" ng-click="saveContent()" ng-disabled="!contentId"
                         style="margin-left: 5px;">
                             <i class="icon-save icon"></i> Save
                         </button>

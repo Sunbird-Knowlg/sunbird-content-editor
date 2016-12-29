@@ -193,3 +193,18 @@ body {
   pointer-events: none;
   position: absolute;
 }
+.username{
+    cursor:pointer; 
+    text-align: right;
+}
+.user-details-container{
+    top: 555px;
+    left: 1px;
+    bottom: auto; 
+    right: auto; 
+    width: 344px!important;
+}
+.user-avtar{
+    width: 45px !important;
+    height: 45px !important;
+}
