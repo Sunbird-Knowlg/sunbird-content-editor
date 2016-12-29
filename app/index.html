@@ -52,8 +52,8 @@
                         <div class="ui input">
                             <label class="content-title">{{contentDetails.contentTitle}}</label>
                             <label class="content-type-label">{{contentDetails.contentType}}</label>
-                            <a class="btn at-btn at-btn-ok" href="{{$window.context.editMetaLink}}" target="_blank">
-                            <i class="edit icon"></i>
+                            <a class="btn at-btn at-btn-ok" ng-href="{{context.editMetaLink}}" target="_blank">
+                                <i class="edit icon"></i>
                             </a>
                         </div>
                         <div class="row">
@@ -202,6 +202,7 @@
     <script src="bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.templatesLoader.js"></script>
     <script src="bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js"></script>
     <script src="bower_components/oclazyload/dist/ocLazyLoad.js"></script>
+    <script src="scripts/dev/localhost-ce.js"></script>
     <script src="libs/semantic.min.js"></script>
     <script src="scripts/main/class.js"></script>
     <script src="scripts/main/ekstep-editor.js"></script>

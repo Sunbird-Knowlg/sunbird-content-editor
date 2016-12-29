@@ -11,8 +11,11 @@ angular.module('editorApp', ['ngDialog', 'oc.lazyLoad']).config(['$locationProvi
 }]);
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window',
     function($scope, $timeout, $http, $location, $q, $window) {
+        $scope.context = $window.context;
         EkstepEditorAPI.globalContext.contentId = $location.search().contentId;
-        if (_.isUndefined(EkstepEditorAPI.globalContext.contentId)) {EkstepEditorAPI.globalContext.contentId = (($window.context && $window.context.content_id) ? $window.context.content_id : undefined)}
+        if (_.isUndefined(EkstepEditorAPI.globalContext.contentId)) {
+            EkstepEditorAPI.globalContext.contentId = (($window.context && $window.context.content_id) ? $window.context.content_id : undefined)
+        }
         $scope.contentId = EkstepEditorAPI.globalContext.contentId;
         $scope.contentDetails = {
             contentTitle: "Untitled Content",
