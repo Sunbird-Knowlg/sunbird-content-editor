@@ -16,9 +16,13 @@ EkstepEditor.migration = new(Class.extend({
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[3]].migrate(content)})                
                 .then(function(content) {
                     console.info('Migration task completed!');
-                    instance.setNewVersion(content);                    
+                    instance.setNewVersion(content);
+                    console.log('after migration content:', _.cloneDeep(content));
                     EkstepEditor.stageManager.fromECML(content);
                 });
+        } else {
+        	console.info('no need for migration');
+        	EkstepEditor.stageManager.fromECML(contentbody);
         }
     },
     versionCompatible: function(version) {
