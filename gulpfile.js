@@ -14,9 +14,9 @@
      gulp.src(['app/config/theme.config']).pipe(gulp.dest('semantic/src/'))
      gulp.src(['app/config/site.variables']).pipe(gulp.dest('semantic/src/site/globals/'))
      gulp.src('semantic/gulpfile.js')
-         .pipe(chug({tasks: ['build']}, function() {
+         .pipe(chug({ tasks: ['build'] }, function() {
              gulp.src(['semantic/dist/semantic.min.css']).pipe(gulp.dest('app/styles/'));
-             gulp.src(['semantic/dist/themes/**/*']).pipe(gulp.dest('app/styles/themes'));    
+             gulp.src(['semantic/dist/themes/**/*']).pipe(gulp.dest('app/styles/themes'));
              gulp.src(['semantic/dist/semantic.min.js']).pipe(gulp.dest('app/libs/'));
          }))
  });
@@ -126,14 +126,48 @@
  gulp.task('inject', ['minify'], function() {
      var target = gulp.src('content-editor/index.html');
      var sources = gulp.src(['content-editor/scripts/*.js', 'content-editor/styles/*.css'], { read: false });
-     return target.pipe(inject(sources, { ignorePath: 'content-editor/',addRootSlash: false }))
+     return target.pipe(inject(sources, { ignorePath: 'content-editor/', addRootSlash: false }))
          .pipe(gulp.dest('./content-editor'));
  });
 
- gulp.task('zip', ['minify', 'inject'], function () {
-    return gulp.src('content-editor/**')
-        .pipe(zip('content-editor.zip'))
-        .pipe(gulp.dest('ansible'));
+ gulp.task('zip', ['minify', 'inject'], function() {
+     return gulp.src('content-editor/**')
+         .pipe(zip('content-editor.zip'))
+         .pipe(gulp.dest('ansible'));
  });
 
  gulp.task('build', ['minify', 'inject', 'zip']);
+
+ //Minification for dev Start
+ gulp.task('copyFilesDev', function() {
+     return gulp.src(['app/scripts/**', 'app/templates/**/*', 'app/images/content-logo.png', 'app/images/geniecontrols.png',
+             'app/config/*.json', 'app/config/*.js', 'app/index.html'
+         ], { base: 'app/' })
+         .pipe(gulp.dest('content-editor'));
+ });
+
+ gulp.task('minifyDev', ['minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyFilesDev']); 
+
+ gulp.task('injectDev', ['minifyDev'], function() {
+     var target = gulp.src('content-editor/index.html');
+     var sources = gulp.src(['content-editor/scripts/external.min.js', 'content-editor/scripts/main/class.js', 'content-editor/scripts/main/ekstep-editor.js', 'content-editor/scripts/main/base-plugin.js',
+         'content-editor/scripts/manager/event-manager.js', 'content-editor/scripts/manager/plugin-manager.js', 'content-editor/scripts/manager/stage-manager.js', 'content-editor/scripts/manager/toolbar-manager.js',
+         'content-editor/scripts/manager/media-manager.js', 'content-editor/scripts/main/ekstep-editor-api.js', 'content-editor/scripts/migration/1_migration-task.js', 'content-editor/scripts/migration/stageordermigration-task.js',
+         'content-editor/scripts/migration/basestagemigration-task.js', 'content-editor/scripts/migration/imagemigration-task.js', 'content-editor/scripts/migration/scribblemigration-task.js', 'content-editor/scripts/service/iservice.js',
+         'content-editor/scripts/service/content-serice.js', 'content-editor/scripts/service/popup-service.js', 'content-editor/scripts/angular/controller/main.js', 'content-editor/scripts/angular/controller/popup-controller.js',
+         'content-editor/scripts/angular/directive/draggable-directive.js', 'content-editor/scripts/angular/directive/droppable-directive.js', 'content-editor/scripts/service/assessment-service.js', 'content-editor/scripts/service/asset-service.js',
+         'content-editor/scripts/service/concept-service.js', 'content-editor/styles/*.css'
+     ], { read: false });
+     return target.pipe(inject(sources, { ignorePath: 'content-editor/', addRootSlash: false }))
+         .pipe(gulp.dest('./content-editor'));
+ });
+
+ gulp.task('zipDev', ['minifyDev', 'injectDev'], function() {
+     return gulp.src('content-editor/**')
+         .pipe(zip('content-editor.zip'))
+         .pipe(gulp.dest('ansible'));
+ });
+
+ gulp.task('buildDev', ['minifyDev', 'injectDev', 'zipDev']);
+
+ //Minification for dev End
