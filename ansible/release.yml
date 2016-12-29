@@ -15,11 +15,8 @@
         - name: Create AuthoringTool directory
           file: path={{at_home}} owner={{server_runs_as}} group={{server_runs_as}} state=directory
 
-        - name: Create Editor directory
-          file: path={{at_home}}/editor owner={{server_runs_as}} group={{server_runs_as}} state=directory          
-  
         - name: Unarchive zip file
-          unarchive: src={{user_home}}/content-editor.zip dest={{at_home}}/editor copy=no owner={{server_runs_as}} group={{server_runs_as}}
+          unarchive: src={{user_home}}/content-editor.zip dest={{at_home}} copy=no owner={{server_runs_as}} group={{server_runs_as}}
 
         - name: Status of plugins directory
           stat: path={{plugins_home}}
