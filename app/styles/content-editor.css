@@ -94,10 +94,6 @@ body {
     border-radius: 0px !important;
 }
 
-.content-title:hover {
-    border: 1px rgba(0, 0, 0, 0.08) solid !important;
-}
-
 .content-masterhead {
     background: #ffffff !important;
     padding-top: 10px !important;

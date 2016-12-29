@@ -53,7 +53,7 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
                     angScope.contentDetails = {
                         contentTitle: res.data.result.content.name,
                         contentImage: res.data.result.content.appIcon,
-                        contentType: '|'+res.data.result.content.contentType,
+                        contentType: '| '+res.data.result.content.contentType,
                         contentConcepts: concepts
                     };
                     EkstepEditorAPI.getAngularScope().safeApply();
