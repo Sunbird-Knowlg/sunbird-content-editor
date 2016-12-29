@@ -10,7 +10,7 @@ cursor: pointer;
 <div class="ui four cards" ng-show="stageAttachments.audio.show">
     <div class="ui card" ng-repeat="item in stageAttachments.audio.items">
         <div class="content">
-            <i class="right floated close icon" id="closeAudio" ng-click="fireEvent({'id':'org.ekstep.audio:removeAudio', 'data':{'asset': item.title}});"></i>
+            <i class="right floated close icon" id="closeAudio" ng-click="fireEvent({'id':'org.ekstep.audio:removeAudio', 'data':{'asset': item.title}});" ng-hide="item.showClose"></i>
             <i class="music icon"></i>{{item.title}}
         </div>
         <div class="extra content">
