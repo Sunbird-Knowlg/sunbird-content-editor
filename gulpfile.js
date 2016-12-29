@@ -29,7 +29,6 @@
 "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
 "app/bower_components/oclazyload/dist/ocLazyLoad.js",
 "libs/semantic.min.js", 
-"libs/lame.min.js"
  ];
 
  var scriptfiles = [
