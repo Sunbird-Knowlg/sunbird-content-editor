@@ -39,7 +39,6 @@
 </head>
 
 <body class="ui fluid container">
-    <div id="userprofile"></div>
     <!-- End of localhost only code-->
     <div ng-app="editorApp" class="maincontainer" ng-strict-di>
         <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
@@ -63,7 +62,7 @@
                     </div>
                     <div class="right floated four wide column bottom aligned"
                          style="padding-right: 20px;">
-                         <div id="userprofile" ng-show="userDetails.id">
+                         <div id="userprofile" ng-show="userDetails.id" class="usercontext">
 							<div class="browse item at username">
 								{{userDetails.name}}
 								<i class="dropdown icon"></i>

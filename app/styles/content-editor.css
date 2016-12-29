@@ -204,3 +204,11 @@ body {
     width: 45px !important;
     height: 45px !important;
 }
+
+.usercontext {
+    position: fixed;
+    font-size: 11px;
+    top: 8px;
+    right: 20px;
+    z-index: 999999999;
+}
