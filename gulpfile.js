@@ -9,6 +9,58 @@
  var inject = require('gulp-inject');
  const zip = require('gulp-zip');
 
+ var bower_components = [
+"app/bower_components/jquery/dist/jquery.js",
+"app/bower_components/angular/angular.js",
+"app/bower_components/fabric/dist/fabric.min.js",
+"app/bower_components/lodash/lodash.js",
+"app/bower_components/x2js/index.js",
+"app/bower_components/eventbus/index.js",
+"app/bower_components/uuid/index.js",
+"app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
+"app/bower_components/ng-dialog/js/ngDialog.js",
+"app/bower_components/oclazyload/dist/modules/ocLazyLoad.core.js",
+"app/bower_components/oclazyload/dist/modules/ocLazyLoad.directive.js",
+"app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.common.js",
+"app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.core.js",
+"app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.cssLoader.js",
+"app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.jsLoader.js",
+"app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.templatesLoader.js",
+"app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
+"app/bower_components/oclazyload/dist/ocLazyLoad.js",
+"libs/semantic.min.js", 
+"libs/lame.min.js"
+ ];
+
+ var scriptfiles = [
+  'app/scripts/main/class.js',
+ 'app/scripts/main/ekstep-editor.js',
+ 'app/scripts/main/base-plugin.js',
+ "app/scripts/manager/event-manager.js",
+"app/scripts/manager/plugin-manager.js",
+"app/scripts/manager/stage-manager.js",
+"app/scripts/manager/toolbar-manager.js",
+"app/scripts/manager/media-manager.js",
+"app/scripts/main/ekstep-editor-api.js",    
+"app/scripts/migration/1_migration-task.js",   
+"app/scripts/migration/stageordermigration-task.js",
+"app/scripts/migration/basestagemigration-task.js",
+"app/scripts/migration/imagemigration-task.js",
+"app/scripts/migration/scribblemigration-task.js",
+"app/scripts/migration/readalongmigration-task.js",    
+"app/scripts/migration/assessmentmigration-task.js",    
+"app/scripts/service/iservice.js",
+"app/scripts/service/content-service.js",
+"app/scripts/service/popup-service.js",
+"app/scripts/angular/controller/main.js",
+"app/scripts/angular/controller/popup-controller.js",
+"app/scripts/angular/directive/draggable-directive.js",
+"app/scripts/angular/directive/droppable-directive.js",
+"app/scripts/service/assessment-service.js",
+"app/scripts/service/asset-service.js",
+"app/scripts/service/concept-service.js"
+ ];
+
  gulp.task('setup', function() {
      gulp.src('semantic/dist', { read: false }).pipe(clean())
      gulp.src(['app/config/theme.config']).pipe(gulp.dest('semantic/src/'))
@@ -21,28 +73,56 @@
          }))
  });
 
+ // gulp.task('minifyJS', function() {
+ //     return gulp.src([
+ //             'app/scripts/main/class.js',
+ //             'app/scripts/main/ekstep-editor.js',
+ //             'app/scripts/main/base-plugin.js',
+ //             "app/scripts/manager/event-manager.js",
+ //            "app/scripts/manager/plugin-manager.js",
+ //            "app/scripts/manager/stage-manager.js",
+ //            "app/scripts/manager/toolbar-manager.js",
+ //            "app/scripts/manager/media-manager.js",
+ //            "app/scripts/main/ekstep-editor-api.js",    
+ //            "app/scripts/migration/1_migration-task.js",   
+ //            "app/scripts/migration/stageordermigration-task.js",
+ //            "app/scripts/migration/basestagemigration-task.js",
+ //            "app/scripts/migration/imagemigration-task.js",
+ //            "app/scripts/migration/scribblemigration-task.js",
+ //            "app/scripts/migration/readalongmigration-task.js",    
+ //            "app/scripts/migration/assessmentmigration-task.js",    
+ //            "app/scripts/service/iservice.js",
+ //            "app/scripts/service/content-service.js",
+ //            "app/scripts/service/popup-service.js",
+ //            "app/scripts/angular/controller/main.js",
+ //            "app/scripts/angular/controller/popup-controller.js",
+ //            "app/scripts/angular/directive/draggable-directive.js",
+ //            "app/scripts/angular/directive/droppable-directive.js",
+ //            "app/scripts/service/assessment-service.js",
+ //            "app/scripts/service/asset-service.js",
+ //            "app/scripts/service/concept-service.js"
+ //         ])
+ //         .pipe(concat('script.min.js'))
+ //         .pipe(minify({
+ //             minify: true,
+ //             collapseWhitespace: true,
+ //             conservativeCollapse: true,
+ //             removeComments: true,
+ //             minifyJS: true,
+ //             getKeptComment: function(content, filePath) {
+ //                 var m = content.match(/\/\*![\s\S]*?\*\//img);
+ //                 return m && m.join('\n') + '\n' || '';
+ //             }
+ //         }))
+ //         .pipe(stripDebug())
+ //         .pipe(gulp.dest('content-editor/scripts'));
+ // });
+
  gulp.task('minifyJS', function() {
-     return gulp.src([
-             'app/scripts/main/class.js',
-             'app/scripts/main/ekstep-editor.js',
-             'app/scripts/service/iservice.js',
-             'app/scripts/**'
-         ])
-         .pipe(concat('script.min.js'))
-         .pipe(minify({
-             minify: true,
-             collapseWhitespace: true,
-             conservativeCollapse: true,
-             removeComments: true,
-             minifyJS: true,
-             getKeptComment: function(content, filePath) {
-                 var m = content.match(/\/\*![\s\S]*?\*\//img);
-                 return m && m.join('\n') + '\n' || '';
-             }
-         }))
-         .pipe(stripDebug())
-         .pipe(gulp.dest('content-editor/scripts'));
- });
+  return gulp.src(scriptfiles)
+    .pipe(concat('script.min.js'))
+    .pipe(gulp.dest('content-editor/scripts'));
+});
 
  gulp.task('minifyCSS', function() {
      return gulp.src([
@@ -67,25 +147,31 @@
  });
 
 
+ // gulp.task('minifyJsBower', function() {
+ //     var filterJS = gulpFilter([bower_components, 'libs/semantic.min.js', 'libs/lame.min.js'], { restore: true });
+ //     return gulp.src('app/bower.json')
+ //         .pipe(mainBowerFiles())
+ //         .pipe(filterJS)
+ //         .pipe(concat('external.min.js'))
+ //         .pipe(minify({
+ //             minify: true,
+ //             collapseWhitespace: true,
+ //             conservativeCollapse: true,
+ //             minifyJS: true,
+ //             minifyCSS: true,
+ //             getKeptComment: function(content, filePath) {
+ //                 var m = content.match(/\/\*![\s\S]*?\*\//img);
+ //                 return m && m.join('\n') + '\n' || '';
+ //             }
+ //         }))
+ //         .pipe(gulp.dest('content-editor/scripts'));
+ // });
+
  gulp.task('minifyJsBower', function() {
-     var filterJS = gulpFilter(['app/bower_components/**/*.js', 'libs/semantic.min.js', 'libs/lame.min.js'], { restore: true });
-     return gulp.src('app/bower.json')
-         .pipe(mainBowerFiles())
-         .pipe(filterJS)
-         .pipe(concat('external.min.js'))
-         .pipe(minify({
-             minify: true,
-             collapseWhitespace: true,
-             conservativeCollapse: true,
-             minifyJS: true,
-             minifyCSS: true,
-             getKeptComment: function(content, filePath) {
-                 var m = content.match(/\/\*![\s\S]*?\*\//img);
-                 return m && m.join('\n') + '\n' || '';
-             }
-         }))
-         .pipe(gulp.dest('content-editor/scripts'));
- });
+  return gulp.src(bower_components)
+    .pipe(concat('external.min.js'))
+    .pipe(gulp.dest('content-editor/scripts'));
+});
 
  gulp.task('minifyCssBower', function() {
      var filterJS = gulpFilter(['app/bower_components/**/*.css', 'app/bower_components/**/*.less'], { restore: true });
