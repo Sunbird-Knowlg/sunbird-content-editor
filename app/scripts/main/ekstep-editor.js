@@ -58,7 +58,7 @@ EkstepEditor.loadExternalResource = function(type, pluginId, pluginVer, src) {
     var url = EkstepEditor.config.pluginRepo + '/' + pluginId + '-' + pluginVer + '/' + src;
     switch (type) {
         case 'js':
-            EkstepEditor.jQuery("head").append($("<script type='text/javascript' src=" + url + ">"));
+            EkstepEditor.jQuery("body").append($("<script type='text/javascript' src=" + url + ">"));
             break;
         case 'css':
             EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + url + "'>");
