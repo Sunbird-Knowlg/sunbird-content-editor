@@ -200,7 +200,7 @@
          .pipe(gulp.dest('content-editor/styles'));
  });
  gulp.task('copyFiles', function() {
-     return gulp.src(['app/templates/**/*', 'app/images/content-logo.png', 'app/images/geniecontrols.png', 'app/config/*.json', 'app/config/*.js', 'app/index.html'], {
+     return gulp.src(['app/templates/**/*', 'app/images/content-logo.png', 'app/images/geniecontrols.png', 'app/images/editor-frame.png','app/config/*.json', 'app/config/*.js', 'app/index.html'], {
              base: 'app/'
          })
          .pipe(gulp.dest('content-editor'));
