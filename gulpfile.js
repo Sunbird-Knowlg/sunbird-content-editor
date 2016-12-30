@@ -11,6 +11,7 @@
 
  var bower_components = [
 "app/bower_components/jquery/dist/jquery.js",
+"app/libs/semantic.min.js",
 "app/bower_components/angular/angular.js",
 "app/bower_components/fabric/dist/fabric.min.js",
 "app/bower_components/lodash/lodash.js",
@@ -27,8 +28,7 @@
 "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.jsLoader.js",
 "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.templatesLoader.js",
 "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
-"app/bower_components/oclazyload/dist/ocLazyLoad.js",
-"libs/semantic.min.js", 
+"app/bower_components/oclazyload/dist/ocLazyLoad.js"
  ];
 
  var scriptfiles = [
@@ -169,7 +169,7 @@
  gulp.task('minifyJsBower', function() {
   return gulp.src(bower_components)
     .pipe(concat('external.min.js'))
-    .pipe(gulp.dest('content-editor/scripts'));
+    .pipe(gulp.dest('content-editor/scripts/'));
 });
 
  gulp.task('minifyCssBower', function() {
