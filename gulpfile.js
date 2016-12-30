@@ -31,6 +31,13 @@
 "app/bower_components/oclazyload/dist/ocLazyLoad.js"
  ];
 
+ var bower_css = [
+"app/bower_components/font-awesome/css/font-awesome.css",
+"app/bower_components/ng-dialog/css/ngDialog.min.css",
+"app/bower_components/ng-dialog/css/ngDialog-theme-plain.min.css",
+"app/bower_components/ng-dialog/css/ngDialog-theme-default.min.css"
+ ];
+
  var scriptfiles = [
   'app/scripts/main/class.js',
  'app/scripts/main/ekstep-editor.js',
@@ -172,25 +179,31 @@
     .pipe(gulp.dest('content-editor/scripts/'));
 });
 
+ // gulp.task('minifyCssBower', function() {
+ //     var filterJS = gulpFilter(['app/bower_components/**/*.css', 'app/bower_components/**/*.less'], { restore: true });
+ //     return gulp.src('app/bower.json')
+ //         .pipe(mainBowerFiles())
+ //         .pipe(filterJS)
+ //         .pipe(concat('external.min.css'))
+ //         .pipe(minify({
+ //             minify: true,
+ //             collapseWhitespace: true,
+ //             conservativeCollapse: true,
+ //             minifyJS: true,
+ //             minifyCSS: true,
+ //             getKeptComment: function(content, filePath) {
+ //                 var m = content.match(/\/\*![\s\S]*?\*\//img);
+ //                 return m && m.join('\n') + '\n' || '';
+ //             }
+ //         }))
+ //         .pipe(gulp.dest('content-editor/styles'));
+ // });
+
  gulp.task('minifyCssBower', function() {
-     var filterJS = gulpFilter(['app/bower_components/**/*.css', 'app/bower_components/**/*.less'], { restore: true });
-     return gulp.src('app/bower.json')
-         .pipe(mainBowerFiles())
-         .pipe(filterJS)
-         .pipe(concat('external.min.css'))
-         .pipe(minify({
-             minify: true,
-             collapseWhitespace: true,
-             conservativeCollapse: true,
-             minifyJS: true,
-             minifyCSS: true,
-             getKeptComment: function(content, filePath) {
-                 var m = content.match(/\/\*![\s\S]*?\*\//img);
-                 return m && m.join('\n') + '\n' || '';
-             }
-         }))
-         .pipe(gulp.dest('content-editor/styles'));
- });
+  return gulp.src(bower_css)
+    .pipe(concat('external.min.css'))
+    .pipe(gulp.dest('content-editor/styles'));
+});
 
 
  gulp.task('copyfonts', function() {
