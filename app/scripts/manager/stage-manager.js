@@ -184,6 +184,7 @@ EkstepEditor.stageManager = new(Class.extend({
 
         var stages = _.isArray(contentBody.theme.stage) ? contentBody.theme.stage : [contentBody.theme.stage];
         _.forEach(stages, function(stage, index) {
+            var stageEvents = _.clone(stage.events) || {};
             var canvas = new fabric.Canvas(stage.id, { backgroundColor: "#FFFFFF", preserveObjectStacking: true, width: 720, height: 405 });
             var stageInstance = EkstepEditorAPI.instantiatePlugin(EkstepEditor.config.corePluginMapping['stage'], stage);
             stageInstance.setCanvas(canvas);
@@ -215,7 +216,13 @@ EkstepEditor.stageManager = new(Class.extend({
                 EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stage.id });
             } : function() {};
             stageInstance.destroyOnLoad(pluginCount, canvas, cb);
-
+           if (stageEvents){ 
+              _.forEach(stageEvents, function (event) {
+                _.forEach(event, function (e) {
+                  stageInstance.addEvent(e); 
+                })
+              })
+           }
         });
 
     },
