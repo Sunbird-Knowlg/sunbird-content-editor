@@ -14,6 +14,7 @@ EkstepEditor.mediaManager = new (Class.extend({
 	getMediaOriginURL: function(src) {
 		var assetReverseProxyUrl = "/assets/public/";
     var aws_s3 = "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/";
-    return src.replace(aws_s3, EkstepEditor.config.baseURL + assetReverseProxyUrl);
+    if(EkstepEditorAPI.globalContext.useProxyForURL) return src.replace(aws_s3, EkstepEditor.config.baseURL + assetReverseProxyUrl);
+    if(!EkstepEditorAPI.globalContext.useProxyForURL) return src.replace(aws_s3, EkstepEditor.config.absURL + assetReverseProxyUrl);
   }
 }));
