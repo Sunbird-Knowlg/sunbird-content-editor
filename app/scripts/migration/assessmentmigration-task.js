@@ -16,12 +16,13 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
         _.forEach(contentbody.theme.stage, function(stage, index) {
             if (!_.isUndefined(stage.iterate) && (_.has(stage, 'emdeb') || _.find(stage.g, function(g){return _.has(g, 'embed')}))) {
                 instance.transformToQuiz(stage);
-                instance.quiz.data.__cdata = JSON.stringify(instance.quiz.data.__cdata);
-                instance.quiz.config.__cdata = JSON.stringify(instance.quiz.config.__cdata);
-                instance.removeObsoleteTag(stage);
-                instance.addPluginToMedia();                
+                instance.removeObsoleteTag(stage);              
             }
-            if (contentbody.theme.stage.length === index + 1) deferred.resolve(contentbody);
+            if (contentbody.theme.stage.length === index + 1) {                
+                instance.quiz.data.__cdata = JSON.stringify(instance.quiz.data.__cdata);
+                instance.quiz.config.__cdata = JSON.stringify(instance.quiz.config.__cdata);                                
+                deferred.resolve(contentbody);  
+            }
         });
 
         return deferred.promise;
@@ -61,8 +62,5 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
     	return _.remove(this.contentbody.theme.template, function(template){
     		return template.id === templateId;
     	});
-    },
-    addPluginToMedia: function() {
-        this.contentbody.theme.manifest.media.push({id: 'org.ekstep.quiz', type: 'plugin', src: 'http://localhost:3000/plugins/org.ekstep.quiz-1.0/editor/plugin.js'});
     }
 }));
