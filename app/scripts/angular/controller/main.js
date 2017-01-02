@@ -11,6 +11,27 @@ angular.module('editorApp', ['ngDialog', 'oc.lazyLoad']).config(['$locationProvi
 }]);
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window',
     function($scope, $timeout, $http, $location, $q, $window) {
+        $scope.progressBarShow = true;
+        $scope.progressMessage = ['Loading App!'];        
+
+        $('.ui.progress')
+            .progress({
+                total: 6,
+                onSuccess: function(){
+                    $scope.progressMessage.push('App is Ready!');
+                    setTimeout(function(){$scope.progressBarShow = false; $scope.safeApply();},1000);
+                }
+            });
+
+        $scope.progressBar = function(increment, message) {
+            if (!increment) increment = 1;
+            for (var i = 0; i < increment; i++) { 
+                $('.ui.progress').progress('increment');
+                if(message) $scope.progressMessage.push(message);
+                $scope.safeApply();
+            };
+        };
+
         $scope.context = $window.context;
         EkstepEditorAPI.globalContext.contentId = $location.search().contentId;
         if (_.isUndefined(EkstepEditorAPI.globalContext.contentId)) {
