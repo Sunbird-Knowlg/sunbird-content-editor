@@ -18,10 +18,8 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
                 instance.transformToQuiz(stage);
                 instance.removeObsoleteTag(stage);              
             }
-            if (contentbody.theme.stage.length === index + 1) {                
-                instance.quiz.data.__cdata = JSON.stringify(instance.quiz.data.__cdata);
-                instance.quiz.config.__cdata = JSON.stringify(instance.quiz.config.__cdata);                                
-                deferred.resolve(contentbody);  
+            if (contentbody.theme.stage.length === index + 1) {
+                deferred.resolve(contentbody);
             }
         });
 
@@ -37,20 +35,25 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
             return template.id === templateId;
         });        
     },
-    transformToQuiz: function(stage) { 
-        var instance = this,        	
-            questionnaire;
+    transformToQuiz: function(stage) {
+        var instance = this,
+            questionnaire,
+            quiz;
 
-        questionnaire = instance.quiz.data.__cdata.questionnaire = instance.getController(stage.iterate).__cdata;        
-        _.forEach(questionnaire.item_sets, function(itemset) {
+        quiz = _.cloneDeep(instance.quiz);
+        questionnaire = quiz.data.__cdata.questionnaire = instance.getController(stage.iterate).__cdata;
+        _.forEach(questionnaire.item_sets, function(itemset, index) {
             _.forEach(questionnaire.items[itemset.id], function(items) {
                 if (items.template) {
-                    instance.quiz.data.__cdata.template.push(instance.getTemplate(items.template));
+                    quiz.data.__cdata.template.push(instance.getTemplate(items.template));
                     instance.removeObsoleteTemplate(items.template);
                 }
             });
+            if (questionnaire.item_sets.length === index + 1) {
+                stage[instance.id] = quiz;
+                instance.stringifycdata(stage);
+            };
         });
-        stage[instance.id] = instance.quiz;
     },
     removeObsoleteTag: function(stage) {
         if (_.has(stage, 'embed')) delete stage.embed;
@@ -62,5 +65,9 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
     	return _.remove(this.contentbody.theme.template, function(template){
     		return template.id === templateId;
     	});
+    },
+    stringifycdata: function(stage) {
+        stage[this.id].data.__cdata = JSON.stringify(stage[this.id].data.__cdata);
+        stage[this.id].config.__cdata = JSON.stringify(stage[this.id].config.__cdata);
     }
 }));
