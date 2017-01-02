@@ -54,6 +54,7 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
     removeObsoleteTag: function(stage) {
         if (_.has(stage, 'embed')) delete stage.embed;
         if (_.has(stage, 'g')) _.remove(stage.g, function(g){return _.has(g, 'embed')});        
+        if (_.has(stage, 'appEvents')) delete stage.appEvents;
         delete stage.iterate;
     },
     removeObsoleteTemplate: function(templateId) {
