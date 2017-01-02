@@ -45,11 +45,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             contentType: ""
         };
         $scope.userDetails = !EkstepEditorAPI._.isUndefined(window.context)? window.context.user : undefined;
-        // EkstepEditorAPI.jQuery('.browse.item.at')
-        //  .popup({
-        //  on: 'click',setFluidWidth:false,
-        //  position   : 'bottom right'
-        // });
+        EkstepEditorAPI.jQuery('.browse.item.at')
+         .popup({
+         on: 'click',setFluidWidth:false,
+         position   : 'bottom right'
+        });
         $scope.showGenieControls = false;
         $scope.stageAttachments = {};
         $scope.safeApply = function(fn) {
