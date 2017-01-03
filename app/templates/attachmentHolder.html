@@ -1,17 +1,24 @@
 <style type="text/css">
 .card #closeAudio {
-  visibility:hidden;
+    visibility: hidden;
 }
+
 .card:hover #closeAudio {
-visibility:visible;
-cursor: pointer;
+    visibility: visible;
+    cursor: pointer;
+}
+.playAudio {
+    position: absolute;
+    cursor: pointer;
 }
 </style>
 <div class="ui four cards" ng-show="stageAttachments.audio.show">
     <div class="ui card" ng-repeat="item in stageAttachments.audio.items">
         <div class="content">
             <i class="right floated close icon" id="closeAudio" ng-click="fireEvent({'id':'org.ekstep.audio:removeAudio', 'data':{'asset': item.id}});" ng-hide="item.showClose"></i>
-            <i class="music icon"></i>{{item.title}}
+            <span class="playAudio" ng-click="fireEvent({'id':'org.ekstep.audio:jplayerInit', 'data':{'url': item.url, 'id': item.id}});" >
+            <i class="music icon"></i>{{item.title}}</span>
+            <div id="{{item.id}}"></div>
         </div>
         <div class="extra content">
             <div class="ui toggle checkbox">
