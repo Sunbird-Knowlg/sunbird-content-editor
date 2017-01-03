@@ -143,7 +143,7 @@ EkstepEditor.stageManager = new(Class.extend({
         var instance = this;
         var size = this.stages.length;
         _.forEach(this.stages, function(stage, index) {
-            stage.deleteParam();
+            //stage.deleteParam();
             if (index !== 0) {
                 stage.addParam('previous', instance.stages[index - 1].id);
             }
