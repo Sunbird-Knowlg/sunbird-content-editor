@@ -104,7 +104,7 @@
             </div>
             <div id="mainContainerGrid" class="ui grid bottom attached celled" style="margin: 0;background: #EEEEEE;">
                 <div class="row">
-                    <div class="ui two wide column">
+                    <div class="ui two wide column scrollable-slides">
                         <div ng-repeat="stage in stages track by $index" class="thumbnail-container" style="margin-bottom: 20px">
                             <div class="ui centered raised card segment thumbnail" ng-click="fireEvent(stage.onclick)">
                                 <span class="stage-number">{{$index+1}}</span>

@@ -5,6 +5,7 @@ CSS file for Content Editor
 html,
 body {
     height: 100%;
+    overflow-y: hidden;    
 }
 
 .maincontainer {
@@ -68,9 +69,9 @@ body {
 
 .stage-number {
     position: absolute;
-    left: -10px;
+    left: -32px;
     bottom: 0;
-    font-size: 13px;
+    font-size: 14px;
 }
 
 .thumbnail-container {
@@ -230,4 +231,9 @@ body {
     border-radius: 5px;
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
     background-color: #555;
+}
+
+.scrollable-slides {
+    overflow-y: auto;
+    height: 90%;
 }
