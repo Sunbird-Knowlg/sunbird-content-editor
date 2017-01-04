@@ -1,6 +1,7 @@
 EkstepEditor.assessmentService = new(EkstepEditor.iService.extend({
     learningURL: EkstepEditor.config.baseURL + '/api/learning/',
     searchURL: EkstepEditor.config.baseURL + '/api/search/',
+    configURL: EkstepEditor.config.baseURL + '/api/config/',
     requestHeaders: {
         "headers": {
             "content-type": "application/json",
@@ -21,7 +22,7 @@ EkstepEditor.assessmentService = new(EkstepEditor.iService.extend({
         this.getFromService(this.learningURL + 'taxonomy/domain/definition/AssessmentItem', this.requestHeaders, callback);
     },
     getResourceBundles: function(callback) {
-        this.getFromService(this.learningURL + 'v2/config/resourcebundles/en', this.requestHeaders, callback);
+        this.getFromService(this.configURL + 'v2/config/resourcebundles/en', this.requestHeaders, callback);
     },
     getQuestions: function(data, callback) {
         this.postFromService(this.searchURL + 'v2/search', data, this.requestHeaders, callback);
