@@ -342,6 +342,7 @@ EkstepEditor.basePlugin = Class.extend({
         var configManifest = this.manifest.editor.configManifest
         if (this.configManifest) {
             configManifest = _.clone(_.concat(this.manifest.editor.configManifest, this.configManifest),true);
+            configManifest = _.clone(_.uniqBy(_.concat(this.manifest.editor.configManifest, this.configManifest),'propertyName'),true);
         }
         if (!(this.manifest.editor.playable && this.manifest.editor.playable === true)) {
           _.remove(configManifest, function (cm) {return cm.propertyName === 'autoplay'})
