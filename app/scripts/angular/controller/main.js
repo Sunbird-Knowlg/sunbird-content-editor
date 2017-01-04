@@ -14,6 +14,10 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.progressBarShow = true;
         $scope.progressMessage = ['Loading App!'];        
         $scope.saveBtnEnabled;
+        $scope.enableSave = function() {
+            $scope.saveBtnEnabled = true;
+            $scope.safeApply();
+        }
 
         $('.ui.progress')
             .progress({
@@ -154,11 +158,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.onStageDragDrop = function(dragEl, dropEl) {
             EkstepEditor.stageManager.onStageDragDrop(EkstepEditor.jQuery('#' + dragEl).attr('data-id'), EkstepEditor.jQuery('#' + dropEl).attr('data-id'));
             EkstepEditorAPI.refreshStages();
-        }
-
-        $scope.enableSave = function() {
-            $scope.saveBtnEnabled = true;
-            $scope.safeApply();
-        }
+        }        
     }
 ]);
