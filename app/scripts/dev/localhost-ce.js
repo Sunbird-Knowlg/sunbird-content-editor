@@ -1,5 +1,5 @@
 window.context = {
-      "content_id": "do_10097535",
+      "content_id": "",
       "sid": "rctrs9r0748iidtuhh79ust993",
       "user": {
         "id": "390",
