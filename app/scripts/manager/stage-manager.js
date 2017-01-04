@@ -75,6 +75,8 @@ EkstepEditor.stageManager = new(Class.extend({
     },
     addStage: function(stage) {
         this.addStageAt(stage, stage.attributes.position);
+        this.selectStage(null, { stageId: stage.id });        
+        EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id });
     },
     deleteStage: function(event, data) {
         var currentStage = _.find(this.stages, { id: data.stageId });
@@ -228,39 +230,30 @@ EkstepEditor.stageManager = new(Class.extend({
                 })
               })
            }
+           if (stages.length === index + 1) EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stages[0].id });            
         });
 
     },
     addStageAt: function(stage, position) {
-        var currentIndex,
-            positionAltered = false;
-
+        var currentIndex;
         switch (position) {
             case "beginning":
-                this.stages.unshift(stage);
-                positionAltered = true;
+                this.stages.unshift(stage);                
                 break;
             case "end":
             case "next":
-                this.stages.push(stage);
-                positionAltered = true;
+                this.stages.push(stage);                
                 break;
             case "afterCurrent":
             case "beforeCurrent":
                 currentIndex = this.getStageIndex(EkstepEditorAPI.getCurrentStage());
-                if (position === "afterCurrent" && currentIndex >= 0) this.stages.splice(currentIndex + 1, 0, stage) && (positionAltered = true);
-                if (position === "beforeCurrent" && currentIndex >= 0) this.stages.splice(currentIndex, 0, stage) && (positionAltered = true);
+                if (position === "afterCurrent" && currentIndex >= 0) this.stages.splice(currentIndex + 1, 0, stage);
+                if (position === "beforeCurrent" && currentIndex >= 0) this.stages.splice(currentIndex, 0, stage);
                 break;
             default:
-                this.stages.push(stage) && (positionAltered = true);
+                this.stages.push(stage)
                 break;
         };
-
-        if (positionAltered) {
-            this.selectStage(null, { stageId: stage.id });
-            EkstepEditorAPI.dispatchEvent('stage:select', { stageId: stage.id });
-            EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id });
-        }
     },
     onStageDragDrop: function(srcStageId, destStageId) {
         var srcIdx = this.getStageIndexById(srcStageId);
