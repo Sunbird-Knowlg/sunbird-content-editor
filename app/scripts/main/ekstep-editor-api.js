@@ -121,5 +121,8 @@ window.EkstepEditorAPI = {
           });
       }
       return pluginInstances;
+    },
+    getMedia: function(assetId) {
+        return EkstepEditor.mediaManager.getMedia(assetId);
     }
 }
