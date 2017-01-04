@@ -143,12 +143,17 @@ EkstepEditor.stageManager = new(Class.extend({
         var instance = this;
         var size = this.stages.length;
         _.forEach(this.stages, function(stage, index) {
-            //stage.deleteParam();
+            if (index === 0) {
+                stage.deleteParam('previous');  // first stage should not have previous param.
+            }            
             if (index !== 0) {
                 stage.addParam('previous', instance.stages[index - 1].id);
             }
             if (index < (size - 1)) {
                 stage.addParam('next', instance.stages[index + 1].id);
+            }
+            if (size === index + 1) {
+                stage.deleteParam('next'); // last stage should not have next param.
             }
         });
     },
