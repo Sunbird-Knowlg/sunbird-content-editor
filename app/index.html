@@ -84,7 +84,7 @@
                         <!-- <button class="ui tiny icon button disabled right floated">
                             <i class="icon-close icon"></i> Close
                         </button> -->
-                        <button class="ui tiny icon button right floated secondary" ng-click="saveContent()" ng-disabled="!contentId"
+                        <button ng-class="saveBtnEnabled ? 'ui tiny icon button right floated primary' : 'ui tiny icon button right floated disabled'" ng-click="saveContent()" ng-disabled="!contentId"
                         style="margin-left: 5px;">
                             <i class="icon-save icon"></i> Save
                         </button>

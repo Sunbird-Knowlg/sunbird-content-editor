@@ -77,6 +77,7 @@ EkstepEditor.stageManager = new(Class.extend({
         this.addStageAt(stage, stage.attributes.position);
         this.selectStage(null, { stageId: stage.id });        
         EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id });
+        this.enableSave();
     },
     deleteStage: function(event, data) {
         var currentStage = _.find(this.stages, { id: data.stageId });
@@ -86,6 +87,7 @@ EkstepEditor.stageManager = new(Class.extend({
             EkstepEditorAPI.dispatchEvent('stage:create', { "position": "next" });
         }
         EkstepEditorAPI.dispatchEvent('stage:afterdelete', { stageId: data.stageId });
+        this.enableSave();
     },
     deleteStageInstances: function(stage) {        
         _.forEach(_.clone(stage.canvas.getObjects()), function(obj) {
@@ -105,6 +107,7 @@ EkstepEditor.stageManager = new(Class.extend({
            EkstepEditorAPI.cloneInstance(plugin); 
         });        
         EkstepEditorAPI.dispatchEvent('stage:afterduplicate', { stageId: data.stageId });
+        this.enableSave();
     },
     getObjectMeta: function(options) {
         var pluginId = (options && options.target) ? options.target.id : '';
@@ -279,5 +282,8 @@ EkstepEditor.stageManager = new(Class.extend({
         return _.findIndex(this.stages, function(stage){
            return stage.id == stageId; 
         });
+    },
+    enableSave: function() { // on stage operation, enable the save button
+        EkstepEditorAPI.getAngularScope().enableSave();        
     }
 }));

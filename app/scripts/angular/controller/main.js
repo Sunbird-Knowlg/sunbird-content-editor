@@ -13,6 +13,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
     function($scope, $timeout, $http, $location, $q, $window) {
         $scope.progressBarShow = true;
         $scope.progressMessage = ['Loading App!'];        
+        $scope.saveBtnEnabled;
 
         $('.ui.progress')
             .progress({
@@ -79,14 +80,18 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             });
         };
 
-        $scope.saveContent = function(){
-            var contentBody = EkstepEditor.stageManager.toECML();
-            EkstepEditor.contentService.saveContent(EkstepEditorAPI.globalContext.contentId, contentBody, function(err, resp) {
-                if (resp) {
-                    alert('Content saved successfully');
-                }
-            });
-        }    
+        $scope.saveContent = function() {
+            if ($scope.saveBtnEnabled) {
+                var contentBody = EkstepEditor.stageManager.toECML();
+                EkstepEditor.contentService.saveContent(EkstepEditorAPI.globalContext.contentId, contentBody, function(err, resp) {
+                    if (resp) {
+                        $scope.saveBtnEnabled = false;
+                        $scope.safeApply();
+                        alert('Content saved successfully');
+                    }
+                });
+            }
+        }
 
         $scope.loadAndInitPlugin = function() {
             if(_.isString($scope.pluginId)) {
@@ -149,6 +154,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.onStageDragDrop = function(dragEl, dropEl) {
             EkstepEditor.stageManager.onStageDragDrop(EkstepEditor.jQuery('#' + dragEl).attr('data-id'), EkstepEditor.jQuery('#' + dropEl).attr('data-id'));
             EkstepEditorAPI.refreshStages();
+        }
+
+        $scope.enableSave = function() {
+            $scope.saveBtnEnabled = true;
+            $scope.safeApply();
         }
     }
 ]);
