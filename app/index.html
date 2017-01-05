@@ -46,7 +46,8 @@
                         <div class="ui input">
                             <label class="content-title">{{contentDetails.contentTitle}}</label>
                             <label class="content-type-label">{{contentDetails.contentType}}</label>
-                            <a class="btn at-btn at-btn-ok" ng-href="{{context.editMetaLink}}" target="_blank">
+                            <div ng-include="'templates/editContentMetaDialog.html'"></div>               
+                            <a class="btn at-btn at-btn-ok" ng-click="editContentMeta()">
                                 <i class="edit icon"></i>
                             </a>
                         </div>
@@ -84,6 +85,8 @@
                         <!-- <button class="ui tiny icon button disabled right floated">
                             <i class="icon-close icon"></i> Close
                         </button> -->
+                        <div ng-include="'templates/saveSuccessMessage.html'"></div>
+                        <div ng-include="'templates/saveErrorMessage.html'"></div>
                         <button ng-class="saveBtnEnabled ? 'ui tiny icon button right floated primary' : 'ui tiny icon button right floated disabled'" ng-click="saveContent()" ng-disabled="!contentId"
                         style="margin-left: 5px;">
                             <i class="icon-save icon"></i> Save

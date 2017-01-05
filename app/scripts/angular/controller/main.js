@@ -84,15 +84,20 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             });
         };
 
-        $scope.saveContent = function() {
+        $scope.saveContent = function(cb) {
             if ($scope.saveBtnEnabled) {
                 var contentBody = EkstepEditor.stageManager.toECML();
                 EkstepEditor.contentService.saveContent(EkstepEditorAPI.globalContext.contentId, contentBody, function(err, resp) {
                     if (resp) {
                         $scope.saveBtnEnabled = false;
                         $scope.safeApply();
-                        alert('Content saved successfully');
+                        $scope.saveNotification('success');
+                    } else {
+                        $scope.saveBtnEnabled = true;
+                        $scope.safeApply();
+                        $scope.saveNotification('error');
                     }
+                    if (cb) cb(err, resp);
                 });
             }
         }
@@ -158,6 +163,46 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.onStageDragDrop = function(dragEl, dropEl) {
             EkstepEditor.stageManager.onStageDragDrop(EkstepEditor.jQuery('#' + dragEl).attr('data-id'), EkstepEditor.jQuery('#' + dropEl).attr('data-id'));
             EkstepEditorAPI.refreshStages();
-        }        
+        }
+
+        $scope.editContentMeta = function() {
+            var config = {
+                template: 'editContentMetaDialog',
+                controller: ['$scope', 'mainCtrlScope', function($scope, mainCtrlScope) {
+                    $scope.routeToContentMeta = function(save) {
+                        $scope.closeThisDialog();
+                        mainCtrlScope.routeToContentMeta(save);
+                    }
+                }],
+                resolve: {
+                    mainCtrlScope: function() {
+                        return $scope;
+                    }
+                },
+                showClose: false
+            };
+
+            EkstepEditorAPI.getService('popup').open(config);
+        }
+
+        $scope.routeToContentMeta = function(save) {
+            $scope.enableSave();
+            if (save) {
+                $scope.saveContent(function(err, resp) {
+                    if (resp) $window.location.assign(window.context.editMetaLink);
+                });
+            } else {
+                $window.location.assign(window.context.editMetaLink);
+            }
+        };
+
+        $scope.saveNotification = function(message) {
+             message = (message === 'success') ? 'saveSuccessMessage.html' : 'saveErrorMessage.html';
+            var config = {
+                template: message,
+                showClose: false
+            }
+            EkstepEditorAPI.getService('popup').open(config);
+        }
     }
 ]);
