@@ -69,9 +69,9 @@ body {
 
 .stage-number {
     position: absolute;
-    left: -32px;
+    left: -23px;
     bottom: 0;
-    font-size: 14px;
+    font-size: 12px;
 }
 
 .thumbnail-container {
@@ -235,5 +235,5 @@ body {
 
 .scrollable-slides {
     overflow-y: auto;
-    height: 90%;
+    height: 516px;
 }
