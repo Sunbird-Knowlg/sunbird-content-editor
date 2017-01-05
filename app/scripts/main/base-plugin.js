@@ -341,8 +341,7 @@ EkstepEditor.basePlugin = Class.extend({
         if (!this.manifest.editor.configManifest) { this.manifest.editor.configManifest = []; }
         var configManifest = this.manifest.editor.configManifest
         if (this.configManifest) {
-            configManifest = _.clone(_.concat(this.manifest.editor.configManifest, this.configManifest),true);
-            configManifest = _.clone(_.uniqBy(_.concat(this.manifest.editor.configManifest, this.configManifest),'propertyName'),true);
+            configManifest = _.uniqBy(_.clone(_.concat(this.manifest.editor.configManifest, this.configManifest),true),'propertyName');
         }
         if (!(this.manifest.editor.playable && this.manifest.editor.playable === true)) {
           _.remove(configManifest, function (cm) {return cm.propertyName === 'autoplay'})
