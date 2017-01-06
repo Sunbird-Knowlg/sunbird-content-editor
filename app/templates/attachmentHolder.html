@@ -8,7 +8,6 @@
     cursor: pointer;
 }
 .playAudio {
-    position: absolute;
     cursor: pointer;
 }
 </style>
@@ -17,7 +16,8 @@
         <div class="content">
             <i class="right floated close icon" id="closeAudio" ng-click="fireEvent({'id':'org.ekstep.audio:removeAudio', 'data':{'asset': item.id}});" ng-hide="item.showClose"></i>
             <span class="playAudio" ng-click="fireEvent({'id':'org.ekstep.audio:jplayerInit', 'data':{'url': item.url, 'id': item.id}});" >
-            <i class="music icon"></i>{{item.title}}</span>
+                <i class="music icon"></i>{{item.title | limitTo:11 }}<span ng-if="item.title.length > 11">....</span>
+            </span>
             <div id="{{item.id}}"></div>
         </div>
         <div class="extra content">
