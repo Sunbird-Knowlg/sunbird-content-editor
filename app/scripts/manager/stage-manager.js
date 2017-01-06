@@ -233,7 +233,10 @@ EkstepEditor.stageManager = new(Class.extend({
                 })
               })
            }
-           if (stages.length === index + 1) EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stages[0].id });            
+           if (stages.length === index + 1) {
+                EkstepEditorAPI.dispatchEvent('stage:select', { stageId: stages[0].id });            
+                EkstepEditorAPI.dispatchEvent('content:onload');
+            }
         });
 
     },
