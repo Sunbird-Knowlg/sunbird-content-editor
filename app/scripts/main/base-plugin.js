@@ -405,6 +405,7 @@ EkstepEditor.basePlugin = Class.extend({
     getProperties: function() {
         var props = _.omitBy(_.clone(this.attributes), _.isObject);
         props = _.omitBy(props, _.isNaN);
+        this.pixelToPercent(props);
         return props;
     },
     renderConfig: function() {
