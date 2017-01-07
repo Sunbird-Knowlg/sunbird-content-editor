@@ -11,7 +11,7 @@
     "x2js": "./libs/xml2json.js",
     "eventbus": "./libs/eventbus.min.js",
     "uuid": "./libs/uuid-v4.min.js",
-    "async": "*",
+    "async": "^2.1.4",
     "angular-bootstrap": "^2.2.0",
     "semantic": "^2.2.6",
     "ng-dialog": "^0.6.4",
