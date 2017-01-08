@@ -6,7 +6,7 @@ EkstepEditor.migration = new(Class.extend({
         EkstepEditor.$q = angular.injector(['ng']).get('$q'); //promise
         EkstepEditorAPI.addEventListener('migrationTask:start', this.execute, this);
     },
-    tasks: ['basestage_task', 'orderstage_task', 'scribblemigration_task', 'imagemigration_task','readalongmigration_task', 'assessmentmigration_task'],
+    tasks: ['basestage_task', 'orderstage_task', 'scribblemigration_task', 'imagemigration_task','readalongmigration_task', 'assessmentmigration_task','eventsmigration_task'],
     execute: function(event, contentbody) {
         var instance = this, scope = EkstepEditorAPI.getAngularScope();        
         if (!this.versionCompatible(contentbody.theme.version || contentbody.theme.ver)) {
@@ -32,6 +32,10 @@ EkstepEditor.migration = new(Class.extend({
                     scope.progressBar(1);
                     scope.safeApply();
                     return EkstepEditor.migration[instance.tasks[5]].migrate(content) })
+                .then(function(content) {
+                    scope.progressBar(1);
+                    scope.safeApply();
+                    return EkstepEditor.migration[instance.tasks[6]].migrate(content) })
                 .then(function(content) {
                     scope.progressBar(1, 'Migration completed!');
                     scope.safeApply();
