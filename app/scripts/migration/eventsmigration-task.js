@@ -20,9 +20,9 @@ EkstepEditor.migration.eventsmigration_task = new(Class.extend({
                         delete pi.events;
                         if (_.isArray(events)) {
 
-                            _forEach(events, function(event) {
+                            _.forEach(events, function(event) {
                                 if (event.action && _.isArray(event.action)) {
-                                    _forEach(event.action, function(action) {
+                                    _.forEach(event.action, function(action) {
                                         instance.addEvent(pi, { 'type': 'click', 'action': [action] });
                                     })
                                 } else if (event.action && _.isObject(event.action)) {
@@ -32,7 +32,7 @@ EkstepEditor.migration.eventsmigration_task = new(Class.extend({
 
                         } else if (_.isObject(events)) {
                             if (events.action && _.isArray(events.action)) {
-                                _forEach(events.action, function(action) {
+                                _.forEach(events.action, function(action) {
                                     instance.addEvent(pi, { 'type': 'click', 'action': [action] });
                                 })
                             } else if (events.action && _.isObject(events.action)) {
