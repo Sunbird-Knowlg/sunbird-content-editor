@@ -55,6 +55,7 @@
 "app/scripts/migration/scribblemigration-task.js",
 "app/scripts/migration/readalongmigration-task.js",    
 "app/scripts/migration/assessmentmigration-task.js",    
+"app/scripts/migration/eventsmigration-task.js",    
 "app/scripts/service/iservice.js",
 "app/scripts/service/content-service.js",
 "app/scripts/service/popup-service.js",
