@@ -3,14 +3,15 @@
     <div class="ui form" ng-switch-when="colorpicker">
         <div class="field">
             <label ng-if="config.title">{{config.title}}</label>
-            <input type="text" class="basic" id="{{config.propertyName}}" />
+            <input type="text" class="basic" id="{{config.propertyName}}" id="{{config.propertyName}}"/>
             <!-- <div class="jscolor" style="width:25px;height:25px; min-width: 20px; min-height: 20px;border-radius: 5px;border: 1px solid rgba(49, 38, 38, 0.34);" id="{{config.propertyName}}" ng-click="fireEvent({'id':'colorpicker:show', 'data': {}})"></div> -->
         </div>
     </div>
     <div class="ui form" ng-switch-when="input">
         <div class="field">
             <label ng-if="config.title">{{config.title}}</label>
-            <input type="{{config.valueType || text}}" placeholder="{{config.placeholder}}" ng-model="configData[config.propertyName]" />
+            <input type="{{config.valueType || text}}" placeholder="{{config.placeholder}}" ng-model="configData[config.propertyName]" min="{{config.minimumValue}}" max="{{config.maximumValue}}" id="{{config.propertyName}}" ng-if="config.valueType == 'number'" onkeypress="return event.charCode>= 48"/>
+            <input type="{{config.valueType || text}}" placeholder="{{config.placeholder}}" ng-model="configData[config.propertyName]" id="{{config.propertyName}}" ng-if="config.valueType != 'number'"/>
         </div>
     </div>
     <div class="ui form" ng-switch-when="select">
