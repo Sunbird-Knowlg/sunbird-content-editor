@@ -70,8 +70,7 @@ EkstepEditor.stageManager = new(Class.extend({
             this.canvas.on("object:added", function(options, event) {
                 EkstepEditor.stageManager.dispatchObjectEvent('added', options, event);
             });
-        }
-        EkstepEditorAPI.dispatchEvent('stage:afterselect', { stageId: data.stageId });
+        }        
     },
     addStage: function(stage) {
         this.addStageAt(stage, stage.attributes.position);
@@ -86,8 +85,7 @@ EkstepEditor.stageManager = new(Class.extend({
         this.stages.splice(currentStageIndex, 1);
         if (this.stages.length === 0) EkstepEditorAPI.dispatchEvent('stage:create', { "position": "next" });
         else if (currentStageIndex === this.stages.length) this.selectStage(null, {stageId: this.stages[currentStageIndex-1].id});
-        else this.selectStage(null, {stageId: this.stages[currentStageIndex].id});
-        EkstepEditorAPI.dispatchEvent('stage:afterdelete', { stageId: data.stageId });        
+        else this.selectStage(null, {stageId: this.stages[currentStageIndex].id});               
         this.enableSave();
     },
     deleteStageInstances: function(stage) {        
@@ -106,8 +104,7 @@ EkstepEditor.stageManager = new(Class.extend({
         EkstepEditorAPI.dispatchEvent('stage:create', {"position": "afterCurrent"});
         _.forEach(stage.children, function(plugin){
            EkstepEditorAPI.cloneInstance(plugin); 
-        });        
-        EkstepEditorAPI.dispatchEvent('stage:afterduplicate', { stageId: data.stageId });
+        });                
         this.enableSave();
     },
     getObjectMeta: function(options) {
