@@ -105,6 +105,7 @@
                 </span>
                 <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
             </div>
+            <div ng-include="'templates/deleteStageDialog.html'"></div>
             <div id="mainContainerGrid" class="ui grid bottom attached celled" style="margin: 0;background: #EEEEEE;">
                 <div class="row">
                     <div class="ui two wide column scrollable-slides">

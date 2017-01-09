@@ -17,7 +17,7 @@ EkstepEditor.stageManager = new(Class.extend({
         //fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
         this.canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true });
         console.log("Stage manager initialized");
-        EkstepEditor.eventManager.addEventListener("stage:delete", this.deleteStage, this);
+        EkstepEditor.eventManager.addEventListener("stage:delete", this.deleteConfirmationDialog, this);
         EkstepEditor.eventManager.addEventListener("stage:duplicate", this.duplicateStage, this);
     },
     registerEvents: function() {
@@ -82,11 +82,12 @@ EkstepEditor.stageManager = new(Class.extend({
     deleteStage: function(event, data) {
         var currentStage = _.find(this.stages, { id: data.stageId });
         this.deleteStageInstances(currentStage);
-        this.stages.splice(this.getStageIndex(currentStage), 1);
-        if (this.stages.length === 0) {
-            EkstepEditorAPI.dispatchEvent('stage:create', { "position": "next" });
-        }
-        EkstepEditorAPI.dispatchEvent('stage:afterdelete', { stageId: data.stageId });
+        var currentStageIndex = this.getStageIndex(currentStage);
+        this.stages.splice(currentStageIndex, 1);
+        if (this.stages.length === 0) EkstepEditorAPI.dispatchEvent('stage:create', { "position": "next" });
+        else if (currentStageIndex === this.stages.length) this.selectStage(null, {stageId: this.stages[currentStageIndex-1].id});
+        else this.selectStage(null, {stageId: this.stages[currentStageIndex].id});
+        EkstepEditorAPI.dispatchEvent('stage:afterdelete', { stageId: data.stageId });        
         this.enableSave();
     },
     deleteStageInstances: function(stage) {        
@@ -287,6 +288,19 @@ EkstepEditor.stageManager = new(Class.extend({
         });
     },
     enableSave: function() { // on stage operation, enable the save button
-        EkstepEditorAPI.getAngularScope().enableSave();        
+        EkstepEditorAPI.getAngularScope().enableSave();
+    },
+    deleteConfirmationDialog: function(event, data) {
+        var instance = this;
+        EkstepEditorAPI.getService('popup').open({
+            template: 'deleteStageDialog.html',
+            controller: ['$scope', function($scope) {
+                $scope.delete = function() {
+                    $scope.closeThisDialog();
+                    instance.deleteStage(event, data);                    
+                }
+            }],
+            showClose: false
+        });
     }
 }));
