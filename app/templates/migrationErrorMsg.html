@@ -1,6 +1,8 @@
-<h4 class="ui header">
+<h5 class="ui header inverted migration-message">
   Sorry, migration couldn't be completed successfully.
   <br/>We recommend closing this content without saving to avoid any unwanted loss of content.
-</h4>
-<a class="ui  button primary" ng-href="{{cancelMigrationAndRevertLink}}">Cancel migration and Revert to original</a>
-<a class="ui  button red" ng-href="{{reportIssueLink}}"><i class="help circle medium icon"></i>Report an issue</a>
+</h5>
+<div class="actions">
+    <a class="ui green ok inverted button right floated migartion-positive-btn" ng-href="{{cancelMigrationAndRevertLink}}"><i class="remove icon"></i>Cancel migration and Revert to original</a>
+    <a class="ui inverted button red right floated" ng-href="{{reportIssueLink}}"><i class="help circle medium icon"></i>Report an issue</a>
+</div>

@@ -12,6 +12,7 @@ angular.module('editorApp', ['ngDialog', 'oc.lazyLoad']).config(['$locationProvi
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window',
     function($scope, $timeout, $http, $location, $q, $window) {
         $scope.showAppLoadScreen = true;
+        $scope.contentLoadedFlag = false;
         $scope.appLoadMessage = [
             {'message' : 'Loading Editor..', 'status': true},
             {'message' : 'Loading Plugins..', 'status': true},                                    
@@ -28,10 +29,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.reportIssueLink = (($window.context && $window.context.reportIssueLink) ? $window.context.reportIssueLink : "");
 
         $scope.closeLoadScreen =  function(flag) {
+              $scope.contentLoadedFlag = true;
               if (!$scope.migrationFlag || flag) {
                 $scope.showAppLoadScreen = false;
-                $scope.safeApply();
               }
+              $scope.safeApply();
         }
 
         $scope.enableSave = function() {

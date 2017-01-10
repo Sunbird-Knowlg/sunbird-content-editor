@@ -1,6 +1,7 @@
-<h4 class="ui header">There might be some unwanted changes in the content due to migration,
+<h5 class="ui header inverted migration-message">There might be some unwanted changes in the content due to migration,
                         <br/> please check the preview before saving.
-                        </h4>
-<button class="ui  button secondary" ng-click="previewContent();migration.showPostMigrationMsg =false; closeLoadScreen(true);">Launch preview</button>
-<button class="ui  button primary" ng-click="saveContent();migration.showPostMigrationMsg=false; closeLoadScreen(true);">Save</button>
-<button class="ui button black" ng-click="closeLoadScreen(true);migration.showPostMigrationMsg = false;">Cancel</button>
+                        </h5>
+<div class="actions">
+    <button class="ui green ok inverted button right floated migartion-positive-btn" ng-click="previewContent();migration.showPostMigrationMsg =false; closeLoadScreen(true);"><i class="unhide icon"></i>Launch preview</button>
+    <button class="ui red basic cancel inverted button right floated" ng-click="closeLoadScreen(true);migration.showPostMigrationMsg = false;"> <i class="remove icon"></i>Cancel</button>
+</div>

@@ -239,12 +239,9 @@ body {
 }
 
 .migartion-message-container {
-    border: 1px solid #ddd;
-    background-color: #eee;
-    padding: 20px;
+    padding: 10px;
     margin-left: 15%;
     margin-right: 15%;
-    border-radius: 5px;
 }
 
 .load-screen-container {
@@ -254,4 +251,13 @@ body {
 .load-screen-list {
     margin-left: 40% !important;
     padding: 10px !important;
+}
+.load-screen-dimmer{
+    background-color: #000000 !important;
+}
+.migration-message{
+    font-size: 14px !important;
+}
+.migartion-positive-btn{
+    margin-left: 15px !important;
 }

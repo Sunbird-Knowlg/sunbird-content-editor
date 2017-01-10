@@ -22,15 +22,15 @@
     <!-- End of localhost only code-->
     <div ng-app="editorApp" class="maincontainer" ng-strict-di>
         <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
-            <div ng-show="showAppLoadScreen" class="ui active inverted dimmer">
-                <div class="ui small text loader" style="position: absolute; top: 20%">Loading</div>
+            <div ng-show="showAppLoadScreen" class="ui active dimmer load-screen-dimmer">
+                <div ng-if="!contentLoadedFlag" class="ui small text loader" style="position: absolute; top: 20%">Loading</div>
                 <div class="load-screen-container">
-                    <div class="ui middle aligned list load-screen-list">
+                    <div class="ui middle aligned inverted list load-screen-list">
                         <div class="item" ng-repeat="message in appLoadMessage">
-                            <i ng-class="message.status ? 'checkmark box big black icon' : 'square outline big grey icon'"></i>
+                            <i ng-class="message.status ? 'checkmark box big inverted icon' : 'square outline big inverted icon'"></i>
                             <div class="content">
                                 <div class="header">
-                                    <h3 ng-bind="message.message"></h3>
+                                    <h5 ng-bind="message.message"></h5>
                                 </div>
                             </div>
                         </div>
@@ -94,8 +94,8 @@
                         </button>
                         <div class="ui tiny buttons right floated primary">
                             <div class="ui button" ng-click="previewContent();">
-                            <i class="icon-preview icon"></i> Preview</div>
-                                <div class="ui floating dropdown icon button">
+                                <i class="icon-preview icon"></i> Preview</div>
+                            <div class="ui floating dropdown icon button">
                                 <i class="dropdown icon"></i>
                                 <div class="menu">
                                     <div class="item" ng-click="previewContent('start');">preview from beginning</div>
