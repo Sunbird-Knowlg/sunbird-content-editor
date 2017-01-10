@@ -11,6 +11,7 @@
 
  var bower_components = [
 "app/bower_components/jquery/dist/jquery.js",
+"app/bower_components/async/dist/async.min.js",
 "app/libs/semantic.min.js",
 "app/bower_components/angular/angular.js",
 "app/bower_components/fabric/dist/fabric.min.js",
