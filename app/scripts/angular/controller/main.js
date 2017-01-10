@@ -136,6 +136,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             if(_.isUndefined(contentBody)) {
                 EkstepEditor.eventManager.dispatchEvent('stage:create', {"position": "beginning"});
                 EkstepEditor.stageManager.registerEvents();                
+                $scope.closeLoadScreen();
             } else {                
                 var parsedBody = $scope.parseContentBody(contentBody);                
                 if(parsedBody) EkstepEditorAPI.dispatchEvent("migrationTask:start",parsedBody);
