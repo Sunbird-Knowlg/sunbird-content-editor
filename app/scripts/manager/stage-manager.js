@@ -5,6 +5,7 @@ EkstepEditor.stageManager = new(Class.extend({
     stages: [],
     currentStage: undefined,
     canvas: undefined,
+    contentLoading: false,
     init: function() {
         var instance = this;
         fabric.Object.prototype.transparentCorners = false;
@@ -178,6 +179,7 @@ EkstepEditor.stageManager = new(Class.extend({
         }
     },
     fromECML: function(contentBody) {
+        EkstepEditor.stageManager.contentLoading = true;
         // Load all plugins
         contentBody.theme.manifest.media = _.isArray(contentBody.theme.manifest.media) ? contentBody.theme.manifest.media : [contentBody.theme.manifest.media];
         var plugins = _.filter(contentBody.theme.manifest.media, { type: 'plugin' });
@@ -221,6 +223,7 @@ EkstepEditor.stageManager = new(Class.extend({
 
             var cb = (index == 0) ? function() {
                 EkstepEditor.stageManager.registerEvents();
+                EkstepEditor.stageManager.contentLoading = false;
                 EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stage.id });
             } : function() {};
             stageInstance.destroyOnLoad(pluginCount, canvas, cb);
