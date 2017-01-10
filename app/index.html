@@ -37,6 +37,10 @@
                     </div>
                 </div>
             </div>
+            <div ng-show="showPostMigrationMsg" class="ui active dimmer inverted">
+              <div ng-show="showMigrationSuccess" ng-include="'templates/migrationSuccessMsg.html'" ></div>
+              <div ng-show="showMigrationError" ng-include="'templates/migrationErrorMsg.html'" ></div>
+            </div>
             <div class="ui masthead vertical segment content-masterhead">
                 <div class="ui grid">
                     <div class="one column" style="width:auto;padding-right: 6px;">
