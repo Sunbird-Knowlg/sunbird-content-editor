@@ -22,24 +22,26 @@
     <!-- End of localhost only code-->
     <div ng-app="editorApp" class="maincontainer" ng-strict-di>
         <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
-            <div ng-show="progressBarShow" class="ui active dimmer">
-                <div class="ui small text loader" style="position: absolute; top: 35%">Loading</div>
-                <div class="content" style="width: 50%; margin-left: 25%">
+            <div ng-show="showAppLoadScreen" class="ui active inverted dimmer">
+                <div class="ui small text loader" style="position: absolute; top: 20%">Loading</div>
+                <div class="content">
                     <div class="center">
-                        <div class="ui green progress" data-value="1" data-total="100">
-                            <div class="bar">
-                                <div class="progress"></div>
+                        <div class="ui middle aligned list" style="margin-left: 40%; height: 200px;">
+                            <div class="item" ng-repeat="message in appLoadMessage">
+                                <i ng-class="message.status ? 'checkmark box big black icon' : 'square outline big grey icon'" aria-hidden="true"></i>
+                                <div class="content">
+                                    <div class="header">
+                                        <h3 ng-bind="message.message"></h3>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div ng-repeat="message in progressMessage">
-                            <div class="label"><i class="checkmark green icon"></i><span ng-bind="message"></span></div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div ng-show="migration.showPostMigrationMsg" class="ui active dimmer inverted">
-              <div ng-show="migration.showMigrationSuccess" ng-include="'templates/migrationSuccessMsg.html'" ></div>
-              <div ng-show="migration.showMigrationError" ng-include="'templates/migrationErrorMsg.html'" ></div>
+                <div ng-show="migration.showPostMigrationMsg">
+                    <div ng-show="migration.showMigrationSuccess" ng-include="'templates/migrationSuccessMsg.html'"></div>
+                    <div ng-show="migration.showMigrationError" ng-include="'templates/migrationErrorMsg.html'"></div>
+                </div>
             </div>
             <div class="ui masthead vertical segment content-masterhead">
                 <div class="ui grid">

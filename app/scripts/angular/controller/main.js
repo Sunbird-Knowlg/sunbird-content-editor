@@ -11,8 +11,12 @@ angular.module('editorApp', ['ngDialog', 'oc.lazyLoad']).config(['$locationProvi
 }]);
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window',
     function($scope, $timeout, $http, $location, $q, $window) {
-        $scope.progressBarShow = true;
-        $scope.progressMessage = ['Loading App!'];        
+        $scope.showAppLoadScreen = true;
+        $scope.appLoadMessage = [
+            {'message' : 'Loading Editor..', 'status': true},
+            {'message' : 'Loading Plugins..', 'status': true},                                    
+            {'message' : 'Loading Content..', 'status': false}            
+        ];        
         $scope.saveBtnEnabled;
         $scope.migration = {
             showMigrationError: false,
@@ -20,29 +24,18 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             showMigrationSuccess: false
         }
 
+        $scope.closeLoadScreen =  function() {
+            setTimeout(function(){
+                $scope.showAppLoadScreen = false;
+                $scope.safeApply();
+            },2000);
+        }
+
         $scope.enableSave = function() {
             $scope.saveBtnEnabled = true;
             $scope.safeApply();
-        }
-
-        $('.ui.progress')
-            .progress({
-                total: 6,
-                onSuccess: function(){
-                    $scope.progressMessage.push('App is Ready!');
-                    setTimeout(function(){$scope.progressBarShow = false; $scope.safeApply();},1000);
-                }
-            });
-
-        $scope.progressBar = function(increment, message) {
-            if (!increment) increment = 1;
-            for (var i = 0; i < increment; i++) { 
-                $('.ui.progress').progress('increment');
-                if(message) $scope.progressMessage.push(message);
-                $scope.safeApply();
-            };
-        };
-
+        }        
+        
         $scope.context = $window.context;
         EkstepEditorAPI.globalContext.contentId = $location.search().contentId;
         if (_.isUndefined(EkstepEditorAPI.globalContext.contentId)) {
@@ -142,14 +135,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             }
             if(_.isUndefined(contentBody)) {
                 EkstepEditor.eventManager.dispatchEvent('stage:create', {"position": "beginning"});
-                EkstepEditor.stageManager.registerEvents();
-                $scope.progressBar(6);
-                $scope.safeApply();
+                EkstepEditor.stageManager.registerEvents();                
             } else {                
                 var parsedBody = $scope.parseContentBody(contentBody);                
                 if(parsedBody) EkstepEditorAPI.dispatchEvent("migrationTask:start",parsedBody);
                 console.log('contentBody', parsedBody);
-            }
+            }                
         });
 
         $scope.convertToJSON = function(contentBody) {

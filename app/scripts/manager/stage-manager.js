@@ -181,6 +181,7 @@ EkstepEditor.stageManager = new(Class.extend({
     fromECML: function(contentBody) {
         EkstepEditor.stageManager.contentLoading = true;
         // Load all plugins
+        var instance = this;
         contentBody.theme.manifest.media = _.isArray(contentBody.theme.manifest.media) ? contentBody.theme.manifest.media : [contentBody.theme.manifest.media];
         var plugins = _.filter(contentBody.theme.manifest.media, { type: 'plugin' });
         _.forEach(plugins, function(plugin) {
@@ -234,7 +235,10 @@ EkstepEditor.stageManager = new(Class.extend({
                 })
               })
            }
-           if (stages.length === index + 1) EkstepEditorAPI.dispatchEvent('content:onload');
+           if (stages.length === index + 1) {
+                EkstepEditorAPI.dispatchEvent('content:onload');
+                instance.showLoadScreenMessage();
+            }
         });
 
     },
@@ -299,5 +303,9 @@ EkstepEditor.stageManager = new(Class.extend({
             }],
             showClose: false
         });
+    },
+    showLoadScreenMessage: function() {
+        EkstepEditorAPI.getAngularScope().appLoadMessage[2].status = true;
+        EkstepEditorAPI.getAngularScope().closeLoadScreen();                
     }
 }));

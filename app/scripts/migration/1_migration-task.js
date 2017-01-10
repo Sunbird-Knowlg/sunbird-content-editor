@@ -20,6 +20,9 @@ EkstepEditor.migration = new(Class.extend({
 
         if (!_.has(contentbody, 'theme.stage')) instance.throwErrorOnScreen();
         if (!this.versionCompatible(contentbody.theme.version || contentbody.theme.ver)) {
+            //show migration message on load screen
+            scope.appLoadMessage.push({message: 'Migarting Content..', status: false});
+
             EkstepEditor.migration[instance.tasks[0]].migrate(contentbody)
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[1]].migrate(content)}, errorcb)
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[2]].migrate(content)}, errorcb)
@@ -28,10 +31,10 @@ EkstepEditor.migration = new(Class.extend({
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[5]].migrate(content)}, errorcb)
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[6]].migrate(content)}, errorcb)
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[7]].migrate(content)}, errorcb)
-                .then(function(content) {
-                        scope.progressBar(6);                                                
+                .then(function(content) {                                                                        
                         scope.migration.showPostMigrationMsg = true;                       
                         scope.migration.showMigrationSuccess = true;
+                        scope.appLoadMessage[3].status = true;
                         scope.safeApply();
                         console.info('Migration task completed!');
                         instance.setNewVersion(content);
@@ -45,10 +48,6 @@ EkstepEditor.migration = new(Class.extend({
         } else {
             console.info('no need for migration');
             EkstepEditor.stageManager.fromECML(contentbody);
-            scope.progressBar(6);
-            scope.migration.showPostMigrationMsg = true;                       
-            scope.migration.showMigrationSuccess = true;
-            scope.safeApply();
         }
     },
     versionCompatible: function(version) {
