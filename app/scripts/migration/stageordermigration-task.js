@@ -14,10 +14,11 @@ EkstepEditor.migration.orderstage_task = new(Class.extend({
             unorderedStages = [];
 
         if (contentbody) nextStage.value = contentbody.theme.startStage;
-        _.forEach(contentbody.theme.stage, function(value, index) {
+        _.forEach(contentbody.theme.stage, function(stage, index) {
                 if (nextStage) {
                     stage = _.find(contentbody.theme.stage, function(stage) { return stage.id === nextStage.value; });
-                    stage && contentstages.push(stage);
+                    if(stage) {contentstages.push(stage);}
+                    else {unorderedStages.push(stage);}
                 } else { //keep the unordered stages at bottom
                     unorderedStages.push(stage);
                 };

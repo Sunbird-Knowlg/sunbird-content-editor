@@ -5,29 +5,45 @@ EkstepEditor.migration.basestage_task = new(Class.extend({
         console.log('basestage_task initialized');
     },
     baseStage: undefined,
+    contentbody: undefined,    
     migrate: function(contentbody) {
         console.log('migrating base stage');
         var deferred = EkstepEditor.$q.defer(),
             instance = this,
-            stageId;
-        _.forEach(contentbody.theme.stage, function(stage, index) {
+            stageId,
+            baseStageArray = [];
+
+            instance.contentbody = contentbody;
+        _.forEach(instance.contentbody.theme.stage, function(stage, index) {
+            var mergedObject = {}
             if (stage.extends) {
                 instance.baseStage = _.find(contentbody.theme.stage, function(o) { return o.id === stage.extends });
-                stage = _.assign(stage, _.omit(instance.baseStage, ['id'])); //merge stage with basestage                
-                delete stage.extends;
+                //merge stage with basestage                
+                for (var attr in instance.baseStage) { mergedObject[attr] = instance.baseStage[attr] }
+                for (var attr in stage) { mergedObject[attr] = stage[attr] }                
+                stage = mergedObject;                 
+                delete instance.contentbody.theme.stage[index].extends;
+                baseStageArray.push(instance.baseStage.id);
             }
             if (contentbody.theme.stage.length === index + 1) {
-                instance.removeBaseStage(contentbody);                
-                deferred.resolve(contentbody);
+                if (baseStageArray.length) {
+                    _.forEach(baseStageArray, function(bs, index){ 
+                        instance.removeBaseStage(bs);
+                        if(baseStageArray.length === index + 1) deferred.resolve(instance.contentbody);
+                    });
+                } else {
+                    deferred.resolve(instance.contentbody);    
+                }
+                
             }
         });
         return deferred.promise;
     },
-    removeBaseStage: function(contentbody) {
+    removeBaseStage: function(baseStage) {
         var instance = this;
-        if (this.baseStage) {
-            _.remove(contentbody.theme.stage, function(stage) {
-                return stage.id === instance.baseStage.id;
+        if (baseStage) {
+            _.remove(instance.contentbody.theme.stage, function(s) {
+                return s.id === baseStage;
             });
         }
     }

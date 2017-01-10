@@ -15,7 +15,7 @@ EkstepEditor.migration.scribblemigration_task = new(Class.extend({
             if(stage.scribble) delete stage.scribble;
             EkstepEditor.migration.imagemigration_task.removeImage(stage, 'domain_38441_trash');                
             instance.removeEraserMedia(contentbody);
-            deferred.resolve(contentbody);
+            if(contentbody.theme.stage.length === index + 1) deferred.resolve(contentbody);
         });
         return deferred.promise;
     },
