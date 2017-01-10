@@ -73,8 +73,24 @@ EkstepEditor.init = function(userSettings, absURL) {
         if (err) {
             alert('Unable to load editor - could not load editor settings');
         } else {
+            var q = async.queue(function(plugin, callback) {
+                //console.log('key ' + plugin.key);
+                //console.log('value ' + plugin.value);
+
+                EkstepEditor.pluginManager.loadPlugin(plugin.key, plugin.value);
+                callback();
+            }, 4);
+
+            // assign a callback
+            q.drain = function() {
+                console.log('all plugins have been loaded');
+            };
+
             _.forIn(data.plugins, function(value, key) {
-                EkstepEditor.pluginManager.loadPlugin(key, value);
+                q.push({"key": key, "value" : value}, function(err) {
+                    //console.log('finished loading: ' + key);
+                });
+                //EkstepEditor.pluginManager.loadPlugin(key, value);
             });
         }
     });
