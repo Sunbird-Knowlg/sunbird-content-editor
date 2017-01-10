@@ -15,8 +15,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.contentLoadedFlag = false;
         $scope.appLoadMessage = [
             {'message' : 'Loading Editor..', 'status': true},
-            {'message' : 'Loading Plugins..', 'status': true},                                    
-            {'message' : 'Loading Content..', 'status': false}            
+            {'message' : 'Loading Plugins..', 'status': true}                                             
         ];        
         $scope.migrationFlag = false;
         $scope.saveBtnEnabled;

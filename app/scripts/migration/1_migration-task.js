@@ -34,7 +34,7 @@ EkstepEditor.migration = new(Class.extend({
                 .then(function(content) {                                                                        
                         scope.migration.showPostMigrationMsg = true;                       
                         scope.migration.showMigrationSuccess = true;
-                        scope.appLoadMessage[3].status = true;
+                        scope.appLoadMessage[2].status = true;
                         scope.safeApply();
                         console.info('Migration task completed!');
                         instance.setNewVersion(content);
