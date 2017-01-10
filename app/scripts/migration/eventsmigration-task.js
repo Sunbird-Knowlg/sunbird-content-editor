@@ -43,8 +43,8 @@ EkstepEditor.migration.eventsmigration_task = new(Class.extend({
                     }
                 })
             })
-        });
-        deferred.resolve(contentbody);
+            if(contentbody.theme.stage.length === index + 1) deferred.resolve(contentbody);
+        });        
         return deferred.promise;
     },
     addEvent: function(pi, event) {

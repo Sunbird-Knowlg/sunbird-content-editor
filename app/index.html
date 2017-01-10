@@ -37,9 +37,9 @@
                     </div>
                 </div>
             </div>
-            <div ng-show="showPostMigrationMsg" class="ui active dimmer inverted">
-              <div ng-show="showMigrationSuccess" ng-include="'templates/migrationSuccessMsg.html'" ></div>
-              <div ng-show="showMigrationError" ng-include="'templates/migrationErrorMsg.html'" ></div>
+            <div ng-show="migration.showPostMigrationMsg" class="ui active dimmer inverted">
+              <div ng-show="migration.showMigrationSuccess" ng-include="'templates/migrationSuccessMsg.html'" ></div>
+              <div ng-show="migration.showMigrationError" ng-include="'templates/migrationErrorMsg.html'" ></div>
             </div>
             <div class="ui masthead vertical segment content-masterhead">
                 <div class="ui grid">
@@ -224,7 +224,8 @@
     <script src="scripts/migration/scribblemigration-task.js"></script>
     <script src="scripts/migration/readalongmigration-task.js"></script>    
     <script src="scripts/migration/assessmentmigration-task.js"></script>
-    <script src="scripts/migration/eventsmigration-task.js"></script>        
+    <script src="scripts/migration/eventsmigration-task.js"></script>
+    <script src="scripts/migration/settagmigration-task.js"></script>        
     <script src="scripts/service/iservice.js"></script>
     <script src="scripts/service/content-service.js"></script>
     <script src="scripts/service/popup-service.js"></script>

@@ -14,6 +14,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.progressBarShow = true;
         $scope.progressMessage = ['Loading App!'];        
         $scope.saveBtnEnabled;
+        $scope.migration = {
+            showMigrationError: false,
+            showPostMigrationMsg: false,
+            showMigrationSuccess: false
+        }
+
         $scope.enableSave = function() {
             $scope.saveBtnEnabled = true;
             $scope.safeApply();
@@ -151,12 +157,17 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             return x2js.xml_str2json(contentBody);
         }
 
-        $scope.parseContentBody = function(contentBody){
-            try{
-                contentBody = JSON.parse(contentBody);                
-            }catch(e){
-                contentBody = $scope.convertToJSON(contentBody);                
+        $scope.parseContentBody = function(contentBody) {
+            try {
+                contentBody = JSON.parse(contentBody);
+            } catch (e) {
+                contentBody = $scope.convertToJSON(contentBody);
             }
+            if (_.isUndefined(contentBody) || _.isNull(contentBody)) {
+                $scope.migration.showPostMigrationMsg = true;
+                $scope.migration.showMigrationError = true;                
+                $scope.safeApply();
+            };
             return contentBody;
         }
 
