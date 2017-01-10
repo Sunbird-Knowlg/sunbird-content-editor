@@ -16,7 +16,7 @@ EkstepEditor.stageManager = new(Class.extend({
         fabric.Object.prototype.borderColor = "#1A98FA";
         fabric.Object.prototype.cornerColor = "#1A98FA";
         //fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
-        this.canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true });
+        this.canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true, perPixelTargetFind: true });
         console.log("Stage manager initialized");
         EkstepEditor.eventManager.addEventListener("stage:delete", this.deleteConfirmationDialog, this);
         EkstepEditor.eventManager.addEventListener("stage:duplicate", this.duplicateStage, this);
@@ -131,15 +131,24 @@ EkstepEditor.stageManager = new(Class.extend({
                 instance.addMediaToMediaMap(mediaMap, child.getMedia());
             });
             content.theme.stage.push(stageBody);
-        })
+        });
+        instance.mergeMediaMap(mediaMap);
         content.theme.manifest.media = _.concat(content.theme.manifest.media, _.values(mediaMap));
         return content;
+    },
+    mergeMediaMap: function(mediaMap) {
+        _.forIn(EkstepEditor.mediaManager.mediaMap, function(value, key) {
+            if(_.isUndefined(mediaMap[key])) {
+                mediaMap[key] = value;
+                value.src = EkstepEditor.mediaManager.getMediaOriginURL(value.src);
+            }
+        });
     },
     addMediaToMediaMap: function(mediaMap, media) {
         if (_.isObject(media)) {
             _.forIn(media, function(value, key) {
                 mediaMap[key] = value;
-                value.src = value.src.replace('https://ekstep-public.s3-ap-southeast-1.amazonaws.com/', 'https://dev.ekstep.in/assets/public/')
+                value.src = EkstepEditor.mediaManager.getMediaOriginURL(value.src);
             });
         }
     },
@@ -188,7 +197,8 @@ EkstepEditor.stageManager = new(Class.extend({
             EkstepEditor.pluginManager.loadPlugin(plugin.id, plugin.ver);
         });
         _.forEach(contentBody.theme.manifest.media, function(media) {
-            if (media.type !== 'plugin') {
+            if (media.type == 'plugin' && EkstepEditor.pluginManager.isDefined(media.id)) {
+            } else {
                 EkstepEditor.mediaManager.addMedia(media);
             }
         });
@@ -196,6 +206,7 @@ EkstepEditor.stageManager = new(Class.extend({
         var stages = _.isArray(contentBody.theme.stage) ? contentBody.theme.stage : [contentBody.theme.stage];
         _.forEach(stages, function(stage, index) {
             var stageEvents = _.clone(stage.events) || {};
+            $('<canvas>').attr({id: stage.id}).css({width: '720px',height: '405px'}).appendTo('#thumbnailCanvasContainer');
             var canvas = new fabric.Canvas(stage.id, { backgroundColor: "#FFFFFF", preserveObjectStacking: true, width: 720, height: 405 });
             var stageInstance = EkstepEditorAPI.instantiatePlugin(EkstepEditor.config.corePluginMapping['stage'], stage);
             stageInstance.setCanvas(canvas);
@@ -225,6 +236,7 @@ EkstepEditor.stageManager = new(Class.extend({
             var cb = (index == 0) ? function() {
                 EkstepEditor.stageManager.registerEvents();
                 EkstepEditor.stageManager.contentLoading = false;
+                EkstepEditorAPI.jQuery('#thumbnailCanvasContainer').empty();
                 EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stage.id });
             } : function() {};
             stageInstance.destroyOnLoad(pluginCount, canvas, cb);

@@ -11,7 +11,9 @@ EkstepEditor.migration.eventsmigration_task = new(Class.extend({
 
         _.forEach(contentbody.theme.stage, function(stage, index) {
             var plugins = _.pickBy(stage, _.isObject);
+            if(!_.isArray(plugins)) plugins = [plugins];
             _.forEach(plugins, function(plugin) {
+                if(!_.isArray(plugin)) plugin = [plugin];
                 _.forEach(plugin, function(pi) {
                     if (pi.event || pi.events) {
                         var event = pi.event || pi.events;

@@ -14,14 +14,13 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
         this.contentbody = contentbody;
 
         _.forEach(contentbody.theme.stage, function(stage, index) {
-            if (!_.isUndefined(stage.iterate) && (_.has(stage, 'emdeb') || _.find(stage.g, function(g){return _.has(g, 'embed')}))) {
+            if(!_.isUndefined(stage.g) && !_.isArray(stage.g)) stage.g = [stage.g];
+            if (!_.isUndefined(stage.iterate) && (_.has(stage, 'embed') || _.find(stage.g, function(g){return _.has(g, 'embed')}))) {
                 instance.transformToQuiz(stage);
                 instance.removeObsoleteTag(stage);              
             }
-            if (contentbody.theme.stage.length === index + 1) {
-                deferred.resolve(contentbody);
-            }
         });
+        deferred.resolve(contentbody);
 
         return deferred.promise;
     },
@@ -39,16 +38,20 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
         var instance = this,
             questionnaire,
             quiz;
-
         quiz = _.cloneDeep(instance.quiz);
-        questionnaire = quiz.data.__cdata.questionnaire = instance.getController(stage.iterate).__cdata;
+        var controllerData = instance.getController(stage.iterate).__cdata;
+        if(typeof controllerData === 'string') controllerData = JSON.parse(controllerData);
+        questionnaire = quiz.data.__cdata.questionnaire = controllerData;
+        
         _.forEach(questionnaire.item_sets, function(itemset, index) {
+            
             _.forEach(questionnaire.items[itemset.id], function(items) {
                 if (items.template) {
                     quiz.data.__cdata.template.push(instance.getTemplate(items.template));
-                    instance.removeObsoleteTemplate(items.template);
+                    //instance.removeObsoleteTemplate(items.template);
                 }
             });
+            
             if (questionnaire.item_sets.length === index + 1) {
                 stage[instance.id] = quiz;
                 instance.stringifycdata(stage);
