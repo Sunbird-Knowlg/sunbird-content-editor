@@ -92,9 +92,16 @@
                         <button ng-class="saveBtnEnabled ? 'ui tiny icon button right floated primary' : 'ui tiny icon button right floated disabled'" ng-click="saveContent()" ng-disabled="!contentId" style="margin-left: 5px;">
                             <i class="icon-save icon"></i> Save
                         </button>
-                        <button class="ui tiny icon button right floated primary" ng-click="previewContent();">
-                            <i class="icon-preview icon"></i> Preview
-                        </button>
+                        <div class="ui tiny buttons right floated primary">
+                            <div class="ui button" ng-click="previewContent();">
+                            <i class="icon-preview icon"></i> Preview</div>
+                                <div class="ui floating dropdown icon button">
+                                <i class="dropdown icon"></i>
+                                <div class="menu">
+                                    <div class="item" ng-click="previewContent('start');">preview from beginning</div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- <button class="ui tiny icon button disabled right floated">
                             <i class="icon-download icon "></i> Download
                         </button> -->

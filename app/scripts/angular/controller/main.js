@@ -79,8 +79,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             if (event) EkstepEditor.eventManager.dispatchEvent(event.id, event.data);
         };
 
-        $scope.previewContent = function() {
-            EkstepEditor.eventManager.dispatchEvent("atpreview:show", { contentBody: EkstepEditor.stageManager.toECML() });
+        $scope.previewContent = function(fromBeginning) {
+            var currentStage = _.isUndefined(fromBeginning) ? true : false;
+            EkstepEditor.eventManager.dispatchEvent("atpreview:show", { contentBody: EkstepEditor.stageManager.toECML(), 'currentStage': currentStage });
             $http.post('ecml', {data: EkstepEditor.stageManager.toECML()}).then(function(resp) {
                 console.info('ECML', resp.data);
             });
