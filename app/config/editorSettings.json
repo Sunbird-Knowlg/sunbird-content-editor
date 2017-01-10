@@ -10,7 +10,6 @@
         "org.ekstep.scribblepad": "1.0",
         "org.ekstep.htext": "1.0",
         "org.ekstep.quiz": "1.0",
-        "org.ekstep.templatebrowser": "1.0",
         "org.ekstep.delete": "1.0",
         "org.ekstep.reorder": "1.0",
         "org.ekstep.copypaste": "1.0",
@@ -20,6 +19,8 @@
         "org.ekstep.todo": "1.0",
         "org.ekstep.stageconfig": "1.0",
         "org.ekstep.unsupported": "1.0",
-        "org.ekstep.viewecml": "1.0"
+        "org.ekstep.viewecml": "1.0",
+        "org.ekstep.akshara-editor": "1.0"
+
     }
 }
