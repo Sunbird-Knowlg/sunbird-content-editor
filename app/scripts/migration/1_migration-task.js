@@ -22,7 +22,7 @@ EkstepEditor.migration = new(Class.extend({
         if (!this.versionCompatible(contentbody.theme.version || contentbody.theme.ver)) {
             //show migration message on load screen
             scope.appLoadMessage.push({message: 'Migarting Content..', status: false});
-
+            scope.migrationFlag = true;
             EkstepEditor.migration[instance.tasks[0]].migrate(contentbody)
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[1]].migrate(content)}, errorcb)
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[2]].migrate(content)}, errorcb)

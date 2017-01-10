@@ -24,23 +24,21 @@
         <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
             <div ng-show="showAppLoadScreen" class="ui active inverted dimmer">
                 <div class="ui small text loader" style="position: absolute; top: 20%">Loading</div>
-                <div class="content">
-                    <div class="center">
-                        <div class="ui middle aligned list" style="margin-left: 40%; height: 200px;">
-                            <div class="item" ng-repeat="message in appLoadMessage">
-                                <i ng-class="message.status ? 'checkmark box big black icon' : 'square outline big grey icon'" aria-hidden="true"></i>
-                                <div class="content">
-                                    <div class="header">
-                                        <h3 ng-bind="message.message"></h3>
-                                    </div>
+                <div class="load-screen-container">
+                    <div class="ui middle aligned list load-screen-list">
+                        <div class="item" ng-repeat="message in appLoadMessage">
+                            <i ng-class="message.status ? 'checkmark box big black icon' : 'square outline big grey icon'"></i>
+                            <div class="content">
+                                <div class="header">
+                                    <h3 ng-bind="message.message"></h3>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div ng-show="migration.showPostMigrationMsg">
-                    <div ng-show="migration.showMigrationSuccess" ng-include="'templates/migrationSuccessMsg.html'"></div>
-                    <div ng-show="migration.showMigrationError" ng-include="'templates/migrationErrorMsg.html'"></div>
+                    <div ng-show="migration.showPostMigrationMsg" class="migartion-message-container">
+                        <div ng-show="migration.showMigrationSuccess" ng-include="'templates/migrationSuccessMsg.html'"></div>
+                        <div ng-show="migration.showMigrationError" ng-include="'templates/migrationErrorMsg.html'"></div>
+                    </div>
                 </div>
             </div>
             <div class="ui masthead vertical segment content-masterhead">
@@ -49,10 +47,10 @@
                         <img class="ui mini image content-logo" ng-src="{{contentDetails.contentImage}}">
                     </div>
                     <div class="three wide column" style="padding-left: 0px">
-                        <div class="ui canvas" style="margin-top: 6px; "> 
+                        <div class="ui canvas" style="margin-top: 6px; ">
                             <label class="content-title">{{contentDetails.contentTitle}}</label>
                             <label class="content-type-label">{{contentDetails.contentType}}</label>
-                            <div ng-include="'templates/editContentMetaDialog.html'" style="display: inline-block; "></div> 
+                            <div ng-include="'templates/editContentMetaDialog.html'" style="display: inline-block; "></div>
                             <a class="btn at-btn at-btn-ok" ng-click="editContentMeta()">
                                 <i class="edit icon link"></i>
                             </a>
@@ -60,41 +58,38 @@
                         <div class="row">
                             <label class="content-concept-label">{{contentDetails.contentConcepts}}</label>
                         </div>
-
                     </div>
-                    <div class="right floated four wide column bottom aligned"
-                         style="padding-right: 20px;">
-                         <div id="userprofile" ng-show="userDetails.id" class="usercontext">
-							<div class="browse item at username">
-								{{userDetails.name}}
-								<i class="dropdown icon"></i>
-							</div>
-							<div class="ui fluid popup bottom right transition hidden user-details-container">
-								<div class="ui divided items">
-									<div class="item">
-										<div class="ui tiny circular image user-avtar">
-											<img src="{{userDetails.avtar}}">
-										</div>
-										<div class="middle aligned content" style="text-align: left;">
-											<span class="header">{{userDetails.name}}</span>
-											<div class="meta">
-												<span>{{userDetails.email}}</span>
-											</div>
-											<div class="extra">
-												<a class="ui tiny button " href="{{userDetails.logout}}">logout</a>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>
+                    <div class="right floated four wide column bottom aligned" style="padding-right: 20px;">
+                        <div id="userprofile" ng-show="userDetails.id" class="usercontext">
+                            <div class="browse item at username">
+                                {{userDetails.name}}
+                                <i class="dropdown icon"></i>
+                            </div>
+                            <div class="ui fluid popup bottom right transition hidden user-details-container">
+                                <div class="ui divided items">
+                                    <div class="item">
+                                        <div class="ui tiny circular image user-avtar">
+                                            <img src="{{userDetails.avtar}}">
+                                        </div>
+                                        <div class="middle aligned content" style="text-align: left;">
+                                            <span class="header">{{userDetails.name}}</span>
+                                            <div class="meta">
+                                                <span>{{userDetails.email}}</span>
+                                            </div>
+                                            <div class="extra">
+                                                <a class="ui tiny button " href="{{userDetails.logout}}">logout</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- <button class="ui tiny icon button disabled right floated">
                             <i class="icon-close icon"></i> Close
                         </button> -->
                         <div ng-include="'templates/saveSuccessMessage.html'"></div>
                         <div ng-include="'templates/saveErrorMessage.html'"></div>
-                        <button ng-class="saveBtnEnabled ? 'ui tiny icon button right floated primary' : 'ui tiny icon button right floated disabled'" ng-click="saveContent()" ng-disabled="!contentId"
-                        style="margin-left: 5px;">
+                        <button ng-class="saveBtnEnabled ? 'ui tiny icon button right floated primary' : 'ui tiny icon button right floated disabled'" ng-click="saveContent()" ng-disabled="!contentId" style="margin-left: 5px;">
                             <i class="icon-save icon"></i> Save
                         </button>
                         <button class="ui tiny icon button right floated primary" ng-click="previewContent();">
@@ -122,7 +117,7 @@
                                     <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
                                         <i class="trash outline icon link" ng-click="fireEvent(stage.ondelete)"></i> <i class="clone icon link" ng-click="fireEvent(stage.duplicate)"></i>
                                     </div>
-                                    <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)"/>
+                                    <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)" />
                                 </div>
                             </div>
                         </div>
@@ -176,10 +171,10 @@
                     </span>
                     </div>
                     <div id="pluginEventsContainer" ng-show="configHeaderText === 'Actions'" class="action-config-container">
-                        <span ng-include="'templates/events.html'" ></span>
+                        <span ng-include="'templates/events.html'"></span>
                     </div>
                     <div id="pluginPropertiesContainer" ng-show="configHeaderText === 'Properties'" class="config-toolbar-content">
-                    <span  ng-include="'templates/properties.html'" ></span>
+                        <span ng-include="'templates/properties.html'"></span>
                     </div>
                     <div id="pluginHelpContent" class="ui message config-toolbar-content" ng-show="configHeaderText === 'Help'">
                     </div>
@@ -189,7 +184,7 @@
         </div>
     </div>
     <div id="objectPointer" style="display: none;border: 1px dashed black;"></div>
-     <!-- inject:js -->
+    <!-- inject:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/async/dist/async.min.js"></script>
     <script src="bower_components/angular/angular.js"></script>
@@ -219,16 +214,16 @@
     <script src="scripts/manager/stage-manager.js"></script>
     <script src="scripts/manager/toolbar-manager.js"></script>
     <script src="scripts/manager/media-manager.js"></script>
-    <script src="scripts/main/ekstep-editor-api.js"></script>    
-    <script src="scripts/migration/1_migration-task.js"></script>   
+    <script src="scripts/main/ekstep-editor-api.js"></script>
+    <script src="scripts/migration/1_migration-task.js"></script>
     <script src="scripts/migration/stageordermigration-task.js"></script>
     <script src="scripts/migration/basestagemigration-task.js"></script>
     <script src="scripts/migration/imagemigration-task.js"></script>
     <script src="scripts/migration/scribblemigration-task.js"></script>
-    <script src="scripts/migration/readalongmigration-task.js"></script>    
+    <script src="scripts/migration/readalongmigration-task.js"></script>
     <script src="scripts/migration/assessmentmigration-task.js"></script>
     <script src="scripts/migration/eventsmigration-task.js"></script>
-    <script src="scripts/migration/settagmigration-task.js"></script>        
+    <script src="scripts/migration/settagmigration-task.js"></script>
     <script src="scripts/service/iservice.js"></script>
     <script src="scripts/service/content-service.js"></script>
     <script src="scripts/service/popup-service.js"></script>

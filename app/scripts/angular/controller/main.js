@@ -17,18 +17,21 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             {'message' : 'Loading Plugins..', 'status': true},                                    
             {'message' : 'Loading Content..', 'status': false}            
         ];        
+        $scope.migrationFlag = false;
         $scope.saveBtnEnabled;
         $scope.migration = {
             showMigrationError: false,
             showPostMigrationMsg: false,
             showMigrationSuccess: false
         }
+        $scope.cancelMigrationAndRevertLink = (($window.context && $window.context.cancelLink) ? $window.context.cancelLink : "");
+        $scope.reportIssueLink = (($window.context && $window.context.reportIssueLink) ? $window.context.reportIssueLink : "");
 
-        $scope.closeLoadScreen =  function() {
-            setTimeout(function(){
+        $scope.closeLoadScreen =  function(flag) {
+              if (!$scope.migrationFlag || flag) {
                 $scope.showAppLoadScreen = false;
                 $scope.safeApply();
-            },2000);
+              }
         }
 
         $scope.enableSave = function() {
@@ -136,7 +139,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             if(_.isUndefined(contentBody)) {
                 EkstepEditor.eventManager.dispatchEvent('stage:create', {"position": "beginning"});
                 EkstepEditor.stageManager.registerEvents();                
-                $scope.closeLoadScreen();
+                $scope.closeLoadScreen(true);
             } else {                
                 var parsedBody = $scope.parseContentBody(contentBody);                
                 if(parsedBody) EkstepEditorAPI.dispatchEvent("migrationTask:start",parsedBody);

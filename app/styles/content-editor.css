@@ -237,3 +237,21 @@ body {
     overflow-y: auto;
     height: 516px;
 }
+
+.migartion-message-container {
+    border: 1px solid #ddd;
+    background-color: #eee;
+    padding: 20px;
+    margin-left: 15%;
+    margin-right: 15%;
+    border-radius: 5px;
+}
+
+.load-screen-container {
+    margin: 12% 10%;
+}
+
+.load-screen-list {
+    margin-left: 40% !important;
+    padding: 10px !important;
+}
