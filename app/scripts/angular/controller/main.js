@@ -149,7 +149,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             } else {                
                 var parsedBody = $scope.parseContentBody(contentBody); 
                 $scope.oldContentBody = parsedBody;               
-                if(parsedBody) EkstepEditorAPI.dispatchEvent("migrationTask:start",parsedBody);
+                if(parsedBody) EkstepEditorAPI.dispatchEvent("content:migration:start",parsedBody);
                 console.log('contentBody', parsedBody);
             }                
         });

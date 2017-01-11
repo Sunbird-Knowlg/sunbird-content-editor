@@ -37,9 +37,14 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
     transformToQuiz: function(stage) {
         var instance = this,
             questionnaire,
-            quiz;
+            quiz,
+            controllerData,
+            ctrl,
+            tmplt;
+
         quiz = _.cloneDeep(instance.quiz);
-        var controllerData = instance.getController(stage.iterate).__cdata;
+        ctrl = instance.getController(stage.iterate);
+        _.isUndefined(ctrl) ? EkstepEditor.migration.migrationErrors.push('controller not found for assessment on stage: '+ stage.id) : (controllerData = ctrl.__cdata);
         if(typeof controllerData === 'string') controllerData = JSON.parse(controllerData);
         questionnaire = quiz.data.__cdata.questionnaire = controllerData;
         
@@ -47,7 +52,8 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
             
             _.forEach(questionnaire.items[itemset.id], function(items) {
                 if (items.template) {
-                    quiz.data.__cdata.template.push(instance.getTemplate(items.template));
+                    tmplt = instance.getTemplate(items.template);
+                    _.isUndefined(tmplt) ? EkstepEditor.migration.migrationErrors.push('Template not found for assessment on stage: '+ stage.id) : quiz.data.__cdata.template.push(tmplt);                    
                     //instance.removeObsoleteTemplate(items.template);
                 }
             });
