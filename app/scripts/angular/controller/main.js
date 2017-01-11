@@ -9,8 +9,8 @@ angular.module('editorApp', ['ngDialog', 'oc.lazyLoad']).config(['$locationProvi
         requireBase: false
     });
 }]);
-angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window',
-    function($scope, $timeout, $http, $location, $q, $window) {
+angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document',
+    function($scope, $timeout, $http, $location, $q, $window, $document) {
         $scope.showAppLoadScreen = true;
         $scope.contentLoadedFlag = false;
         $scope.appLoadMessage = [
@@ -226,5 +226,14 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
              }],
               showClose: false});
         }
+
+        /* KeyDown event to show ECML */
+        $document.on("keydown", function(event) {
+            if ((event.metaKey || event.ctrlKey) && event.shiftKey && event.keyCode == 69) { /*ctrl+shift+e or command+shift+e*/
+                event.preventDefault();
+                EkstepEditor.eventManager.dispatchEvent("org.ekstep.viewecml:show", {});
+            }
+        });
+
     }
 ]);
