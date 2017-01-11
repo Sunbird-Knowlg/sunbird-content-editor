@@ -62,6 +62,7 @@ EkstepEditor.migration = new(Class.extend({
         var scope = EkstepEditorAPI.getAngularScope();
         scope.migration.showPostMigrationMsg = true;
         scope.migration.showMigrationError = true;
+        scope.contentLoadedFlag = true;
         scope.safeApply();
     }
 }));
