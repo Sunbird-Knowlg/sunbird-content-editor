@@ -78,7 +78,8 @@
                                                 <span>{{userDetails.email}}</span>
                                             </div>
                                             <div class="extra">
-                                                <a class="ui tiny button " href="{{userDetails.logout}}">logout</a>
+                                                <a class="ui tiny button " ng-href="{{cancelLink}}" onclick="location.reload();">close</a>
+                                                <a class="ui tiny button " href="{{userDetails.logout}}" onclick="location.reload();">logout</a>
                                             </div>
                                         </div>
                                     </div>
@@ -90,6 +91,7 @@
                         </button> -->
                         <div ng-include="'templates/saveSuccessMessage.html'"></div>
                         <div ng-include="'templates/saveErrorMessage.html'"></div>
+                        <div ng-include="'templates/migratedContentSaveMsg.html'"></div>
                         <button ng-class="saveBtnEnabled ? 'ui tiny icon button right floated primary' : 'ui tiny icon button right floated disabled'" ng-click="saveContent()" ng-disabled="!contentId" style="margin-left: 5px;">
                             <i class="icon-save icon"></i> Save
                         </button>

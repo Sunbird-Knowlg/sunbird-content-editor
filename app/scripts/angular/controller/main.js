@@ -24,7 +24,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             showPostMigrationMsg: false,
             showMigrationSuccess: false
         }
-        $scope.cancelMigrationAndRevertLink = (($window.context && $window.context.cancelLink) ? $window.context.cancelLink : "");
+        $scope.cancelLink = (($window.context && $window.context.cancelLink) ? $window.context.cancelLink : "");
         $scope.reportIssueLink = (($window.context && $window.context.reportIssueLink) ? $window.context.reportIssueLink : "");
 
         $scope.closeLoadScreen =  function(flag) {
@@ -90,19 +90,23 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         $scope.saveContent = function(cb) {
             if ($scope.saveBtnEnabled) {
-                var contentBody = EkstepEditor.stageManager.toECML();
-                EkstepEditor.contentService.saveContent(EkstepEditorAPI.globalContext.contentId, contentBody, function(err, resp) {
-                    if (resp) {
-                        $scope.saveBtnEnabled = false;
-                        $scope.safeApply();
-                        $scope.saveNotification('success');
-                    } else {
-                        $scope.saveBtnEnabled = true;
-                        $scope.safeApply();
-                        $scope.saveNotification('error');
-                    }
-                    if (cb) cb(err, resp);
-                });
+                if ($scope.migrationFlag) {
+                  $scope.showMigratedContentSaveDialog();
+                } else{
+                    var contentBody = EkstepEditor.stageManager.toECML();
+                  EkstepEditor.contentService.saveContent(EkstepEditorAPI.globalContext.contentId, contentBody, function(err, resp) {
+                      if (resp) {
+                          $scope.saveBtnEnabled = false;
+                          $scope.safeApply();
+                          $scope.saveNotification('success');
+                      } else {
+                          $scope.saveBtnEnabled = true;
+                          $scope.safeApply();
+                          $scope.saveNotification('error');
+                      }
+                      if (cb) cb(err, resp);
+                  });
+                }
             }
         }
 
@@ -143,7 +147,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 EkstepEditor.stageManager.registerEvents();                
                 $scope.closeLoadScreen(true);
             } else {                
-                var parsedBody = $scope.parseContentBody(contentBody);                
+                var parsedBody = $scope.parseContentBody(contentBody); 
+                $scope.oldContentBody = parsedBody;               
                 if(parsedBody) EkstepEditorAPI.dispatchEvent("migrationTask:start",parsedBody);
                 console.log('contentBody', parsedBody);
             }                
@@ -211,6 +216,15 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 showClose: false
             }
             EkstepEditorAPI.getService('popup').open(config);
+        };
+        $scope.showMigratedContentSaveDialog = function () {
+          var instance = $scope;
+            EkstepEditorAPI.getService('popup').open({
+              template: 'migratedContentSaveMsg.html',
+              controller: ['$scope', function($scope){
+               $scope.saveContent = function(){instance.migrationFlag = false;instance.saveContent();}
+             }],
+              showClose: false});
         }
     }
 ]);
