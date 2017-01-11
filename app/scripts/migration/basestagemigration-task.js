@@ -14,6 +14,7 @@ EkstepEditor.migration.basestage_task = new(Class.extend({
             baseStageArray = [];
 
             instance.contentbody = contentbody;
+        _.isArray(instance.contentbody.theme.stage) ? null : (instance.contentbody.theme.stage = [instance.contentbody.theme.stage]);
         _.forEach(instance.contentbody.theme.stage, function(stage, index) {
             var mergedObject = {}
             if (stage.extends) {
