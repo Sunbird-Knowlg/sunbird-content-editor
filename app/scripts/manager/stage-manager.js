@@ -16,7 +16,7 @@ EkstepEditor.stageManager = new(Class.extend({
         fabric.Object.prototype.borderColor = "#1A98FA";
         fabric.Object.prototype.cornerColor = "#1A98FA";
         //fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
-        this.canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true, perPixelTargetFind: true });
+        this.canvas = new fabric.Canvas('canvas', { backgroundColor: '#FFFFFF', preserveObjectStacking: true, perPixelTargetFind: true });
         console.log("Stage manager initialized");
         EkstepEditor.eventManager.addEventListener("stage:delete", this.deleteConfirmationDialog, this);
         EkstepEditor.eventManager.addEventListener("stage:duplicate", this.duplicateStage, this);
@@ -71,11 +71,11 @@ EkstepEditor.stageManager = new(Class.extend({
             this.canvas.on("object:added", function(options, event) {
                 EkstepEditor.stageManager.dispatchObjectEvent('added', options, event);
             });
-        }        
+        }
     },
     addStage: function(stage) {
         this.addStageAt(stage, stage.attributes.position);
-        this.selectStage(null, { stageId: stage.id });        
+        this.selectStage(null, { stageId: stage.id });
         EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id });
         this.enableSave();
     },
@@ -85,11 +85,11 @@ EkstepEditor.stageManager = new(Class.extend({
         var currentStageIndex = this.getStageIndex(currentStage);
         this.stages.splice(currentStageIndex, 1);
         if (this.stages.length === 0) EkstepEditorAPI.dispatchEvent('stage:create', { "position": "next" });
-        else if (currentStageIndex === this.stages.length) this.selectStage(null, {stageId: this.stages[currentStageIndex-1].id});
-        else this.selectStage(null, {stageId: this.stages[currentStageIndex].id});               
+        else if (currentStageIndex === this.stages.length) this.selectStage(null, { stageId: this.stages[currentStageIndex - 1].id });
+        else this.selectStage(null, { stageId: this.stages[currentStageIndex].id });
         this.enableSave();
     },
-    deleteStageInstances: function(stage) {        
+    deleteStageInstances: function(stage) {
         _.forEach(_.clone(stage.canvas.getObjects()), function(obj) {
             stage.canvas.remove(obj);
         });
@@ -100,12 +100,12 @@ EkstepEditor.stageManager = new(Class.extend({
         });
     },
     duplicateStage: function(event, data) {
-        var currentStage = _.find(this.stages, { id: data.stageId });        
+        var currentStage = _.find(this.stages, { id: data.stageId });
         var stage = this.stages[this.getStageIndex(currentStage)];
-        EkstepEditorAPI.dispatchEvent('stage:create', {"position": "afterCurrent"});
-        _.forEach(stage.children, function(plugin){
-           EkstepEditorAPI.cloneInstance(plugin); 
-        });                
+        EkstepEditorAPI.dispatchEvent('stage:create', { "position": "afterCurrent" });
+        _.forEach(stage.children, function(plugin) {
+            EkstepEditorAPI.cloneInstance(plugin);
+        });
         this.enableSave();
     },
     getObjectMeta: function(options) {
@@ -121,8 +121,8 @@ EkstepEditor.stageManager = new(Class.extend({
         var content = { theme: { id: "theme", version: "1.0", startStage: this.stages[0].id, stage: [], manifest: { media: [] } } };
         this.setNavigationalParams();
         var mediaMap = {};
-        _.forEach(this.stages, function(stage, index) {                       
-            var stageBody = stage.toECML();                        
+        _.forEach(this.stages, function(stage, index) {
+            var stageBody = stage.toECML();
             _.forEach(stage.children, function(child) {
                 var id = child.getManifestId();
                 if (_.isUndefined(stageBody[id])) stageBody[id] = [];
@@ -138,7 +138,7 @@ EkstepEditor.stageManager = new(Class.extend({
     },
     mergeMediaMap: function(mediaMap) {
         _.forIn(EkstepEditor.mediaManager.mediaMap, function(value, key) {
-            if(_.isUndefined(mediaMap[key])) {
+            if (_.isUndefined(mediaMap[key])) {
                 mediaMap[key] = value;
                 value.src = EkstepEditor.mediaManager.getMediaOriginURL(value.src);
             }
@@ -157,8 +157,8 @@ EkstepEditor.stageManager = new(Class.extend({
         var size = this.stages.length;
         _.forEach(this.stages, function(stage, index) {
             if (index === 0) {
-                stage.deleteParam('previous');  // first stage should not have previous param.
-            }            
+                stage.deleteParam('previous'); // first stage should not have previous param.
+            }
             if (index !== 0) {
                 stage.addParam('previous', instance.stages[index - 1].id);
             }
@@ -188,7 +188,7 @@ EkstepEditor.stageManager = new(Class.extend({
         }
     },
     fromECML: function(contentBody) {
-        EkstepEditorAPI.getAngularScope().appLoadMessage.push({'message' : 'Loading Content..', 'status': false});
+        EkstepEditorAPI.getAngularScope().appLoadMessage.push({ 'message': 'Loading Content..', 'status': false });
         EkstepEditorAPI.getAngularScope().safeApply();
         EkstepEditor.stageManager.contentLoading = true;
         // Load all plugins
@@ -199,8 +199,7 @@ EkstepEditor.stageManager = new(Class.extend({
             EkstepEditor.pluginManager.loadPlugin(plugin.id, plugin.ver);
         });
         _.forEach(contentBody.theme.manifest.media, function(media) {
-            if (media.type == 'plugin' && EkstepEditor.pluginManager.isDefined(media.id)) {
-            } else {
+            if (media.type == 'plugin' && EkstepEditor.pluginManager.isDefined(media.id)) {} else {
                 EkstepEditor.mediaManager.addMedia(media);
             }
         });
@@ -208,7 +207,7 @@ EkstepEditor.stageManager = new(Class.extend({
         var stages = _.isArray(contentBody.theme.stage) ? contentBody.theme.stage : [contentBody.theme.stage];
         _.forEach(stages, function(stage, index) {
             var stageEvents = _.clone(stage.events) || {};
-            $('<canvas>').attr({id: stage.id}).css({width: '720px',height: '405px'}).appendTo('#thumbnailCanvasContainer');
+            $('<canvas>').attr({ id: stage.id }).css({ width: '720px', height: '405px' }).appendTo('#thumbnailCanvasContainer');
             var canvas = new fabric.Canvas(stage.id, { backgroundColor: "#FFFFFF", preserveObjectStacking: true, width: 720, height: 405 });
             var stageInstance = EkstepEditorAPI.instantiatePlugin(EkstepEditor.config.corePluginMapping['stage'], stage);
             stageInstance.setCanvas(canvas);
@@ -229,7 +228,7 @@ EkstepEditor.stageManager = new(Class.extend({
                 var pluginInstance = EkstepEditorAPI.instantiatePlugin(pluginId, plugin.data, stageInstance);
                 if (_.isUndefined(pluginInstance)) {
                     console.log('Unable to instantiate', plugin.id);
-                    EkstepEditorAPI.dispatchEvent("org.ekstep.unsupported:create",{data: plugin});
+                    EkstepEditorAPI.dispatchEvent("org.ekstep.unsupported:create", { data: plugin });
                 } else {
                     pluginCount++;
                 }
@@ -242,14 +241,14 @@ EkstepEditor.stageManager = new(Class.extend({
                 EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stage.id });
             } : function() {};
             stageInstance.destroyOnLoad(pluginCount, canvas, cb);
-           if (stageEvents){ 
-              _.forEach(stageEvents, function (event) {
-                _.forEach(event, function (e) {
-                  stageInstance.addEvent(e); 
+            if (stageEvents) {
+                _.forEach(stageEvents, function(event) {
+                    _.forEach(event, function(e) {
+                        stageInstance.addEvent(e);
+                    })
                 })
-              })
-           }
-           if (stages.length === index + 1) {
+            }
+            if (stages.length === index + 1) {
                 EkstepEditorAPI.dispatchEvent('content:onload');
                 instance.showLoadScreenMessage();
             }
@@ -260,11 +259,11 @@ EkstepEditor.stageManager = new(Class.extend({
         var currentIndex;
         switch (position) {
             case "beginning":
-                this.stages.unshift(stage);                
+                this.stages.unshift(stage);
                 break;
             case "end":
             case "next":
-                this.stages.push(stage);                
+                this.stages.push(stage);
                 break;
             case "afterCurrent":
             case "beforeCurrent":
@@ -298,8 +297,8 @@ EkstepEditor.stageManager = new(Class.extend({
         EkstepEditorAPI.dispatchEvent('stage:reorder', { stageId: srcStageId, fromIndex: srcIdx, toIndex: destIdx });
     },
     getStageIndexById: function(stageId) {
-        return _.findIndex(this.stages, function(stage){
-           return stage.id == stageId; 
+        return _.findIndex(this.stages, function(stage) {
+            return stage.id == stageId;
         });
     },
     enableSave: function() { // on stage operation, enable the save button
@@ -312,17 +311,17 @@ EkstepEditor.stageManager = new(Class.extend({
             controller: ['$scope', function($scope) {
                 $scope.delete = function() {
                     $scope.closeThisDialog();
-                    instance.deleteStage(event, data);                    
+                    instance.deleteStage(event, data);
                 }
             }],
             showClose: false
         });
     },
     showLoadScreenMessage: function() {
-        EkstepEditorAPI.getAngularScope().appLoadMessage[EkstepEditorAPI.getAngularScope().appLoadMessage.length-1].status = true;
+        EkstepEditorAPI.getAngularScope().appLoadMessage[EkstepEditorAPI.getAngularScope().appLoadMessage.length - 1].status = true;
         EkstepEditorAPI.getAngularScope().safeApply();
-        setTimeout(function () {
-          EkstepEditorAPI.getAngularScope().closeLoadScreen();     // added 2 sec set timeout to show the content load message           
-        },2000)
+        setTimeout(function() {
+            EkstepEditorAPI.getAngularScope().closeLoadScreen(); // added 2 sec set timeout to show the content load message           
+        }, 2000)
     }
 }));
