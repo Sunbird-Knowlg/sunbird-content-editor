@@ -110,6 +110,23 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             }
         }
 
+        $scope.saveMigratedContent = function(cb) {
+            console.log("Saving content with old body");
+            var contentBody = EkstepEditor.stageManager.toECML();
+            EkstepEditor.contentService.saveMigratedContent(EkstepEditorAPI.globalContext.contentId, contentBody, $scope.oldContentBody, function(err, resp) {
+                if (resp) {
+                    $scope.saveBtnEnabled = false;
+                    $scope.safeApply();
+                    $scope.saveNotification('success');
+                } else {
+                    $scope.saveBtnEnabled = true;
+                    $scope.safeApply();
+                    $scope.saveNotification('error');
+                }
+                if (cb) cb(err, resp);
+            });
+        }
+
         $scope.loadAndInitPlugin = function() {
             if (_.isString($scope.pluginId)) {
                 var loaded = EkstepEditor.pluginManager.loadAndInitPlugin($scope.pluginId);
@@ -148,8 +165,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
                     $scope.closeLoadScreen(true);
                 } else {
+                    $scope.oldContentBody = angular.copy(contentBody);
                     var parsedBody = $scope.parseContentBody(contentBody);
-                    $scope.oldContentBody = parsedBody;
                     if (parsedBody) EkstepEditorAPI.dispatchEvent("content:migration:start", parsedBody);
                     console.log('contentBody', parsedBody);
                 }
@@ -224,8 +241,10 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             EkstepEditorAPI.getService('popup').open({
                 template: 'migratedContentSaveMsg.html',
                 controller: ['$scope', function($scope) {
-                    $scope.saveContent = function() { instance.migrationFlag = false;
-                        instance.saveContent(); }
+                    $scope.saveContent = function() { 
+                        instance.migrationFlag = false;
+                        instance.saveMigratedContent(); 
+                    }
                 }],
                 showClose: false
             });

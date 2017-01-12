@@ -12,6 +12,13 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
         return this.content[id] || {};
     },
     saveContent: function(contentId, body, callback) {
+        this._saveContent(contentId, body, undefined, callback);
+    },
+    saveMigratedContent: function(contentId, body, oldBody, callback) {
+        this._saveContent(contentId, body, oldBody, callback);
+    },
+    _saveContent: function(contentId, body, oldBody, callback) {
+        console.log("Saving oldBody in the content.")
         var instance = this,
             versionKey = instance.content[contentId] && instance.content[contentId].contentMeta.versionKey;
 
@@ -24,6 +31,10 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
                     }
                 }
             };
+
+            if(!_.isUndefined(oldBody)) {
+                requestObj.request.content.oldBody = JSON.stringify(oldBody);
+            }
 
             var headers = {
                 "headers": {
