@@ -1,8 +1,15 @@
 [qa]
-54.254.252.172 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/Documents/Personal/kartheek-aws.pem
+172.31.28.32 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/ekstep/keys/community-portal-spike
+172.31.4.116 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/ekstep/keys/community-portal-spike
 
 [qa:vars]
-user = ubuntu
-
-[all:children]
-qa
+user=ubuntu
+ansible_become=true
+ansible_ssh_user=ubuntu
+user_home=/var/www/qa.ekstep.in/public
+at_home={{user_home}}/content-editor
+plugins_home={{user_home}}/content-plugins
+s3_location=ekstep-public/qa
+ansible_ssh_private_key_file=~/.ssh/ekstep/keys/portal
+server_runs_as="www-data"
+server_runs_as_group="www-data"
