@@ -50,7 +50,7 @@
         <div class="field">
         <label ng-if="config.title">{{config.title}}</label>
             <div class="ui toggle checkbox">
-                <input name="{{config.propertyName}}" type="checkbox" ng-model="configData[config.propertyName]" ng-init="configData[config.propertyName] = configData[config.propertyName] || config.defaultValue">
+                <input name="{{config.propertyName}}" type="checkbox" ng-model="configData[config.propertyName]">
                 <label></label>
             </div>
         </div>
