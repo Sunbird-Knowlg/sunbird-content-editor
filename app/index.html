@@ -121,7 +121,7 @@
                 <div class="row">
                     <div class="ui two wide column scrollable-slides">
                         <div ng-repeat="stage in stages track by $index" class="thumbnail-container" style="margin-bottom: 20px">
-                            <div class="ui centered raised card segment thumbnail" ng-click="fireEvent(stage.onclick)">
+                            <div class="ui centered raised card segment thumbnail" ng-click="fireEvent(stage.getOnClick())">
                                 <span class="stage-number">{{$index+1}}</span>
                                 <div class="ui fluid image">
                                     <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">

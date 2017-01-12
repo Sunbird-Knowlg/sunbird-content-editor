@@ -241,6 +241,9 @@ EkstepEditor.basePlugin = Class.extend({
     getParams: function() {
         return this.params;
     },
+    getParam: function(key) {
+        return this.params ? this.params[key] : undefined;
+    },
     addMedia: function(media) {
         if (_.isUndefined(this.media)) this.media = {};
         this.media[media.id] = media;

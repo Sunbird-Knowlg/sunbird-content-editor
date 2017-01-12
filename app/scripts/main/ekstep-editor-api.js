@@ -42,6 +42,9 @@ window.EkstepEditorAPI = {
     getCurrentStage: function() {
         return EkstepEditor.stageManager.currentStage;
     },
+    getStage: function(stageId) {
+        return EkstepEditor.stageManager.getStage(stageId);
+    },
     refreshStages: function() {
         EkstepEditor.toolbarManager.scope.safeApply(function() { EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages; });
     },

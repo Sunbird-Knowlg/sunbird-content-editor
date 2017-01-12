@@ -78,9 +78,10 @@ EkstepEditor.stageManager = new(Class.extend({
         }
     },
     addStage: function(stage) {
+        var prevStageId = _.isUndefined(this.currentStage) ? undefined : this.currentStage.id;
         this.addStageAt(stage, stage.attributes.position);
         this.selectStage(null, { stageId: stage.id });
-        EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id });
+        EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id, prevStageId: prevStageId});
         this.enableSave();
     },
     deleteStage: function(event, data) {
@@ -102,6 +103,9 @@ EkstepEditor.stageManager = new(Class.extend({
         return EkstepEditorAPI.getAllStages().findIndex(function(obj) {
             return obj.id === stage.id
         });
+    },
+    getStage: function(stageId) {
+        return _.find(this.stages, { id: stageId });
     },
     duplicateStage: function(event, data) {
         var currentStage = _.find(this.stages, { id: data.stageId });

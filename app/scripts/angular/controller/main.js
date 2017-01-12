@@ -36,6 +36,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         ];
         $scope.migrationFlag = false;
         $scope.saveBtnEnabled;
+        $scope.model = {
+            teacherInstructions: undefined
+        }
         $scope.migration = {
             showMigrationError: false,
             showPostMigrationMsg: false,
@@ -228,6 +231,17 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             });
         }
 
+        $scope.updateTeacherInstructionsOnKeyPress = function() {
+            EkstepEditorAPI.getCurrentStage().addParam('instructions', $scope.model.teacherInstructions);
+        }
+
+        $scope.resetTeacherInstructions = function(event, data) {
+            $scope.safeApply(function() {
+                $scope.model.teacherInstructions = '';
+                $scope.model.teacherInstructions = EkstepEditorAPI.getStage(data.stageId).getParam('instructions');
+            });
+        }
+
         EkstepEditor.toolbarManager.setScope($scope);
         EkstepEditor.init(null, $location.protocol() + '://' + $location.host() + ':' + $location.port(), function() {
             $scope.initEditor();
@@ -239,6 +253,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.contextMenus = EkstepEditor.toolbarManager.contextMenuItems;
             $scope.stages = EkstepEditor.stageManager.stages;
             $scope.currentStage = EkstepEditor.stageManager.currentStage;
+            EkstepEditor.eventManager.addEventListener("stage:select", $scope.resetTeacherInstructions, this);
+            EkstepEditor.eventManager.addEventListener("stage:add", $scope.resetTeacherInstructions, this);
             $scope.loadContent();
             /* KeyDown event to show ECML */
             $document.on("keydown", function(event) {
