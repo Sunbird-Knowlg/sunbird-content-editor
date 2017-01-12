@@ -240,7 +240,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.stages = EkstepEditor.stageManager.stages;
             $scope.currentStage = EkstepEditor.stageManager.currentStage;
             $scope.loadContent();
-            EkstepEditorAPI.getCanvas().setBackgroundColor('#FFFFFF', EkstepEditorAPI.getCanvas().renderAll.bind(EkstepEditorAPI.getCanvas()));
             /* KeyDown event to show ECML */
             $document.on("keydown", function(event) {
                 if ((event.metaKey || event.ctrlKey) && event.shiftKey && event.keyCode == 69) { /*ctrl+shift+e or command+shift+e*/

@@ -21,6 +21,10 @@ EkstepEditor.stageManager = new(Class.extend({
         EkstepEditor.eventManager.addEventListener("stage:delete", this.deleteConfirmationDialog, this);
         EkstepEditor.eventManager.addEventListener("stage:duplicate", this.duplicateStage, this);
     },
+    clearCanvas: function(canvas) {
+        canvas.clear();
+        canvas.setBackgroundColor('#FFFFFF', canvas.renderAll.bind(canvas));
+    },
     registerEvents: function() {
         var instance = this;
         EkstepEditor.eventManager.addEventListener("stage:select", this.selectStage, this);
@@ -62,7 +66,7 @@ EkstepEditor.stageManager = new(Class.extend({
         } else {
             this.currentStage.isSelected = false;
             EkstepEditor.eventManager.dispatchEvent('stage:unselect', { stageId: this.currentStage.id });
-            this.canvas.clear();
+            this.clearCanvas(this.canvas);
             this.currentStage = _.find(this.stages, { id: data.stageId });
             this.currentStage.isSelected = true;
             this.canvas.off("object:added");
