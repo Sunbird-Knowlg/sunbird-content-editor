@@ -3,32 +3,46 @@
 EkstepEditor.migration.orderstage_task = new(Class.extend({
     init: function() {
         console.log('orderstage-task initialized');
-    },    
+    },
     migrate: function(contentbody) {
-    	console.log('migrating stage order');
-        var deferred = EkstepEditor.$q.defer(),        
-        		nextStage = {},
+        console.log('migrating stage order');
+        var deferred = EkstepEditor.$q.defer(),
+            nextStage = {},
             stage,
             contentstages = [],
             instance = this,
-            unorderedStages = [];
+            stageIds = [];
 
-        if (contentbody) nextStage.value = contentbody.theme.startStage;
-        _.forEach(contentbody.theme.stage, function(stage, index) {
-                if (nextStage) {
-                    stage = _.find(contentbody.theme.stage, function(stage) { return stage.id === nextStage.value; });
-                    if(stage) {contentstages.push(stage);}
-                    else {unorderedStages.push(stage);}
-                } else { //keep the unordered stages at bottom
-                    unorderedStages.push(stage);
-                };
-
-                nextStage = _.find(stage.param, function(param) { return param.name === 'next' });
-                if (contentbody.theme.stage.length === index + 1) {
-                    contentbody.theme.stage = contentstages.concat(unorderedStages);
-                		deferred.resolve(contentbody);
-            		}
-        });
-    return deferred.promise;
-		}
+        nextStage.value = (!_.isUndefined(contentbody)) ? contentbody.theme.startStage : undefined;
+        var stages = _.clone(contentbody.theme.stage);
+        for (var i = 0; i < contentbody.theme.stage.length; i++) {
+            if (!_.isUndefined(nextStage.value)) {
+                stage = _.find(stages, function(st) {
+                    return st.id === nextStage.value;
+                });
+                if(!_.isUndefined(stage)){
+                    contentstages.push(stage);
+                    var index = _.findIndex(stages, function(s) {
+                        return s.id == nextStage.value;
+                    });
+                    stages.splice(index, 1);
+                    if (_.isArray(stage.param) && !_.isUndefined(stage.param)) {
+                        _.forEach(stage.param, function(param) {
+                            if (param.name === 'next')
+                                nextStage.value = param.value;
+                        });
+                    } else if (!_.isUndefined(stage.param) && stage.param.name === 'next') {
+                        nextStage.value = stage.param.value;
+                    } else {
+                        nextStage.value = undefined;
+                    }
+                }
+            }
+            if (contentbody.theme.stage.length === i + 1) {
+                contentbody.theme.stage = contentstages.concat(stages);
+                deferred.resolve(contentbody);
+            }
+        }
+        return deferred.promise;
+    }
 }));
