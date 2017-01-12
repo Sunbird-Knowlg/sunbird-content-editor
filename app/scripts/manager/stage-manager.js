@@ -141,7 +141,7 @@ EkstepEditor.stageManager = new(Class.extend({
             content.theme.stage.push(stageBody);
         });
         instance.mergeMediaMap(mediaMap);
-        content.theme.manifest.media = _.concat(content.theme.manifest.media, _.values(mediaMap));
+        content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mediaMap)), 'id');
         return content;
     },
     mergeMediaMap: function(mediaMap) {
@@ -193,6 +193,15 @@ EkstepEditor.stageManager = new(Class.extend({
                 src: EkstepEditor.config.absURL + EkstepEditor.relativeURL(pluginManifest.id, pluginManifest.ver, pluginManifest.renderer.main),
                 type: "plugin"
             });
+            if(!_.isUndefined(pluginManifest.renderer.dependencies) && pluginManifest.renderer.dependencies.length > 0) {
+                _.forEach(pluginManifest.renderer.dependencies, function(dependency) {
+                    content.theme.manifest.media.push({
+                        id: dependency.id,
+                        type: dependency.type,
+                        src: EkstepEditor.config.absURL + EkstepEditor.relativeURL(pluginManifest.id, pluginManifest.ver, dependency.src)
+                    });
+                });
+            }
         }
     },
     fromECML: function(contentBody) {
