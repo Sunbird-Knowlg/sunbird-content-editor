@@ -17,7 +17,7 @@ EkstepEditor.migration.eventsmigration_task = new(Class.extend({
                     _.forEach(plugin, function(pluginInstances) {
                         if (_.isArray(pluginInstances)) {
                             _.forEach(pluginInstances, function(pi) {
-                                if (pi.event || pi.events) {
+                                if (pi && (pi.event || pi.events)) {
                                     var event = pi.event || pi.events;
                                     var events = _.clone(event, true);
                                     delete pi.event;
