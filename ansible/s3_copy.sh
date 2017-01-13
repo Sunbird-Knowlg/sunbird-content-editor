@@ -20,4 +20,4 @@ aws s3 rm s3://ekstep-public/dev/content-plugins/org.ekstep.stage-1.0/ --recursi
 aws s3 rm s3://ekstep-public/dev/content-plugins/org.ekstep.stagedecorator-1.0/ --recursive
 aws s3 rm s3://ekstep-public/dev/content-plugins/org.ekstep.text-1.0/ --recursive
 
-aws s3 cp /var/www/dev.ekstep.in/public/content-plugins/content-plugins s3://ekstep-public/dev/content-plugins/ --recursive --acl public-read
+aws s3 cp content-plugins s3://ekstep-public/dev/content-plugins/ --recursive --acl public-read
