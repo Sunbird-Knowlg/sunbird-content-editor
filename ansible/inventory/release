@@ -1,5 +1,8 @@
-[release]
+[machine]
 172.31.19.22 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/ekstep/keys/community-portal-spike
+
+[release:children]
+machine
 
 [release:vars]
 user=ubuntu
