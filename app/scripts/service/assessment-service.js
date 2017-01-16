@@ -1,7 +1,7 @@
 EkstepEditor.assessmentService = new(EkstepEditor.iService.extend({
     learningURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug + '/learning/',
     searchURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug + '/search/',
-    configURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug + '/config/',
+    configURL: EkstepEditor.config.baseURL + '/api/config/',
     requestHeaders: {
         "headers": {
             "content-type": "application/json",
