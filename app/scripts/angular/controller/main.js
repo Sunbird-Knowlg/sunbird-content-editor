@@ -35,7 +35,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             { 'message': 'Loading Plugins...', 'status': true }
         ];
         $scope.migrationFlag = false;
-        $scope.saveBtnEnabled;
+        $scope.saveBtnEnabled = true;
         $scope.model = {
             teacherInstructions: undefined
         }
@@ -43,6 +43,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             showMigrationError: false,
             showPostMigrationMsg: false,
             showMigrationSuccess: false
+        }
+
+        $scope.onLoadCustomMessage = {
+            show : false,
+            text: undefined
         }
         $scope.cancelLink = (($window.context && $window.context.cancelLink) ? $window.context.cancelLink : "");
         $scope.reportIssueLink = (($window.context && $window.context.reportIssueLink) ? $window.context.reportIssueLink : "");
@@ -76,8 +81,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.enableSave = function() {
-            $scope.saveBtnEnabled = true;
-            $scope.safeApply();
+            //$scope.saveBtnEnabled = true;
+            //$scope.safeApply();
         }
 
         $scope.previewContent = function(fromBeginning) {
@@ -96,11 +101,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     var contentBody = EkstepEditor.stageManager.toECML();
                     EkstepEditor.contentService.saveContent(EkstepEditorAPI.globalContext.contentId, contentBody, function(err, resp) {
                         if (resp) {
-                            $scope.saveBtnEnabled = false;
+                            //$scope.saveBtnEnabled = false;
                             $scope.safeApply();
                             $scope.saveNotification('success');
                         } else {
-                            $scope.saveBtnEnabled = true;
+                            //$scope.saveBtnEnabled = true;
                             $scope.safeApply();
                             $scope.saveNotification('error');
                         }
@@ -115,11 +120,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             var contentBody = EkstepEditor.stageManager.toECML();
             EkstepEditor.contentService.saveMigratedContent(EkstepEditorAPI.globalContext.contentId, contentBody, $scope.oldContentBody, function(err, resp) {
                 if (resp) {
-                    $scope.saveBtnEnabled = false;
+                    //$scope.saveBtnEnabled = false;
                     $scope.safeApply();
                     $scope.saveNotification('success');
                 } else {
-                    $scope.saveBtnEnabled = true;
+                    //$scope.saveBtnEnabled = true;
                     $scope.safeApply();
                     $scope.saveNotification('error');
                 }
@@ -158,13 +163,16 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.loadContent = function() {
             EkstepEditor.contentService.getContent(EkstepEditorAPI.globalContext.contentId, function(err, contentBody) {
                 if (err) {
-                    console.error('Unable to get content');
+                    console.log('on content service error');
+                    $scope.contentLoadedFlag = true;
+                    $scope.onLoadCustomMessage.show = true;
+                    $scope.onLoadCustomMessage.text = ":( Unable to fetch the content! Please try again later!";
                 }
-                if (_.isUndefined(contentBody)) {
+                if (_.isUndefined(contentBody) && _.isUndefined(err)) {
                     EkstepEditor.stageManager.registerEvents();
                     EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
                     $scope.closeLoadScreen(true);
-                } else {
+                } else if (contentBody) {
                     $scope.oldContentBody = angular.copy(contentBody);
                     var parsedBody = $scope.parseContentBody(contentBody);
                     if (parsedBody) EkstepEditorAPI.dispatchEvent("content:migration:start", parsedBody);

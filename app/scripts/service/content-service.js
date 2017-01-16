@@ -58,6 +58,7 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
         if (contentId) {
             var metaDataFields = "?fields=body,editorState,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType";
             instance.http.get(this.serviceURL + 'v2/content/' + contentId + metaDataFields, {}, function(err,res){
+                if (err) callback(err, undefined);
                 if (!err && res.statusText == "OK") {
                       var concepts = "";
                     if (!EkstepEditorAPI._.isUndefined(res.data.result.content.concepts)) {
@@ -71,8 +72,9 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
                         contentConcepts: concepts
                     };
                     EkstepEditorAPI.getAngularScope().safeApply();
+                    callback(err, res.data.result.content.body);
                 }
-                callback(err, res.data.result.content.body);
+                
             });
             //get content meta for preview
             instance.http.get(this.serviceURL + 'v2/content/' + contentId, {}, function(err, res){
