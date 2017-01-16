@@ -1,5 +1,5 @@
 EkstepEditor.contentService = new(EkstepEditor.iService.extend({
-    serviceURL: EkstepEditor.config.baseURL + '/api/learning/',
+    serviceURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug +'/learning/',
     content: {},
     initService: function() {},
     setContentMeta: function(id, contentMeta) {
