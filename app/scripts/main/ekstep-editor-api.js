@@ -94,6 +94,9 @@ window.EkstepEditorAPI = {
     addPluginInstance: function(pluginInstance) {
         EkstepEditor.pluginManager.addPluginInstance(pluginInstance);
     },
+    removePluginInstance: function(pluginInstance) {
+        EkstepEditor.pluginManager.removePluginInstance(pluginInstance);  
+    },
     cloneInstance: function(plugin) {
         var data = plugin.getCopy();
         delete data.id; // delete id not to get duplicate pluginInstances

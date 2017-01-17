@@ -148,6 +148,7 @@ EkstepEditor.basePlugin = Class.extend({
     },
     remove: function() {
         this.parent.removeChild(this);
+        this.parent =  undefined; // if called from newInstance(), it won't be added to stage children 
         delete EkstepEditor.pluginManager.pluginInstances[this.id];
     },
     create: function(event, data) {
