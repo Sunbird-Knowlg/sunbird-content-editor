@@ -31,6 +31,9 @@ window.EkstepEditorAPI = {
             case 'assessmentService':
                 return EkstepEditor.assessmentService;
                 break;
+            case 'languageService':
+                return EkstepEditor.languageService;
+                break;
         }
     },
     getAngularScope: function() {
