@@ -143,8 +143,8 @@ EkstepEditor.stageManager = new(Class.extend({
         if(!_.isEmpty(EkstepEditor.mediaManager.migratedMediaMap)) {
             var mergedMigratedMediaMap = _.clone(mediaMap);
             instance.mergeMediaMap(mergedMigratedMediaMap);
-            content.theme.migratedMedia = {};
-            content.theme.migratedMedia.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mergedMigratedMediaMap)), 'id');
+            content.theme["migration-media"] = {};
+            content.theme["migration-media"].media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mergedMigratedMediaMap)), 'id');
         }
         content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mediaMap)), 'id');
         return content;

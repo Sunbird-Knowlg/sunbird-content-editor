@@ -6,7 +6,7 @@ EkstepEditor.migration = new(Class.extend({
         EkstepEditor.$q = angular.injector(['ng']).get('$q'); //promise
         EkstepEditorAPI.addEventListener('content:migration:start', this.execute, this);
     },
-    tasks: ['basestage_task', 'orderstage_task', 'scribblemigration_task', 'imagemigration_task', 'readalongmigration_task', 'assessmentmigration_task', 'eventsmigration_task', 'settagmigration_task', 'mediamigration_task'],
+    tasks: ['mediamigration_task', 'basestage_task', 'orderstage_task', 'scribblemigration_task', 'imagemigration_task', 'readalongmigration_task', 'assessmentmigration_task', 'eventsmigration_task', 'settagmigration_task'],
     migrationErrors: [],
     execute: function(event, contentbody) {
         var instance = this,
