@@ -3,6 +3,7 @@
  */
 EkstepEditor.mediaManager = new(Class.extend({
     mediaMap: {},
+    migratedMediaMap: {},
     addMedia: function(media) {
         if (_.isObject(media) && _.isString(media.id)) {
             this.mediaMap[media.id] = media;
@@ -16,5 +17,10 @@ EkstepEditor.mediaManager = new(Class.extend({
         var aws_s3 = "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/";
         if (EkstepEditorAPI.globalContext.useProxyForURL) return src.replace(aws_s3, EkstepEditor.config.baseURL + assetReverseProxyUrl);
         if (!EkstepEditorAPI.globalContext.useProxyForURL) return src.replace(aws_s3, EkstepEditor.config.absURL + assetReverseProxyUrl);
+    },
+    addToMigratedMedia: function(media) {
+        if (_.isObject(media) && _.isString(media.id)) {
+            this.migratedMediaMap[media.id] = media;
+        }
     }
 }));

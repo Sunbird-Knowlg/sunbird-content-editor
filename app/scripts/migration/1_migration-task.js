@@ -6,7 +6,7 @@ EkstepEditor.migration = new(Class.extend({
         EkstepEditor.$q = angular.injector(['ng']).get('$q'); //promise
         EkstepEditorAPI.addEventListener('content:migration:start', this.execute, this);
     },
-    tasks: ['basestage_task', 'orderstage_task', 'scribblemigration_task', 'imagemigration_task', 'readalongmigration_task', 'assessmentmigration_task', 'eventsmigration_task', 'settagmigration_task'],
+    tasks: ['mediamigration_task', 'basestage_task', 'orderstage_task', 'scribblemigration_task', 'imagemigration_task', 'readalongmigration_task', 'assessmentmigration_task', 'eventsmigration_task', 'settagmigration_task'],
     migrationErrors: [],
     execute: function(event, contentbody) {
         var instance = this,
@@ -25,6 +25,7 @@ EkstepEditor.migration = new(Class.extend({
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[5]].migrate(content)})
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[6]].migrate(content)})
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[7]].migrate(content)})
+                .then(function(content) {return EkstepEditor.migration[instance.tasks[8]].migrate(content)})
                 .then(function(content) {                                                                        
                         scope.migration.showPostMigrationMsg = true;                       
                         scope.migration.showMigrationSuccess = true;

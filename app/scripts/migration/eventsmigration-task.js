@@ -17,33 +17,47 @@ EkstepEditor.migration.eventsmigration_task = new(Class.extend({
                     _.forEach(plugin, function(pluginInstances) {
                         if (_.isArray(pluginInstances)) {
                             _.forEach(pluginInstances, function(pi) {
-                                if (pi.event || pi.events) {
-                                    var event = pi.event || pi.events;
-                                    var events = _.clone(event, true);
-                                    delete pi.event;
-                                    delete pi.events;
-                                    instance.migrateEvents(events, pi)
+                                if (pi && (pi.event || pi.events)) {
+                                    if (pi.event) {
+                                        var event = _.clone(pi.event, true);
+                                        delete pi.event;
+                                        instance.migrateEvents(event, pi);
+                                    }
+                                    if (pi.events && pi.events.event) {
+                                        var events = _.clone(pi.events.event, true);
+                                        delete pi.events;
+                                        instance.migrateEvents(events, pi);
+                                    }
                                 }
                             })
                         } else {
-                            if (pluginInstances.event || pluginInstances.events) {
-                                var events = pluginInstances.event || pluginInstances.events;
-                                var event = pluginInstances.event || pluginInstances.events;
-                                var events = _.clone(event, true);
-                                delete pluginInstances.event;
-                                delete pluginInstances.events;
-                                instance.migrateEvents(events, pluginInstances)
+                            if (pluginInstances && (pluginInstances.event || pluginInstances.events)) {
+                                if (pluginInstances.event) {
+                                    var event = _.clone(pluginInstances.event, true);
+                                    delete pluginInstances.event;
+                                    instance.migrateEvents(event, pluginInstances);
+                                }
+                                if (pluginInstances.events && pluginInstances.events.event) {
+                                    var events = _.clone(pluginInstances.events.event, true);
+                                    delete pluginInstances.events;
+                                    instance.migrateEvents(events, pluginInstances);
+                                }
                             }
                         }
                     })
                 })
             })
             if (stage.event || stage.events) {
-                var stageEventsCopy = stage.event || stage.events;
-                var stageEvents = _.clone(stageEventsCopy, true);
-                delete stage.event;
-                delete stage.events;
-                instance.migrateStageEvents(stageEvents, stage);
+                if (stage.event) {
+                    var stageEvent = _.clone(stage.event, true);
+                    delete stage.event;
+                    instance.migrateStageEvents(stageEvent, stage);
+                }
+                if (stage.events && stage.events.event) {
+                    var stageEvents = _.clone(stage.events.event, true);
+                    delete stage.events;
+                    instance.migrateStageEvents(stageEvents, stage);
+                }
             }
             if (contentbody.theme.stage.length === index + 1) deferred.resolve(contentbody);
         });
@@ -55,31 +69,23 @@ EkstepEditor.migration.eventsmigration_task = new(Class.extend({
             _.forEach(events, function(event) {
                 if (event.action && _.isArray(event.action)) {
                     _.forEach(event.action, function(action) {
-                        var eventObj = { 'type': 'click', 'action': [action] };
-                        if (!_.isUndefined(event.type)) {
-                            eventObj.type = event.type;
-                        }
-                        instance.addEvent(pi, eventObj);
+                        instance.addEvent(pi, { 'type': event.type, 'action': [action] });
                     })
                 } else if (event.action && _.isObject(event.action)) {
-                    var eventObj = { 'type': 'click', 'action': [event.action] };
-                    if (!_.isUndefined(event.type)) {
-                        eventObj.type = event.type;
-                    }
-                    instance.addEvent(pi, eventObj);
+                    instance.addEvent(pi, { 'type': event.type, 'action': [event.action] });
                 }
             })
         } else if (_.isObject(events)) {
             if (events.action && _.isArray(events.action)) {
                 _.forEach(events.action, function(action) {
-                    var eventObj = { 'type': 'click', 'action': [action] };
+                    var eventObj = { 'type': events.type, 'action': [action] };
                     if (!_.isUndefined(events.type)) {
                         eventObj.type = events.type;
                     }
                     instance.addEvent(pi, eventObj);
                 })
             } else if (events.action && _.isObject(events.action)) {
-                var eventObj = { 'type': 'click', 'action': [events.action] };
+                var eventObj = { 'type': events.type, 'action': [events.action] };
                 if (!_.isUndefined(events.type)) {
                     eventObj.type = events.type;
                 }
@@ -93,19 +99,19 @@ EkstepEditor.migration.eventsmigration_task = new(Class.extend({
             _.forEach(events, function(event) {
                 if (event.action && _.isArray(event.action)) {
                     _.forEach(event.action, function(action) {
-                        instance.addEvent(pi, { 'type': 'click', 'action': [action] });
+                        instance.addEvent(pi, { 'type': event.type, 'action': [action] });
                     })
                 } else if (event.action && _.isObject(event.action)) {
-                    instance.addEvent(pi, { 'type': 'click', 'action': [event.action] });
+                    instance.addEvent(pi, { 'type': event.type, 'action': [event.action] });
                 }
             })
         } else if (_.isObject(events)) {
             if (events.action && _.isArray(events.action)) {
                 _.forEach(events.action, function(action) {
-                    instance.addEvent(pi, { 'type': 'click', 'action': [action] });
+                    instance.addEvent(pi, { 'type': events.type, 'action': [action] });
                 })
             } else if (events.action && _.isObject(events.action)) {
-                instance.addEvent(pi, { 'type': 'click', 'action': [events.action] });
+                instance.addEvent(pi, { 'type': events.type, 'action': [events.action] });
             }
         }
     },
