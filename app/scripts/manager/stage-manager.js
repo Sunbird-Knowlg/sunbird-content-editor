@@ -139,13 +139,18 @@ EkstepEditor.stageManager = new(Class.extend({
                 instance.addMediaToMediaMap(mediaMap, child.getMedia());
             });
             content.theme.stage.push(stageBody);
-        });
-        instance.mergeMediaMap(mediaMap);
+        });        
+        if(!_.isEmpty(EkstepEditor.mediaManager.migratedMediaMap)) {
+            var mergedMigratedMediaMap = _.clone(mediaMap);
+            instance.mergeMediaMap(mergedMigratedMediaMap);
+            content.theme["migration-media"] = {};
+            content.theme["migration-media"].media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mergedMigratedMediaMap)), 'id');
+        }
         content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mediaMap)), 'id');
         return content;
     },
     mergeMediaMap: function(mediaMap) {
-        _.forIn(EkstepEditor.mediaManager.mediaMap, function(value, key) {
+        _.forIn(EkstepEditor.mediaManager.migratedMediaMap, function(value, key) {
             if (_.isUndefined(mediaMap[key])) {
                 mediaMap[key] = value;
                 value.src = EkstepEditor.mediaManager.getMediaOriginURL(value.src);
@@ -221,6 +226,12 @@ EkstepEditor.stageManager = new(Class.extend({
             }
         });
 
+        //if migratedMedia present inside theme, add to migrated media
+        if (contentBody.theme.migratedMedia) {
+            _.forEach(contentBody.theme.migratedMedia.media, function(media){
+                EkstepEditor.mediaManager.addToMigratedMedia(media);
+            });
+        } 
         var stages = _.isArray(contentBody.theme.stage) ? contentBody.theme.stage : [contentBody.theme.stage];
         _.forEach(stages, function(stage, index) {
             var stageEvents = _.clone(stage.events) || {};

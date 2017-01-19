@@ -11,8 +11,11 @@ EkstepEditor.migration.scribblemigration_task = new(Class.extend({
     			instance = this;
 
         _.forEach(contentbody.theme.stage, function(stage, index) {
-            if (stage.scribble && stage.scribble.length) stage[instance.id] = stage.scribble;
-            if(stage.scribble) delete stage.scribble;
+            if (stage.scribble && (!_.isArray(stage.scribble))) stage.scribble = [stage.scribble];
+            if (stage.scribble && stage.scribble.length) {
+                stage[instance.id] = stage.scribble;
+                delete stage.scribble;
+            }            
             EkstepEditor.migration.imagemigration_task.removeImage(stage, 'domain_38441_trash');                
             instance.removeEraserMedia(contentbody);
             if(contentbody.theme.stage.length === index + 1) deferred.resolve(contentbody);

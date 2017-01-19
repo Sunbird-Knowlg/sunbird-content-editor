@@ -19,8 +19,8 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
                 instance.transformToQuiz(stage);
                 instance.removeObsoleteTag(stage);              
             }
+            if (contentbody.theme.stage.length === index + 1) deferred.resolve(contentbody);
         });
-        deferred.resolve(contentbody);
 
         return deferred.promise;
     },
@@ -47,22 +47,23 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
         _.isUndefined(ctrl) ? EkstepEditor.migration.migrationErrors.push('controller not found for assessment on stage: '+ stage.id) : (controllerData = ctrl.__cdata);
         if(typeof controllerData === 'string') controllerData = JSON.parse(controllerData);
         questionnaire = quiz.data.__cdata.questionnaire = controllerData;
-        
-        _.forEach(questionnaire.item_sets, function(itemset, index) {
-            
-            _.forEach(questionnaire.items[itemset.id], function(items) {
-                if (items.template) {
-                    tmplt = instance.getTemplate(items.template);
-                    _.isUndefined(tmplt) ? EkstepEditor.migration.migrationErrors.push('Template not found for assessment on stage: '+ stage.id) : quiz.data.__cdata.template.push(tmplt);                    
-                    //instance.removeObsoleteTemplate(items.template);
-                }
+        if (questionnaire) {
+            _.forEach(questionnaire.item_sets, function(itemset, index) {
+
+                _.forEach(questionnaire.items[itemset.id], function(items) {
+                    if (items.template) {
+                        tmplt = instance.getTemplate(items.template);
+                        _.isUndefined(tmplt) ? EkstepEditor.migration.migrationErrors.push('Template not found for assessment on stage: ' + stage.id) : quiz.data.__cdata.template.push(tmplt);
+                        //instance.removeObsoleteTemplate(items.template);
+                    }
+                });
+
+                if (questionnaire.item_sets.length === index + 1) {
+                    stage[instance.id] = quiz;
+                    instance.stringifycdata(stage);
+                };
             });
-            
-            if (questionnaire.item_sets.length === index + 1) {
-                stage[instance.id] = quiz;
-                instance.stringifycdata(stage);
-            };
-        });
+        }
     },
     removeObsoleteTag: function(stage) {
         if (_.has(stage, 'embed')) delete stage.embed;

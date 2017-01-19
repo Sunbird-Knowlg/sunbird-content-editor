@@ -1,6 +1,6 @@
 EkstepEditor.conceptService = new(EkstepEditor.iService.extend({
-    learningURL: EkstepEditor.config.baseURL + '/api/learning/',
-    searchURL: EkstepEditor.config.baseURL + '/api/search/',
+    learningURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug +'/learning/',
+    searchURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug + '/search/',
     requestHeaders: {
         "headers": {
             "content-type": "application/json",

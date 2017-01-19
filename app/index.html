@@ -36,6 +36,8 @@
                             </div>
                         </div>
                     </div>
+                    <h3 ng-if="onLoadCustomMessage.show" class="ui header inverted" ng-bind="onLoadCustomMessage.text">
+                    </h3>
                     <div ng-show="migration.showPostMigrationMsg" class="migartion-message-container">
                         <div ng-show="migration.showMigrationSuccess" ng-include="'templates/migrationSuccessMsg.html'"></div>
                         <div ng-show="migration.showMigrationError" ng-include="'templates/migrationErrorMsg.html'"></div>
@@ -47,9 +49,10 @@
                     <div class="one column" style="width:auto;padding-right: 6px;">
                         <img class="ui mini image content-logo" ng-src="{{contentDetails.contentImage}}">
                     </div>
-                    <div class="three wide column" style="padding-left: 0px">
+                    <div class="five wide column" style="padding-left: 0px">
                         <div class="ui canvas" style="margin-top: 6px; ">
-                            <label class="content-title">{{contentDetails.contentTitle}}</label>
+                            <label class="content-title" title="{{contentDetails.contentTitle}}">{{contentDetails.contentTitle | limitTo:30}}
+                             <span ng-if="contentDetails.contentTitle.length > 30">...</span></label>
                             <label class="content-type-label">{{contentDetails.contentType}}</label>
                             <div ng-include="'templates/editContentMetaDialog.html'" style="display: inline-block; "></div>
                             <a class="btn at-btn at-btn-ok" ng-click="editContentMeta()">
@@ -226,6 +229,7 @@
     <script src="scripts/manager/media-manager.js"></script>
     <script src="scripts/main/ekstep-editor-api.js"></script>
     <script src="scripts/migration/1_migration-task.js"></script>
+    <script src="scripts/migration/mediamigration-task.js"></script>
     <script src="scripts/migration/stageordermigration-task.js"></script>
     <script src="scripts/migration/basestagemigration-task.js"></script>
     <script src="scripts/migration/imagemigration-task.js"></script>

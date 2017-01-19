@@ -1,5 +1,5 @@
 EkstepEditor.assetService = new(EkstepEditor.iService.extend({
-    serviceURL: EkstepEditor.config.baseURL + '/api/learning/',
+    serviceURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug + '/learning/',
     asset: {},
     initService: function() {},
     setAssetMeta: function(id, assetMeta) {

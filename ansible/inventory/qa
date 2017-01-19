@@ -1,6 +1,9 @@
-[qa]
+[machine]
 172.31.28.32 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/ekstep/keys/community-portal-spike
 172.31.4.116 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/ekstep/keys/community-portal-spike
+
+[qa:children]
+machine
 
 [qa:vars]
 user=ubuntu
