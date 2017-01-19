@@ -36,8 +36,7 @@
                             </div>
                         </div>
                     </div>
-                    <h3 ng-if="onLoadCustomMessage.show" class="ui header inverted" ng-bind="onLoadCustomMessage.text">
-                    </h3>
+                    <div ng-show="onLoadCustomMessage.show" ng-include="'templates/appLoadScreenMessage.html'"></div>
                     <div ng-show="migration.showPostMigrationMsg" class="migartion-message-container">
                         <div ng-show="migration.showMigrationSuccess" ng-include="'templates/migrationSuccessMsg.html'"></div>
                         <div ng-show="migration.showMigrationError" ng-include="'templates/migrationErrorMsg.html'"></div>
