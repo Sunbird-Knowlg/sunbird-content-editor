@@ -160,8 +160,13 @@ EkstepEditor.stageManager = new(Class.extend({
     addMediaToMediaMap: function(mediaMap, media) {
         if (_.isObject(media)) {
             _.forIn(media, function(value, key) {
-                mediaMap[key] = value;
-                value.src = EkstepEditor.mediaManager.getMediaOriginURL(value.src);
+                if(!mediaMap[key]) {
+                    mediaMap[key] = value;
+                    value.src = EkstepEditor.mediaManager.getMediaOriginURL(value.src);    
+                } else if(value.preload) {
+                    mediaMap[key].preload = value.preload;
+                }
+                
             });
         }
     },
