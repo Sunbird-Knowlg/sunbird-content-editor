@@ -227,8 +227,8 @@ EkstepEditor.stageManager = new(Class.extend({
         });
 
         //if migratedMedia present inside theme, add to migrated media
-        if (contentBody.theme.migratedMedia) {
-            _.forEach(contentBody.theme.migratedMedia.media, function(media){
+        if (contentBody.theme["migration-media"]) {
+            _.forEach(contentBody.theme["migration-media"].media, function(media){
                 EkstepEditor.mediaManager.addToMigratedMedia(media);
             });
         } 
