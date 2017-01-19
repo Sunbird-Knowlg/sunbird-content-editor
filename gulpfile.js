@@ -68,8 +68,9 @@
 "app/scripts/angular/directive/droppable-directive.js",
 "app/scripts/service/assessment-service.js",
 "app/scripts/service/asset-service.js",
-"app/scripts/service/concept-service.js"
- ];
+"app/scripts/service/concept-service.js",
+"scripts/service/language-service.js"
+];
 
  gulp.task('setup', function() {
      gulp.src('semantic/dist', { read: false }).pipe(clean())
