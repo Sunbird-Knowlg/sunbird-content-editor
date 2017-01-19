@@ -50,6 +50,7 @@
 "app/scripts/manager/media-manager.js",
 "app/scripts/main/ekstep-editor-api.js",    
 "app/scripts/migration/1_migration-task.js",   
+"app/scripts/migration/mediamigration-task.js",   
 "app/scripts/migration/stageordermigration-task.js",
 "app/scripts/migration/basestagemigration-task.js",
 "app/scripts/migration/imagemigration-task.js",
