@@ -101,6 +101,9 @@ EkstepEditor.pluginManager = new (Class.extend({
     addPluginInstance: function(pluginObj) {
         this.pluginInstances[pluginObj.id] = pluginObj;
     },
+    removePluginInstance: function(pluginObj) {        
+        if (pluginObj) pluginObj.remove();
+    },
     getPluginInstance: function(id) {
         return this.pluginInstances[id];
     },
