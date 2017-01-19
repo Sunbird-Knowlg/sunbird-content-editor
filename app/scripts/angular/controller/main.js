@@ -181,8 +181,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.convertToJSON = function(contentBody) {
-            var x2js = new X2JS({ attributePrefix: 'none', enableToStringFunc: false });
-            return x2js.xml_str2json(contentBody);
+            try {            
+                var x2js = new X2JS({ attributePrefix: 'none', enableToStringFunc: false });
+                return x2js.xml_str2json(contentBody);            
+            } catch(e) {
+                return;
+            }
         }
 
         $scope.parseContentBody = function(contentBody) {
@@ -192,8 +196,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 contentBody = $scope.convertToJSON(contentBody);
             }
             if (_.isUndefined(contentBody) || _.isNull(contentBody)) {
-                $scope.migration.showPostMigrationMsg = true;
-                $scope.migration.showMigrationError = true;
+                $scope.contentLoadedFlag = true;
+                $scope.onLoadCustomMessage.show = true;
+                $scope.onLoadCustomMessage.text = "Your content has errors! we are unable to read the content!";
                 $scope.safeApply();
             };
             return contentBody;
