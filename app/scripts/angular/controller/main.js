@@ -176,6 +176,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     var parsedBody = $scope.parseContentBody(contentBody);
                     if (parsedBody) EkstepEditorAPI.dispatchEvent("content:migration:start", parsedBody);
                     console.log('contentBody', parsedBody);
+                    $scope.setTitleBarText($scope.contentDetails.contentTitle);
                 }
             });
         }
@@ -296,5 +297,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             });
         }
 
+        $scope.setTitleBarText = function(text) {
+            if(text) $document[0].title = text;
+        };
     }
 ]);
