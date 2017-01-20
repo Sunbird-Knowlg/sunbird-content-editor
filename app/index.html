@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="shortcut icon" href="/templates/ja_social_ii/favicon.ico" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- inject:css -->
@@ -36,8 +37,7 @@
                             </div>
                         </div>
                     </div>
-                    <h3 ng-if="onLoadCustomMessage.show" class="ui header inverted" ng-bind="onLoadCustomMessage.text">
-                    </h3>
+                    <div ng-show="onLoadCustomMessage.show" ng-include="'templates/appLoadScreenMessage.html'"></div>
                     <div ng-show="migration.showPostMigrationMsg" class="migartion-message-container">
                         <div ng-show="migration.showMigrationSuccess" ng-include="'templates/migrationSuccessMsg.html'"></div>
                         <div ng-show="migration.showMigrationError" ng-include="'templates/migrationErrorMsg.html'"></div>

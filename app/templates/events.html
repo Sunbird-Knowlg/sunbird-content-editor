@@ -37,7 +37,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="action in currentObjectActions">
+        <tr ng-repeat="action in currentObjectActions track by $index">
             <td>{{action.command}}</td>
             <td>{{action.asset  | limitTo: 15}}</td>
             <td><i class="delete icon link" ng-click="fireEvent({'id':'org.ekstep.config:removeAction', 'data': {index : $index}})"></i></td>
