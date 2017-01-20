@@ -80,7 +80,7 @@ EkstepEditor.stageManager = new(Class.extend({
     addStage: function(stage) {
         var prevStageId = _.isUndefined(this.currentStage) ? undefined : this.currentStage.id;
         this.addStageAt(stage, stage.attributes.position);
-        this.selectStage(null, { stageId: stage.id });
+        if (!this.contentLoading) this.selectStage(null, { stageId: stage.id });
         EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id, prevStageId: prevStageId});
         this.enableSave();
     },
@@ -269,7 +269,7 @@ EkstepEditor.stageManager = new(Class.extend({
 
             var cb = (index == 0) ? function() {
                 EkstepEditor.stageManager.registerEvents();
-                EkstepEditor.stageManager.contentLoading = false;
+                //EkstepEditor.stageManager.contentLoading = false;
                 EkstepEditorAPI.jQuery('#thumbnailCanvasContainer').empty();
                 EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stage.id });
             } : function() {};
@@ -283,6 +283,7 @@ EkstepEditor.stageManager = new(Class.extend({
             }
             if (stages.length === index + 1) {
                 EkstepEditorAPI.dispatchEvent('content:onload');
+                EkstepEditor.stageManager.contentLoading = false;
                 instance.showLoadScreenMessage();
             }
         });
