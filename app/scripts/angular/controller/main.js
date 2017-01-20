@@ -95,6 +95,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         $scope.saveContent = function(cb) {
             if ($scope.saveBtnEnabled) {
+                $scope.saveBtnEnabled = false;
                 if ($scope.migrationFlag) {
                     $scope.showMigratedContentSaveDialog();
                 } else {
@@ -109,7 +110,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                             $scope.safeApply();
                             $scope.saveNotification('error');
                         }
-                        if (cb) cb(err, resp);
+                        $scope.saveBtnEnabled = true;
+                        if (cb) cb(err, resp);                        
                     });
                 }
             }
