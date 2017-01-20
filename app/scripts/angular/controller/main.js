@@ -130,6 +130,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     $scope.safeApply();
                     $scope.saveNotification('error');
                 }
+                $scope.saveBtnEnabled = true;
                 if (cb) cb(err, resp);
             });
         }
@@ -260,8 +261,14 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                         instance.migrationFlag = false;
                         instance.saveMigratedContent(); 
                     }
+
+                    $scope.enableSaveBtn = function() {
+                        instance.saveBtnEnabled = true;
+                    }
                 }],
-                showClose: false
+                showClose: false,
+                closeByDocument: false,
+                closeByEscape: false
             });
         }
 
