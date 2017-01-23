@@ -1,8 +1,14 @@
-[prod]
-54.254.252.172 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/Documents/Personal/kartheek-aws.pem
+[machine]
+10.10.1.85 ansible_ssh_user=serverpilot ansible_ssh_private_key_file=~/.ssh/ekstep/keys/portal
+
+[prod:children]
+machine
 
 [prod:vars]
-user = ubuntu
-
-[all:children]
-prod
+user=serverpilot
+user_home=/srv/users/serverpilot/apps/ekstepprod/public
+at_home={{user_home}}/content-editor
+plugins_home={{user_home}}/content-plugins
+ansible_ssh_private_key_file=~/.ssh/ekstep/keys/portal
+server_runs_as="serverpilot"
+server_runs_as_group="serverpilot"
