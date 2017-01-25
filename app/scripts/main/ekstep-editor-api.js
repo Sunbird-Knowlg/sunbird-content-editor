@@ -80,8 +80,8 @@ window.EkstepEditorAPI = {
             case 'languageService':
                 return EkstepEditor.languageService;
                 break;
-            case 'activityService':
-                return EkstepEditor.activityService;    
+            case 'searchService':
+                return EkstepEditor.searchService;    
                 break;
         }
     },

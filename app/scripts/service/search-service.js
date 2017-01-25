@@ -1,4 +1,4 @@
-EkstepEditor.activityService = new(EkstepEditor.iService.extend({
+EkstepEditor.searchService = new(EkstepEditor.iService.extend({
     searchURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug + '/search/',
     requestHeaders: {
         "headers": {
@@ -7,7 +7,7 @@ EkstepEditor.activityService = new(EkstepEditor.iService.extend({
         }
     },
     initService: function() {},
-    getActivities: function(data, callback) {
+    search: function(data, callback) {
         this.postFromService(this.searchURL + 'v2/search', data, this.requestHeaders, callback);
     },
     postFromService: function(url, data, headers, callback) {
