@@ -236,7 +236,7 @@
  gulp.task('zip', ['minify', 'inject'], function() {
      return gulp.src('content-editor/**')
          .pipe(zip('content-editor.zip'))
-         .pipe(gulp.dest('ansible'));
+         .pipe(gulp.dest(''));
  });
 
  gulp.task('build', ['minify', 'inject', 'zip']);
@@ -268,7 +268,7 @@
  gulp.task('zipDev', ['minifyDev', 'injectDev'], function() {
      return gulp.src('content-editor/**')
          .pipe(zip('content-editor.zip'))
-         .pipe(gulp.dest('ansible'));
+         .pipe(gulp.dest(''));
  });
 
  gulp.task('buildDev', ['minifyDev', 'injectDev', 'zipDev']);
