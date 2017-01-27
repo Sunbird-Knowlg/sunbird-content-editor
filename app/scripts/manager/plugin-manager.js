@@ -37,6 +37,9 @@ EkstepEditor.pluginManager = new (Class.extend({
                     console.error('Unable to find plugin manifest for ' + pluginId);
                 } else {
                     instance.loadPluginByManifest(data);
+                    if (data.type && EkstepEditorAPI._.lowerCase(data.type) === "widget") {
+                        instance.invoke(pluginId, _.cloneDeep(data.editor['init-data'] || {}), EkstepEditorAPI.getCurrentStage());
+                    }
                 }
             });
         }

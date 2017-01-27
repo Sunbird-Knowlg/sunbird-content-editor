@@ -86,6 +86,9 @@ window.EkstepEditorAPI = {
             case 'languageService':
                 return EkstepEditor.languageService;
                 break;
+            case 'searchService':
+                return EkstepEditor.searchService;    
+                break;
         }
     },
 
@@ -338,5 +341,11 @@ window.EkstepEditorAPI = {
      */
     getMedia: function(assetId) {
         return EkstepEditor.mediaManager.getMedia(assetId);
+    },
+    loadPlugin: function (pluginId, pluginVersion) {
+      EkstepEditor.pluginManager.loadPlugin(pluginId, pluginVersion);
+    },
+    getPluginRepo: function () {
+      return EkstepEditor.config.pluginRepo;
     }
 }
