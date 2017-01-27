@@ -18,7 +18,7 @@ EkstepEditor.assessmentService = new(EkstepEditor.iService.extend({
     getLanguages: function(callback) {
         this.getFromService(this.learningURL + 'v1/language', this.requestHeaders, callback);
     },
-    getDefinations: function(callback) {
+    getDefinitions: function(callback) {
         this.getFromService(this.learningURL + 'taxonomy/domain/definition/AssessmentItem', this.requestHeaders, callback);
     },
     getResourceBundles: function(callback) {
