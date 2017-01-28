@@ -171,7 +171,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     $scope.onLoadCustomMessage.show = true;
                     $scope.onLoadCustomMessage.text = ":( Unable to fetch the content! Please try again later!";
                 }
-                if (_.isUndefined(content) && !err) {
+                if (!(content && content.body) && !err) {
                     EkstepEditor.stageManager.registerEvents();
                     EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
                     $scope.closeLoadScreen(true);
