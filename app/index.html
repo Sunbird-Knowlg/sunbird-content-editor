@@ -111,6 +111,9 @@
                         <!-- <button class="ui tiny icon button disabled right floated">
                             <i class="icon-download icon "></i> Download
                         </button> -->
+                        <div class="ui tiny icon button right floated" style="margin-right: 3px;" ng-click="fireEvent({id: 'collaborator:add', data: undefined});">
+                            <i class="add user icon"></i> collaborator
+                        </div>
                     </div>
                 </div>
             </div>
@@ -163,7 +166,7 @@
                         <i class="large {{toolbar.iconClass}}"></i>
                     </div>
                 </div>
-                <!-- 
+                <!--
                 <div class="ui mini compact icon menu configmenu">
                     <a class="item" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show" style="padding: 6px;">
                         <i class="large {{toolbar.iconClass}}"></i>
