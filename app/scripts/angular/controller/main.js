@@ -86,6 +86,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.previewContent = function(fromBeginning) {
+            EkstepEditorAPI.getCanvas().deactivateAll().renderAll();
             var currentStage = _.isUndefined(fromBeginning) ? true : false;
             EkstepEditor.eventManager.dispatchEvent("atpreview:show", { contentBody: EkstepEditor.stageManager.toECML(), 'currentStage': currentStage });
             $http.post('ecml', { data: EkstepEditor.stageManager.toECML() }).then(function(resp) {
