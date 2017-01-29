@@ -21,7 +21,8 @@ EkstepEditor.mediaManager = new(Class.extend({
             }
         });
         if (EkstepEditorAPI.globalContext.useProxyForURL && aws_s3 !== "") return src.replace(aws_s3, EkstepEditor.config.baseURL + assetReverseProxyUrl);
-        if (!EkstepEditorAPI.globalContext.useProxyForURL && aws_s3 !== "") return src.replace(aws_s3, EkstepEditor.config.absURL + assetReverseProxyUrl);
+        if (!EkstepEditorAPI.globalContext.useProxyForURL && aws_s3 !== "") return src.replace(aws_s3, EkstepEditor.config.absURL + assetReverseProxyUrl);  
+        if(aws_s3 == "") return src;
     },
     addToMigratedMedia: function(media) {
         if (_.isObject(media) && _.isString(media.id)) {
