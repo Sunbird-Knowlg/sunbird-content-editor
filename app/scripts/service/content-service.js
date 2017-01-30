@@ -59,8 +59,10 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
             var metaDataFields = "?fields=body,editorState,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType";
             instance.http.get(this.serviceURL + 'v2/content/' + contentId + metaDataFields, {}, function(err,res){
                 if (err) callback(err, undefined);
-                if (!err && res.statusText == "OK") {
+                if (!err && res.data && res.data.result && res.data.result.content) {
                     callback(err, res.data.result.content);
+                } else{
+                    callback(new Error('no content found!'), undefined)
                 }
                 
             });
