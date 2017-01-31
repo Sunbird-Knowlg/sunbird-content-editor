@@ -17,7 +17,7 @@ EkstepEditor.mediaManager = new(Class.extend({
         var replaceText = EkstepEditorAPI.globalContext.useProxyForURL ? (EkstepEditor.config.baseURL + assetReverseProxyUrl) : (EkstepEditor.config.absURL + assetReverseProxyUrl);
         _.forEach(EkstepEditor.config.aws_s3_urls, function(url){
             if(src.indexOf(url) !== -1){
-                return src.replace(url, replaceText)
+                src = src.replace(url, replaceText);
             }
         });
         return src;
