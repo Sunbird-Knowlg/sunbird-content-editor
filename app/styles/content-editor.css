@@ -211,7 +211,7 @@ body {
     font-size: 11px;
     top: 8px;
     right: 20px;
-    z-index: 999999999;
+    z-index: 1000;
 }
 
 
