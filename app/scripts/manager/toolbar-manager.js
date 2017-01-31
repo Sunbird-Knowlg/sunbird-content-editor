@@ -36,7 +36,7 @@ EkstepEditor.toolbarManager = new(Class.extend({
         _.forEach(menus, function(cmenu) {
             instance._updateContextMenu(cmenu.id, cmenu);
         });
-        this.scope.safeApply(function() {
+        EkstepEditorAPI.ngSafeApply(this.scope, function() {
             instance.scope.contextMenus = instance.contextMenuItems;
         });
         EkstepEditor.jQuery(document).ready(function() {
