@@ -30,7 +30,7 @@ EkstepEditor.migration = new(Class.extend({
                         scope.migration.showPostMigrationMsg = true;                       
                         scope.migration.showMigrationSuccess = true;
                         scope.appLoadMessage[2].status = true;
-                        scope.safeApply();
+                        EkstepEditorAPI.ngSafeApply(scope);
                         console.info('Migration task completed!');
                         instance.setNewVersion(content);
                         console.log('after migration content:', _.cloneDeep(content));
