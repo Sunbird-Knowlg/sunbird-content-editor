@@ -138,7 +138,7 @@ window.EkstepEditorAPI = {
      */
     refreshStages: function() {
         //EkstepEditor.toolbarManager.scope.safeApply(function() { EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages; });
-        EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
+        EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope(), function() { EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages; });
     },
 
     /**
