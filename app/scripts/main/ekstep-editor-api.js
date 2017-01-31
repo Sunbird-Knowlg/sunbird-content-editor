@@ -355,5 +355,8 @@ window.EkstepEditorAPI = {
         inst.attributes.h = inst.editorObj.getHeight();
         if (_.isFunction(inst.editorObj.getRx))
             inst.attributes.r = inst.editorObj.getRx();
+    },
+    ngSafeApply: function(scope, fn) {
+        if(scope) scope.$safeApply(fn);
     }
 }
