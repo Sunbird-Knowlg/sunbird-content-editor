@@ -318,7 +318,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.setTitleBarText = function(text) {
-            if(text) $document[0].title = text;
+            if(text) document.title = text;
         };
     }
 ]);
