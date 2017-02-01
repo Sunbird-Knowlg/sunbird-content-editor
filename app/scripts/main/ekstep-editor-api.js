@@ -14,6 +14,8 @@ window.EkstepEditorAPI = {
         useProxyForURL: true
     },
 
+    baseURL: EkstepEditor.config.baseURL,
+    absURL: EkstepEditor.config.absURL,
     /**
      * Register an event listener callback function for the events raised by the framework.
      * @param type {string} name of the event (e.g. org.ekstep.quickstart:configure)
