@@ -86,6 +86,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.previewContent = function(fromBeginning) {
+            EkstepEditorAPI.getCanvas().deactivateAll().renderAll();
             var currentStage = _.isUndefined(fromBeginning) ? true : false;
             EkstepEditor.eventManager.dispatchEvent("atpreview:show", { contentBody: EkstepEditor.stageManager.toECML(), 'currentStage': currentStage });
             $http.post('ecml', { data: EkstepEditor.stageManager.toECML() }).then(function(resp) {
@@ -164,19 +165,29 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.loadContent = function() {
-            EkstepEditor.contentService.getContent(EkstepEditorAPI.globalContext.contentId, function(err, contentBody) {
+            EkstepEditor.contentService.getContent(EkstepEditorAPI.globalContext.contentId, function(err, content) {
                 if (err) {                    
                     $scope.contentLoadedFlag = true;
                     $scope.onLoadCustomMessage.show = true;
                     $scope.onLoadCustomMessage.text = ":( Unable to fetch the content! Please try again later!";
                 }
-                if (_.isUndefined(contentBody) && !err) {
+                if (!(content && content.body) && !err) {
                     EkstepEditor.stageManager.registerEvents();
                     EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
                     $scope.closeLoadScreen(true);
-                } else if (contentBody) {
-                    $scope.oldContentBody = angular.copy(contentBody);
-                    var parsedBody = $scope.parseContentBody(contentBody);
+                } else if (content && content.body) {
+                    var concepts = "";
+                    if (!EkstepEditorAPI._.isUndefined(content.concepts)) {
+                        concepts = EkstepEditorAPI._.size(content.concepts) <= 1 ? content.concepts[0].name : content.concepts[0].name+' & '+ (EkstepEditorAPI._.size(content.concepts) - 1 )+' more';
+                    }
+                    $scope.contentDetails = {
+                        contentTitle: content.name,
+                        contentImage: content.appIcon,
+                        contentType: '| '+content.contentType,
+                        contentConcepts: concepts
+                    };
+                    $scope.oldContentBody = angular.copy(content.body);
+                    var parsedBody = $scope.parseContentBody(content.body);
                     if (parsedBody) EkstepEditorAPI.dispatchEvent("content:migration:start", parsedBody);
                     console.log('contentBody', parsedBody);
                     $scope.setTitleBarText($scope.contentDetails.contentTitle);
@@ -323,7 +334,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.setTitleBarText = function(text) {
-            if(text) $document[0].title = text;
+            if(text) document.title = text;
         };
     }
 ]);

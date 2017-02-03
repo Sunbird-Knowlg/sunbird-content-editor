@@ -88,12 +88,7 @@ EkstepEditor.basePlugin = Class.extend({
                     var inst = EkstepEditorAPI.getPluginInstance(this.id);
                     inst.added(inst, options, event);
                     if (inst.editorObj) {
-                        inst.attributes.x = inst.editorObj.getLeft();
-                        inst.attributes.y = inst.editorObj.getTop();
-                        inst.attributes.w = inst.editorObj.getWidth();
-                        inst.attributes.h = inst.editorObj.getHeight();
-                        if (_.isFunction(inst.editorObj.getRx))
-                            inst.attributes.r = inst.editorObj.getRx();
+                        EkstepEditorAPI.updatePluginDimensions(inst);
                     }
                 },
                 removed: function(options, event) {
@@ -115,12 +110,7 @@ EkstepEditor.basePlugin = Class.extend({
                 modified: function(options, event) {
                     var inst = EkstepEditorAPI.getPluginInstance(this.id);
                     if (inst.editorObj) {
-                        inst.attributes.x = inst.editorObj.getLeft();
-                        inst.attributes.y = inst.editorObj.getTop();
-                        inst.attributes.w = inst.editorObj.getWidth();
-                        inst.attributes.h = inst.editorObj.getHeight();
-                        if (_.isFunction(inst.editorObj.getRx))
-                            inst.attributes.r = inst.editorObj.getRx();
+                        EkstepEditorAPI.updatePluginDimensions(inst);
                     }
                     inst.changed(inst, options, event)
                 },
@@ -265,6 +255,7 @@ EkstepEditor.basePlugin = Class.extend({
         return dims;
     },
     toECML: function() {
+        if(this.editorObj) EkstepEditorAPI.updatePluginDimensions(this);
         var attr = _.clone(this.getAttributes());
         attr.id = this.id;
         this.pixelToPercent(attr);

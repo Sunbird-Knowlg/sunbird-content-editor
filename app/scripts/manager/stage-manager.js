@@ -140,11 +140,10 @@ EkstepEditor.stageManager = new(Class.extend({
             });
             content.theme.stage.push(stageBody);
         });        
-        if(!_.isEmpty(EkstepEditor.mediaManager.migratedMediaMap)) {
-            var mergedMigratedMediaMap = _.clone(mediaMap);
-            instance.mergeMediaMap(mergedMigratedMediaMap);
+        if(!_.isEmpty(EkstepEditor.mediaManager.migratedMediaMap)) {            
+            instance.mergeMediaMap(mediaMap);
             content.theme["migration-media"] = {};
-            content.theme["migration-media"].media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mergedMigratedMediaMap)), 'id');
+            content.theme["migration-media"].media =  _.values(EkstepEditor.mediaManager.migratedMediaMap);
         }
         content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mediaMap)), 'id');
         return content;
@@ -257,14 +256,19 @@ EkstepEditor.stageManager = new(Class.extend({
 
             _.forIn(_.sortBy(plugins, 'z-index'), function(plugin) {
                 var pluginId = EkstepEditor.config.corePluginMapping[plugin.id] || plugin.id;
-
-                var pluginInstance = EkstepEditorAPI.instantiatePlugin(pluginId, plugin.data, stageInstance);
-                if (_.isUndefined(pluginInstance)) {
-                    console.log('Unable to instantiate', plugin.id);
-                    EkstepEditorAPI.dispatchEvent("org.ekstep.unsupported:create", { data: plugin });
-                } else {
-                    pluginCount++;
-                }
+                var pluginInstance;
+                try {
+                    pluginInstance = EkstepEditorAPI.instantiatePlugin(pluginId, plugin.data, stageInstance);
+                    if (_.isUndefined(pluginInstance)) {
+                        console.log('Unable to instantiate', plugin.id);
+                        EkstepEditorAPI.dispatchEvent("org.ekstep.unsupported:create", { data: plugin });
+                    } else {
+                        pluginCount++;
+                    }
+                } catch(e) { 
+                    console.warn('error when instantiating plugin:', pluginId, plugin.data, stageInstance.id);                   
+                    EkstepEditorAPI.dispatchEvent('ce:plugin:error', {error: 'unable to instantiate plugin', 'pluginId': pluginId, pluginData: plugin.data, stageId: stageInstance.id });
+                }                
             });
 
             var cb = (index == 0) ? function() {

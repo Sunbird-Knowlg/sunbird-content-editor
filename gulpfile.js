@@ -69,7 +69,8 @@
 "app/scripts/service/assessment-service.js",
 "app/scripts/service/asset-service.js",
 "app/scripts/service/concept-service.js",
-"app/scripts/service/language-service.js"
+"app/scripts/service/language-service.js",
+"app/scripts/service/search-service.js"
 ];
 
  gulp.task('setup', function() {
@@ -236,7 +237,7 @@
  gulp.task('zip', ['minify', 'inject'], function() {
      return gulp.src('content-editor/**')
          .pipe(zip('content-editor.zip'))
-         .pipe(gulp.dest('ansible'));
+         .pipe(gulp.dest(''));
  });
 
  gulp.task('build', ['minify', 'inject', 'zip']);
@@ -268,7 +269,7 @@
  gulp.task('zipDev', ['minifyDev', 'injectDev'], function() {
      return gulp.src('content-editor/**')
          .pipe(zip('content-editor.zip'))
-         .pipe(gulp.dest('ansible'));
+         .pipe(gulp.dest(''));
  });
 
  gulp.task('buildDev', ['minifyDev', 'injectDev', 'zipDev']);

@@ -14,9 +14,13 @@ EkstepEditor.mediaManager = new(Class.extend({
     },
     getMediaOriginURL: function(src) {
         var assetReverseProxyUrl = "/assets/public/";
-        var aws_s3 = "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/";
-        if (EkstepEditorAPI.globalContext.useProxyForURL) return src.replace(aws_s3, EkstepEditor.config.baseURL + assetReverseProxyUrl);
-        if (!EkstepEditorAPI.globalContext.useProxyForURL) return src.replace(aws_s3, EkstepEditor.config.absURL + assetReverseProxyUrl);
+        var replaceText = EkstepEditorAPI.globalContext.useProxyForURL ? (EkstepEditor.config.baseURL + assetReverseProxyUrl) : (EkstepEditor.config.absURL + assetReverseProxyUrl);
+        _.forEach(EkstepEditor.config.aws_s3_urls, function(url){
+            if(src.indexOf(url) !== -1){
+                src = src.replace(url, replaceText);
+            }
+        });
+        return src;
     },
     addToMigratedMedia: function(media) {
         if (_.isObject(media) && _.isString(media.id)) {
