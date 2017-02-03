@@ -7,6 +7,8 @@
  */
 var ecmlBuilder = require('../helpers/ecmlBuilder');
 var request = require('request');
+var fs = require('fs');
+
 
 module.exports = function(app, dirname) {
 	
@@ -17,6 +19,11 @@ module.exports = function(app, dirname) {
 
 	app.post('/app/ecml', function(req, res) {
 		ecmlBuilder.buildECML(req, res);
-	})
+	});
+
+	app.post('/app/telemetry', function(req, res) {
+		fs.appendFile('telemetry.log', JSON.stringify(req.body));
+		res.end();
+	});
 };
 

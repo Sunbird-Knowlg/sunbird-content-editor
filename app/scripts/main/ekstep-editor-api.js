@@ -87,7 +87,10 @@ window.EkstepEditorAPI = {
                 return EkstepEditor.languageService;
                 break;
             case 'searchService':
-                return EkstepEditor.searchService;    
+                return EkstepEditor.searchService;
+                break;
+            case 'telemetry':
+                return EkstepEditor.telemetryService;
                 break;
         }
     },
