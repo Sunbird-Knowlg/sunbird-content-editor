@@ -14,6 +14,9 @@ window.EkstepEditorAPI = {
         useProxyForURL: true
     },
 
+    baseURL: EkstepEditor.config.baseURL,
+    absURL: EkstepEditor.config.absURL,
+    apislug: EkstepEditor.config.apislug,
     /**
      * Register an event listener callback function for the events raised by the framework.
      * @param type {string} name of the event (e.g. org.ekstep.quickstart:configure)
@@ -87,7 +90,10 @@ window.EkstepEditorAPI = {
                 return EkstepEditor.languageService;
                 break;
             case 'searchService':
-                return EkstepEditor.searchService;    
+                return EkstepEditor.searchService;
+                break;
+            case 'telemetry':
+                return EkstepEditor.telemetryService;
                 break;
         }
     },
@@ -137,7 +143,8 @@ window.EkstepEditorAPI = {
      * @memberof EkstepEditorAPI
      */
     refreshStages: function() {
-        EkstepEditor.toolbarManager.scope.safeApply(function() { EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages; });
+        //EkstepEditor.toolbarManager.scope.safeApply(function() { EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages; });
+        EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope(), function() { EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages; });
     },
 
     /**
@@ -355,5 +362,8 @@ window.EkstepEditorAPI = {
         inst.attributes.h = inst.editorObj.getHeight();
         if (_.isFunction(inst.editorObj.getRx))
             inst.attributes.r = inst.editorObj.getRx();
+    },
+    ngSafeApply: function(scope, fn) {
+        if(scope) scope.$safeApply(fn);
     }
 }

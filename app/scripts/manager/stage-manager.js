@@ -215,7 +215,7 @@ EkstepEditor.stageManager = new(Class.extend({
     },
     fromECML: function(contentBody) {
         EkstepEditorAPI.getAngularScope().appLoadMessage.push({ 'message': 'Loading Content..', 'status': false });
-        EkstepEditorAPI.getAngularScope().safeApply();
+        EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
         EkstepEditor.stageManager.contentLoading = true;
         // Load all plugins
         var instance = this;
@@ -357,7 +357,7 @@ EkstepEditor.stageManager = new(Class.extend({
     },
     showLoadScreenMessage: function() {
         EkstepEditorAPI.getAngularScope().appLoadMessage[EkstepEditorAPI.getAngularScope().appLoadMessage.length - 1].status = true;
-        EkstepEditorAPI.getAngularScope().safeApply();
+        EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
         setTimeout(function() {
             EkstepEditorAPI.getAngularScope().closeLoadScreen(); // added 2 sec set timeout to show the content load message           
         }, 2000)

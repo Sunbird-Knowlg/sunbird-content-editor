@@ -3,7 +3,7 @@
  */
 'use strict';
 
-angular.module('editorApp', ['ngDialog', 'oc.lazyLoad']).config(['$locationProvider', function($locationProvider) {
+angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).config(['$locationProvider', function($locationProvider) {
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
@@ -13,16 +13,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
     function($scope, $timeout, $http, $location, $q, $window, $document) {
 
         // Global functions to be instantiated first
-        $scope.safeApply = function(fn) {
-            var phase = this.$root.$$phase;
-            if (phase == '$apply' || phase == '$digest') {
-                if (fn && (typeof(fn) === 'function')) {
-                    fn();
-                }
-            } else {
-                this.$apply(fn);
-            }
-        };
+        
         $scope.fireEvent = function(event) {
             if (event) EkstepEditor.eventManager.dispatchEvent(event.id, event.data);
         };
@@ -77,12 +68,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             if (!$scope.migrationFlag || flag) {
                 $scope.showAppLoadScreen = false;
             }
-            $scope.safeApply();
+            $scope.$safeApply();
         }
 
         $scope.enableSave = function() {
             //$scope.saveBtnEnabled = true;
-            //$scope.safeApply();
+            //$scope.$safeApply();
         }
 
         $scope.previewContent = function(fromBeginning) {
@@ -104,11 +95,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     EkstepEditor.contentService.saveContent(EkstepEditorAPI.globalContext.contentId, contentBody, function(err, resp) {
                         if (resp) {
                             //$scope.saveBtnEnabled = false;
-                            $scope.safeApply();
+                            $scope.$safeApply();
                             $scope.saveNotification('success');
                         } else {
                             //$scope.saveBtnEnabled = true;
-                            $scope.safeApply();
+                            $scope.$safeApply();
                             $scope.saveNotification('error');
                         }
                         $scope.saveBtnEnabled = true;
@@ -124,11 +115,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             EkstepEditor.contentService.saveMigratedContent(EkstepEditorAPI.globalContext.contentId, contentBody, $scope.oldContentBody, function(err, resp) {
                 if (resp) {
                     //$scope.saveBtnEnabled = false;
-                    $scope.safeApply();
+                    $scope.$safeApply();
                     $scope.saveNotification('success');
                 } else {
                     //$scope.saveBtnEnabled = true;
-                    $scope.safeApply();
+                    $scope.$safeApply();
                     $scope.saveNotification('error');
                 }
                 $scope.saveBtnEnabled = true;
@@ -214,7 +205,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 $scope.contentLoadedFlag = true;
                 $scope.onLoadCustomMessage.show = true;
                 $scope.onLoadCustomMessage.text = "Your content has errors! we are unable to read the content!";
-                $scope.safeApply();
+                $scope.$safeApply();
             };
             return contentBody;
         }
@@ -288,9 +279,24 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.resetTeacherInstructions = function(event, data) {
-            $scope.safeApply(function() {
+            $scope.$safeApply(function() {
                 $scope.model.teacherInstructions = '';
                 $scope.model.teacherInstructions = EkstepEditorAPI.getStage(data.stageId).getParam('instructions');
+            });
+        }
+
+        $scope.initTelemetry = function() {
+            EkstepEditor.telemetryService.start({
+                uid: $window.context.user.id,
+                sid: $window.context.sid,
+                content_id: EkstepEditorAPI.globalContext.contentId
+            }, {
+                defaultPlugins: [], // TODO: Get the default plugins loaded by the editor
+                loadtimes: { // TODO: capture these at all places
+                    plugins: 0,
+                    migration: 0,
+                    contentLoad: 0
+                }
             });
         }
 
@@ -308,6 +314,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             EkstepEditor.eventManager.addEventListener("stage:select", $scope.resetTeacherInstructions, this);
             EkstepEditor.eventManager.addEventListener("stage:add", $scope.resetTeacherInstructions, this);
             $scope.loadContent();
+            $scope.initTelemetry();
             /* KeyDown event to show ECML */
             $document.on("keydown", function(event) {
                 if ((event.metaKey || event.ctrlKey) && event.shiftKey && event.keyCode == 69) { /*ctrl+shift+e or command+shift+e*/
