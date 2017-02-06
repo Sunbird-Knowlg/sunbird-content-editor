@@ -261,3 +261,9 @@ body {
 .migartion-positive-btn{
     margin-left: 15px !important;
 }
+.ui.loading.table tr td { 
+    border-top: 0px !important; 
+}
+.ui.loading.table thead tr th{
+    border-bottom: 0px !important;    
+}
