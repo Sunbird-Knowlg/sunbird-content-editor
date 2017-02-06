@@ -14,7 +14,7 @@ window.EkstepEditorAPI = {
         useProxyForURL: true
     },
 
-    baseURL: EkstepEditor.config.baseURL,
+    baseURL: undefined,
     absURL: EkstepEditor.config.absURL,
     apislug: EkstepEditor.config.apislug,
     /**
