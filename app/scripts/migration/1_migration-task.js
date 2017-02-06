@@ -39,12 +39,16 @@ EkstepEditor.migration = new(Class.extend({
                         instance.setNewVersion(content);
                         console.log('after migration content:', _.cloneDeep(content));
                         if(instance.migrationErrors.length) {
+                            if (_.isObject(obj)){
+                                obj.message = "Content migration failed";
+                                obj.error = true;
+                            }
                             console.info('Migration has errors: ', instance.migrationErrors); 
                             EkstepEditorAPI.dispatchEvent('content:migration:end', {'logs': {'error': instance.migrationErrors}, 'status': 'FAIL'});                      
                         } else {
                             EkstepEditorAPI.dispatchEvent('content:migration:end', {'logs': {'error': undefined}, 'status': 'PASS'});                      
                         }
-
+                        EkstepEditorAPI.ngSafeApply(scope);
                         EkstepEditor.stageManager.fromECML(content);
                     });
         } else {

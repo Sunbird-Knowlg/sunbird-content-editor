@@ -36,7 +36,8 @@
                         <tbody>
                             <tr ng-repeat="message in appLoadMessage">
                                 <td>
-                                    <i ng-if="message.status" class="checkmark box big icon"></i>
+                                <i ng-if="message.status && message.error" class="square outline big icon"></i>
+                                    <i ng-if="message.status && !message.error" class="checkmark box big icon"></i>
                                     <div ng-if="!message.status" class="ui active small inline loader"></div>
                                 </td>
                                 <td>
