@@ -18,8 +18,10 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
         this._dispatch(this.startEvent);
     },
     addDispatcher: function(dispatcher) {
-        // TODO: Do not add duplicate dispatchers
-        this.dispatchers.push(dispatcher);
+        var dispatcherExist = _.find(this.dispatchers, function(obj){
+           return  obj.type === dispatcher.type;
+        });
+        if(!dispatcherExist) this.dispatchers.push(dispatcher);
     },
     _dispatch: function(message) {
         if (this.initialized) {
@@ -43,8 +45,13 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
         }
     },
     isValidInteract: function(data) {
-        //TODO: Add code to check whether required attributes are present.
-        return true;
+        var isValid = true,
+            mandatoryFields = ["type", "subtype", "target", "targetid", "objectid", "stage"];
+
+        _.forEach(mandatoryFields, function(key) {
+            if (!_.has(data, key)) isValid = false;
+        });
+        return isValid;
     },
     interact: function(data) {
         if(!this.isValidInteract(data)) {
@@ -58,8 +65,13 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
         this._dispatch(endEvent);
     },
     isValidPluginLifeCycle: function(data) {
-        //TODO: Add code to check whether required attributes are present.
-        return true;
+        var isValid = true,
+            mandatoryFields = ["type", "pluginid", "pluginver", "objectid", "stage", "containerid", "containerplugin"];
+
+        _.forEach(mandatoryFields, function(key) {
+            if (!_.has(data, key)) isValid = false;
+        });
+        return isValid;
     },
     pluginLifeCycle: function(data) {
         if(!this.isValidPluginLifeCycle(data)) {
@@ -68,8 +80,13 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
         this._dispatch(this.getEvent('CE_PLUGIN_LIFECYCLE', data))
     },
     isValidError: function() {
-        //TODO: Add code to check whether required attributes are present.
-        return true;
+        var isValid = true,
+            mandatoryFields = ["env", "stage", "action", "err", "type", "data", "severity"];
+
+        _.forEach(mandatoryFields, function(key) {
+            if (!_.has(data, key)) isValid = false;
+        });
+        return isValid;
     },
     error: function(data) {
         if (!this.isValidError(data)) {
