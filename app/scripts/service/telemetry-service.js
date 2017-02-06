@@ -19,11 +19,11 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     },
     addDispatcher: function(dispatcher) {
         // TODO: Do not add duplicate dispatchers
-        this.dispatchers.push(dispatchers);
+        this.dispatchers.push(dispatcher);
     },
     _dispatch: function(message) {
-        if(this.initialized) {
-            _.forEach(dispatchers, function(dispatcher) {
+        if (this.initialized) {
+            _.forEach(this.dispatchers, function(dispatcher) {
                 dispatcher.dispatch(message);
             })
         }
@@ -31,7 +31,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     getEvent: function(eventId, data) {
         return {
             "eid": eventId,
-            "ets": (new Date()).getUTCMilliseconds(), //TODO: Verify this once
+            "ets": (new Date()).getTime(), //TODO: Verify this once
             "ver": "1.0",
             "pdata": {"id": "ATTool","pid": "ContentEditor","ver": "2.0"},
             "cdata": this.context.cdata, //TODO: No correlation data as of now. Needs to be sent by portal in context
@@ -41,7 +41,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
             "edata": { "eks": data},
             "tags":[]
         }
-    }
+    },
     isValidInteract: function(data) {
         //TODO: Add code to check whether required attributes are present.
         return true;
@@ -54,7 +54,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     },
     end: function() {
         var endEvent = this.getEvent('CE_END', {});
-        endEvent.edata.eks.duration = endEvent.ets - this.startEvent.ets;
+        endEvent.edata.eks.duration = (new Date()).getTime() - this.startEvent.ets;
         this._dispatch(endEvent);
     },
     isValidPluginLifeCycle: function(data) {
@@ -66,5 +66,15 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
             console.error('Invalid plugin lifecycle event data');    
         }
         this._dispatch(this.getEvent('CE_PLUGIN_LIFECYCLE', data))
+    },
+    isValidError: function() {
+        //TODO: Add code to check whether required attributes are present.
+        return true;
+    },
+    error: function(data) {
+        if (!this.isValidError(data)) {
+            console.error('Invalid error data');
+        }
+        this._dispatch(this.getEvent('CE_ERROR', data))
     }
 }));

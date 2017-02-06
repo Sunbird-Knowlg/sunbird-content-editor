@@ -37,6 +37,7 @@ EkstepEditor.migration = new(Class.extend({
                         if(instance.migrationErrors.length) {
                             console.info('Migration has errors: ', instance.migrationErrors); 
                             EkstepEditorAPI.dispatchEvent('content:migration:end', {'logs': {'error': instance.migrationErrors}, 'status': 'FAIL'});                      
+                            EkstepEditorAPI.dispatchEvent('ce:telemetry:error', { "env": "migration", "stage": "", "action": "log the error", "err": "migration has errors", "type": "PORTAL", "data": "", "severity": "warn" });
                         } else {
                             EkstepEditorAPI.dispatchEvent('content:migration:end', {'logs': {'error': undefined}, 'status': 'PASS'});                      
                         }

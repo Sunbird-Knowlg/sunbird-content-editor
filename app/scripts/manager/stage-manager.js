@@ -56,6 +56,7 @@ EkstepEditor.stageManager = new(Class.extend({
         if (meta.type != '') {
             EkstepEditor.eventManager.dispatchEvent(meta.type + ':' + eventType, meta);
         }
+        if (!_.isEmpty(meta.type)) EkstepEditorAPI.dispatchEvent('ce:telemetry:plugin:interact', { "type": "selected", "subtype": eventType, "target": "canvas", "targetid": meta.id, "objectid": options.target.id, "stage": this.currentStage.id });
     },
     selectStage: function(event, data) {
         if (_.isUndefined(this.currentStage)) {
@@ -76,6 +77,8 @@ EkstepEditor.stageManager = new(Class.extend({
                 EkstepEditor.stageManager.dispatchObjectEvent('added', options, event);
             });
         }
+
+        EkstepEditorAPI.dispatchEvent('ce:telemetry:plugin:interact', { "type": "click", "subtype": "stageSelect", "target": "stageThumbnail", "targetid": "org.ekstep.stage", "objectid": data.stageId, "stage": this.currentStage.id });
     },
     addStage: function(stage) {
         var prevStageId = _.isUndefined(this.currentStage) ? undefined : this.currentStage.id;
@@ -83,6 +86,7 @@ EkstepEditor.stageManager = new(Class.extend({
         this.selectStage(null, { stageId: stage.id });
         EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id, prevStageId: prevStageId});
         this.enableSave();
+        EkstepEditorAPI.dispatchEvent('ce:telemetry:plugin:interact', { "type": "click", "subtype": "stageAdd", "target": "stageThumbnail", "targetid": "org.ekstep.stage", "objectid": stage.id, "stage": this.currentStage.id });
     },
     deleteStage: function(event, data) {
         var currentStage = _.find(this.stages, { id: data.stageId });
@@ -93,6 +97,7 @@ EkstepEditor.stageManager = new(Class.extend({
         else if (currentStageIndex === this.stages.length) this.selectStage(null, { stageId: this.stages[currentStageIndex - 1].id });
         else this.selectStage(null, { stageId: this.stages[currentStageIndex].id });
         this.enableSave();
+        EkstepEditorAPI.dispatchEvent('ce:telemetry:plugin:interact', { "type": "click", "subtype": "stageDelete", "target": "stageThumbnail", "targetid": "org.ekstep.stage", "objectid": data.stageId, "stage": this.currentStage.id });
     },
     deleteStageInstances: function(stage) {
         _.forEach(_.clone(stage.canvas.getObjects()), function(obj) {
@@ -115,6 +120,7 @@ EkstepEditor.stageManager = new(Class.extend({
             EkstepEditorAPI.cloneInstance(plugin);
         });
         this.enableSave();
+        EkstepEditorAPI.dispatchEvent('ce:telemetry:plugin:interact', { "type": "click", "subtype": "stageDuplicate", "target": "stageThumbnail", "targetid": "org.ekstep.stage", "objectid": data.stageId, "stage": this.currentStage.id });
     },
     getObjectMeta: function(options) {
         var pluginId = (options && options.target) ? options.target.id : '';

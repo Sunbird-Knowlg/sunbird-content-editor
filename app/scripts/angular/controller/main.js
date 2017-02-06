@@ -161,6 +161,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     $scope.contentLoadedFlag = true;
                     $scope.onLoadCustomMessage.show = true;
                     $scope.onLoadCustomMessage.text = ":( Unable to fetch the content! Please try again later!";
+                    EkstepEditorAPI.dispatchEvent('ce:telemetry:error', { "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to fetch content from remote", "type": "API", "data": err, "severity": "fatal" });
                 }
                 if (!(content && content.body) && !err) {
                     EkstepEditor.stageManager.registerEvents();
@@ -206,6 +207,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 $scope.onLoadCustomMessage.show = true;
                 $scope.onLoadCustomMessage.text = "Your content has errors! we are unable to read the content!";
                 $scope.$safeApply();
+                EkstepEditorAPI.dispatchEvent('ce:telemetry:error', { "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to read the content due to parse error", "type": "PORTAL", "data": "", "severity": "fatal" });
             };
             return contentBody;
         }
@@ -286,12 +288,13 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.initTelemetry = function() {
+            EkstepEditor.telemetryService.addDispatcher(EkstepEditor.localDispatcher);
             EkstepEditor.telemetryService.start({
                 uid: $window.context.user.id,
                 sid: $window.context.sid,
                 content_id: EkstepEditorAPI.globalContext.contentId
             }, {
-                defaultPlugins: [], // TODO: Get the default plugins loaded by the editor
+                defaultPlugins: Object.keys(EkstepEditor.pluginManager.plugins), // TODO: Get the default plugins loaded by the editor
                 loadtimes: { // TODO: capture these at all places
                     plugins: 0,
                     migration: 0,
@@ -302,6 +305,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         EkstepEditor.toolbarManager.setScope($scope);
         EkstepEditor.init(null, $location.protocol() + '://' + $location.host() + ':' + $location.port(), function() {
+            $scope.initTelemetry();
             $scope.initEditor();
         });
 
@@ -313,8 +317,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.currentStage = EkstepEditor.stageManager.currentStage;
             EkstepEditor.eventManager.addEventListener("stage:select", $scope.resetTeacherInstructions, this);
             EkstepEditor.eventManager.addEventListener("stage:add", $scope.resetTeacherInstructions, this);
-            $scope.loadContent();
-            $scope.initTelemetry();
+            $scope.loadContent();            
             /* KeyDown event to show ECML */
             $document.on("keydown", function(event) {
                 if ((event.metaKey || event.ctrlKey) && event.shiftKey && event.keyCode == 69) { /*ctrl+shift+e or command+shift+e*/

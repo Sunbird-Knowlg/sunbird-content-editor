@@ -92,14 +92,20 @@ EkstepEditor.pluginManager = new (Class.extend({
                     p = new pluginClass(pluginManifest, d, parent);
                     instance.addPluginInstance(p);
                     p.initPlugin();
+                    instance.dispatchTelemetry(pluginManifest, p, parent);
                 })
             } else {
                 p = new pluginClass(pluginManifest, data, parent);
                 instance.addPluginInstance(p);
                 p.initPlugin();
+                instance.dispatchTelemetry(pluginManifest, p, parent);
             }
         }
         return p;
+    },
+    dispatchTelemetry: function(pluginManifest, pluginInstance, parent) {
+        var stageId = parent ? parent.id : "";
+        EkstepEditorAPI.dispatchEvent('ce:telemetry:plugin:lifecycle', {type: 'instance', pluginid: pluginManifest.id, pluginver: pluginManifest.ver, objectid: pluginInstance.id, stage: stageId, containerid: "", containerplugin: ""});
     },
     addPluginInstance: function(pluginObj) {
         this.pluginInstances[pluginObj.id] = pluginObj;
