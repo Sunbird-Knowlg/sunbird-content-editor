@@ -220,6 +220,7 @@ EkstepEditor.stageManager = new(Class.extend({
         }
     },
     fromECML: function(contentBody) {
+        var startTime = (new Date()).getTime();
         EkstepEditorAPI.getAngularScope().appLoadMessage.push({ 'message': 'Loading Content..', 'status': false });
         EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
         EkstepEditor.stageManager.contentLoading = true;
@@ -295,6 +296,8 @@ EkstepEditor.stageManager = new(Class.extend({
                 EkstepEditorAPI.dispatchEvent('content:onload');
                 EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stages[0].id });
                 instance.showLoadScreenMessage();
+                EkstepEditor.telemetryService.updateStartEvent("contentLoad", ((new Date()).getTime() - startTime));
+                EkstepEditor.telemetryService.start();
             }
         });
 

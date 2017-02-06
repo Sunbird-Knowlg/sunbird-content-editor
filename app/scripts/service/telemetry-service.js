@@ -3,7 +3,8 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     dispatchers: [],
     initialized: true,
     startEvent: undefined,
-    start: function(context, data) {
+    startEventData: undefined,
+    initialize: function(context) {
         this.context = context;
         if(_.isUndefined(this.context.cdata)) {
             this.context.cdata = [];
@@ -14,8 +15,12 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
         }
         //TODO: Need to pass in default-plugins and load time.
         //Break up the load time between - loading plugins, loading content and migration
-        this.startEvent = this.getEvent('CE_START', data)
-        this._dispatch(this.startEvent);
+        //this.startEvent = this.getEvent('CE_START', data)
+        //this._dispatch(this.startEvent);
+        this.startEventData = { defaultPlugins: Object.keys(EkstepEditor.pluginManager.plugins), loadtimes: {} };
+    },
+    updateStartEvent: function(key, value) {                
+        this.startEventData && (this.startEventData.loadtimes[key] = value);
     },
     addDispatcher: function(dispatcher) {
         var dispatcherExist = _.find(this.dispatchers, function(obj){
@@ -79,7 +84,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
         }
         this._dispatch(this.getEvent('CE_PLUGIN_LIFECYCLE', data))
     },
-    isValidError: function() {
+    isValidError: function(data) {
         var isValid = true,
             mandatoryFields = ["env", "stage", "action", "err", "type", "data", "severity"];
 
@@ -93,5 +98,25 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
             console.error('Invalid error data');
         }
         this._dispatch(this.getEvent('CE_ERROR', data))
+    },
+    isValidStart: function(data) {
+        var isValid = true,
+            mandatoryFields = ["defaultPlugins", "loadtimes"],
+            subMandatoryFields = ["plugins", "migration", "contentLoad"];
+
+        _.forEach(mandatoryFields, function(key) {
+            if (!data[key]) isValid = false;
+        });
+
+        _.forEach(subMandatoryFields, function(key) {
+            if (isValid && (!data.loadtimes[key])) isValid = false;
+        });
+        return isValid;
+    },
+    start: function() {
+        if (this.isValidStart(this.startEventData)) {   
+            this.startEvent = this.getEvent('CE_START', this.startEventData);         
+            this._dispatch(this.startEvent);
+        }
     }
 }));

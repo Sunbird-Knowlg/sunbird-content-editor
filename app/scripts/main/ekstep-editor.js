@@ -70,6 +70,7 @@ EkstepEditor.loadExternalResource = function(type, pluginId, pluginVer, src) {
 }
 
 EkstepEditor.init = function(userSettings, absURL, callback) {
+    var startTime = (new Date()).getTime();
     EkstepEditor.config.absURL = absURL;
     EkstepEditor.loadResource(EkstepEditor.config.defaultSettings, 'json', function(err, data) {
         if (err) {
@@ -83,6 +84,7 @@ EkstepEditor.init = function(userSettings, absURL, callback) {
             // assign a callback
             q.drain = function() {
                 callback();
+                EkstepEditor.telemetryService.updateStartEvent("plugins", ((new Date()).getTime() - startTime));
             };
 
             _.forIn(data.plugins, function(value, key) {

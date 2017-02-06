@@ -9,7 +9,7 @@ EkstepEditor.migration = new(Class.extend({
     tasks: ['mediamigration_task', 'basestage_task', 'orderstage_task', 'scribblemigration_task', 'imagemigration_task', 'readalongmigration_task', 'assessmentmigration_task', 'eventsmigration_task', 'settagmigration_task'],
     migrationErrors: [],
     execute: function(event, contentbody) {
-        var instance = this,
+        var instance = this, startTime = (new Date()).getTime(),
             scope = EkstepEditorAPI.getAngularScope();
             
         if (!_.has(contentbody, 'theme.stage')) EkstepEditor.migration.migrationErrors.push('Content has no stage defined!');
@@ -27,6 +27,7 @@ EkstepEditor.migration = new(Class.extend({
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[7]].migrate(content)})
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[8]].migrate(content)})
                 .then(function(content) {                                                                        
+                        EkstepEditor.telemetryService.updateStartEvent("migration", ((new Date()).getTime() - startTime));                                                                        
                         scope.migration.showPostMigrationMsg = true;                       
                         scope.migration.showMigrationSuccess = true;
                         scope.appLoadMessage[2].status = true;
