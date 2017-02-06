@@ -15,7 +15,7 @@ EkstepEditor.migration = new(Class.extend({
         if (!_.has(contentbody, 'theme.stage')) EkstepEditor.migration.migrationErrors.push('Content has no stage defined!');
         if (!this.versionCompatible(contentbody.theme.version || contentbody.theme.ver)) {
             //show migration message on load screen
-            scope.appLoadMessage.push({message: 'Migrating Content..', status: false});
+            scope.appLoadMessage.push({'id': 2, 'message': 'Migrating Content', 'status': false});
             scope.migrationFlag = true;
             EkstepEditor.migration[instance.tasks[0]].migrate(contentbody)
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[1]].migrate(content)})
@@ -29,7 +29,11 @@ EkstepEditor.migration = new(Class.extend({
                 .then(function(content) {                                                                        
                         scope.migration.showPostMigrationMsg = true;                       
                         scope.migration.showMigrationSuccess = true;
-                        scope.appLoadMessage[2].status = true;
+                        var obj = _.find(EkstepEditorAPI.getAngularScope().appLoadMessage, { 'id': 2});
+                        if (_.isObject(obj)) {
+                            obj.message = "Content migrated";
+                            obj.status = true;
+                        }
                         EkstepEditorAPI.ngSafeApply(scope);
                         console.info('Migration task completed!');
                         instance.setNewVersion(content);

@@ -24,19 +24,39 @@
     <div id="thumbnailCanvasContainer" style="display: none;"></div>
     <div ng-app="editorApp" class="maincontainer" ng-strict-di>
         <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
-            <div ng-show="showAppLoadScreen" class="ui active dimmer load-screen-dimmer">
-                <div ng-if="!contentLoadedFlag" class="ui small text loader" style="position: absolute; top: 20%">Loading</div>
+            <div ng-show="showAppLoadScreen" class="ui active inverted dimmer load-screen-dimmer">
+                <!-- <div ng-if="!contentLoadedFlag" class="ui small indeterminate text loader" style="position: absolute; top: 20%">Loading</div> -->
                 <div class="load-screen-container">
-                    <div class="ui middle aligned inverted list load-screen-list">
+                    <!-- <div class="ui middle aligned  list load-screen-list">
                         <div class="item" ng-repeat="message in appLoadMessage">
-                            <i ng-class="message.status ? 'checkmark box big inverted icon' : 'square outline big inverted icon'"></i>
+                            <i ng-if="!message.status" class="checkmark box big icon"></i>
+                            <div ng-if="message.status" class="ui active small inline loader"></div>
                             <div class="content">
                                 <div class="header">
                                     <h5 ng-bind="message.message"></h5>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
+                    <table class="ui very basic collapsing table" style="margin-left: auto;margin-right: auto;">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="message in appLoadMessage">
+                                <td>
+                                    <i ng-if="message.status" class="checkmark box big icon"></i>
+                                    <div ng-if="!message.status" class="ui active small inline loader"></div>
+                                </td>
+                                <td>
+                                    <h5 ng-bind="message.message"></h5>     
+                                </td>
+                            </tr>
+                        </tbody>      
+                    </table>
                     <div ng-show="onLoadCustomMessage.show" ng-include="'templates/appLoadScreenMessage.html'"></div>
                     <div ng-show="migration.showPostMigrationMsg" class="migartion-message-container">
                         <div ng-show="migration.showMigrationSuccess" ng-include="'templates/migrationSuccessMsg.html'"></div>
