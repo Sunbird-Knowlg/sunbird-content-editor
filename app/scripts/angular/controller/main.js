@@ -170,8 +170,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     $scope.oldContentBody = angular.copy(content.body);
                     var parsedBody = $scope.parseContentBody(content.body);
                     if (parsedBody) EkstepEditorAPI.dispatchEvent("content:migration:start", parsedBody);
-                    console.log('contentBody', parsedBody);
-                    $scope.setTitleBarText($scope.contentDetails.contentTitle);
+                    console.log('contentBody', parsedBody);                    
                 }
                 if (content) {
                     var concepts = "";
@@ -184,6 +183,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                         contentType: '| '+content.contentType,
                         contentConcepts: concepts
                     };
+                    $scope.setTitleBarText($scope.contentDetails.contentTitle);
                 }
             });
         }
