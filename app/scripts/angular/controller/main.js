@@ -167,6 +167,13 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
                     $scope.closeLoadScreen(true);
                 } else if (content && content.body) {
+                    $scope.oldContentBody = angular.copy(content.body);
+                    var parsedBody = $scope.parseContentBody(content.body);
+                    if (parsedBody) EkstepEditorAPI.dispatchEvent("content:migration:start", parsedBody);
+                    console.log('contentBody', parsedBody);
+                    $scope.setTitleBarText($scope.contentDetails.contentTitle);
+                }
+                if (content) {
                     var concepts = "";
                     if (!EkstepEditorAPI._.isUndefined(content.concepts)) {
                         concepts = EkstepEditorAPI._.size(content.concepts) <= 1 ? content.concepts[0].name : content.concepts[0].name+' & '+ (EkstepEditorAPI._.size(content.concepts) - 1 )+' more';
@@ -177,11 +184,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                         contentType: '| '+content.contentType,
                         contentConcepts: concepts
                     };
-                    $scope.oldContentBody = angular.copy(content.body);
-                    var parsedBody = $scope.parseContentBody(content.body);
-                    if (parsedBody) EkstepEditorAPI.dispatchEvent("content:migration:start", parsedBody);
-                    console.log('contentBody', parsedBody);
-                    $scope.setTitleBarText($scope.contentDetails.contentTitle);
                 }
             });
         }
