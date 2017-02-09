@@ -15,7 +15,7 @@ window.EkstepEditorAPI = {
     },
 
     baseURL: EkstepEditor.config.baseURL,
-    absURL: EkstepEditor.config.absURL,
+    absURL: undefined,
     apislug: EkstepEditor.config.apislug,
     /**
      * Register an event listener callback function for the events raised by the framework.

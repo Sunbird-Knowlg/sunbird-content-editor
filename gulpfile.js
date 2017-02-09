@@ -21,6 +21,7 @@
 "app/bower_components/uuid/index.js",
 "app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
 "app/bower_components/ng-dialog/js/ngDialog.js",
+"app/bower_components/ngSafeApply/index.js",
 "app/bower_components/oclazyload/dist/modules/ocLazyLoad.core.js",
 "app/bower_components/oclazyload/dist/modules/ocLazyLoad.directive.js",
 "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.common.js",

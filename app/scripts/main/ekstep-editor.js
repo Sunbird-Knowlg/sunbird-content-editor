@@ -71,7 +71,7 @@ EkstepEditor.loadExternalResource = function(type, pluginId, pluginVer, src) {
 
 EkstepEditor.init = function(userSettings, absURL, callback) {
     var startTime = (new Date()).getTime();
-    EkstepEditor.config.absURL = absURL;
+    EkstepEditor.config.absURL = EkstepEditorAPI.absURL = absURL;
     EkstepEditor.loadResource(EkstepEditor.config.defaultSettings, 'json', function(err, data) {
         if (err) {
             alert('Unable to load editor - could not load editor settings');
