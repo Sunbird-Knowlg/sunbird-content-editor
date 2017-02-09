@@ -61,10 +61,10 @@ EkstepEditor.loadExternalResource = function(type, pluginId, pluginVer, src) {
     var url = EkstepEditor.config.pluginRepo + '/' + pluginId + '-' + pluginVer + '/' + src;
     switch (type) {
         case 'js':
-            EkstepEditor.jQuery("body").append($("<script type='text/javascript' src=" + url + "?ver=" + EkstepEditor.config.build_number">"));
+            EkstepEditor.jQuery("body").append($("<script type='text/javascript' src=" + url + "?ver=" + EkstepEditor.config.build_number + ">"));
             break;
         case 'css':
-            EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + url + "?ver=" + EkstepEditor.config.build_number"'>");
+            EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + url + "?ver=" + EkstepEditor.config.build_number + ">");
             break;
         default:
     }
