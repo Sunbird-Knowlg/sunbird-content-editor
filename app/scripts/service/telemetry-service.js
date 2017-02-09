@@ -1,4 +1,4 @@
-EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
+/*EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     context: {},
     dispatchers: [],
     initialized: true,
@@ -120,3 +120,4 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
         }
     }
 }));
+*/

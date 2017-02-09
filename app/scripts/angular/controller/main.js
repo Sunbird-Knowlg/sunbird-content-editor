@@ -290,12 +290,18 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.initTelemetry = function() {
-            EkstepEditor.telemetryService.addDispatcher(EkstepEditor.localDispatcher);
-            EkstepEditor.telemetryService.initialize({
+            /*EkstepEditor.telemetryService.start({
                 uid: $window.context.user.id,
                 sid: $window.context.sid,
                 content_id: EkstepEditorAPI.globalContext.contentId
-            });
+            }, {
+                defaultPlugins: [], // TODO: Get the default plugins loaded by the editor
+                loadtimes: { // TODO: capture these at all places
+                    plugins: 0,
+                    migration: 0,
+                    contentLoad: 0
+                }
+            });*/
         }
 
         EkstepEditor.toolbarManager.setScope($scope);
