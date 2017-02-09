@@ -288,7 +288,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.initTelemetry = function() {
-            EkstepEditor.telemetryService.start({
+            /*EkstepEditor.telemetryService.start({
                 uid: $window.context.user.id,
                 sid: $window.context.sid,
                 content_id: EkstepEditorAPI.globalContext.contentId
@@ -299,7 +299,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     migration: 0,
                     contentLoad: 0
                 }
-            });
+            });*/
         }
 
         EkstepEditor.toolbarManager.setScope($scope);
