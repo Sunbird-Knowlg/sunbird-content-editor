@@ -21,7 +21,7 @@ EkstepEditor.config = {
     defaultSettings: 'config/editorSettings.json',
     build_number: 'BUILDNUMBER',
     pluginRepo: '/plugins',
-    aws_s3_urls: ["https://s3.ap-southeast-1.amazonaws.com/ekstep-public/", "https://ekstep-public.s3-ap-southeast-1.amazonaws.com/"],
+    aws_s3_urls: ["https://s3.ap-south-1.amazonaws.com/ekstep-public/", "https://ekstep-public-dev.s3-ap-south-1.amazonaws.com/"],
     corePlugins: ["text", "audio", "div", "hotspot", "image", "shape", "scribble", "htext"],
     corePluginMapping: {
         "text": "org.ekstep.text", 
