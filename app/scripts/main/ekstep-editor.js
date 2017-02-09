@@ -21,7 +21,7 @@ EkstepEditor.config = {
     defaultSettings: 'config/editorSettings.json',
     build_number: 'BUILDNUMBER',
     pluginRepo: '/plugins',
-    aws_s3_urls: ["https://s3.ap-south-1.amazonaws.com/ekstep-public/", "https://ekstep-public-dev.s3-ap-south-1.amazonaws.com/"],
+    aws_s3_urls: ["https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/", "https://ekstep-public-dev.s3-ap-south-1.amazonaws.com/"],
     corePlugins: ["text", "audio", "div", "hotspot", "image", "shape", "scribble", "htext"],
     corePluginMapping: {
         "text": "org.ekstep.text", 
@@ -39,7 +39,7 @@ EkstepEditor.config = {
 EkstepEditor.loadResource = function(url, dataType, callback) {
     EkstepEditor.jQuery.ajax({
         async: false,
-        url: url + "?ver=" + EkstepEditor.config.build_number,
+        url: url + "?"+ EkstepEditor.config.build_number,
         dataType: dataType
     }).fail(function(err) {
         callback(err)
@@ -61,10 +61,10 @@ EkstepEditor.loadExternalResource = function(type, pluginId, pluginVer, src) {
     var url = EkstepEditor.config.pluginRepo + '/' + pluginId + '-' + pluginVer + '/' + src;
     switch (type) {
         case 'js':
-            EkstepEditor.jQuery("body").append($("<script type='text/javascript' src=" + url + "?ver=" + EkstepEditor.config.build_number + ">"));
+            EkstepEditor.jQuery("body").append($("<script type='text/javascript' src=" + url + "?" + EkstepEditor.config.build_number + ">"));
             break;
         case 'css':
-            EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + url + "?ver=" + EkstepEditor.config.build_number + ">");
+            EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + url + "?" + EkstepEditor.config.build_number + ">");
             break;
         default:
     }
