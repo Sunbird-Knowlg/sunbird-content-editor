@@ -6,51 +6,19 @@
         </div>
     </div>
     <div class="row">
-        <div class="ui styled accordion">
-            <div id="todoplugin" class="title" ng-click="showTodo = !showTodo" ng-class="showTodo ? 'active': '' ">
-                <i class="dropdown icon"></i>Review comments
-            </div>
-            <div class="content {{showTodo ? 'active': ''}}">
-                <div class="title" ng-click="showReportedTodos = !showReportedTodos" ng-class="showReportedTodos ? '': 'active' ">
-                    <i class="dropdown icon"></i>Reported Issues
-                </div>
-                <div class="content {{showReportedTodos ? '': 'active'}}">
-                    <div class="ui cards">
-                        <div class="content">
-                            <div class="description">
-                                <div id="pageLevelTodos">No Todo</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="title" ng-click="showResolvedTodos = !showResolvedTodos" ng-class="showResolvedTodos ? 'active': '' ">
-                    <i class="dropdown icon"></i>Resolved Issues
-                </div>
-                <div class="content {{showResolvedTodos ? 'active': ''}}">
-                    <div class="ui cards">
-                        <div class="card">
-                            <div class="content">
-                                <div class="description">
-                                    <div id="pageLevelResolvedTodos">No Issues</div>
-                                </div>
-                            </div>
-                        </div>
+        <div class="todoHolder" style="overflow:auto;max-height:300px;">
+            <div class="ui styled accordion pageLevelTodos">
+                <div class="content {{showTodo ? 'active': ''}}">
+                    <div class="description">
+                        <div id="pageLevelTodos">No Todo</div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="ui styled accordion">
-            <div class="title" ng-click="showInstructions = !showInstructions" ng-class="showInstructions ? 'active': '' ">
-                <i class="dropdown icon"></i>Teacher Instructions
-            </div>
-            <div class="content {{showInstructions ? 'active': ''}}">
-                <div class="ui form">
-                    <div class="field">
-                        <label></label>
-                        <textarea rows="6" ng-maxlength="1000" ng-model="model.teacherInstructions" ng-keyup="updateTeacherInstructionsOnKeyPress()">
-                        </textarea>
+            <div class="ui hidden divider"></div>
+            <div class="ui styled accordion pageLevelResolvedTodos">
+                <div class="content {{showTodo ? 'active': ''}}">
+                    <div class="description">
+                       <div id="pageLevelResolvedTodos">No Issues</div>
                     </div>
                 </div>
             </div>
