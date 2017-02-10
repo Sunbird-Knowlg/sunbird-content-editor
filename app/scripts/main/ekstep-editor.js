@@ -64,7 +64,7 @@ EkstepEditor.loadExternalResource = function(type, pluginId, pluginVer, src) {
             EkstepEditor.jQuery("body").append($("<script type='text/javascript' src=" + url + "?" + EkstepEditor.config.build_number + ">"));
             break;
         case 'css':
-            EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + url + "?" + EkstepEditor.config.build_number + ">");
+            EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + url + "?" + EkstepEditor.config.build_number + "'>");
             break;
         default:
     }
