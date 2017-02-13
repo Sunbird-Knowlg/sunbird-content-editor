@@ -1,0 +1,24 @@
+{
+  "name": "ide_plugin",
+  "version": "1.0.0",
+  "description": "It is used to create, run the plugins for content editor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "ide_plugin": "index.js"
+  },
+  "author": "Harishkumar Gangula",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.1",
+    "express": "^4.14.1",
+    "fs": "0.0.1-security",
+    "https": "^1.0.0",
+    "n-cli": "^1.2.9",
+    "path": "^0.12.7",
+    "unzip": "^0.1.11"
+  },
+  "preferGlobal": "true"
+}
