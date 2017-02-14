@@ -75,6 +75,7 @@ EkstepEditor.stageManager = new(Class.extend({
             this.canvas.on("object:added", function(options, event) {
                 EkstepEditor.stageManager.dispatchObjectEvent('added', options, event);
             });
+            EkstepEditorAPI.dispatchEvent('config:showSettingsTab', {id: this.currentStage.id});
         }
     },
     addStage: function(stage) {
@@ -82,7 +83,6 @@ EkstepEditor.stageManager = new(Class.extend({
         this.addStageAt(stage, stage.attributes.position);
         this.selectStage(null, { stageId: stage.id });
         EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id, prevStageId: prevStageId});
-        EkstepEditorAPI.dispatchEvent('config:showSettingsTab', {id: stage.id});
         this.enableSave();
     },
     deleteStage: function(event, data) {
