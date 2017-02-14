@@ -1,12 +1,80 @@
-<div class="ui padded grid">
-    <div class=" row">
-        <div class="ui toggle checkbox">
-            <input type="checkbox" ng-model="showGenieControls" ng-click="toggleGenieControl()">
-            <label>Show Genie Controls</label>
+<style type="text/css">
+    .sidebarConfigDiv, .sidebarHelpDiv{
+        height: 380px;
+        width: 100%;
+        overflow-y: auto;
+        margin: 0px !important;
+        border: none !important;
+        border-radius: 0px !important;
+        background: none !important;
+        box-shadow: none !important;
+    }
+    .sidebarConfig, .sidebarHelp{
+        padding: none !important;
+        box-shadow: none !important;
+        border-radius: 0px !important;
+    }
+    .sidebarConfig a.item:hover{
+        background: none !important;
+    }
+</style>
+<div ng-show="showSettingContainer">
+    <div class="ui mini compact three item menu sidebarConfig">
+      <a class="blue item active" id="settingsTab" data-tab="settings" ng-click="fireEvent({id: 'config:show'})"><i class="setting icon"></i> Config </a>
+      <a class="blue item" data-tab="actions" ng-click="fireEvent({id: 'config:actions'})"><i class="tasks icon"></i> Actions </a>
+      <a class="blue item" data-tab="info" ng-click="fireEvent({ id: 'config:properties'})"><i class="info icon"></i> Properties </a>
+    </div>
+
+    <div class="ui active tab segment sidebarConfigDiv" id="settingsContent" data-tab="settings">
+        <span ng-repeat="config in pluginConfig" ng-show="!stageConfigStatus" ng-include="'templates/config.html'"></span>
+        <div class="ui padded grid" ng-show="stageConfigStatus">
+            <div class=" row">
+                <div class="ui toggle checkbox">
+                    <input type="checkbox" ng-model="showGenieControls" ng-click="toggleGenieControl()">
+                    <label>Show Genie Controls</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="ui styled accordion">
+                    <div class="title" ng-click="showInstructions = !showInstructions" ng-class="showInstructions ? 'active': '' ">
+                        <i class="dropdown icon"></i>Teacher Instructions
+                    </div>
+                    <div class="content {{showInstructions ? 'active': ''}}">
+                        <div class="ui form">
+                            <div class="field">
+                                <label></label>
+                                <textarea rows="6" ng-maxlength="1000" ng-model="model.teacherInstructions" ng-keyup="updateTeacherInstructionsOnKeyPress()">
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <a class="ui basic small button" ng-href="{{reportIssueLink}}" target="_blank"><i class="help circle medium icon"></i>Report an issue</a>
+            </div>
         </div>
     </div>
+    <div class="ui tab segment sidebarConfigDiv" data-tab="actions">
+        <span ng-show="!stageConfigStatus" ng-include="'templates/events.html'"></span>
+    </div>
+    <div class="ui tab segment sidebarConfigDiv" data-tab="info" style="padding: 10px !important">
+        <span ng-include="'templates/properties.html'"></span>
+    </div>
+</div>
+<div ng-show="showHelpContainer">
+    <div class="ui mini compact two item menu sidebarHelp">
+      <a class="blue item active" id="helpTab" data-tab="help" ng-click="fireEvent({ id: 'config:help'})"><i class="question icon"></i>Help </a>
+      <a class="blue item" data-tab="feedback" ><i class="talk icon"></i>Feedback </a>
+    </div>
+    <div class="ui active tab segment sidebarHelpDiv" id="helpContent" data-tab="help" style="padding: 10px !important">
+       <div id="pluginHelpContent" class="ui message"></div>
+    </div>
+    <div class="ui tab segment sidebarConfigDiv" data-tab="feedback"></div>
+</div>
+<div ng-show="showCommentsContainer">
     <div class="row">
-        <div class="todoHolder" style="overflow:auto;max-height:300px;">
+        <div class="todoHolder" style="overflow:auto;max-height:500px;">
             <div class="ui styled accordion pageLevelTodos">
                 <div class="content {{showTodo ? 'active': ''}}">
                     <div class="description">
@@ -24,18 +92,9 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <a class="ui basic small button" ng-href="{{reportIssueLink}}" target="_blank"><i class="help circle medium icon"></i>Report an issue</a>
-    </div>
 </div>
-<!-- <div class="title" ng-click="showKeywords = !showKeywords" ng-class="showKeywords ? 'active': '' ">
-        <i class="dropdown icon"></i>Keywords
-    </div>
-    <div class="content {{showKeywords ? 'active': ''}}">
-        <a class="ui grey label large">Eat</a>
-        <a class="ui grey label large">Leg</a>
-        <a class="ui grey label large">Eye</a>
-        <a class="ui grey label large">Cat</a>
-        <a class="ui grey label large">Tiger</a>
-    </div> -->
-
+<script type="text/javascript">
+    $('.sidebarConfig .item, .sidebarHelp .item').tab({
+        history: false
+    });
+</script>

@@ -1,4 +1,4 @@
-EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
+/*EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     context: {},
     dispatchers: [],
     initialized: true,
@@ -68,3 +68,4 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
         this._dispatch(this.getEvent('CE_PLUGIN_LIFECYCLE', data))
     }
 }));
+*/

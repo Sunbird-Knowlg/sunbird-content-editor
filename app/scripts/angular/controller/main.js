@@ -167,6 +167,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
                     $scope.closeLoadScreen(true);
                 } else if (content && content.body) {
+                    $scope.oldContentBody = angular.copy(content.body);
+                    var parsedBody = $scope.parseContentBody(content.body);
+                    if (parsedBody) EkstepEditorAPI.dispatchEvent("content:migration:start", parsedBody);
+                    console.log('contentBody', parsedBody);                    
+                }
+                if (content) {
                     var concepts = "";
                     if (!EkstepEditorAPI._.isUndefined(content.concepts)) {
                         concepts = EkstepEditorAPI._.size(content.concepts) <= 1 ? content.concepts[0].name : content.concepts[0].name+' & '+ (EkstepEditorAPI._.size(content.concepts) - 1 )+' more';
@@ -177,10 +183,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                         contentType: '| '+content.contentType,
                         contentConcepts: concepts
                     };
-                    $scope.oldContentBody = angular.copy(content.body);
-                    var parsedBody = $scope.parseContentBody(content.body);
-                    if (parsedBody) EkstepEditorAPI.dispatchEvent("content:migration:start", parsedBody);
-                    console.log('contentBody', parsedBody);
                     $scope.setTitleBarText($scope.contentDetails.contentTitle);
                 }
             });
@@ -286,7 +288,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.initTelemetry = function() {
-            EkstepEditor.telemetryService.start({
+            /*EkstepEditor.telemetryService.start({
                 uid: $window.context.user.id,
                 sid: $window.context.sid,
                 content_id: EkstepEditorAPI.globalContext.contentId
@@ -297,7 +299,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     migration: 0,
                     contentLoad: 0
                 }
-            });
+            });*/
         }
 
         EkstepEditor.toolbarManager.setScope($scope);

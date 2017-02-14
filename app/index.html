@@ -117,10 +117,26 @@
                     </div>
                 </div>
             </div>
-            <div class="ui icon menu" style="margin-bottom: 0; margin-top: 0;margin-left: 30px; border:none;">
-                <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'">
-                </span>
-                <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
+            <div class="ui grid">
+                <div class="ui nine wide column">
+                    <div class="ui icon menu" style="margin-bottom: 0; margin-top: 0;margin-left: 30px; border:none; box-shadow: none;">
+                        <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'"></span>
+                        <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
+                    </div>
+                </div>
+                <div class="ui three wide column">
+                    <div class="ui mini buttons" id="configMenu" style="margin-top: 5px;">
+                        <button class="ui button active" id="settingsMenu" data-content="Settings" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showSettingsTab'})">
+                            <i class="settings icon"></i>
+                        </button>
+                        <button class="ui button" id="helpMenu" data-content="Help" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showHelpTab'})">
+                            <i class="help icon"></i>
+                        </button>
+                        <button class="ui button" id="commentsMenu" data-content="Comments" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showCommentsTab'})">
+                            <i class="comments icon"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
             <div ng-include="'templates/deleteStageDialog.html'"></div>
             <div id="mainContainerGrid" class="ui grid bottom attached celled" style="margin: 0;background: #EEEEEE;">
@@ -155,44 +171,8 @@
                         </div>
                         -->
                     </div>
-                    <div class="ui three wide column" style="background-color: #EEEEEE;">
+                    <div class="ui three wide column" style="background-color: #EEEEEE; padding: 0px !important;">
                         <span ng-include="'templates/sidebar.html'"></span>
-                    </div>
-                </div>
-            </div>
-            <div id="toolbarOptions" class="hide toolbarOptions">
-                <div class="ui horizontal list">
-                    <div class="item config-toolbar" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show">
-                        <i class="large {{toolbar.iconClass}}"></i>
-                    </div>
-                </div>
-                <!--
-                <div class="ui mini compact icon menu configmenu">
-                    <a class="item" ng-repeat="toolbar in contextToolbar" ng-click="fireEvent(toolbar.onclick)" ng-show="toolbar.show" style="padding: 6px;">
-                        <i class="large {{toolbar.iconClass}}"></i>
-                    </a>
-                </div>
-                -->
-            </div>
-            <div class="ui raised card" id="plugin-toolbar-container" ng-show="showConfigContainer" ng-style="configStyle">
-                <div class="content at config properties">
-                    <div class="ui header config-header">{{configHeaderText}}
-                    </div>
-                    <div ng-click="showConfigContainer = false;" class="config-close-icon" style="color:'white';">X</div>
-                </div>
-                <!-- config-close-icon -->
-                <div class="content">
-                    <div ng-show="configHeaderText === 'Configuration'" class="config-toolbar-content">
-                        <span ng-repeat="config in pluginConfig" ng-include="'templates/config.html'">
-                    </span>
-                    </div>
-                    <div id="pluginEventsContainer" ng-show="configHeaderText === 'Actions'" class="action-config-container">
-                        <span ng-include="'templates/events.html'"></span>
-                    </div>
-                    <div id="pluginPropertiesContainer" ng-show="configHeaderText === 'Properties'" class="config-toolbar-content">
-                        <span ng-include="'templates/properties.html'"></span>
-                    </div>
-                    <div id="pluginHelpContent" class="ui message config-toolbar-content" ng-show="configHeaderText === 'Help'">
                     </div>
                 </div>
             </div>
