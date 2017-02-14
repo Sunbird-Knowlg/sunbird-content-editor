@@ -22,8 +22,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.showAppLoadScreen = true;
         $scope.contentLoadedFlag = false;
         $scope.appLoadMessage = [
-            { 'message': 'Loading Editor...', 'status': true },
-            { 'message': 'Loading Plugins...', 'status': true }
+            { 'id': 1, 'message': 'Loading Plugins', 'status': false }
         ];
         $scope.migrationFlag = false;
         $scope.saveBtnEnabled = true;
@@ -304,6 +303,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         EkstepEditor.toolbarManager.setScope($scope);
         EkstepEditor.init(null, $location.protocol() + '://' + $location.host() + ':' + $location.port(), function() {
+            $scope.appLoadMessage
+            var obj = _.find($scope.appLoadMessage, { 'id': 1});
+            if (_.isObject(obj)) {
+                obj.message = "Plugins loaded";
+                obj.status = true;
+            }
             $scope.initEditor();
         });
 
