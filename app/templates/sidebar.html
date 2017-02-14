@@ -19,12 +19,17 @@
     }
 </style>
 <div ng-show="showSettingContainer">
-    <div class="ui mini compact three item menu sidebarConfig">
+    <div class="ui mini compact item menu sidebarConfig" ng-class="stageConfigStatus ? 'two' : 'three' ">
       <a class="blue item active" id="settingsTab" data-tab="settings" ng-click="fireEvent({id: 'config:show'})"><i class="setting icon"></i> Config </a>
-      <a class="blue item" data-tab="actions" ng-click="fireEvent({id: 'config:actions'})"><i class="tasks icon"></i> Actions </a>
+      <a class="blue item" ng-show="!stageConfigStatus" data-tab="actions" ng-click="fireEvent({id: 'config:actions'})"><i class="tasks icon"></i> Actions </a>
       <a class="blue item" data-tab="info" ng-click="fireEvent({ id: 'config:properties'})"><i class="info icon"></i> Properties </a>
     </div>
     <div class="ui active tab segment sidebarConfigDiv" id="settingsContent" data-tab="settings">
+        <div class="ui small basic icon buttons" ng-show="!stageConfigStatus" style="margin-bottom: 10px;">
+          <button ng-repeat="menu in contextMenus " ng-show="!stageConfigStatus" ng-if="menu.state === 'SHOW'" class="ui button popup-item" ng-click="fireEvent(menu.onclick)"  data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="top center"><i class="{{menu.iconClass}}"></i>
+          </button>
+        </div>
+        <div class="ui divider" ng-show="!stageConfigStatus"></div>
         <span ng-repeat="config in pluginConfig" ng-show="!stageConfigStatus" ng-include="'templates/config.html'"></span>
         <div class="ui padded grid" ng-show="stageConfigStatus">
             <div class=" row">
@@ -54,7 +59,7 @@
             </div>
         </div>
     </div>
-    <div class="ui tab segment sidebarConfigDiv" data-tab="actions">
+    <div class="ui tab segment sidebarConfigDiv" data-tab="actions" ng-show="!stageConfigStatus">
         <span ng-show="!stageConfigStatus" ng-include="'templates/events.html'"></span>
     </div>
     <div class="ui tab segment sidebarConfigDiv" data-tab="info" style="padding: 10px !important">

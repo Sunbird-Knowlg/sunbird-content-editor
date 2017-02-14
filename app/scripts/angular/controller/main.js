@@ -55,7 +55,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             contentType: ""
         };
         $scope.userDetails = !EkstepEditorAPI._.isUndefined(window.context) ? window.context.user : undefined;
-        $scope.showGenieControls = false;
+        $scope.showInstructions = true;
         $scope.stageAttachments = {};
 
         // TODO: Figure out what the below code does

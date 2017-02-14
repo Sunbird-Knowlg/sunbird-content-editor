@@ -82,6 +82,7 @@ EkstepEditor.stageManager = new(Class.extend({
         this.addStageAt(stage, stage.attributes.position);
         this.selectStage(null, { stageId: stage.id });
         EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id, prevStageId: prevStageId});
+        EkstepEditorAPI.dispatchEvent('config:showSettingsTab', {id: stage.id});
         this.enableSave();
     },
     deleteStage: function(event, data) {
@@ -287,6 +288,7 @@ EkstepEditor.stageManager = new(Class.extend({
             }
             if (stages.length === index + 1) {
                 EkstepEditorAPI.dispatchEvent('content:onload');
+                EkstepEditorAPI.getAngularScope().toggleGenieControl();
                 EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stages[0].id });
                 instance.showLoadScreenMessage();
             }
