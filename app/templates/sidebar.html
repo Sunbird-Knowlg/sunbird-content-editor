@@ -74,8 +74,8 @@
 </div>
 <div ng-show="showCommentsContainer">
     <div class="row">
-        <div class="todoHolder" style="overflow:auto;max-height:500px;">
-            <div class="ui styled accordion pageLevelTodos">
+        <div class="todoHolder ui message" style="overflow:auto;max-height:500px;">
+            <div class="pageLevelTodos">
                 <div class="content {{showTodo ? 'active': ''}}">
                     <div class="description">
                         <div id="pageLevelTodos">No Todo</div>
@@ -83,7 +83,7 @@
                 </div>
             </div>
             <div class="ui hidden divider"></div>
-            <div class="ui styled accordion pageLevelResolvedTodos">
+            <div class="pageLevelResolvedTodos">
                 <div class="content {{showTodo ? 'active': ''}}">
                     <div class="description">
                        <div id="pageLevelResolvedTodos">No Issues</div>
