@@ -161,7 +161,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     $scope.contentLoadedFlag = true;
                     $scope.onLoadCustomMessage.show = true;
                     $scope.onLoadCustomMessage.text = ":( Unable to fetch the content! Please try again later!";
-                    EkstepEditorAPI.dispatchEvent('ce:telemetry:error', { "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to fetch content from remote", "type": "API", "data": err, "severity": "fatal" });
+                    EkstepEditor.telemetryService.error({ "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to fetch content from remote", "type": "API", "data": err, "severity": "fatal" });
                 }
                 if (!(content && content.body) && !err) {
                     EkstepEditor.stageManager.registerEvents();
@@ -209,7 +209,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 $scope.onLoadCustomMessage.show = true;
                 $scope.onLoadCustomMessage.text = "Your content has errors! we are unable to read the content!";
                 $scope.$safeApply();
-                EkstepEditorAPI.dispatchEvent('ce:telemetry:error', { "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to read the content due to parse error", "type": "PORTAL", "data": "", "severity": "fatal" });
+                EkstepEditor.telemetryService.error({ "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to read the content due to parse error", "type": "PORTAL", "data": "", "severity": "fatal" });
             };
             return contentBody;
         }
@@ -289,19 +289,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             });
         }
 
-        $scope.initTelemetry = function() {
-            /*EkstepEditor.telemetryService.start({
+        $scope.initTelemetry = function() {            
+            EkstepEditor.telemetryService.initialize({
                 uid: $window.context.user.id,
                 sid: $window.context.sid,
                 content_id: EkstepEditorAPI.globalContext.contentId
-            }, {
-                defaultPlugins: [], // TODO: Get the default plugins loaded by the editor
-                loadtimes: { // TODO: capture these at all places
-                    plugins: 0,
-                    migration: 0,
-                    contentLoad: 0
-                }
-            });*/
+            }, EkstepEditor.localDispatcher);
         }
 
         EkstepEditor.toolbarManager.setScope($scope);

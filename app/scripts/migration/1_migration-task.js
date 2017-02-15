@@ -27,7 +27,7 @@ EkstepEditor.migration = new(Class.extend({
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[7]].migrate(content)})
                 .then(function(content) {return EkstepEditor.migration[instance.tasks[8]].migrate(content)})
                 .then(function(content) {                                                                        
-                        EkstepEditor.telemetryService.updateStartEvent("migration", ((new Date()).getTime() - startTime));                                                                        
+                        EkstepEditor.telemetryService.startEvent().append("loadtimes", {migration: ((new Date()).getTime() - startTime)});                                                                        
                         scope.migration.showPostMigrationMsg = true;                       
                         scope.migration.showMigrationSuccess = true;
                         scope.appLoadMessage[2].status = true;
@@ -38,7 +38,7 @@ EkstepEditor.migration = new(Class.extend({
                         if(instance.migrationErrors.length) {
                             console.info('Migration has errors: ', instance.migrationErrors); 
                             EkstepEditorAPI.dispatchEvent('content:migration:end', {'logs': {'error': instance.migrationErrors}, 'status': 'FAIL'});                      
-                            EkstepEditorAPI.dispatchEvent('ce:telemetry:error', { "env": "migration", "stage": "", "action": "log the error", "err": "migration has errors", "type": "PORTAL", "data": "", "severity": "warn" });
+                            EkstepEditor.telemetryService.end({ "env": "migration", "stage": "", "action": "log the error", "err": "migration has errors", "type": "PORTAL", "data": "", "severity": "warn" });
                         } else {
                             EkstepEditorAPI.dispatchEvent('content:migration:end', {'logs': {'error': undefined}, 'status': 'PASS'});                      
                         }

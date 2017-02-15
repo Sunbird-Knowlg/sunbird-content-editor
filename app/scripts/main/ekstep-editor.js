@@ -84,7 +84,7 @@ EkstepEditor.init = function(userSettings, absURL, callback) {
             // assign a callback
             q.drain = function() {
                 callback();
-                EkstepEditor.telemetryService.updateStartEvent("plugins", ((new Date()).getTime() - startTime));
+                EkstepEditor.telemetryService.startEvent().append("loadtimes", {plugins: ((new Date()).getTime() - startTime)});
             };
 
             _.forIn(data.plugins, function(value, key) {

@@ -1,10 +1,10 @@
-/*EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
+EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     context: {},
     dispatchers: [],
     initialized: true,
     startEvent: undefined,
     startEventData: undefined,
-    initialize: function(context) {
+    initialize: function(context, dispatcher) {
         this.context = context;
         if(_.isUndefined(this.context.cdata)) {
             this.context.cdata = [];
@@ -13,14 +13,26 @@
             console.error('Unable to instantiate telemetry service');
             this.initialized = false;
         }
+        if (!_.isUndefined(dispatcher)) this.addDispatcher(dispatcher);
         //TODO: Need to pass in default-plugins and load time.
         //Break up the load time between - loading plugins, loading content and migration
         //this.startEvent = this.getEvent('CE_START', data)
         //this._dispatch(this.startEvent);
-        this.startEventData = { defaultPlugins: Object.keys(EkstepEditor.pluginManager.plugins), loadtimes: {} };
+        this.startEventData = { defaultPlugins: Object.keys(EkstepEditor.pluginManager.plugins), loadtimes: {}, client: {} };
     },
-    updateStartEvent: function(key, value) {                
-        this.startEventData && (this.startEventData.loadtimes[key] = value);
+    startEvent: function(autopublish) {
+        var instance = this;
+        return {
+            getData: function() {
+                return this.startEventData;
+            },
+            append: function(param, dataObj) {
+                _.forIn(dataObj, function(value, key) {
+                    instance.startEventData[param][key] = value;
+                });
+                if (autopublish) instance.start();
+            }
+        }
     },
     addDispatcher: function(dispatcher) {
         var dispatcherExist = _.find(this.dispatchers, function(obj){
@@ -101,8 +113,8 @@
     },
     isValidStart: function(data) {
         var isValid = true,
-            mandatoryFields = ["defaultPlugins", "loadtimes"],
-            subMandatoryFields = ["plugins", "migration", "contentLoad"];
+            mandatoryFields = ["defaultPlugins", "loadtimes", "client"],
+            subMandatoryFields = ["plugins", "contentLoad"];
 
         _.forEach(mandatoryFields, function(key) {
             if (!data[key]) isValid = false;
@@ -114,10 +126,54 @@
         return isValid;
     },
     start: function() {
-        if (this.isValidStart(this.startEventData)) {   
-            this.startEvent = this.getEvent('CE_START', this.startEventData);         
+        this.startEventData.client = this.detectClient();
+        if (this.isValidStart(this.startEventData)) {            
+            this.startEvent = this.getEvent('CE_START', this.startEventData);
             this._dispatch(this.startEvent);
         }
+    },
+    detectClient: function() {        
+        var nAgt = navigator.userAgent;
+        var browserName = navigator.appName;
+        var fullVersion = '' + parseFloat(navigator.appVersion);
+        var nameOffset, verOffset, ix;
+
+        // In Opera
+        if ((verOffset = nAgt.indexOf("Opera")) != -1) {
+            browserName = "opera";
+            fullVersion = nAgt.substring(verOffset + 6);
+            if ((verOffset = nAgt.indexOf("Version")) != -1)
+                fullVersion = nAgt.substring(verOffset + 8);
+        }
+        // In MSIE
+        else if ((verOffset = nAgt.indexOf("MSIE")) != -1) {
+            browserName = "IE";
+            fullVersion = nAgt.substring(verOffset + 5);
+        }
+        // In Chrome
+        else if ((verOffset = nAgt.indexOf("Chrome")) != -1) {
+            browserName = "chrome";
+            fullVersion = nAgt.substring(verOffset + 7);
+        }
+        // In Safari
+        else if ((verOffset = nAgt.indexOf("Safari")) != -1) {
+            browserName = "safari";
+            fullVersion = nAgt.substring(verOffset + 7);
+            if ((verOffset = nAgt.indexOf("Version")) != -1)
+                fullVersion = nAgt.substring(verOffset + 8);
+        }
+        // In Firefox
+        else if ((verOffset = nAgt.indexOf("Firefox")) != -1) {
+            browserName = "firefox";
+            fullVersion = nAgt.substring(verOffset + 8);
+        }
+        
+        // trim the fullVersion string at semicolon/space if present
+        if ((ix = fullVersion.indexOf(";")) != -1)
+            fullVersion = fullVersion.substring(0, ix);
+        if ((ix = fullVersion.indexOf(" ")) != -1)
+            fullVersion = fullVersion.substring(0, ix);
+
+        return { browser: browserName, browserver: fullVersion, os: navigator.platform };
     }
 }));
-*/

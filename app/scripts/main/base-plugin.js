@@ -30,7 +30,7 @@ EkstepEditor.basePlugin = Class.extend({
             this.registerMenu();
             this.initialize();
             EkstepEditorAPI.addEventListener(this.manifest.id + ":create", this.create, this);
-            EkstepEditorAPI.dispatchEvent('ce:telemetry:plugin:lifecycle', {type: 'load', pluginid: this.manifest.id, pluginver: this.manifest.ver, objectid: "", stage: "", containerid: "", containerplugin: ""});
+            EkstepEditor.telemetryService.pluginLifeCycle({type: 'load', pluginid: this.manifest.id, pluginver: this.manifest.ver, objectid: "", stage: "", containerid: "", containerplugin: ""});
             console.log(manifest.id + " plugin initialized");
         } else {
             this.editorObj = undefined, this.event = undefined, this.attributes = { x: 0, y: 0, w: 0, h: 0, visible: true }, this.params = undefined, this.data = undefined, this.media = undefined;
