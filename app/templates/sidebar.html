@@ -24,6 +24,7 @@
       <a class="blue item" data-tab="actions" ng-click="fireEvent({id: 'config:actions'})"><i class="tasks icon"></i> Actions </a>
       <a class="blue item" data-tab="info" ng-click="fireEvent({ id: 'config:properties'})"><i class="info icon"></i> Properties </a>
     </div>
+
     <div class="ui active tab segment sidebarConfigDiv" id="settingsContent" data-tab="settings">
         <span ng-repeat="config in pluginConfig" ng-show="!stageConfigStatus" ng-include="'templates/config.html'"></span>
         <div class="ui padded grid" ng-show="stageConfigStatus">
@@ -72,7 +73,25 @@
     <div class="ui tab segment sidebarConfigDiv" data-tab="feedback"></div>
 </div>
 <div ng-show="showCommentsContainer">
-    
+    <div class="row">
+        <div class="todoHolder ui message" style="overflow:auto;max-height:500px;">
+            <div class="pageLevelTodos">
+                <div class="content {{showTodo ? 'active': ''}}">
+                    <div class="description">
+                        <div id="pageLevelTodos">No Todo</div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui hidden divider"></div>
+            <div class="pageLevelResolvedTodos">
+                <div class="content {{showTodo ? 'active': ''}}">
+                    <div class="description">
+                       <div id="pageLevelResolvedTodos">No Issues</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 <script type="text/javascript">
     $('.sidebarConfig .item, .sidebarHelp .item').tab({
