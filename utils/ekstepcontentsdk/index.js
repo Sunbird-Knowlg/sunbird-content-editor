@@ -42,12 +42,8 @@ cli.on("serve", function(){
 
 cli.on("create", function(){
     if (this.argv._[1] === undefined) {
-        throw new cli.Error("Provide plugin id \n")
+        throw new cli.Error("please provide plugin name \n")
         process.exit(0);
     }
-    if (this.argv._[2] === undefined) {
-        throw new cli.Error("Provide plugin version \n")
-        process.exit(0);
-    }
-    pluginHelper.create(this.argv._[1],this.argv._[2],cli);
+    pluginHelper.create(this.argv._[1],cli);
 });
