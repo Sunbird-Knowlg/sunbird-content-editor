@@ -166,8 +166,8 @@ body {
 }
 .show-action-form-btn{
     position: absolute;
-    left: 85px;
-    top: 51px;
+    left: 89px;
+    top: 13px;
 }
 
 #geniecontrols {
@@ -253,11 +253,17 @@ body {
     padding: 10px !important;
 }
 .load-screen-dimmer{
-    background-color: #000000 !important;
+    background-color: rgba(255,255,255,.95) !important;
 }
 .migration-message{
-    font-size: 14px !important;
+    font-size: 16px !important;
 }
 .migartion-positive-btn{
     margin-left: 15px !important;
+}
+.ui.loading.table tr td { 
+    border-top: 0px !important; 
+}
+.ui.loading.table thead tr th{
+    border-bottom: 0px !important;    
 }

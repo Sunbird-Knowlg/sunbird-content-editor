@@ -7,6 +7,9 @@
  var mainBowerFiles = require('gulp-main-bower-files');
  var gulpFilter = require('gulp-filter');
  var inject = require('gulp-inject');
+ var CacheBuster = require('gulp-cachebust');
+
+ var cachebust = new CacheBuster();
  const zip = require('gulp-zip');
 
  var bower_components = [
@@ -134,6 +137,7 @@
  gulp.task('minifyJS', function() {
   return gulp.src(scriptfiles)
     .pipe(concat('script.min.js'))
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('content-editor/scripts'));
 });
 
@@ -156,6 +160,7 @@
                  return m && m.join('\n') + '\n' || '';
              }
          }))
+         .pipe(cachebust.resources())
          .pipe(gulp.dest('content-editor/styles'));
  });
 
@@ -183,6 +188,7 @@
  gulp.task('minifyJsBower', function() {
   return gulp.src(bower_components)
     .pipe(concat('external.min.js'))
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('content-editor/scripts/'));
 });
 
@@ -209,6 +215,7 @@
  gulp.task('minifyCssBower', function() {
   return gulp.src(bower_css)
     .pipe(concat('external.min.css'))
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('content-editor/styles'));
 });
 
@@ -231,7 +238,8 @@
  gulp.task('inject', ['minify'], function() {
      var target = gulp.src('content-editor/index.html');
      var sources = gulp.src(['content-editor/scripts/*.js', 'content-editor/styles/*.css'], { read: false });
-     return target.pipe(inject(sources, { ignorePath: 'content-editor/', addRootSlash: false }))
+     return target
+         .pipe(inject(sources, { ignorePath: 'content-editor/', addRootSlash: false }))
          .pipe(gulp.dest('./content-editor'));
  });
 
@@ -273,6 +281,6 @@
          .pipe(gulp.dest(''));
  });
 
- gulp.task('buildDev', ['minifyDev', 'injectDev', 'zipDev']);
+ gulp.task('buildDev', ['minifyDev', 'injectDev', 'zipDev', "cachebust"]);
 
  //Minification for dev End
