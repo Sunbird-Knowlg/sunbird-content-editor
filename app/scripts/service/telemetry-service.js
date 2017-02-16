@@ -5,6 +5,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     startEvent: undefined,
     startEventData: undefined,
     initialize: function(context, dispatcher) {
+        var instance = this;
         this.context = context;
         if(_.isUndefined(this.context.cdata)) {
             this.context.cdata = [];
@@ -16,7 +17,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
         if (!_.isUndefined(dispatcher)) this.addDispatcher(dispatcher);
 
         window.addEventListener('beforeunload', function() {
-            this.end();
+            instance.end();
         }); 
         //TODO: Need to pass in default-plugins and load time.
         //Break up the load time between - loading plugins, loading content and migration
