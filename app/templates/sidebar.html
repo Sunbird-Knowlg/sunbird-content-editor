@@ -20,7 +20,7 @@
 </style>
 <div ng-show="showSettingContainer">
     <div class="ui mini compact item menu sidebarConfig" ng-class="stageConfigStatus ? 'two' : 'three' ">
-      <a class="blue item active" id="settingsTab" data-tab="settings" ng-click="fireEvent({id: 'config:show'})"><i class="setting icon"></i> Config </a>
+      <a class="blue item active" id="settingsTab" data-tab="settings" ng-click="fireEvent({id: 'config:show'})"><i class="setting icon"></i> Customise </a>
       <a class="blue item" ng-show="!stageConfigStatus" data-tab="actions" ng-click="fireEvent({id: 'config:actions'})"><i class="tasks icon"></i> Actions </a>
       <a class="blue item" data-tab="info" ng-click="fireEvent({ id: 'config:properties'})"><i class="info icon"></i> Properties </a>
     </div>
@@ -67,14 +67,14 @@
     </div>
 </div>
 <div ng-show="showHelpContainer">
-    <div class="ui mini compact two item menu sidebarHelp">
+    <div class="ui mini compact one item menu sidebarHelp">
       <a class="blue item active" id="helpTab" data-tab="help" ng-click="fireEvent({ id: 'config:help'})"><i class="question icon"></i>Help </a>
-      <a class="blue item" data-tab="feedback" ><i class="talk icon"></i>Feedback </a>
+      <!-- <a class="blue item" data-tab="feedback"><i class="talk icon"></i>Feedback </a> -->
     </div>
     <div class="ui active tab segment sidebarHelpDiv" id="helpContent" data-tab="help" style="padding: 10px !important">
        <div id="pluginHelpContent" class="ui message"></div>
     </div>
-    <div class="ui tab segment sidebarConfigDiv" data-tab="feedback"></div>
+    <!-- <div class="ui tab segment sidebarConfigDiv" data-tab="feedback"></div> -->
 </div>
 <div ng-show="showCommentsContainer">
     
