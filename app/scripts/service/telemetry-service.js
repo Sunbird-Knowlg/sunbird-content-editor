@@ -14,6 +14,10 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
             this.initialized = false;
         }
         if (!_.isUndefined(dispatcher)) this.addDispatcher(dispatcher);
+
+        window.addEventListener('beforeunload', function() {
+            this.end();
+        }); 
         //TODO: Need to pass in default-plugins and load time.
         //Break up the load time between - loading plugins, loading content and migration
         //this.startEvent = this.getEvent('CE_START', data)
@@ -113,15 +117,10 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     },
     isValidStart: function(data) {
         var isValid = true,
-            mandatoryFields = ["defaultPlugins", "loadtimes", "client"],
-            subMandatoryFields = ["plugins", "contentLoad"];
+            mandatoryFields = ["defaultPlugins", "loadtimes", "client"];
 
         _.forEach(mandatoryFields, function(key) {
             if (!data[key]) isValid = false;
-        });
-
-        _.forEach(subMandatoryFields, function(key) {
-            if (isValid && (!data.loadtimes[key])) isValid = false;
         });
         return isValid;
     },

@@ -329,5 +329,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.setTitleBarText = function(text) {
             if(text) document.title = text;
         };
+
+        $scope.fireToolbarTelemetry = function(menu, menuType) {
+            EkstepEditor.telemetryService.interact({ "type": "select", "subtype": "click", "target": menuType, "targetid": menu.id, "objectid": "", "stage": EkstepEditor.stageManager.currentStage.id });
+        }
     }
 ]);
