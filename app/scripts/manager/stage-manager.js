@@ -262,9 +262,8 @@ EkstepEditor.stageManager = new(Class.extend({
                     if (_.isUndefined(pluginInstance)) {
                         console.log('Unable to instantiate', plugin.id);
                         EkstepEditorAPI.dispatchEvent("org.ekstep.unsupported:create", { data: plugin });
-                    } else {
-                        pluginCount++;
                     }
+                    pluginCount++;
                 } catch(e) { 
                     console.warn('error when instantiating plugin:', pluginId, plugin.data, stageInstance.id);                   
                     EkstepEditorAPI.dispatchEvent('ce:plugin:error', {error: 'unable to instantiate plugin', 'pluginId': pluginId, pluginData: plugin.data, stageId: stageInstance.id });
