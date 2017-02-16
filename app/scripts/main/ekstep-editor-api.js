@@ -294,7 +294,7 @@ window.EkstepEditorAPI = {
      */
     cloneInstance: function(plugin) {
         var data = plugin.getCopy();
-        delete data.id; // delete id not to get duplicate pluginInstances
+        data = _.omit(data, ["id", "event"]);
         if (plugin.parent.id == EkstepEditorAPI.getCurrentStage().id) {
             data.x = data.x + 2;
             data.y = data.y + 2;
