@@ -76,9 +76,8 @@ EkstepEditor.stageManager = new(Class.extend({
             this.canvas.on("object:added", function(options, event) {
                 EkstepEditor.stageManager.dispatchObjectEvent('added', options, event);
             });
-            EkstepEditorAPI.dispatchEvent('config:showSettingsTab', {id: this.currentStage.id});
         }
-
+        EkstepEditorAPI.dispatchEvent('config:showSettingsTab', {id: this.currentStage.id});
         EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "stageSelect", "target": "stageThumbnail", "targetid": "org.ekstep.stage", "objectid": data.stageId, "stage": this.currentStage.id });
     },
     addStage: function(stage) {
