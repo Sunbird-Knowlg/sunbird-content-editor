@@ -36,7 +36,7 @@
         </button>
     </div>
     <div class="ui icon buttons" ng-switch-when="groupToggle">
-        <div ng-repeat="config in config.subconfig">
+        <div ng-repeat="config in config.config">
             <button id="{{config.propertyName}}" class="ui button popup-button2" data-tooltip="{{config.toolTip}}">
                 <i class='{{config.iconClass}} icon'> </i>
             </button>
