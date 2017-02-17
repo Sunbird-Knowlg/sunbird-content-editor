@@ -130,18 +130,17 @@
                 <div class="ui nine wide column">
                     <div class="ui icon menu" style="margin-bottom: 0; margin-top: 0;margin-left: 30px; border:none; box-shadow: none;">
                         <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'"></span>
-                        <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
                     </div>
                 </div>
                 <div class="ui three wide column">
-                    <div class="ui mini buttons" id="configMenu" style="margin-top: 5px;">
-                        <button class="ui button active" id="settingsMenu" data-content="Settings" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showSettingsTab'})">
+                    <div class="ui icon buttons" id="configMenu">
+                        <button class="ui button active popup-item" id="settingsMenu" data-content="Settings" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showSettingsTab'})">
                             <i class="settings icon"></i>
                         </button>
-                        <button class="ui button" id="helpMenu" data-content="Help" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showHelpTab'})">
+                        <button class="ui button popup-item" id="helpMenu" data-content="Help" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showHelpTab'})">
                             <i class="help icon"></i>
                         </button>
-                        <button class="ui button" id="commentsMenu" data-content="Comments" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showCommentsTab'})">
+                        <button class="ui button popup-item" id="commentsMenu" data-content="Comments" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showCommentsTab'})">
                             <i class="comments icon"></i>
                         </button>
                     </div>
