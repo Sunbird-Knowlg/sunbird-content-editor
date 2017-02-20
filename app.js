@@ -11,7 +11,7 @@ var app = express();
 // all environments
 app.set('port', 3000);
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json())
+app.use(bodyParser.json({limit: '50mb'}))
 app.use(express.static(path.join(__dirname, '.')));
 
 var routes = __dirname + '/server/routes', route_files = fs.readdirSync(routes);

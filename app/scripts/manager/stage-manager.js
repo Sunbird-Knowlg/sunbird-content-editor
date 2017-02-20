@@ -56,6 +56,7 @@ EkstepEditor.stageManager = new(Class.extend({
         if (meta.type != '') {
             EkstepEditor.eventManager.dispatchEvent(meta.type + ':' + eventType, meta);
         }
+        if (!_.isEmpty(meta.type)) EkstepEditor.telemetryService.interact({ "type": "selected", "subtype": eventType, "target": "canvas", "targetid": meta.id, "objectid": options.target.id, "stage": this.currentStage.id });
     },
     selectStage: function(event, data) {
         if (_.isUndefined(this.currentStage)) {
@@ -76,6 +77,8 @@ EkstepEditor.stageManager = new(Class.extend({
                 EkstepEditor.stageManager.dispatchObjectEvent('added', options, event);
             });
         }
+        EkstepEditorAPI.dispatchEvent('config:showSettingsTab', {id: this.currentStage.id});
+        EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "stageSelect", "target": "stageThumbnail", "targetid": "org.ekstep.stage", "objectid": data.stageId, "stage": this.currentStage.id });
     },
     addStage: function(stage) {
         var prevStageId = _.isUndefined(this.currentStage) ? undefined : this.currentStage.id;
@@ -83,6 +86,7 @@ EkstepEditor.stageManager = new(Class.extend({
         this.selectStage(null, { stageId: stage.id });
         EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id, prevStageId: prevStageId});
         this.enableSave();
+        EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "stageAdd", "target": "stageThumbnail", "targetid": "org.ekstep.stage", "objectid": stage.id, "stage": this.currentStage.id });
     },
     deleteStage: function(event, data) {
         var currentStage = _.find(this.stages, { id: data.stageId });
@@ -93,6 +97,7 @@ EkstepEditor.stageManager = new(Class.extend({
         else if (currentStageIndex === this.stages.length) this.selectStage(null, { stageId: this.stages[currentStageIndex - 1].id });
         else this.selectStage(null, { stageId: this.stages[currentStageIndex].id });
         this.enableSave();
+        EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "stageDelete", "target": "stageThumbnail", "targetid": "org.ekstep.stage", "objectid": data.stageId, "stage": this.currentStage.id });
     },
     deleteStageInstances: function(stage) {
         _.forEach(_.clone(stage.canvas.getObjects()), function(obj) {
@@ -115,6 +120,7 @@ EkstepEditor.stageManager = new(Class.extend({
             EkstepEditorAPI.cloneInstance(plugin);
         });
         this.enableSave();
+        EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "stageDuplicate", "target": "stageThumbnail", "targetid": "org.ekstep.stage", "objectid": data.stageId, "stage": this.currentStage.id });
     },
     getObjectMeta: function(options) {
         var pluginId = (options && options.target) ? options.target.id : '';
@@ -214,7 +220,8 @@ EkstepEditor.stageManager = new(Class.extend({
         }
     },
     fromECML: function(contentBody) {
-        EkstepEditorAPI.getAngularScope().appLoadMessage.push({ 'message': 'Loading Content..', 'status': false });
+        var startTime = (new Date()).getTime();
+        EkstepEditorAPI.getAngularScope().appLoadMessage.push({ 'id': 3, 'message': 'Loading Content', 'status': false });
         EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
         EkstepEditor.stageManager.contentLoading = true;
         // Load all plugins
@@ -262,9 +269,8 @@ EkstepEditor.stageManager = new(Class.extend({
                     if (_.isUndefined(pluginInstance)) {
                         console.log('Unable to instantiate', plugin.id);
                         EkstepEditorAPI.dispatchEvent("org.ekstep.unsupported:create", { data: plugin });
-                    } else {
-                        pluginCount++;
                     }
+                    pluginCount++;
                 } catch(e) { 
                     console.warn('error when instantiating plugin:', pluginId, plugin.data, stageInstance.id);                   
                     EkstepEditorAPI.dispatchEvent('ce:plugin:error', {error: 'unable to instantiate plugin', 'pluginId': pluginId, pluginData: plugin.data, stageId: stageInstance.id });
@@ -287,8 +293,10 @@ EkstepEditor.stageManager = new(Class.extend({
             }
             if (stages.length === index + 1) {
                 EkstepEditorAPI.dispatchEvent('content:onload');
+                EkstepEditorAPI.getAngularScope().toggleGenieControl();
                 EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stages[0].id });
                 instance.showLoadScreenMessage();
+                EkstepEditor.telemetryService.startEvent(true).append("loadtimes", {"contentLoad": ((new Date()).getTime() - startTime)});                
             }
         });
 
@@ -356,7 +364,11 @@ EkstepEditor.stageManager = new(Class.extend({
         });
     },
     showLoadScreenMessage: function() {
-        EkstepEditorAPI.getAngularScope().appLoadMessage[EkstepEditorAPI.getAngularScope().appLoadMessage.length - 1].status = true;
+        var obj = _.find(EkstepEditorAPI.getAngularScope().appLoadMessage, { 'id': 3});
+        if (_.isObject(obj)) {
+            obj.message = "Content loaded";
+            obj.status = true;
+        }
         EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
         setTimeout(function() {
             EkstepEditorAPI.getAngularScope().closeLoadScreen(); // added 2 sec set timeout to show the content load message           

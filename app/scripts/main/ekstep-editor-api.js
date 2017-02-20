@@ -15,7 +15,7 @@ window.EkstepEditorAPI = {
     },
 
     baseURL: EkstepEditor.config.baseURL,
-    absURL: EkstepEditor.config.absURL,
+    absURL: undefined,
     apislug: EkstepEditor.config.apislug,
     /**
      * Register an event listener callback function for the events raised by the framework.
@@ -294,7 +294,7 @@ window.EkstepEditorAPI = {
      */
     cloneInstance: function(plugin) {
         var data = plugin.getCopy();
-        delete data.id; // delete id not to get duplicate pluginInstances
+        data = _.omit(data, ["id", "event"]);
         if (plugin.parent.id == EkstepEditorAPI.getCurrentStage().id) {
             data.x = data.x + 2;
             data.y = data.y + 2;

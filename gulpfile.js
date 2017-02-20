@@ -7,6 +7,9 @@
  var mainBowerFiles = require('gulp-main-bower-files');
  var gulpFilter = require('gulp-filter');
  var inject = require('gulp-inject');
+ var CacheBuster = require('gulp-cachebust');
+
+ var cachebust = new CacheBuster();
  const zip = require('gulp-zip');
 
  var bower_components = [
@@ -21,6 +24,7 @@
 "app/bower_components/uuid/index.js",
 "app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
 "app/bower_components/ng-dialog/js/ngDialog.js",
+"app/bower_components/ngSafeApply/index.js",
 "app/bower_components/oclazyload/dist/modules/ocLazyLoad.core.js",
 "app/bower_components/oclazyload/dist/modules/ocLazyLoad.directive.js",
 "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.common.js",
@@ -62,6 +66,11 @@
 "app/scripts/service/iservice.js",
 "app/scripts/service/content-service.js",
 "app/scripts/service/popup-service.js",
+"app/scripts/service/telemetry-service.js",
+"app/scripts/dispatcher/idispatcher.js",
+"app/scripts/dispatcher/console-dispatcher.js",
+"app/scripts/dispatcher/local-dispatcher.js",
+"app/scripts/dispatcher/piwik-dispatcher.js",
 "app/scripts/angular/controller/main.js",
 "app/scripts/angular/controller/popup-controller.js",
 "app/scripts/angular/directive/draggable-directive.js",
@@ -133,6 +142,7 @@
  gulp.task('minifyJS', function() {
   return gulp.src(scriptfiles)
     .pipe(concat('script.min.js'))
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('content-editor/scripts'));
 });
 
@@ -155,6 +165,7 @@
                  return m && m.join('\n') + '\n' || '';
              }
          }))
+         .pipe(cachebust.resources())
          .pipe(gulp.dest('content-editor/styles'));
  });
 
@@ -182,6 +193,7 @@
  gulp.task('minifyJsBower', function() {
   return gulp.src(bower_components)
     .pipe(concat('external.min.js'))
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('content-editor/scripts/'));
 });
 
@@ -208,6 +220,7 @@
  gulp.task('minifyCssBower', function() {
   return gulp.src(bower_css)
     .pipe(concat('external.min.css'))
+    .pipe(cachebust.resources())
     .pipe(gulp.dest('content-editor/styles'));
 });
 
@@ -230,7 +243,8 @@
  gulp.task('inject', ['minify'], function() {
      var target = gulp.src('content-editor/index.html');
      var sources = gulp.src(['content-editor/scripts/*.js', 'content-editor/styles/*.css'], { read: false });
-     return target.pipe(inject(sources, { ignorePath: 'content-editor/', addRootSlash: false }))
+     return target
+         .pipe(inject(sources, { ignorePath: 'content-editor/', addRootSlash: false }))
          .pipe(gulp.dest('./content-editor'));
  });
 
@@ -272,6 +286,6 @@
          .pipe(gulp.dest(''));
  });
 
- gulp.task('buildDev', ['minifyDev', 'injectDev', 'zipDev']);
+ gulp.task('buildDev', ['minifyDev', 'injectDev', 'zipDev', "cachebust"]);
 
  //Minification for dev End
