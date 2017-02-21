@@ -40,9 +40,9 @@
             <button id="{{config.propertyName}}" class="ui button popup-button2" data-tooltip="{{config.toolTip}}">
                 <i class='{{config.iconClass}} icon'> </i>
             </button>
-            <div class="ui custom flowing popup">
+            <div id="{{config.propertyName + $index}}" class="ui custom flowing popup">
                <div class='ui buttons'>
-                    <button id="{{subconf.id}}" class="ui button {{configData[subconf.propertyName] === subconf.propertyValue ? 'primary': ''}}" ng-repeat="subconf in config.subconfig" ng-click="textAlignClick(config, subconf, configData)" data-tooltip="{{subconf.toolTip}}">
+                    <button id="{{subconf.propertyName}}" class="ui button {{configData[subconf.propertyName] ? 'primary': ''}}" ng-repeat="subconf in config.subconfig" ng-click="configData[subconf.propertyName] = !configData[subconf.propertyName]" data-tooltip="{{subconf.toolTip}}" tabindex="0">
                         <div ng-switch on="subconf.dataType">
                             <span ng-if="subconf.text" ng-switch-when="text" class="{{subconf.textClass}}" style="{{subconf.textStyle}}">{{subconf.text}}</span>
                             <i class="{{subconf.iconClass}} " ng-if="subconf.iconClass" style="{{subconf.iconStyle}}" ng-switch-when="icon"></i>
