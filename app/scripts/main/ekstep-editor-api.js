@@ -61,7 +61,7 @@ window.EkstepEditorAPI = {
      * @memberof EkstepEditorAPI
      */
     loadPluginResource: function(pluginId, pluginVer, src, dataType, callback) {
-        EkstepEditor.loadPluginResource(pluginId, pluginVer, src, dataType, callback);
+        EkstepEditor.resourceManager.loadPluginResource(pluginId, pluginVer, src, dataType, callback);
     },
 
     /**

@@ -32,41 +32,14 @@ EkstepEditor.pluginManager = new (Class.extend({
         if(this.plugins[pluginId]) {
             console.log('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded');
         } else {
-            EkstepEditor.loadPluginResource(pluginId, pluginVer, 'manifest.json', 'json', function(err, data) {
+            EkstepEditor.resourceManager.loadPlugin(pluginId, pluginVer, function(err, data) {
                 if(err) {
-                    console.error('Unable to find plugin manifest for ' + pluginId);
+                    console.error('Unable to find plugin ' + pluginId);
                 } else {
-                    instance.loadPluginByManifest(data);
+                    // instance.loadPluginByManifest(data);
                     if (data.type && EkstepEditorAPI._.lowerCase(data.type) === "widget") {
                         instance.invoke(pluginId, _.cloneDeep(data.editor['init-data'] || {}), EkstepEditorAPI.getCurrentStage());
                     }
-                }
-            });
-        }
-    },
-    loadPluginByManifest: function(manifest) {
-        var instance = this;
-        EkstepEditor.loadPluginResource(manifest.id, manifest.ver, manifest.editor.main, 'text', function(err, data) {
-            if (err) {
-                console.error('Unable to load plugin js', manifest.editor.main);
-            } else {
-                instance.loadDependencies(manifest);
-                try {
-                    instance.registerPlugin(manifest, eval(data));
-                } catch (e) {
-                    console.error("error while loading plugin:" + manifest.id, e);
-                }
-            }
-        });
-    },
-    loadDependencies: function(manifest) {
-        var instance = this;
-        if (_.isArray(manifest.editor.dependencies)) {
-            _.forEach(manifest.editor.dependencies, function(dependency) {
-                if (dependency.type == 'plugin') {
-                    instance.loadPlugin(dependency.plugin, dependency.ver);
-                } else {
-                    EkstepEditor.loadExternalResource(dependency.type, manifest.id, manifest.ver, dependency.src);
                 }
             });
         }
