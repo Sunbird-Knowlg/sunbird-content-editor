@@ -58,8 +58,9 @@ EkstepEditor.migration = new(Class.extend({
             EkstepEditor.stageManager.fromECML(contentbody);
         }
     },
-    versionCompatible: function(version) {
-        if (version !== "1.0") return false;
+    versionCompatible: function(version) {        
+        if(typeof version == 'string') version = parseInt(version);
+        if (version < 1) return false;
         return true;
     },
     setNewVersion: function(contentbody) {
