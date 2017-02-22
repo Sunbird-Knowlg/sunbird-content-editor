@@ -44,10 +44,11 @@
  ];
 
  var scriptfiles = [
-  'app/scripts/main/class.js',
- 'app/scripts/main/ekstep-editor.js',
- 'app/scripts/main/base-plugin.js',
- "app/scripts/manager/event-manager.js",
+'app/scripts/main/class.js',
+'app/scripts/main/ekstep-editor.js',
+'app/scripts/main/ekstep-config.js',
+'app/scripts/main/base-plugin.js',
+"app/scripts/manager/event-manager.js",
 "app/scripts/manager/plugin-manager.js",
 "app/scripts/manager/stage-manager.js",
 "app/scripts/manager/toolbar-manager.js",
