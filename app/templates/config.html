@@ -24,7 +24,7 @@
     <div class="ui form" ng-switch-when="inputSelect">
         <div class="field">
             <label ng-if="config.title">{{config.title}}</label>
-            <select class="ui search dropdown" ng-model="configData[config.propertyName]" ng-options="val for val in config.range" id="{{config.propertyName}}">
+            <select ng-model="configData[config.propertyName]" ng-options="val for val in config.range" id="{{config.propertyName}}">
             </select>
         </div>
     </div>
