@@ -28,6 +28,7 @@
         </div>
     </div>
     <div class="ui icon buttons" ng-switch-when="group">
+        <label ng-if="config.title">{{config.title}}</label>
         <button class="ui button {{configData[dd.propertyName] ? 'primary': ''}}" ng-repeat="dd in config.config" ng-click="configData[dd.propertyName] = !configData[dd.propertyName]" data-tooltip="{{dd.toolTip}}">
             <div ng-switch on="dd.dataType">
                 <span ng-if="dd.text" ng-switch-when="text" class="{{dd.textClass}}" style="{{dd.textStyle}}">{{dd.text}}</span>
@@ -35,22 +36,13 @@
             </div>
         </button>
     </div>
-    <div class="ui icon buttons" ng-switch-when="groupToggle">
-        <div ng-repeat="config in config.config">
-            <button id="{{config.propertyName}}" class="ui button popup-button2" data-tooltip="{{config.toolTip}}">
-                <i class='{{config.iconClass}} icon'> </i>
-            </button>
-            <div id="{{config.propertyName + $index}}" class="ui custom flowing popup">
-               <div class='ui buttons'>
-                    <button id="{{subconf.propertyName}}" class="ui button {{configData[subconf.propertyName] ? 'primary': ''}}" ng-repeat="subconf in config.subconfig" ng-click="configData[subconf.propertyName] = !configData[subconf.propertyName]" data-tooltip="{{subconf.toolTip}}" tabindex="0">
-                        <div ng-switch on="subconf.dataType">
-                            <span ng-if="subconf.text" ng-switch-when="text" class="{{subconf.textClass}}" style="{{subconf.textStyle}}">{{subconf.text}}</span>
-                            <i class="{{subconf.iconClass}} " ng-if="subconf.iconClass" style="{{subconf.iconStyle}}" ng-switch-when="icon"></i>
-                        </div>
-                    </button>
-               </div>
+    <div class="ui icon buttons" ng-switch-when="buttonToggle">
+        <label ng-if="config.title">{{config.title}}</label>
+        <button class="ui button {{configData[config.propertyName] === option.value ? 'primary': ''}}" ng-repeat="option in config.options" ng-click="configData[config.propertyName] = option.value">
+            <div ng-switch on="option.dataType">
+                <i class="{{option.iconClass}} " ng-if="option.iconClass" style="{{option.iconStyle}}" ng-switch-when="icon"></i>
             </div>
-        </div>
+        </button>
     </div>
     <div class="ui form" ng-switch-when="rangeslider">
         <div class="field">
