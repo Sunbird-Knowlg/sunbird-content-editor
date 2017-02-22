@@ -293,7 +293,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 uid: $window.context.user.id,
                 sid: $window.context.sid,
                 content_id: EkstepEditorAPI.globalContext.contentId
-            }, EkstepEditor.piwikDispatcher);
+            }, EkstepEditor.config.dispatcher);
         }
 
         EkstepEditor.toolbarManager.setScope($scope);

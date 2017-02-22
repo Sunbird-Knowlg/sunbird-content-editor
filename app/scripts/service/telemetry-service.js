@@ -39,7 +39,20 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
             }
         }
     },
-    addDispatcher: function(dispatcher) {
+    getDispatcher: function(dispatcherId) {
+        switch(dispatcherId) {
+            case "local":
+                return EkstepEditor.localDispatcher;
+                break;
+            case "piwik":
+                return EkstepEditor.piwikDispatcher;
+                break;
+            default:
+                return EkstepEditor.consoleDispatcher;
+        }
+    },
+    addDispatcher: function(dispatcherId) {
+        var dispatcher = this.getDispatcher(dispatcherId);
         var dispatcherExist = _.find(this.dispatchers, function(obj){
            return  obj.type === dispatcher.type;
         });
