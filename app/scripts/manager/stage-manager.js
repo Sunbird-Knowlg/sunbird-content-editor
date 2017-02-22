@@ -204,6 +204,8 @@ EkstepEditor.stageManager = new(Class.extend({
         if (_.isUndefined(manifestEntry)) {
             content.theme.manifest.media.push({
                 id: id,
+                pluginId: id,
+                pluginVer: pluginManifest.ver,
                 ver: pluginManifest.ver,
                 src: EkstepEditor.config.absURL + EkstepEditor.relativeURL(pluginManifest.id, pluginManifest.ver, pluginManifest.renderer.main),
                 type: "plugin"
