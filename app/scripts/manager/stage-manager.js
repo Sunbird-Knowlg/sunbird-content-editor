@@ -113,12 +113,19 @@ EkstepEditor.stageManager = new(Class.extend({
         return _.find(this.stages, { id: stageId });
     },
     duplicateStage: function(event, data) {
-        var currentStage = _.find(this.stages, { id: data.stageId });
+        var currentStage = _.find(this.stages, { id: data.stageId }), instance = this, plugins = [];
         var stage = this.stages[this.getStageIndex(currentStage)];
         EkstepEditorAPI.dispatchEvent('stage:create', { "position": "afterCurrent" });
+        this.contentLoading = true;
         _.forEach(stage.children, function(plugin) {
-            EkstepEditorAPI.cloneInstance(plugin);
+            plugins.push({'z-index': plugin.attributes['z-index'], data: plugin });
         });
+        _.forEach(_.sortBy(plugins, 'z-index'), function(plugin) {            
+            EkstepEditorAPI.cloneInstance(plugin.data);
+        });
+        this.currentStage.destroyOnLoad(stage.children.length, this.canvas, function(){
+            instance.contentLoading = false;
+        });       
         this.enableSave();
         EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "stageDuplicate", "target": "stageThumbnail", "targetid": "org.ekstep.stage", "objectid": data.stageId, "stage": this.currentStage.id });
     },
