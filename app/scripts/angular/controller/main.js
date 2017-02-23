@@ -3,11 +3,12 @@
  */
 'use strict';
 
-angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).config(['$locationProvider', function($locationProvider) {
+angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).config(['$locationProvider', '$httpProvider', function($locationProvider, $httpProvider) {
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
     });
+    $httpProvider.interceptors.push('apiTimeStamp');
 }]);
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document',
     function($scope, $timeout, $http, $location, $q, $window, $document) {

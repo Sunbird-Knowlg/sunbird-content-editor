@@ -145,6 +145,21 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
             this._dispatch(this.startEvent);
         }
     },
+    isValidApiCall: function(data) {
+        var isValid = true,
+            mandatoryFields = ["path", "method", "request", "response","responseTime", "status", "uip"];
+
+        _.forEach(mandatoryFields, function(key) {
+            if (!_.has(data, key)) isValid = false;
+        });
+        return isValid;
+    },
+    apiCall: function(data) {
+        if (!this.isValidApiCall(data)) {
+            console.error('Invalid api call data');
+        }
+        this._dispatch(this.getEvent('CE_API_CALL', data))
+    },
     detectClient: function() {        
         var nAgt = navigator.userAgent;
         var browserName = navigator.appName;
