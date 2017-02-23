@@ -50,21 +50,9 @@ EkstepEditor.loadExternalResource = function(type, pluginId, pluginVer, src) {
 }
 
 EkstepEditor.init = function(userSettings, absURL, callback) {
-    var startTime = (new Date()).getTime();
     EkstepEditor.config.absURL = EkstepEditorAPI.absURL = absURL;
-    var q = async.queue(function(plugin, callback) {
-        EkstepEditor.pluginManager.loadPlugin(plugin.key, plugin.value);
+    EkstepEditor.pluginManager.loadAllPlugins(EkstepEditor.config.plugins, function () {
         callback();
-    }, 4);
-
-    // assign a callback
-    q.drain = function() {
-        callback();
-        EkstepEditor.telemetryService.startEvent().append("loadtimes", {plugins: ((new Date()).getTime() - startTime)});
-    };
-
-    _.forIn(EkstepEditor.config.plugins, function(value, key) {
-        q.push({"key": key, "value" : value}, function(err) {});
     });
 }
 

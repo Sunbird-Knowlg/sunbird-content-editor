@@ -9,8 +9,8 @@ EkstepEditor.pluginManager = new (Class.extend({
     init: function() {
         console.log("Plugin manager initialized");
     },
-    registerPlugin: function(manifest, plugin) {
-        this.plugins[manifest.id] = {p: plugin, m: manifest};
+    registerPlugin: function(manifest, plugin, url) {
+        this.plugins[manifest.id] = {p: plugin, m: manifest, 'url': url};
         var p = new plugin(manifest); // Initialize plugin
         this.pluginObjs[manifest.id] = p;
     },
@@ -32,14 +32,42 @@ EkstepEditor.pluginManager = new (Class.extend({
         if(this.plugins[pluginId]) {
             console.log('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded');
         } else {
-            EkstepEditor.resourceManager.loadPlugin(pluginId, pluginVer, function(err, data) {
+            EkstepEditor.resourceManager.loadManifest(pluginId, pluginVer, function(err, data) {
                 if(err) {
                     console.error('Unable to find plugin ' + pluginId);
                 } else {
-                    // instance.loadPluginByManifest(data);
-                    if (data.type && EkstepEditorAPI._.lowerCase(data.type) === "widget") {
-                        instance.invoke(pluginId, _.cloneDeep(data.editor['init-data'] || {}), EkstepEditorAPI.getCurrentStage());
+                    instance.loadPluginByManifest(data.manifest, data.url);
+                }
+            });
+        }
+    },
+    loadPluginByManifest: function(manifest, url) {
+        var instance = this;
+        EkstepEditor.resourceManager.loadPluginResource(manifest.id, manifest.ver, manifest.editor.main, 'text', function(err, data) {
+            if (err) {
+                console.error('Unable to load plugin js', manifest.editor.main);
+            } else {
+                instance.loadDependencies(manifest, url);
+                try {
+                    instance.registerPlugin(manifest, eval(data), url);
+                    if (manifest.type && EkstepEditorAPI._.lowerCase(manifest.type) === "widget") {
+                        instance.invoke(pluginId, _.cloneDeep(manifest.editor['init-data'] || {}), EkstepEditorAPI.getCurrentStage());
                     }
+                } catch (e) {
+                    console.error("error while loading plugin:" + manifest.id, e);
+                }
+            }
+        },url);
+    },
+    loadDependencies: function(manifest, url) {
+        var instance = this;
+        if (_.isArray(manifest.editor.dependencies)) {
+            _.forEach(manifest.editor.dependencies, function(dependency) {
+                if (dependency.type == 'plugin') {
+                    console.log(dependency.plugin,dependency.ver);
+                    instance.loadPlugin(dependency.plugin, dependency.ver);
+                } else {
+                    EkstepEditor.resourceManager.loadExternalResource(dependency.type, manifest.id, manifest.ver, dependency.src, url);
                 }
             });
         }
@@ -117,5 +145,22 @@ EkstepEditor.pluginManager = new (Class.extend({
         } else {
             return '';
         }
+    },
+    loadAllPlugins: function (plugins, callback) {
+        var startTime = (new Date()).getTime();
+        var instance = this;
+        var q = async.queue(function(plugin, pluginCallback) {
+            instance.loadPlugin(plugin.key, plugin.value);
+            pluginCallback();
+        },6);
+
+        // assign a callback
+        q.drain = function() {
+            callback();
+            EkstepEditor.telemetryService.startEvent().append("loadtimes", { plugins: ((new Date()).getTime() - startTime) });
+        };
+        _.forIn(plugins, function(value, key) {
+            q.push({ "key": key, "value": value }, function(err) {});
+        });
     }
 }));
