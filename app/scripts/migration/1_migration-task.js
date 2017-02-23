@@ -59,7 +59,7 @@ EkstepEditor.migration = new(Class.extend({
         }
     },
     versionCompatible: function(version) {        
-        if(typeof version == 'string') version = parseInt(version);
+        if(typeof version == 'string') version = parseFloat(version);
         if (version < 1) return false;
         return true;
     },
