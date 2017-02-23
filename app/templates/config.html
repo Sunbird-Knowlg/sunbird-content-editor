@@ -21,6 +21,13 @@
             </select>
         </div>
     </div>
+    <div class="ui form" ng-switch-when="inputSelect">
+        <div class="field">
+            <label ng-if="config.title">{{config.title}}</label>
+            <select ng-model="configData[config.propertyName]" ng-options="val for val in config.range" id="{{config.propertyName}}">
+            </select>
+        </div>
+    </div>
     <div class="ui form" ng-switch-when="imagebrowser">
         <div class="field">
             <label ng-if="config.title">{{config.title}}</label>
