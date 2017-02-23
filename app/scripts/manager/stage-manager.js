@@ -78,7 +78,7 @@ EkstepEditor.stageManager = new(Class.extend({
             });
         }
         EkstepEditorAPI.dispatchEvent('config:showSettingsTab', {id: this.currentStage.id});
-        EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "stageSelect", "target": "stageThumbnail", "targetid": "org.ekstep.stage", "objectid": data.stageId, "stage": this.currentStage.id });
+        if (!this.contentLoading) EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "stageSelect", "target": "stageThumbnail", "targetid": "org.ekstep.stage", "objectid": data.stageId, "stage": this.currentStage.id });
     },
     addStage: function(stage) {
         var prevStageId = _.isUndefined(this.currentStage) ? undefined : this.currentStage.id;
@@ -86,7 +86,7 @@ EkstepEditor.stageManager = new(Class.extend({
         this.selectStage(null, { stageId: stage.id });
         EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id, prevStageId: prevStageId});
         this.enableSave();
-        EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "stageAdd", "target": "stageThumbnail", "targetid": "org.ekstep.stage", "objectid": stage.id, "stage": this.currentStage.id });
+        if (!this.contentLoading) EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "stageAdd", "target": "stageThumbnail", "targetid": "org.ekstep.stage", "objectid": stage.id, "stage": this.currentStage.id });
     },
     deleteStage: function(event, data) {
         var currentStage = _.find(this.stages, { id: data.stageId });
@@ -287,10 +287,10 @@ EkstepEditor.stageManager = new(Class.extend({
             });
 
             var cb = (index == 0) ? function() {
-                EkstepEditor.stageManager.registerEvents();
-                EkstepEditor.stageManager.contentLoading = false;
+                EkstepEditor.stageManager.registerEvents();                
                 EkstepEditorAPI.jQuery('#thumbnailCanvasContainer').empty();
                 EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stage.id });
+                EkstepEditor.stageManager.contentLoading = false;
             } : function() {};
             stageInstance.destroyOnLoad(pluginCount, canvas, cb);
             if (stageEvents) {
@@ -302,8 +302,7 @@ EkstepEditor.stageManager = new(Class.extend({
             }
             if (stages.length === index + 1) {
                 EkstepEditorAPI.dispatchEvent('content:onload');
-                EkstepEditorAPI.getAngularScope().toggleGenieControl();
-                EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stages[0].id });
+                EkstepEditorAPI.getAngularScope().toggleGenieControl();                
                 instance.showLoadScreenMessage();
                 EkstepEditor.telemetryService.startEvent(true).append("loadtimes", {"contentLoad": ((new Date()).getTime() - startTime)});                
             }
