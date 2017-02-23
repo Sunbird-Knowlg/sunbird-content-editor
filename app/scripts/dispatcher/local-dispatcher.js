@@ -2,6 +2,7 @@ EkstepEditor.localDispatcher = new(EkstepEditor.IDispatcher.extend({
     type: "localDispatcher",
     initDispatcher: function() {},
     dispatch: function(event) {
-        EkstepEditorAPI.jQuery.post('telemetry', event, function() {});
+        var http = angular.injector(["ng"]).get("$http");
+        http.post('telemetry', event, function() {});
     }
 }));
