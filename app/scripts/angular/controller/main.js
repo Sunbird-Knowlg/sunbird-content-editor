@@ -302,16 +302,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         EkstepEditor.toolbarManager.setScope($scope);
-        EkstepEditor.init(null, $location.protocol() + '://' + $location.host() + ':' + $location.port(), function() {
-            $scope.initTelemetry();
-            $scope.appLoadMessage
-            var obj = _.find($scope.appLoadMessage, { 'id': 1});
-            if (_.isObject(obj)) {
-                obj.message = "Plugins loaded";
-                obj.status = true;
-            }
-            $scope.initEditor();
-        });
 
         $scope.initEditor = function() {
 
@@ -338,5 +328,16 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.fireToolbarTelemetry = function(menu, menuType) {
             EkstepEditor.telemetryService.interact({ "type": "select", "subtype": "click", "target": menuType, "targetid": menu.id, "objectid": "", "stage": EkstepEditor.stageManager.currentStage.id });
         }
+
+        EkstepEditor.init(null, $location.protocol() + '://' + $location.host() + ':' + $location.port(), function() {
+            $scope.initTelemetry();
+            $scope.appLoadMessage
+            var obj = _.find($scope.appLoadMessage, { 'id': 1});
+            if (_.isObject(obj)) {
+                obj.message = "Plugins loaded";
+                obj.status = true;
+            }
+            $scope.initEditor();
+        });
     }
 ]);
