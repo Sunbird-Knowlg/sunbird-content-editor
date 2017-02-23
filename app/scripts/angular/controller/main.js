@@ -3,11 +3,12 @@
  */
 'use strict';
 
-angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).config(['$locationProvider', function($locationProvider) {
+angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).config(['$locationProvider', '$httpProvider', function($locationProvider, $httpProvider) {
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
     });
+    $httpProvider.interceptors.push('apiTimeStamp');
 }]);
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document',
     function($scope, $timeout, $http, $location, $q, $window, $document) {
@@ -82,6 +83,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $http.post('ecml', { data: EkstepEditor.stageManager.toECML() }).then(function(resp) {
                 console.info('ECML', resp.data);
             });
+            EkstepEditorAPI.dispatchEvent('config:showSettingsTab', {id: $scope.currentStage.id});
         };
 
         $scope.saveContent = function(cb) {
@@ -164,7 +166,10 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 }
                 if (!(content && content.body) && !err) {
                     EkstepEditor.stageManager.registerEvents();
+                    EkstepEditor.stageManager.contentLoading = true;
                     EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
+                    EkstepEditor.stageManager.contentLoading = false;
+                    EkstepEditor.telemetryService.start();
                     $scope.closeLoadScreen(true);
                 } else if (content && content.body) {
                     $scope.oldContentBody = angular.copy(content.body);
@@ -293,7 +298,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 uid: $window.context.user.id,
                 sid: $window.context.sid,
                 content_id: EkstepEditorAPI.globalContext.contentId
-            }, EkstepEditor.piwikDispatcher);
+            }, EkstepEditor.config.dispatcher);
         }
 
         EkstepEditor.toolbarManager.setScope($scope);

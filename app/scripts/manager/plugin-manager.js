@@ -78,7 +78,7 @@ EkstepEditor.pluginManager = new (Class.extend({
     },
     dispatchTelemetry: function(pluginManifest, pluginInstance, parent) {
         var stageId = parent ? parent.id : "";
-        EkstepEditor.telemetryService.pluginLifeCycle({type: 'instance', pluginid: pluginManifest.id, pluginver: pluginManifest.ver, objectid: pluginInstance.id, stage: stageId, containerid: "", containerplugin: ""});
+        if (!EkstepEditor.stageManager.contentLoading) EkstepEditor.telemetryService.pluginLifeCycle({type: 'instance', pluginid: pluginManifest.id, pluginver: pluginManifest.ver, objectid: pluginInstance.id, stage: stageId, containerid: "", containerplugin: ""});
     },
     addPluginInstance: function(pluginObj) {
         this.pluginInstances[pluginObj.id] = pluginObj;
