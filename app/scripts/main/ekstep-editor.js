@@ -67,7 +67,7 @@ EkstepEditor.init = function(userSettings, absURL, callback) {
     _.forIn(EkstepEditor.config.plugins, function(value, key) {
         q.push({"key": key, "value" : value}, function(err) {});
     });*/
-    EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='styles/coreplugins.css?" + EkstepEditor.config.build_number + "'>"));
+    EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='styles/coreplugins.css?" + EkstepEditor.config.build_number + "'>");
     EkstepEditor.jQuery("body").append($("<script type='text/javascript' src='scripts/coreplugins.js?" + EkstepEditor.config.build_number + "'>"));
     EkstepEditor.jQuery("body").append($("<script type='text/javascript' src='scripts/coreplugins-dependencies.js?" + EkstepEditor.config.build_number + "'>"));
     callback();
