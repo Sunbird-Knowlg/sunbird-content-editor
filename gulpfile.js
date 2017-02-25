@@ -393,13 +393,14 @@ gulp.task('packageCorePlugins', ["minify","minifyCorePlugins"], function() {
         var plugin = fs.readFileSync('plugins/' + plugin + '/editor/plugin.min.js', 'utf8');
         fs.appendFile('content-editor/scripts/coreplugins.js', 'EkstepEditor.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',eval(\'' + plugin.replace(/'/g, "\\'") + '\'))' + '\n');
     });
-    gulp.src(_.uniq(jsDependencies))
+    var jsdependencies = gulp.src(_.uniq(jsDependencies))
         .pipe(concat('coreplugins-dependencies.js'))
         .pipe(gulp.dest('content-editor/scripts'));
-    gulp.src(cssDependencies)
+    var corecss = gulp.src(cssDependencies)
         .pipe(concat('coreplugins.css'))
         .pipe(gulp.dest('content-editor/styles'));
-    gulp.src('plugins/**/plugin.min.js', {read: false})
+    var removeminjs = gulp.src('plugins/**/plugin.min.js', {read: false})
         .pipe(clean());
+    return mergeStream(jsdependencies, corecss, removeminjs);
 });
 //Minification for dev End
