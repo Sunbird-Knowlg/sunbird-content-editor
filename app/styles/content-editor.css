@@ -164,44 +164,48 @@ body {
 .ngdialog.ngdialog-theme-default {
     padding-top: 80px !important;
 }
-.show-action-form-btn{
+
+.show-action-form-btn {
     position: absolute;
     left: 89px;
     top: 13px;
 }
 
 #geniecontrols {
-  border: none;
-  outline: none;
-  width: 726px;
-  height: 411px;
-  margin-top: 20px;
-  position: fixed;
-  display:none;
-  pointer-events: none;
+    border: none;
+    outline: none;
+    width: 726px;
+    height: 411px;
+    margin-top: 20px;
+    position: fixed;
+    display: none;
+    pointer-events: none;
 }
 
 #geniecontrolsimage {
-  outline: none;
-  border: none;
-  width: 720px;
-  height: 405px;
-  background: none;
-  pointer-events: none;
-  position: absolute;
+    outline: none;
+    border: none;
+    width: 720px;
+    height: 405px;
+    background: none;
+    pointer-events: none;
+    position: absolute;
 }
-.username{
-    cursor:pointer;
+
+.username {
+    cursor: pointer;
     text-align: right;
 }
-.user-details-container{
+
+.user-details-container {
     top: 555px;
     left: 1px;
     bottom: auto;
     right: auto;
     width: 344px!important;
 }
-.user-avtar{
+
+.user-avtar {
     width: 45px !important;
     height: 45px !important;
 }
@@ -213,7 +217,6 @@ body {
     right: 20px;
     z-index: 1000;
 }
-
 
 ::-webkit-scrollbar {
     width: 6px;
@@ -252,29 +255,36 @@ body {
     margin-left: 40% !important;
     padding: 10px !important;
 }
-.load-screen-dimmer{
-    background-color: rgba(255,255,255,.95) !important;
+
+.load-screen-dimmer {
+    background-color: rgba(255, 255, 255, .95) !important;
 }
-.migration-message{
+
+.migration-message {
     font-size: 16px !important;
 }
-.migartion-positive-btn{
+
+.migartion-positive-btn {
     margin-left: 15px !important;
 }
 
 .ui.loading.table tr td {
     border-top: 0px !important;
 }
-.ui.loading.table thead tr th{
+
+.ui.loading.table thead tr th {
     border-bottom: 0px !important;
 }
-#configMenu{
+
+#configMenu {
     margin: 1px 25px 0 0;
     float: right;
 }
-#configMenu .ui.button{
+
+#configMenu .ui.button {
     border-left: 1px solid #ccc !important;
 }
-#configMenu .ui.button:last-child{
+
+#configMenu .ui.button:last-child {
     border-right: 1px solid #ccc !important;
 }
