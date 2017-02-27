@@ -289,8 +289,7 @@ EkstepEditor.stageManager = new(Class.extend({
             var cb = (index == 0) ? function() {
                 EkstepEditor.stageManager.registerEvents();                
                 EkstepEditorAPI.jQuery('#thumbnailCanvasContainer').empty();
-                EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stage.id });
-                EkstepEditor.stageManager.contentLoading = false;
+                EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stage.id });                
             } : function() {};
             stageInstance.destroyOnLoad(pluginCount, canvas, cb);
             if (stageEvents) {
@@ -305,6 +304,7 @@ EkstepEditor.stageManager = new(Class.extend({
                 EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stages[0].id });
                 EkstepEditorAPI.getAngularScope().toggleGenieControl();                
                 instance.showLoadScreenMessage();
+                EkstepEditor.stageManager.contentLoading = false;
                 EkstepEditor.telemetryService.startEvent(true).append("loadtimes", {"contentLoad": ((new Date()).getTime() - startTime)});                
             }
         });
