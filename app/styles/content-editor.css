@@ -289,5 +289,11 @@ body {
     border-right: 1px solid #ccc !important;
 }
 
-.download-collaborator-icon{padding:6px; margin-left: 148px;}
-.download-collaborator-icon .download.link.icon{line-height: 26px;}
+.download-collaborator-icon {
+    padding: 6px;
+    margin-left: 148px;
+}
+
+.download-collaborator-icon .download.link.icon {
+    line-height: 26px;
+}
