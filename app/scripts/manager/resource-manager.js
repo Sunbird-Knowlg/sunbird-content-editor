@@ -2,7 +2,7 @@
  * @author Harish kumar Gangula<harishg@ilimi.in>
  */
 EkstepEditor.resourceManager = new(Class.extend({
-    repos: ["https://localhost:8081/", "/content/snapshot/", EkstepEditor.config.pluginRepo],
+    repos: [EkstepEditor.hostRepo.url, EkstepEditor.draftRepo.url, EkstepEditor.publishedRepo.url],
     loadManifest: function(pluginId, pluginVer, callback, reposLength) {
         var instance = this;
         if (_.isUndefined(reposLength)) {

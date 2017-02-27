@@ -366,10 +366,9 @@ window.EkstepEditorAPI = {
     ngSafeApply: function(scope, fn) {
         if(scope) scope.$safeApply(fn);
     },
-    addRepo: function (url) {
+    updateHostRepo: function (url) {
         if (url) {
-            EkstepEditor.resourceManager.repos.unshift(url); 
-            EkstepEditor.resourceManager.repos = _.uniq(EkstepEditor.resourceManager.repos);   
+            EkstepEditor.hostRepo.url = url;
             return true;
         }
         return false;
