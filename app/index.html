@@ -41,10 +41,10 @@
                                     <div ng-if="!message.status" class="ui active small inline loader"></div>
                                 </td>
                                 <td>
-                                    <h5 ng-bind="message.message"></h5>     
+                                    <h5 ng-bind="message.message"></h5>
                                 </td>
                             </tr>
-                        </tbody>      
+                        </tbody>
                     </table>
                     <div ng-show="onLoadCustomMessage.show" ng-include="'templates/appLoadScreenMessage.html'"></div>
                     <div ng-show="migration.showPostMigrationMsg" class="migartion-message-container">
@@ -117,12 +117,12 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="ui tiny icon button right floated" style="margin-right: 5px;" ng-click="fireEvent({id: 'download:content', data: undefined});">
-                            <i class="icon-download icon "></i> Download
-                        </div> -->
-                        <!-- <div class="ui tiny icon button right floated" style="margin-right: 3px;" ng-click="fireEvent({id: 'collaborator:add', data: undefined});">
-                            <i class="add user icon"></i> collaborator
-                        </div> -->
+                        <div class="ui tiny icon button right floated" style="margin-right: 5px;" ng-click="fireEvent({id: 'download:content', data: undefined});" title=Download>
+                            <i class="download icon "></i>
+                        </div>
+                        <div class="ui tiny icon button right floated" style="margin-right: 3px;" ng-click="fireEvent({id: 'collaborator:add', data: undefined});" title="Add Collaborator">
+                            <i class="add user icon"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -230,9 +230,9 @@
     <script src="scripts/migration/readalongmigration-task.js"></script>
     <script src="scripts/migration/assessmentmigration-task.js"></script>
     <script src="scripts/migration/eventsmigration-task.js"></script>
-    <script src="scripts/migration/settagmigration-task.js"></script>    
+    <script src="scripts/migration/settagmigration-task.js"></script>
     <script src="scripts/dispatcher/idispatcher.js"></script>
-    <script src="scripts/dispatcher/console-dispatcher.js"></script>    
+    <script src="scripts/dispatcher/console-dispatcher.js"></script>
     <script src="scripts/dispatcher/local-dispatcher.js"></script>
     <script src="scripts/dispatcher/piwik-dispatcher.js"></script>
     <script src="scripts/angular/controller/main.js"></script>
