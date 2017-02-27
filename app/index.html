@@ -117,11 +117,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="ui tiny icon button right floated" style="margin-right: 5px;" ng-click="fireEvent({id: 'download:content', data: undefined});" title=Download>
-                            <i class="download icon "></i>
-                        </div>
-                        <div class="ui tiny icon button right floated" style="margin-right: 3px;" ng-click="fireEvent({id: 'collaborator:add', data: undefined});" title="Add Collaborator">
-                            <i class="add user icon"></i>
+                        <div class="download-collaborator-icon">
+                            <i class="large add user link icon" ng-click="fireEvent({id: 'collaborator:add', data: undefined});" title="Add Collaborator"></i>
+                            <i class="large download link icon" ng-click="fireEvent({id: 'download:content', data: undefined});" title="Download" style="line-height: 26px;"></i>
                         </div>
                     </div>
                 </div>
