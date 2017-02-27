@@ -360,6 +360,7 @@ window.EkstepEditorAPI = {
         inst.attributes.y = inst.editorObj.getTop();
         inst.attributes.w = inst.editorObj.getWidth();
         inst.attributes.h = inst.editorObj.getHeight();
+        inst.attributes.r = inst.editorObj.getAngle();
         if (_.isFunction(inst.editorObj.getRx))
             inst.attributes.r = inst.editorObj.getRx();
     },

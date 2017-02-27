@@ -645,6 +645,7 @@ EkstepEditor.basePlugin = Class.extend({
         if (data.h) retData.height = data.h;
         if (data.radius) retData.rx = data.radius;
         if (data.color) retData.fill = data.color;
+        if (data.r) retData.angle = data.r;
         return retData;
     },
     getConfigManifest: function() {
