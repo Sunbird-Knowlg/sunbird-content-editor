@@ -302,6 +302,7 @@ EkstepEditor.stageManager = new(Class.extend({
             }
             if (stages.length === index + 1) {
                 EkstepEditorAPI.dispatchEvent('content:onload');
+                EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stages[0].id });
                 EkstepEditorAPI.getAngularScope().toggleGenieControl();                
                 instance.showLoadScreenMessage();
                 EkstepEditor.telemetryService.startEvent(true).append("loadtimes", {"contentLoad": ((new Date()).getTime() - startTime)});                
