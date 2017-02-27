@@ -24,7 +24,7 @@
     <div id="thumbnailCanvasContainer" style="display: none;"></div>
     <div ng-app="editorApp" class="maincontainer" ng-strict-di>
         <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
-            <div ng-show="showAppLoadScreen" class="ui active inverted dimmer load-screen-dimmer">
+            <div ng-show="showAppLoadScreen" class="ui active inverted dimmer">
                 <div class="load-screen-container">
                     <table class="ui very basic collapsing loading table" style="margin-left: auto;margin-right: auto;">
                         <thead>
@@ -133,15 +133,15 @@
                     </div>
                 </div>
                 <div class="ui three wide column">
-                    <div class="ui icon buttons" id="configMenu">
-                        <button class="ui button active popup-item" id="settingsMenu" data-content="Settings" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showSettingsTab'})">
-                            <i class="settings icon"></i>
+                    <div class="ui small buttons" id="configMenu">
+                        <button class="ui grey button active popup-item" id="settingsMenu" data-content="Settings" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showSettingsTab'})">
+                            <i class="large settings icon"></i>
                         </button>
                         <button class="ui button popup-item" id="helpMenu" data-content="Help" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showHelpTab'})">
-                            <i class="help icon"></i>
+                            <i class="large help icon"></i>
                         </button>
                         <button class="ui button popup-item" id="commentsMenu" data-content="Comments" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showCommentsTab'})">
-                            <i class="comments icon"></i>
+                            <i class="large comments icon"></i>
                         </button>
                     </div>
                 </div>
@@ -213,6 +213,7 @@
     <script src="libs/semantic.min.js"></script>
     <script src="scripts/main/class.js"></script>
     <script src="scripts/main/ekstep-editor.js"></script>
+    <script src="scripts/main/ekstep-config.js"></script>
     <script src="scripts/main/base-plugin.js"></script>
     <script src="scripts/manager/event-manager.js"></script>
     <script src="scripts/manager/plugin-manager.js"></script>
@@ -229,11 +230,7 @@
     <script src="scripts/migration/readalongmigration-task.js"></script>
     <script src="scripts/migration/assessmentmigration-task.js"></script>
     <script src="scripts/migration/eventsmigration-task.js"></script>
-    <script src="scripts/migration/settagmigration-task.js"></script>
-    <script src="scripts/service/iservice.js"></script>
-    <script src="scripts/service/content-service.js"></script>
-    <script src="scripts/service/popup-service.js"></script>
-    <script src="scripts/service/telemetry-service.js"></script>
+    <script src="scripts/migration/settagmigration-task.js"></script>    
     <script src="scripts/dispatcher/idispatcher.js"></script>
     <script src="scripts/dispatcher/console-dispatcher.js"></script>    
     <script src="scripts/dispatcher/local-dispatcher.js"></script>
@@ -242,6 +239,11 @@
     <script src="scripts/angular/controller/popup-controller.js"></script>
     <script src="scripts/angular/directive/draggable-directive.js"></script>
     <script src="scripts/angular/directive/droppable-directive.js"></script>
+    <script src="scripts/angular/service/api-timestamp-service.js"></script>
+    <script src="scripts/service/iservice.js"></script>
+    <script src="scripts/service/content-service.js"></script>
+    <script src="scripts/service/popup-service.js"></script>
+    <script src="scripts/service/telemetry-service.js"></script>
     <script src="scripts/service/assessment-service.js"></script>
     <script src="scripts/service/asset-service.js"></script>
     <script src="scripts/service/concept-service.js"></script>
