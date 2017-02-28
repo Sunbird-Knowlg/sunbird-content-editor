@@ -335,7 +335,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         };
 
         $scope.fireToolbarTelemetry = function(menu, menuType) {
-            EkstepEditor.telemetryService.interact({ "type": "select", "subtype": "click", "target": menuType, "targetid": menu.id, "objectid": "", "stage": EkstepEditor.stageManager.currentStage.id });
+            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "menu", "target": menuType, "targetid": menu.id, "objectid": "", "stage": EkstepEditor.stageManager.currentStage.id });
         }
     }
 ]);

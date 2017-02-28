@@ -54,7 +54,7 @@ EkstepEditor.stageManager = new(Class.extend({
         EkstepEditor.eventManager.dispatchEvent('object:' + eventType, meta);
         if (meta.type != '') {
             EkstepEditor.eventManager.dispatchEvent(meta.type + ':' + eventType, meta);
-        }    
+        }
     },
     selectStage: function(event, data) {
         if (_.isUndefined(this.currentStage)) {
@@ -92,6 +92,7 @@ EkstepEditor.stageManager = new(Class.extend({
         if (this.stages.length === 0) EkstepEditorAPI.dispatchEvent('stage:create', { "position": "next" });
         else if (currentStageIndex === this.stages.length) this.selectStage(null, { stageId: this.stages[currentStageIndex - 1].id });
         else this.selectStage(null, { stageId: this.stages[currentStageIndex].id });
+        EkstepEditorAPI.dispatchEvent('stage:removed', { stageId: data.stageId});
         this.enableSave();
     },
     deleteStageInstances: function(stage) {
@@ -110,8 +111,8 @@ EkstepEditor.stageManager = new(Class.extend({
     duplicateStage: function(event, data) {
         var currentStage = _.find(this.stages, { id: data.stageId }), instance = this, plugins = [];
         var stage = this.stages[this.getStageIndex(currentStage)];
-        EkstepEditorAPI.dispatchEvent('stage:create', { "position": "afterCurrent" });
-        this.contentLoading = true;
+        EkstepEditorAPI.dispatchEvent('stage:create', { "position": "afterCurrent" });        
+        EkstepEditor.eventManager.enableEvents = false;
         _.forEach(stage.children, function(plugin) {
             plugins.push({'z-index': plugin.attributes['z-index'], data: plugin });
         });
@@ -119,7 +120,7 @@ EkstepEditor.stageManager = new(Class.extend({
             EkstepEditorAPI.cloneInstance(plugin.data);
         });
         this.currentStage.destroyOnLoad(stage.children.length, this.canvas, function(){
-            instance.contentLoading = false;
+            EkstepEditor.eventManager.enableEvents = true;
         });       
         this.enableSave();        
     },

@@ -52,6 +52,7 @@ EkstepEditor.pluginManager = new (Class.extend({
             } else {
                 instance.loadDependencies(manifest);
                 try {
+                    if (!EkstepEditor.stageManager.contentLoading) EkstepEditor.telemetryService.pluginLifeCycle({type: 'load', pluginid: manifest.id, pluginver: manifest.ver, objectid: "", stage: "", containerid: "", containerplugin: ""});
                     instance.registerPlugin(manifest, eval(data));
                 } catch (e) {
                     console.error("error while loading plugin:" + manifest.id, e);
@@ -91,21 +92,21 @@ EkstepEditor.pluginManager = new (Class.extend({
                 data.forEach(function(d) {
                     p = new pluginClass(pluginManifest, d, parent);
                     instance.addPluginInstance(p);
+                    instance.dispatchTelemetry(pluginManifest, p, parent, d);
                     p.initPlugin();
-                    instance.dispatchTelemetry(pluginManifest, p, parent);
                 })
             } else {
                 p = new pluginClass(pluginManifest, data, parent);
                 instance.addPluginInstance(p);
+                instance.dispatchTelemetry(pluginManifest, p, parent, data);
                 p.initPlugin();
-                instance.dispatchTelemetry(pluginManifest, p, parent);
             }
         }
         return p;
     },
-    dispatchTelemetry: function(pluginManifest, pluginInstance, parent) {
+    dispatchTelemetry: function(pluginManifest, pluginInstance, parent, data) {
         var stageId = parent ? parent.id : "";
-        if (!EkstepEditor.stageManager.contentLoading) EkstepEditor.telemetryService.pluginLifeCycle({type: 'instance', pluginid: pluginManifest.id, pluginver: pluginManifest.ver, objectid: pluginInstance.id, stage: stageId, containerid: "", containerplugin: ""});
+        if (!EkstepEditor.stageManager.contentLoading) EkstepEditor.telemetryService.pluginLifeCycle({type: 'instance', pluginid: pluginManifest.id, pluginver: pluginManifest.ver, objectid: pluginInstance.id, stage: stageId, assetid: data.asset, containerid: "", containerplugin: ""});
     },
     addPluginInstance: function(pluginObj) {
         this.pluginInstances[pluginObj.id] = pluginObj;
