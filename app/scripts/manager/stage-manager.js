@@ -16,7 +16,7 @@ EkstepEditor.stageManager = new(Class.extend({
         fabric.Object.prototype.borderColor = "#1A98FA";
         fabric.Object.prototype.cornerColor = "#1A98FA";
         //fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
-        this.canvas = new fabric.Canvas('canvas', { backgroundColor: '#FFFFFF', preserveObjectStacking: true, perPixelTargetFind: true });
+        this.canvas = new fabric.Canvas('canvas', { backgroundColor: '#FFFFFF', preserveObjectStacking: true, perPixelTargetFind: false });
         console.log("Stage manager initialized");
         EkstepEditor.eventManager.addEventListener("stage:delete", this.deleteConfirmationDialog, this);
         EkstepEditor.eventManager.addEventListener("stage:duplicate", this.duplicateStage, this);
