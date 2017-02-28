@@ -209,15 +209,8 @@ EkstepEditor.stageManager = new(Class.extend({
         }
         var manifestEntry = _.find(content.theme.manifest.media, { id: id });
         if (_.isUndefined(manifestEntry)) {
-            content.theme.manifest.media.push({
-                id: id,
-                pluginId: id,
-                pluginVer: pluginManifest.ver,
-                ver: pluginManifest.ver,
-                src: EkstepEditor.config.absURL + EkstepEditor.relativeURL(pluginManifest.id, pluginManifest.ver, pluginManifest.renderer.main),
-                type: "plugin"
-            });
-            if(!_.isUndefined(pluginManifest.renderer.dependencies) && pluginManifest.renderer.dependencies.length > 0) {
+            //Add renderer dependencies first 
+             if(!_.isUndefined(pluginManifest.renderer.dependencies) && pluginManifest.renderer.dependencies.length > 0) {
                 _.forEach(pluginManifest.renderer.dependencies, function(dependency) {
                     content.theme.manifest.media.push({
                         id: dependency.id,
@@ -226,6 +219,16 @@ EkstepEditor.stageManager = new(Class.extend({
                     });
                 });
             }
+            //then push the main renderer file
+            content.theme.manifest.media.push({
+                id: id,
+                pluginId: id,
+                pluginVer: pluginManifest.ver,
+                ver: pluginManifest.ver,
+                src: EkstepEditor.config.absURL + EkstepEditor.relativeURL(pluginManifest.id, pluginManifest.ver, pluginManifest.renderer.main),
+                type: "plugin"
+            });
+           
         }
     },
     fromECML: function(contentBody) {
