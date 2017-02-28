@@ -1,12 +1,17 @@
-EkstepEditor.popupService = new(EkstepEditor.iService.extend({    
-    initService: function(loadNgModules, openModal) {        
-        this.loadNgModules = loadNgModules;
-        this.openModal = openModal;
+EkstepEditor.popupService = new(EkstepEditor.iService.extend({
+    loadModules: undefined,
+    openModal: undefined,
+    initService: function(loadModuleFn, openModalFn) {
+        this.loadModules = loadModuleFn;
+        this.openModal = openModalFn;
     },
     loadNgModules: function(templatePath, controllerPath) {
-        this.loadNgModules && this.loadNgModules(templatePath, controllerPath);
+        this.loadModules && this.loadModules(templatePath, controllerPath);
     },
     open: function(config, callback){
-        this.openModal && this.openModal(config, callback);
+        if(this.openModal) {
+            this.openModal(config, callback);
+            EkstepEditor.telemetryService.interact({ "type": "popupInteract", "subtype": "popup:open", "target": "window", "targetid": "", "objectid": "", "stage": EkstepEditorAPI.getCurrentStage().id });
+        }
     }
 }));
