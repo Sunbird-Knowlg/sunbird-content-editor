@@ -23,6 +23,7 @@
     <!-- End of localhost only code-->
     <div id="thumbnailCanvasContainer" style="display: none;"></div>
     <div ng-app="editorApp" class="maincontainer" ng-strict-di>
+        <div ng-controller="popupController as $ctrl" id="popuptemplate"></div>
         <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
             <div ng-show="showAppLoadScreen" class="ui active inverted dimmer">
                 <div class="load-screen-container">
@@ -184,7 +185,6 @@
                     </div>
                 </div>
             </div>
-            <div ng-controller="popupController as $ctrl" id="popuptemplate"></div>
         </div>
     </div>
     <div id="objectPointer" style="display: none;border: 1px dashed black;"></div>

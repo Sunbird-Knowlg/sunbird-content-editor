@@ -314,7 +314,6 @@ var corePlugins = [
     "org.ekstep.stageconfig-1.0",
     "org.ekstep.unsupported-1.0",
     "org.ekstep.activitybrowser-1.0",
-    "org.ekstep.stagedecorator-1.0",
     "org.ekstep.assessmentbrowser-1.0",
     "org.ekstep.conceptselector-1.0"
 ]
