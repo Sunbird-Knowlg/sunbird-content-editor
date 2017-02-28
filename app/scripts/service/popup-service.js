@@ -11,7 +11,7 @@ EkstepEditor.popupService = new(EkstepEditor.iService.extend({
     open: function(config, callback){
         if(this.openModal) {
             this.openModal(config, callback);
-            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "open", "target": "popup", "targetid": "", "objectid": "", "stage": EkstepEditorAPI.getCurrentStage().id });
+            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "open", "target": "popup", "pluginid": "", "pluginver": '', "objectid": "", "stage": EkstepEditorAPI.getCurrentStage().id });
         }
     }
 }));

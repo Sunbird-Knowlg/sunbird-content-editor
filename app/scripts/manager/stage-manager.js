@@ -126,10 +126,10 @@ EkstepEditor.stageManager = new(Class.extend({
     },
     getObjectMeta: function(options) {
         var pluginId = (options && options.target) ? options.target.id : '';
-        var pluginType = EkstepEditor.pluginManager.getPluginType(pluginId);
         return {
             'id': pluginId,
-            'type': pluginType
+            'type': EkstepEditor.pluginManager.getPluginType(pluginId),
+            'ver': EkstepEditor.pluginManager.getPluginVersion(pluginId)
         }
     },
     toECML: function() {

@@ -119,6 +119,14 @@ EkstepEditor.basePlugin = Class.extend({
     },
 
     /**
+     * Returns the version of this plugin (manifest ID)
+     * @memberof EkstepEditor.BasePlugin
+     */
+    getVersion: function() {
+        return this.manifest ? this.manifest.ver : '';
+    },
+
+    /**
      * Registers listeners for Fabricjs events from the canvas. Child implementations should override
      * the actual callback methods instead of overriding this one.
      * @private

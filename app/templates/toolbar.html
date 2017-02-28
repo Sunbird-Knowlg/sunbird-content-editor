@@ -1,6 +1,6 @@
 <span ng-switch on="menu.type">
     <span ng-if="!menu.submenu">
-        <a class="item at-menu-item popup-item"  ng-click="fireToolbarTelemetry(menu, 'mainmenu');fireEvent(menu.onclick);"  data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="top center">
+        <a class="item at-menu-item popup-item"  ng-click="fireToolbarTelemetry(menu, 'mainmenu'); fireEvent(menu.onclick);"  data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="top center">
             <i class="{{menu.iconClass}}" ng-if="menu.iconClass" style="{{menu.iconStyle}}" id="{{menu.id}}" ng-switch-when="icon"></i>
             <img class="ui mini image {{menu.iconClass}}" ng-src="{{menu.iconImage}}" ng-if="menu.iconImage" id="{{menu.id}}" ng-switch-when="image">
         </a> 
