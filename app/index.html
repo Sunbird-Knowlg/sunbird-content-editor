@@ -25,7 +25,7 @@
     <div ng-app="editorApp" class="maincontainer" ng-strict-di>
         <div ng-controller="popupController as $ctrl" id="popuptemplate"></div>
         <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
-            <div ng-show="showAppLoadScreen" class="ui active inverted dimmer">
+            <div ng-show="showAppLoadScreen" class="ui active inverted dimmer" ng-cloak>
                 <div class="load-screen-container">
                     <table class="ui very basic collapsing loading table" style="margin-left: auto;margin-right: auto;">
                         <thead>
