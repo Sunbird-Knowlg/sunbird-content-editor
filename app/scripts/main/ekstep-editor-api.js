@@ -61,7 +61,7 @@ window.EkstepEditorAPI = {
      * @memberof EkstepEditorAPI
      */
     loadPluginResource: function(pluginId, pluginVer, src, dataType, callback) {
-        EkstepEditor.resourceManager.loadPluginResource(pluginId, pluginVer, src, dataType, callback);
+        EkstepEditor.pluginManager.loadPluginResource(pluginId, pluginVer, src, dataType, callback);
     },
 
     /**
@@ -365,12 +365,5 @@ window.EkstepEditorAPI = {
     },
     ngSafeApply: function(scope, fn) {
         if(scope) scope.$safeApply(fn);
-    },
-    updateHostRepo: function (url) {
-        if (url) {
-            EkstepEditor.hostRepo.url = url;
-            return true;
-        }
-        return false;
     }
 }

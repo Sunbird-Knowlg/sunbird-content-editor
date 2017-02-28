@@ -50,9 +50,11 @@ EkstepEditor.loadExternalResource = function(type, pluginId, pluginVer, src) {
 }
 
 EkstepEditor.init = function(userSettings, absURL, callback) {
+    var startTime = (new Date()).getTime();
     EkstepEditor.config.absURL = EkstepEditorAPI.absURL = absURL;
     EkstepEditor.pluginManager.loadAllPlugins(EkstepEditor.config.plugins, function () {
         callback();
+        EkstepEditor.telemetryService.startEvent().append("loadtimes", { plugins: ((new Date()).getTime() - startTime) });
     });
 }
 
