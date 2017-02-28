@@ -166,9 +166,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 }
                 if (!(content && content.body) && !err) {
                     EkstepEditor.stageManager.registerEvents();
-                    EkstepEditor.stageManager.contentLoading = true;
                     EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
-                    EkstepEditor.stageManager.contentLoading = false;
+                    EkstepEditorAPI.dispatchEvent('content:onload');
                     EkstepEditor.telemetryService.start();
                     $scope.closeLoadScreen(true);
                 } else if (content && content.body) {
