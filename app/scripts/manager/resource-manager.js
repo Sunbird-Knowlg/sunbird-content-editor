@@ -3,7 +3,7 @@
  */
 EkstepEditor.resourceManager = new(Class.extend({
     init: function() {
-        this.repos =  [EkstepEditor.draftRepo, EkstepEditor.publishedRepo, EkstepEditor.hostRepo];
+        this.repos =  [EkstepEditor.hostRepo, EkstepEditor.draftRepo, EkstepEditor.publishedRepo];
     },
     discoverManifest: function(pluginId, pluginVer, callback) {
         this._findManifestFromRepos(pluginId, pluginVer, function (err, data) {
