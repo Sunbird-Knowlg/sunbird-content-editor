@@ -83,7 +83,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $http.post('ecml', { data: EkstepEditor.stageManager.toECML() }).then(function(resp) {
                 console.info('ECML', resp.data);
             });
-            EkstepEditorAPI.dispatchEvent('config:showSettingsTab', {id: $scope.currentStage.id});
+            EkstepEditorAPI.dispatchEvent('config:showSettingsTab');
         };
 
         $scope.saveContent = function(cb) {
