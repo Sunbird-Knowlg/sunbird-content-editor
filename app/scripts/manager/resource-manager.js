@@ -3,14 +3,14 @@
  */
 EkstepEditor.resourceManager = new(Class.extend({
     init: function() {
-        this.repos =  [EkstepEditor.hostRepo, EkstepEditor.draftRepo, EkstepEditor.publishedRepo];
+        this.repos = [EkstepEditor.hostRepo, EkstepEditor.draftRepo, EkstepEditor.publishedRepo];
     },
     discoverManifest: function(pluginId, pluginVer, callback) {
-        this._findManifestFromRepos(pluginId, pluginVer, function (err, data) {
+        this._findManifestFromRepos(pluginId, pluginVer, function(err, data) {
             callback(err, data);
         });
     },
-    _findManifestFromRepos: function (pluginId,pluginVer,callback, reposLength) {
+    _findManifestFromRepos: function(pluginId, pluginVer, callback, reposLength) {
         var instance = this;
         if (_.isUndefined(reposLength)) {
             reposLength = this.repos.length - 1;
@@ -30,7 +30,7 @@ EkstepEditor.resourceManager = new(Class.extend({
         this.loadResource(repo.url + '/' + pluginId + '-' + pluginVer + '/' + src, dataType, callback);
     },
     loadExternalResource: function(type, pluginId, pluginVer, src, repo) {
-        
+
         url = repo.url + '/' + pluginId + '-' + pluginVer + '/' + src;
         switch (type) {
             case 'js':

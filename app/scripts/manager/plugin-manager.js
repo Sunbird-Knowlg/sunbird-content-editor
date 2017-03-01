@@ -10,6 +10,7 @@ EkstepEditor.pluginManager = new (Class.extend({
         console.log("Plugin manager initialized");
     },
     registerPlugin: function(manifest, plugin, repo) {
+        repo = repo || EkstepEditor.publishedRepo;
         this.plugins[manifest.id] = {p: plugin, m: manifest, 'repo': repo};
         var p = new plugin(manifest); // Initialize plugin
         this.pluginObjs[manifest.id] = p;
@@ -147,6 +148,9 @@ EkstepEditor.pluginManager = new (Class.extend({
         }
     },
     loadAllPlugins: function (plugins, callback) {
+        if (_.isEmpty(plugins)) {
+            callback();
+        }
         var instance = this;
         var q = async.queue(function(plugin, pluginCallback) {
             instance.loadPlugin(plugin.key, plugin.value);
