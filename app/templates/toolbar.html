@@ -8,7 +8,7 @@
 <div class="menu" ng-if="menu.submenu">
     <div class="ui dropdown item popup-item" data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="top center">
         <i class="{{menu.iconClass}}" ng-if="menu.iconClass" style="{{menu.iconStyle}}" id="{{menu.id}}" ng-switch-when="icon" ng-click="fireEvent(menu.onclick); fireToolbarTelemetry(menu, menu.category);"></i>
-        <div class="menu">=
+        <div class="menu">
             <a class="item" ng-repeat="dd in menu.submenu" ng-click="fireToolbarTelemetry(dd, menu.category);fireEvent(dd.onclick);" ng-switch on="dd.type">
                 <span ng-switch-when="icon">
                         <i class="{{dd.iconClass}}" ng-if="dd.iconClass" style="{{dd.iconStyle}}" id="{{dd.id}}"></i>
