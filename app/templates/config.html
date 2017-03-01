@@ -45,11 +45,21 @@
     </div>
     <div class="ui icon buttons" ng-switch-when="buttonToggle">
         <label ng-if="config.title">{{config.title}}</label>
-        <button class="ui button {{configData[config.propertyName] === option.value ? 'primary': ''}}" ng-repeat="option in config.options" ng-click="configData[config.propertyName] = option.value">
+        <button class="ui button {{configData[config.propertyName] === option.value ? 'primary': ''}}" ng-repeat="option in config.options" ng-click="configData[config.propertyName] = option.value" data-tooltip="{{option.toolTip}}">
             <div ng-switch on="option.dataType">
                 <i class="{{option.iconClass}} " ng-if="option.iconClass" style="{{option.iconStyle}}" ng-switch-when="icon"></i>
             </div>
         </button>
+
+
+        <div class="ui blue labels" ng-repeat="option in config.options" ng-if="configData[config.propertyName] === option.value">
+            
+            <button class="ui button" ng-repeat="suboption in option.suboptions" ng-if="configData[config.propertyName] === option.value" data-tooltip="{{suboption.toolTip}}" ng-click="configData[suboption.value] = suboption.value" >
+                <div ng-switch on="suboption.dataType">
+                    <i class="{{suboption.iconClass}} " ng-if="suboption.iconClass" style="{{suboption.iconStyle}}" ng-switch-when="icon"></i>
+                </div>
+            </button>
+        </div>
     </div>
     <div class="ui form" ng-switch-when="rangeslider">
         <div class="field">
