@@ -51,26 +51,29 @@ EkstepEditor.loadExternalResource = function(type, pluginId, pluginVer, src) {
 
 EkstepEditor.init = function(userSettings, absURL, callback) {
     var startTime = (new Date()).getTime();
-    EkstepEditor.config.absURL = EkstepEditorAPI.absURL = absURL;
-    /*
+    EkstepEditor.config.absURL = EkstepEditorAPI.absURL = absURL;   
+    
+    EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='styles/coreplugins.css?" + EkstepEditor.config.build_number + "'>");
+    EkstepEditor.jQuery("body").append($("<script type='text/javascript' src='scripts/coreplugins.js?" + EkstepEditor.config.build_number + "'>"));
+    EkstepEditor.jQuery("body").append($("<script type='text/javascript' src='scripts/coreplugins-dependencies.js?" + EkstepEditor.config.build_number + "'>"));
+
+    if(_.isEmpty(EkstepEditor.config.plugins)) callback();
+    
     var q = async.queue(function(plugin, callback) {
+        console.log('plugin loaded async:', plugin.key);
         EkstepEditor.pluginManager.loadPlugin(plugin.key, plugin.value);
         callback();
     }, 4);
 
     // assign a callback
     q.drain = function() {
+        //EkstepEditor.telemetryService.startEvent().append("loadtimes", {plugins: ((new Date()).getTime() - startTime)});
         callback();
-        EkstepEditor.telemetryService.startEvent().append("loadtimes", {plugins: ((new Date()).getTime() - startTime)});
     };
 
     _.forIn(EkstepEditor.config.plugins, function(value, key) {
         q.push({"key": key, "value" : value}, function(err) {});
-    });*/
-    EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='styles/coreplugins.css?" + EkstepEditor.config.build_number + "'>");
-    EkstepEditor.jQuery("body").append($("<script type='text/javascript' src='scripts/coreplugins.js?" + EkstepEditor.config.build_number + "'>"));
-    EkstepEditor.jQuery("body").append($("<script type='text/javascript' src='scripts/coreplugins-dependencies.js?" + EkstepEditor.config.build_number + "'>"));
-    callback();
+    });
 }
 
 EkstepEditor.loadBaseConfigManifest = function (cb) {
