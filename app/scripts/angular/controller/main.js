@@ -166,9 +166,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 }
                 if (!(content && content.body) && !err) {
                     EkstepEditor.stageManager.registerEvents();
-                    EkstepEditor.stageManager.contentLoading = true;
                     EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
-                    EkstepEditor.stageManager.contentLoading = false;
+                    EkstepEditorAPI.dispatchEvent('content:onload');
                     EkstepEditor.telemetryService.start();
                     $scope.closeLoadScreen(true);
                 } else if (content && content.body) {
@@ -326,7 +325,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         };
 
         $scope.fireToolbarTelemetry = function(menu, menuType) {
-            EkstepEditor.telemetryService.interact({ "type": "select", "subtype": "click", "target": menuType, "targetid": menu.id, "objectid": "", "stage": EkstepEditor.stageManager.currentStage.id });
+            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "menu", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
+        }
+
+        $scope.fireSidebarTelemetry = function(menu, menuType) {
+            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "sidebar", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
         }
 
         EkstepEditor.init(null, $location.protocol() + '://' + $location.host() + ':' + $location.port(), function() {

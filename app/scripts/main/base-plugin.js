@@ -37,7 +37,6 @@ EkstepEditor.basePlugin = Class.extend({
             this.registerMenu();
             this.initialize();
             EkstepEditorAPI.addEventListener(this.manifest.id + ":create", this.create, this);
-            if (!EkstepEditor.stageManager.contentLoading) EkstepEditor.telemetryService.pluginLifeCycle({type: 'load', pluginid: this.manifest.id, pluginver: this.manifest.ver, objectid: "", stage: "", containerid: "", containerplugin: ""});
             console.log(manifest.id + " plugin initialized");
         } else {
             this.editorObj = undefined, this.event = undefined, this.attributes = { x: 0, y: 0, w: 0, h: 0, visible: true }, this.params = undefined, this.data = undefined, this.media = undefined;
@@ -117,6 +116,14 @@ EkstepEditor.basePlugin = Class.extend({
      */
     getType: function() {
         return this.manifest ? this.manifest.id : '';
+    },
+
+    /**
+     * Returns the version of this plugin (manifest ID)
+     * @memberof EkstepEditor.BasePlugin
+     */
+    getVersion: function() {
+        return this.manifest ? this.manifest.ver : '';
     },
 
     /**

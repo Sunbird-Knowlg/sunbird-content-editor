@@ -34,22 +34,16 @@
 </style>
 <div ng-show="showSettingContainer">
     <div class="ui mini compact item menu sidebarConfig sidebarHeadTab" ng-class="stageConfigStatus ? 'two' : 'three' ">
-        <a class="item active" id="settingsTab" data-tab="settings" ng-click="fireEvent({id: 'config:show'})"><i class="setting icon"></i> Customise </a>
-        <a class="item" ng-show="!stageConfigStatus" data-tab="actions" ng-click="fireEvent({id: 'config:actions'})"><i class="tasks icon"></i> Actions </a>
-        <a class="item" data-tab="info" ng-click="fireEvent({ id: 'config:properties'})"><i class="info icon"></i> Properties </a>
+        <a class="item active" id="settingsTab" data-tab="settings" ng-click="fireEvent({id: 'config:show'}); fireSidebarTelemetry({id: 'customise'}, 'config')"><i class="setting icon"></i> Customise </a>
+        <a class="item" ng-show="!stageConfigStatus" data-tab="actions" ng-click="fireEvent({id: 'config:actions'}); fireSidebarTelemetry({id: 'actions'}, 'config')"><i class="tasks icon"></i> Actions </a>
+        <a class="item" data-tab="info" ng-click="fireEvent({ id: 'config:properties'}); fireSidebarTelemetry({id: 'properties'}, 'config')"><i class="info icon"></i> Properties </a>
     </div>
     <div class="ui active tab segment sidebarContent" id="settingsContent" data-tab="settings">
-        <div class="ui small basic icon buttons" ng-show="!stageConfigStatus" style="margin-bottom: 10px;">
-            <button ng-repeat="menu in contextMenus " ng-if="menu.state === 'SHOW'" class="ui button popup-item" ng-click="fireEvent(menu.onclick)" data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="top center">
-                <i class="{{menu.iconClass}}"></i>
-            </button>
-        </div>
-        <div class="ui divider" ng-show="!stageConfigStatus"></div>
         <span ng-repeat="config in pluginConfig" ng-show="!stageConfigStatus" ng-include="'templates/config.html'"></span>
         <div class="ui padded grid" ng-show="stageConfigStatus">
             <div class=" row">
                 <div class="ui toggle checkbox">
-                    <input type="checkbox" ng-model="showGenieControls" ng-click="toggleGenieControl()">
+                    <input type="checkbox" ng-model="showGenieControls" ng-click="toggleGenieControl(); fireSidebarTelemetry({id: 'genieControl'}, 'config')">
                     <label>Show Genie Controls</label>
                 </div>
             </div>
@@ -62,7 +56,7 @@
                         <div class="ui form">
                             <div class="field">
                                 <label></label>
-                                <textarea rows="6" ng-maxlength="1000" ng-model="model.teacherInstructions" ng-keyup="updateTeacherInstructionsOnKeyPress()">
+                                <textarea rows="6" ng-maxlength="1000" ng-model="model.teacherInstructions" ng-keyup="updateTeacherInstructionsOnKeyPress()" ng-click="fireSidebarTelemetry({id: 'teacherInstructions'}, 'config')">
                                 </textarea>
                             </div>
                         </div>
@@ -70,7 +64,7 @@
                 </div>
             </div>
             <div class="row">
-                <a class="ui basic small button" ng-href="{{reportIssueLink}}" target="_blank"><i class="help circle medium icon"></i>Report an issue</a>
+                <a class="ui basic small button" ng-click="fireSidebarTelemetry({id: 'reportIssue'}, 'reportIssueButton')" ng-href="{{reportIssueLink}}" target="_blank"><i class="help circle medium icon"></i>Report an issue</a>
             </div>
         </div>
     </div>
@@ -83,7 +77,7 @@
 </div>
 <div ng-show="showHelpContainer">
     <div class="ui mini compact one item menu sidebarHelp sidebarHeadTab">
-        <a class="item active" id="helpTab" data-tab="help" ng-click="fireEvent({ id: 'config:help'})">
+        <a class="item active" id="helpTab" data-tab="help" ng-click="fireEvent({ id: 'config:help'}); fireSidebarTelemetry(menu, 'config')">
             <i class="question icon"></i>Help
         </a>
         <!-- <a class="blue item" data-tab="feedback"><i class="talk icon"></i>Feedback </a> -->
