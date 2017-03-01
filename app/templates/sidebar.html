@@ -39,12 +39,6 @@
         <a class="item" data-tab="info" ng-click="fireEvent({ id: 'config:properties'})"><i class="info icon"></i> Properties </a>
     </div>
     <div class="ui active tab segment sidebarContent" id="settingsContent" data-tab="settings">
-        <div class="ui small basic icon buttons" ng-show="!stageConfigStatus" style="margin-bottom: 10px;">
-            <button ng-repeat="menu in contextMenus " ng-if="menu.state === 'SHOW'" class="ui button popup-item" ng-click="fireEvent(menu.onclick)" data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="top center">
-                <i class="{{menu.iconClass}}"></i>
-            </button>
-        </div>
-        <div class="ui divider" ng-show="!stageConfigStatus"></div>
         <span ng-repeat="config in pluginConfig" ng-show="!stageConfigStatus" ng-include="'templates/config.html'"></span>
         <div class="ui padded grid" ng-show="stageConfigStatus">
             <div class=" row">
