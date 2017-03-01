@@ -22,6 +22,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         // Declare global variables
         $scope.showAppLoadScreen = true;
         $scope.contentLoadedFlag = false;
+        $scope.showGenieControls = false;
         $scope.appLoadMessage = [
             { 'id': 1, 'message': 'Loading Plugins', 'status': false }
         ];
@@ -316,6 +317,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
             $scope.menus = EkstepEditor.toolbarManager.menuItems;
             $scope.contextMenus = EkstepEditor.toolbarManager.contextMenuItems;
+            $scope.configMenus = EkstepEditor.toolbarManager.configMenuItems;
             $scope.stages = EkstepEditor.stageManager.stages;
             $scope.currentStage = EkstepEditor.stageManager.currentStage;
             EkstepEditor.eventManager.addEventListener("stage:select", $scope.resetTeacherInstructions, this);

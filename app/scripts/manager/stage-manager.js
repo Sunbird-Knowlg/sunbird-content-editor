@@ -298,10 +298,10 @@ EkstepEditor.stageManager = new(Class.extend({
                 })
             }
             if (stages.length === index + 1) {
-                EkstepEditor.stageManager.registerEvents();                                
-                EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stages[0].id });                
+                EkstepEditor.stageManager.registerEvents();
+                EkstepEditorAPI.getAngularScope().toggleGenieControl();                           
+                EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: stages[0].id });
                 EkstepEditorAPI.dispatchEvent('content:onload');
-                EkstepEditorAPI.getAngularScope().toggleGenieControl();                
                 instance.showLoadScreenMessage();
                 EkstepEditor.stageManager.contentLoading = false;
                 EkstepEditor.telemetryService.startEvent(true).append("loadtimes", {"contentLoad": ((new Date()).getTime() - startTime)});                

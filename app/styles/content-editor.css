@@ -277,3 +277,6 @@ body {
 #configMenu .ui.button:last-child{
     border-right: 1px solid #ccc !important;
 }
+.ce-button.button, .ce-button .button {
+    background-color: #999;
+}
