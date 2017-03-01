@@ -3,11 +3,12 @@
  */
 'use strict';
 
-angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).config(['$locationProvider', function($locationProvider) {
+angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).config(['$locationProvider', '$httpProvider', function($locationProvider, $httpProvider) {
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
     });
+    $httpProvider.interceptors.push('apiTimeStamp');
 }]);
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document',
     function($scope, $timeout, $http, $location, $q, $window, $document) {
@@ -55,7 +56,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             contentType: ""
         };
         $scope.userDetails = !EkstepEditorAPI._.isUndefined(window.context) ? window.context.user : undefined;
-        $scope.showGenieControls = false;
+        $scope.showInstructions = true;
         $scope.stageAttachments = {};
 
         // TODO: Figure out what the below code does
@@ -82,6 +83,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $http.post('ecml', { data: EkstepEditor.stageManager.toECML() }).then(function(resp) {
                 console.info('ECML', resp.data);
             });
+            EkstepEditorAPI.dispatchEvent('config:showSettingsTab', {id: $scope.currentStage.id});
         };
 
         $scope.saveContent = function(cb) {
@@ -160,10 +162,13 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     $scope.contentLoadedFlag = true;
                     $scope.onLoadCustomMessage.show = true;
                     $scope.onLoadCustomMessage.text = ":( Unable to fetch the content! Please try again later!";
+                    EkstepEditor.telemetryService.error({ "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to fetch content from remote", "type": "API", "data": err, "severity": "fatal" });
                 }
                 if (!(content && content.body) && !err) {
                     EkstepEditor.stageManager.registerEvents();
                     EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
+                    EkstepEditorAPI.dispatchEvent('content:onload');
+                    EkstepEditor.telemetryService.start();
                     $scope.closeLoadScreen(true);
                 } else if (content && content.body) {
                     $scope.oldContentBody = angular.copy(content.body);
@@ -207,6 +212,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 $scope.onLoadCustomMessage.show = true;
                 $scope.onLoadCustomMessage.text = "Your content has errors! we are unable to read the content!";
                 $scope.$safeApply();
+                EkstepEditor.telemetryService.error({ "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to read the content due to parse error", "type": "PORTAL", "data": "", "severity": "fatal" });
             };
             return contentBody;
         }
@@ -286,23 +292,17 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             });
         }
 
-        $scope.initTelemetry = function() {
-            /*EkstepEditor.telemetryService.start({
+        $scope.initTelemetry = function() {            
+            EkstepEditor.telemetryService.initialize({
                 uid: $window.context.user.id,
                 sid: $window.context.sid,
                 content_id: EkstepEditorAPI.globalContext.contentId
-            }, {
-                defaultPlugins: [], // TODO: Get the default plugins loaded by the editor
-                loadtimes: { // TODO: capture these at all places
-                    plugins: 0,
-                    migration: 0,
-                    contentLoad: 0
-                }
-            });*/
+            }, EkstepEditor.config.dispatcher);
         }
 
         EkstepEditor.toolbarManager.setScope($scope);
         EkstepEditor.init(null, $location.protocol() + '://' + $location.host() + ':' + $location.port(), function() {
+            $scope.initTelemetry();
             $scope.appLoadMessage
             var obj = _.find($scope.appLoadMessage, { 'id': 1});
             if (_.isObject(obj)) {
@@ -320,8 +320,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.currentStage = EkstepEditor.stageManager.currentStage;
             EkstepEditor.eventManager.addEventListener("stage:select", $scope.resetTeacherInstructions, this);
             EkstepEditor.eventManager.addEventListener("stage:add", $scope.resetTeacherInstructions, this);
-            $scope.loadContent();
-            $scope.initTelemetry();
+            $scope.loadContent();            
             /* KeyDown event to show ECML */
             $document.on("keydown", function(event) {
                 if ((event.metaKey || event.ctrlKey) && event.shiftKey && event.keyCode == 69) { /*ctrl+shift+e or command+shift+e*/
@@ -334,5 +333,13 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.setTitleBarText = function(text) {
             if(text) document.title = text;
         };
+
+        $scope.fireToolbarTelemetry = function(menu, menuType) {
+            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "menu", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
+        }
+
+        $scope.fireSidebarTelemetry = function(menu, menuType) {
+            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "sidebar", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
+        }
     }
 ]);

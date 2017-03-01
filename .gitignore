@@ -6,3 +6,4 @@ plugins
 /bower_components
 /semantic
 semantic.json
+/telemetry.log

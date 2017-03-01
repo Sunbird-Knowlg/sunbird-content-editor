@@ -1,6 +1,8 @@
-EkstepEditor.piwikDispatcher = new(EkstepEditor.IDispatcher.extend({
+EkstepEditor.localDispatcher = new(EkstepEditor.IDispatcher.extend({
+    type: "localDispatcher",
     initDispatcher: function() {},
     dispatch: function(event) {
-        EkstepEditor.iservice.http.post('/app/telemetry', event, {}, function() {});
+        var http = angular.injector(["ng"]).get("$http");
+        http.post('telemetry', event, function() {});
     }
 }));

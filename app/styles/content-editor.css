@@ -267,3 +267,13 @@ body {
 .ui.loading.table thead tr th{
     border-bottom: 0px !important;    
 }
+#configMenu{
+    margin: 1px 25px 0 0;
+    float: right;
+}
+#configMenu .ui.button{
+    border-left: 1px solid #ccc !important;
+}
+#configMenu .ui.button:last-child{
+    border-right: 1px solid #ccc !important;
+}

@@ -21,6 +21,13 @@
             </select>
         </div>
     </div>
+    <div class="ui form" ng-switch-when="inputSelect">
+        <div class="field">
+            <label ng-if="config.title">{{config.title}}</label>
+            <select ng-model="configData[config.propertyName]" ng-options="val for val in config.range" id="{{config.propertyName}}">
+            </select>
+        </div>
+    </div>
     <div class="ui form" ng-switch-when="imagebrowser">
         <div class="field">
             <label ng-if="config.title">{{config.title}}</label>
@@ -28,10 +35,19 @@
         </div>
     </div>
     <div class="ui icon buttons" ng-switch-when="group">
+        <label ng-if="config.title">{{config.title}}</label>
         <button class="ui button {{configData[dd.propertyName] ? 'primary': ''}}" ng-repeat="dd in config.config" ng-click="configData[dd.propertyName] = !configData[dd.propertyName]" data-tooltip="{{dd.toolTip}}">
             <div ng-switch on="dd.dataType">
                 <span ng-if="dd.text" ng-switch-when="text" class="{{dd.textClass}}" style="{{dd.textStyle}}">{{dd.text}}</span>
                 <i class="{{dd.iconClass}} " ng-if="dd.iconClass" style="{{dd.iconStyle}}" ng-switch-when="icon"></i>
+            </div>
+        </button>
+    </div>
+    <div class="ui icon buttons" ng-switch-when="buttonToggle">
+        <label ng-if="config.title">{{config.title}}</label>
+        <button class="ui button {{configData[config.propertyName] === option.value ? 'primary': ''}}" ng-repeat="option in config.options" ng-click="configData[config.propertyName] = option.value">
+            <div ng-switch on="option.dataType">
+                <i class="{{option.iconClass}} " ng-if="option.iconClass" style="{{option.iconStyle}}" ng-switch-when="icon"></i>
             </div>
         </button>
     </div>

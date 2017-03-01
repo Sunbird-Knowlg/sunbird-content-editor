@@ -24,7 +24,7 @@
     <div id="thumbnailCanvasContainer" style="display: none;"></div>
     <div ng-app="editorApp" class="maincontainer" ng-strict-di>
         <div ng-controller="MainCtrl" id="editorContainer" class="wrapper">
-            <div ng-show="showAppLoadScreen" class="ui active inverted dimmer load-screen-dimmer">
+            <div ng-show="showAppLoadScreen" class="ui active inverted dimmer">
                 <div class="load-screen-container">
                     <table class="ui very basic collapsing loading table" style="margin-left: auto;margin-right: auto;">
                         <thead>
@@ -64,7 +64,7 @@
                              <span ng-if="contentDetails.contentTitle.length > 30">...</span></label>
                             <label class="content-type-label">{{contentDetails.contentType}}</label>
                             <div ng-include="'templates/editContentMetaDialog.html'" style="display: inline-block; "></div>
-                            <a class="btn at-btn at-btn-ok" ng-click="editContentMeta()">
+                            <a class="btn at-btn at-btn-ok" ng-click="editContentMeta(); fireToolbarTelemetry({id: 'editMeta'}, 'editMetaButton')">
                                 <i class="edit icon link"></i>
                             </a>
                         </div>
@@ -90,8 +90,8 @@
                                                 <span>{{userDetails.email}}</span>
                                             </div>
                                             <div class="extra">
-                                                <a class="ui tiny button " ng-href="{{cancelLink}}" onclick="location.reload();">close</a>
-                                                <a class="ui tiny button " href="{{userDetails.logout}}" onclick="location.reload();">logout</a>
+                                                <a class="ui tiny button " ng-href="{{cancelLink}}" ng-click="location.reload(); fireToolbarTelemetry({id: 'close'}, 'closeButton')">close</a>
+                                                <a class="ui tiny button " href="{{userDetails.logout}}" ng-click="location.reload(); fireToolbarTelemetry({id: 'logout'}, 'logoutButton')">logout</a>
                                             </div>
                                         </div>
                                     </div>
@@ -104,16 +104,16 @@
                         <div ng-include="'templates/saveSuccessMessage.html'"></div>
                         <div ng-include="'templates/saveErrorMessage.html'"></div>
                         <div ng-include="'templates/migratedContentSaveMsg.html'"></div>
-                        <button ng-class="saveBtnEnabled ? 'ui tiny icon button right floated primary' : 'ui tiny icon button right floated disabled'" ng-click="saveContent()" ng-disabled="!contentId" style="margin-left: 5px;">
+                        <button ng-class="saveBtnEnabled ? 'ui tiny icon button right floated primary' : 'ui tiny icon button right floated disabled'" ng-click="saveContent(); fireToolbarTelemetry({id: 'save'}, 'saveButton')" ng-disabled="!contentId" style="margin-left: 5px;">
                             <i class="icon-save icon"></i> Save
                         </button>
                         <div class="ui tiny buttons right floated primary">
-                            <div class="ui button" ng-click="previewContent();">
+                            <div class="ui button" ng-click="previewContent(); fireToolbarTelemetry({id: 'preview'}, 'previewButton');">
                                 <i class="icon-preview icon"></i> Preview</div>
                             <div class="ui floating dropdown icon button">
                                 <i class="dropdown icon"></i>
                                 <div class="menu">
-                                    <div class="item" ng-click="previewContent('start');">preview from beginning</div>
+                                    <div class="item" ng-click="previewContent('start'); fireToolbarTelemetry({id: 'preview'}, 'previewButton')">preview from beginning</div>
                                 </div>
                             </div>
                         </div>
@@ -131,18 +131,19 @@
                     <div class="ui icon menu" style="margin-bottom: 0; margin-top: 0;margin-left: 30px; border:none; box-shadow: none;">
                         <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'"></span>
                         <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
+
                     </div>
                 </div>
                 <div class="ui three wide column">
-                    <div class="ui mini buttons" id="configMenu" style="margin-top: 5px;">
-                        <button class="ui button active" id="settingsMenu" data-content="Settings" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showSettingsTab'})">
-                            <i class="settings icon"></i>
+                    <div class="ui small buttons" id="configMenu">
+                        <button class="ui grey button active popup-item" id="settingsMenu" data-content="Settings" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showSettingsTab'}); fireToolbarTelemetry({id: 'config'}, 'settingsTab')">
+                            <i class="large settings icon"></i>
                         </button>
-                        <button class="ui button" id="helpMenu" data-content="Help" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showHelpTab'})">
-                            <i class="help icon"></i>
+                        <button class="ui button popup-item" id="helpMenu" data-content="Help" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showHelpTab'}); fireToolbarTelemetry({id: 'config'}, 'helpTab')">
+                            <i class="large help icon"></i>
                         </button>
-                        <button class="ui button" id="commentsMenu" data-content="Comments" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showCommentsTab'})">
-                            <i class="comments icon"></i>
+                        <button class="ui button popup-item" id="commentsMenu" data-content="Comments" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showCommentsTab'}); fireToolbarTelemetry({id: 'config'}, 'commentsTab')">
+                            <i class="large comments icon"></i>
                         </button>
                     </div>
                 </div>
@@ -152,13 +153,13 @@
                 <div class="row">
                     <div class="ui two wide column scrollable-slides">
                         <div ng-repeat="stage in stages track by $index" class="thumbnail-container" style="margin-bottom: 20px">
-                            <div class="ui centered raised card segment thumbnail" ng-click="fireEvent(stage.getOnClick())">
+                            <div class="ui centered raised card segment thumbnail">
                                 <span class="stage-number">{{$index+1}}</span>
                                 <div class="ui fluid image">
                                     <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
                                         <i class="trash outline icon link" ng-click="fireEvent(stage.ondelete)"></i> <i class="clone icon link" ng-click="fireEvent(stage.duplicate)"></i>
                                     </div>
-                                    <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)" />
+                                    <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)" ng-click="fireEvent(stage.getOnClick())"/>
                                 </div>
                             </div>
                         </div>
@@ -214,6 +215,7 @@
     <script src="libs/semantic.min.js"></script>
     <script src="scripts/main/class.js"></script>
     <script src="scripts/main/ekstep-editor.js"></script>
+    <script src="scripts/main/ekstep-config.js"></script>
     <script src="scripts/main/base-plugin.js"></script>
     <script src="scripts/manager/event-manager.js"></script>
     <script src="scripts/manager/plugin-manager.js"></script>
@@ -230,14 +232,20 @@
     <script src="scripts/migration/readalongmigration-task.js"></script>
     <script src="scripts/migration/assessmentmigration-task.js"></script>
     <script src="scripts/migration/eventsmigration-task.js"></script>
-    <script src="scripts/migration/settagmigration-task.js"></script>
-    <script src="scripts/service/iservice.js"></script>
-    <script src="scripts/service/content-service.js"></script>
-    <script src="scripts/service/popup-service.js"></script>
+    <script src="scripts/migration/settagmigration-task.js"></script>    
+    <script src="scripts/dispatcher/idispatcher.js"></script>
+    <script src="scripts/dispatcher/console-dispatcher.js"></script>    
+    <script src="scripts/dispatcher/local-dispatcher.js"></script>
+    <script src="scripts/dispatcher/piwik-dispatcher.js"></script>
     <script src="scripts/angular/controller/main.js"></script>
     <script src="scripts/angular/controller/popup-controller.js"></script>
     <script src="scripts/angular/directive/draggable-directive.js"></script>
     <script src="scripts/angular/directive/droppable-directive.js"></script>
+    <script src="scripts/angular/service/api-timestamp-service.js"></script>
+    <script src="scripts/service/iservice.js"></script>
+    <script src="scripts/service/content-service.js"></script>
+    <script src="scripts/service/popup-service.js"></script>
+    <script src="scripts/service/telemetry-service.js"></script>
     <script src="scripts/service/assessment-service.js"></script>
     <script src="scripts/service/asset-service.js"></script>
     <script src="scripts/service/concept-service.js"></script>

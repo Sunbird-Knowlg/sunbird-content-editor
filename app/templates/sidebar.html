@@ -1,36 +1,49 @@
 <style type="text/css">
-    .sidebarConfigDiv, .sidebarHelpDiv{
-        height: 380px;
-        width: 100%;
-        overflow-y: auto;
-        margin: 0px !important;
-        border: none !important;
-        border-radius: 0px !important;
-        background: none !important;
-        box-shadow: none !important;
-    }
-    .sidebarConfig, .sidebarHelp{
-        padding: none !important;
-        box-shadow: none !important;
-        border-radius: 0px !important;
-    }
-    .sidebarConfig a.item:hover{
-        background: none !important;
-    }
+.sidebarContent {
+    height: 450px;
+    width: 100%;
+    overflow-y: auto;
+    margin: 0px !important;
+    border: none !important;
+    border-radius: 0px !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+
+.sidebarHeadTab {
+    box-shadow: none !important;
+    border-bottom: 1px solid #ccc !important;
+    ;
+    border-radius: 0px !important;
+}
+
+.sidebarHeadTab .item {
+    padding: 0px !important;
+}
+
+.sidebarHeadTab .item.active {
+    background: #2185d0 !important;
+    color: #FFFFFF !important;
+    border-radius: 0px !important;
+}
+
+.sidebarHeadTab .item,
+.sidebarContent label {
+    font-family: sans-serif;
+}
 </style>
 <div ng-show="showSettingContainer">
-    <div class="ui mini compact three item menu sidebarConfig">
-      <a class="blue item active" id="settingsTab" data-tab="settings" ng-click="fireEvent({id: 'config:show'})"><i class="setting icon"></i> Config </a>
-      <a class="blue item" data-tab="actions" ng-click="fireEvent({id: 'config:actions'})"><i class="tasks icon"></i> Actions </a>
-      <a class="blue item" data-tab="info" ng-click="fireEvent({ id: 'config:properties'})"><i class="info icon"></i> Properties </a>
+    <div class="ui mini compact item menu sidebarConfig sidebarHeadTab" ng-class="stageConfigStatus ? 'two' : 'three' ">
+        <a class="item active" id="settingsTab" data-tab="settings" ng-click="fireEvent({id: 'config:show'}); fireSidebarTelemetry({id: 'customise'}, 'config')"><i class="setting icon"></i> Customise </a>
+        <a class="item" ng-show="!stageConfigStatus" data-tab="actions" ng-click="fireEvent({id: 'config:actions'}); fireSidebarTelemetry({id: 'actions'}, 'config')"><i class="tasks icon"></i> Actions </a>
+        <a class="item" data-tab="info" ng-click="fireEvent({ id: 'config:properties'}); fireSidebarTelemetry({id: 'properties'}, 'config')"><i class="info icon"></i> Properties </a>
     </div>
-
-    <div class="ui active tab segment sidebarConfigDiv" id="settingsContent" data-tab="settings">
+    <div class="ui active tab segment sidebarContent" id="settingsContent" data-tab="settings">
         <span ng-repeat="config in pluginConfig" ng-show="!stageConfigStatus" ng-include="'templates/config.html'"></span>
         <div class="ui padded grid" ng-show="stageConfigStatus">
             <div class=" row">
                 <div class="ui toggle checkbox">
-                    <input type="checkbox" ng-model="showGenieControls" ng-click="toggleGenieControl()">
+                    <input type="checkbox" ng-model="showGenieControls" ng-click="toggleGenieControl(); fireSidebarTelemetry({id: 'genieControl'}, 'config')">
                     <label>Show Genie Controls</label>
                 </div>
             </div>
@@ -43,7 +56,7 @@
                         <div class="ui form">
                             <div class="field">
                                 <label></label>
-                                <textarea rows="6" ng-maxlength="1000" ng-model="model.teacherInstructions" ng-keyup="updateTeacherInstructionsOnKeyPress()">
+                                <textarea rows="6" ng-maxlength="1000" ng-model="model.teacherInstructions" ng-keyup="updateTeacherInstructionsOnKeyPress()" ng-click="fireSidebarTelemetry({id: 'teacherInstructions'}, 'config')">
                                 </textarea>
                             </div>
                         </div>
@@ -51,26 +64,28 @@
                 </div>
             </div>
             <div class="row">
-                <a class="ui basic small button" ng-href="{{reportIssueLink}}" target="_blank"><i class="help circle medium icon"></i>Report an issue</a>
+                <a class="ui basic small button" ng-click="fireSidebarTelemetry({id: 'reportIssue'}, 'reportIssueButton')" ng-href="{{reportIssueLink}}" target="_blank"><i class="help circle medium icon"></i>Report an issue</a>
             </div>
         </div>
     </div>
-    <div class="ui tab segment sidebarConfigDiv" data-tab="actions">
-        <span ng-show="!stageConfigStatus" ng-include="'templates/events.html'"></span>
+    <div class="ui tab segment sidebarContent" data-tab="actions" ng-show="!stageConfigStatus">
+        <span ng-include="'templates/events.html'"></span>
     </div>
-    <div class="ui tab segment sidebarConfigDiv" data-tab="info" style="padding: 10px !important">
+    <div class="ui tab segment sidebarContent" data-tab="info" style="padding: 10px !important">
         <span ng-include="'templates/properties.html'"></span>
     </div>
 </div>
 <div ng-show="showHelpContainer">
-    <div class="ui mini compact two item menu sidebarHelp">
-      <a class="blue item active" id="helpTab" data-tab="help" ng-click="fireEvent({ id: 'config:help'})"><i class="question icon"></i>Help </a>
-      <a class="blue item" data-tab="feedback" ><i class="talk icon"></i>Feedback </a>
+    <div class="ui mini compact one item menu sidebarHelp sidebarHeadTab">
+        <a class="item active" id="helpTab" data-tab="help" ng-click="fireEvent({ id: 'config:help'}); fireSidebarTelemetry(menu, 'config')">
+            <i class="question icon"></i>Help
+        </a>
+        <!-- <a class="blue item" data-tab="feedback"><i class="talk icon"></i>Feedback </a> -->
     </div>
-    <div class="ui active tab segment sidebarHelpDiv" id="helpContent" data-tab="help" style="padding: 10px !important">
-       <div id="pluginHelpContent" class="ui message"></div>
+    <div class="ui active tab segment sidebarContent" id="helpContent" data-tab="help" style="padding: 10px !important">
+        <div id="pluginHelpContent" class="ui message"></div>
     </div>
-    <div class="ui tab segment sidebarConfigDiv" data-tab="feedback"></div>
+    <!-- <div class="ui tab segment" data-tab="feedback"></div> -->
 </div>
 <div ng-show="showCommentsContainer">
     <div class="row">
@@ -94,7 +109,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    $('.sidebarConfig .item, .sidebarHelp .item').tab({
-        history: false
-    });
+$('.sidebarConfig .item, .sidebarHelp .item').tab({
+    history: false
+});
 </script>
