@@ -1,5 +1,5 @@
 EkstepEditor.conceptService = new(EkstepEditor.iService.extend({
-    learningURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug +'/learning/',
+    learningURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug + '/learning/',
     searchURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug + '/search/',
     requestHeaders: {
         "headers": {
@@ -15,14 +15,14 @@ EkstepEditor.conceptService = new(EkstepEditor.iService.extend({
     },
     initService: function() {},
     getConceptsTree: function(callback) {
-        var data = {"request": { "filters":{ "objectType": ["Dimension","Domain"]}}};
-        this.postFromService(this.searchURL + 'v2/search',data, this.requestHeaders, callback);
+        var data = { "request": { "filters": { "objectType": ["Dimension", "Domain"] } } };
+        this.postFromService(this.searchURL + 'v2/search', data, this.requestHeaders, callback);
     },
-    getConcepts: function(callback, offset, limit) {
+    getConcepts: function(offset, limit, callback) {
         offset = offset || 0;
-        limit  = limit || 200;
-        var data = {"request": { "filters":{ "objectType": ["Concept"]}, "offset":offset, "limit":limit}};
-        this.postFromService(this.searchURL + 'v2/search',data, this.requestHeaders, callback);
+        limit = limit || 200;
+        var data = { "request": { "filters": { "objectType": ["Concept"] }, "offset": offset, "limit": limit } };
+        this.postFromService(this.searchURL + 'v2/search', data, this.requestHeaders, callback);
     },
     postFromService: function(url, data, headers, callback) {
         var instance = this;
