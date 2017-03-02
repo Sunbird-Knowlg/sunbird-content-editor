@@ -39,9 +39,6 @@ a.item.at-menu-item.popup-item.active {
     </div>
     <div class="ui active tab segment sidebarContent" data-tab="settings">
         <span ng-repeat="config in pluginConfig" ng-include="'templates/config.html'"></span>
-        <div class="row">
-            <a class="ui basic small button" ng-click="fireSidebarTelemetry({id: 'reportIssue'}, 'reportIssueButton')" ng-href="{{reportIssueLink}}" target="_blank" style="position: absolute; bottom:0; right: 30px"><i class="help circle medium icon"></i>Report an issue</a>
-        </div>
     </div>
     <div class="ui tab segment sidebarContent" data-tab="actions">
         <span ng-include="'templates/events.html'"></span>
@@ -73,6 +70,55 @@ a.item.at-menu-item.popup-item.active {
             </div>
         </div>
     </div>
+</div>
+<div ng-show="selectedConfigCategory == 'developer'">
+        <div  style="padding: 10px !important">
+            <form class="ui  form">
+                <div class="inline field">
+                    <input type="text" placeholder="Eg: https://localhost:8080/" ng-model="localServerPath" ng-show="localServerPathEdit" />
+                    <a class="ui big label" ng-show="!localServerPathEdit">
+                      {{localServerPath}}
+                    </a>
+                    <buttton class="ui  right floated icon button" " ng-click="localServerPathEdit=true; " ng-show="!localServerPathEdit ">
+                        <i class="write icon "></i>
+                    </buttton>
+                    <buttton class="ui right floated icon button " ng-click="fireEvent({ 'id': 'org.ekstep.developer:updateLocalServerPath', 'data':{'path': localServerPath}});localServerPathEdit = false;" ng-show="localServerPathEdit">
+                        <i class="checkmark icon "></i>
+                    </buttton>
+                </div>
+            </form>
+            <div class="contributed-plugins-list {{(localPlugins.length===0 || contributedPluginMessageClass==='error' )? 'no-plugins': ''}} ">
+                <table class="ui very basic table ">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="plugin in localPlugins ">
+                            <td>
+                                <img ng-src="{{localServerPath}}{{plugin}}/favicon.ico "/>
+                            </td>
+                            <td>
+                                <span title="{{plugin}} ">{{plugin | limitTo:20 }}</span>
+                                <span ng-if="plugin.length> 20">...</span>
+                            </td>
+                            <td>
+                                <div class="ui primary icon mini     button" ng-click="fireEvent({'id':'org.ekstep.developer:loadplugin', 'data': {'plugin': plugin}})">
+                                    <i class="repeat icon"></i>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="ui {{contributedPluginMessageClass}} mini message" ng-if="contributedPluginMessage">{{contributedPluginMessage}}</div>
+    </div>
+</div>
+<div class="sidebar-reportissue" style="position: fixed; right: 0; bottom: 0;width: 100%;margin-bottom: 10px;">
+    <a class="ui basic small button" ng-click="fireSidebarTelemetry({id: 'reportIssue'}, 'reportIssueButton')" ng-href="{{reportIssueLink}}" target="_blank" style="position: absolute; bottom:0; right: 30px"><i class="help circle medium icon"></i>Report an issue</a>
 </div>
 <script type="text/javascript">
 $('.sidebarConfig .item, .sidebarHelp .item').tab({

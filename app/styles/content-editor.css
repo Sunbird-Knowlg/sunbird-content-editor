@@ -291,8 +291,9 @@ body {
 
 .download-collaborator-icon {
     padding: 6px;
-    margin-left: 148px;
     color: #767676;
+    display: inline-block;
+    float: right;
 }
 
 .download-collaborator-icon .download.link.icon {
@@ -302,4 +303,14 @@ body {
 .ce-button.button,
 .ce-button .button {
     background-color: #999;
+}
+.sidebar-menu{
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-left: 30px !important;
+    border:none !important;
+    border-left:1px solid #eee !important;
+    box-shadow: none !important;
+    float: right !important;
+    margin-right: 6px !important;
 }
