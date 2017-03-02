@@ -343,7 +343,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.fireSidebarTelemetry = function(menu, menuType) {
-            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "sidebar", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
+            var pluginId = "", pluginVer = "";
+            if(EkstepEditorAPI.getCurrentObject()) {
+                pluginId = EkstepEditorAPI.getCurrentObject().manifest.id;
+                pluginVer = EkstepEditorAPI.getCurrentObject().manifest.ver;
+            }
+            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "sidebar", "target": menuType, "pluginid": pluginId, 'pluginver': pluginVer, "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
         }
     }
 ]);

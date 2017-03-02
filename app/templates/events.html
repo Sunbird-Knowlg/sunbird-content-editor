@@ -12,18 +12,20 @@
     <div id="addActionForm">
         <form class="ui form">
             <div class="field">
-                <select class="ui  dropdown" ng-model="selectedActionType" id="actionTypeDropdown" ng-options="key as value for (key , value) in allActionsList">
+                <select class="ui  dropdown" ng-model="selectedActionType" id="actionTypeDropdown" ng-options="key as value for (key , value) in allActionsList" ng-change="fireSidebarTelemetry({id: 'eventSelectAction'}, 'configAction')">
                     <option value="">select action</option>
 
                 </select>
             </div>
             <div class="field">
-                <select class="ui  dropdown" ng-model="selectedActionTarget" ng-options="key as value for (key , value) in actionTargetObjects" id="actionTargetDropdown">
+                <select class="ui  dropdown" ng-model="selectedActionTarget" ng-options="key as value for (key , value) in actionTargetObjects" id="actionTargetDropdown" ng-change="fireSidebarTelemetry({id: 'eventSelectTarget'}, 'configAction')">
                     <option value="">select target</option>
                 </select>
             </div>
             <div class="field">
-                <button class="ui primary tiny button" ng-disabled="!selectedActionType || !selectedActionTarget" ng-click="fireEvent({'id':'org.ekstep.config:addAction', 'data':{'command': selectedActionType, 'asset': selectedActionTarget}}); showActionForm = false;" id="addActionBtn">Add</button>
+                <button class="ui primary tiny button" ng-disabled="!selectedActionType || !selectedActionTarget" ng-click="fireEvent({'id':'org.ekstep.config:addAction', 'data':{'command': selectedActionType, 'asset': selectedActionTarget}}); showActionForm = false;
+                fireSidebarTelemetry({id: 'eventAddButton'}, 'configAction')"
+                id="addActionBtn">Add</button>
             </div>
         </form>
     </div>
@@ -40,7 +42,8 @@
         <tr ng-repeat="action in currentObjectActions track by $index">
             <td>{{action.command}}</td>
             <td>{{action.asset  | limitTo: 15}}</td>
-            <td><i class="delete icon link" ng-click="fireEvent({'id':'org.ekstep.config:removeAction', 'data': {index : $index}})"></i></td>
+            <td><i class="delete icon link" ng-click="fireEvent({'id':'org.ekstep.config:removeAction', 'data': {index : $index}});
+            fireSidebarTelemetry({id: 'removeAction'}, 'configAction')"></i></td>
         </tr>
     </tbody>
 </table>
