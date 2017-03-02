@@ -1,6 +1,6 @@
 EkstepEditor.piwikDispatcher = new(EkstepEditor.IDispatcher.extend({
     type: "piwikDispatcher",
-    piwikEndPoint: "https://devqa-analytics.ekstep.in/piwik.php",
+    piwikEndPoint: EkstepEditor.config.baseURL + "/piwik/piwik.php",
     idsite: 1,
     initDispatcher: function() {},
     dispatch: function(event) {

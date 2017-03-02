@@ -39,7 +39,20 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
             }
         }
     },
-    addDispatcher: function(dispatcher) {
+    getDispatcher: function(dispatcherId) {
+        switch(dispatcherId) {
+            case "local":
+                return EkstepEditor.localDispatcher;
+                break;
+            case "piwik":
+                return EkstepEditor.piwikDispatcher;
+                break;
+            default:
+                return EkstepEditor.consoleDispatcher;
+        }
+    },
+    addDispatcher: function(dispatcherId) {
+        var dispatcher = this.getDispatcher(dispatcherId);
         var dispatcherExist = _.find(this.dispatchers, function(obj){
            return  obj.type === dispatcher.type;
         });
@@ -66,17 +79,19 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
             "tags":[]
         }
     },
-    isValidInteract: function(data) {
-        var isValid = true,
-            mandatoryFields = ["type", "subtype", "target", "targetid", "objectid", "stage"];
-
+    hasRequiredData: function(data, mandatoryFields) {
+        var isValid = true;
         _.forEach(mandatoryFields, function(key) {
             if (!_.has(data, key)) isValid = false;
         });
         return isValid;
     },
+    interactRequiredFields: ["type", "subtype", "target", "pluginid", "pluginver", "objectid", "stage"],
+    lifecycleRequiredFields: ["type", "pluginid", "pluginver", "objectid", "stage"],
+    errorRequiredFields: ["env", "stage", "action", "err", "type", "data", "severity"],
+    apiCallRequiredFields: ["path", "method", "request", "response","responseTime", "status", "uip"],
     interact: function(data) {
-        if(!this.isValidInteract(data)) {
+        if(!this.hasRequiredData(data, this.interactRequiredFields)) {
             console.error('Invalid interact data');    
         }
         this._dispatch(this.getEvent('CE_INTERACT', data))
@@ -86,51 +101,28 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
         endEvent.edata.eks.duration = (new Date()).getTime() - this.startEvent.ets;
         this._dispatch(endEvent);
     },
-    isValidPluginLifeCycle: function(data) {
-        var isValid = true,
-            mandatoryFields = ["type", "pluginid", "pluginver", "objectid", "stage", "containerid", "containerplugin"];
-
-        _.forEach(mandatoryFields, function(key) {
-            if (!_.has(data, key)) isValid = false;
-        });
-        return isValid;
-    },
     pluginLifeCycle: function(data) {
-        if(!this.isValidPluginLifeCycle(data)) {
+        if(!this.hasRequiredData(data, this.lifecycleRequiredFields)) {
             console.error('Invalid plugin lifecycle event data');    
         }
         this._dispatch(this.getEvent('CE_PLUGIN_LIFECYCLE', data))
     },
-    isValidError: function(data) {
-        var isValid = true,
-            mandatoryFields = ["env", "stage", "action", "err", "type", "data", "severity"];
-
-        _.forEach(mandatoryFields, function(key) {
-            if (!_.has(data, key)) isValid = false;
-        });
-        return isValid;
-    },
     error: function(data) {
-        if (!this.isValidError(data)) {
+        if(!this.hasRequiredData(data, this.errorRequiredFields)) {
             console.error('Invalid error data');
         }
         this._dispatch(this.getEvent('CE_ERROR', data))
     },
-    isValidStart: function(data) {
-        var isValid = true,
-            mandatoryFields = ["defaultPlugins", "loadtimes", "client"];
-
-        _.forEach(mandatoryFields, function(key) {
-            if (!data[key]) isValid = false;
-        });
-        return isValid;
-    },
     start: function() {
         this.startEventData.client = this.detectClient();
-        if (this.isValidStart(this.startEventData)) {            
-            this.startEvent = this.getEvent('CE_START', this.startEventData);
-            this._dispatch(this.startEvent);
+        this.startEvent = this.getEvent('CE_START', this.startEventData);
+        this._dispatch(this.startEvent);
+    },
+    apiCall: function(data) {
+        if (!this.hasRequiredData(data, this.apiCallRequiredFields)) {
+            console.error('Invalid api call data');
         }
+        this._dispatch(this.getEvent('CE_API_CALL', data))
     },
     detectClient: function() {        
         var nAgt = navigator.userAgent;

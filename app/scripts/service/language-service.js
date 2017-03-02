@@ -29,6 +29,9 @@ EkstepEditor.languageService = new(EkstepEditor.iService.extend({
     getWordDefinition: function(callback){
         this.getFromService(this.learningURL + 'taxonomy/en/definition/Word', this.requestHeaders, callback);
     },
+    getKeyWords: function(data, callback) {
+        this.postFromService(this.languageURL + 'v1/language/parser', data, this.requestHeaders, callback);
+    },
     getFromService: function(url, headers, callback) {
         var instance = this;
         instance.http.get(url, headers, function(err, res) {
