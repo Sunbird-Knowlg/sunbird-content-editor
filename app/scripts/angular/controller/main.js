@@ -301,18 +301,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             }, EkstepEditor.config.dispatcher);
         }
 
-        EkstepEditor.toolbarManager.setScope($scope);
-        EkstepEditor.init(null, $location.protocol() + '://' + $location.host() + ':' + $location.port(), function() {
-            $scope.initTelemetry();
-            $scope.appLoadMessage
-            var obj = _.find($scope.appLoadMessage, { 'id': 1});
-            if (_.isObject(obj)) {
-                obj.message = "Plugins loaded";
-                obj.status = true;
-            }
-            $scope.initEditor();
-        });
-
         $scope.initEditor = function() {
 
             $scope.menus = EkstepEditor.toolbarManager.menuItems;
@@ -331,6 +319,20 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 }
             });
         }
+
+        EkstepEditor.toolbarManager.setScope($scope);
+        EkstepEditor.init(null, $location.protocol() + '://' + $location.host() + ':' + $location.port(), function() {
+            $scope.initTelemetry();
+            $scope.appLoadMessage
+            var obj = _.find($scope.appLoadMessage, { 'id': 1});
+            if (_.isObject(obj)) {
+                obj.message = "Plugins loaded";
+                obj.status = true;
+            }
+            $scope.initEditor();
+        });
+
+        
 
         $scope.setTitleBarText = function(text) {
             if(text) document.title = text;

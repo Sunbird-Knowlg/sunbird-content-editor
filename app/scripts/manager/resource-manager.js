@@ -5,26 +5,29 @@ EkstepEditor.resourceManager = new(Class.extend({
     init: function() {
         this.repos = [EkstepEditor.hostRepo, EkstepEditor.draftRepo, EkstepEditor.publishedRepo];
     },
-    discoverManifest: function(pluginId, pluginVer, callback) {
-        this._findManifestFromRepos(pluginId, pluginVer, function(err, data) {
-            callback(err, data);
-        });
-    },
-    _findManifestFromRepos: function(pluginId, pluginVer, callback, reposLength) {
-        var instance = this;
-        if (_.isUndefined(reposLength)) {
-            reposLength = this.repos.length - 1;
-        }
-        this.getResource(pluginId, pluginVer, "manifest.json", "json", this.repos[reposLength], function(err, response) {
-            var result = { "manifest": response, "repo": instance.repos[reposLength] }
-            if (!err) {
-                callback(err, result);
-            } else if (err && reposLength > 0) {
-                instance._findManifestFromRepos(pluginId, pluginVer, callback, --reposLength);
-            } else if (err && reposLength <= 0) {
-                callback(err, result);
+    discoverManifest: function(pluginId, pluginVer, cb) {
+        async.parallel({
+            published: function(callback) {
+                EkstepEditor.publishedRepo.getManifest(pluginId, pluginVer, callback); // callback(err, manifest)
+            },
+            draft: function(callback) {
+                EkstepEditor.draftRepo.getManifest(pluginId, pluginVer, callback); // callback(err, manifest)
+            },
+            hosted: function(callback) {
+                EkstepEditor.hostRepo.getManifest(pluginId, pluginVer, callback); // callback(err, manifest)
             }
+        }, function(err, result) {
+            console.log(result);
+            if (result.published.manifest !== undefined)
+                cb(undefined, result.published);
+            else if (result.draft.manifest !== undefined)
+                cb(undefined, result.draft);
+            else if (result.hosted.manifest !== undefined)
+                cb(undefined, result.hosted);
+            else
+                cb('Plugin not found in any repo', undefined);
         });
+
     },
     getResource: function(pluginId, pluginVer, src, dataType, repo, callback) {
         this.loadResource(repo.url + '/' + pluginId + '-' + pluginVer + '/' + src, dataType, callback);
