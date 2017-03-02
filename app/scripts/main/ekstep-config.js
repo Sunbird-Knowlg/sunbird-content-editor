@@ -42,6 +42,8 @@ EkstepEditor.config = {
         "org.ekstep.activitybrowser": "1.0",
         "org.ekstep.download":"1.0",
         "org.ekstep.collaborator":"1.0"
+        ,"org.ekstep.developer": "1.0"
+
     },
     dispatcher: "local"
 }
