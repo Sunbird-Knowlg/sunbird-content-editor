@@ -56,16 +56,6 @@
                 <i class="{{option.iconClass}} " ng-if="option.iconClass" style="{{option.iconStyle}}" ng-switch-when="icon"></i>
             </div>
         </button>
-
-
-        <div class="ui blue labels" ng-repeat="option in config.options" ng-if="configData[config.propertyName] === option.value">
-            
-            <button class="ui button" ng-repeat="suboption in option.suboptions" ng-if="configData[config.propertyName] === option.value" data-tooltip="{{suboption.toolTip}}" ng-click="configData[suboption.value] = suboption.value" >
-                <div ng-switch on="suboption.dataType">
-                    <i class="{{suboption.iconClass}} " ng-if="suboption.iconClass" style="{{suboption.iconStyle}}" ng-switch-when="icon"></i>
-                </div>
-            </button>
-        </div>
     </div>
     <div class="ui form" ng-switch-when="rangeslider">
         <div class="field">
@@ -93,4 +83,20 @@
             <button class="ui button" ng-click="fireEvent(config.onclick)">{{configData[config.PropertyName]}}</button>
         </div>
     </div>    
+    <div class="ui form" ng-switch-when="advancebuttonToggle">
+        <div class="field">
+            <label ng-if="config.title">{{config.title}}</label>
+            <span ng-repeat="option in config.options" ng-if="option.state" >
+                <div class="ui checkbox" ng-if="option.checkboxShow">
+                    <input name="checkbox" type="checkbox" ng-click="fireEvent(option.checkboxonclick)" ng-checked="option.checkboxShow">
+                    <label></label>
+                </div>
+                <div class="ui grey button {{option.checkboxShow ? 'primary': ''}}" ng-click="fireEvent(option.onclick)">
+                    {{option.title}}
+                </div>
+
+            </span>
+        </div>
+    </div>  
+
 </div>
