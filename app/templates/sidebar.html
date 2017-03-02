@@ -33,38 +33,12 @@ a.item.at-menu-item.popup-item.active {
 </style>
 <div ng-show="selectedConfigCategory == 'settings'">
     <div class="ui mini compact menu item sidebarConfig sidebarHeadTab three">
-        <a class="item active" id="settingsTab" data-tab="settings" ng-click="fireEvent({id: 'config:show'}); fireSidebarTelemetry({id: 'customise'}, 'config')"><i class="setting icon"></i> Customise </a>
-        <a class="item" ng-if="!stageConfigStatus" data-tab="actions" ng-click="fireEvent({id: 'config:actions'}); fireSidebarTelemetry({id: 'actions'}, 'config')"><i class="tasks icon"></i> Actions </a>
-        <a class="item disabled" ng-if="stageConfigStatus" data-tab="actions"><i class="tasks icon"></i> Actions </a>
+        <a class="item active" id="settingsTab" data-tab="settings" ng-click="fireEvent({id: 'config:customize'}); fireSidebarTelemetry({id: 'customise'}, 'config')"><i class="setting icon"></i> Customise </a>
+        <a class="item {{selectedObjectForConfig == 'stage' ? 'disabled' : ''}}" data-tab="actions" ng-click="fireEvent({id: 'config:actions'}); fireSidebarTelemetry({id: 'actions'}, 'config')" ng-disabled="selectedObjectForConfig == 'stage'"><i class="tasks icon"></i> Actions </a>
         <a class="item" data-tab="info" ng-click="fireEvent({ id: 'config:properties'}); fireSidebarTelemetry({id: 'properties'}, 'config')"><i class="info icon"></i> Properties </a>
     </div>
     <div class="ui active tab segment sidebarContent" data-tab="settings">
         <span ng-repeat="config in pluginConfig" ng-include="'templates/config.html'"></span>
-        <!--- 
-        <div class="ui padded grid" ng-show="stageConfigStatus">
-            <div class=" row">
-                <div class="ui toggle checkbox">
-                    <input type="checkbox" ng-model="showGenieControls" ng-click="toggleGenieControl(); fireSidebarTelemetry({id: 'genieControl'}, 'config')">
-                    <label>Show Genie Controls</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="ui styled accordion">
-                    <div class="title" ng-click="showInstructions = !showInstructions" ng-class="showInstructions ? 'active': '' ">
-                        <i class="dropdown icon"></i>Teacher Instructions
-                    </div>
-                    <div class="content {{showInstructions ? 'active': ''}}">
-                        <div class="ui form">
-                            <div class="field">
-                                <label></label>
-                                <textarea rows="6" ng-maxlength="1000" ng-model="model.teacherInstructions" ng-keyup="updateTeacherInstructionsOnKeyPress()" ng-click="fireSidebarTelemetry({id: 'teacherInstructions'}, 'config')">
-                                </textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div> -->
         <div class="row">
             <a class="ui basic small button" ng-click="fireSidebarTelemetry({id: 'reportIssue'}, 'reportIssueButton')" ng-href="{{reportIssueLink}}" target="_blank" style="position: absolute; bottom:0; right: 30px"><i class="help circle medium icon"></i>Report an issue</a>
         </div>
@@ -77,17 +51,6 @@ a.item.at-menu-item.popup-item.active {
     </div>
 </div>
 <div ng-show="selectedConfigCategory == 'help'">
-    <!-- 
-    <div class="ui mini compact one item menu sidebarHelp sidebarHeadTab">
-        <a class="item active" id="helpTab" data-tab="help" ng-click="fireEvent({ id: 'config:help'}); fireSidebarTelemetry(menu, 'config')">
-            <i class="question icon"></i>Help
-        </a> -->
-        <!-- <a class="blue item" data-tab="feedback"><i class="talk icon"></i>Feedback </a> -->
-    <!-- </div>
-    <div class="ui active tab segment sidebarContent" id="helpContent" data-tab="help" style="padding: 10px !important">
-        <div id="pluginHelpContent" class="ui message"></div>
-    </div> -->
-    <!-- <div class="ui tab segment" data-tab="feedback"></div> -->
     <div id="pluginHelpContent" class="ui message"></div>
 </div>
 <div ng-show="selectedConfigCategory == 'comments'">
