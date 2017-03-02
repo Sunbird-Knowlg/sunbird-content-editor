@@ -305,9 +305,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
             $scope.menus = EkstepEditor.toolbarManager.menuItems;
             $scope.contextMenus = EkstepEditor.toolbarManager.contextMenuItems;
-            $scope.configMenus = EkstepEditor.toolbarManager.configMenuItems;
             $scope.stages = EkstepEditor.stageManager.stages;
             $scope.currentStage = EkstepEditor.stageManager.currentStage;
+            $scope.configMenus = $scope.configMenus || [];
+            _.forEach(EkstepEditor.toolbarManager.configMenuItems,function (menu) {
+                $scope.configMenus.push(menu);
+            });
             EkstepEditor.eventManager.addEventListener("stage:select", $scope.resetTeacherInstructions, this);
             EkstepEditor.eventManager.addEventListener("stage:add", $scope.resetTeacherInstructions, this);
             $scope.loadContent();            
