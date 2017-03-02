@@ -1,7 +1,7 @@
 /**
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
-EkstepEditor.pluginManager = new (Class.extend({
+EkstepEditor.pluginManager = new(Class.extend({
     plugins: {},
     pluginObjs: {},
     pluginInstances: {},
@@ -11,7 +11,7 @@ EkstepEditor.pluginManager = new (Class.extend({
     },
     registerPlugin: function(manifest, plugin, repo) {
         repo = repo || EkstepEditor.publishedRepo;
-        this.plugins[manifest.id] = {p: plugin, m: manifest, 'repo': repo};
+        this.plugins[manifest.id] = { p: plugin, m: manifest, 'repo': repo };
         var p = new plugin(manifest); // Initialize plugin
         this.pluginObjs[manifest.id] = p;
     },
@@ -20,7 +20,7 @@ EkstepEditor.pluginManager = new (Class.extend({
         var pluginId = pluginFQName.substr(0, index);
         var version = pluginFQName.substr(index + 1);
         this.loadPlugin(pluginId, version);
-        if(this.isDefined(pluginId)) {
+        if (this.isDefined(pluginId)) {
             var pluginManifest = this.getPluginManifest(pluginId);
             this.invoke(pluginId, _.cloneDeep(pluginManifest.editor['init-data'] || {}), EkstepEditorAPI.getCurrentStage());
             return 0;
@@ -30,11 +30,11 @@ EkstepEditor.pluginManager = new (Class.extend({
     },
     loadPlugin: function(pluginId, pluginVer) {
         var instance = this;
-        if(this.plugins[pluginId]) {
+        if (this.plugins[pluginId]) {
             console.log('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded');
         } else {
             EkstepEditor.resourceManager.discoverManifest(pluginId, pluginVer, function(err, data) {
-                if(err) {
+                if (err) {
                     console.error('Unable to find plugin ' + pluginId);
                 } else {
                     instance.loadPluginByManifest(data.manifest, data.repo);
@@ -54,7 +54,7 @@ EkstepEditor.pluginManager = new (Class.extend({
                     if (manifest.type && EkstepEditorAPI._.lowerCase(manifest.type) === "widget") {
                         instance.invoke(pluginId, _.cloneDeep(manifest.editor['init-data'] || {}), EkstepEditorAPI.getCurrentStage());
                     }
-                    if (!EkstepEditor.stageManager.contentLoading) EkstepEditor.telemetryService.pluginLifeCycle({type: 'load', pluginid: manifest.id, pluginver: manifest.ver, objectid: "", stage: "", containerid: "", containerplugin: ""});
+                    if (!EkstepEditor.stageManager.contentLoading) EkstepEditor.telemetryService.pluginLifeCycle({ type: 'load', pluginid: manifest.id, pluginver: manifest.ver, objectid: "", stage: "", containerid: "", containerplugin: "" });
                 } catch (e) {
                     console.error("error while loading plugin:" + manifest.id, e);
                 }
@@ -66,7 +66,7 @@ EkstepEditor.pluginManager = new (Class.extend({
         if (_.isArray(manifest.editor.dependencies)) {
             _.forEach(manifest.editor.dependencies, function(dependency) {
                 if (dependency.type == 'plugin') {
-                    console.log(dependency.plugin,dependency.ver);
+                    console.log(dependency.plugin, dependency.ver);
                     instance.loadPlugin(dependency.plugin, dependency.ver);
                 } else {
                     EkstepEditor.resourceManager.loadExternalResource(dependency.type, manifest.id, manifest.ver, dependency.src, repo);
@@ -108,12 +108,12 @@ EkstepEditor.pluginManager = new (Class.extend({
     },
     dispatchTelemetry: function(pluginManifest, pluginInstance, parent, data) {
         var stageId = parent ? parent.id : "";
-        if (!EkstepEditor.stageManager.contentLoading) EkstepEditor.telemetryService.pluginLifeCycle({type: 'add', pluginid: pluginManifest.id, pluginver: pluginManifest.ver, objectid: pluginInstance.id, stage: stageId, assetid: data.asset, containerid: "", containerplugin: ""});
+        if (!EkstepEditor.stageManager.contentLoading) EkstepEditor.telemetryService.pluginLifeCycle({ type: 'add', pluginid: pluginManifest.id, pluginver: pluginManifest.ver, objectid: pluginInstance.id, stage: stageId, assetid: data.asset, containerid: "", containerplugin: "" });
     },
     addPluginInstance: function(pluginObj) {
         this.pluginInstances[pluginObj.id] = pluginObj;
     },
-    removePluginInstance: function(pluginObj) {        
+    removePluginInstance: function(pluginObj) {
         if (pluginObj) pluginObj.remove();
     },
     getPluginInstance: function(id) {
@@ -142,13 +142,13 @@ EkstepEditor.pluginManager = new (Class.extend({
         return Object.keys(this.plugins);
     },
     getPluginType: function(id) {
-        if(this.pluginInstances[id]) {
+        if (this.pluginInstances[id]) {
             return this.pluginInstances[id].getType();
         } else {
             return '';
         }
     },
-    loadAllPlugins: function (plugins, callback) {
+    loadAllPlugins: function(plugins, callback) {
         if (_.isEmpty(plugins)) {
             callback();
         }
@@ -156,7 +156,7 @@ EkstepEditor.pluginManager = new (Class.extend({
         var q = async.queue(function(plugin, pluginCallback) {
             instance.loadPlugin(plugin.key, plugin.value);
             pluginCallback();
-        },6);
+        }, 6);
         q.drain = function() {
             callback();
         };
@@ -164,15 +164,15 @@ EkstepEditor.pluginManager = new (Class.extend({
             q.push({ "key": key, "value": value }, function(err) {});
         });
     },
-    loadPluginResource: function (pluginId, pluginVer, src, dataType, callback) {
-        if (this.plugins[pluginId]){
+    loadPluginResource: function(pluginId, pluginVer, src, dataType, callback) {
+        if (this.plugins[pluginId]) {
             EkstepEditor.resourceManager.getResource(pluginId, pluginVer, src, dataType, this.plugins[pluginId]['repo'], callback)
         } else {
-            callback(new Error("unable load plugin resource "+src), undefined)
+            callback(new Error("unable load plugin resource " + src), undefined)
         }
     },
     getPluginVersion: function(id) {
-        if(this.pluginInstances[id]) {
+        if (this.pluginInstances[id]) {
             return this.pluginInstances[id].getVersion();
         } else {
             return '';
