@@ -20,10 +20,10 @@ EkstepEditor.iService = Class.extend({
             var instance = this;
             if (!config) config = {};
             return this.$http.post(url, data, config).then(function(res) { 
-                instance._dispatchTelemetry({url: url, method: "POST", request: "", res: res});
+                instance._dispatchTelemetry({url: url, method: "POST", request: data, res: res});
                 cb(null, res) 
             }, function(res) { 
-                instance._dispatchTelemetry({url: url, method: "POST", request: "", res: res});
+                instance._dispatchTelemetry({url: url, method: "POST", request: data, res: res});
                 cb(res, null) 
             });
         },
@@ -31,10 +31,10 @@ EkstepEditor.iService = Class.extend({
             var instance = this;
             if (!config) config = {};
             return this.$http.patch(url, data, config).then(function(res) {
-                instance._dispatchTelemetry({url: url, method: "PATCH", request: "", res: res}); 
+                instance._dispatchTelemetry({url: url, method: "PATCH", request: data, res: res}); 
                 cb(null, res) 
             }, function(res) { 
-                instance._dispatchTelemetry({url: url, method: "PATCH", request: "", res: res}); 
+                instance._dispatchTelemetry({url: url, method: "PATCH", request: data, res: res}); 
                 cb(res, null) 
             });
         },

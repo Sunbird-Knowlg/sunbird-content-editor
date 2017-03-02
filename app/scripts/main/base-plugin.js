@@ -37,7 +37,6 @@ EkstepEditor.basePlugin = Class.extend({
             this.registerMenu();
             this.initialize();
             EkstepEditorAPI.addEventListener(this.manifest.id + ":create", this.create, this);
-            if (!EkstepEditor.stageManager.contentLoading) EkstepEditor.telemetryService.pluginLifeCycle({type: 'load', pluginid: this.manifest.id, pluginver: this.manifest.ver, objectid: "", stage: "", containerid: "", containerplugin: ""});
             console.log(manifest.id + " plugin initialized");
         } else {
             this.editorObj = undefined, this.event = undefined, this.attributes = { x: 0, y: 0, w: 0, h: 0, visible: true }, this.params = undefined, this.data = undefined, this.media = undefined;
@@ -98,6 +97,8 @@ EkstepEditor.basePlugin = Class.extend({
                 EkstepEditor.toolbarManager.registerMenu(menu);
             } else if (menu.category === 'context') {
                 EkstepEditor.toolbarManager.registerContextMenu(menu);
+            } else if (menu.category === 'config') {
+                EkstepEditor.toolbarManager.registerConfigMenu(menu);
             }
         });
     },
@@ -117,6 +118,14 @@ EkstepEditor.basePlugin = Class.extend({
      */
     getType: function() {
         return this.manifest ? this.manifest.id : '';
+    },
+
+    /**
+     * Returns the version of this plugin (manifest ID)
+     * @memberof EkstepEditor.BasePlugin
+     */
+    getVersion: function() {
+        return this.manifest ? this.manifest.ver : '';
     },
 
     /**
@@ -682,7 +691,7 @@ EkstepEditor.basePlugin = Class.extend({
      * @param value {string} Value of the config setting.
      * @memberof EkstepEditor.BasePlugin
      */
-    onConfigChange: function(key, value) {
+    _onConfigChange: function(key, value) {
         this.addConfig(key, value);
         var currentInstace = EkstepEditorAPI.getCurrentObject();
         if (currentInstace.config === undefined) { currentInstace.config = {} }

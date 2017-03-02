@@ -72,7 +72,7 @@
 "app/scripts/angular/controller/popup-controller.js",
 "app/scripts/angular/directive/draggable-directive.js",
 "app/scripts/angular/directive/droppable-directive.js",
-"scripts/angular/service/api-timestamp-service.js",
+"app/scripts/angular/service/api-timestamp-service.js",
 "app/scripts/service/iservice.js",
 "app/scripts/service/content-service.js",
 "app/scripts/service/popup-service.js",

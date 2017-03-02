@@ -22,6 +22,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         // Declare global variables
         $scope.showAppLoadScreen = true;
         $scope.contentLoadedFlag = false;
+        $scope.showGenieControls = false;
         $scope.appLoadMessage = [
             { 'id': 1, 'message': 'Loading Plugins', 'status': false }
         ];
@@ -166,9 +167,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 }
                 if (!(content && content.body) && !err) {
                     EkstepEditor.stageManager.registerEvents();
-                    EkstepEditor.stageManager.contentLoading = true;
                     EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
-                    EkstepEditor.stageManager.contentLoading = false;
+                    EkstepEditorAPI.dispatchEvent('content:onload');
                     EkstepEditor.telemetryService.start();
                     $scope.closeLoadScreen(true);
                 } else if (content && content.body) {
@@ -301,22 +301,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             }, EkstepEditor.config.dispatcher);
         }
 
-        EkstepEditor.toolbarManager.setScope($scope);
-        EkstepEditor.init(null, $location.protocol() + '://' + $location.host() + ':' + $location.port(), function() {
-            $scope.initTelemetry();
-            $scope.appLoadMessage
-            var obj = _.find($scope.appLoadMessage, { 'id': 1});
-            if (_.isObject(obj)) {
-                obj.message = "Plugins loaded";
-                obj.status = true;
-            }
-            $scope.initEditor();
-        });
-
         $scope.initEditor = function() {
 
             $scope.menus = EkstepEditor.toolbarManager.menuItems;
             $scope.contextMenus = EkstepEditor.toolbarManager.contextMenuItems;
+            $scope.configMenus = EkstepEditor.toolbarManager.configMenuItems;
             $scope.stages = EkstepEditor.stageManager.stages;
             $scope.currentStage = EkstepEditor.stageManager.currentStage;
             EkstepEditor.eventManager.addEventListener("stage:select", $scope.resetTeacherInstructions, this);
@@ -331,12 +320,30 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             });
         }
 
+        EkstepEditor.toolbarManager.setScope($scope);
+        EkstepEditor.init(null, $location.protocol() + '://' + $location.host() + ':' + $location.port(), function() {
+            $scope.initTelemetry();
+            $scope.appLoadMessage
+            var obj = _.find($scope.appLoadMessage, { 'id': 1});
+            if (_.isObject(obj)) {
+                obj.message = "Plugins loaded";
+                obj.status = true;
+            }
+            $scope.initEditor();
+        });
+
+        
+
         $scope.setTitleBarText = function(text) {
             if(text) document.title = text;
         };
 
         $scope.fireToolbarTelemetry = function(menu, menuType) {
-            EkstepEditor.telemetryService.interact({ "type": "select", "subtype": "click", "target": menuType, "targetid": menu.id, "objectid": "", "stage": EkstepEditor.stageManager.currentStage.id });
+            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "menu", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
+        }
+
+        $scope.fireSidebarTelemetry = function(menu, menuType) {
+            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "sidebar", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
         }
     }
 ]);
