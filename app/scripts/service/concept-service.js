@@ -15,7 +15,13 @@ EkstepEditor.conceptService = new(EkstepEditor.iService.extend({
     },
     initService: function() {},
     getConceptsTree: function(callback) {
-        var data = {"request": { "filters":{ "objectType": ["Dimension","Domain","Concept"]}, "limit": 500}};
+        var data = {"request": { "filters":{ "objectType": ["Dimension","Domain"]}}};
+        this.postFromService(this.searchURL + 'v2/search',data, this.requestHeaders, callback);
+    },
+    getConcepts: function(callback, offset, limit) {
+        offset = offset || 0;
+        limit  = limit || 200;
+        var data = {"request": { "filters":{ "objectType": ["Concept"]}, "offset":offset, "limit":limit}};
         this.postFromService(this.searchURL + 'v2/search',data, this.requestHeaders, callback);
     },
     postFromService: function(url, data, headers, callback) {
