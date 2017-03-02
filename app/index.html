@@ -64,7 +64,7 @@
                                 <span ng-if="contentDetails.contentTitle.length > 30">...</span></label>
                             <label class="content-type-label">{{contentDetails.contentType}}</label>
                             <div ng-include="'templates/editContentMetaDialog.html'" style="display: inline-block; "></div>
-                            <a class="btn at-btn at-btn-ok" ng-click="editContentMeta()">
+                            <a class="btn at-btn at-btn-ok" ng-click="editContentMeta(); fireToolbarTelemetry({id: 'editMeta'}, 'editMetaButton')">
                                 <i class="edit icon link"></i>
                             </a>
                         </div>
@@ -90,8 +90,8 @@
                                                 <span>{{userDetails.email}}</span>
                                             </div>
                                             <div class="extra">
-                                                <a class="ui tiny button " ng-href="{{cancelLink}}" onclick="location.reload();">close</a>
-                                                <a class="ui tiny button " href="{{userDetails.logout}}" onclick="location.reload();">logout</a>
+                                                <a class="ui tiny button " ng-href="{{cancelLink}}" ng-click="location.reload(); fireToolbarTelemetry({id: 'close'}, 'closeButton')">close</a>
+                                                <a class="ui tiny button " href="{{userDetails.logout}}" ng-click="location.reload(); fireToolbarTelemetry({id: 'logout'}, 'logoutButton')">logout</a>
                                             </div>
                                         </div>
                                     </div>
@@ -104,16 +104,16 @@
                         <div ng-include="'templates/saveSuccessMessage.html'"></div>
                         <div ng-include="'templates/saveErrorMessage.html'"></div>
                         <div ng-include="'templates/migratedContentSaveMsg.html'"></div>
-                        <button ng-class="saveBtnEnabled ? 'ui tiny icon button right floated primary' : 'ui tiny icon button right floated disabled'" ng-click="saveContent()" ng-disabled="!contentId" style="margin-left: 5px;">
+                        <button ng-class="saveBtnEnabled ? 'ui compact icon button right floated ce-button' : 'ui compact icon button right floated disabled'" ng-click="saveContent(); fireToolbarTelemetry({id: 'save'}, 'saveButton')" ng-disabled="!contentId" style="margin-left: 5px;">
                             <i class="icon-save icon"></i> Save
                         </button>
-                        <div class="ui tiny buttons right floated primary">
-                            <div class="ui button" ng-click="previewContent();">
+                        <div class="ui compact buttons right floated ce-button">
+                            <div class="ui button" ng-click="previewContent(); fireToolbarTelemetry({id: 'preview'}, 'previewButton');">
                                 <i class="icon-preview icon"></i> Preview</div>
                             <div class="ui floating dropdown icon button">
                                 <i class="dropdown icon"></i>
                                 <div class="menu">
-                                    <div class="item" ng-click="previewContent('start');">preview from beginning</div>
+                                    <div class="item" ng-click="previewContent('start'); fireToolbarTelemetry({id: 'preview'}, 'previewButton')">preview from beginning</div>
                                 </div>
                             </div>
                         </div>
@@ -125,22 +125,15 @@
                 </div>
             </div>
             <div class="ui grid">
-                <div class="ui nine wide column">
+                <div class="ui ten wide column">
                     <div class="ui icon menu" style="margin-bottom: 0; margin-top: 0;margin-left: 30px; border:none; box-shadow: none;">
                         <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'"></span>
+                        <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
                     </div>
                 </div>
-                <div class="ui three wide column">
-                    <div class="ui small buttons" id="configMenu">
-                        <button class="ui grey button active popup-item" id="settingsMenu" data-content="Settings" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showSettingsTab'})">
-                            <i class="large settings icon"></i>
-                        </button>
-                        <button class="ui button popup-item" id="helpMenu" data-content="Help" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showHelpTab'})">
-                            <i class="large help icon"></i>
-                        </button>
-                        <button class="ui button popup-item" id="commentsMenu" data-content="Comments" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showCommentsTab'})">
-                            <i class="large comments icon"></i>
-                        </button>
+                <div class="ui two wide column">
+                    <div class="ui icon menu" style="margin-bottom: 0; margin-top: 0;margin-left: 30px; border-left:1px solid #eee; box-shadow: none;">
+                        <span ng-repeat="menu in configMenus" ng-include="'templates/toolbar.html'" class="at-config-menu"></span>
                     </div>
                 </div>
             </div>

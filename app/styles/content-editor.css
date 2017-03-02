@@ -298,3 +298,8 @@ body {
 .download-collaborator-icon .download.link.icon {
     line-height: 26px;
 }
+
+.ce-button.button,
+.ce-button .button {
+    background-color: #999;
+}
