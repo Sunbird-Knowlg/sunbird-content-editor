@@ -17,7 +17,6 @@ EkstepEditor.resourceManager = new(Class.extend({
                 EkstepEditor.hostRepo.getManifest(pluginId, pluginVer, callback); // callback(err, manifest)
             }
         }, function(err, result) {
-            console.log(result);
             if (result.published.manifest !== undefined)
                 cb(undefined, result.published);
             else if (result.draft.manifest !== undefined)

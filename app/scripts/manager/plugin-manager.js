@@ -55,7 +55,6 @@ EkstepEditor.pluginManager = new (Class.extend({
                         instance.invoke(pluginId, _.cloneDeep(manifest.editor['init-data'] || {}), EkstepEditorAPI.getCurrentStage());
                     }
                     if (!EkstepEditor.stageManager.contentLoading) EkstepEditor.telemetryService.pluginLifeCycle({type: 'load', pluginid: manifest.id, pluginver: manifest.ver, objectid: "", stage: "", containerid: "", containerplugin: ""});
-                    instance.registerPlugin(manifest, eval(data));
                 } catch (e) {
                     console.error("error while loading plugin:" + manifest.id, e);
                 }
