@@ -1,7 +1,13 @@
 EkstepEditor.contentService = new(EkstepEditor.iService.extend({
-    serviceURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug +'/learning/',
+    serviceURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug + '/learning/',
     content: {},
     initService: function() {},
+    requestHeaders: {
+        "headers": {
+            "content-type": "application/json",
+            "user-id": "content-editor"
+        }
+    },
     setContentMeta: function(id, contentMeta) {
         if (id) {
             this.content[id] = _.isUndefined(this.content[id]) ? {} : this.content[id];
@@ -32,7 +38,7 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
                 }
             };
 
-            if(!_.isUndefined(oldBody)) {
+            if (!_.isUndefined(oldBody)) {
                 requestObj.request.content.oldBody = JSON.stringify(oldBody);
             }
 
@@ -57,21 +63,31 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
         var instance = this;
         if (contentId) {
             var metaDataFields = "?fields=body,editorState,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType";
-            instance.http.get(this.serviceURL + 'v2/content/' + contentId + metaDataFields, {}, function(err,res){
+            instance.http.get(this.serviceURL + 'v2/content/' + contentId + metaDataFields, {}, function(err, res) {
                 if (err) callback(err, undefined);
                 if (!err && res.data && res.data.result && res.data.result.content) {
                     callback(err, res.data.result.content);
-                } else{
+                } else {
                     callback(new Error('no content found!'), undefined)
                 }
-                
+
             });
             //get content meta for preview
-            instance.http.get(this.serviceURL + 'v2/content/' + contentId, {}, function(err, res){
-                if(res) instance.setContentMeta(contentId, res.data.result.content);
+            instance.http.get(this.serviceURL + 'v2/content/' + contentId, {}, function(err, res) {
+                if (res) instance.setContentMeta(contentId, res.data.result.content);
             });
         } else {
             callback(null, undefined);
         }
+    },
+    downloadContent: function(contentId, fileName, callback) {
+        var data = { "request": { "content_identifiers": [contentId], "file_name": fileName } };
+        this.postFromService(this.serviceURL + 'v2/content/bundle', data, this.requestHeaders, callback);
+    },
+    postFromService: function(url, data, headers, callback) {
+        var instance = this;
+        instance.http.post(url, JSON.stringify(data), headers, function(err, res) {
+            callback(err, res)
+        });
     }
 }));
