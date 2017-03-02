@@ -56,7 +56,7 @@
 "app/scripts/manager/stage-manager.js",
 "app/scripts/manager/toolbar-manager.js",
 "app/scripts/manager/media-manager.js",
-"app/scripts/manager/plugin-manager.js",
+"app/scripts/manager/resource-manager.js",
 "app/scripts/main/ekstep-editor-api.js",    
 "app/scripts/migration/1_migration-task.js",   
 "app/scripts/migration/mediamigration-task.js",   
