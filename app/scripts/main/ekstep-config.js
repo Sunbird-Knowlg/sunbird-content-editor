@@ -39,7 +39,8 @@ EkstepEditor.config = {
         "org.ekstep.stageconfig": "1.0",
         "org.ekstep.unsupported": "1.0",
         "org.ekstep.viewecml": "1.0",
-        "org.ekstep.activitybrowser": "1.0"
+        "org.ekstep.activitybrowser": "1.0",
+        "org.ekstep.download":"1.0"
     },
     dispatcher: "local"
 }

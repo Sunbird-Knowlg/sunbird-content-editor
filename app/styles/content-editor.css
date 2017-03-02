@@ -291,8 +291,9 @@ body {
 
 .download-collaborator-icon {
     padding: 6px;
-    margin-left: 148px;
     color: #767676;
+    display: inline-block;
+    float: right;
 }
 
 .download-collaborator-icon .download.link.icon {
