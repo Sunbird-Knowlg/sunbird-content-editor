@@ -149,7 +149,6 @@ EkstepEditor.pluginManager = new (Class.extend({
             return '';
         }
     },
-
     loadAllPlugins: function (plugins, callback) {
         if (_.isEmpty(plugins)) {
             callback();
@@ -171,6 +170,7 @@ EkstepEditor.pluginManager = new (Class.extend({
             EkstepEditor.resourceManager.getResource(pluginId, pluginVer, src, dataType, this.plugins[pluginId]['repo'], callback)
         } else {
             callback(new Error("unable load plugin resource "+src), undefined)
+        }
     },
     getPluginVersion: function(id) {
         if(this.pluginInstances[id]) {
