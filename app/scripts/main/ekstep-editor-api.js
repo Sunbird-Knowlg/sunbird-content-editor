@@ -358,8 +358,8 @@ window.EkstepEditorAPI = {
     updatePluginDimensions: function(inst) {
         inst.attributes.x = inst.editorObj.getLeft();
         inst.attributes.y = inst.editorObj.getTop();
-        inst.attributes.w = inst.editorObj.getWidth();
-        inst.attributes.h = inst.editorObj.getHeight();
+        inst.attributes.w = inst.editorObj.getWidth() - inst.editorObj.getStrokeWidth();
+        inst.attributes.h = inst.editorObj.getHeight() - inst.editorObj.getStrokeWidth();
         if (_.isFunction(inst.editorObj.getRx))
             inst.attributes.r = inst.editorObj.getRx();
     },
