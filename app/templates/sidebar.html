@@ -1,6 +1,6 @@
 <style type="text/css">
 .sidebarContent {
-    height: 450px;
+    height: 400px;
     width: 100%;
     overflow-y: auto;
     margin: 0px !important;
@@ -47,7 +47,7 @@ a.item.at-menu-item.popup-item.active {
         <span ng-include="'templates/properties.html'"></span>
     </div>
 </div>
-<div ng-show="selectedConfigCategory == 'help'">
+<div ng-show="selectedConfigCategory == 'help'" class="sidebar-help">
     <div id="pluginHelpContent" class="ui message"></div>
 </div>
 <div ng-show="selectedConfigCategory == 'comments'">

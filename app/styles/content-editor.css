@@ -314,3 +314,7 @@ body {
     float: right !important;
     margin-right: 6px !important;
 }
+.sidebar-help{
+    height: 430px;
+    overflow-y: auto;
+}
