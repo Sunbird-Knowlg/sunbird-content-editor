@@ -344,7 +344,7 @@ EkstepEditor.basePlugin = Class.extend({
         obj.y = parseFloat(((obj.y / 405) * 100).toFixed(2));
         obj.w = parseFloat(((obj.w / 720) * 100).toFixed(2));
         obj.h = parseFloat(((obj.h / 405) * 100).toFixed(2));
-        obj.r = parseFloat(((obj.r / 405) * 100).toFixed(2));
+        obj.r = parseFloat(obj.r);
     },
 
     /**
@@ -358,7 +358,7 @@ EkstepEditor.basePlugin = Class.extend({
         obj.y = obj.y * (405 / 100);
         obj.w = obj.w * (720 / 100);
         obj.h = obj.h * (405 / 100);
-        obj.r = obj.r * (405 / 100);
+        obj.r = obj.r;
     },
 
     /**
