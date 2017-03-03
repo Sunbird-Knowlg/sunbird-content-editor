@@ -133,6 +133,79 @@ EkstepEditor.stageManager = new(Class.extend({
             'ver': EkstepEditor.pluginManager.getPluginVersion(pluginId)
         }
     },
+    addStageAt: function(stage, position) {
+        var currentIndex;
+        switch (position) {
+            case "beginning":
+                this.stages.unshift(stage);
+                break;
+            case "end":
+            case "next":
+                this.stages.push(stage);
+                break;
+            case "afterCurrent":
+            case "beforeCurrent":
+                currentIndex = this.getStageIndex(EkstepEditorAPI.getCurrentStage());
+                if (position === "afterCurrent" && currentIndex >= 0) this.stages.splice(currentIndex + 1, 0, stage);
+                if (position === "beforeCurrent" && currentIndex >= 0) this.stages.splice(currentIndex, 0, stage);
+                break;
+            default:
+                this.stages.push(stage)
+                break;
+        };
+    },
+    onStageDragDrop: function(srcStageId, destStageId) {
+        var srcIdx = this.getStageIndexById(srcStageId);
+        var destIdx = this.getStageIndexById(destStageId);
+        if (srcIdx < destIdx) {
+            var src = this.stages[srcIdx];
+            for (var i = srcIdx; i <= destIdx; i++) {
+                this.stages[i] = this.stages[i + 1];
+                if (i === destIdx) this.stages[destIdx] = src;
+            }
+        }
+        if (srcIdx > destIdx) {
+            var src = this.stages[srcIdx];
+            for (var i = srcIdx; i >= destIdx; i--) {
+                this.stages[i] = this.stages[i - 1];
+                if (i === destIdx) this.stages[destIdx] = src;
+            }
+        }
+
+        EkstepEditorAPI.dispatchEvent('stage:reorder', { stageId: srcStageId, fromIndex: srcIdx, toIndex: destIdx });
+    },
+    getStageIndexById: function(stageId) {
+        return _.findIndex(this.stages, function(stage) {
+            return stage.id == stageId;
+        });
+    },
+    enableSave: function() { // on stage operation, enable the save button
+        EkstepEditorAPI.getAngularScope().enableSave();
+    },
+    deleteConfirmationDialog: function(event, data) {
+        var instance = this;
+        EkstepEditorAPI.getService('popup').open({
+            template: 'deleteStageDialog.html',
+            controller: ['$scope', function($scope) {
+                $scope.delete = function() {
+                    $scope.closeThisDialog();
+                    instance.deleteStage(event, data);
+                }
+            }],
+            showClose: false
+        });
+    },
+    showLoadScreenMessage: function() {
+        var obj = _.find(EkstepEditorAPI.getAngularScope().appLoadMessage, { 'id': 3});
+        if (_.isObject(obj)) {
+            obj.message = "Content loaded";
+            obj.status = true;
+        }
+        EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
+        setTimeout(function() {
+            EkstepEditorAPI.getAngularScope().closeLoadScreen(); // added 2 sec set timeout to show the content load message           
+        }, 2000)
+    },
     getStageIcons: function() {
         return this.thumbnails;
     },
@@ -231,6 +304,21 @@ EkstepEditor.stageManager = new(Class.extend({
            
         }
     },
+    fromECML: function(contentBody, stageIcons) {
+        var instance = this;
+        var startTime = (new Date()).getTime();
+        EkstepEditorAPI.getAngularScope().appLoadMessage.push({ 'id': 3, 'message': 'Loading Content', 'status': false });
+        EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
+        EkstepEditor.stageManager.contentLoading = true;
+        EkstepEditor.eventManager.enableEvents = false;
+        this._loadMedia(contentBody);
+        this._loadPlugins(contentBody, function(err, res) {
+            if(!err) {
+                var stages = _.isArray(contentBody.theme.stage) ? contentBody.theme.stage : [contentBody.theme.stage];
+                instance._loadStages(stages, stageIcons);
+            }
+        });
+    },
     _loadMedia: function(contentBody) {
         _.forEach(contentBody.theme.manifest.media, function(media) {
             if (media.type == 'plugin' && EkstepEditor.pluginManager.isDefined(media.id)) {} else {
@@ -254,15 +342,22 @@ EkstepEditor.stageManager = new(Class.extend({
         });
         EkstepEditor.pluginManager.loadAllPlugins(pluginMap, cb);
     },
-    _loadStages: function(stages, stageIcons) {
+    _loadStages: function(stages, stageIcons, startTime) {
         var instance = this;
         stageIcons = stageIcons || '{}';
         var thumbnails = JSON.parse(stageIcons);
+        var tasks = [];
         _.forEach(stages, function(stage, index) {
-            instance._loadStage(stage, index, stages.length, thumbnails[stage.id]);
+            tasks.push(function(callback) {
+                instance._loadStage(stage, index, stages.length, thumbnails[stage.id], callback);
+            });
+        });
+        async.parallel(tasks, function(err, data) {
+            instance._loadComplete(startTime)
         });
     },
-    _loadStage: function(stage, index, size, thumbnail) {
+    _loadStage: function(stage, index, size, thumbnail, callback) {
+        var instance = this;
         var stageEvents = _.clone(stage.events) || {};
         var canvas = undefined;
         if(thumbnail) {
@@ -273,7 +368,8 @@ EkstepEditor.stageManager = new(Class.extend({
                 add: function() {},
                 setActiveObject: function() {},
                 clear: function() {},
-                renderAll: function() {}
+                renderAll: function() {},
+                setBackgroundColor: function() {}
             }
         } else {
             // Some extremely complex logic is happening here. Read at your own risk
@@ -310,7 +406,7 @@ EkstepEditor.stageManager = new(Class.extend({
                 }
                 pluginCount++;
             } catch(e) { 
-                console.warn('error when instantiating plugin:', pluginId, plugin.data, stageInstance.id);                   
+                console.warn('error when instantiating plugin:', pluginId, plugin.data, stageInstance.id, e);                   
                 EkstepEditorAPI.dispatchEvent('ce:plugin:error', {error: 'unable to instantiate plugin', 'pluginId': pluginId, pluginData: plugin.data, stageId: stageInstance.id });
             }                
         });
@@ -321,13 +417,11 @@ EkstepEditor.stageManager = new(Class.extend({
                 })
             })
         }
-
-        var cb = ((index + 1) == size) ? function() {                
-            EkstepEditorAPI.jQuery('#thumbnailCanvasContainer').empty();
-        } : function() {};
-        stageInstance.destroyOnLoad(pluginCount, canvas, cb);
+        stageInstance.destroyOnLoad(pluginCount, canvas, callback);
     },
-    _loadComplete: function() {
+    _loadComplete: function(startTime) {
+        EkstepEditorAPI.jQuery('#thumbnailCanvasContainer').empty();
+        EkstepEditor.eventManager.enableEvents = true;
         EkstepEditor.stageManager.registerEvents();
         EkstepEditor.eventManager.addEventListener("stage:select", this.selectStage, this);
         EkstepEditorAPI.getAngularScope().toggleGenieControl();
@@ -335,94 +429,6 @@ EkstepEditor.stageManager = new(Class.extend({
         EkstepEditorAPI.dispatchEvent('content:onload');
         this.showLoadScreenMessage();
         EkstepEditor.stageManager.contentLoading = false;
-    },
-    fromECML: function(contentBody, stageIcons) {
-        var instance = this;
-        var startTime = (new Date()).getTime();
-        EkstepEditorAPI.getAngularScope().appLoadMessage.push({ 'id': 3, 'message': 'Loading Content', 'status': false });
-        EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
-        EkstepEditor.stageManager.contentLoading = true;
-        this._loadMedia(contentBody);
-        this._loadPlugins(contentBody, function(err, res) {
-            if(!err) {
-                var stages = _.isArray(contentBody.theme.stage) ? contentBody.theme.stage : [contentBody.theme.stage];
-                instance._loadStages(stages, stageIcons);
-                instance._loadComplete();
-                EkstepEditor.telemetryService.startEvent(true).append("loadtimes", {"contentLoad": ((new Date()).getTime() - startTime)});
-            }
-        });
-    },
-    addStageAt: function(stage, position) {
-        var currentIndex;
-        switch (position) {
-            case "beginning":
-                this.stages.unshift(stage);
-                break;
-            case "end":
-            case "next":
-                this.stages.push(stage);
-                break;
-            case "afterCurrent":
-            case "beforeCurrent":
-                currentIndex = this.getStageIndex(EkstepEditorAPI.getCurrentStage());
-                if (position === "afterCurrent" && currentIndex >= 0) this.stages.splice(currentIndex + 1, 0, stage);
-                if (position === "beforeCurrent" && currentIndex >= 0) this.stages.splice(currentIndex, 0, stage);
-                break;
-            default:
-                this.stages.push(stage)
-                break;
-        };
-    },
-    onStageDragDrop: function(srcStageId, destStageId) {
-        var srcIdx = this.getStageIndexById(srcStageId);
-        var destIdx = this.getStageIndexById(destStageId);
-        if (srcIdx < destIdx) {
-            var src = this.stages[srcIdx];
-            for (var i = srcIdx; i <= destIdx; i++) {
-                this.stages[i] = this.stages[i + 1];
-                if (i === destIdx) this.stages[destIdx] = src;
-            }
-        }
-        if (srcIdx > destIdx) {
-            var src = this.stages[srcIdx];
-            for (var i = srcIdx; i >= destIdx; i--) {
-                this.stages[i] = this.stages[i - 1];
-                if (i === destIdx) this.stages[destIdx] = src;
-            }
-        }
-
-        EkstepEditorAPI.dispatchEvent('stage:reorder', { stageId: srcStageId, fromIndex: srcIdx, toIndex: destIdx });
-    },
-    getStageIndexById: function(stageId) {
-        return _.findIndex(this.stages, function(stage) {
-            return stage.id == stageId;
-        });
-    },
-    enableSave: function() { // on stage operation, enable the save button
-        EkstepEditorAPI.getAngularScope().enableSave();
-    },
-    deleteConfirmationDialog: function(event, data) {
-        var instance = this;
-        EkstepEditorAPI.getService('popup').open({
-            template: 'deleteStageDialog.html',
-            controller: ['$scope', function($scope) {
-                $scope.delete = function() {
-                    $scope.closeThisDialog();
-                    instance.deleteStage(event, data);
-                }
-            }],
-            showClose: false
-        });
-    },
-    showLoadScreenMessage: function() {
-        var obj = _.find(EkstepEditorAPI.getAngularScope().appLoadMessage, { 'id': 3});
-        if (_.isObject(obj)) {
-            obj.message = "Content loaded";
-            obj.status = true;
-        }
-        EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
-        setTimeout(function() {
-            EkstepEditorAPI.getAngularScope().closeLoadScreen(); // added 2 sec set timeout to show the content load message           
-        }, 2000)
+        EkstepEditor.telemetryService.startEvent(true).append("loadtimes", {"contentLoad": ((new Date()).getTime() - startTime)});
     }
 }));
