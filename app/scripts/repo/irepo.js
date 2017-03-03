@@ -3,7 +3,7 @@
  */
 EkstepEditor.iRepo = Class.extend({
     discoverManifest: function(pluginId, pluginVer, callback) {
-        callback(undefined, undefined);
+    	callback(undefined, undefined);
     },
     resolveResource: function(pluginId, pluginVer, resource) {}
 });

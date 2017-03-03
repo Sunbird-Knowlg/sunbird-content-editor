@@ -11,14 +11,14 @@ EkstepEditor.resourceManager = new(Class.extend({
                 EkstepEditor.publishedRepo.discoverManifest(pluginId, pluginVer, callback); // callback(err, manifest)
             },
             function(data, callback) {
-                if (_.isUndefined(data.manifest)) {
+                if(_.isUndefined(data.manifest)) {
                     EkstepEditor.draftRepo.discoverManifest(pluginId, pluginVer, callback); // callback(err, manifest)    
                 } else {
                     callback(null, data);
                 }
             },
             function(data, callback) {
-                if (_.isUndefined(data.manifest)) {
+                if(_.isUndefined(data.manifest)) {
                     EkstepEditor.hostRepo.discoverManifest(pluginId, pluginVer, callback); // callback(err, manifest)
                 } else {
                     callback(null, data);
@@ -50,7 +50,6 @@ EkstepEditor.resourceManager = new(Class.extend({
     },
     loadResource: function(url, dataType, callback) {
         EkstepEditor.jQuery.ajax({
-            async: false,
             url: url + "?" + EkstepEditor.config.build_number,
             dataType: dataType
         }).fail(function(err) {

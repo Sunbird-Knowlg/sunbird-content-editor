@@ -11,6 +11,6 @@ EkstepEditor.publishedRepo = new(EkstepEditor.iRepo.extend({
         });
     },
     resolveResource: function(id, ver, resource) {
-        return this.basePath + "/" + id + "-" + ver + "/" + resource;
+    	return this.basePath + "/" + id + "-" + ver + "/" + resource;
     }
 }));
