@@ -36,15 +36,15 @@
                         <tbody>
                             <tr ng-repeat="message in appLoadMessage">
                                 <td>
-                                <i ng-if="message.status && message.error" class="square outline big icon"></i>
+                                    <i ng-if="message.status && message.error" class="square outline big icon"></i>
                                     <i ng-if="message.status && !message.error" class="checkmark box big icon"></i>
                                     <div ng-if="!message.status" class="ui active small inline loader"></div>
                                 </td>
                                 <td>
-                                    <h5 ng-bind="message.message"></h5>     
+                                    <h5 ng-bind="message.message"></h5>
                                 </td>
                             </tr>
-                        </tbody>      
+                        </tbody>
                     </table>
                     <div ng-show="onLoadCustomMessage.show" ng-include="'templates/appLoadScreenMessage.html'"></div>
                     <div ng-show="migration.showPostMigrationMsg" class="migartion-message-container">
@@ -61,10 +61,10 @@
                     <div class="five wide column" style="padding-left: 0px">
                         <div class="ui canvas" style="margin-top: 6px; ">
                             <label class="content-title" title="{{contentDetails.contentTitle}}">{{contentDetails.contentTitle | limitTo:30}}
-                             <span ng-if="contentDetails.contentTitle.length > 30">...</span></label>
+                                <span ng-if="contentDetails.contentTitle.length > 30">...</span></label>
                             <label class="content-type-label">{{contentDetails.contentType}}</label>
                             <div ng-include="'templates/editContentMetaDialog.html'" style="display: inline-block; "></div>
-                            <a class="btn at-btn at-btn-ok" ng-click="editContentMeta()">
+                            <a class="btn at-btn at-btn-ok" ng-click="editContentMeta(); fireToolbarTelemetry({id: 'editMeta'}, 'editMetaButton')">
                                 <i class="edit icon link"></i>
                             </a>
                         </div>
@@ -90,8 +90,8 @@
                                                 <span>{{userDetails.email}}</span>
                                             </div>
                                             <div class="extra">
-                                                <a class="ui tiny button " ng-href="{{cancelLink}}" onclick="location.reload();">close</a>
-                                                <a class="ui tiny button " href="{{userDetails.logout}}" onclick="location.reload();">logout</a>
+                                                <a class="ui tiny button " ng-href="{{cancelLink}}" ng-click="location.reload(); fireToolbarTelemetry({id: 'close'}, 'closeButton')">close</a>
+                                                <a class="ui tiny button " href="{{userDetails.logout}}" ng-click="location.reload(); fireToolbarTelemetry({id: 'logout'}, 'logoutButton')">logout</a>
                                             </div>
                                         </div>
                                     </div>
@@ -104,25 +104,23 @@
                         <div ng-include="'templates/saveSuccessMessage.html'"></div>
                         <div ng-include="'templates/saveErrorMessage.html'"></div>
                         <div ng-include="'templates/migratedContentSaveMsg.html'"></div>
-                        <button ng-class="saveBtnEnabled ? 'ui tiny icon button right floated primary' : 'ui tiny icon button right floated disabled'" ng-click="saveContent()" ng-disabled="!contentId" style="margin-left: 5px;">
+                        <button ng-class="saveBtnEnabled ? 'ui compact icon button right floated ce-button' : 'ui compact icon button right floated disabled'" ng-click="saveContent(); fireToolbarTelemetry({id: 'save'}, 'saveButton')" ng-disabled="!contentId" style="margin-left: 5px;">
                             <i class="icon-save icon"></i> Save
                         </button>
-                        <div class="ui tiny buttons right floated primary">
-                            <div class="ui button" ng-click="previewContent();">
+                        <div class="ui compact buttons right floated ce-button">
+                            <div class="ui button" ng-click="previewContent(); fireToolbarTelemetry({id: 'preview'}, 'previewButton');">
                                 <i class="icon-preview icon"></i> Preview</div>
                             <div class="ui floating dropdown icon button">
                                 <i class="dropdown icon"></i>
                                 <div class="menu">
-                                    <div class="item" ng-click="previewContent('start');">preview from beginning</div>
+                                    <div class="item" ng-click="previewContent('start'); fireToolbarTelemetry({id: 'preview'}, 'previewButton')">preview from beginning</div>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="ui tiny icon button right floated" style="margin-right: 5px;" ng-click="fireEvent({id: 'download:content', data: undefined});">
-                            <i class="icon-download icon "></i> Download
-                        </div> -->
-                        <!-- <div class="ui tiny icon button right floated" style="margin-right: 3px;" ng-click="fireEvent({id: 'collaborator:add', data: undefined});">
-                            <i class="add user icon"></i> collaborator
-                        </div> -->
+                        <div class="download-collaborator-icon">
+                            <i class="large add user link icon" ng-click="fireEvent({id: 'collaborator:add', data: undefined});" title="Add Collaborator"></i>
+                            <i class="large download link icon" ng-click="fireEvent({id: 'download:content', data: undefined});" title="Download" style="line-height: 26px;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -130,19 +128,12 @@
                 <div class="ui nine wide column">
                     <div class="ui icon menu" style="margin-bottom: 0; margin-top: 0;margin-left: 30px; border:none; box-shadow: none;">
                         <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'"></span>
+                        <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
                     </div>
                 </div>
                 <div class="ui three wide column">
-                    <div class="ui small buttons" id="configMenu">
-                        <button class="ui grey button active popup-item" id="settingsMenu" data-content="Settings" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showSettingsTab'})">
-                            <i class="large settings icon"></i>
-                        </button>
-                        <button class="ui button popup-item" id="helpMenu" data-content="Help" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showHelpTab'})">
-                            <i class="large help icon"></i>
-                        </button>
-                        <button class="ui button popup-item" id="commentsMenu" data-content="Comments" data-variation="tiny inverted" data-position="top center" ng-click="fireEvent({'id':'config:showCommentsTab'})">
-                            <i class="large comments icon"></i>
-                        </button>
+                    <div class="ui icon menu sidebar-menu" >
+                        <span ng-repeat="menu in configMenus" ng-include="'templates/toolbar.html'" class="at-config-menu"></span>
                     </div>
                 </div>
             </div>
@@ -157,7 +148,7 @@
                                     <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
                                         <i class="trash outline icon link" ng-click="fireEvent(stage.ondelete)"></i> <i class="clone icon link" ng-click="fireEvent(stage.duplicate)"></i>
                                     </div>
-                                    <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)" ng-click="fireEvent(stage.getOnClick())"/>
+                                    <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)" ng-click="fireEvent(stage.getOnClick())" />
                                 </div>
                             </div>
                         </div>
@@ -215,11 +206,16 @@
     <script src="scripts/main/ekstep-editor.js"></script>
     <script src="scripts/main/ekstep-config.js"></script>
     <script src="scripts/main/base-plugin.js"></script>
+    <script src="scripts/manager/resource-manager.js"></script>
     <script src="scripts/manager/event-manager.js"></script>
     <script src="scripts/manager/plugin-manager.js"></script>
     <script src="scripts/manager/stage-manager.js"></script>
     <script src="scripts/manager/toolbar-manager.js"></script>
     <script src="scripts/manager/media-manager.js"></script>
+    <script src="scripts/repo/irepo.js"></script>
+    <script src="scripts/repo/published-repo.js"></script>
+    <script src="scripts/repo/draft-repo.js"></script>
+    <script src="scripts/repo/host-repo.js"></script>
     <script src="scripts/main/ekstep-editor-api.js"></script>
     <script src="scripts/migration/1_migration-task.js"></script>
     <script src="scripts/migration/mediamigration-task.js"></script>
@@ -230,9 +226,9 @@
     <script src="scripts/migration/readalongmigration-task.js"></script>
     <script src="scripts/migration/assessmentmigration-task.js"></script>
     <script src="scripts/migration/eventsmigration-task.js"></script>
-    <script src="scripts/migration/settagmigration-task.js"></script>    
+    <script src="scripts/migration/settagmigration-task.js"></script>
     <script src="scripts/dispatcher/idispatcher.js"></script>
-    <script src="scripts/dispatcher/console-dispatcher.js"></script>    
+    <script src="scripts/dispatcher/console-dispatcher.js"></script>
     <script src="scripts/dispatcher/local-dispatcher.js"></script>
     <script src="scripts/dispatcher/piwik-dispatcher.js"></script>
     <script src="scripts/angular/controller/main.js"></script>

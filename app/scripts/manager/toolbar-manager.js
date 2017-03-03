@@ -4,6 +4,7 @@
 EkstepEditor.toolbarManager = new(Class.extend({
     menuItems: [],
     contextMenuItems: [],
+    configMenuItems: [],
     scope: undefined,
     setScope: function(scope) {
         this.scope = scope;
@@ -23,6 +24,11 @@ EkstepEditor.toolbarManager = new(Class.extend({
     registerContextMenu: function(menu) {
         if (!_.isObject(_.find(this.contextMenuItems, { id: menu.id }))) {
             this.contextMenuItems.push(menu);
+        }
+    },
+    registerConfigMenu: function(menu) {
+        if (!_.isObject(_.find(this.configMenuItems, { id: menu.id }))) {
+            this.configMenuItems.push(menu);
         }
     },
     resetContextMenu: function() {

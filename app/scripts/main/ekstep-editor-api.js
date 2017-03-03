@@ -61,7 +61,7 @@ window.EkstepEditorAPI = {
      * @memberof EkstepEditorAPI
      */
     loadPluginResource: function(pluginId, pluginVer, src, dataType, callback) {
-        EkstepEditor.loadPluginResource(pluginId, pluginVer, src, dataType, callback);
+        EkstepEditor.pluginManager.loadPluginResource(pluginId, pluginVer, src, dataType, callback);
     },
 
     /**
@@ -82,7 +82,7 @@ window.EkstepEditorAPI = {
                 break;
             case 'content':
                 return EkstepEditor.contentService;
-                break
+                break;
             case 'assessmentService':
                 return EkstepEditor.assessmentService;
                 break;
@@ -358,13 +358,16 @@ window.EkstepEditorAPI = {
     updatePluginDimensions: function(inst) {
         inst.attributes.x = inst.editorObj.getLeft();
         inst.attributes.y = inst.editorObj.getTop();
-        inst.attributes.w = inst.editorObj.getWidth();
-        inst.attributes.h = inst.editorObj.getHeight();
+        inst.attributes.w = inst.editorObj.getWidth() - inst.editorObj.getStrokeWidth();
+        inst.attributes.h = inst.editorObj.getHeight() - inst.editorObj.getStrokeWidth();
         inst.attributes.r = inst.editorObj.getAngle();
         if (_.isFunction(inst.editorObj.getRx))
             inst.attributes.r = inst.editorObj.getRx();
     },
     ngSafeApply: function(scope, fn) {
         if(scope) scope.$safeApply(fn);
+    },
+    loadAndInitPlugin: function (pluginId, pluginVersion) {
+      EkstepEditor.pluginManager.loadAndInitPlugin(pluginId+"-"+pluginVersion);
     }
 }

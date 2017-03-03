@@ -5,7 +5,7 @@ CSS file for Content Editor
 html,
 body {
     height: 100%;
-    overflow-y: hidden;    
+    overflow-y: hidden;
 }
 
 .maincontainer {
@@ -164,44 +164,48 @@ body {
 .ngdialog.ngdialog-theme-default {
     padding-top: 80px !important;
 }
-.show-action-form-btn{
+
+.show-action-form-btn {
     position: absolute;
     left: 89px;
     top: 13px;
 }
 
 #geniecontrols {
-  border: none;
-  outline: none;
-  width: 726px;
-  height: 411px;
-  margin-top: 20px;
-  position: fixed;
-  display:none;
-  pointer-events: none;
+    border: none;
+    outline: none;
+    width: 726px;
+    height: 411px;
+    margin-top: 20px;
+    position: fixed;
+    display: none;
+    pointer-events: none;
 }
 
 #geniecontrolsimage {
-  outline: none;
-  border: none;
-  width: 720px;
-  height: 405px; 
-  background: none;
-  pointer-events: none;
-  position: absolute;
+    outline: none;
+    border: none;
+    width: 720px;
+    height: 405px;
+    background: none;
+    pointer-events: none;
+    position: absolute;
 }
-.username{
-    cursor:pointer; 
+
+.username {
+    cursor: pointer;
     text-align: right;
 }
-.user-details-container{
+
+.user-details-container {
     top: 555px;
     left: 1px;
-    bottom: auto; 
-    right: auto; 
+    bottom: auto;
+    right: auto;
     width: 344px!important;
 }
-.user-avtar{
+
+.user-avtar {
     width: 45px !important;
     height: 45px !important;
 }
@@ -211,9 +215,8 @@ body {
     font-size: 11px;
     top: 8px;
     right: 20px;
-    z-index: 999999999;
+    z-index: 1000;
 }
-
 
 ::-webkit-scrollbar {
     width: 6px;
@@ -252,28 +255,66 @@ body {
     margin-left: 40% !important;
     padding: 10px !important;
 }
-.load-screen-dimmer{
-    background-color: rgba(255,255,255,.95) !important;
+
+.load-screen-dimmer {
+    background-color: rgba(255, 255, 255, .95) !important;
 }
-.migration-message{
+
+.migration-message {
     font-size: 16px !important;
 }
-.migartion-positive-btn{
+
+.migartion-positive-btn {
     margin-left: 15px !important;
 }
-.ui.loading.table tr td { 
-    border-top: 0px !important; 
+
+.ui.loading.table tr td {
+    border-top: 0px !important;
 }
-.ui.loading.table thead tr th{
-    border-bottom: 0px !important;    
+
+.ui.loading.table thead tr th {
+    border-bottom: 0px !important;
 }
-#configMenu{
+
+#configMenu {
     margin: 1px 25px 0 0;
     float: right;
 }
-#configMenu .ui.button{
+
+#configMenu .ui.button {
     border-left: 1px solid #ccc !important;
 }
-#configMenu .ui.button:last-child{
+
+#configMenu .ui.button:last-child {
     border-right: 1px solid #ccc !important;
+}
+
+.download-collaborator-icon {
+    padding: 6px;
+    color: #767676;
+    display: inline-block;
+    float: right;
+}
+
+.download-collaborator-icon .download.link.icon {
+    line-height: 26px;
+}
+
+.ce-button.button,
+.ce-button .button {
+    background-color: #999;
+}
+.sidebar-menu{
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-left: 30px !important;
+    border:none !important;
+    border-left:1px solid #eee !important;
+    box-shadow: none !important;
+    float: right !important;
+    margin-right: 6px !important;
+}
+.sidebar-help{
+    height: 430px;
+    overflow-y: auto;
 }
