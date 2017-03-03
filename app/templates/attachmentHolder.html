@@ -19,7 +19,7 @@
 <div class="ui four cards audioDiv" ng-show="stageAttachments.audio.show">
     <div class="ui card" ng-repeat="item in stageAttachments.audio.items">
         <div class="content">
-            <i class="right floated close icon" id="closeAudio" ng-click="fireEvent({'id':'org.ekstep.audio:removeAudio', 'data':{'asset': item.id}});" ng-hide="item.showClose"></i>
+            <i class="right floated close icon" id="closeAudio" ng-click="fireEvent({'id':'org.ekstep.audio:removeAudio', 'data':item});" ng-hide="item.showClose"></i>
             <span class="playAudio" ng-click="fireEvent({'id':'org.ekstep.audio:jplayerInit', 'data':{'url': item.url, 'id': item.id}});" >
                 <i class="music icon"></i>{{item.title | limitTo:9 }}<span ng-if="item.title.length > 9">....</span>
             </span>
