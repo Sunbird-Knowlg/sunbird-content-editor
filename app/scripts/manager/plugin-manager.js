@@ -22,7 +22,9 @@ EkstepEditor.pluginManager = new (Class.extend({
         this.loadPlugin(pluginId, version);
         if(this.isDefined(pluginId)) {
             var pluginManifest = this.getPluginManifest(pluginId);
-            this.invoke(pluginId, _.cloneDeep(pluginManifest.editor['init-data'] || {}), EkstepEditorAPI.getCurrentStage());
+            if (pluginManifest.type && EkstepEditorAPI._.lowerCase(pluginManifest.type) === "widget") {
+                this.invoke(pluginId, _.cloneDeep(pluginManifest.editor['init-data'] || {}), EkstepEditorAPI.getCurrentStage());    
+            }
             return 0;
         } else {
             return 1;
@@ -51,9 +53,6 @@ EkstepEditor.pluginManager = new (Class.extend({
                 instance.loadDependencies(manifest, repo);
                 try {
                     instance.registerPlugin(manifest, eval(data), repo);
-                    if (manifest.type && EkstepEditorAPI._.lowerCase(manifest.type) === "widget") {
-                        instance.invoke(pluginId, _.cloneDeep(manifest.editor['init-data'] || {}), EkstepEditorAPI.getCurrentStage());
-                    }
                     if (!EkstepEditor.stageManager.contentLoading) EkstepEditor.telemetryService.pluginLifeCycle({type: 'load', pluginid: manifest.id, pluginver: manifest.ver, objectid: "", stage: "", containerid: "", containerplugin: ""});
                 } catch (e) {
                     console.error("error while loading plugin:" + manifest.id, e);
@@ -66,7 +65,6 @@ EkstepEditor.pluginManager = new (Class.extend({
         if (_.isArray(manifest.editor.dependencies)) {
             _.forEach(manifest.editor.dependencies, function(dependency) {
                 if (dependency.type == 'plugin') {
-                    console.log(dependency.plugin,dependency.ver);
                     instance.loadPlugin(dependency.plugin, dependency.ver);
                 } else {
                     EkstepEditor.resourceManager.loadExternalResource(dependency.type, manifest.id, manifest.ver, dependency.src, repo);

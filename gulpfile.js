@@ -53,6 +53,11 @@
 "app/scripts/manager/stage-manager.js",
 "app/scripts/manager/toolbar-manager.js",
 "app/scripts/manager/media-manager.js",
+"app/scripts/manager/resource-manager.js",
+"app/scripts/repo/irepo.js",
+"app/scripts/repo/published-repo.js",
+"app/scripts/repo/draft-repo.js",
+"app/scripts/repo/host-repo.js",
 "app/scripts/main/ekstep-editor-api.js",    
 "app/scripts/migration/1_migration-task.js",   
 "app/scripts/migration/mediamigration-task.js",   
@@ -83,7 +88,7 @@
 "app/scripts/service/language-service.js",
 "app/scripts/service/search-service.js"
 ];
-
+    
  gulp.task('setup', function() {
      gulp.src('semantic/dist', { read: false }).pipe(clean())
      gulp.src(['app/config/theme.config']).pipe(gulp.dest('semantic/src/'))

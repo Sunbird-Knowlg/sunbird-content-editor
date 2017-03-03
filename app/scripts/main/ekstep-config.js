@@ -40,7 +40,10 @@ EkstepEditor.config = {
         "org.ekstep.unsupported": "1.0",
         "org.ekstep.viewecml": "1.0",
         "org.ekstep.activitybrowser": "1.0",
+        "org.ekstep.download":"1.0",
+        "org.ekstep.collaborator":"1.0",
         "org.ekstep.wordinfotext": "1.0"
+        ,"org.ekstep.developer": "1.0"
     },
     dispatcher: "local"
 }
