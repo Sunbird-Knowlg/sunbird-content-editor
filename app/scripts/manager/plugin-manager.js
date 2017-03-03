@@ -65,7 +65,6 @@ EkstepEditor.pluginManager = new (Class.extend({
         if (_.isArray(manifest.editor.dependencies)) {
             _.forEach(manifest.editor.dependencies, function(dependency) {
                 if (dependency.type == 'plugin') {
-                    console.log(dependency.plugin,dependency.ver);
                     instance.loadPlugin(dependency.plugin, dependency.ver);
                 } else {
                     EkstepEditor.resourceManager.loadExternalResource(dependency.type, manifest.id, manifest.ver, dependency.src, repo);

@@ -307,10 +307,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.contextMenus = EkstepEditor.toolbarManager.contextMenuItems;
             $scope.stages = EkstepEditor.stageManager.stages;
             $scope.currentStage = EkstepEditor.stageManager.currentStage;
-            $scope.configMenus = $scope.configMenus || [];
-            _.forEach(EkstepEditor.toolbarManager.configMenuItems,function (menu) {
-                $scope.configMenus.push(menu);
-            });
+            $scope.configMenus = EkstepEditor.toolbarManager.configMenuItems;
             EkstepEditor.eventManager.addEventListener("stage:select", $scope.resetTeacherInstructions, this);
             EkstepEditor.eventManager.addEventListener("stage:add", $scope.resetTeacherInstructions, this);
             $scope.loadContent();            
@@ -353,5 +350,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             }
             EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "sidebar", "target": menuType, "pluginid": pluginId, 'pluginver': pluginVer, "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
         }
+        $scope.developerMode = $location.search().developerMode;
+
     }
 ]);
