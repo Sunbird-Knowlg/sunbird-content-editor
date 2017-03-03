@@ -48,6 +48,7 @@
 'app/scripts/main/ekstep-editor.js',
 'app/scripts/main/ekstep-config.js',
 'app/scripts/main/base-plugin.js',
+"app/scripts/repo/irepo.js",
 "app/scripts/repo/published-repo.js",
 "app/scripts/repo/draft-repo.js",
 "app/scripts/repo/host-repo.js",
