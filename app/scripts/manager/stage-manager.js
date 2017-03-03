@@ -222,7 +222,7 @@ EkstepEditor.stageManager = new(Class.extend({
                 if (_.isUndefined(stageBody[id])) stageBody[id] = [];
                 stageBody[id].push(child.toECML());
                 instance.updateContentManifest(content, id, child.manifest);
-                instance.addMediaToMediaMap(mediaMap, child.getMedia());
+                instance.addMediaToMediaMap(mediaMap, child.getMedia(), child.manifest);
             });
             content.theme.stage.push(stageBody);
         });        
@@ -242,13 +242,20 @@ EkstepEditor.stageManager = new(Class.extend({
             }
         });
     },
-    addMediaToMediaMap: function(mediaMap, media) {
+    addMediaToMediaMap: function(mediaMap, media, manifest) {
+        var pluginType = ['plugin', 'css'];
         if (_.isObject(media)) {
             _.forIn(media, function(value, key) {
                 if(!mediaMap[key]) {
                     mediaMap[key] = value;
-                    value.src = EkstepEditor.mediaManager.getMediaOriginURL(value.src);    
-                } else if(value.preload) {
+                    value.src = EkstepEditor.mediaManager.getMediaOriginURL(value.src);
+                    _.forEach(pluginType, function(type) {
+                        if (mediaMap[key].type === type) {
+                            mediaMap[key].plugin = manifest.id;
+                            mediaMap[key].ver = manifest.ver;
+                        }
+                    });
+                } else if (value.preload) {
                     mediaMap[key].preload = value.preload;
                 }
                 
@@ -288,6 +295,8 @@ EkstepEditor.stageManager = new(Class.extend({
                     content.theme.manifest.media.push({
                         id: dependency.id,
                         type: dependency.type,
+                        plugin: dependency.id,
+                        ver: pluginManifest.ver,
                         src: EkstepEditor.config.absURL + EkstepEditor.relativeURL(pluginManifest.id, pluginManifest.ver, dependency.src)
                     });
                 });
@@ -295,8 +304,7 @@ EkstepEditor.stageManager = new(Class.extend({
             //then push the main renderer file
             content.theme.manifest.media.push({
                 id: id,
-                pluginId: id,
-                pluginVer: pluginManifest.ver,
+                plugin: id,
                 ver: pluginManifest.ver,
                 src: EkstepEditor.config.absURL + EkstepEditor.relativeURL(pluginManifest.id, pluginManifest.ver, pluginManifest.renderer.main),
                 type: "plugin"

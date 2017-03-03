@@ -294,9 +294,14 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
             $scope.menus = EkstepEditor.toolbarManager.menuItems;
             $scope.contextMenus = EkstepEditor.toolbarManager.contextMenuItems;
-            $scope.configMenus = EkstepEditor.toolbarManager.configMenuItems;
             $scope.stages = EkstepEditor.stageManager.stages;
             $scope.currentStage = EkstepEditor.stageManager.currentStage;
+            //$scope.configMenus = EkstepEditor.toolbarManager.configMenuItems;
+            $scope.configMenus = $scope.configMenus || [];
+            _.forEach(EkstepEditor.toolbarManager.configMenuItems,function (menu) {
+                $scope.configMenus.push(menu);
+            });
+
             EkstepEditor.eventManager.addEventListener("stage:select", $scope.resetTeacherInstructions, this);
             EkstepEditor.eventManager.addEventListener("stage:add", $scope.resetTeacherInstructions, this);
             $scope.loadContent();
@@ -330,7 +335,14 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.fireSidebarTelemetry = function(menu, menuType) {
-            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "sidebar", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
+            var pluginId = "", pluginVer = "";
+            if(EkstepEditorAPI.getCurrentObject()) {
+                pluginId = EkstepEditorAPI.getCurrentObject().manifest.id;
+                pluginVer = EkstepEditorAPI.getCurrentObject().manifest.ver;
+            }
+            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "sidebar", "target": menuType, "pluginid": pluginId, 'pluginver': pluginVer, "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
         }
+        $scope.developerMode = $location.search().developerMode;
+
     }
 ]);

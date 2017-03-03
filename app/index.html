@@ -125,14 +125,14 @@
                 </div>
             </div>
             <div class="ui grid">
-                <div class="ui ten wide column">
+                <div class="ui nine wide column">
                     <div class="ui icon menu" style="margin-bottom: 0; margin-top: 0;margin-left: 30px; border:none; box-shadow: none;">
                         <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'"></span>
                         <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
                     </div>
                 </div>
-                <div class="ui two wide column">
-                    <div class="ui icon menu" style="margin-bottom: 0; margin-top: 0;margin-left: 30px; border:none; border-left:1px solid #eee; box-shadow: none;">
+                <div class="ui three wide column">
+                    <div class="ui icon menu sidebar-menu" >
                         <span ng-repeat="menu in configMenus" ng-include="'templates/toolbar.html'" class="at-config-menu"></span>
                     </div>
                 </div>
@@ -212,6 +212,10 @@
     <script src="scripts/manager/stage-manager.js"></script>
     <script src="scripts/manager/toolbar-manager.js"></script>
     <script src="scripts/manager/media-manager.js"></script>
+    <script src="scripts/repo/irepo.js"></script>
+    <script src="scripts/repo/published-repo.js"></script>
+    <script src="scripts/repo/draft-repo.js"></script>
+    <script src="scripts/repo/host-repo.js"></script>
     <script src="scripts/main/ekstep-editor-api.js"></script>
     <script src="scripts/repo/irepo.js"></script>
     <script src="scripts/repo/published-repo.js"></script>
