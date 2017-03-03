@@ -120,7 +120,7 @@ EkstepEditor.stageManager = new(Class.extend({
         _.forEach(_.sortBy(plugins, 'z-index'), function(plugin) {            
             EkstepEditorAPI.cloneInstance(plugin.data);
         });
-        this.currentStage.destroyOnLoad(stage.children.length, this.canvas, instance.thumbnails[stage.id], function(){
+        this.currentStage.destroyOnLoad(stage.children.length, this.canvas, function(){
             EkstepEditor.eventManager.enableEvents = true;
         });       
         this.enableSave();        
@@ -265,8 +265,17 @@ EkstepEditor.stageManager = new(Class.extend({
     _loadStage: function(stage, index, size, thumbnail) {
         var stageEvents = _.clone(stage.events) || {};
         var canvas = undefined;
-        if(thumbnail) canvas = this.canvas
-        else {
+        if(thumbnail) {
+            canvas = {
+                toDataURL: function() {
+                    return thumbnail;
+                },
+                add: function() {},
+                setActiveObject: function() {},
+                clear: function() {},
+                renderAll: function() {}
+            }
+        } else {
             // Some extremely complex logic is happening here. Read at your own risk
             // Instantiate a canvas to create thumbnail.
             if(index == 0) {
@@ -316,7 +325,7 @@ EkstepEditor.stageManager = new(Class.extend({
         var cb = ((index + 1) == size) ? function() {                
             EkstepEditorAPI.jQuery('#thumbnailCanvasContainer').empty();
         } : function() {};
-        stageInstance.destroyOnLoad(pluginCount, canvas, thumbnail, cb);
+        stageInstance.destroyOnLoad(pluginCount, canvas, cb);
     },
     _loadComplete: function() {
         EkstepEditor.stageManager.registerEvents();
