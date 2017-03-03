@@ -237,8 +237,7 @@ EkstepEditor.stageManager = new(Class.extend({
     fromECML: function(contentBody) {
         var startTime = (new Date()).getTime();
         EkstepEditorAPI.getAngularScope().appLoadMessage.push({ 'id': 3, 'message': 'Loading Content', 'status': false });
-        EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
-        EkstepEditor.stageManager.contentLoading = true;
+        EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());        
         // Load all plugins
         var instance = this;
         contentBody.theme.manifest.media = _.isArray(contentBody.theme.manifest.media) ? contentBody.theme.manifest.media : [contentBody.theme.manifest.media];
