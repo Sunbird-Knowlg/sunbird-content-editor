@@ -385,7 +385,7 @@ window.EkstepEditorAPI = {
     ngSafeApply: function(scope, fn) {
         if(scope) scope.$safeApply(fn);
     },
-    loadAndInitPlugin: function (pluginId, pluginVersion) {
-      EkstepEditor.pluginManager.loadAndInitPlugin(pluginId+"-"+pluginVersion);
+    loadAndInitPlugin: function (pluginId, pluginVersion, publishedTime) {
+      EkstepEditor.pluginManager.loadAndInitPlugin(pluginId+"-"+pluginVersion, publishedTime);
     }
 }

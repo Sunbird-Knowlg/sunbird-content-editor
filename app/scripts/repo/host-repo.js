@@ -17,15 +17,15 @@ EkstepEditor.hostRepo = new(EkstepEditor.iRepo.extend({
     	var instance = this;
     	EkstepEditor.resourceManager.loadResource(this.url + "/list", "json", cb);
     },
-    discoverManifest: function(pluginId, pluginVer, callback) {
-    	if(this.connected) {
-    		var instance = this;
-	        EkstepEditor.resourceManager.loadResource(this.resolveResource(pluginId, pluginVer, "manifest.json"), "json", function(err, response) {
-	            callback(undefined, { "manifest": response, "repo": instance });
-	        });
-    	} else {
-    		callback(undefined, { "manifest": undefined, "repo": undefined });
-    	}
+    discoverManifest: function(pluginId, pluginVer, callback, publishedTime) {
+        if(this.connected) {
+            var instance = this;
+            EkstepEditor.resourceManager.loadResource(this.resolveResource(pluginId, pluginVer, "manifest.json"), "json", function(err, response) {
+                callback(undefined, { "manifest": response, "repo": instance });
+            }, publishedTime);
+        } else {
+            callback(undefined, { "manifest": undefined, "repo": undefined });
+        }
     },
     resolveResource: function(pluginId, pluginVer, resource) {
     	return this.basePath + "/" + pluginId + "-" + pluginVer + "/" + resource;
