@@ -171,7 +171,7 @@ gulp.task('inject', ['minify'], function() {
         .pipe(gulp.dest('./content-editor'));
 });
 
-gulp.task('zip', ['minify', 'inject'], function() {
+gulp.task('zip', ['minify', 'inject', 'packageCorePlugins'], function() {
     return gulp.src('content-editor/**')
         .pipe(zip('content-editor.zip'))
         .pipe(gulp.dest(''));
