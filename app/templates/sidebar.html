@@ -1,6 +1,6 @@
 <style type="text/css">
 .sidebarContent {
-    height: 450px;
+    height: 400px;
     width: 100%;
     overflow-y: auto;
     margin: 0px !important;
@@ -47,7 +47,7 @@ a.item.at-menu-item.popup-item.active {
         <span ng-include="'templates/properties.html'"></span>
     </div>
 </div>
-<div ng-show="selectedConfigCategory == 'help'">
+<div ng-show="selectedConfigCategory == 'help'" class="sidebar-help">
     <div id="pluginHelpContent" class="ui message"></div>
 </div>
 <div ng-show="selectedConfigCategory == 'comments'">
@@ -56,7 +56,7 @@ a.item.at-menu-item.popup-item.active {
             <div class="pageLevelTodos">
                 <div class="content {{showTodo ? 'active': ''}}">
                     <div class="description">
-                        <div id="pageLevelTodos">No Todo</div>
+                        <div id="pageLevelTodos"></div>
                     </div>
                 </div>
             </div>
@@ -64,7 +64,7 @@ a.item.at-menu-item.popup-item.active {
             <div class="pageLevelResolvedTodos">
                 <div class="content {{showTodo ? 'active': ''}}">
                     <div class="description">
-                        <div id="pageLevelResolvedTodos">No Issues</div>
+                       <div id="pageLevelResolvedTodos"></div>
                     </div>
                 </div>
             </div>

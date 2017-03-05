@@ -321,26 +321,45 @@ window.EkstepEditorAPI = {
      * @param includeFlag {boolean} Whether to include or exclude the types
      * @memberof EkstepEditorAPI
      */
-    getAllPluginInstanceByTypes: function (id, types, includeFlag) {
-      var pluginInstances = _.clone(EkstepEditor.stageManager.currentStage.children);
-       if (id) {
-            EkstepEditorAPI._.remove(pluginInstances, function(pi) {
-                return pi.id === id;
-            })
+    getStagePluginInstances: function(stage, includeTypes, excludeTypes, excludeIds) {
+        // TODO: Add logic to check if stage exists
+        var instances = _.clone(EkstepEditorAPI.getStage(stage).children);
+        if(includeTypes) {
+            instances = _.filter(instances, function(obj) {
+                return includeTypes.indexOf(obj.manifest.id) != -1;
+            });
         }
-      if (types && types.length && includeFlag === true) {
-          _.remove(pluginInstances, function (pi) {
-            return (_.indexOf(types, pi.manifest.id) === -1)
-          });
-      }
-      if (types && types.length && includeFlag === false) {
-           _.remove(pluginInstances, function (pi) {
-            return (_.indexOf(types, pi.manifest.id) > -1)
-          });
-      }
-      return pluginInstances;
+        if(excludeTypes) {
+            instances = _.filter(instances, function(obj) {
+                return excludeTypes.indexOf(obj.manifest.id) == -1;
+            });
+        }
+        if(excludeIds) {
+            instances = _.filter(instances, function(obj) {
+                return excludeIds.indexOf(obj.id) == -1;
+            });
+        }
+        return instances;
     },
-
+    getPluginInstances: function(includeTypes, excludeTypes, excludeIds) {
+        var instances = _.clone(EkstepEditor.pluginManager.pluginInstances);
+        if(includeTypes) {
+            instances = _.filter(instances, function(obj) {
+                return includeTypes.indexOf(obj.manifest.id) != -1;
+            });
+        }
+        if(excludeTypes) {
+            instances = _.filter(instances, function(obj) {
+                return excludeTypes.indexOf(obj.manifest.id) == -1;
+            });
+        }
+        if(excludeIds) {
+            instances = _.filter(instances, function(obj) {
+                return excludeIds.indexOf(obj.id) == -1;
+            });
+        }
+        return instances;
+    },
     /**
      * Allows plugins to load a media object that they may depend upon.
      * @param assetId {string} ID of the media asset to load
@@ -366,7 +385,7 @@ window.EkstepEditorAPI = {
     ngSafeApply: function(scope, fn) {
         if(scope) scope.$safeApply(fn);
     },
-    loadAndInitPlugin: function (pluginId, pluginVersion) {
-      EkstepEditor.pluginManager.loadAndInitPlugin(pluginId+"-"+pluginVersion);
+    loadAndInitPlugin: function (pluginId, pluginVersion, publishedTime) {
+      EkstepEditor.pluginManager.loadAndInitPlugin(pluginId+"-"+pluginVersion, publishedTime);
     }
 }
