@@ -353,7 +353,7 @@ EkstepEditor.basePlugin = Class.extend({
         obj.y = parseFloat(((obj.y / 405) * 100).toFixed(2));
         obj.w = parseFloat(((obj.w / 720) * 100).toFixed(2));
         obj.h = parseFloat(((obj.h / 405) * 100).toFixed(2));
-        obj.r = parseFloat(obj.r);
+        obj.rotate = parseFloat(obj.rotate);
     },
 
     /**
@@ -367,7 +367,7 @@ EkstepEditor.basePlugin = Class.extend({
         obj.y = obj.y * (405 / 100);
         obj.w = obj.w * (720 / 100);
         obj.h = obj.h * (405 / 100);
-        obj.r = obj.r;
+        obj.rotate = obj.rotate;
     },
 
     /**
@@ -553,7 +553,7 @@ EkstepEditor.basePlugin = Class.extend({
             y: attr.y,
             w: attr.w,
             h: attr.h,
-            r: attr.r
+            rotate: attr.rotate
         }
         this.pixelToPercent(dims);
         return dims;
@@ -654,7 +654,7 @@ EkstepEditor.basePlugin = Class.extend({
         if (data.h) retData.height = data.h;
         if (data.radius) retData.rx = data.radius;
         if (data.color) retData.fill = data.color;
-        if (data.r) retData.angle = data.r;
+        if (data.rotate) retData.angle = data.rotate;
         return retData;
     },
     getConfigManifest: function() {
