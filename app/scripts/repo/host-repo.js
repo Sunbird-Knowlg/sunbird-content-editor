@@ -6,28 +6,28 @@ EkstepEditor.hostRepo = new(EkstepEditor.iRepo.extend({
     basePath: "https://localhost:8081",
     connected: false,
     init: function() {
-        var instance = this;
-        this.checkConnection(function(err, res) {
-            if(!err) {
-                instance.connected = true;
+    	var instance = this;
+    	this.checkConnection(function(err, res) {
+    		if(!err) {
+            	instance.connected = true;
             }
-        });
+    	});
     },
     checkConnection: function(cb) {
-        var instance = this;
-        EkstepEditor.resourceManager.loadResource(this.basePath + "/list", "json", cb);
+    	var instance = this;
+    	EkstepEditor.resourceManager.loadResource(this.url + "/list", "json", cb);
     },
-    discoverManifest: function(pluginId, pluginVer, callback) {
+    discoverManifest: function(pluginId, pluginVer, callback, publishedTime) {
         if(this.connected) {
             var instance = this;
             EkstepEditor.resourceManager.loadResource(this.resolveResource(pluginId, pluginVer, "manifest.json"), "json", function(err, response) {
                 callback(undefined, { "manifest": response, "repo": instance });
-            });
+            }, publishedTime);
         } else {
             callback(undefined, { "manifest": undefined, "repo": undefined });
         }
     },
     resolveResource: function(pluginId, pluginVer, resource) {
-        return this.basePath + "/" + pluginId + "-" + pluginVer + "/" + resource;
+    	return this.basePath + "/" + pluginId + "-" + pluginVer + "/" + resource;
     }
 }));

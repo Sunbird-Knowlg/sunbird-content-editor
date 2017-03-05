@@ -5,21 +5,21 @@ EkstepEditor.resourceManager = new(Class.extend({
     init: function() {
         this.repos = [EkstepEditor.hostRepo, EkstepEditor.draftRepo, EkstepEditor.publishedRepo];
     },
-    discoverManifest: function(pluginId, pluginVer, cb) {
+    discoverManifest: function(pluginId, pluginVer, cb, publishedTime) {
         async.waterfall([
             function(callback) {
-                EkstepEditor.publishedRepo.discoverManifest(pluginId, pluginVer, callback); // callback(err, manifest)
+                EkstepEditor.publishedRepo.discoverManifest(pluginId, pluginVer, callback, publishedTime); 
             },
             function(data, callback) {
                 if (_.isUndefined(data.manifest)) {
-                    EkstepEditor.draftRepo.discoverManifest(pluginId, pluginVer, callback); // callback(err, manifest)    
+                    EkstepEditor.draftRepo.discoverManifest(pluginId, pluginVer, callback, publishedTime);
                 } else {
                     callback(null, data);
                 }
             },
             function(data, callback) {
                 if (_.isUndefined(data.manifest)) {
-                    EkstepEditor.hostRepo.discoverManifest(pluginId, pluginVer, callback); // callback(err, manifest)
+                    EkstepEditor.hostRepo.discoverManifest(pluginId, pluginVer, callback, publishedTime); 
                 } else {
                     callback(null, data);
                 }
@@ -32,26 +32,30 @@ EkstepEditor.resourceManager = new(Class.extend({
         });
 
     },
-    getResource: function(pluginId, pluginVer, src, dataType, repo, callback) {
+    getResource: function(pluginId, pluginVer, src, dataType, repo, callback, publishedTime) {
         var resource = repo.resolveResource(pluginId, pluginVer, src);
-        this.loadResource(resource, dataType, callback);
+        this.loadResource(resource, dataType, callback, publishedTime);
     },
-    loadExternalResource: function(type, pluginId, pluginVer, src, repo) {
-        var resource = repo.resolveResource(pluginId, pluginVer, src);
+    loadExternalResource: function(type, pluginId, pluginVer, src, repo, publishedTime) {
+        var resource = repo.resolveResource(pluginId, pluginVer, src) + "?" + (publishedTime || "");
         switch (type) {
             case 'js':
-                EkstepEditor.jQuery("body").append($("<script type='text/javascript' src=" + resource + "?" + new Date().getTime() + ">"));
+                EkstepEditor.jQuery("body").append($("<script type='text/javascript' src=" + resource + ">"));
                 break;
             case 'css':
-                EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + resource + "?" + new Date().getTime() + "'>");
+                EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + resource + "'>");
                 break;
             default:
         }
     },
-    loadResource: function(url, dataType, callback) {
+    loadResource: function(url, dataType, callback, publishedTime) {
+        url = url + "?" + EkstepEditor.config.build_number
+        if (publishedTime) {
+            url = url + "&" + publishedTime;
+        }
         EkstepEditor.jQuery.ajax({
             async: false,
-            url: url + "?" + EkstepEditor.config.build_number,
+            url: url ,
             dataType: dataType
         }).fail(function(err) {
             callback(err)
