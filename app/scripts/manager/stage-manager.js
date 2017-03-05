@@ -49,6 +49,7 @@ EkstepEditor.stageManager = new(Class.extend({
         this.canvas.on("object:scaling", function(options, event) {
             EkstepEditor.stageManager.dispatchObjectEvent('scaling', options, event);
         });
+        EkstepEditor.eventManager.addEventListener("stage:select", this.selectStage, this);
     },
     dispatchObjectEvent: function(eventType, options, event) {
         var meta = EkstepEditor.stageManager.getObjectMeta(options);
@@ -58,6 +59,7 @@ EkstepEditor.stageManager = new(Class.extend({
         }
     },
     selectStage: function(event, data) {
+        console.log('select stage', event, data);
         if (_.isUndefined(this.currentStage)) {
             this.currentStage = _.find(this.stages, { id: data.stageId });
             this.currentStage.isSelected = true;
@@ -360,9 +362,13 @@ EkstepEditor.stageManager = new(Class.extend({
                 instance._loadStage(stage, index, stages.length, thumbnails[stage.id], callback);
             });
         });
-        async.parallel(tasks, function(err, data) {
-            instance._loadComplete(startTime)
-        });
+        if(tasks.length == 0) {
+            instance._loadComplete(startTime);
+        } else {
+            async.parallel(tasks, function(err, data) {
+                instance._loadComplete(startTime)
+            });
+        }
     },
     _loadStage: function(stage, index, size, thumbnail, callback) {
         var instance = this;
@@ -431,7 +437,6 @@ EkstepEditor.stageManager = new(Class.extend({
         EkstepEditorAPI.jQuery('#thumbnailCanvasContainer').empty();
         EkstepEditor.eventManager.enableEvents = true;
         EkstepEditor.stageManager.registerEvents();
-        EkstepEditor.eventManager.addEventListener("stage:select", this.selectStage, this);
         EkstepEditorAPI.getAngularScope().toggleGenieControl();
         EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: this.stages[0].id });
         EkstepEditorAPI.dispatchEvent('content:onload');
