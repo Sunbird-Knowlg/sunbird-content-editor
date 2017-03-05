@@ -8,7 +8,9 @@ EkstepEditor.migration = new(Class.extend({
     },
     tasks: ['mediamigration_task', 'basestage_task', 'orderstage_task', 'scribblemigration_task', 'imagemigration_task', 'readalongmigration_task', 'assessmentmigration_task', 'eventsmigration_task', 'settagmigration_task'],
     migrationErrors: [],
-    execute: function(event, contentbody) {
+    execute: function(event, data) {
+        var contentbody = data.body;
+        var stageIcons = data.stageIcons;
         var instance = this, startTime = (new Date()).getTime(),
             scope = EkstepEditorAPI.getAngularScope();
             
@@ -51,11 +53,11 @@ EkstepEditor.migration = new(Class.extend({
                             EkstepEditorAPI.dispatchEvent('content:migration:end', {'logs': {'error': undefined}, 'status': 'PASS'});                      
                         }
                         EkstepEditorAPI.ngSafeApply(scope);
-                        EkstepEditor.stageManager.fromECML(content);
+                        EkstepEditor.stageManager.fromECML(content, stageIcons);
                     });
         } else {
             console.info('no need for migration');
-            EkstepEditor.stageManager.fromECML(contentbody);
+            EkstepEditor.stageManager.fromECML(contentbody, stageIcons);
         }
     },
     versionCompatible: function(version) {        

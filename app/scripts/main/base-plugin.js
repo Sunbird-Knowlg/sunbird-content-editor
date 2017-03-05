@@ -97,6 +97,8 @@ EkstepEditor.basePlugin = Class.extend({
                 EkstepEditor.toolbarManager.registerMenu(menu);
             } else if (menu.category === 'context') {
                 EkstepEditor.toolbarManager.registerContextMenu(menu);
+            } else if (menu.category === 'config') {
+                EkstepEditor.toolbarManager.registerConfigMenu(menu);
             }
         });
     },
@@ -689,7 +691,7 @@ EkstepEditor.basePlugin = Class.extend({
      * @param value {string} Value of the config setting.
      * @memberof EkstepEditor.BasePlugin
      */
-    onConfigChange: function(key, value) {
+    _onConfigChange: function(key, value) {
         this.addConfig(key, value);
         var currentInstace = EkstepEditorAPI.getCurrentObject();
         if (currentInstace.config === undefined) { currentInstace.config = {} }
