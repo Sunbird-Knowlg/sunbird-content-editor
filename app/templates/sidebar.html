@@ -34,7 +34,7 @@ a.item.at-menu-item.popup-item.active {
 <div ng-show="selectedConfigCategory == 'settings'">
     <div class="ui mini compact menu item sidebarConfig sidebarHeadTab three">
         <a class="item active" id="settingsTab" data-tab="settings" ng-click="fireEvent({id: 'config:customize'}); fireSidebarTelemetry({id: 'customise'}, 'config')"><i class="setting icon"></i> Customise </a>
-        <a class="item {{selectedObjectForConfig == 'stage' ? 'disabled' : ''}}" data-tab="actions" ng-click="fireEvent({id: 'config:actions'}); fireSidebarTelemetry({id: 'actions'}, 'config')" ng-disabled="selectedObjectForConfig == 'stage'"><i class="tasks icon"></i> Actions </a>
+        <a class="item {{selectedObjectForConfig == 'stage' ? 'disabled disabled-link' : ''}}" data-tab="actions" ng-click="fireEvent({id: 'config:actions'}); fireSidebarTelemetry({id: 'actions'}, 'config')" ng-disabled="selectedObjectForConfig == 'stage'"><i class="tasks icon"></i> Actions </a>
         <a class="item" data-tab="info" ng-click="fireEvent({ id: 'config:properties'}); fireSidebarTelemetry({id: 'properties'}, 'config')"><i class="info icon"></i> Properties </a>
     </div>
     <div class="ui active tab segment sidebarContent" data-tab="settings">
