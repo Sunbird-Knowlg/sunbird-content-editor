@@ -49,6 +49,7 @@ EkstepEditor.stageManager = new(Class.extend({
         this.canvas.on("object:scaling", function(options, event) {
             EkstepEditor.stageManager.dispatchObjectEvent('scaling', options, event);
         });
+        EkstepEditor.eventManager.addEventListener("stage:select", this.selectStage, this);
     },
     dispatchObjectEvent: function(eventType, options, event) {
         var meta = EkstepEditor.stageManager.getObjectMeta(options);
@@ -361,10 +362,10 @@ EkstepEditor.stageManager = new(Class.extend({
             });
         });
         if(tasks.length == 0) {
-            instance._loadComplete(startTime);
+            instance.onContentLoad(startTime);
         } else {
             async.parallel(tasks, function(err, data) {
-                instance._loadComplete(startTime)
+                instance.onContentLoad(startTime)
             });
         }
     },
@@ -431,16 +432,19 @@ EkstepEditor.stageManager = new(Class.extend({
         }
         stageInstance.destroyOnLoad(pluginCount, canvas, callback);
     },
-    _loadComplete: function(startTime) {
+    onContentLoad: function(startTime) {
         EkstepEditorAPI.jQuery('#thumbnailCanvasContainer').empty();
+        EkstepEditorAPI.getAngularScope().toggleGenieControl();
         EkstepEditor.eventManager.enableEvents = true;
         EkstepEditor.stageManager.registerEvents();
-        EkstepEditor.eventManager.addEventListener("stage:select", this.selectStage, this);
-        EkstepEditorAPI.getAngularScope().toggleGenieControl();
-        EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: this.stages[0].id });
-        EkstepEditorAPI.dispatchEvent('content:onload');
         this.showLoadScreenMessage();
         EkstepEditor.stageManager.contentLoading = false;
         EkstepEditor.telemetryService.startEvent(true).append("loadtimes", {"contentLoad": ((new Date()).getTime() - startTime)});
+        EkstepEditorAPI.dispatchEvent('content:onload');
+        if(EkstepEditorAPI._.isEmpty(this.stages)) {
+            EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
+        } else {
+            EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: this.stages[0].id });
+        }
     }
 }));
