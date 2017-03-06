@@ -93,14 +93,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 // TODO: Show saving dialog
                 // saveDialog.open
                 $scope.patchContent({ stageIcons: EkstepEditor.stageManager.getStageIcons() }, EkstepEditor.stageManager.toECML(), function(err, res) {
-                    if (res) {
-                        $scope.$safeApply();
-                        $scope.saveNotification('success');
-                    } else {
-                        $scope.$safeApply();
-                        $scope.saveNotification('error');
-                    }
-                    $scope.saveBtnEnabled = true;
+                    if (res) $scope.saveNotification('success');
+                    if (err) $scope.saveNotification('error');                                                            
                 });
             }
         }
@@ -232,8 +226,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.routeToContentMeta = function(save) {
             $scope.enableSave();
             if (save) {
-                $scope.saveContent(function(err, resp) {
-                    if (resp) $window.location.assign(window.context.editMetaLink);
+                $scope.patchContent({ stageIcons: EkstepEditor.stageManager.getStageIcons() }, EkstepEditor.stageManager.toECML(), function(err, res) {
+                    if (res) {
+                        $scope.saveNotification('success');
+                        $window.location.assign(window.context.editMetaLink);                    
+                    }
+                    if (err) $scope.saveNotification('error');
                 });
             } else {
                 $window.location.assign(window.context.editMetaLink);
