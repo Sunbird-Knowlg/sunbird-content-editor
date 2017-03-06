@@ -76,6 +76,11 @@ EkstepEditor.basePlugin = Class.extend({
         if (this.editorObj) { this.editorObj.set({ id: this.id }); this.editorObj.setVisible(true); }
         if (this.parent) this.parent.addChild(this);
         if (this.parent && this.parent.type !== 'stage') EkstepEditorAPI.dispatchEvent('object:modified', { id: this.id });
+        if(_.has(this.manifest.editor, 'behaviour')) {
+            if(!_.isUndefined(this.manifest.editor.behaviour.rotatable) && (this.manifest.editor.behaviour.rotatable === true)) {
+                if (this.editorObj) { this.editorObj.hasRotatingPoint = true; }
+            }
+        }
     },
 
     /**
@@ -353,7 +358,7 @@ EkstepEditor.basePlugin = Class.extend({
         obj.y = parseFloat(((obj.y / 405) * 100).toFixed(2));
         obj.w = parseFloat(((obj.w / 720) * 100).toFixed(2));
         obj.h = parseFloat(((obj.h / 405) * 100).toFixed(2));
-        obj.r = parseFloat(((obj.r / 405) * 100).toFixed(2));
+        obj.rotate = parseFloat(obj.rotate);
     },
 
     /**
@@ -367,7 +372,7 @@ EkstepEditor.basePlugin = Class.extend({
         obj.y = obj.y * (405 / 100);
         obj.w = obj.w * (720 / 100);
         obj.h = obj.h * (405 / 100);
-        obj.r = obj.r * (405 / 100);
+        obj.rotate = obj.rotate;
     },
 
     /**
@@ -553,7 +558,7 @@ EkstepEditor.basePlugin = Class.extend({
             y: attr.y,
             w: attr.w,
             h: attr.h,
-            r: attr.r
+            rotate: attr.rotate
         }
         this.pixelToPercent(dims);
         return dims;
@@ -654,6 +659,7 @@ EkstepEditor.basePlugin = Class.extend({
         if (data.h) retData.height = data.h;
         if (data.radius) retData.rx = data.radius;
         if (data.color) retData.fill = data.color;
+        if (data.rotate) retData.angle = data.rotate;
         return retData;
     },
     getConfigManifest: function() {
