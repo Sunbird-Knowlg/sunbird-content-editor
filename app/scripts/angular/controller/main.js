@@ -155,10 +155,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     EkstepEditor.telemetryService.error({ "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to fetch content from remote", "type": "API", "data": err, "severity": "fatal" });
                 }
                 if (!(content && content.body) && !err) {
-                    EkstepEditor.stageManager.registerEvents();
-                    EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
-                    EkstepEditorAPI.dispatchEvent('content:onload');
-                    EkstepEditor.telemetryService.start();
+                    EkstepEditor.stageManager.onContentLoad((new Date()).getTime());
                     $scope.closeLoadScreen(true);
                 } else if (content && content.body) {
                     $scope.oldContentBody = angular.copy(content.body);
