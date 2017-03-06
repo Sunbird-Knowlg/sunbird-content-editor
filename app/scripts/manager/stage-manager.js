@@ -199,7 +199,7 @@ EkstepEditor.stageManager = new(Class.extend({
     showLoadScreenMessage: function() {
         var obj = _.find(EkstepEditorAPI.getAngularScope().appLoadMessage, { 'id': 3});
         if (_.isObject(obj)) {
-            obj.message = "Content loaded";
+            obj.message = "Loading your lesson";
             obj.status = true;
         }
         EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
@@ -316,7 +316,7 @@ EkstepEditor.stageManager = new(Class.extend({
     fromECML: function(contentBody, stageIcons) {
         var instance = this;
         var startTime = (new Date()).getTime();
-        EkstepEditorAPI.getAngularScope().appLoadMessage.push({ 'id': 3, 'message': 'Loading Content', 'status': false });
+        EkstepEditorAPI.getAngularScope().appLoadMessage.push({ 'id': 3, 'message': 'Loading your lesson', 'status': false });
         EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
         EkstepEditor.stageManager.contentLoading = true;
         EkstepEditor.eventManager.enableEvents = false;

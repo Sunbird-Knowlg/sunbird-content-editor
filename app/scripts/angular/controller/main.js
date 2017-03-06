@@ -25,7 +25,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.showGenieControls = false;
         $scope.developerMode = $location.search().developerMode;
         $scope.appLoadMessage = [
-            { 'id': 1, 'message': 'Loading Plugins', 'status': false }
+            { 'id': 1, 'message': 'Getting things ready for you', 'status': false }
         ];
         $scope.migrationFlag = false;
         $scope.saveBtnEnabled = true;
@@ -318,7 +318,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.appLoadMessage
             var obj = _.find($scope.appLoadMessage, { 'id': 1 });
             if (_.isObject(obj)) {
-                obj.message = "Plugins loaded";
+                obj.message = "Getting things ready for you";
                 obj.status = true;
             }
             $scope.initEditor();
