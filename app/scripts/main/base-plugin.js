@@ -703,8 +703,8 @@ EkstepEditor.basePlugin = Class.extend({
         if (currentInstace.config === undefined) { currentInstace.config = {} }
         switch (key) {
             case 'opacity':
-                currentInstace.editorObj.setOpacity(value);
-                currentInstace.attributes.opacity = value;
+                currentInstace.editorObj.setOpacity(value/100);
+                currentInstace.attributes.opacity = value/100;
                 currentInstace.config.opacity = value;
                 break;
             case 'strokeWidth':
