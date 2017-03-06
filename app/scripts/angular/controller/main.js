@@ -23,6 +23,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.showAppLoadScreen = true;
         $scope.contentLoadedFlag = false;
         $scope.showGenieControls = false;
+        $scope.developerMode = $location.search().developerMode;
         $scope.appLoadMessage = [
             { 'id': 1, 'message': 'Loading Plugins', 'status': false }
         ];
@@ -339,7 +340,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             }
             EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "sidebar", "target": menuType, "pluginid": pluginId, 'pluginver': pluginVer, "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
         }
-        $scope.developerMode = $location.search().developerMode;
+        
 
     }
 ]);
