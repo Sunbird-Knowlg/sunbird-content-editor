@@ -7,3 +7,5 @@ plugins
 /semantic
 semantic.json
 /telemetry.log
+/content-editor
+content-editor.zip
