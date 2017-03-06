@@ -94,7 +94,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 // saveDialog.open
                 $scope.patchContent({ stageIcons: EkstepEditor.stageManager.getStageIcons() }, EkstepEditor.stageManager.toECML(), function(err, res) {
                     if (res) $scope.saveNotification('success');
-                    if (err) $scope.saveNotification('error');                                                            
+                    if (err) $scope.saveNotification('error'); 
+                    $scope.saveBtnEnabled = true;                                                           
                 });
             }
         }
