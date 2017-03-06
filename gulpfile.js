@@ -234,7 +234,6 @@ var corePlugins = [
     "org.ekstep.reorder-1.0",
     "org.ekstep.templatebrowser-1.0",
     "org.ekstep.atpreview-1.0",
-    "org.ekstep.developer-1.0",
     "org.ekstep.todo-1.0",
     "org.ekstep.activitybrowser-1.0",
     "org.ekstep.collaborator-1.0",

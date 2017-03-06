@@ -17,6 +17,8 @@ EkstepEditor.config = {
         "audio": "org.ekstep.audio"
     },
     baseConfigManifest: "config/baseConfigManifest.json",
-    plugins: {},
+    plugins: {
+        "org.ekstep.developer":"1.0",
+    },
     dispatcher: "local"
 }
