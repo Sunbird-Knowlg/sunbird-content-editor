@@ -72,10 +72,18 @@ EkstepEditor.basePlugin = Class.extend({
      * @memberof EkstepEditor.BasePlugin
      */
     postInit: function() {
+        var instance = this;
         this.registerFabricEvents();
         if (this.editorObj) { this.editorObj.set({ id: this.id }); this.editorObj.setVisible(true); }
         if (this.parent) this.parent.addChild(this);
         if (this.parent && this.parent.type !== 'stage') EkstepEditorAPI.dispatchEvent('object:modified', { id: this.id });
+        if(_.has(this.manifest.editor, 'behaviour')){
+            _.forOwn(this.manifest.editor.behaviour, function(value, key) {
+                if(key === "rotatable" && key){
+                    if (instance.editorObj) { instance.editorObj.hasRotatingPoint = true; }
+                }
+            });
+        }
     },
 
     /**
