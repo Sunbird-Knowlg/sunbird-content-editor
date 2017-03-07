@@ -700,36 +700,38 @@ EkstepEditor.basePlugin = Class.extend({
     _onConfigChange: function(key, value) {
         this.addConfig(key, value);
         var currentInstace = EkstepEditorAPI.getCurrentObject();
-        if (currentInstace.config === undefined) { currentInstace.config = {} }
-        switch (key) {
-            case 'opacity':
-                currentInstace.editorObj.setOpacity(value/100);
-                currentInstace.attributes.opacity = value/100;
-                currentInstace.config.opacity = value;
-                break;
-            case 'strokeWidth':
-                value = parseInt(value);
-                currentInstace.editorObj.set('strokeWidth', value);
-                currentInstace.attributes['stroke-width'] = value;
-                currentInstace.attributes['strokeWidth'] = value;
-                currentInstace.config.strokeWidth = value;
-                break;
-            case 'stroke':
-                currentInstace.editorObj.setStroke(value);
-                currentInstace.attributes.stroke = value;
-                currentInstace.config.stroke = value;
-                break;
-            case 'autoplay':
-                currentInstace.attributes.autoplay = value;
-                currentInstace.config.autoplay = value;
-                break;
-            case 'visible':
-                currentInstace.attributes.visible = value;
-                currentInstace.config.visible = value;
-                break;
+        if (currentInstace) {
+            if (currentInstace.config === undefined) { currentInstace.config = {} }
+            switch (key) {
+                case 'opacity':
+                    currentInstace.editorObj.setOpacity(value/100);
+                    currentInstace.attributes.opacity = value/100;
+                    currentInstace.config.opacity = value;
+                    break;
+                case 'strokeWidth':
+                    value = parseInt(value);
+                    currentInstace.editorObj.set('strokeWidth', value);
+                    currentInstace.attributes['stroke-width'] = value;
+                    currentInstace.attributes['strokeWidth'] = value;
+                    currentInstace.config.strokeWidth = value;
+                    break;
+                case 'stroke':
+                    currentInstace.editorObj.setStroke(value);
+                    currentInstace.attributes.stroke = value;
+                    currentInstace.config.stroke = value;
+                    break;
+                case 'autoplay':
+                    currentInstace.attributes.autoplay = value;
+                    currentInstace.config.autoplay = value;
+                    break;
+                case 'visible':
+                    currentInstace.attributes.visible = value;
+                    currentInstace.config.visible = value;
+                    break;
+            }
+            EkstepEditorAPI.render();
+            EkstepEditorAPI.dispatchEvent('object:modified', { target: EkstepEditorAPI.getEditorObject() });
         }
-        EkstepEditorAPI.render();
-        EkstepEditorAPI.dispatchEvent('object:modified', { target: EkstepEditorAPI.getEditorObject() });
     },
 
     /**
