@@ -233,7 +233,7 @@ EkstepEditor.stageManager = new(Class.extend({
             content.theme["migration-media"].media =  _.values(EkstepEditor.mediaManager.migratedMediaMap);
         }
         content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mediaMap)), 'id');
-        return content;
+        return _.cloneDeep(content);
     },
     mergeMediaMap: function(mediaMap) {
         _.forIn(EkstepEditor.mediaManager.migratedMediaMap, function(value, key) {
