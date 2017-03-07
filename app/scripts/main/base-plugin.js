@@ -283,7 +283,14 @@ EkstepEditor.basePlugin = Class.extend({
      * provide the complete functional implementation.
      * @memberof EkstepEditor.BasePlugin
      */
-    changed: function(instance, options, event) {},
+    changed: function(instance, options, event) {
+        if(instance.editorObj) {
+            instance.editorObj.setWidth(instance.editorObj.getWidth() - instance.editorObj.getStrokeWidth());
+            instance.editorObj.setHeight(instance.editorObj.getHeight() - instance.editorObj.getStrokeWidth());
+            instance.editorObj.setScaleX(1);
+            instance.editorObj.setScaleY(1);
+        }
+    },
 
     /**
      * Called continuously while the object is rotating. This is a no-op implementation and child classes must
