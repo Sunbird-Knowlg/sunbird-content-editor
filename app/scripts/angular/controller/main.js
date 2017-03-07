@@ -93,15 +93,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 $scope.saveBtnEnabled = false;
                 // TODO: Show saving dialog
                 // saveDialog.open
-                $scope.patchContent({ stageIcons: EkstepEditor.stageManager.getStageIcons() }, EkstepEditor.stageManager.toECML(), function(err, res) {
-                    if (res) {
-                        $scope.$safeApply();
-                        $scope.saveNotification('success');
-                    } else {
-                        $scope.$safeApply();
-                        $scope.saveNotification('error');
-                    }
-                    $scope.saveBtnEnabled = true;
+                var contentBody = EkstepEditor.stageManager.toECML();
+                $scope.patchContent({ stageIcons: JSON.stringify(EkstepEditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
+                    if (res) $scope.saveNotification('success');
+                    if (err) $scope.saveNotification('error'); 
+                    $scope.saveBtnEnabled = true;                                                           
                 });
             }
         }
@@ -233,8 +229,13 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.routeToContentMeta = function(save) {
             $scope.enableSave();
             if (save) {
-                $scope.saveContent(function(err, resp) {
-                    if (resp) $window.location.assign(window.context.editMetaLink);
+                var contentBody = EkstepEditor.stageManager.toECML();
+                $scope.patchContent({ stageIcons: JSON.stringify(EkstepEditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
+                    if (res) {
+                        $scope.saveNotification('success');
+                        $window.location.assign(window.context.editMetaLink);                    
+                    }
+                    if (err) $scope.saveNotification('error');
                 });
             } else {
                 $window.location.assign(window.context.editMetaLink);
