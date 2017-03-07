@@ -123,7 +123,9 @@ EkstepEditor.stageManager = new(Class.extend({
         });
         this.currentStage.destroyOnLoad(stage.children.length, this.canvas, function(){
             EkstepEditor.eventManager.enableEvents = true;
-        });       
+        });
+        EkstepEditorAPI.dispatchEvent('stage:select', { stageId: this.currentStage.id });      
+
         this.enableSave();        
     },
     getObjectMeta: function(options) {
