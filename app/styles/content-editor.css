@@ -321,3 +321,6 @@ body {
 .disabled-link{
     pointer-events: none;
 }
+.sidebarContent div label{
+    text-transform: capitalize !important;
+}
