@@ -417,12 +417,12 @@ EkstepEditor.stageManager = new(Class.extend({
                 pluginInstance = EkstepEditorAPI.instantiatePlugin(pluginId, plugin.data, stageInstance);
                 if (_.isUndefined(pluginInstance)) {
                     console.log('Unable to instantiate', plugin.id); // TODO: Add telemetry that plugin is not found
-                    EkstepEditorAPI.dispatchEvent("org.ekstep.unsupported:create", { data: plugin });
+                    EkstepEditorAPI.instantiatePlugin("org.ekstep.unsupported", {data: plugin}, stageInstance);
                 }
                 pluginCount++;
             } catch(e) { 
                 console.warn('error when instantiating plugin:', pluginId, plugin.data, stageInstance.id, e);                   
-                EkstepEditorAPI.dispatchEvent('ce:plugin:error', {error: 'unable to instantiate plugin', 'pluginId': pluginId, pluginData: plugin.data, stageId: stageInstance.id });
+                EkstepEditor.telemetryService.error({ "env": "content", "stage": stageInstance.id, "action": "console log error", "err": "plugin instantiation", "type": "PORTAL", "data": "", "severity": "warn" });
             }                
         });
         if (stageEvents) {
