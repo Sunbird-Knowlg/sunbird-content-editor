@@ -318,3 +318,9 @@ body {
     height: 430px;
     overflow-y: auto;
 }
+.disabled-link{
+    pointer-events: none;
+}
+.sidebarContent div label{
+    text-transform: capitalize !important;
+}

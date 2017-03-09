@@ -15,7 +15,7 @@ EkstepEditor.hostRepo = new(EkstepEditor.iRepo.extend({
     },
     checkConnection: function(cb) {
     	var instance = this;
-    	EkstepEditor.resourceManager.loadResource(this.url + "/list", "json", cb);
+    	EkstepEditor.resourceManager.loadResource(this.basePath + "/list", "json", cb);
     },
     discoverManifest: function(pluginId, pluginVer, callback, publishedTime) {
         if(this.connected) {

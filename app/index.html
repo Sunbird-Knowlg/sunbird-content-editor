@@ -16,6 +16,8 @@
     <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-plain.min.css">
     <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-default.min.css">
     <link rel="stylesheet" type="text/css" href="styles/iconfont.css">
+    <link rel="stylesheet" type="text/css" href="styles/noto.css">
+
     <!-- endinject -->
 </head>
 
@@ -91,8 +93,8 @@
                                                 <span>{{userDetails.email}}</span>
                                             </div>
                                             <div class="extra">
-                                                <a class="ui tiny button " ng-href="{{cancelLink}}" ng-click="location.reload(); fireToolbarTelemetry({id: 'close'}, 'closeButton')">close</a>
-                                                <a class="ui tiny button " href="{{userDetails.logout}}" ng-click="location.reload(); fireToolbarTelemetry({id: 'logout'}, 'logoutButton')">logout</a>
+                                                <a class="ui tiny button " ng-href="{{cancelLink}}" ng-click="location.reload(); fireToolbarTelemetry({id: 'close'}, 'closeButton')" target="_self">close</a>
+                                                <a class="ui tiny button " ng-href="{{userDetails.logout}}" ng-click="location.reload(); fireToolbarTelemetry({id: 'logout'}, 'logoutButton')" target="_self">logout</a>
                                             </div>
                                         </div>
                                     </div>
@@ -217,10 +219,6 @@
     <script src="scripts/repo/draft-repo.js"></script>
     <script src="scripts/repo/host-repo.js"></script>
     <script src="scripts/main/ekstep-editor-api.js"></script>
-    <script src="scripts/repo/irepo.js"></script>
-    <script src="scripts/repo/published-repo.js"></script>
-    <script src="scripts/repo/draft-repo.js"></script>
-    <script src="scripts/repo/host-repo.js"></script>
     <script src="scripts/migration/1_migration-task.js"></script>
     <script src="scripts/migration/mediamigration-task.js"></script>
     <script src="scripts/migration/stageordermigration-task.js"></script>

@@ -91,18 +91,22 @@ EkstepEditor.pluginManager = new(Class.extend({
         } else {
             var pluginClass = override ? plugin.p.extend(override) : plugin.p;
             var pluginManifest = plugin.m;
-            if (_.isArray(data)) {
-                data.forEach(function(d) {
-                    p = new pluginClass(pluginManifest, d, parent);
+            try {
+                if (_.isArray(data)) {
+                    data.forEach(function(d) {
+                        p = new pluginClass(pluginManifest, d, parent);
+                        instance.addPluginInstance(p);
+                        p.initPlugin();
+                        instance.dispatchTelemetry(pluginManifest, p, parent, d);
+                    })
+                } else {
+                    p = new pluginClass(pluginManifest, data, parent);
                     instance.addPluginInstance(p);
-                    instance.dispatchTelemetry(pluginManifest, p, parent, d);
                     p.initPlugin();
-                })
-            } else {
-                p = new pluginClass(pluginManifest, data, parent);
-                instance.addPluginInstance(p);
-                instance.dispatchTelemetry(pluginManifest, p, parent, data);
-                p.initPlugin();
+                    instance.dispatchTelemetry(pluginManifest, p, parent, data);
+                }
+            } catch(e) {
+                throw new Error(e);
             }
         }
         return p;

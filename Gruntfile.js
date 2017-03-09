@@ -91,18 +91,18 @@ module.exports = function(grunt) {
             options: {
                 accessKeyId: '', // Use the variables
                 secretAccessKey: '', // You can also use env variables
-                region: 'ap-southeast-1',
+                region: 'ap-south-1',
                 uploadConcurrency: 5, // 5 simultaneous uploads
                 downloadConcurrency: 5 // 5 simultaneous downloads
             },
             main: {
                 options: {
-                    bucket: 'ekstep-public',
+                    bucket: 'ekstep-public-dev',
                     differential: true, // Only uploads the files that have changed
                     gzipRename: 'ext' // when uploading a gz file, keep the original extension
                 },
                 files: [
-                    { dest: 'preview/dev/', cwd: 'app/preview/', action: 'download' }
+                    { dest: 'preview/', cwd: 'app/preview/', action: 'download' }
                 ]
             }
         },

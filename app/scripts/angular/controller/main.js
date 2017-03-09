@@ -23,8 +23,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.showAppLoadScreen = true;
         $scope.contentLoadedFlag = false;
         $scope.showGenieControls = false;
+        $scope.developerMode = $location.search().developerMode;
         $scope.appLoadMessage = [
-            { 'id': 1, 'message': 'Loading Plugins', 'status': false }
+            { 'id': 1, 'message': 'Getting things ready for you', 'status': false }
         ];
         $scope.migrationFlag = false;
         $scope.saveBtnEnabled = true;
@@ -84,7 +85,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             /*$http.post('ecml', { data: EkstepEditor.stageManager.toECML() }).then(function(resp) {
                 console.info('ECML', resp.data);
             });*/
-            EkstepEditorAPI.dispatchEvent('config:showSettingsTab', { id: $scope.currentStage.id });
+            EkstepEditorAPI.dispatchEvent('config:settings:show', { id: $scope.currentStage.id });
         };
 
         $scope.saveContent = function() {
@@ -92,7 +93,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 $scope.saveBtnEnabled = false;
                 // TODO: Show saving dialog
                 // saveDialog.open
-                $scope.patchContent({ stageIcons: EkstepEditor.stageManager.getStageIcons() }, EkstepEditor.stageManager.toECML(), function(err, res) {
+                var contentBody = EkstepEditor.stageManager.toECML();
+                $scope.patchContent({ stageIcons: JSON.stringify(EkstepEditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
                     if (res) $scope.saveNotification('success');
                     if (err) $scope.saveNotification('error'); 
                     $scope.saveBtnEnabled = true;                                                           
@@ -227,7 +229,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.routeToContentMeta = function(save) {
             $scope.enableSave();
             if (save) {
-                $scope.patchContent({ stageIcons: EkstepEditor.stageManager.getStageIcons() }, EkstepEditor.stageManager.toECML(), function(err, res) {
+                var contentBody = EkstepEditor.stageManager.toECML();
+                $scope.patchContent({ stageIcons: JSON.stringify(EkstepEditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
                     if (res) {
                         $scope.saveNotification('success');
                         $window.location.assign(window.context.editMetaLink);                    
@@ -316,7 +319,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.appLoadMessage
             var obj = _.find($scope.appLoadMessage, { 'id': 1 });
             if (_.isObject(obj)) {
-                obj.message = "Plugins loaded";
+                obj.message = "Getting things ready for you";
                 obj.status = true;
             }
             $scope.initEditor();
@@ -338,7 +341,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             }
             EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "sidebar", "target": menuType, "pluginid": pluginId, 'pluginver': pluginVer, "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
         }
-        $scope.developerMode = $location.search().developerMode;
+        
 
     }
 ]);

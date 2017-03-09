@@ -51,7 +51,7 @@
     </div>
     <div class="ui icon buttons" ng-switch-when="buttonToggle">
         <label ng-if="config.title">{{config.title}}</label>
-        <button class="ui button {{configData[config.propertyName] === option.value ? 'primary': ''}}" ng-repeat="option in config.options" ng-click="configData[config.propertyName] = option.value; fireSidebarTelemetry({id: config.propertyName}, config.dataType)">
+        <button class="ui button {{configData[config.propertyName] === option.value ? 'primary': ''}}" ng-repeat="option in config.options" ng-click="configData[config.propertyName] = option.value; fireSidebarTelemetry({id: config.propertyName}, config.dataType)" data-tooltip="{{option.toolTip}}">
             <div ng-switch on="option.dataType">
                 <i class="{{option.iconClass}} " ng-if="option.iconClass" style="{{option.iconStyle}}" ng-switch-when="icon"></i>
             </div>
@@ -90,7 +90,7 @@
                 <button class="ui icon button" ng-if="option.status === 'SHOW'" ng-repeat="suboption in option.suboptions" ng-click="fireEvent(suboption.onclick)" data-tooltip="{{suboption.toolTip}}">
                     <i class="{{suboption.iconClass}} "></i>
                 </button>
-                <div class="ui grey button {{option.showStatus === 'SHOW' ? 'primary': ''}}" ng-click="fireEvent(option.onclick)">{{option.title}}</div>
+                <div class="ui grey button {{option.status === 'SHOW' ? 'primary': ''}}" ng-click="fireEvent(option.onclick)">{{option.title}}</div>
             </span>
         </div>
     </div>  
