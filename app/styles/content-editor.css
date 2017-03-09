@@ -237,7 +237,7 @@ body {
 }
 
 .scrollable-slides {
-    overflow-y: auto;
+    overflow-y: scroll;
     height: 516px;
 }
 
