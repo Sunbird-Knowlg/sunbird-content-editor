@@ -74,13 +74,13 @@ EkstepEditor.basePlugin = Class.extend({
     postInit: function() {
         this.registerFabricEvents();
         if (this.editorObj) { this.editorObj.set({ id: this.id }); this.editorObj.setVisible(true); }
-        if (this.parent) this.parent.addChild(this);
-        if (this.parent && this.parent.type !== 'stage') EkstepEditorAPI.dispatchEvent('object:modified', { id: this.id });
         if(_.has(this.manifest.editor, 'behaviour')) {
             if(!_.isUndefined(this.manifest.editor.behaviour.rotatable) && (this.manifest.editor.behaviour.rotatable === true)) {
                 if (this.editorObj) { this.editorObj.hasRotatingPoint = true; }
             }
         }
+        if (this.parent) this.parent.addChild(this);
+        if (this.parent && this.parent.type !== 'stage') EkstepEditorAPI.dispatchEvent('object:modified', { id: this.id });
     },
 
     /**
