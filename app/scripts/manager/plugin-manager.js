@@ -183,5 +183,12 @@ EkstepEditor.pluginManager = new(Class.extend({
             return '';
 
         }
+    },
+    resolvePluginResource: function (id, ver, resource) {
+        if (this.plugins[id] && this.plugins[id]["repo"]) {
+            return this.plugins[id]["repo"].resolveResource(id, ver, resource);
+        } else{
+            return "";
+        }
     }
 }));

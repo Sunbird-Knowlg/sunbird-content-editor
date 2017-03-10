@@ -228,13 +228,14 @@ EkstepEditor.stageManager = new(Class.extend({
                 instance.addMediaToMediaMap(mediaMap, child.getMedia(), child.manifest);
             });
             content.theme.stage.push(stageBody);
-        });        
+        });    
         if(!_.isEmpty(EkstepEditor.mediaManager.migratedMediaMap)) {            
             instance.mergeMediaMap(mediaMap);
             content.theme["migration-media"] = {};
             content.theme["migration-media"].media =  _.values(EkstepEditor.mediaManager.migratedMediaMap);
         }
         content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mediaMap)), 'id');
+        
         return _.cloneDeep(content);
     },
     mergeMediaMap: function(mediaMap) {
@@ -295,21 +296,29 @@ EkstepEditor.stageManager = new(Class.extend({
             //Add renderer dependencies first 
              if(!_.isUndefined(pluginManifest.renderer.dependencies) && pluginManifest.renderer.dependencies.length > 0) {
                 _.forEach(pluginManifest.renderer.dependencies, function(dependency) {
+                    var src = EkstepEditor.pluginManager.resolvePluginResource(pluginManifest.id, pluginManifest.ver, dependency.src);
+                    if (src.indexOf("http") === -1) {
+                        src = EkstepEditor.config.absURL + src;
+                    }
                     content.theme.manifest.media.push({
                         id: dependency.id,
                         type: dependency.type,
                         plugin: dependency.id,
                         ver: pluginManifest.ver,
-                        src: EkstepEditor.config.absURL + EkstepEditor.relativeURL(pluginManifest.id, pluginManifest.ver, dependency.src)
+                        src: src
                     });
                 });
             }
             //then push the main renderer file
+            var src = EkstepEditor.pluginManager.resolvePluginResource(pluginManifest.id, pluginManifest.ver, pluginManifest.renderer.main);
+            if (src.indexOf("http") === -1) {
+                src = EkstepEditor.config.absURL + src;
+            }
             content.theme.manifest.media.push({
                 id: id,
                 plugin: id,
                 ver: pluginManifest.ver,
-                src: EkstepEditor.config.absURL + EkstepEditor.relativeURL(pluginManifest.id, pluginManifest.ver, pluginManifest.renderer.main),
+                src: src,
                 type: "plugin"
             });
            
