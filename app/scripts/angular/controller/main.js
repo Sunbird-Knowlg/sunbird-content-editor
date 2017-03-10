@@ -345,3 +345,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
     }
 ]);
+
+EkstepEditor.jQuery(document).ready(function() {
+    var newheight = $(window).innerHeight() - 114;  
+    EkstepEditor.jQuery('.scrollable-slides').css("height",newheight + "px");  
+});

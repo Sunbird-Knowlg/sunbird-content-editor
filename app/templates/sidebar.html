@@ -1,8 +1,7 @@
 <style type="text/css">
 .sidebarContent {
-    height: 400px;
     width: 100%;
-    overflow-y: auto;
+    overflow-y: scroll;
     margin: 0px !important;
     border: none !important;
     border-radius: 0px !important;
@@ -124,4 +123,7 @@ a.item.at-menu-item.popup-item.active {
 $('.sidebarConfig .item, .sidebarHelp .item').tab({
     history: false
 });
+var newheight = $(window).innerHeight() - 212;
+EkstepEditor.jQuery('.sidebarContent').css("height",newheight + "px");  
+
 </script>
