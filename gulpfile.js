@@ -115,7 +115,8 @@ gulp.task('minifyCSS', function() {
             'app/styles/semantic.min.css',
             'app/styles/content-editor.css',
             'app/styles/MyFontsWebfontsKit.css',
-            'app/styles/iconfont.css'
+            'app/styles/iconfont.css',
+            'app/styles/noto.css'
         ])
         .pipe(concat('style.min.css'))
         .pipe(minify({
