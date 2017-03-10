@@ -5,9 +5,7 @@ EkstepEditor.migration.orderstage_task = new(Class.extend({
         console.log('orderstage-task initialized');
     },
     migrate: function(contentbody) {
-        console.log('migrating stage order');
-        var deferred = EkstepEditor.$q.defer(),
-            nextStage = {},
+        var nextStage = {},
             stage,
             contentstages = [],
             instance = this,
@@ -40,9 +38,7 @@ EkstepEditor.migration.orderstage_task = new(Class.extend({
             }
             if (contentbody.theme.stage.length === i + 1) {
                 contentbody.theme.stage = contentstages.concat(stages);
-                deferred.resolve(contentbody);
             }
         }
-        return deferred.promise;
     }
 }));

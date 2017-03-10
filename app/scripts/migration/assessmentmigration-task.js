@@ -9,8 +9,7 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
     id: 'org.ekstep.quiz',
     quiz: { x: 0, y: 0, w: 0, h: 0, visible: true, editable: true, 'z-index': 0, data: { __cdata: { questionnaire: {}, template: [] } }, config: { __cdata: { "type": "items", "var": "item" } } },
     migrate: function(contentbody) {
-        var deferred = EkstepEditor.$q.defer(),
-            instance = this;
+        var instance = this;
         this.contentbody = contentbody;
 
         _.forEach(contentbody.theme.stage, function(stage, index) {
@@ -19,10 +18,8 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
                 instance.transformToQuiz(stage);
                 instance.removeObsoleteTag(stage);              
             }
-            if (contentbody.theme.stage.length === index + 1) deferred.resolve(contentbody);
         });
 
-        return deferred.promise;
     },
     getController: function(controllerId) {
         return _.find(this.contentbody.theme.controller, function(ctrl) {

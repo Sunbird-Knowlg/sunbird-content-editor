@@ -7,7 +7,6 @@ EkstepEditor.migration.readalongmigration_task = new(Class.extend({
     // check 'isReadAlongAutoPlay' attribute in htext and convert to 'autoplay'
     migrate: function(contentbody) {
     		console.log('migrating readalong');
-        var deferred = EkstepEditor.$q.defer();
         _.forEach(contentbody.theme.stage, function(stage, index) {
             if (stage.htext && (!_.isArray(stage.htext))) stage.htext = [stage.htext];
             if (stage.htext && stage.htext.length) {
@@ -18,8 +17,6 @@ EkstepEditor.migration.readalongmigration_task = new(Class.extend({
                     }
                 });
             }
-            if(contentbody.theme.stage.length === index + 1)  deferred.resolve(contentbody);                    	
         });
-        return deferred.promise;
     }
 }));

@@ -329,7 +329,7 @@ EkstepEditor.stageManager = new(Class.extend({
         this._loadPlugins(contentBody, function(err, res) {
             if(!err) {
                 var stages = _.isArray(contentBody.theme.stage) ? contentBody.theme.stage : [contentBody.theme.stage];
-                instance._loadStages(stages, stageIcons);
+                instance._loadStages(stages, stageIcons, startTime);
             }
         });
     },

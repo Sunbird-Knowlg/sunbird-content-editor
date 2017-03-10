@@ -7,9 +7,7 @@ EkstepEditor.migration.basestage_task = new(Class.extend({
     baseStage: undefined,
     contentbody: undefined,    
     migrate: function(contentbody) {
-        console.log('migrating base stage');
-        var deferred = EkstepEditor.$q.defer(),
-            instance = this,
+        var instance = this,
             stageId,
             baseStageArray = [];
 
@@ -30,15 +28,10 @@ EkstepEditor.migration.basestage_task = new(Class.extend({
                 if (baseStageArray.length) {
                     _.forEach(baseStageArray, function(bs, index){ 
                         instance.removeBaseStage(bs);
-                        if(baseStageArray.length === index + 1) deferred.resolve(instance.contentbody);
                     });
-                } else {
-                    deferred.resolve(instance.contentbody);    
-                }
-                
+                }                
             }
         });
-        return deferred.promise;
     },
     removeBaseStage: function(baseStage) {
         var instance = this;

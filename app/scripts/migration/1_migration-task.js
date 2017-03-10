@@ -3,70 +3,65 @@
 EkstepEditor.migration = new(Class.extend({
     init: function() {
         console.log('migration task initialized');
-        EkstepEditor.$q = angular.injector(['ng']).get('$q'); //promise
         EkstepEditorAPI.addEventListener('content:migration:start', this.execute, this);
     },
+    _startTime: undefined,
     tasks: ['mediamigration_task', 'basestage_task', 'orderstage_task', 'scribblemigration_task', 'imagemigration_task', 'readalongmigration_task', 'assessmentmigration_task', 'eventsmigration_task', 'settagmigration_task'],
     migrationErrors: [],
     execute: function(event, data) {
-        var contentbody = data.body;
-        var stageIcons = data.stageIcons;
-        var instance = this, startTime = (new Date()).getTime(),
-            scope = EkstepEditorAPI.getAngularScope();
-            
-        if (!_.has(contentbody, 'theme.stage')) EkstepEditor.migration.migrationErrors.push('Content has no stage defined!');
-        if (!this.versionCompatible(contentbody.theme.version || contentbody.theme.ver)) {
-            //show migration message on load screen
-            scope.appLoadMessage.push({'id': 2, 'message': 'Migrating Content', 'status': false});
-            scope.migrationFlag = true;
-            EkstepEditor.migration[instance.tasks[0]].migrate(contentbody)
-                .then(function(content) {return EkstepEditor.migration[instance.tasks[1]].migrate(content)})
-                .then(function(content) {return EkstepEditor.migration[instance.tasks[2]].migrate(content)})
-                .then(function(content) {return EkstepEditor.migration[instance.tasks[3]].migrate(content)})
-                .then(function(content) {return EkstepEditor.migration[instance.tasks[4]].migrate(content)})
-                .then(function(content) {return EkstepEditor.migration[instance.tasks[5]].migrate(content)})
-                .then(function(content) {return EkstepEditor.migration[instance.tasks[6]].migrate(content)})
-                .then(function(content) {return EkstepEditor.migration[instance.tasks[7]].migrate(content)})
-                .then(function(content) {return EkstepEditor.migration[instance.tasks[8]].migrate(content)})
-                .then(function(content) {                                                                        
-                        EkstepEditor.telemetryService.startEvent().append("loadtimes", {migration: ((new Date()).getTime() - startTime)});                                                                        
-                        scope.migration.showPostMigrationMsg = true;                       
-                        scope.migration.showMigrationSuccess = true;
-                        var obj = _.find(EkstepEditorAPI.getAngularScope().appLoadMessage, { 'id': 2});
-                        if (_.isObject(obj)) {
-                            obj.message = "Content migrated";
-                            obj.status = true;
-                        }
-                        EkstepEditorAPI.ngSafeApply(scope);
-                        console.info('Migration task completed!');
-                        instance.setNewVersion(content);
-                        console.log('after migration content:', _.cloneDeep(content));
-                        if(instance.migrationErrors.length) {
-                            if (_.isObject(obj)){
-                                obj.message = "Content migration failed";
-                                obj.error = true;
-                            }
-                            console.info('Migration has errors: ', instance.migrationErrors); 
-                            EkstepEditorAPI.dispatchEvent('content:migration:end', {'logs': {'error': instance.migrationErrors}, 'status': 'FAIL'});                      
-                            EkstepEditor.telemetryService.error({ "env": "migration", "stage": "", "action": "log the error", "err": "migration has errors", "type": "PORTAL", "data": "", "severity": "warn" });
-                        } else {
-                            EkstepEditorAPI.dispatchEvent('content:migration:end', {'logs': {'error': undefined}, 'status': 'PASS'});                      
-                        }
-                        EkstepEditorAPI.ngSafeApply(scope);
-                        EkstepEditor.stageManager.fromECML(content, stageIcons);
-                    });
+        var contentbody = data.body, stageIcons = data.stageIcons;
+
+        if (!_.has(contentbody, 'theme.stage')) EkstepEditor.telemetryService.error({ "env": "migration", "stage": "", "action": "log the error", "err": "migration has errors", "type": "PORTAL", "data": "", "severity": "warn" });  
+        if (this.isOldContent(contentbody)) {            
+            this.initLoadScreenMsg();
+            this._startTime = (new Date()).getTime();
+            _.forEach(this.tasks, function(task) {
+                EkstepEditor.migration[task].migrate(contentbody)
+            });
+            this.postMigration(contentbody, stageIcons);
         } else {
             console.info('no need for migration');
             EkstepEditor.stageManager.fromECML(contentbody, stageIcons);
         }
     },
-    versionCompatible: function(version) {        
-        if(typeof version == 'string') version = parseFloat(version);
-        if (version < 1) return false;
-        return true;
+    postMigration: function(content, stageIcons) {
+        var instance = this;
+        EkstepEditor.telemetryService.startEvent().append("loadtimes", { migration: ((new Date()).getTime() - instance._startTime) });
+        instance.setNewVersion(content);
+        instance.showLoadScreenMsg();        
+        console.info('Migration task completed!');        
+        console.log('after migration content:', _.cloneDeep(content));
+        if (instance.migrationErrors.length) {            
+            console.info('Migration has errors: ', instance.migrationErrors);
+            EkstepEditor.telemetryService.error({ "env": "migration", "stage": "", "action": "log the error", "err": "migration has errors", "type": "PORTAL", "data": "", "severity": "warn" });
+        }
+
+        EkstepEditor.stageManager.fromECML(content, stageIcons);
+    },
+    isOldContent: function(contentbody) {
+        var version = contentbody.theme.version || contentbody.theme.ver;
+        if (typeof version == 'string') version = parseFloat(version);
+        if (version < 1) return true;
+        return false;
+    },
+    initLoadScreenMsg: function() {
+        var scope = EkstepEditorAPI.getAngularScope();
+        scope.appLoadMessage.push({ 'id': 2, 'message': 'Migrating Content', 'status': false });
+        scope.migrationFlag = true;
+    },
+    showLoadScreenMsg: function () {
+        var scope = EkstepEditorAPI.getAngularScope();
+        scope.migration.showPostMigrationMsg = true;
+        scope.migration.showMigrationSuccess = true;
+        var obj = _.find(EkstepEditorAPI.getAngularScope().appLoadMessage, { 'id': 2 });
+        if (_.isObject(obj)) {
+            obj.message = "Content migrated";
+            obj.status = true;
+        }
+        EkstepEditorAPI.ngSafeApply(scope);
     },
     setNewVersion: function(contentbody) {
-        if (_.has(contentbody,'theme.ver')) delete contentbody.theme.ver;
+        if (_.has(contentbody, 'theme.ver')) delete contentbody.theme.ver;
         contentbody.theme.version = "1.0";
     }
 }));

@@ -6,8 +6,7 @@ EkstepEditor.migration.eventsmigration_task = new(Class.extend({
     },
     migrate: function(contentbody) {
         console.log('migrating events');
-        var deferred = EkstepEditor.$q.defer(),
-            instance = this;
+        var instance = this;
         _.forEach(contentbody.theme.stage, function(stage, index) {
             var plugins = _.pickBy(stage, _.isObject);
             if (!_.isArray(plugins)) plugins = [plugins];
@@ -59,9 +58,7 @@ EkstepEditor.migration.eventsmigration_task = new(Class.extend({
                     instance.migrateStageEvents(stageEvents, stage);
                 }
             }
-            if (contentbody.theme.stage.length === index + 1) deferred.resolve(contentbody);
         });
-        return deferred.promise;
     },
     migrateStageEvents: function(events, pi) {
         var instance = this;

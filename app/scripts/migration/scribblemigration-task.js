@@ -6,9 +6,7 @@ EkstepEditor.migration.scribblemigration_task = new(Class.extend({
     },
     id: 'org.ekstep.scribblepad',    
     migrate: function(contentbody) {
-    	console.log('migrating scribblepad');
-    	var deferred = EkstepEditor.$q.defer(),
-    			instance = this;
+    	var instance = this;
 
         _.forEach(contentbody.theme.stage, function(stage, index) {
             if (stage.scribble && (!_.isArray(stage.scribble))) stage.scribble = [stage.scribble];
@@ -18,9 +16,7 @@ EkstepEditor.migration.scribblemigration_task = new(Class.extend({
             }            
             EkstepEditor.migration.imagemigration_task.removeImage(stage, 'domain_38441_trash');                
             instance.removeEraserMedia(contentbody);
-            if(contentbody.theme.stage.length === index + 1) deferred.resolve(contentbody);
         });
-        return deferred.promise;
     },
     removeEraserMedia: function(contentbody) {
         _.forEach(_.clone(contentbody.theme.manifest.media), function(media, index) {
