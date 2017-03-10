@@ -188,7 +188,7 @@ EkstepEditor.pluginManager = new(Class.extend({
         if (this.plugins[id] && this.plugins[id]["repo"]) {
             return this.plugins[id]["repo"].resolveResource(id, ver, resource);
         } else{
-            return "";
+            return false;
         }
     }
 }));

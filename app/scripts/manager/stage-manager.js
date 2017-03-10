@@ -285,6 +285,7 @@ EkstepEditor.stageManager = new(Class.extend({
         });
     },
     updateContentManifest: function(content, id, pluginManifest) {
+        var instance = this;
         if (_.indexOf(EkstepEditor.config.corePlugins, id) == 1) {
             return;
         }
@@ -296,29 +297,22 @@ EkstepEditor.stageManager = new(Class.extend({
             //Add renderer dependencies first 
              if(!_.isUndefined(pluginManifest.renderer.dependencies) && pluginManifest.renderer.dependencies.length > 0) {
                 _.forEach(pluginManifest.renderer.dependencies, function(dependency) {
-                    var src = EkstepEditor.pluginManager.resolvePluginResource(pluginManifest.id, pluginManifest.ver, dependency.src);
-                    if (src.indexOf("http") === -1) {
-                        src = EkstepEditor.config.absURL + src;
-                    }
+                    
                     content.theme.manifest.media.push({
                         id: dependency.id,
                         type: dependency.type,
                         plugin: dependency.id,
                         ver: pluginManifest.ver,
-                        src: src
+                        src: instance._resolveManifestMediaPath(pluginManifest.id, pluginManifest.ver, dependency.src)
                     });
                 });
             }
             //then push the main renderer file
-            var src = EkstepEditor.pluginManager.resolvePluginResource(pluginManifest.id, pluginManifest.ver, pluginManifest.renderer.main);
-            if (src.indexOf("http") === -1) {
-                src = EkstepEditor.config.absURL + src;
-            }
             content.theme.manifest.media.push({
                 id: id,
                 plugin: id,
                 ver: pluginManifest.ver,
-                src: src,
+                src: instance._resolveManifestMediaPath(pluginManifest.id, pluginManifest.ver, pluginManifest.renderer.main),
                 type: "plugin"
             });
            
@@ -457,5 +451,14 @@ EkstepEditor.stageManager = new(Class.extend({
         } else {
             EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: this.stages[0].id });
         }
+    },
+    _resolveManifestMediaPath : function (id, ver, resource) {
+        var src = EkstepEditor.pluginManager.resolvePluginResource(id, ver, resource);
+        if (src === false) {
+            return ""
+        } else if(src.indexOf("http") === -1) {
+            src = EkstepEditor.config.absURL + src;
+        } 
+        return src;
     }
 }));
