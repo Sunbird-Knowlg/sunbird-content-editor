@@ -87,7 +87,7 @@ a.item.at-menu-item.popup-item.active {
                 </div>
             </form>
             <div class="contributed-plugins-list {{(localPlugins.length===0 || contributedPluginMessageClass==='error' )? 'no-plugins': ''}} ">
-                <table class="ui very basic table ">
+                <table class="ui very basic padded table">
                     <thead>
                         <tr>
                             <th></th>
@@ -98,11 +98,10 @@ a.item.at-menu-item.popup-item.active {
                     <tbody>
                         <tr ng-repeat="plugin in localPlugins ">
                             <td>
-                                <img ng-src="{{localServerPath}}{{plugin}}/favicon.ico "/>
+                                <i class="icon-widget icon"></i>
                             </td>
                             <td>
-                                <span title="{{plugin}} ">{{plugin | limitTo:20 }}</span>
-                                <span ng-if="plugin.length> 20">...</span>
+                                <p class="local-plugin-label" title="{{plugin}} ">{{plugin}}</p>
                             </td>
                             <td>
                                 <div class="ui primary icon mini     button" ng-click="fireEvent({'id':'org.ekstep.developer:loadplugin', 'data': {'plugin': plugin}})">

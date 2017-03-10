@@ -228,13 +228,14 @@ EkstepEditor.stageManager = new(Class.extend({
                 instance.addMediaToMediaMap(mediaMap, child.getMedia(), child.manifest);
             });
             content.theme.stage.push(stageBody);
-        });        
+        });    
         if(!_.isEmpty(EkstepEditor.mediaManager.migratedMediaMap)) {            
             instance.mergeMediaMap(mediaMap);
             content.theme["migration-media"] = {};
             content.theme["migration-media"].media =  _.values(EkstepEditor.mediaManager.migratedMediaMap);
         }
         content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mediaMap)), 'id');
+        
         return _.cloneDeep(content);
     },
     mergeMediaMap: function(mediaMap) {
@@ -284,6 +285,7 @@ EkstepEditor.stageManager = new(Class.extend({
         });
     },
     updateContentManifest: function(content, id, pluginManifest) {
+        var instance = this;
         if (_.indexOf(EkstepEditor.config.corePlugins, id) == 1) {
             return;
         }
@@ -295,12 +297,13 @@ EkstepEditor.stageManager = new(Class.extend({
             //Add renderer dependencies first 
              if(!_.isUndefined(pluginManifest.renderer.dependencies) && pluginManifest.renderer.dependencies.length > 0) {
                 _.forEach(pluginManifest.renderer.dependencies, function(dependency) {
+                    
                     content.theme.manifest.media.push({
                         id: dependency.id,
                         type: dependency.type,
                         plugin: dependency.id,
                         ver: pluginManifest.ver,
-                        src: EkstepEditor.config.absURL + EkstepEditor.relativeURL(pluginManifest.id, pluginManifest.ver, dependency.src)
+                        src: instance._resolveManifestMediaPath(pluginManifest.id, pluginManifest.ver, dependency.src)
                     });
                 });
             }
@@ -309,7 +312,7 @@ EkstepEditor.stageManager = new(Class.extend({
                 id: id,
                 plugin: id,
                 ver: pluginManifest.ver,
-                src: EkstepEditor.config.absURL + EkstepEditor.relativeURL(pluginManifest.id, pluginManifest.ver, pluginManifest.renderer.main),
+                src: instance._resolveManifestMediaPath(pluginManifest.id, pluginManifest.ver, pluginManifest.renderer.main),
                 type: "plugin"
             });
            
@@ -448,5 +451,14 @@ EkstepEditor.stageManager = new(Class.extend({
         } else {
             EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: this.stages[0].id });
         }
+    },
+    _resolveManifestMediaPath : function (id, ver, resource) {
+        var src = EkstepEditor.pluginManager.resolvePluginResource(id, ver, resource);
+        if (src === false) {
+            return ""
+        } else if(src.indexOf("http") === -1) {
+            src = EkstepEditor.config.absURL + src;
+        } 
+        return src;
     }
 }));
