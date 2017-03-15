@@ -81,6 +81,13 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
             callback('Content id is required to get content from platform', undefined);
         }
     },
+    getTemaplteData: function(templateId, callback){
+        var instance = this;
+        var templateMetaFields = "?taxonomyId=literacy_v2&fields=body,editorState,templateId,languageCode";
+        instance.http.get(this.serviceURL + 'v2/content/' + templateId + templateMetaFields, this.requestHeaders, function(err, res) {
+            callback(err, res)
+        });
+    },
     downloadContent: function(contentId, fileName, callback) {
         var data = { "request": { "content_identifiers": [contentId], "file_name": fileName } };
         this.postFromService(this.serviceURL + 'v2/content/bundle', data, this.requestHeaders, callback);
