@@ -14,6 +14,8 @@ EkstepEditor.pluginManager = new(Class.extend({
         this.plugins[manifest.id] = { p: plugin, m: manifest, 'repo': repo };
         var p = new plugin(manifest); // Initialize plugin
         this.pluginObjs[manifest.id] = p;
+        EkstepEditorAPI.dispatchEvent('plugin:load', { plugin: manifest.id, version: manifest.ver });
+        EkstepEditorAPI.dispatchEvent(manifest.id + ':load');
     },
     loadAndInitPlugin: function(pluginFQName, publishedTime) {
         var index = pluginFQName.lastIndexOf('-');
@@ -56,7 +58,7 @@ EkstepEditor.pluginManager = new(Class.extend({
                     if (manifest.type && EkstepEditorAPI._.lowerCase(manifest.type) === "widget") {
                         instance.invoke(pluginId, _.cloneDeep(manifest.editor['init-data'] || {}), EkstepEditorAPI.getCurrentStage());
                     }
-                    if (!EkstepEditor.stageManager.contentLoading) EkstepEditor.telemetryService.pluginLifeCycle({ type: 'load', pluginid: manifest.id, pluginver: manifest.ver, objectid: "", stage: "", containerid: "", containerplugin: "" });
+                    EkstepEditorAPI.dispatchEvent('plugin:load', { plugin: manifest.id, version: manifest.ver });
                 } catch (e) {
                     console.error("error while loading plugin:" + manifest.id, e);
                 }
@@ -97,23 +99,22 @@ EkstepEditor.pluginManager = new(Class.extend({
                         p = new pluginClass(pluginManifest, d, parent);
                         instance.addPluginInstance(p);
                         p.initPlugin();
+                        EkstepEditorAPI.dispatchEvent('plugin:add', { plugin: pluginManifest.id, version: pluginManifest.ver, instanceId: p.id });
+                        EkstepEditorAPI.dispatchEvent(pluginManifest.id + ':add');
                         instance.dispatchTelemetry(pluginManifest, p, parent, d);
                     })
                 } else {
                     p = new pluginClass(pluginManifest, data, parent);
                     instance.addPluginInstance(p);
                     p.initPlugin();
-                    instance.dispatchTelemetry(pluginManifest, p, parent, data);
+                    EkstepEditorAPI.dispatchEvent('plugin:add', { plugin: pluginManifest.id, version: pluginManifest.ver, instanceId: p.id });
+                    EkstepEditorAPI.dispatchEvent(pluginManifest.id + ':add');                    
                 }
             } catch(e) {
                 throw new Error(e);
             }
         }
         return p;
-    },
-    dispatchTelemetry: function(pluginManifest, pluginInstance, parent, data) {
-        var stageId = parent ? parent.id : "";
-        if (!EkstepEditor.stageManager.contentLoading) EkstepEditor.telemetryService.pluginLifeCycle({ type: 'add', pluginid: pluginManifest.id, pluginver: pluginManifest.ver, objectid: pluginInstance.id, stage: stageId, assetid: data.asset, containerid: "", containerplugin: "" });
     },
     addPluginInstance: function(pluginObj) {
         this.pluginInstances[pluginObj.id] = pluginObj;

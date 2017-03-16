@@ -48,7 +48,7 @@ window.EkstepEditorAPI = {
      * @memberof EkstepEditorAPI
      */
     removeEventListener: function(type, callback, scope) {
-
+        EkstepEditor.eventManager.removeEventListener(type, callback, scope); 
     },
 
     /**
