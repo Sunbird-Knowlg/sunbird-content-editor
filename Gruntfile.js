@@ -112,13 +112,14 @@ module.exports = function(grunt) {
                 options: {
                     archive: 'ansible/content-editor.zip'
                 },
-                files: [
-                    { src: ['content-editor/**', 
-                            'content-plugins/**', 
-                            'server/**', '*', 
-                            '!node_modules', 
-                            '!ansible'] }
-                ]
+                files: [{
+                    src: ['content-editor/**',
+                        'content-plugins/**',
+                        'server/**', '*',
+                        '!node_modules',
+                        '!ansible'
+                    ]
+                }]
             }
         },
 
@@ -130,11 +131,17 @@ module.exports = function(grunt) {
             }
         },
 
-        jsdoc : {
-            dist : {
-                src: ['app/scripts/**/*.js', 'plugins/**/*.js', 'README.md'],
+        jsdoc: {
+            framework: {
+                src: ['app/scripts/**/*.js', '!**/node_modules/**', '!**/bower_components/**', '!**/libs/**', 'README.md'],
                 options: {
-                    destination: 'docs'
+                    destination: 'docs/framework'
+                }
+            },
+            plugins: {
+                src: ['plugins/**/*.js', '!**/node_modules/**', '!**/bower_components/**', '!**/libs/**', 'README.md'],
+                options: {
+                    destination: 'docs/plugins'
                 }
             }
         }
