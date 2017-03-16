@@ -445,7 +445,7 @@ EkstepEditor.stageManager = new(Class.extend({
         this.showLoadScreenMessage();
         EkstepEditor.stageManager.contentLoading = false;
         EkstepEditor.telemetryService.startEvent(true).append("loadtimes", {"contentLoad": ((new Date()).getTime() - startTime)});
-        EkstepEditorAPI.dispatchEvent('content:onload');
+        EkstepEditorAPI.dispatchEvent('content:load:complete');
         if(EkstepEditorAPI._.isEmpty(this.stages)) {
             EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
         } else {
