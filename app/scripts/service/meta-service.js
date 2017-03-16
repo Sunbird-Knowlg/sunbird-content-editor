@@ -27,7 +27,7 @@ EkstepEditor.metaService = new(EkstepEditor.iService.extend({
     },
     /**
      * 
-     * @param  {string}   objectType  eg.Assessmentitem, Language etc.
+     * @param  {string}   objectType  eg.AssessmentItem, Language etc.
      * @param  {Function} callback    returns error and response as arguments
      * @memberof EkstepEditor.metaService
      */

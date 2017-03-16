@@ -139,6 +139,12 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
             callback('Content id is required to get content from platform', undefined);
         }
     },
+    /**
+     * retrieves template data of selected templateid
+     * @param templateId {string} template id
+     * @param callback {function} callback function
+     * @memberof EkstepEditor.contentService
+     */
     getTemplateData: function(templateId, callback){
         var instance = this;
         var templateMetaFields = "?taxonomyId=literacy_v2&fields=body,editorState,templateId,languageCode";
