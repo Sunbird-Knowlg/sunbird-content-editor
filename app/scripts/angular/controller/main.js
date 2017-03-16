@@ -334,12 +334,13 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.fireSidebarTelemetry = function(menu, menuType) {
-            var pluginId = "", pluginVer = "";
+            var pluginId = "", pluginVer = "", objectId = "";
             if(EkstepEditorAPI.getCurrentObject()) {
                 pluginId = EkstepEditorAPI.getCurrentObject().manifest.id;
                 pluginVer = EkstepEditorAPI.getCurrentObject().manifest.ver;
+                objectId = EkstepEditorAPI.getCurrentObject().id;
             }
-            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "sidebar", "target": menuType, "pluginid": pluginId, 'pluginver': pluginVer, "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
+            EkstepEditor.telemetryService.interact({ "type": "modify", "subtype": "sidebar", "target": menuType, "pluginid": pluginId, 'pluginver': pluginVer, "objectid": objectId, "stage": EkstepEditor.stageManager.currentStage.id });
         }
         
 
