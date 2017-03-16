@@ -39,13 +39,13 @@ EkstepEditor.assessmentService = new(EkstepEditor.iService.extend({
         this.getFromService(this.learningURL + 'v1/assessmentitem/' + itemId, this.requestHeaders, callback);
     },
     /**
-     * Get temaplte data of selected question from content_service API
+     * Get template data of selected question from content service API
      * @param  {string}   templateId selected question(assessmentitem) template id
      * @param  {Function} callback   returns error and response as arguments
      * @memberof EkstepEditor.assessmentService
      */
     getTemplate: function(templateId, callback) {
-        EkstepEditorAPI.getService('content').getTemaplteData(templateId, callback);
+        EkstepEditorAPI.getService('content').getTemplateData(templateId, callback);
     },
     /**
      * Utility function which is used to call http get request
