@@ -226,7 +226,7 @@ var corePlugins = [
     "org.ekstep.audio-1.0",
     "org.ekstep.hotspot-1.0",
     "org.ekstep.scribblepad-1.0",
-    "org.ekstep.htext-1.0",
+    "org.ekstep.readalongbrowser-1.0",
     "org.ekstep.quiz-1.0",
     "org.ekstep.stageconfig-1.0",
     "org.ekstep.telemetry-1.0",
@@ -239,7 +239,7 @@ var corePlugins = [
     "org.ekstep.collaborator-1.0",
     "org.ekstep.download-1.0",
     "org.ekstep.unsupported-1.0",
-    "org.ekstep.wordinfotext-1.0",
+    "org.ekstep.wordinfobrowser-1.0",
     "org.ekstep.viewecml-1.0"
 ]
 
