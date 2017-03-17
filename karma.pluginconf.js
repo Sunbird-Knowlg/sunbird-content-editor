@@ -92,18 +92,17 @@ module.exports = function(config) {
 
 
         // list of files to exclude
-        exclude: ['plugins/coverage/**', 'plugins/**/renderer/**','plugins/**/*.spec.js'],
+        exclude: ['plugins/coverage/**', 'plugins/**/renderer/**'],
 
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'plugins/**/!(lib)/*.js': ['coverage']
+            'plugins/**/!(lib)/!(*.spec).js': ['coverage']
         },
         proxies: {
             '/plugins/': '/base/plugins/'
         },
-
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
