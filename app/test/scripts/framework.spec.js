@@ -69,6 +69,8 @@ describe(" framework integration", function() {
         EkstepEditor.hostRepo.connected = false;
         EkstepEditor.hostRepo.init();
         EkstepEditor.pluginManager.loadPlugin("org.ekstep.testexample","1.0");
+        expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalled();
+        expect(Object.keys(EkstepEditor.pluginManager.plugins).length).toEqual(7);
         EkstepEditor.hostRepo.connected = true;
     });
 
