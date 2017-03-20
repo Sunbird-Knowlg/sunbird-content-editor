@@ -8,7 +8,10 @@
     "publishedDate": "",
     "editor": {
         "main": "editor/plugin.js",
-        "dependencies": [],
+        "dependencies": [
+            {"type": "js", "src": "editor/libs/dependency.js"},
+            {"type": "css", "src": "editor/libs/dependency.css"}
+        ],
         "menu": [{
             "id": "shape",
             "category": "main",
