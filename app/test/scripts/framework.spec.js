@@ -64,6 +64,14 @@ describe(" framework integration", function() {
 
     });
 
+    it("should try to load plugin from hosted and fail", function() {
+        spyOn(EkstepEditor.pluginManager, "loadPlugin").and.callThrough();
+        EkstepEditor.hostRepo.connected = false;
+        EkstepEditor.hostRepo.init();
+        EkstepEditor.pluginManager.loadPlugin("org.ekstep.testexample","1.0");
+        EkstepEditor.hostRepo.connected = true;
+    });
+
     it("should register menu", function() {
         var manifest = EkstepEditor.pluginManager.getPluginManifest("org.ekstep.test1");
         spyOn(EkstepEditor.toolbarManager, "registerMenu").and.callThrough();

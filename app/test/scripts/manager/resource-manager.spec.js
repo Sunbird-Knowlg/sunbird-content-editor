@@ -35,12 +35,6 @@ describe("Resource Manager test cases", function() {
         expect(EkstepEditor.hostRepo.discoverManifest).toHaveBeenCalled();
         expect(EkstepEditor.hostRepo.discoverManifest.calls.count()).toEqual(1);
     });
-    xit("should add external js file to body", function() {
-        EkstepEditor.resourceManager.loadExternalResource("js","org.ekstep.config","1.0", "editor/lib/micromarkdown.min.js", EkstepEditor.publishedRepo);
-    });
-
-    xit("should add external css file to head", function() {
-
-    });
+   
 
 });
