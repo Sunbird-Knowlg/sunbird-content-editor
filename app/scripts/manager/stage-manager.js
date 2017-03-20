@@ -83,8 +83,7 @@ EkstepEditor.stageManager = new(Class.extend({
         var prevStageId = _.isUndefined(this.currentStage) ? undefined : this.currentStage.id;
         this.addStageAt(stage, stage.attributes.position);
         this.selectStage(null, { stageId: stage.id });
-        EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id, prevStageId: prevStageId});
-        this.enableSave();
+        EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id, prevStageId: prevStageId });
     },
     deleteStage: function(event, data) {
         var currentStage = _.find(this.stages, { id: data.stageId });
@@ -95,7 +94,6 @@ EkstepEditor.stageManager = new(Class.extend({
         else if (currentStageIndex === this.stages.length) this.selectStage(null, { stageId: this.stages[currentStageIndex - 1].id });
         else this.selectStage(null, { stageId: this.stages[currentStageIndex].id });
         EkstepEditorAPI.dispatchEvent('stage:removed', { stageId: data.stageId});
-        this.enableSave();
     },
     deleteStageInstances: function(stage) {
         _.forEach(_.clone(stage.canvas.getObjects()), function(obj) {
@@ -126,7 +124,6 @@ EkstepEditor.stageManager = new(Class.extend({
         });
         EkstepEditorAPI.dispatchEvent('stage:select', { stageId: this.currentStage.id });      
 
-        this.enableSave();        
     },
     getObjectMeta: function(options) {
         var pluginId = (options && options.target) ? options.target.id : '';
@@ -181,9 +178,6 @@ EkstepEditor.stageManager = new(Class.extend({
         return _.findIndex(this.stages, function(stage) {
             return stage.id == stageId;
         });
-    },
-    enableSave: function() { // on stage operation, enable the save button
-        EkstepEditorAPI.getAngularScope().enableSave();
     },
     deleteConfirmationDialog: function(event, data) {
         var instance = this;
