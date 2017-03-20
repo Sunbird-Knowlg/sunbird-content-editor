@@ -454,5 +454,11 @@ EkstepEditor.stageManager = new(Class.extend({
             src = EkstepEditor.config.absURL + src;
         } 
         return src;
+    },
+    cleanUp: function() {
+        this.stages = [];
+        this.thumbnails = {};
+        this.canvas = undefined;
+        this.currentStage = undefined;
     }
 }));

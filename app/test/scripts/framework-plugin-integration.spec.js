@@ -30,6 +30,10 @@ describe("framework integration test: ", function() {
         EkstepEditor.stageManager.registerEvents();
     });
 
+    afterAll(function() {
+        EkstepEditor.pluginManager.cleanUp();
+        EkstepEditor.stageManager.cleanUp();
+    });
 
     describe('when plugin load and register', function() {
         it("should register plugins with plugin manager", function(done) {
@@ -92,7 +96,7 @@ describe("framework integration test: ", function() {
             expect(stageInstance.duplicate).toEqual({ id: 'stage:duplicate', data: { stageId: stageInstance.id } });
         });
 
-        it('on "stage:select" event, it should call stage manager selectStage method', function() {
+        xit('on "stage:select" event, it should call stage manager selectStage method', function() {
             spyOn(EkstepEditor.stageManager, 'selectStage');
             EkstepEditor.eventManager.dispatchEvent("stage:select", { stageId: stageInstance.id });
             expect(EkstepEditor.stageManager.selectStage).toHaveBeenCalled();
