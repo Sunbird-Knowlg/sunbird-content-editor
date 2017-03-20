@@ -35,12 +35,12 @@ describe(" framework integration", function() {
         spyOn(EkstepEditor.hostRepo, "discoverManifest").and.callThrough();
         spyOn(EkstepEditor.resourceManager, "loadResource").and.callThrough();
         spyOn(EkstepEditor.jQuery, "ajax").and.callThrough();
-
-
+        spyOn(EkstepEditor.resourceManager, "loadExternalResource").and.callThrough();
+        spyOn(EkstepEditor.resourceManager, "getResource").and.callThrough();
+        
         EkstepEditor.pluginManager.loadAllPlugins(EkstepEditor.config.plugins, function() {
-            // console.log("count", EkstepEditor.resourceManager.loadResource.calls.count());
             expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalled();
-            expect(EkstepEditor.pluginManager.loadPlugin.calls.count()).toEqual(6);
+            expect(EkstepEditor.pluginManager.loadPlugin.calls.count()).toEqual(7);
             expect(EkstepEditor.resourceManager.discoverManifest).toHaveBeenCalled();
             expect(EkstepEditor.resourceManager.discoverManifest.calls.count()).toEqual(6);
             expect(EkstepEditor.publishedRepo.discoverManifest).toHaveBeenCalled();
@@ -53,6 +53,12 @@ describe(" framework integration", function() {
             expect(EkstepEditor.resourceManager.loadResource.calls.count()).toEqual(16);
             expect(EkstepEditor.jQuery.ajax).toHaveBeenCalled();
             expect(EkstepEditor.jQuery.ajax.calls.count()).toEqual(17);
+            expect(EkstepEditor.resourceManager.loadExternalResource).toHaveBeenCalled();
+            expect(EkstepEditor.resourceManager.loadExternalResource.calls.count()).toEqual(2);
+            expect(EkstepEditor.resourceManager.getResource).toHaveBeenCalled();
+            expect(EkstepEditor.resourceManager.getResource.calls.count()).toEqual(5);  
+            expect(EkstepEditor.pluginManager.plugins).not.toBe({});
+            expect(Object.keys(EkstepEditor.pluginManager.plugins).length).toEqual(7);
             done();
         });
 

@@ -4,6 +4,7 @@
     "shortId": "shape",
     "author": "Santhosh Vasabhaktula",
     "title": "Shape Plugin",
+    "type": "widget",
     "description": "",
     "publishedDate": "",
     "editor": {

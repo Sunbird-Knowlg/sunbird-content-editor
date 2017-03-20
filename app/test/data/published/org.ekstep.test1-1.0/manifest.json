@@ -8,7 +8,9 @@
     "publishedDate": "",
     "editor": {
         "main": "editor/plugin.js",
-        "dependencies": [],
+        "dependencies": [
+            {"type": "plugin", "plugin": "org.ekstep.test2", "ver": "1.0"}
+        ],
         "menu": [{
             "id": "shape",
             "category": "main",
