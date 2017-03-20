@@ -33,8 +33,8 @@ EkstepEditor.toolbarManager = new(Class.extend({
     },
     resetContextMenu: function() {
         _.forEach(this.contextMenuItems, function(cmenu) {
-            cm.state = 'HIDE';
-            cm.selected = false;
+            cmenu.state = 'HIDE';
+            cmenu.selected = false;
         });
     },
     updateContextMenu: function(menus) {

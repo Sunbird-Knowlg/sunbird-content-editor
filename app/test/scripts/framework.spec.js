@@ -1,9 +1,10 @@
 describe(" framework integration", function() {
-    beforeAll(function() {        
+    beforeAll(function() {
         var corePlugins = {
-            "org.ekstep.stage": "1.0"
+            "org.ekstep.stage": "1.0",
+            "org.ekstep.copypaste": "1.0"
         };
-        
+
         // test plugins
         EkstepEditor.config.plugins = {
             "org.ekstep.test1": "1.0",
@@ -19,7 +20,7 @@ describe(" framework integration", function() {
         _.forIn(corePlugins, function(value, key) {
             EkstepEditor.pluginManager.loadPlugin(key, value);
         });
-        
+
         EkstepEditor.publishedRepo.basePath = "base/app/test/data/published";
         EkstepEditor.hostRepo.basePath = "base/app/test/data/hosted";
         EkstepEditor.draftRepo.basePath = "base/app/test/data/draft";
@@ -34,10 +35,10 @@ describe(" framework integration", function() {
         spyOn(EkstepEditor.hostRepo, "discoverManifest").and.callThrough();
         spyOn(EkstepEditor.resourceManager, "loadResource").and.callThrough();
         spyOn(EkstepEditor.jQuery, "ajax").and.callThrough();
-        
-        
+
+
         EkstepEditor.pluginManager.loadAllPlugins(EkstepEditor.config.plugins, function() {
-           // console.log("count", EkstepEditor.resourceManager.loadResource.calls.count());
+            // console.log("count", EkstepEditor.resourceManager.loadResource.calls.count());
             expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalled();
             expect(EkstepEditor.pluginManager.loadPlugin.calls.count()).toEqual(6);
             expect(EkstepEditor.resourceManager.discoverManifest).toHaveBeenCalled();
@@ -54,6 +55,41 @@ describe(" framework integration", function() {
             expect(EkstepEditor.jQuery.ajax.calls.count()).toEqual(17);
             done();
         });
-        
+
+    });
+
+    it("should register menu", function() {
+        var manifest = EkstepEditor.pluginManager.getPluginManifest("org.ekstep.test1");
+        spyOn(EkstepEditor.toolbarManager, "registerMenu").and.callThrough();
+        EkstepEditor.toolbarManager.registerMenu(manifest.editor.menu);
+        expect(EkstepEditor.toolbarManager.registerMenu).toHaveBeenCalled();
+    });
+
+    it("should register config menu", function() {
+        var manifest = EkstepEditor.pluginManager.getPluginManifest("org.ekstep.test1");
+        spyOn(EkstepEditor.toolbarManager, "registerConfigMenu").and.callThrough();
+        EkstepEditor.toolbarManager.registerConfigMenu(manifest.editor.menu);
+        expect(EkstepEditor.toolbarManager.registerConfigMenu).toHaveBeenCalled();
+    });
+
+    it("should register context menu", function() {
+        var manifest = EkstepEditor.pluginManager.getPluginManifest("org.ekstep.copypaste");
+        spyOn(EkstepEditor.toolbarManager, "registerContextMenu").and.callThrough();
+        EkstepEditor.toolbarManager.registerContextMenu(manifest.editor.menu);
+        expect(EkstepEditor.toolbarManager.registerContextMenu).toHaveBeenCalled();
+    });
+
+    it("should update context menu", function() {
+        var manifest = EkstepEditor.pluginManager.getPluginManifest("org.ekstep.copypaste");
+        spyOn(EkstepEditor.toolbarManager, "updateContextMenu").and.callThrough();
+        EkstepEditor.toolbarManager.updateContextMenu(manifest.editor.menu);
+        expect(EkstepEditor.toolbarManager.updateContextMenu).toHaveBeenCalled();
+        EkstepEditor.toolbarManager.resetContextMenu();
+    });
+
+    it("should reset context menu", function() {
+        spyOn(EkstepEditor.toolbarManager, "resetContextMenu").and.callThrough();
+        EkstepEditor.toolbarManager.resetContextMenu();
+        expect(EkstepEditor.toolbarManager.resetContextMenu).toHaveBeenCalled();
     });
 });
