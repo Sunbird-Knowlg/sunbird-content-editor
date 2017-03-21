@@ -110,15 +110,10 @@ module.exports = function(grunt) {
         compress: {
             main: {
                 options: {
-                    archive: 'ansible/content-editor.zip'
+                    archive: 'ce-docs.zip'
                 },
                 files: [{
-                    src: ['content-editor/**',
-                        'content-plugins/**',
-                        'server/**', '*',
-                        '!node_modules',
-                        '!ansible'
-                    ]
+                    src: ['docs/**']
                 }]
             }
         },
