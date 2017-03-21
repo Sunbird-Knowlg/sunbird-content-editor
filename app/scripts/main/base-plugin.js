@@ -206,8 +206,10 @@ EkstepEditor.basePlugin = Class.extend({
      * @memberof EkstepEditor.BasePlugin
      */
     remove: function() {
-        this.parent.removeChild(this);
-        this.parent =  undefined; // if this method is called from newInstance(), plugin won't be added to stage children
+        if (this.parent) {
+            this.parent.removeChild(this);
+            this.parent =  undefined; // if this method is called from newInstance(), plugin won't be added to stage children    
+        }
         delete EkstepEditor.pluginManager.pluginInstances[this.id];
     },
 

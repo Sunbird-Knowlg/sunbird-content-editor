@@ -1,6 +1,6 @@
 describe("Plugin Manager test cases", function() {
-
-    beforeAll(function(){
+    
+    beforeAll(function() {
         var corePlugins = {
             "org.ekstep.stage": "1.0",
             "org.ekstep.copypaste": "1.0"
@@ -22,16 +22,16 @@ describe("Plugin Manager test cases", function() {
         EkstepEditor.stageManager.cleanUp();
     });
     it("should load and init plugin", function() {
-        spyOn(EkstepEditor.pluginManager,"loadAndInitPlugin").and.callThrough();
-        spyOn(EkstepEditor.pluginManager,"loadPlugin").and.callThrough();
-        spyOn(EkstepEditor.pluginManager,"isDefined").and.callThrough();
-        spyOn(EkstepEditor.pluginManager,"invoke").and.callThrough();
-        spyOn(EkstepEditor.pluginManager,"getPluginManifest").and.callThrough();
-        
+        spyOn(EkstepEditor.pluginManager, "loadAndInitPlugin").and.callThrough();
+        spyOn(EkstepEditor.pluginManager, "loadPlugin").and.callThrough();
+        spyOn(EkstepEditor.pluginManager, "isDefined").and.callThrough();
+        spyOn(EkstepEditor.pluginManager, "invoke").and.callThrough();
+        spyOn(EkstepEditor.pluginManager, "getPluginManifest").and.callThrough();
+
         var returnValue = EkstepEditor.pluginManager.loadAndInitPlugin("org.ekstep.test2-1.0");
         expect(returnValue).toBe(0);
         expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalled();
-        expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalledWith("org.ekstep.test2","1.0",undefined);
+        expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalledWith("org.ekstep.test2", "1.0", undefined);
         expect(EkstepEditor.pluginManager.isDefined).toHaveBeenCalled();
         expect(EkstepEditor.pluginManager.isDefined).toHaveBeenCalledWith("org.ekstep.test2");
         expect(EkstepEditor.pluginManager.invoke).toHaveBeenCalled();
@@ -40,15 +40,15 @@ describe("Plugin Manager test cases", function() {
     });
 
     it("should not load and init plugin", function() {
-        spyOn(EkstepEditor.pluginManager,"loadAndInitPlugin").and.callThrough();
-        spyOn(EkstepEditor.pluginManager,"loadPlugin").and.callThrough();
-        spyOn(EkstepEditor.pluginManager,"isDefined").and.callThrough();
-        spyOn(EkstepEditor.pluginManager,"invoke").and.callThrough();
-        spyOn(EkstepEditor.pluginManager,"getPluginManifest").and.callThrough();
+        spyOn(EkstepEditor.pluginManager, "loadAndInitPlugin").and.callThrough();
+        spyOn(EkstepEditor.pluginManager, "loadPlugin").and.callThrough();
+        spyOn(EkstepEditor.pluginManager, "isDefined").and.callThrough();
+        spyOn(EkstepEditor.pluginManager, "invoke").and.callThrough();
+        spyOn(EkstepEditor.pluginManager, "getPluginManifest").and.callThrough();
         var returnValue = EkstepEditor.pluginManager.loadAndInitPlugin("org.ekstep.jsdklghfksjd-1.0");
         expect(returnValue).toBe(1);
         expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalled();
-        expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalledWith("org.ekstep.jsdklghfksjd","1.0",undefined);
+        expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalledWith("org.ekstep.jsdklghfksjd", "1.0", undefined);
         expect(EkstepEditor.pluginManager.isDefined).toHaveBeenCalled();
         expect(EkstepEditor.pluginManager.isDefined).toHaveBeenCalledWith("org.ekstep.jsdklghfksjd");
         expect(EkstepEditor.pluginManager.invoke).not.toHaveBeenCalled();
@@ -56,27 +56,27 @@ describe("Plugin Manager test cases", function() {
     });
 
     it("get plugins should return plugins array", function() {
-        spyOn(EkstepEditor.pluginManager,"getPlugins").and.callThrough();
+        spyOn(EkstepEditor.pluginManager, "getPlugins").and.callThrough();
         expect(EkstepEditor.pluginManager.getPlugins().length).toEqual(3);
     });
 
     it("should load help for plugin", function(done) {
-        spyOn(EkstepEditor.pluginManager,"loadPluginResource").and.callThrough();
-        EkstepEditor.pluginManager.loadPluginResource("org.ekstep.test2", "1.0", "editor/help.md", "text", function(err, res){
+        spyOn(EkstepEditor.pluginManager, "loadPluginResource").and.callThrough();
+        EkstepEditor.pluginManager.loadPluginResource("org.ekstep.test2", "1.0", "editor/help.md", "text", function(err, res) {
             done();
         })
     });
 
     it("should not load help for plugin", function(done) {
-        spyOn(EkstepEditor.pluginManager,"loadPluginResource").and.callThrough();
-        EkstepEditor.pluginManager.loadPluginResource("org.ekstep.sdfsdfsd", "1.0", "editor/help.md", "text", function(err, res){
+        spyOn(EkstepEditor.pluginManager, "loadPluginResource").and.callThrough();
+        EkstepEditor.pluginManager.loadPluginResource("org.ekstep.sdfsdfsd", "1.0", "editor/help.md", "text", function(err, res) {
             done();
         })
     });
 
     it("should resolve resource path", function() {
-        spyOn(EkstepEditor.pluginManager,"resolvePluginResource").and.callThrough();
-        spyOn(EkstepEditor.publishedRepo,"resolveResource").and.callThrough();
+        spyOn(EkstepEditor.pluginManager, "resolvePluginResource").and.callThrough();
+        spyOn(EkstepEditor.publishedRepo, "resolveResource").and.callThrough();
         var path = EkstepEditor.pluginManager.resolvePluginResource("org.ekstep.test2", "1.0", "editor/help.md");
         expect(path).toBe("base/app/test/data/published/org.ekstep.test2-1.0/editor/help.md");
         expect(EkstepEditor.publishedRepo.resolveResource).toHaveBeenCalled();
@@ -85,8 +85,8 @@ describe("Plugin Manager test cases", function() {
     });
 
     it("should not resolve resource path", function() {
-        spyOn(EkstepEditor.pluginManager,"resolvePluginResource").and.callThrough();
-        spyOn(EkstepEditor.publishedRepo,"resolveResource").and.callThrough();
+        spyOn(EkstepEditor.pluginManager, "resolvePluginResource").and.callThrough();
+        spyOn(EkstepEditor.publishedRepo, "resolveResource").and.callThrough();
         var path = EkstepEditor.pluginManager.resolvePluginResource("org.ekstep.dskjhfgk", "1.0", "editor/help.md");
         expect(path).toBe(false);
         expect(EkstepEditor.publishedRepo.resolveResource).not.toHaveBeenCalled();
@@ -96,7 +96,7 @@ describe("Plugin Manager test cases", function() {
 
     it("should call load plugins with empty object and should call callback method", function() {
         spyOn(EkstepEditor.pluginManager, "loadAllPlugins").and.callThrough();
-        EkstepEditor.pluginManager.loadAllPlugins({}, function(){
+        EkstepEditor.pluginManager.loadAllPlugins({}, function() {
             expect(Object.keys(EkstepEditor.pluginManager.plugins).length).toEqual(3);
         })
     });
@@ -111,30 +111,49 @@ describe("Plugin Manager test cases", function() {
         expect(EkstepEditor.pluginManager.getErrors()).toEqual(["No plugin found for - org.test.test"]);
     });
 
-    it("should load array of plugins with invoke", function(){
+    it("should load array of plugins with invoke", function() {
         var data = [{
-                        "type": "rect",
-                        "x": 10,
-                        "y": 20,
-                        "fill": "#FFFF00",
-                        "w": 14,
-                        "h": 25,
-                        "stroke": "rgba(255, 255, 255, 0)",
-                        "strokeWidth": 1,
-                        "opacity": 1
-                    },{
-                        "type": "rect",
-                        "x": 10,
-                        "y": 20,
-                        "fill": "#FFFFF0",
-                        "w": 14,
-                        "h": 25,
-                        "stroke": "rgba(255, 255, 0, 0)",
-                        "strokeWidth": 1,
-                        "opacity": 1
-                    }];
+            "type": "rect",
+            "x": 10,
+            "y": 20,
+            "fill": "#FFFF00",
+            "w": 14,
+            "h": 25,
+            "stroke": "rgba(255, 255, 255, 0)",
+            "strokeWidth": 1,
+            "opacity": 1
+        }, {
+            "type": "rect",
+            "x": 10,
+            "y": 20,
+            "fill": "#FFFFF0",
+            "w": 14,
+            "h": 25,
+            "stroke": "rgba(255, 255, 0, 0)",
+            "strokeWidth": 1,
+            "opacity": 1
+        }];
         spyOn(EkstepEditor.pluginManager, "invoke").and.callThrough();
         EkstepEditor.pluginManager.invoke("org.ekstep.test2", data);
 
-    })
+    });
+
+    xit("should call invoke and throw error", function() {
+        spyOn(EkstepEditor.pluginManager, "invoke").and.callThrough();
+        expect(EkstepEditor.pluginManager.invoke("org.ekstep.test2", undefined)).toThrowError();
+    });
+
+    it("get manifest should return undefined", function() {
+        spyOn(EkstepEditor.pluginManager, "getPluginManifest").and.callThrough();
+        var value = EkstepEditor.pluginManager.getPluginManifest("org.ksjdhf.sdjhfg");
+        expect(value).toBe(undefined);
+    });
+
+    it("should remove plugin instance by calling removePluginInstance", function() {
+        var PIlength = Object.keys(EkstepEditor.pluginManager.pluginInstances).length;
+        var lastPI = EkstepEditor.pluginManager.pluginInstances[Object.keys(EkstepEditor.pluginManager.pluginInstances)[0]];
+        spyOn(EkstepEditor.pluginManager, "removePluginInstance").and.callThrough();
+        EkstepEditor.pluginManager.removePluginInstance(lastPI);
+        expect(Object.keys(EkstepEditor.pluginManager.pluginInstances).length).not.toEqual(PIlength);
+    });
 });
