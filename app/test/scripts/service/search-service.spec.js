@@ -6,12 +6,26 @@ describe('Search service test cases', function() {
         })
     });
 
-    it("should return activitieson search method call", function() {
+    it("should return activities on search method call", function() {
         var request = '{ "request": { "query": "", "filters":{ "contentType": ["Plugin"], "status": ["Live"], "category": [] }, "sort_by": { "lastUpdatedOn": "desc" }, "limit": 1 } }';
         spyOn(EkstepEditor.searchService, "search").and.callThrough();
         spyOn(EkstepEditor.searchService, "postFromService").and.callThrough();
-        EkstepEditor.searchService.search(request, function(err,res){
+        EkstepEditor.searchService.search(request, function(err, res) {
             expect(res).toBe(activities);
+            expect(EkstepEditor.searchService.postFromService).toHaveBeenCalled();
+            expect(EkstepEditor.searchService.postFromService.calls.count()).toBe(1);
+        })
+    });
+
+    it("should return error on search method call", function() {
+        EkstepEditor.searchService.http.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
+            cb("no data found", undefined);
+        })
+        var request = '{ "request": { "query": "", "filters":{ "contentType": ["Plugin"], "status": ["Live"], "category": [] }, "sort_by": { "lastUpdatedOn": "desc" }, "limit": 1 } }';
+        spyOn(EkstepEditor.searchService, "search").and.callThrough();
+        spyOn(EkstepEditor.searchService, "postFromService").and.callThrough();
+        EkstepEditor.searchService.search(request, function(err, res) {
+            expect(err).toBe("no data found");
             expect(EkstepEditor.searchService.postFromService).toHaveBeenCalled();
             expect(EkstepEditor.searchService.postFromService.calls.count()).toBe(1);
         })
