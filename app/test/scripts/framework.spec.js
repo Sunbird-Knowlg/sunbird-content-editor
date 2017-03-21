@@ -1,5 +1,7 @@
 describe(" framework integration", function() {
     beforeAll(function() {
+        EkstepEditor.pluginManager.cleanUp();
+        EkstepEditor.stageManager.cleanUp();
         var corePlugins = {
             "org.ekstep.stage": "1.0",
             "org.ekstep.copypaste": "1.0"

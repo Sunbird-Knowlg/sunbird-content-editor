@@ -47,7 +47,7 @@ describe("Ekstep editor test", function() {
     it('should get plugin repo', function(){
         spyOn(EkstepEditorAPI, "getPluginRepo").and.callThrough();
         var returnValue = EkstepEditorAPI.getPluginRepo();
-        expect(returnValue).toBe('/plugins');
+        expect(returnValue).toBe(EkstepEditor.config.pluginRepo);
         expect(EkstepEditorAPI.getPluginRepo).toHaveBeenCalled();
     });
 
