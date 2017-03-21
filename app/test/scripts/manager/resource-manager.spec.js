@@ -7,16 +7,16 @@ describe("Resource Manager test cases", function() {
         done();
     });
 
-    it("should discover Manifest from published repo", function() {
-        spyOn(EkstepEditor.publishedRepo, "discoverManifest").and.callThrough();
+    it("should discover Manifest from host repo", function() {
+        spyOn(EkstepEditor.hostRepo, "discoverManifest").and.callThrough();
         spyOn(EkstepEditor.resourceManager, "loadResource").and.callFake(function(url, dataType, callback, publishedTime) {
             if (url.indexOf("manifest.json")) {
                 callback(undefined, pluginManifest)
             }
         });
         EkstepEditor.resourceManager.discoverManifest("org.ekstep.config", "1.0", function(err, res) {}, new Date().toString());
-        expect(EkstepEditor.publishedRepo.discoverManifest).toHaveBeenCalled();
-        expect(EkstepEditor.publishedRepo.discoverManifest.calls.count()).toEqual(1);
+        expect(EkstepEditor.hostRepo.discoverManifest).toHaveBeenCalled();
+        expect(EkstepEditor.hostRepo.discoverManifest.calls.count()).toEqual(1);
     });
     it("should discover Manifest from all repos and throw error", function() {
         spyOn(EkstepEditor.publishedRepo, "discoverManifest").and.callThrough();
