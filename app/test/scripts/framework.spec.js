@@ -73,7 +73,7 @@ describe(" framework integration", function() {
         spyOn(EkstepEditor.pluginManager, "loadPlugin").and.callThrough();
         EkstepEditor.hostRepo.connected = false;
         EkstepEditor.hostRepo.init();
-        EkstepEditor.pluginManager.loadPlugin("org.ekstep.testexample","1.0");
+        EkstepEditor.pluginManager.loadPlugin("org.ekstep.testexample","1.0", new Date().toString());
         expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalled();
         expect(Object.keys(EkstepEditor.pluginManager.plugins).length).toEqual(7);
         EkstepEditor.hostRepo.connected = true;

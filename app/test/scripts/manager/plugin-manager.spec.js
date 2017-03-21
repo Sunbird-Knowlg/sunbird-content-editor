@@ -156,4 +156,20 @@ describe("Plugin Manager test cases", function() {
         EkstepEditor.pluginManager.removePluginInstance(lastPI);
         expect(Object.keys(EkstepEditor.pluginManager.pluginInstances).length).not.toEqual(PIlength);
     });
+
+    it("should not load plugin js file", function() {
+        var defectManifest = JSON.parse('{ "id": "org.ekstep.test2", "ver": "1.0", "shortId": "shape", "author": "Santhosh Vasabhaktula", "title": "Shape Plugin", "type": "widget", "description": "", "publishedDate": "", "editor": { "main": "plugin.js", "dependencies": [], "menu": [{ "id": "shape", "category": "main", "type": "icon", "toolTip": "Add Shapes", "title": "Shapes", "iconClass": "icon-shape icon", "submenu": [{ "id": "rectangle", "type": "icon", "toolTip": "Add Rectangle", "title": "Rectangle", "iconClass": "icon-rectangle icon", "onclick": { "id": "org.ekstep.test2:create", "data": { "type": "rect", "x": 10, "y": 20, "fill": "#FFFF00", "w": 14, "h": 25, "stroke": "rgba(255, 255, 255, 0)", "strokeWidth": 1, "opacity": 1 } } }] }], "behaviour": { "rotatable": true }, "configManifest": [{ "propertyName": "color", "title": "Fill Color", "description": "Choose a color from the color picker", "dataType": "colorpicker", "required": true, "defaultValue": "#000000" }], "help": { "src": "editor/help.md", "dataType": "text" }, "init-data": { "type": "rect", "x": 10, "y": 20, "fill": "#FFFF00", "w": 14, "h": 25 } } } ');
+        spyOn(EkstepEditor.pluginManager, "loadPluginByManifest").and.callThrough();
+        spyOn(console, "error").and.callThrough();
+        EkstepEditor.pluginManager.loadPluginByManifest(defectManifest, EkstepEditor.publishedRepo);
+        expect(console.error).toHaveBeenCalled();
+        expect(console.error.calls.count()).toEqual(1);
+        expect(console.error).toHaveBeenCalledWith('Unable to load plugin js', defectManifest.editor.main);        
+    });
+
+    xit('should not load plugin js file', function() {
+        spyOn(EkstepEditor.pluginManager, "loadPluginByManifest").and.callThrough();
+        spyOn(console, "error").and.callThrough();
+        EkstepEditor.pluginManager.loadPlugin("org.ekstep.defecttest","1.0");
+    });
 });
