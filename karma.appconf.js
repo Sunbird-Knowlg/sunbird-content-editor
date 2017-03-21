@@ -95,7 +95,7 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'app/scripts/**/!(migration|directive|controller|service)/*.js': ['coverage'],
+            'app/scripts/**/!(migration|directive|controller)/!(api-timestamp-service)*.js': ['coverage'],
             'plugins/org.ekstep.stage-1.0/**/*.js': ['coverage']
         },
 
