@@ -6,7 +6,7 @@ EkstepEditor.resourceManager = new(Class.extend({
     discoverManifest: function(pluginId, pluginVer, cb, publishedTime) {
         async.waterfall([
             function(callback) {
-                EkstepEditor.publishedRepo.discoverManifest(pluginId, pluginVer, callback, publishedTime); 
+                    EkstepEditor.hostRepo.discoverManifest(pluginId, pluginVer, callback, publishedTime); 
             },
             function(data, callback) {
                 if (_.isUndefined(data.manifest)) {
@@ -17,7 +17,7 @@ EkstepEditor.resourceManager = new(Class.extend({
             },
             function(data, callback) {
                 if (_.isUndefined(data.manifest)) {
-                    EkstepEditor.hostRepo.discoverManifest(pluginId, pluginVer, callback, publishedTime); 
+                    EkstepEditor.publishedRepo.discoverManifest(pluginId, pluginVer, callback, publishedTime); 
                 } else {
                     callback(null, data);
                 }
