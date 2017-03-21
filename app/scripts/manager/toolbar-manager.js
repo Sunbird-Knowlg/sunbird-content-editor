@@ -14,12 +14,8 @@ EkstepEditor.toolbarManager = new(Class.extend({
             this.menuItems.push(menu);
         }
         //TODO: should be moved if possible
-        EkstepEditor.jQuery(document).ready(function() {
-            setTimeout(function() {
-                EkstepEditor.jQuery(".ui.dropdown").dropdown();
-                EkstepEditor.jQuery(".popup-item").popup();
-            }, 500)
-        });
+        EkstepEditor.jQuery(".ui.dropdown").dropdown();
+        EkstepEditor.jQuery(".popup-item").popup();
     },
     registerContextMenu: function(menu) {
         if (!_.isObject(_.find(this.contextMenuItems, { id: menu.id }))) {

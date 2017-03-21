@@ -84,6 +84,7 @@ describe(" framework integration", function() {
         spyOn(EkstepEditor.toolbarManager, "registerMenu").and.callThrough();
         EkstepEditor.toolbarManager.registerMenu(manifest.editor.menu);
         expect(EkstepEditor.toolbarManager.registerMenu).toHaveBeenCalled();
+        expect(EkstepEditor.toolbarManager.menuItems.length).toEqual(3);
     });
 
     it("should register config menu", function() {
@@ -91,6 +92,7 @@ describe(" framework integration", function() {
         spyOn(EkstepEditor.toolbarManager, "registerConfigMenu").and.callThrough();
         EkstepEditor.toolbarManager.registerConfigMenu(manifest.editor.menu);
         expect(EkstepEditor.toolbarManager.registerConfigMenu).toHaveBeenCalled();
+        expect(EkstepEditor.toolbarManager.configMenuItems.length).toEqual(1);
     });
 
     it("should register context menu", function() {
@@ -98,6 +100,7 @@ describe(" framework integration", function() {
         spyOn(EkstepEditor.toolbarManager, "registerContextMenu").and.callThrough();
         EkstepEditor.toolbarManager.registerContextMenu(manifest.editor.menu);
         expect(EkstepEditor.toolbarManager.registerContextMenu).toHaveBeenCalled();
+        expect(EkstepEditor.toolbarManager.contextMenuItems.length).toEqual(3);                
     });
 
     it("should update context menu", function() {
@@ -105,7 +108,6 @@ describe(" framework integration", function() {
         spyOn(EkstepEditor.toolbarManager, "updateContextMenu").and.callThrough();
         EkstepEditor.toolbarManager.updateContextMenu(manifest.editor.menu);
         expect(EkstepEditor.toolbarManager.updateContextMenu).toHaveBeenCalled();
-        EkstepEditor.toolbarManager.resetContextMenu();
     });
 
     it("should reset context menu", function() {
