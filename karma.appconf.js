@@ -53,6 +53,16 @@ module.exports = function(config) {
             "app/scripts/repo/draft-repo.js",
             "app/scripts/repo/host-repo.js",
             "app/scripts/main/ekstep-editor-api.js",
+            "app/scripts/migration/1_migration-task.js",
+            "app/scripts/migration/mediamigration-task.js",
+            "app/scripts/migration/stageordermigration-task.js",
+            "app/scripts/migration/basestagemigration-task.js",
+            "app/scripts/migration/imagemigration-task.js",
+            "app/scripts/migration/scribblemigration-task.js",
+            "app/scripts/migration/readalongmigration-task.js",
+            "app/scripts/migration/assessmentmigration-task.js",
+            "app/scripts/migration/eventsmigration-task.js",
+            "app/scripts/migration/settagmigration-task.js",
             "app/scripts/dispatcher/idispatcher.js",
             "app/scripts/dispatcher/console-dispatcher.js",
             "app/scripts/dispatcher/local-dispatcher.js",
@@ -85,7 +95,7 @@ module.exports = function(config) {
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'app/scripts/**/*.js': ['coverage'],
+            'app/scripts/**/!(migration|directive|controller|service)/*.js': ['coverage'],
             'plugins/org.ekstep.stage-1.0/**/*.js': ['coverage']
         },
 
