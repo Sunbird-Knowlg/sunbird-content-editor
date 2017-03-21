@@ -101,7 +101,6 @@ EkstepEditor.pluginManager = new(Class.extend({
                         p.initPlugin();
                         EkstepEditorAPI.dispatchEvent('plugin:add', { plugin: pluginManifest.id, version: pluginManifest.ver, instanceId: p.id });
                         EkstepEditorAPI.dispatchEvent(pluginManifest.id + ':add');
-                        instance.dispatchTelemetry(pluginManifest, p, parent, d);
                     })
                 } else {
                     p = new pluginClass(pluginManifest, data, parent);

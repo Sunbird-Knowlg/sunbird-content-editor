@@ -2,9 +2,7 @@
  * @author Harish kumar Gangula<harishg@ilimi.in>
  */
 EkstepEditor.resourceManager = new(Class.extend({
-    init: function() {
-        this.repos = [EkstepEditor.hostRepo, EkstepEditor.draftRepo, EkstepEditor.publishedRepo];
-    },
+    init: function() {},
     discoverManifest: function(pluginId, pluginVer, cb, publishedTime) {
         async.waterfall([
             function(callback) {

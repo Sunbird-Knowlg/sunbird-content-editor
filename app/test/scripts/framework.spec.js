@@ -27,6 +27,11 @@ describe(" framework integration", function() {
         EkstepEditor.hostRepo.connected = true;
     });
 
+    afterAll(function() {
+        EkstepEditor.pluginManager.cleanUp();
+        EkstepEditor.stageManager.cleanUp();
+    });
+
     it("should register plugins with plugin manager", function(done) {
         spyOn(EkstepEditor.pluginManager, "loadPlugin").and.callThrough();
         spyOn(EkstepEditor.resourceManager, "discoverManifest").and.callThrough();
