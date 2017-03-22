@@ -56,6 +56,7 @@ var scriptfiles = [
     "app/scripts/manager/toolbar-manager.js",
     "app/scripts/manager/media-manager.js",
     "app/scripts/manager/resource-manager.js",
+    "app/scripts/manager/keyboard-manager.js",
     "app/scripts/repo/irepo.js",
     "app/scripts/repo/published-repo.js",
     "app/scripts/repo/draft-repo.js",

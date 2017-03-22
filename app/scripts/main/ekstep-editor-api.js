@@ -555,7 +555,28 @@ window.EkstepEditorAPI = {
     loadAndInitPlugin: function(pluginId, pluginVersion, publishedTime) {
         EkstepEditor.pluginManager.loadAndInitPlugin(pluginId, pluginVersion, publishedTime);
     },
+
+    /**
+     * API to Resolve plugin resource URL. This API would resolve to the repo the plugin is loaded from.
+     * 
+     * @param  {String} pluginId      Plugin ID
+     * @param  {String} pluginVersion Plugin Version
+     * @param  {String} resource resource relative URL
+     * @return {String}          Resolved URL
+     * @memberof EkstepEditorAPI
+     */
     resolvePluginResource: function (id, ver, resource) {
          return EkstepEditor.pluginManager.resolvePluginResource(id, ver, resource);
+    },
+
+    /**
+     * API to register for a keyboard command
+     * 
+     * @param  {String}   command  Key combination. For ex: ctrl+s, ctrl+c etc
+     * @param  {Function} callback Callback to invoke when the key is pressed
+     * @memberof EkstepEditorAPI
+     */
+    registerKeyboardCommand: function(command, callback) {
+        EkstepEditor.keyboardManager.registerKeyCombination(command, callback);
     }
 }

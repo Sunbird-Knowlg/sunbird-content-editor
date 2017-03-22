@@ -35,10 +35,11 @@ window.ManagerConstants = {
     TOOLBAR_MANAGER: "toolbar"
 }
 
-EkstepEditor.init = function(context, config, scope, callback) {
+EkstepEditor.init = function(context, config, $scope, $document, callback) {
     EkstepEditorAPI.globalContext = context; // TODO: Deprecate after the April release
     EkstepEditor.globalContext = context;
-    EkstepEditor.toolbarManager.setScope(scope);
+    EkstepEditor.toolbarManager.setScope($scope);
+    EkstepEditor.keyboardManager.initialize($document);
     EkstepEditor._mergeConfig(config);
     EkstepEditor._loadDefaultPlugins(context, callback);
 }
