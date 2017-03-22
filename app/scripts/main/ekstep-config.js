@@ -20,5 +20,7 @@ EkstepEditor.config = {
     plugins: {
         "org.ekstep.developer":"1.0",
     },
-    dispatcher: "local"
+    corePluginsPackaged: true,
+    dispatcher: "local",
+    useProxyForURL: true
 }

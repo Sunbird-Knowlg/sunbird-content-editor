@@ -7,16 +7,118 @@
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
 window.EkstepEditorAPI = {
+    /**
+     * Handle for JQuery. All plugins should use this instead of using '$' directly
+     * 
+     * @member {Object} jQuery
+     * @memberof EkstepEditorAPI
+     */
     jQuery: EkstepEditor.jQuery,
+
+    /**
+     * Handle for Lodash Library. All plugins should use this instead of using '_' directly
+     * 
+     * @member {Object} _
+     * @memberof EkstepEditorAPI
+     */
     _: EkstepEditor._,
-    globalContext: {
-        contentId: undefined,
-        useProxyForURL: true
+
+    /**
+     * @deprecated since current version. This will be removed after April Release
+     * Object to hold global context
+     * 
+     * @member {Object} _
+     * @memberof EkstepEditorAPI
+     */
+    globalContext: undefined, // TODO: Deprecate the variable
+
+    /**
+     * @deprecated since current version. This will be removed after April Release
+     * Object to hold Base URL
+     * 
+     * @member {String} baseURL
+     * @memberof EkstepEditorAPI
+     */
+    baseURL: EkstepEditor.config.baseURL,
+
+    /**
+     * @deprecated since current version. This will be removed after April Release
+     * Object to hold absolute URL
+     * 
+     * @member {String} absURL
+     * @memberof EkstepEditorAPI
+     */
+    absURL: undefined,
+
+    /**
+     * @deprecated since current version. This will be removed after April Release
+     * Object to hold API slug for API reverse proxy
+     * 
+     * @member {String} apislug
+     * @memberof EkstepEditorAPI
+     */
+    apislug: EkstepEditor.config.apislug,
+
+    /**
+     * Add an object to the context
+     * 
+     * @param {String} key   Key
+     * @param {Object} value Value
+     * @memberof EkstepEditorAPI
+     */
+    setContext: function(key, value) {
+        EkstepEditor.globalContext[key] = value;
     },
 
-    baseURL: EkstepEditor.config.baseURL,
-    absURL: undefined,
-    apislug: EkstepEditor.config.apislug,
+    /**
+     * Get the context variable
+     * 
+     * @param  {String} key Key
+     * @return {object}     Value
+     * @memberof EkstepEditorAPI
+     */
+    getContext: function(key) {
+        return EkstepEditor.globalContext[key];
+    },
+
+    /**
+     * Get all context attributes
+     * @return {map} Map of key values
+     */
+    getAllContext: function() {
+        return EkstepEditor.globalContext;
+    },
+
+    /**
+     * Add or update a configuration property
+     * 
+     * @param {String} key   Key
+     * @param {Object} value Value
+     * @memberof EkstepEditorAPI
+     */
+    setConfig: function(key, value) {
+        EkstepEditor.config[key] = value;
+    },
+
+    /**
+     * Get the config variable
+     * 
+     * @param  {String} key Key
+     * @return {object}     Value
+     * @memberof EkstepEditorAPI
+     */
+    getConfig: function(key) {
+        return EkstepEditor.config[key];
+    },
+
+    /**
+     * Get all config attributes
+     * @return {map} Map of key values
+     */
+    getAllConfig: function() {
+        return EkstepEditorAPI.config;
+    },
+
     /**
      * Register an event listener callback function for the events raised by the framework.
      * @param type {string} name of the event (e.g. org.ekstep.quickstart:configure)
@@ -48,7 +150,7 @@ window.EkstepEditorAPI = {
      * @memberof EkstepEditorAPI
      */
     removeEventListener: function(type, callback, scope) {
-        EkstepEditor.eventManager.removeEventListener(type, callback, scope); 
+        EkstepEditor.eventManager.removeEventListener(type, callback, scope);
     },
 
     /**
@@ -80,28 +182,28 @@ window.EkstepEditorAPI = {
      */
     getService: function(serviceId) {
         switch (serviceId) {
-            case 'popup':
+            case ServiceConstants.POPUP_SERVICE:
                 return EkstepEditor.popupService;
                 break;
-            case 'content':
+            case ServiceConstants.CONTENT_SERVICE:
                 return EkstepEditor.contentService;
                 break;
-            case 'assessment':
+            case ServiceConstants.ASSESSMENT_SERVICE:
                 return EkstepEditor.assessmentService;
                 break;
-            case 'language':
+            case ServiceConstants.LANGUAGE_SERVICE:
                 return EkstepEditor.languageService;
                 break;
-            case 'search':
+            case ServiceConstants.SEARCH_SERVICE:
                 return EkstepEditor.searchService;
                 break;
-            case 'meta':
+            case ServiceConstants.META_SERVICE:
                 return EkstepEditor.metaService;
                 break;
-            case 'asset':
+            case ServiceConstants.ASSET_SERVICE:
                 return EkstepEditor.assetService;
                 break;
-            case 'telemetry':
+            case ServiceConstants.TELEMETRY_SERVICE:
                 return EkstepEditor.telemetryService;
                 break;
         }
@@ -325,50 +427,64 @@ window.EkstepEditorAPI = {
      * Selector for plugins of a given type in the document. This can be used by plugins to discover other
      * instances of the same plugin, or other plugins that are compatible with this plugin. E.g. a wordnet
      * plugin might use this to discover all other text plugins in the content.
-     * @param id {string} ID of the plugin to look for
-     * @param types {array} Include or exclude specified plugins
-     * @param includeFlag {boolean} Whether to include or exclude the types
+     * 
+     * @param  {String} stage        Stage ID
+     * @param  {Array} includeTypes Include plugins
+     * @param  {Array} excludeTypes Exclude plugins
+     * @param  {Array} excludeIds   Exclude specific plugin instances
+     * @return {Array}              Array of plugin instances matching the given criteria
      * @memberof EkstepEditorAPI
      */
     getStagePluginInstances: function(stage, includeTypes, excludeTypes, excludeIds) {
         // TODO: Add logic to check if stage exists
         var instances = _.clone(EkstepEditorAPI.getStage(stage).children);
-        if(includeTypes) {
+        if (includeTypes) {
             instances = _.filter(instances, function(obj) {
                 return includeTypes.indexOf(obj.manifest.id) != -1;
             });
         }
-        if(excludeTypes) {
+        if (excludeTypes) {
             instances = _.filter(instances, function(obj) {
                 return excludeTypes.indexOf(obj.manifest.id) == -1;
             });
         }
-        if(excludeIds) {
+        if (excludeIds) {
             instances = _.filter(instances, function(obj) {
                 return excludeIds.indexOf(obj.id) == -1;
             });
         }
         return instances;
     },
+
+    /**
+     * Get matching plugin instances. This function returns instances across all stages matching the given criteria
+     * 
+     * @param  {Array} includeTypes Include plugins
+     * @param  {Array} excludeTypes Exclude plugins
+     * @param  {Array} excludeIds   Exclude specific plugin instances
+     * @return {Array}              Array of plugin instances matching the given criteria
+     * @memberof EkstepEditorAPI
+     */
     getPluginInstances: function(includeTypes, excludeTypes, excludeIds) {
         var instances = _.clone(EkstepEditor.pluginManager.pluginInstances);
-        if(includeTypes) {
+        if (includeTypes) {
             instances = _.filter(instances, function(obj) {
                 return includeTypes.indexOf(obj.manifest.id) != -1;
             });
         }
-        if(excludeTypes) {
+        if (excludeTypes) {
             instances = _.filter(instances, function(obj) {
                 return excludeTypes.indexOf(obj.manifest.id) == -1;
             });
         }
-        if(excludeIds) {
+        if (excludeIds) {
             instances = _.filter(instances, function(obj) {
                 return excludeIds.indexOf(obj.id) == -1;
             });
         }
         return instances;
     },
+
     /**
      * Allows plugins to load a media object that they may depend upon.
      * @param assetId {string} ID of the media asset to load
@@ -377,12 +493,45 @@ window.EkstepEditorAPI = {
     getMedia: function(assetId) {
         return EkstepEditor.mediaManager.getMedia(assetId);
     },
-    loadPlugin: function (pluginId, pluginVersion) {
-      EkstepEditor.pluginManager.loadPlugin(pluginId, pluginVersion);
+
+    /**
+     * Get the media asset's reverse proxy URL
+     * @param  {String} url Fully qualified URL
+     * @return {String}     Reverse proxied URL
+     * @memberof EkstepEditorAPI
+     */
+    getMediaReverseProxyURL: function(url) {
+        return EkstepEditor.mediaManager.getMediaOriginURL(url);
     },
-    getPluginRepo: function () {
-      return EkstepEditor.config.pluginRepo;
+
+    /**
+     * API to load a plugin dynamically. Any plugin to be loaded should be ideally declared as dependency in the manifest.
+     * 
+     * @param  {String} pluginId      Plugin ID
+     * @param  {String} pluginVersion Plugin Version
+     * @memberof EkstepEditorAPI
+     */
+    loadPlugin: function(pluginId, pluginVersion) {
+        EkstepEditor.pluginManager.loadPlugin(pluginId, pluginVersion);
     },
+
+    /**
+     * @deprecated
+     * Method to get plugin rep
+     * 
+     * @return {String} Repo location of published plugins
+     * @memberof EkstepEditorAPI
+     */
+    getPluginRepo: function() {
+        return EkstepEditor.config.pluginRepo;
+    },
+
+    /**
+     * Utility API to update the plugin dimenstions once any action like - move, resize etc are performed
+     * 
+     * @param  {Object} inst Plugin Instance
+     * @memberof EkstepEditorAPI
+     */
     updatePluginDimensions: function(inst) {
         inst.attributes.x = inst.editorObj.getLeft();
         inst.attributes.y = inst.editorObj.getTop();
@@ -393,9 +542,18 @@ window.EkstepEditorAPI = {
             inst.attributes.r = inst.editorObj.getRx();
     },
     ngSafeApply: function(scope, fn) {
-        if(scope) scope.$safeApply(fn);
+        if (scope) scope.$safeApply(fn);
     },
-    loadAndInitPlugin: function (pluginId, pluginVersion, publishedTime) {
-      EkstepEditor.pluginManager.loadAndInitPlugin(pluginId+"-"+pluginVersion, publishedTime);
+
+    /**
+     * API to load and initialize a plugin to the current stage
+     * 
+     * @param  {String} pluginId      Plugin ID
+     * @param  {String} pluginVersion Plugin Version
+     * @param  {Long} publishedTime   Plugin published timestamp (for cache busting)
+     * @memberof EkstepEditorAPI
+     */
+    loadAndInitPlugin: function(pluginId, pluginVersion, publishedTime) {
+        EkstepEditor.pluginManager.loadAndInitPlugin(pluginId + "-" + pluginVersion, publishedTime);
     }
 }
