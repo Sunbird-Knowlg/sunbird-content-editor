@@ -397,5 +397,8 @@ window.EkstepEditorAPI = {
     },
     loadAndInitPlugin: function (pluginId, pluginVersion, publishedTime) {
       EkstepEditor.pluginManager.loadAndInitPlugin(pluginId+"-"+pluginVersion, publishedTime);
+    },
+    resolvePluginResource: function (id, ver, resource) {
+         return EkstepEditor.pluginManager.resolvePluginResource(id, ver, resource);
     }
 }
