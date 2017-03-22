@@ -18,7 +18,7 @@ describe('telemetry service', function() {
         service.initialize({
             uid: uid,
             sid: "",
-            content_id: EkstepEditorAPI.globalContext.contentId
+            content_id: EkstepEditorAPI.getContext('contentId')
         }, dispatcher);
 
         expect(service.initialized).toBe(true);
@@ -54,7 +54,7 @@ describe('telemetry service', function() {
         expect(empty_event.ver).toBe("1.0");
         expect(empty_event.pdata).toEqual({ "id": "ATTool", "pid": "ContentEditor", "ver": "2.0" });
         expect(empty_event.cdata).toEqual([]);
-        expect(empty_event.context).toEqual({ "sid": "", "content_id": EkstepEditorAPI.globalContext.contentId });
+        expect(empty_event.context).toEqual({ "sid": "", "content_id": EkstepEditorAPI.getContext('contentId') });
         expect(empty_event.rid).toBe("");
         expect(empty_event.edata).toEqual({ "eks": {} });
         expect(empty_event.tags).toEqual([]);

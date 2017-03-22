@@ -11,6 +11,9 @@ describe("plugin framework integration test: ", function() {
 
     beforeAll(function() {
         cleanUp();
+
+        //EkstepEditor.init();
+        EkstepEditor.globalContext = {};
         corePlugins = {
             "org.ekstep.stage": "1.0",
             "org.ekstep.shape": "1.0",
@@ -40,7 +43,7 @@ describe("plugin framework integration test: ", function() {
             }
         };
 
-        EkstepEditorAPI.globalContext.useProxyForURL = false;
+        EkstepEditor.config.useProxyForURL = false;
 
         //load core plugins from s3
         EkstepEditor.publishedRepo.basePath = "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins";
@@ -324,7 +327,7 @@ describe("plugin framework integration test: ", function() {
                 return pluginsCount[plugin];
             };
 
-            EkstepEditorAPI.globalContext.contentId = "do_112206722833612800186";
+            EkstepEditorAPI.setContext('contentId', "do_112206722833612800186");
 
             spyOn(EkstepEditorAPI, 'getAngularScope').and.returnValue({ toggleGenieControl: function() {}, enableSave: function() {}, appLoadMessage: [], $safeApply: function() {} });
             spyOn(EkstepEditor.stageManager, 'showLoadScreenMessage').and.returnValue(true);
@@ -335,8 +338,8 @@ describe("plugin framework integration test: ", function() {
             spyOn(EkstepEditor.stageManager, 'registerEvents').and.callThrough();
             spyOn(EkstepEditor.telemetryService, 'start').and.callThrough();
 
-            EkstepEditor.contentService.getContent(EkstepEditorAPI.globalContext.contentId, function(err, content) {
-                if (err) console.log('Failed to get content! content ID:', EkstepEditorAPI.globalContext.contentId);
+            EkstepEditor.contentService.getContent(EkstepEditorAPI.getContext('contentId'), function(err, content) {
+                if (err) console.log('Failed to get content! content ID:', EkstepEditorAPI.getContext('contentId'));
                 if (content) {
                     try {
                         contentECML = JSON.parse(content.body);
@@ -354,7 +357,7 @@ describe("plugin framework integration test: ", function() {
                 EkstepEditor.telemetryService.initialize({
                     uid: "346",
                     sid: "",
-                    content_id: EkstepEditorAPI.globalContext.contentId
+                    content_id: EkstepEditorAPI.getContext('contentId')
                 }, "console");
             })();
         });

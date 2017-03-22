@@ -114,7 +114,7 @@ EkstepEditor.basePlugin = Class.extend({
      * @memberof EkstepEditor.BasePlugin
      */
     relativeURL: function(src) {
-        return EkstepEditor.relativeURL(this.manifest.id, this.manifest.ver, src);
+        return EkstepEditorAPI.resolvePluginResource(this.manifest.id, this.manifest.ver, src);
     },
 
     /**

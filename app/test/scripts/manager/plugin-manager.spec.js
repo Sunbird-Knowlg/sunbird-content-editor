@@ -28,7 +28,7 @@ describe("Plugin Manager test cases", function() {
         spyOn(EkstepEditor.pluginManager, "invoke").and.callThrough();
         spyOn(EkstepEditor.pluginManager, "getPluginManifest").and.callThrough();
 
-        var returnValue = EkstepEditor.pluginManager.loadAndInitPlugin("org.ekstep.test2-1.0");
+        var returnValue = EkstepEditor.pluginManager.loadAndInitPlugin("org.ekstep.test2", "1.0");
         expect(returnValue).toBe(0);
         expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalled();
         expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalledWith("org.ekstep.test2", "1.0", undefined);
@@ -45,7 +45,7 @@ describe("Plugin Manager test cases", function() {
         spyOn(EkstepEditor.pluginManager, "isDefined").and.callThrough();
         spyOn(EkstepEditor.pluginManager, "invoke").and.callThrough();
         spyOn(EkstepEditor.pluginManager, "getPluginManifest").and.callThrough();
-        var returnValue = EkstepEditor.pluginManager.loadAndInitPlugin("org.ekstep.jsdklghfksjd-1.0");
+        var returnValue = EkstepEditor.pluginManager.loadAndInitPlugin("org.ekstep.jsdklghfksjd","1.0");
         expect(returnValue).toBe(1);
         expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalled();
         expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalledWith("org.ekstep.jsdklghfksjd", "1.0", undefined);

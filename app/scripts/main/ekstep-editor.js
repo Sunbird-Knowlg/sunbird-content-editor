@@ -15,10 +15,6 @@ ekstep_editor.prototype._ = window._;
 var editor = new ekstep_editor();
 window.EkstepEditor = editor;
 
-EkstepEditor.relativeURL = function(pluginId, pluginVer, src) {
-    return EkstepEditor.config.pluginRepo + '/' + pluginId + '-' + pluginVer + '/' + src;
-}
-
 window.ServiceConstants = {
     SEARCH_SERVICE: "search",
     POPUP_SERVICE: "popup",
@@ -47,7 +43,8 @@ EkstepEditor.init = function(context, config, scope, callback) {
     EkstepEditor._loadDefaultPlugins(context, callback);
 }
 
-EkstepEditor._mergeConfig = function(config = {}) {
+EkstepEditor._mergeConfig = function(config) {
+    config = config || {};
     EkstepEditor.config = Object.assign(config, EkstepEditor.config);
 }
 
