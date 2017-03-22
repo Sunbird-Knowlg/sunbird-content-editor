@@ -18,7 +18,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     context: {},
     dispatchers: [],
     initialized: true,
-    startEvent: undefined,
+    start_event: undefined,
     startEventData: undefined,
     /**
     * 
@@ -70,7 +70,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
         var instance = this;
         return {
             getData: function() {
-                return this.startEventData;
+                return instance.startEventData;
             },
             append: function(param, dataObj) {
                 _.forIn(dataObj, function(value, key) {
@@ -209,7 +209,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     */
     end: function() {
         var endEvent = this.getEvent('CE_END', {});
-        endEvent.edata.eks.duration = (new Date()).getTime() - this.startEvent.ets;
+        endEvent.edata.eks.duration = (new Date()).getTime() - this.start_event.ets;
         this._dispatch(endEvent);
     },
     /**
@@ -246,8 +246,8 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     */
     start: function() {
         this.startEventData.client = this.detectClient();
-        this.startEvent = this.getEvent('CE_START', this.startEventData);
-        this._dispatch(this.startEvent);
+        this.start_event = this.getEvent('CE_START', this.startEventData);
+        this._dispatch(this.start_event);
     },
     /**
     *

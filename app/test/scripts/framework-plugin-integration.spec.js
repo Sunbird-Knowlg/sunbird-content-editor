@@ -6,12 +6,16 @@ describe("plugin framework integration test: ", function() {
     cleanUp = function() {
         EkstepEditor.pluginManager.cleanUp();
         EkstepEditor.stageManager.cleanUp();
+        EkstepEditor.toolbarManager.cleanUp();
     }
 
     beforeAll(function() {
         cleanUp();
         corePlugins = {
-            "org.ekstep.stage": "1.0"
+            "org.ekstep.stage": "1.0",
+            "org.ekstep.shape": "1.0",
+            "org.ekstep.image": "1.0",
+            "org.ekstep.audio": "1.0"
         };
 
         // test plugins
@@ -27,7 +31,7 @@ describe("plugin framework integration test: ", function() {
             corePluginMapping: {
                 "text": "org.ekstep.text",
                 "image": "org.ekstep.image",
-                "shape": "org.ekstep.test1", // shape test plugin
+                "shape": "org.ekstep.shape",
                 "stage": "org.ekstep.stage",
                 "hotspot": "org.ekstep.hotspot",
                 "scribble": "org.ekstep.scribblepad",
@@ -35,6 +39,8 @@ describe("plugin framework integration test: ", function() {
                 "audio": "org.ekstep.audio"
             }
         };
+
+        EkstepEditorAPI.globalContext.useProxyForURL = false;
 
         //load core plugins from s3
         EkstepEditor.publishedRepo.basePath = "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins";
@@ -86,7 +92,6 @@ describe("plugin framework integration test: ", function() {
                 "rotate": ""
             };
             stageInstance = EkstepEditorAPI.instantiatePlugin(stagePlugin, stageECML);
-            spyOn(EkstepEditorAPI, 'dispatchEvent').and.callThrough();
         });
 
         it('instance properties should be defined', function() {
@@ -113,23 +118,46 @@ describe("plugin framework integration test: ", function() {
             expect(stageInstance.duplicate).toEqual({ id: 'stage:duplicate', data: { stageId: stageInstance.id } });
         });
 
-        xit('on "stage:select" event, it should call stage manager selectStage method', function() {
-            spyOn(EkstepEditor.stageManager, 'selectStage').and.callThrough();
+        it('on "stage:select" event, it should call stage manager selectStage method', function() {
+            spyOn(EkstepEditorAPI, 'dispatchEvent').and.callThrough();
             EkstepEditorAPI.dispatchEvent("stage:select", { stageId: stageInstance.id });
-            expect(EkstepEditor.stageManager.selectStage).toHaveBeenCalled();
-        });
-
-        xit('on "stage:duplicate" event, it should call stage manager duplicateStage method', function() {
-            spyOn(EkstepEditor.stageManager, 'duplicateStage');
-            EkstepEditorAPI.dispatchEvent("stage:duplicate", { stageId: stageInstance.id });
-            expect(EkstepEditor.stageManager.duplicateStage).toHaveBeenCalled();
+            expect(EkstepEditor.stageManager.currentStage.id).toBe(stageInstance.id);
+            expect(EkstepEditor.stageManager.currentStage.isSelected).toBe(true);
+            expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith('config:showSettingsTab', { id: EkstepEditor.stageManager.currentStage.id });
         });
 
         it('should dispatch "stage:add" event on Stage add', function() {
-            spyOn(EkstepEditor.stageManager, 'selectStage');
+            spyOn(EkstepEditorAPI, 'dispatchEvent').and.callThrough();
             var newStageInstance = EkstepEditorAPI.instantiatePlugin(stagePlugin, stageECML);
             expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith("stage:add", { stageId: newStageInstance.id, prevStageId: stageInstance.id });
-            expect(EkstepEditor.stageManager.selectStage).toHaveBeenCalled();
+        });
+
+        it('on "stage:duplicate" event, it should call stage manager duplicateStage method', function() {
+            spyOn(EkstepEditor.stageManager, 'getStageIndex').and.returnValue(0);
+            spyOn(EkstepEditorAPI, 'dispatchEvent').and.callThrough();
+            EkstepEditorAPI.dispatchEvent("stage:duplicate", { stageId: stageInstance.id });
+            expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith('stage:create', jasmine.objectContaining({ "position": "afterCurrent" }));
+            expect(EkstepEditor.stageManager.currentStage.isSelected).toBe(true);
+            expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith('config:showSettingsTab', { id: EkstepEditor.stageManager.currentStage.id });
+        });
+
+        it('on stage delete, it should dispatch event: "stage:removed"', function() {
+            spyOn(EkstepEditorAPI, 'dispatchEvent').and.callThrough();
+            spyOn(EkstepEditor.stageManager, 'getStageIndex').and.returnValue(0);
+            var noOfstages = EkstepEditorAPI.getAllStages().length;
+            EkstepEditor.stageManager.deleteStage({}, { stageId: stageInstance.id });
+            expect(EkstepEditor.stageManager.stages.length).toBe(noOfstages - 1);
+            expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith('stage:removed', { stageId: stageInstance.id });
+        });
+
+        it('on stage drag/drop it should dispacth event: "stage:reorder"', function() {
+            spyOn(EkstepEditorAPI, 'dispatchEvent').and.callThrough();
+            var firstStage = EkstepEditorAPI.getAllStages()[0];
+            var secondStage = EkstepEditorAPI.getAllStages()[1];
+            EkstepEditor.stageManager.onStageDragDrop(secondStage.id, firstStage.id);
+            expect(EkstepEditorAPI.getAllStages()[0].id).toBe(secondStage.id);
+            expect(EkstepEditorAPI.getAllStages()[1].id).toBe(firstStage.id);
+            expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith('stage:reorder', { stageId: secondStage.id, fromIndex: 1, toIndex: 0 });
         });
     });
 
@@ -264,6 +292,7 @@ describe("plugin framework integration test: ", function() {
 
             newInstance.remove();
 
+            expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith('stage:modified', { id: newInstance.id });
             expect(EkstepEditor.pluginManager.getPluginInstance(newInstance.id)).toBeUndefined();
         });
     });
@@ -272,20 +301,26 @@ describe("plugin framework integration test: ", function() {
         var contentECML, getPluginCount;
 
         beforeAll(function(done) {
-            console.log('-------STAGE MANAGER FROM ECML TEST STARTS----- ');
+            console.log('-------STAGE MANAGER ECML TEST STARTS----- ');
             EkstepEditor.pluginManager.pluginInstances = {};
             EkstepEditor.stageManager.stages = [];
 
-            //should be updated if the content is modified on dev!
-            getPluginCount = function(plugin) {                
-                var pluginsCount;                
-                pluginsCount = {
-                    "shape": 1,
-                    "media": 0,
-                    "total": undefined,
-                    "stage": 1
+            getPluginCount = function(plugin) {
+                var pluginsCount;
+                pluginsCount = { //update the count based on the content
+                    "shape": 3,
+                    "media": 2,
+                    "total": 0,
+                    "stage": 3,
+                    "image": 1,
+                    "audio": 1,
+                    "text": 0
                 };
-                pluginsCount.total = pluginsCount.shape + pluginsCount.stage;
+
+                _.forIn(_.omit(pluginsCount, ['total', 'media']), function(value, key) {
+                    pluginsCount.total += value;
+                });
+
                 return pluginsCount[plugin];
             };
 
@@ -297,6 +332,8 @@ describe("plugin framework integration test: ", function() {
             spyOn(EkstepEditorAPI, 'instantiatePlugin').and.callThrough();
             spyOn(EkstepEditor.stageManager, 'onContentLoad').and.callThrough();
             spyOn(EkstepEditor.eventManager, 'dispatchEvent');
+            spyOn(EkstepEditor.stageManager, 'registerEvents').and.callThrough();
+            spyOn(EkstepEditor.telemetryService, 'start').and.callThrough();
 
             EkstepEditor.contentService.getContent(EkstepEditorAPI.globalContext.contentId, function(err, content) {
                 if (err) console.log('Failed to get content! content ID:', EkstepEditorAPI.globalContext.contentId);
@@ -307,7 +344,9 @@ describe("plugin framework integration test: ", function() {
                     } catch (e) {
                         console.log('error when loading ECML:', e);
                     }
-                    done();
+                    setTimeout(function() { // let stage load all its plugins to render on stage
+                        done();
+                    }, 2000);
                 }
             });
 
@@ -316,13 +355,13 @@ describe("plugin framework integration test: ", function() {
                     uid: "346",
                     sid: "",
                     content_id: EkstepEditorAPI.globalContext.contentId
-                });
+                }, "console");
             })();
         });
 
         afterAll(function() {
             EkstepEditor.stageManager.canvas.clear();
-            console.log('-------STAGE MANAGER FROM ECML TEST ENDS----- ');
+            console.log('-------STAGE MANAGER ECML TEST ENDS----- ');
         });
 
         it('should call instantiate stage and plugin', function() {
@@ -330,37 +369,61 @@ describe("plugin framework integration test: ", function() {
             expect(EkstepEditorAPI.instantiatePlugin.calls.count()).toEqual(getPluginCount('total'));
         });
 
+        it('should dispatch telemetry "CE_START" event', function() {
+            expect(EkstepEditor.telemetryService.start).toHaveBeenCalled();
+            expect(EkstepEditor.telemetryService.start.calls.count()).toBe(1);
+        });
+
         it('stage manager should have stage defined', function() {
-           expect(EkstepEditor.stageManager.stages.length).toBe(getPluginCount('stage')); 
+            expect(EkstepEditor.stageManager.stages.length).toBe(getPluginCount('stage'));
         });
 
         it('plugin manager should have plugin instances', function() {
-           expect(Object.keys(EkstepEditor.pluginManager.pluginInstances).length).toBe(getPluginCount('total')); 
+            expect(Object.keys(EkstepEditor.pluginManager.pluginInstances).length).toBe(getPluginCount('total'));
         });
 
-        it('should call onContentLoad method', function() {
-           expect(EkstepEditor.stageManager.onContentLoad).toHaveBeenCalled(); 
+        it('should call stage manager onContentLoad method', function() {
+            expect(EkstepEditor.stageManager.onContentLoad).toHaveBeenCalled();
+        });
+
+        it('should register stage manager events', function() {
+            expect(EkstepEditor.stageManager.registerEvents).toHaveBeenCalled();
         });
 
         it('after content load: should enable the event bus', function() {
             expect(EkstepEditor.eventManager.enableEvents).toBe(true);
         });
 
-        it('after content load: should fire "content:load:complete" event', function(){
+        it('after content load: should fire "content:load:complete" event', function() {
             expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith("content:load:complete");
         });
 
         it('after content load: should fire select stage event', function() {
-           expect(EkstepEditor.eventManager.dispatchEvent).toHaveBeenCalledWith('stage:select', { stageId: EkstepEditor.stageManager.stages[0].id }); 
+            expect(EkstepEditor.eventManager.dispatchEvent).toHaveBeenCalledWith('stage:select', { stageId: EkstepEditor.stageManager.stages[0].id });
         });
 
         it('should give back the ECML', function() {
-           var ecml = EkstepEditor.stageManager.toECML();  
-           expect(ecml.theme.version).toBe("1.0");   
-           expect(ecml.theme.startStage).toBeDefined();
-           expect(ecml.theme.stage.length).toBe(getPluginCount('stage'));
-           expect(ecml.theme.manifest.media.length).toBe(getPluginCount('media')); 
-           //TODO: test each plugin inside the stage          
+            var getEcmlPluginCount, ecml = EkstepEditor.stageManager.toECML();
+
+            getEcmlPluginCount = function(plugin) {
+                var count = 0;
+                _.forEach(ecml.theme.stage, function(stage) {
+                    if (stage[plugin] && stage[plugin].length) count += stage[plugin].length;
+                });
+                return count;
+            };
+
+            expect(ecml.theme.version).toBe("1.0");
+            expect(ecml.theme.startStage).toBeDefined();
+            expect(ecml.theme.stage.length).toBe(getPluginCount('stage'));
+            expect(ecml.theme.manifest.media.length).toBe(getPluginCount('media'));
+            expect(getEcmlPluginCount('shape')).toBe(getPluginCount('shape'));
+            expect(getEcmlPluginCount('image')).toBe(getPluginCount('image'));
+            expect(getEcmlPluginCount('audio')).toBe(getPluginCount('audio'));
+        });
+
+        it('should generate stageIcons when toECML', function() {
+            expect(Object.keys(EkstepEditor.stageManager.getStageIcons()).length).toBe(getPluginCount('stage'));
         });
     });
 });

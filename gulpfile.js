@@ -107,7 +107,6 @@ gulp.task('setup', function() {
 gulp.task('minifyJS', function() {
     return gulp.src(scriptfiles)
         .pipe(concat('script.min.js'))
-        .pipe(cachebust.resources())
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
@@ -131,21 +130,18 @@ gulp.task('minifyCSS', function() {
                 return m && m.join('\n') + '\n' || '';
             }
         }))
-        .pipe(cachebust.resources())
         .pipe(gulp.dest('content-editor/styles'));
 });
 
 gulp.task('minifyJsBower', function() {
     return gulp.src(bower_components)
         .pipe(concat('external.min.js'))
-        .pipe(cachebust.resources())
         .pipe(gulp.dest('content-editor/scripts/'));
 });
 
 gulp.task('minifyCssBower', function() {
     return gulp.src(bower_css)
         .pipe(concat('external.min.css'))
-        .pipe(cachebust.resources())
         .pipe(gulp.dest('content-editor/styles'));
 });
 
@@ -163,7 +159,14 @@ gulp.task('copyFiles', function() {
         .pipe(gulp.dest('content-editor'));
 });
 
-gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyFiles']);
+gulp.task('copydeploydependencies', function() {
+    return gulp.src(['deploy/gulpfile.js', 'deploy/package.json'], {
+            base: ''
+        })
+        .pipe(gulp.dest('content-editor'));
+});
+
+gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyFiles', 'copydeploydependencies']);
 
 gulp.task('inject', ['minify'], function() {
     var target = gulp.src('content-editor/index.html');

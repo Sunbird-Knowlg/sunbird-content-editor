@@ -56,5 +56,10 @@ EkstepEditor.toolbarManager = new(Class.extend({
                 EkstepEditor.eventManager.dispatchEvent(menuId + ':' + key, props.data);
             }
         });
+    },
+    cleanUp: function() {
+        this.menuItems = [];
+        this.contextMenus = [];
+        this.configMenuItems = [];
     }
 }));
