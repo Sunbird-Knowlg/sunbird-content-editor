@@ -159,14 +159,14 @@ gulp.task('copyFiles', function() {
         .pipe(gulp.dest('content-editor'));
 });
 
-gulp.task('copyGulp', function() {
-    return gulp.src(['gulpfile.js'], {
+gulp.task('copydeploydependencies', function() {
+    return gulp.src(['deploy/gulpfile.js', 'deploy/package.json'], {
             base: ''
         })
         .pipe(gulp.dest('content-editor'));
 });
 
-gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyFiles', 'copyGulp']);
+gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyFiles', 'copydeploydependencies']);
 
 gulp.task('inject', ['minify'], function() {
     var target = gulp.src('content-editor/index.html');
@@ -180,24 +180,6 @@ gulp.task('zip', ['minify', 'inject', 'packageCorePlugins'], function() {
     return gulp.src('content-editor/**')
         .pipe(zip('content-editor.zip'))
         .pipe(gulp.dest(''));
-});
-
-gulp.task('renameminifiedfiles', function() {
-    var js =  gulp.src('content-editor/scripts/*.min.js')
-        .pipe(cachebust.resources())
-        .pipe(gulp.dest('content-editor/scripts/'));
-    var css = gulp.src('content-editor/styles/*.min.css')
-        .pipe(cachebust.resources())
-        .pipe(gulp.dest('content-editor/styles/'));
-    return [js, css];
-});
-
-gulp.task('injectrenamedfiles', function() {
-    var target = gulp.src('content-editor/index.html');
-    var sources = gulp.src(['content-editor/scripts/*.min.*.js', 'content-editor/styles/*.min.*.css'], { read: false });
-    return target
-        .pipe(inject(sources, { ignorePath: 'content-editor/', addRootSlash: false }))
-        .pipe(gulp.dest('./content-editor'));
 });
 
 gulp.task('build', ['minify', 'inject', 'zip']);
