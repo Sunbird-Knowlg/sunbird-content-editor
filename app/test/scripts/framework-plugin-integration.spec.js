@@ -86,7 +86,6 @@ describe("plugin framework integration test: ", function() {
                 "rotate": ""
             };
             stageInstance = EkstepEditorAPI.instantiatePlugin(stagePlugin, stageECML);
-            spyOn(EkstepEditorAPI, 'dispatchEvent').and.callThrough();
         });
 
         it('instance properties should be defined', function() {
@@ -113,23 +112,46 @@ describe("plugin framework integration test: ", function() {
             expect(stageInstance.duplicate).toEqual({ id: 'stage:duplicate', data: { stageId: stageInstance.id } });
         });
 
-        xit('on "stage:select" event, it should call stage manager selectStage method', function() {
-            spyOn(EkstepEditor.stageManager, 'selectStage').and.callThrough();
+        it('on "stage:select" event, it should call stage manager selectStage method', function() {
+            spyOn(EkstepEditorAPI, 'dispatchEvent').and.callThrough();
             EkstepEditorAPI.dispatchEvent("stage:select", { stageId: stageInstance.id });
-            expect(EkstepEditor.stageManager.selectStage).toHaveBeenCalled();
-        });
-
-        xit('on "stage:duplicate" event, it should call stage manager duplicateStage method', function() {
-            spyOn(EkstepEditor.stageManager, 'duplicateStage');
-            EkstepEditorAPI.dispatchEvent("stage:duplicate", { stageId: stageInstance.id });
-            expect(EkstepEditor.stageManager.duplicateStage).toHaveBeenCalled();
+            expect(EkstepEditor.stageManager.currentStage.id).toBe(stageInstance.id);
+            expect(EkstepEditor.stageManager.currentStage.isSelected).toBe(true);
+            expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith('config:showSettingsTab', {id: EkstepEditor.stageManager.currentStage.id});
         });
 
         it('should dispatch "stage:add" event on Stage add', function() {
-            spyOn(EkstepEditor.stageManager, 'selectStage');
+            spyOn(EkstepEditorAPI, 'dispatchEvent').and.callThrough();
             var newStageInstance = EkstepEditorAPI.instantiatePlugin(stagePlugin, stageECML);
             expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith("stage:add", { stageId: newStageInstance.id, prevStageId: stageInstance.id });
-            expect(EkstepEditor.stageManager.selectStage).toHaveBeenCalled();
+        });
+
+        it('on "stage:duplicate" event, it should call stage manager duplicateStage method', function() {
+            spyOn(EkstepEditor.stageManager, 'getStageIndex').and.returnValue(0);
+            spyOn(EkstepEditorAPI, 'dispatchEvent').and.callThrough();
+            EkstepEditorAPI.dispatchEvent("stage:duplicate", { stageId: stageInstance.id });
+            expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith('stage:create', jasmine.objectContaining({ "position": "afterCurrent" }));
+            expect(EkstepEditor.stageManager.currentStage.isSelected).toBe(true);
+            expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith('config:showSettingsTab', {id: EkstepEditor.stageManager.currentStage.id});
+        });
+
+        it('on stage delete, it should dispatch event: "stage:removed"', function() {
+            spyOn(EkstepEditorAPI, 'dispatchEvent').and.callThrough();
+            spyOn(EkstepEditor.stageManager, 'getStageIndex').and.returnValue(0);
+            var noOfstages = EkstepEditorAPI.getAllStages().length;
+            EkstepEditor.stageManager.deleteStage({}, { stageId: stageInstance.id });
+            expect(EkstepEditor.stageManager.stages.length).toBe(noOfstages - 1);
+            expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith('stage:removed', { stageId: stageInstance.id});
+        });
+
+        it('on stage drag/drop it should dispacth event: "stage:reorder"', function() { 
+            spyOn(EkstepEditorAPI, 'dispatchEvent').and.callThrough();
+            var firstStage = EkstepEditorAPI.getAllStages()[0];            
+            var secondStage = EkstepEditorAPI.getAllStages()[1];            
+            EkstepEditor.stageManager.onStageDragDrop(secondStage.id, firstStage.id);
+            expect(EkstepEditorAPI.getAllStages()[0].id).toBe(secondStage.id);
+            expect(EkstepEditorAPI.getAllStages()[1].id).toBe(firstStage.id);
+            expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith('stage:reorder', { stageId: secondStage.id, fromIndex: 1, toIndex: 0 });
         });
     });
 
@@ -264,6 +286,7 @@ describe("plugin framework integration test: ", function() {
 
             newInstance.remove();
 
+            expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith('stage:modified', { id: newInstance.id });
             expect(EkstepEditor.pluginManager.getPluginInstance(newInstance.id)).toBeUndefined();
         });
     });
@@ -272,7 +295,7 @@ describe("plugin framework integration test: ", function() {
         var contentECML, getPluginCount;
 
         beforeAll(function(done) {
-            console.log('-------STAGE MANAGER FROM ECML TEST STARTS----- ');
+            console.log('-------STAGE MANAGER ECML TEST STARTS----- ');
             EkstepEditor.pluginManager.pluginInstances = {};
             EkstepEditor.stageManager.stages = [];
 
@@ -297,6 +320,7 @@ describe("plugin framework integration test: ", function() {
             spyOn(EkstepEditorAPI, 'instantiatePlugin').and.callThrough();
             spyOn(EkstepEditor.stageManager, 'onContentLoad').and.callThrough();
             spyOn(EkstepEditor.eventManager, 'dispatchEvent');
+            spyOn(EkstepEditor.stageManager, 'registerEvents').and.callThrough();
 
             EkstepEditor.contentService.getContent(EkstepEditorAPI.globalContext.contentId, function(err, content) {
                 if (err) console.log('Failed to get content! content ID:', EkstepEditorAPI.globalContext.contentId);
@@ -322,7 +346,7 @@ describe("plugin framework integration test: ", function() {
 
         afterAll(function() {
             EkstepEditor.stageManager.canvas.clear();
-            console.log('-------STAGE MANAGER FROM ECML TEST ENDS----- ');
+            console.log('-------STAGE MANAGER ECML TEST ENDS----- ');
         });
 
         it('should call instantiate stage and plugin', function() {
@@ -338,8 +362,12 @@ describe("plugin framework integration test: ", function() {
            expect(Object.keys(EkstepEditor.pluginManager.pluginInstances).length).toBe(getPluginCount('total')); 
         });
 
-        it('should call onContentLoad method', function() {
+        it('should call stage manager onContentLoad method', function() {
            expect(EkstepEditor.stageManager.onContentLoad).toHaveBeenCalled(); 
+        });
+
+        it('should register stage manager events', function() {
+            expect(EkstepEditor.stageManager.registerEvents).toHaveBeenCalled();
         });
 
         it('after content load: should enable the event bus', function() {
