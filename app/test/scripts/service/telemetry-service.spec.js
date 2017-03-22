@@ -9,6 +9,7 @@ describe('telemetry service', function() {
         EkstepEditor.pluginManager.cleanUp();
         EkstepEditor.stageManager.cleanUp();
         EkstepEditor.toolbarManager.cleanUp();
+        spyOn(window,'Date').and.returnValue({ getTime: function() { return 100 }});
     });
 
     it('should initialize the service', function() {
