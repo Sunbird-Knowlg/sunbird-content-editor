@@ -19,7 +19,6 @@ describe('Content service test cases', function() {
         
         var meta = EkstepEditor.contentService.getContentMeta(contentId);
         var contentParsed = JSON.parse(content)[contentId];
-        console.log(contentParsed)
         expect(meta).toEqual(contentParsed);
     });
 
