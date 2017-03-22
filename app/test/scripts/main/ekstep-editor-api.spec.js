@@ -217,7 +217,7 @@ describe("Ekstep editor test", function() {
             spyOn(EkstepEditorAPI, "addPluginInstance").and.callThrough();
             EkstepEditorAPI.addPluginInstance(test1pluginInstance);
             expect(EkstepEditorAPI.addPluginInstance).toHaveBeenCalled();
-            expect(Object.keys(EkstepEditor.pluginManager.pluginInstances).length).toEqual(3);
+            expect(Object.keys(EkstepEditor.pluginManager.pluginInstances).length).toEqual(2);
         });
 
         it("should remove plugin instance by calling removePluginInstance", function() {
@@ -273,6 +273,14 @@ describe("Ekstep editor test", function() {
             spyOn(EkstepEditorAPI, "getPluginInstances").and.callThrough();
             var returnValue = EkstepEditorAPI.getPluginInstances(['org.ekstep.test1'], ['org.ekstep.audio'], [EkstepEditorAPI.getCurrentObject().id]);
             expect(returnValue.length).toBe(1);
+        });
+
+        it("should return help.md path by calling resolvePluginResource", function() {
+            spyOn(EkstepEditorAPI, "resolvePluginResource").and.callThrough();
+            spyOn(EkstepEditor.pluginManager, "resolvePluginResource").and.callThrough();
+            var src = EkstepEditorAPI.resolvePluginResource("org.ekstep.test2","1.0","editor/help.md");
+            expect(EkstepEditor.pluginManager.resolvePluginResource).toHaveBeenCalled();
+            expect(src).toBe("base/app/test/data/published/org.ekstep.test2-1.0/editor/help.md");
         });
     });
 

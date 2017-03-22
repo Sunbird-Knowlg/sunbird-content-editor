@@ -52,9 +52,6 @@ EkstepEditor.pluginManager = new(Class.extend({
                 instance.loadDependencies(manifest, repo, publishedTime);
                 try {
                     instance.registerPlugin(manifest, eval(data), repo);
-                    if (manifest.type && EkstepEditorAPI._.lowerCase(manifest.type) === "widget") {
-                        instance.invoke(manifest.id, _.cloneDeep(manifest.editor['init-data'] || {}), EkstepEditorAPI.getCurrentStage());
-                    }
                     EkstepEditorAPI.dispatchEvent('plugin:load', { plugin: manifest.id, version: manifest.ver });
                 } catch (e) {
                     console.error("error while loading plugin:" + manifest.id, e);
