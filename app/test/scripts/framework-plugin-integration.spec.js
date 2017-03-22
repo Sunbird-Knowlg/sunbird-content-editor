@@ -14,7 +14,8 @@ describe("plugin framework integration test: ", function() {
         corePlugins = {
             "org.ekstep.stage": "1.0",
             "org.ekstep.shape": "1.0",
-            "org.ekstep.image": "1.0"
+            "org.ekstep.image": "1.0",
+            "org.ekstep.audio": "1.0"
         };
 
         // test plugins
@@ -301,17 +302,23 @@ describe("plugin framework integration test: ", function() {
             console.log('-------STAGE MANAGER ECML TEST STARTS----- ');
             EkstepEditor.pluginManager.pluginInstances = {};
             EkstepEditor.stageManager.stages = [];
-
-            //should be updated if the content is modified on dev!
+            
             getPluginCount = function(plugin) {                
                 var pluginsCount;                
-                pluginsCount = {
-                    "shape": 1,
-                    "media": 0,
-                    "total": undefined,
-                    "stage": 1
+                pluginsCount = { //update the count based on the content
+                    "shape": 3,
+                    "media": 2,
+                    "total": 0,
+                    "stage": 3,
+                    "image": 1,
+                    "audio": 1,
+                    "text": 0
                 };
-                pluginsCount.total = pluginsCount.shape + pluginsCount.stage;
+
+                _.forIn(_.omit(pluginsCount, ['total', 'media']), function(value, key) {
+                    pluginsCount.total += value;
+                });
+
                 return pluginsCount[plugin];
             };
 
@@ -334,7 +341,9 @@ describe("plugin framework integration test: ", function() {
                     } catch (e) {
                         console.log('error when loading ECML:', e);
                     }
-                    done();
+                    setTimeout(function() { // let stage load all its plugins to render on stage
+                        done(); 
+                    }, 2000);
                 }
             });
 
