@@ -544,8 +544,6 @@ window.EkstepEditorAPI = {
     ngSafeApply: function(scope, fn) {
         if (scope) scope.$safeApply(fn);
     },
-<<<<<<< HEAD
-
     /**
      * API to load and initialize a plugin to the current stage
      * 
@@ -556,12 +554,8 @@ window.EkstepEditorAPI = {
      */
     loadAndInitPlugin: function(pluginId, pluginVersion, publishedTime) {
         EkstepEditor.pluginManager.loadAndInitPlugin(pluginId + "-" + pluginVersion, publishedTime);
-=======
-    loadAndInitPlugin: function (pluginId, pluginVersion, publishedTime) {
-      EkstepEditor.pluginManager.loadAndInitPlugin(pluginId+"-"+pluginVersion, publishedTime);
-    },
+    ,
     resolvePluginResource: function (id, ver, resource) {
          return EkstepEditor.pluginManager.resolvePluginResource(id, ver, resource);
->>>>>>> c0589fe128618d580b80a8c74539c11e9663b7fb
     }
 }
