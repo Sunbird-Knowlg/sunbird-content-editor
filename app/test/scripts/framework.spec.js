@@ -121,4 +121,11 @@ describe(" framework integration", function() {
         EkstepEditor.toolbarManager.resetContextMenu();
         expect(EkstepEditor.toolbarManager.resetContextMenu).toHaveBeenCalled();
     });
+
+    it("should setscope", function() {
+        spyOn(EkstepEditor.toolbarManager, "setScope").and.callThrough();
+        EkstepEditor.toolbarManager.setScope(EkstepEditorAPI.getAngularScope());
+        expect(EkstepEditor.toolbarManager.setScope).toHaveBeenCalled();
+        expect(EkstepEditor.toolbarManager.scope).toBe(EkstepEditorAPI.getAngularScope());
+    });
 });
