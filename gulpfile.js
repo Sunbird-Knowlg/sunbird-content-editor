@@ -107,7 +107,6 @@ gulp.task('setup', function() {
 gulp.task('minifyJS', function() {
     return gulp.src(scriptfiles)
         .pipe(concat('script.min.js'))
-        .pipe(cachebust.resources())
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
@@ -131,21 +130,18 @@ gulp.task('minifyCSS', function() {
                 return m && m.join('\n') + '\n' || '';
             }
         }))
-        .pipe(cachebust.resources())
         .pipe(gulp.dest('content-editor/styles'));
 });
 
 gulp.task('minifyJsBower', function() {
     return gulp.src(bower_components)
         .pipe(concat('external.min.js'))
-        .pipe(cachebust.resources())
         .pipe(gulp.dest('content-editor/scripts/'));
 });
 
 gulp.task('minifyCssBower', function() {
     return gulp.src(bower_css)
         .pipe(concat('external.min.css'))
-        .pipe(cachebust.resources())
         .pipe(gulp.dest('content-editor/styles'));
 });
 
@@ -163,7 +159,14 @@ gulp.task('copyFiles', function() {
         .pipe(gulp.dest('content-editor'));
 });
 
-gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyFiles']);
+gulp.task('copyGulp', function() {
+    return gulp.src(['gulpfile.js'], {
+            base: ''
+        })
+        .pipe(gulp.dest('content-editor'));
+});
+
+gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyFiles', 'copyGulp']);
 
 gulp.task('inject', ['minify'], function() {
     var target = gulp.src('content-editor/index.html');
@@ -177,6 +180,24 @@ gulp.task('zip', ['minify', 'inject', 'packageCorePlugins'], function() {
     return gulp.src('content-editor/**')
         .pipe(zip('content-editor.zip'))
         .pipe(gulp.dest(''));
+});
+
+gulp.task('renameminifiedfiles', function() {
+    var js =  gulp.src('content-editor/scripts/*.min.js')
+        .pipe(cachebust.resources())
+        .pipe(gulp.dest('content-editor/scripts/'));
+    var css = gulp.src('content-editor/styles/*.min.css')
+        .pipe(cachebust.resources())
+        .pipe(gulp.dest('content-editor/styles/'));
+    return [js, css];
+});
+
+gulp.task('injectrenamedfiles', function() {
+    var target = gulp.src('content-editor/index.html');
+    var sources = gulp.src(['content-editor/scripts/*.min.*.js', 'content-editor/styles/*.min.*.css'], { read: false });
+    return target
+        .pipe(inject(sources, { ignorePath: 'content-editor/', addRootSlash: false }))
+        .pipe(gulp.dest('./content-editor'));
 });
 
 gulp.task('build', ['minify', 'inject', 'zip']);
