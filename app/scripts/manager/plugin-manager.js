@@ -17,10 +17,7 @@ EkstepEditor.pluginManager = new(Class.extend({
         EkstepEditorAPI.dispatchEvent('plugin:load', { plugin: manifest.id, version: manifest.ver });
         EkstepEditorAPI.dispatchEvent(manifest.id + ':load');
     },
-    loadAndInitPlugin: function(pluginFQName, publishedTime) {
-        var index = pluginFQName.lastIndexOf('-');
-        var pluginId = pluginFQName.substr(0, index);
-        var version = pluginFQName.substr(index + 1);
+    loadAndInitPlugin: function(pluginId, version, publishedTime) {
         this.loadPlugin(pluginId, version, publishedTime);
         if(this.isDefined(pluginId)) {
             var pluginManifest = this.getPluginManifest(pluginId);
