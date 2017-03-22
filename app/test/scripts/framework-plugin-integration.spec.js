@@ -6,12 +6,15 @@ describe("plugin framework integration test: ", function() {
     cleanUp = function() {
         EkstepEditor.pluginManager.cleanUp();
         EkstepEditor.stageManager.cleanUp();
+        EkstepEditor.toolbarManager.cleanUp();
     }
 
     beforeAll(function() {
         cleanUp();
         corePlugins = {
-            "org.ekstep.stage": "1.0"
+            "org.ekstep.stage": "1.0",
+            "org.ekstep.shape": "1.0",
+            "org.ekstep.image": "1.0"
         };
 
         // test plugins
@@ -21,13 +24,13 @@ describe("plugin framework integration test: ", function() {
                 "org.ekstep.test2": "1.0",
                 "org.ekstep.test3": "1.0",
                 "org.ekstep.test4": "1.0",
-                "org.ekstep.test5": "1.0"
+                "org.ekstep.test5": "1.0"                
             },
             corePlugins: ["text", "audio", "div", "hotspot", "image", "shape", "scribble", "htext"],
             corePluginMapping: {
                 "text": "org.ekstep.text",
                 "image": "org.ekstep.image",
-                "shape": "org.ekstep.test1", // shape test plugin
+                "shape": "org.ekstep.shape", 
                 "stage": "org.ekstep.stage",
                 "hotspot": "org.ekstep.hotspot",
                 "scribble": "org.ekstep.scribblepad",

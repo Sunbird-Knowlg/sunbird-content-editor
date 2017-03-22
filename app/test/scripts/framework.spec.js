@@ -1,7 +1,12 @@
 describe(" framework integration", function() {
-    beforeAll(function() {
+    var cleanUp = function() {
         EkstepEditor.pluginManager.cleanUp();
         EkstepEditor.stageManager.cleanUp();
+        EkstepEditor.toolbarManager.cleanUp();
+    };
+
+    beforeAll(function() {
+        cleanUp();
         var corePlugins = {
             "org.ekstep.stage": "1.0",
             "org.ekstep.copypaste": "1.0"
@@ -30,8 +35,7 @@ describe(" framework integration", function() {
     });
 
     afterAll(function() {
-        EkstepEditor.pluginManager.cleanUp();
-        EkstepEditor.stageManager.cleanUp();
+        cleanUp();
     });
 
     it("should register plugins with plugin manager", function(done) {
