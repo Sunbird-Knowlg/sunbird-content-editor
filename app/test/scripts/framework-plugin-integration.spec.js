@@ -333,6 +333,7 @@ describe("plugin framework integration test: ", function() {
             spyOn(EkstepEditor.stageManager, 'onContentLoad').and.callThrough();
             spyOn(EkstepEditor.eventManager, 'dispatchEvent');
             spyOn(EkstepEditor.stageManager, 'registerEvents').and.callThrough();
+            spyOn(EkstepEditor.telemetryService, 'start').and.callThrough();
 
             EkstepEditor.contentService.getContent(EkstepEditorAPI.globalContext.contentId, function(err, content) {
                 if (err) console.log('Failed to get content! content ID:', EkstepEditorAPI.globalContext.contentId);
@@ -354,7 +355,7 @@ describe("plugin framework integration test: ", function() {
                     uid: "346",
                     sid: "",
                     content_id: EkstepEditorAPI.globalContext.contentId
-                });
+                }, "console");
             })();
         });
 
@@ -366,6 +367,11 @@ describe("plugin framework integration test: ", function() {
         it('should call instantiate stage and plugin', function() {
             expect(EkstepEditorAPI.instantiatePlugin).toHaveBeenCalled();
             expect(EkstepEditorAPI.instantiatePlugin.calls.count()).toEqual(getPluginCount('total'));
+        });
+
+        it('should dispatch telemetry "CE_START" event', function() {
+            expect(EkstepEditor.telemetryService.start).toHaveBeenCalled();
+            expect(EkstepEditor.telemetryService.start.calls.count()).toBe(1);
         });
 
         it('stage manager should have stage defined', function() {
@@ -414,6 +420,10 @@ describe("plugin framework integration test: ", function() {
             expect(getEcmlPluginCount('shape')).toBe(getPluginCount('shape'));
             expect(getEcmlPluginCount('image')).toBe(getPluginCount('image'));
             expect(getEcmlPluginCount('audio')).toBe(getPluginCount('audio'));
+        });
+
+        it('should generate stageIcons when toECML', function() {
+            expect(Object.keys(EkstepEditor.stageManager.getStageIcons()).length).toBe(getPluginCount('stage'));
         });
     });
 });
