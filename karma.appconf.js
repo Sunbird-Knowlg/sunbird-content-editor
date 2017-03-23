@@ -9,7 +9,7 @@ module.exports = function(config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine'],
+        frameworks: ['jasmine', 'jasmine-matchers'],
 
 
         // list of files / patterns to load in the browser
@@ -86,6 +86,11 @@ module.exports = function(config) {
             // fixtures
             { pattern: 'test/**/*.json', watched: true, served: true, included: false },
             { pattern: 'plugins/org.ekstep.stage-1.0/**/*.json', watched: true, served: true, included: false }
+        ],
+
+        plugins: [
+            'karma-jasmine',
+            'karma-jasmine-matchers'
         ],
 
 
