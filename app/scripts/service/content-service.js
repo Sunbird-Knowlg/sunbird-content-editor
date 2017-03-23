@@ -6,7 +6,7 @@
  * @author Sunil A S <sunils@ilimi.in>
  */
 EkstepEditor.contentService = new(EkstepEditor.iService.extend({
-    serviceURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug + '/learning/',
+    serviceURL: EkstepEditor.config.baseURL + EkstepEditorAPI.getConfig('apislug') + '/learning/',
     content: {},
     initService: function() {},
     /**
