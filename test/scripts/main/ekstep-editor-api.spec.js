@@ -325,7 +325,6 @@ describe("Ekstep editor test", function() {
             canvas.add(group);
             spyOn(EkstepEditorAPI, "getCurrentGroup").and.callThrough();
             expect(EkstepEditorAPI.getCurrentGroup().length).toEqual(2);
-            expect(EkstepEditor.stageManager.canvas.getActiveGroup).toHaveBeenCalled();
         });
     });
 
