@@ -302,7 +302,7 @@ describe("Ekstep editor test", function() {
         it("should return help.md path by calling resolvePluginResource", function() {
             spyOn(EkstepEditorAPI, "resolvePluginResource").and.callThrough();
             spyOn(EkstepEditor.pluginManager, "resolvePluginResource").and.callThrough();
-            var src = EkstepEditorAPI.resolvePluginResource("org.ekstep.test2","1.0","editor/help.md");
+            var src = EkstepEditorAPI.resolvePluginResource("org.ekstep.test2", "1.0", "editor/help.md");
             expect(EkstepEditor.pluginManager.resolvePluginResource).toHaveBeenCalled();
             expect(src).toBe("base/test/data/published/org.ekstep.test2-1.0/editor/help.md");
         });
@@ -316,7 +316,17 @@ describe("Ekstep editor test", function() {
             expect(returnValue).toEqual(audio);
         });
 
-        
+        it("should return the plugins group array", function() {
+            var canvas = EkstepEditor.stageManager.canvas,
+                group = new fabric.Group();
+            group.add(EkstepEditor.stageManager.canvas.getObjects()[0]);
+            group.add(EkstepEditor.stageManager.canvas.getObjects()[1]);
+            canvas.setActiveGroup(group);
+            canvas.add(group);
+            spyOn(EkstepEditorAPI, "getCurrentGroup").and.callThrough();
+            expect(EkstepEditorAPI.getCurrentGroup().length).toEqual(2);
+            expect(EkstepEditor.stageManager.canvas.getActiveGroup).toHaveBeenCalled();
+        });
     });
 
 
