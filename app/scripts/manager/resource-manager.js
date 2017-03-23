@@ -26,7 +26,7 @@ EkstepEditor.resourceManager = new(Class.extend({
             if (result.manifest !== undefined)
                 cb(undefined, result);
             else
-                cb(err, undefined);
+                cb('Plugin not found in any repo or manifest', undefined);
         });
 
     },
