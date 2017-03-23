@@ -90,7 +90,9 @@ module.exports = function(config) {
 
         plugins: [
             'karma-jasmine',
-            'karma-jasmine-matchers'
+            'karma-jasmine-matchers',
+            'karma-coverage',
+            'karma-phantomjs-launcher'
         ],
 
 
