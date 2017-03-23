@@ -51,9 +51,9 @@ describe("plugin framework integration test: ", function() {
             EkstepEditor.pluginManager.loadPlugin(key, value);
         });
 
-        EkstepEditor.publishedRepo.basePath = "base/app/test/data/published";
-        EkstepEditor.hostRepo.basePath = "base/app/test/data/hosted";
-        EkstepEditor.draftRepo.basePath = "base/app/test/data/draft";
+        EkstepEditor.publishedRepo.basePath = "base/test/data/published";
+        EkstepEditor.hostRepo.basePath = "base/test/data/hosted";
+        EkstepEditor.draftRepo.basePath = "base/test/data/draft";
         EkstepEditor.hostRepo.connected = true;
 
         EkstepEditor.stageManager.canvas = canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true, width: 720, height: 405 });

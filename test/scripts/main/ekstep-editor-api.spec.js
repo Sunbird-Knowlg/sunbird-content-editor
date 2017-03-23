@@ -21,9 +21,9 @@ describe("Ekstep editor test", function() {
             EkstepEditor.pluginManager.loadPlugin(key, value);
         });
 
-        EkstepEditor.publishedRepo.basePath = "base/app/test/data/published";
-        EkstepEditor.hostRepo.basePath = "base/app/test/data/hosted";
-        EkstepEditor.draftRepo.basePath = "base/app/test/data/draft";
+        EkstepEditor.publishedRepo.basePath = "base/test/data/published";
+        EkstepEditor.hostRepo.basePath = "base/test/data/hosted";
+        EkstepEditor.draftRepo.basePath = "base/test/data/draft";
         EkstepEditor.hostRepo.connected = true;
 
         EkstepEditor.stageManager.canvas = canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true, width: 720, height: 405 });
@@ -280,7 +280,7 @@ describe("Ekstep editor test", function() {
             spyOn(EkstepEditor.pluginManager, "resolvePluginResource").and.callThrough();
             var src = EkstepEditorAPI.resolvePluginResource("org.ekstep.test2","1.0","editor/help.md");
             expect(EkstepEditor.pluginManager.resolvePluginResource).toHaveBeenCalled();
-            expect(src).toBe("base/app/test/data/published/org.ekstep.test2-1.0/editor/help.md");
+            expect(src).toBe("base/test/data/published/org.ekstep.test2-1.0/editor/help.md");
         });
     });
 
