@@ -95,6 +95,37 @@ describe("Ekstep editor test", function() {
         expect(EkstepEditor.toolbarManager.contextMenuItems[0].id).toBe("copy");
     });
 
+    it('should set contentid in config ', function() {
+        spyOn(EkstepEditorAPI, "setConfig").and.callThrough();
+        EkstepEditorAPI.setConfig('contentId', 'do_1122069161408757761139');
+        expect(EkstepEditorAPI.setConfig).toHaveBeenCalled();
+    });
+
+    it('should return all config values', function() {
+        spyOn(EkstepEditorAPI, "getAllConfig").and.callThrough();
+        EkstepEditorAPI.setConfig('contentId', 'do_1122069161408757761139');
+        var returnValue = EkstepEditorAPI.getAllConfig();
+        expect(EkstepEditorAPI.getAllConfig).toHaveBeenCalled();
+        expect(returnValue.contentId).toEqual('do_1122069161408757761139');
+    });
+
+    it('should return all global context values', function() {
+        spyOn(EkstepEditorAPI, "getAllContext").and.callThrough();
+        EkstepEditorAPI.setContext('contentId', 'do_1122069161408757761139');
+        var returnValue = EkstepEditorAPI.getAllContext();
+        expect(EkstepEditorAPI.getAllContext).toHaveBeenCalled();
+        expect(returnValue.contentId).toEqual('do_1122069161408757761139');
+    });
+
+    it('should remove event listener', function() {
+        spyOn(EkstepEditorAPI, "addEventListener").and.callThrough();
+        spyOn(EkstepEditorAPI, "removeEventListener").and.callThrough();
+        EkstepEditorAPI.addEventListener("stage:delete", function(){}, undefined);
+        EkstepEditorAPI.removeEventListener("stage:delete", function(){}, undefined);
+        expect(EkstepEditorAPI.removeEventListener).toHaveBeenCalled();
+        expect(EkstepEditorAPI.addEventListener).toHaveBeenCalled();
+    });    
+
     describe('when stage plugin instantiated', function() {
         var stagePlugin = 'org.ekstep.stage',
             test1Plugin = 'org.ekstep.test1',
@@ -177,13 +208,6 @@ describe("Ekstep editor test", function() {
             EkstepEditor.stageManager.canvas.deactivateAll().renderAll();
             var currentObject = EkstepEditorAPI.getCurrentObject();
             expect(EkstepEditorAPI.getCurrentObject).toHaveBeenCalled();
-        });
-
-        xit('should retrns current group of selected objects', function() {
-            spyOn(EkstepEditorAPI, "getCurrentGroup").and.callThrough();
-            var returnValue = EkstepEditorAPI.getCurrentGroup();
-            expect(EkstepEditorAPI.getCurrentGroup).toHaveBeenCalled();
-            expect(returnValue).toBeDefined();
         });
 
         it('should retrns current group', function() {
@@ -282,6 +306,17 @@ describe("Ekstep editor test", function() {
             expect(EkstepEditor.pluginManager.resolvePluginResource).toHaveBeenCalled();
             expect(src).toBe("base/test/data/published/org.ekstep.test2-1.0/editor/help.md");
         });
+
+        it("should return media object", function() {
+            var audio = '{"asset" : "do_10095959","assetMedia" : {"id" : "do_10095959", "name" : "test ","preload" : "true","src : https://ekstep-public-dev.s3-ap-south-1.amazonaws.com/content/1475505176audio_1475505049712.mp3","type" : "audio"}}';
+            EkstepEditor.mediaManager.mediaMap["do_10095959"] = audio;
+            spyOn(EkstepEditorAPI, "getMedia").and.callThrough();
+            var returnValue = EkstepEditorAPI.getMedia("do_10095959");
+            expect(EkstepEditorAPI.getMedia).toHaveBeenCalled();
+            expect(returnValue).toEqual(audio);
+        });
+
+        
     });
 
 
