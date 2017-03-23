@@ -9,7 +9,7 @@ EkstepEditor.searchService = new(EkstepEditor.iService.extend({
      * @member {string} searchURL
      * @memberof EkstepEditor.searchService
      */
-    searchURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug + '/search/',
+    searchURL: EkstepEditor.config.baseURL + EkstepEditorAPI.getConfig('apislug') + '/search/',
     /** 
      * @member {object} requestHeaders
      * @memberof EkstepEditor.searchService

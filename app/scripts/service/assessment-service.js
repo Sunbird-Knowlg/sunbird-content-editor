@@ -9,7 +9,7 @@ EkstepEditor.assessmentService = new(EkstepEditor.iService.extend({
      * @member {string} learningURL
      * @memberof EkstepEditor.assessmentService
      */
-    learningURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug + '/learning/',
+    learningURL: EkstepEditor.config.baseURL + EkstepEditorAPI.getConfig('apislug') + '/learning/',
      /** 
      * @member {object} requestHeaders
      * @memberof EkstepEditor.assessmentService
