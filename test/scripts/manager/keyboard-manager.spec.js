@@ -31,28 +31,28 @@ describe('Keyboard manager', function() {
         var testFn = function() {
             EkstepEditor.keyboardManager.registerKeyCombination("ctrl+x", function() {});
         };
-        expect(testFn).toThrow();
+        expect(testFn).toThrow("The given key combination is already registered. Please provide a different combination");
     });
 
     it('should throw error when register command with only modifier key', function() {
         var testFn = function() {
             EkstepEditor.keyboardManager.registerKeyCombination("ctrl", function() {});
         };
-        expect(testFn).toThrow();
+        expect(testFn).toThrow("Cannot register a command only with modifier keys. Need one key character");
     });
 
     it('should throw error when register command with multiple key', function() {
         var testFn = function() {
             EkstepEditor.keyboardManager.registerKeyCombination("ctrl+x+h", function() {});
         };
-        expect(testFn).toThrow();
+        expect(testFn).toThrow("Cannot register a command with multiple key characters");
     });
 
     it('should throw error when register command with more than 4 key combination', function() {
         var testFn = function() {
             EkstepEditor.keyboardManager.registerKeyCombination("ctrl+x+h+j+K", function() {});
         };
-        expect(testFn).toThrow();
+        expect(testFn).toThrow("Cannot register a command with more than 3 keys");
     });
 
 });
