@@ -32,7 +32,7 @@ module.exports = function(config) {
 
 
         // list of files to exclude
-        exclude: ['plugins/coverage/**', 'plugins/**/renderer/**'],
+        exclude: ['plugins/coverage/**', 'plugins/**/renderer/**', 'plugins/karma.pluginconf.js'],
 
 
         // preprocess matching files before serving them to the browser
