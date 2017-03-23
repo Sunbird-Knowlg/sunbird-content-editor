@@ -35,7 +35,7 @@ EkstepEditor.pluginManager = new(Class.extend({
             console.log('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded');
         } else {
             EkstepEditor.resourceManager.discoverManifest(pluginId, pluginVer, function(err, data) {
-                if (err) {
+                if (err || _.isUndefined(data)) {
                     console.error('Unable to load plugin manifest', 'plugin:' + pluginId + '-' + pluginVer, 'Error:', err);
                 } else {
                     instance.loadDependencies(data.manifest, data.repo, publishedTime);
