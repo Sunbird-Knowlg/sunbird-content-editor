@@ -35,7 +35,7 @@ module.exports = function(config) {
             "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.templatesLoader.js",
             "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
             "app/bower_components/oclazyload/dist/ocLazyLoad.js",
-            "app/test/baseSpec.js",
+            "test/baseSpec.js",
             "app/scripts/dev/localhost-ce.js",
             "app/libs/semantic.min.js",
             "app/scripts/main/class.js",
@@ -82,9 +82,9 @@ module.exports = function(config) {
             "app/scripts/service/meta-service.js",
             "app/scripts/service/language-service.js",
             "app/scripts/service/search-service.js",
-            'app/test/**/*.js',
+            'test/**/*.js',
             // fixtures
-            { pattern: 'app/test/**/*.json', watched: true, served: true, included: false },
+            { pattern: 'test/**/*.json', watched: true, served: true, included: false },
             { pattern: 'plugins/org.ekstep.stage-1.0/**/*.json', watched: true, served: true, included: false }
         ],
 
