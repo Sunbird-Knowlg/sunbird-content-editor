@@ -257,6 +257,7 @@ window.EkstepEditorAPI = {
      */
     refreshStages: function() {
         //EkstepEditor.toolbarManager.scope.safeApply(function() { EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages; });
+        /* istanbul ignore next */
         EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope(), function() { EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages; });
     },
 
