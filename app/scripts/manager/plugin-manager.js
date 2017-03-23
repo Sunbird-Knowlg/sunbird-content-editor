@@ -38,6 +38,7 @@ EkstepEditor.pluginManager = new(Class.extend({
                 if (err) {
                     console.error('Unable to find plugin ' + pluginId);
                 } else {
+                    instance.loadDependencies(data.manifest, data.repo, publishedTime);
                     instance.loadPluginByManifest(data.manifest, data.repo, publishedTime);
                 }
             }, publishedTime);
@@ -49,7 +50,6 @@ EkstepEditor.pluginManager = new(Class.extend({
             if (err) {
                 console.error('Unable to load plugin js', manifest.editor.main);
             } else {
-                instance.loadDependencies(manifest, repo, publishedTime);
                 try {
                     instance.registerPlugin(manifest, eval(data), repo);
                     EkstepEditorAPI.dispatchEvent('plugin:load', { plugin: manifest.id, version: manifest.ver });
