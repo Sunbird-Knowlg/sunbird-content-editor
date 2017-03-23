@@ -301,7 +301,7 @@ describe("plugin framework integration test: ", function() {
     });
 
     describe('when new ECML content is loaded to framework', function() {
-        var contentECML, getPluginCount;
+        var getPluginCount;
 
         beforeAll(function(done) {
             console.log('-------STAGE MANAGER ECML TEST STARTS----- ');
@@ -338,20 +338,11 @@ describe("plugin framework integration test: ", function() {
             spyOn(EkstepEditor.stageManager, 'registerEvents').and.callThrough();
             spyOn(EkstepEditor.telemetryService, 'start').and.callThrough();
 
-            EkstepEditor.contentService.getContent(EkstepEditorAPI.getContext('contentId'), function(err, content) {
-                if (err) console.log('Failed to get content! content ID:', EkstepEditorAPI.getContext('contentId'));
-                if (content) {
-                    try {
-                        contentECML = JSON.parse(content.body);
-                        EkstepEditor.stageManager.fromECML(contentECML, content.stageIcons);
-                    } catch (e) {
-                        console.log('error when loading ECML:', e);
-                    }
-                    setTimeout(function() { // let stage load all its plugins to render on stage
-                        done();
-                    }, 2000);
-                }
-            });
+            EkstepEditor.stageManager.fromECML(JSON.parse(contentResponse.result.content.body), contentResponse.result.content.stageIcons);
+
+            setTimeout(function() { // let stage load all its plugins
+                done();
+            }, 2000);
 
             (function initTelemetry() {
                 EkstepEditor.telemetryService.initialize({

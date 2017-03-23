@@ -36,6 +36,7 @@ module.exports = function(config) {
             "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
             "app/bower_components/oclazyload/dist/ocLazyLoad.js",
             "test/baseSpec.js",
+            "test/data/ECMLcontent.fixture.js",
             "app/scripts/dev/localhost-ce.js",
             "app/libs/semantic.min.js",
             "app/scripts/main/class.js",
