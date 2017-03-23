@@ -43,12 +43,13 @@
     "karma-jasmine": "1.0.2",
     "karma-jasmine-matchers": "3.7.0",
     "karma-phantomjs-launcher": "1.0.2",
-    "merge-stream": "^1.0.1",
+    "merge-stream": "1.0.1",
     "phantomjs": "2.1.7"
   },
   "scripts": {
     "plugintest": "karma start karma.pluginconf.js",
-    "apptest": "karma start karma.appconf.js"
+    "apptest": "karma start karma.appconf.js",
+    "test": "karma start karmaconf.js"
   },
   "repository": {
     "type": "git",
