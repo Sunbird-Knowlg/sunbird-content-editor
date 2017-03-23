@@ -13,14 +13,13 @@ describe('telemetry service', function() {
     });
 
     it('should initialize the service', function() {
-        var dispatcher = "local";
         spyOn(window, 'addEventListener');
-
+        service.addDispatcher(); //console
         service.initialize({
             uid: uid,
             sid: "",
             content_id: EkstepEditorAPI.getContext('contentId')
-        }, dispatcher);
+        });
 
         expect(service.initialized).toBe(true);
         expect(service.dispatchers.length).toBe(1);
