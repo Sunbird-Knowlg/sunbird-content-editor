@@ -8,7 +8,7 @@ EkstepEditor.assetService = new(EkstepEditor.iService.extend({
      * @member {string} searchURL
      * @memberof EkstepEditor.assetService
      */
-    learningURL: EkstepEditor.config.baseURL + EkstepEditor.config.apislug + '/learning/',
+    learningURL: EkstepEditor.config.baseURL + EkstepEditorAPI.getConfig('apislug') + '/learning/',
     asset: {},
      /** 
      * @member {object} requestHeaders
