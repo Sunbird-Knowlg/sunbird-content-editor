@@ -214,13 +214,18 @@ EkstepEditor.stageManager = new(Class.extend({
         _.forEach(this.stages, function(stage, index) {
             instance.thumbnails[stage.id] = stage.thumbnail;
             var stageBody = stage.toECML();
-            _.forEach(stage.children, function(child) {
-                var id = child.getManifestId();
+            stageBody.manifest = { media: [] };
+            var stageAssets = []
+            _.forEach(stage.children, function(plugin) {
+                var id = plugin.getManifestId();
                 if (_.isUndefined(stageBody[id])) stageBody[id] = [];
-                stageBody[id].push(child.toECML());
-                instance.updateContentManifest(content, id, child.manifest);
-                instance.addMediaToMediaMap(mediaMap, child.getMedia(), child.manifest);
+                stageBody[id].push(plugin.toECML());
+                instance.updateContentManifest(content, id, plugin.manifest);
+                var pluginMedia = plugin.getMedia();
+                instance.addMediaToMediaMap(mediaMap, pluginMedia, plugin.manifest);
+                stageAssets = _.concat(stageAssets, _.keys(pluginMedia));
             });
+            stageBody.manifest.media = _.map(_.uniq(stageAssets), function(asset) { return {assetId: asset}});
             content.theme.stage.push(stageBody);
         });    
         if(!_.isEmpty(EkstepEditor.mediaManager.migratedMediaMap)) {            
@@ -240,23 +245,20 @@ EkstepEditor.stageManager = new(Class.extend({
             }
         });
     },
-    addMediaToMediaMap: function(mediaMap, media, manifest) {
-        var pluginType = ['plugin', 'css'];
+    addMediaToMediaMap: function(mediaMap, media, manifest, stageBody) {
+        var pluginType = ['plugin', 'css', 'js'];
         if (_.isObject(media)) {
             _.forIn(media, function(value, key) {
                 if(!mediaMap[key]) {
                     mediaMap[key] = value;
                     value.src = EkstepEditor.mediaManager.getMediaOriginURL(value.src);
-                    _.forEach(pluginType, function(type) {
-                        if (mediaMap[key].type === type) {
-                            mediaMap[key].plugin = manifest.id;
-                            mediaMap[key].ver = manifest.ver;
-                        }
-                    });
+                    if(_.indexOf(pluginType, mediaMap[key].type) != -1) {
+                        mediaMap[key].plugin = manifest.id;
+                        mediaMap[key].ver = manifest.ver;
+                    }
                 } else if (value.preload) {
                     mediaMap[key].preload = value.preload;
                 }
-                
             });
         }
     },
@@ -369,6 +371,7 @@ EkstepEditor.stageManager = new(Class.extend({
         }
     },
     _loadStage: function(stage, index, size, thumbnail, callback) {
+        delete stage.manifest;
         var instance = this;
         var stageEvents = _.clone(stage.events) || {};
         var canvas = undefined;

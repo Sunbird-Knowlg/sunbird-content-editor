@@ -414,6 +414,28 @@ describe("plugin framework integration test: ", function() {
             expect(getEcmlPluginCount('shape')).toBe(getPluginCount('shape'));
             expect(getEcmlPluginCount('image')).toBe(getPluginCount('image'));
             expect(getEcmlPluginCount('audio')).toBe(getPluginCount('audio'));
+
+            var stage1 = _.find(ecml.theme.stage, {id: '4d0657d8-27ba-4e2c-b4a6-795202e4d754'});
+            expect(stage1.manifest).toBeDefined();
+            expect(stage1.manifest.media).toBeDefined();
+            expect(stage1.manifest.media.length).toBe(0);
+
+            var stage2 = _.find(ecml.theme.stage, {id: '9701579a-029a-4466-818c-630321926a3e'});
+            expect(stage2.manifest).toBeDefined();
+            expect(stage2.manifest.media).toBeDefined();
+            expect(stage2.manifest.media.length).toBe(1);
+            expect(stage2.manifest.media[0].assetId).toBe('do_112193622951706624125');
+
+            var stage3 = _.find(ecml.theme.stage, {id: '5d075bd1-d1c9-499b-87e9-d2bcdbb51786'});
+            expect(stage3.manifest).toBeDefined();
+            expect(stage3.manifest.media).toBeDefined();
+            expect(stage3.manifest.media.length).toBe(1);
+            expect(stage3.manifest.media[0].assetId).toBe('do_1121989168199106561309');
+
+            // TODO: Enhance the stage manifest test cases to add more test cases for 
+            // 1. Duplicate assets within a stage
+            // 2. Plugin, js and css should also be in the manifest
+            // 3. Enhance the test data to also contain quiz plugin
         });
 
         it('should generate stageIcons when toECML', function() {
