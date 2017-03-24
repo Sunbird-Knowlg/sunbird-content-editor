@@ -8,7 +8,7 @@ EkstepEditor.iService = Class.extend({
         get: function(url, config, cb) {
             var instance = this;
             if (!config) config = {};
-            return this.$http.get(url, config).then(function(res) {
+            this.$http.get(url, config).then(function(res) {
                 instance._dispatchTelemetry({url: url, method: "GET", request: "", res: res});
                 cb(null, res) 
             }, function(res) {
@@ -19,7 +19,7 @@ EkstepEditor.iService = Class.extend({
         post: function(url, data, config, cb) {
             var instance = this;
             if (!config) config = {};
-            return this.$http.post(url, data, config).then(function(res) { 
+            this.$http.post(url, data, config).then(function(res) { 
                 instance._dispatchTelemetry({url: url, method: "POST", request: data, res: res});
                 cb(null, res) 
             }, function(res) { 
@@ -30,7 +30,7 @@ EkstepEditor.iService = Class.extend({
         patch: function(url, data, config, cb) {
             var instance = this;
             if (!config) config = {};
-            return this.$http.patch(url, data, config).then(function(res) {
+            this.$http.patch(url, data, config).then(function(res) {
                 instance._dispatchTelemetry({url: url, method: "PATCH", request: data, res: res}); 
                 cb(null, res) 
             }, function(res) { 

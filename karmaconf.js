@@ -9,44 +9,46 @@ module.exports = function(config) {
 
         // frameworks to use
         // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-        frameworks: ['jasmine'],
+        frameworks: ['jasmine', 'jasmine-matchers'],
 
 
         // list of files / patterns to load in the browser
         files: [
             // bower:js
-            'https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-editor/scripts/external.min.js',
+            'dist/external.min.js',
             'test/baseSpec.js',
-            'https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-editor/scripts/script.min.js',
-            'plugins/**/editor/*.js',
+            'test/data/ECMLcontent.fixture.js',
+            'dist/script.min.js',
+            'app/scripts/dev/localhost-ce.js',
+            'test/**/*.js',
+            // fixtures
+            { pattern: 'test/**/*.json', watched: true, served: true, included: false },
+            { pattern: 'plugins/org.ekstep.stage-1.0/**/*.json', watched: true, served: true, included: false }
+        ],
 
-            // 'plugins/org.ekstep.test-1.0/editor/*.js', // if you want to test your editor plugin only
-            // 'plugins/org.ekstep.test-1.0/test/*.js',  // include test directory for your specific plugin
-            // fixtures - include as required, below patterns cover the core plugins
-            { pattern: 'plugins/**/*.json', watched: true, served: true, included: false },
-            { pattern: 'plugins/**/*.md', watched: true, served: true, included: false },
-            { pattern: 'plugins/**/*.css', watched: true, served: true, included: false },
-            { pattern: 'plugins/**/*.html', watched: true, served: true, included: false },
-            { pattern: 'app/preview/**', watched: true, served: true, included: false }
+        plugins: [
+            'karma-jasmine',
+            'karma-jasmine-matchers',
+            'karma-coverage',
+            'karma-phantomjs-launcher'
         ],
 
 
         // list of files to exclude
-        exclude: ['plugins/coverage/**', 'plugins/**/renderer/**', 'plugins/karma.pluginconf.js'],
+        exclude: [],
 
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
         preprocessors: {
-            'plugins/**/!(lib)/!(*.spec).js': ['coverage']
+            'dist/script.min.js': ['coverage'],
+            'plugins/org.ekstep.stage-1.0/**/*.js': ['coverage']
         },
-        proxies: {
-            '/plugins/': '/base/plugins/'
-        },
+
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', 'coverage'],
+        reporters: ['dots', 'coverage'],
 
 
         // web server port
@@ -59,7 +61,7 @@ module.exports = function(config) {
 
         // level of logging
         // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-        logLevel: config.LOG_INFO,
+        logLevel: config.LOG_ERROR,
 
 
         // enable / disable watching file and executing tests whenever any file changes
@@ -83,8 +85,9 @@ module.exports = function(config) {
 
         coverageReporter: {
             reporters: [
-                { type: 'html', dir: 'plugins/coverage/' },
-                { type: 'text-summary' }
+                { type: 'html', dir: 'coverage/' },
+                { type: 'text-summary' },
+                { type: 'cobertura' }
             ],
         }
     })

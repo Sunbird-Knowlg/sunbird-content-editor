@@ -116,7 +116,7 @@ window.EkstepEditorAPI = {
      * @return {map} Map of key values
      */
     getAllConfig: function() {
-        return EkstepEditorAPI.config;
+        return EkstepEditor.config;
     },
 
     /**
@@ -181,32 +181,34 @@ window.EkstepEditorAPI = {
      * @memberof EkstepEditorAPI
      */
     getService: function(serviceId) {
+        var service = '';
         switch (serviceId) {
             case ServiceConstants.POPUP_SERVICE:
-                return EkstepEditor.popupService;
+                service = EkstepEditor.popupService;
                 break;
             case ServiceConstants.CONTENT_SERVICE:
-                return EkstepEditor.contentService;
+                service = EkstepEditor.contentService;
                 break;
             case ServiceConstants.ASSESSMENT_SERVICE:
-                return EkstepEditor.assessmentService;
+                service = EkstepEditor.assessmentService;
                 break;
             case ServiceConstants.LANGUAGE_SERVICE:
-                return EkstepEditor.languageService;
+                service = EkstepEditor.languageService;
                 break;
             case ServiceConstants.SEARCH_SERVICE:
-                return EkstepEditor.searchService;
+                service = EkstepEditor.searchService;
                 break;
             case ServiceConstants.META_SERVICE:
-                return EkstepEditor.metaService;
+                service = EkstepEditor.metaService;
                 break;
             case ServiceConstants.ASSET_SERVICE:
-                return EkstepEditor.assetService;
+                service = EkstepEditor.assetService;
                 break;
             case ServiceConstants.TELEMETRY_SERVICE:
-                return EkstepEditor.telemetryService;
+                service = EkstepEditor.telemetryService;
                 break;
         }
+        return service;
     },
 
     /**
@@ -255,6 +257,7 @@ window.EkstepEditorAPI = {
      */
     refreshStages: function() {
         //EkstepEditor.toolbarManager.scope.safeApply(function() { EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages; });
+        /* istanbul ignore next */
         EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope(), function() { EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages; });
     },
 
