@@ -2,6 +2,7 @@ var gulp = require('gulp');
 var inject = require('gulp-inject');
 var CacheBuster = require('gulp-cachebust');
 var merge = require('merge-stream');
+var promise = require("any-promise/register")("bluebird");
 
 var cachebust = new CacheBuster();
 
