@@ -1,6 +1,7 @@
 var gulp = require('gulp');
 var inject = require('gulp-inject');
 var CacheBuster = require('gulp-cachebust');
+var merge = require('merge-stream');
 
 var cachebust = new CacheBuster();
 
@@ -11,7 +12,7 @@ gulp.task('renameminifiedfiles', function() {
     var css = gulp.src('styles/*.min.css')
         .pipe(cachebust.resources())
         .pipe(gulp.dest('styles/'));
-    return [js, css];
+    return merge(js, css);
 });
 
 gulp.task('injectrenamedfiles', function() {
