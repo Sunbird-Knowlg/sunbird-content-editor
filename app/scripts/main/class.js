@@ -4,6 +4,7 @@
  */
 // Inspired by base2 and Prototype
 (function() {
+    /* istanbul ignore next */
     var initializing = false,
         fnTest = /xyz/.test(function() {
             xyz;

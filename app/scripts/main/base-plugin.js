@@ -122,7 +122,7 @@ EkstepEditor.basePlugin = Class.extend({
      * @memberof EkstepEditor.BasePlugin
      */
     getType: function() {
-        return this.manifest ? this.manifest.id : '';
+        return this.manifest.id;
     },
 
     /**
@@ -130,7 +130,7 @@ EkstepEditor.basePlugin = Class.extend({
      * @memberof EkstepEditor.BasePlugin
      */
     getVersion: function() {
-        return this.manifest ? this.manifest.ver : '';
+        return this.manifest.ver;
     },
 
     /**
@@ -167,6 +167,7 @@ EkstepEditor.basePlugin = Class.extend({
                 },
                 modified: function(options, event) {
                     var inst = EkstepEditorAPI.getPluginInstance(this.id);
+                    /* istanbul ignore else. This cannot be reached */
                     if (inst.editorObj) {
                         EkstepEditorAPI.updatePluginDimensions(inst);
                     }
