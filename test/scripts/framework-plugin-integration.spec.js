@@ -211,6 +211,8 @@ describe("plugin framework integration test: ", function() {
             stageInstance.setCanvas(canvas);
             spyOn(EkstepEditorAPI, 'getAngularScope').and.returnValue({ enableSave: function() {}, $safeApply: function() {} });
             spyOn(EkstepEditorAPI, 'dispatchEvent');
+            spyOn(EkstepEditor.basePlugin.prototype, 'added').and.callThrough();
+            spyOn(EkstepEditor.basePlugin.prototype, 'selected').and.callThrough();
             test1pluginInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
         });
 
@@ -223,6 +225,14 @@ describe("plugin framework integration test: ", function() {
             expect(test1pluginInstance.manifest).toBeDefined();
             expect(test1pluginInstance.getAttributes()).toBeDefined(jasmine.objectContaining({ type: 'rect', x: 72, y: 81, fill: '#FFFF00', w: 100.8, h: 101.25, stroke: 'rgba(255, 255, 255, 0)', strokeWidth: '1', opacity: '1', rotate: '0', "z-index": '0', id: test1pluginInstance.id }));
             expect(test1pluginInstance.getConfig()).toEqual({ "opacity": 100, "strokeWidth": 1, "stroke": "rgba(255, 255, 255, 0)", "autoplay": false, "visible": true, "color": "#FFFF00" });
+        });
+
+        it('should call added method', function() {
+            expect(test1pluginInstance.added).toHaveBeenCalled();
+        });
+
+        it('should call selected method', function() {
+            expect(test1pluginInstance.selected).toHaveBeenCalled();
         });
 
         it('instance should be added to plugin registery', function() {
@@ -298,6 +308,131 @@ describe("plugin framework integration test: ", function() {
             expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith('stage:modified', { id: newInstance.id });
             expect(EkstepEditor.pluginManager.getPluginInstance(newInstance.id)).toBeUndefined();
         });
+
+        it('on editorObj delete, removed method should be called', function() {
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            spyOn(newInstance, 'remove').and.callThrough();
+
+            EkstepEditorAPI.getCanvas().remove(newInstance.editorObj);
+
+            expect(newInstance.remove).toHaveBeenCalled();
+        });
+
+        it('on editorObj modified, modified method should be called', function() {
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            spyOn(newInstance, 'changed').and.callThrough();
+
+            newInstance.editorObj.trigger("modified");
+
+            expect(newInstance.changed).toHaveBeenCalled();
+        });
+
+        it('on editorObj rotating, rotating method should be called', function() {
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            spyOn(newInstance, 'rotating').and.callThrough();
+
+            newInstance.editorObj.trigger("rotating");
+
+            expect(newInstance.rotating).toHaveBeenCalled();
+        });
+
+        it('on editorObj scaling, scaling method should be called', function() {
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            spyOn(newInstance, 'scaling').and.callThrough();
+
+            newInstance.editorObj.trigger("scaling");
+
+            expect(newInstance.scaling).toHaveBeenCalled();
+        });
+
+        it('on editorObj moving, moving method should be called', function() {
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            spyOn(newInstance, 'moving').and.callThrough();
+
+            newInstance.editorObj.trigger("moving");
+
+            expect(newInstance.moving).toHaveBeenCalled();
+        });
+
+        it('on editorObj skewing, skewing method should be called', function() {
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            spyOn(newInstance, 'skewing').and.callThrough();
+
+            newInstance.editorObj.trigger("skewing");
+
+            expect(newInstance.skewing).toHaveBeenCalled();
+        });
+
+        it('instance can set its config', function() {
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            newInstance.setConfig({ supertext: true });
+
+            expect(newInstance.config).toEqual({ supertext: true });
+        });
+
+        it('instance can set its data', function() {
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            newInstance.setData({ textStyle: 'bold', font: 'verdana' });
+
+            expect(newInstance.data).toEqual({ textStyle: 'bold', font: 'verdana' });
+        });
+
+        it('instance can add events', function() {
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            newInstance.addEvent({ action: 'play' });
+
+            expect(newInstance.event[0]).toEqual({ action: 'play' });
+        });
+
+        it('instance can set its attribute', function() {
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            newInstance.setAttribute("animate", false);
+
+            expect(_.has(newInstance.attributes, 'animate')).toBe(true);
+        });
+
+        it('on config changes, instance config properties should be set', function() {
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            newInstance._onConfigChange('opacity', 0.3);
+            newInstance._onConfigChange('strokeWidth', 2);
+            newInstance._onConfigChange('stroke', 1);
+            newInstance._onConfigChange('autoplay', true);
+            newInstance._onConfigChange('visible', false);
+
+            expect(newInstance.config.opacity).toBe(0.3);
+            expect(newInstance.config.strokeWidth).toBe(2);
+            expect(newInstance.config.stroke).toBe(1);
+            expect(newInstance.config.autoplay).toBe(true);
+            expect(newInstance.config.visible).toBe(false);
+            expect(EkstepEditorAPI.dispatchEvent).toHaveBeenCalledWith("object:modified", { target: newInstance.editorObj });
+        });
+
+        xit('instance can get its own help text', function(done) {
+            var helpText;
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            newInstance.getHelp(function(text) {
+                helpText = text;
+                done();
+            });
+
+            expect(helpText).toBeDefined();
+        });
+
+        it('instance can get its own config manifest data', function() {
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            expect(newInstance.getConfigManifest()).toEqual([{ "propertyName": "color", "title": "Fill Color", "description": "Choose a color from the color picker", "dataType": "colorpicker", "required": true, "defaultValue": "#000000" }]);
+        });
+
+        it('instance can get relative URL of its own resource', function() {
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            
+            expect(newInstance.relativeURL("editor/help.md")).toBe("base/test/data/published/org.ekstep.test1-1.0/editor/help.md");
+        });
+
+        it('instance copy should retutn its editorObj', function() {
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+            expect(newInstance.doCopy()).toEqual(newInstance.editorObj);
+        });
     });
 
     describe('when new ECML content is loaded to framework', function() {
@@ -310,7 +445,7 @@ describe("plugin framework integration test: ", function() {
 
             getPluginCount = function(plugin) {
                 var pluginsCount;
-                pluginsCount = { //update the count based on the content
+                pluginsCount = { //update the count based on the content: content can be found in ECMLContent.fixture.js
                     "shape": 3,
                     "media": 2,
                     "total": 0,
@@ -415,18 +550,18 @@ describe("plugin framework integration test: ", function() {
             expect(getEcmlPluginCount('image')).toBe(getPluginCount('image'));
             expect(getEcmlPluginCount('audio')).toBe(getPluginCount('audio'));
 
-            var stage1 = _.find(ecml.theme.stage, {id: '4d0657d8-27ba-4e2c-b4a6-795202e4d754'});
+            var stage1 = _.find(ecml.theme.stage, { id: '4d0657d8-27ba-4e2c-b4a6-795202e4d754' });
             expect(stage1.manifest).toBeDefined();
             expect(stage1.manifest.media).toBeDefined();
             expect(stage1.manifest.media.length).toBe(0);
 
-            var stage2 = _.find(ecml.theme.stage, {id: '9701579a-029a-4466-818c-630321926a3e'});
+            var stage2 = _.find(ecml.theme.stage, { id: '9701579a-029a-4466-818c-630321926a3e' });
             expect(stage2.manifest).toBeDefined();
             expect(stage2.manifest.media).toBeDefined();
             expect(stage2.manifest.media.length).toBe(1);
             expect(stage2.manifest.media[0].assetId).toBe('do_112193622951706624125');
 
-            var stage3 = _.find(ecml.theme.stage, {id: '5d075bd1-d1c9-499b-87e9-d2bcdbb51786'});
+            var stage3 = _.find(ecml.theme.stage, { id: '5d075bd1-d1c9-499b-87e9-d2bcdbb51786' });
             expect(stage3.manifest).toBeDefined();
             expect(stage3.manifest.media).toBeDefined();
             expect(stage3.manifest.media.length).toBe(1);
