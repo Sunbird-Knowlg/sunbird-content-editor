@@ -33,8 +33,14 @@ describe('Asset service test cases', function() {
     it("should set assetMeta data to empty Object ", function() {
         spyOn(EkstepEditor.assetService, "setAssetMeta").and.callThrough();
         spyOn(EkstepEditor.assetService, "getAssetMeta").and.callThrough();
-        EkstepEditor.assetService.setAssetMeta(assetId);
-        expect(EkstepEditor.assetService.getAssetMeta()).toBeDefined();
-        expect(EkstepEditor.assetService.getAssetMeta()).toEqual(jasmine.any(Object));
+        EkstepEditor.assetService.setAssetMeta(assetId, {"test": "123"});
+        expect(EkstepEditor.assetService.getAssetMeta(assetId)).toBeDefined();
+        expect(EkstepEditor.assetService.getAssetMeta(assetId)).toEqual({ 'assetMeta': {"test": "123"}});
+        EkstepEditor.assetService.setAssetMeta(undefined, {"test": "123"});
+        expect(_.keys(EkstepEditor.assetService.asset).length).toBe(1);
+        expect(EkstepEditor.assetService.getAssetMeta(undefined)).toEqual({});
+
+        EkstepEditor.assetService.setAssetMeta(assetId, {"test": "456"});
+        expect(EkstepEditor.assetService.getAssetMeta(assetId)).toEqual({ 'assetMeta': {"test": "456"}});
     });
 });

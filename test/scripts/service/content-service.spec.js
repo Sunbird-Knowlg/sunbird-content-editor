@@ -66,4 +66,25 @@ describe('Content service test cases', function() {
         });
     });
 
+    it("should set content meta once the API call is successful", function() {
+        EkstepEditor.contentService.http.get = jasmine.createSpy().and.callFake(function(url, object, cb) {
+            cb(undefined, {data: contentResponse});
+        });
+        EkstepEditor.contentService.getContent('do_112206722833612800186', function(err, res){
+            expect(res).toBeDefined();
+            expect(res.identifier).toEqual('do_112206722833612800186');
+        });
+        
+        var contentMeta = EkstepEditor.contentService.getContentMeta('do_112206722833612800186');
+        console.log('contentMeta', contentMeta);
+        expect(contentMeta.identifier).toEqual('do_112206722833612800186');
+        expect(contentMeta.languageCode).toEqual('en');
+        expect(contentMeta.concepts).toBeDefined();
+
+        expect(EkstepEditor.contentService.getContentMeta('xyz')).toEqual({});
+
+        EkstepEditor.contentService.saveContent('do_112206722833612800186', undefined, undefined, function(err, res) {
+            expect(err).toEqual('Nothing to save');
+        });
+    });
 });

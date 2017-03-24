@@ -39,6 +39,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     initialize: function(context, dispatcher) {
         var instance = this;
         this.context = context;
+        /* istanbul ignore else */
         if(_.isUndefined(this.context.cdata)) {
             this.context.cdata = [];
         }
@@ -48,7 +49,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
         }
         if (!_.isUndefined(dispatcher)) this.addDispatcher(dispatcher);
 
-        window.addEventListener('beforeunload', function() {
+        window.addEventListener('beforeunload', /* istanbul ignore next */ function() {
             instance.end();
         }); 
 
@@ -97,10 +98,8 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
         switch(dispatcherId) {
             case "local":
                 return EkstepEditor.localDispatcher;
-                break;
             case "piwik":
                 return EkstepEditor.piwikDispatcher;
-                break;
             default:
                 return EkstepEditor.consoleDispatcher;
         }
@@ -197,7 +196,8 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     */
     interact: function(data) {
         if(!this.hasRequiredData(data, this.interactRequiredFields)) {
-            console.error('Invalid interact data');    
+            console.error('Invalid interact data');
+            return;
         }
         this._dispatch(this.getEvent('CE_INTERACT', data))
     },
@@ -221,7 +221,8 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     */
     pluginLifeCycle: function(data) {
         if(!this.hasRequiredData(data, this.lifecycleRequiredFields)) {
-            console.error('Invalid plugin lifecycle event data');    
+            console.error('Invalid plugin lifecycle event data');
+            return;
         }
         this._dispatch(this.getEvent('CE_PLUGIN_LIFECYCLE', data))
     },
@@ -235,6 +236,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     error: function(data) {
         if(!this.hasRequiredData(data, this.errorRequiredFields)) {
             console.error('Invalid error data');
+            return;
         }
         this._dispatch(this.getEvent('CE_ERROR', data))
     },
@@ -259,6 +261,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     apiCall: function(data) {
         if (!this.hasRequiredData(data, this.apiCallRequiredFields)) {
             console.error('Invalid api call data');
+            return;
         }
         this._dispatch(this.getEvent('CE_API_CALL', data))
     },
@@ -269,12 +272,14 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     *
     */
     detectClient: function() {        
+
         var nAgt = navigator.userAgent;
         var browserName = navigator.appName;
         var fullVersion = '' + parseFloat(navigator.appVersion);
         var nameOffset, verOffset, ix;
 
         // In Opera
+        /* istanbul ignore next. Cannot test this as the test cases runs in phatomjs browser */
         if ((verOffset = nAgt.indexOf("Opera")) != -1) {
             browserName = "opera";
             fullVersion = nAgt.substring(verOffset + 6);
@@ -305,8 +310,10 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
         }
         
         // trim the fullVersion string at semicolon/space if present
+        /* istanbul ignore next. Cannot test this as the test cases runs in phatomjs browser */
         if ((ix = fullVersion.indexOf(";")) != -1)
             fullVersion = fullVersion.substring(0, ix);
+        /* istanbul ignore next. Cannot test this as the test cases runs in phatomjs browser */
         if ((ix = fullVersion.indexOf(" ")) != -1)
             fullVersion = fullVersion.substring(0, ix);
 

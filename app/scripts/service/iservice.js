@@ -1,3 +1,4 @@
+/* istanbul ignore next */
 EkstepEditor.iService = Class.extend({
     init: function(config) {
         this.initService(config);
@@ -8,6 +9,7 @@ EkstepEditor.iService = Class.extend({
         get: function(url, config, cb) {
             var instance = this;
             if (!config) config = {};
+            
             this.$http.get(url, config).then(function(res) {
                 instance._dispatchTelemetry({url: url, method: "GET", request: "", res: res});
                 cb(null, res) 

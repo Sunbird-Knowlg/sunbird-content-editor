@@ -28,9 +28,9 @@ EkstepEditor.assetService = new(EkstepEditor.iService.extend({
      * @memberof EkstepEditor.assetService
      */
     setAssetMeta: function(id, assetMeta) {
-        if (id) {
-            this.asset[id] = _.isUndefined(this.asset[id]) ? {} : this.asset[id];
-            this.asset[id].assetMeta = _.isUndefined(assetMeta) ? this.asset[id].assetMeta : assetMeta;
+        if (id && assetMeta) {
+            if(_.isUndefined(this.asset[id])) this.asset[id] = {};
+            this.asset[id].assetMeta = assetMeta;
         }
     },
     /**

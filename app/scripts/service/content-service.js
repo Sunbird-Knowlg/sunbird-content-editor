@@ -31,6 +31,7 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
     * @memberof EkstepEditor.contentService
     */
     _setContentMeta: function(id, contentMeta) {
+        /* istanbul ignore else */
         if (id && contentMeta) {
             var meta = {};
             for(k in contentMeta) {
@@ -100,6 +101,7 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
                 var headers = { "headers": { "content-type": "application/json", "user-id": "ATTool" } }
                 var requestObj = { request: { content: content } };
                 instance.http.patch(this.serviceURL + 'v2/content/' + contentId, requestObj, headers, function(err, res) {
+                    /* istanbul ignore else */
                     if (res) {
                         instance.content[contentId].versionKey = res.data.result.versionKey;
                     }
@@ -126,6 +128,7 @@ EkstepEditor.contentService = new(EkstepEditor.iService.extend({
         if (contentId) {
             var metaDataFields = "?fields=" + instance.contentFields;
             instance.http.get(this.serviceURL + 'v2/content/' + contentId + metaDataFields, {}, function(err, res) {
+                /* istanbul ignore else */
                 if (err) callback(err, undefined);
                 if (!err && res.data && res.data.result && res.data.result.content) {
                     instance._setContentMeta(contentId, res.data.result.content);

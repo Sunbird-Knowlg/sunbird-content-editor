@@ -118,4 +118,53 @@ describe('telemetry service', function() {
         service.apiCall(data);
         expect(service._dispatch).toHaveBeenCalledWith(testEvent);
     });
+
+    it('should fail to initialize the service', function() {
+        spyOn(window, 'addEventListener');
+        service.addDispatcher(); //console
+        service.initialize({
+            uid: uid,
+            sid: undefined,
+            content_id: EkstepEditorAPI.getContext('contentId')
+        });
+
+        expect(service.initialized).toBe(false);
+        expect(service.dispatchers.length).toBe(1);
+        expect(window.addEventListener).toHaveBeenCalledWith('beforeunload', jasmine.any(Function));
+        expect(service.startEvent().getData()).toEqual({ defaultPlugins: [], loadtimes: {}, client: {} });
+
+        service.addDispatcher();
+        expect(service.dispatchers.length).toBe(1);
+        service.end();
+    });
+
+    it('test all validations for the telemetry events', function() {
+
+        spyOn(service, '_dispatch');
+        spyOn(console, "error").and.callThrough();
+        var data = { "env": "migration", "action": "log the error", "err": "migration has errors", "type": "PORTAL", "data": "", "severity": "warn" };
+        service.error(service.getEvent("CE_ERROR", data));
+        expect(service._dispatch).not.toHaveBeenCalledWith();
+        expect(console.error).toHaveBeenCalledWith('Invalid error data');
+
+        var data = { "path": "https://dev.ekstep.in/api/search/v2/search", "method": "POST", "request": "{\"request\":{\"filters\":{\"objectType\":[\"Concept\"]},\"offset\":315,\"limit\":200}}", "response": "", "responseTime": 601, "status": 200, "uip": "" }
+        service.apiCall(service.getEvent("CE_API_CALL", data));
+        expect(service._dispatch).not.toHaveBeenCalledWith();
+        expect(console.error).toHaveBeenCalledWith('Invalid api call data');
+
+        var data = { "type": "select", "subtype": "", "target": "plugin", "pluginid": "org.ekstep.image", "pluginver": "1.0", "objectid": "c10732bd-e548-4195-a7d5-4dc921a5599b", "stage": "4d0657d8-27ba-4e2c-b4a6-795202e4d754" };
+        service.interact(service.getEvent("CE_INTERACT", data));
+        expect(service._dispatch).not.toHaveBeenCalledWith();
+        expect(console.error).toHaveBeenCalledWith('Invalid interact data');
+
+        var data = { "type": "add", "pluginid": "org.ekstep.image", "pluginver": "1.0", "objectid": "c10732bd-e548-4195-a7d5-4dc921a5599b", "stage": "4d0657d8-27ba-4e2c-b4a6-795202e4d754", "containerid": "", "containerplugin": "" };
+        service.pluginLifeCycle(service.getEvent("CE_PLUGIN_LIFECYCLE", data));
+        expect(service._dispatch).not.toHaveBeenCalledWith();
+        expect(console.error).toHaveBeenCalledWith('Invalid plugin lifecycle event data');
+
+        var data = { "type": "add", "pluginid": "org.ekstep.image", "pluginver": "1.0", "objectid": "c10732bd-e548-4195-a7d5-4dc921a5599b", "stage": "4d0657d8-27ba-4e2c-b4a6-795202e4d754", "containerid": "", "containerplugin": "" };
+        service.pluginLifeCycle(service.getEvent("CE_PLUGIN_LIFECYCLE", data));
+        expect(service._dispatch).not.toHaveBeenCalledWith();
+        expect(console.error).toHaveBeenCalledWith('Invalid interact data');
+    });        
 });
