@@ -23,6 +23,7 @@ EkstepEditor.toolbarManager = new(Class.extend({
         }
     },
     registerConfigMenu: function(menu) {
+        /* istanbul ignore else */
         if (!_.isObject(_.find(this.configMenuItems, { id: menu.id }))) {
             this.configMenuItems.push(menu);
         }
@@ -38,6 +39,7 @@ EkstepEditor.toolbarManager = new(Class.extend({
         _.forEach(menus, function(cmenu) {
             instance._updateContextMenu(cmenu.id, cmenu);
         });
+        /* istanbul ignore next. Angular functions cannot be tested now */
         EkstepEditorAPI.ngSafeApply(this.scope, function() {
             instance.scope.contextMenus = instance.contextMenuItems;
         });

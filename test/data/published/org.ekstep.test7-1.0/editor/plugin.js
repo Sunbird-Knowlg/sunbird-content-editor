@@ -22,6 +22,7 @@ EkstepEditor.basePlugin.extend({
         var props = this.convertToFabric(this.attributes);
         this.shapeType = 'rect';
         this.editorObj = new fabric.Rect(props);
+        throw 'Unable to create a new instance';
     },
     /**
      *

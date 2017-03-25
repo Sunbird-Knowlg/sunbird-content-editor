@@ -43,7 +43,6 @@ EkstepEditor.resourceManager = new(Class.extend({
             case 'css':
                 EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + resource + "'>");
                 break;
-            default:
         }
     },
     loadResource: function(url, dataType, callback, publishedTime) {

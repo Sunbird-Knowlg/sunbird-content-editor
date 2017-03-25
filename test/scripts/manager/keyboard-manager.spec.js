@@ -17,13 +17,40 @@ describe('Keyboard manager', function() {
 
     it('should invoke the callback on key combination keydown event', function() {
 
+        var $document = {
+            cb: undefined,
+            on: function(action, cb) {
+                this.cb = cb;
+            },
+            invoke: function(event) {
+                this.cb(event);
+            }
+        };
+        EkstepEditor.keyboardManager.initialize($document);
         var callbackInvoked = false;
         EkstepEditor.keyboardManager.registerKeyCombination("ctrl+x", function() {
             callbackInvoked = true;
         });
-
-        EkstepEditor.keyboardManager.resolveKeyCombination({ ctrlKey: true, keyCode: 88, preventDefault: function() {} });
+        $document.invoke({ ctrlKey: true, keyCode: 88, preventDefault: function() {} })
         expect(callbackInvoked).toBe(true);
+
+        callbackInvoked = false;
+        EkstepEditor.keyboardManager.registerKeyCombination("cmd + shift + alt + 5", function() {
+            callbackInvoked = true;
+        });
+        $document.invoke({ metaKey: true, shiftKey: true, altKey: true, keyCode: 53, preventDefault: function() {} })
+        expect(callbackInvoked).toBe(true);
+
+        callbackInvoked = false;
+        EkstepEditor.keyboardManager.registerKeyCombination("alt + del", function() {
+            callbackInvoked = true;
+        });
+        $document.invoke({ metaKey: false, shiftKey: false, altKey: true, keyCode: 8, preventDefault: function() {} })
+        expect(callbackInvoked).toBe(true);
+
+        callbackInvoked = false;
+        $document.invoke({ metaKey: true, shiftKey: false, altKey: true, keyCode: 8, preventDefault: function() {} })
+        expect(callbackInvoked).toBe(false);
     });
 
     it('should throw error on multiple register of same key combination', function() {

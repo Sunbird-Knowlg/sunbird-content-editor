@@ -104,7 +104,8 @@ EkstepEditor.pluginManager = new(Class.extend({
                     EkstepEditorAPI.dispatchEvent(pluginManifest.id + ':add');                    
                 }
             } catch(e) {
-                throw new Error(e);
+                delete instance.pluginInstances[p.id];
+                throw e;
             }
         }
         return p;
@@ -113,6 +114,7 @@ EkstepEditor.pluginManager = new(Class.extend({
         this.pluginInstances[pluginObj.id] = pluginObj;
     },
     removePluginInstance: function(pluginObj) {
+        /* istanbul ignore else */
         if (pluginObj) pluginObj.remove();
     },
     getPluginInstance: function(id) {

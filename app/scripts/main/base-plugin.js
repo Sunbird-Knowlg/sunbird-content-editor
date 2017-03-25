@@ -31,7 +31,7 @@ EkstepEditor.basePlugin = Class.extend({
      * @memberof EkstepEditor.BasePlugin
      */
     init: function(manifest, data, parent) {
-      var instance = this;
+        var instance = this;
         this.manifest = _.cloneDeep(manifest);
         if (arguments.length == 1) {
             this.registerMenu();
@@ -348,7 +348,8 @@ EkstepEditor.basePlugin = Class.extend({
      * this method to return custom metadata.
      * @memberof EkstepEditor.BasePlugin
      */    
-    /* istanbul ignore next */getMeta: function() {},
+    /* istanbul ignore next */
+    getMeta: function() {},
 
     /**
      * Utility method to convert canvas pixels to relative units. By design, all rendering must work with

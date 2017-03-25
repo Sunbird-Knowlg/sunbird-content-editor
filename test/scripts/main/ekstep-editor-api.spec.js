@@ -124,7 +124,7 @@ describe("Ekstep editor test", function() {
         EkstepEditorAPI.removeEventListener("stage:delete", function(){}, undefined);
         expect(EkstepEditorAPI.removeEventListener).toHaveBeenCalled();
         expect(EkstepEditorAPI.addEventListener).toHaveBeenCalled();
-    });    
+    });
 
     describe('when stage plugin instantiated', function() {
         var stagePlugin = 'org.ekstep.stage',
@@ -133,6 +133,7 @@ describe("Ekstep editor test", function() {
             test1pluginInstance,
             stageECML,
             test1ECML;
+        var callbackInvoked = false;
 
         beforeAll(function() {
             stageECML = {
@@ -171,7 +172,12 @@ describe("Ekstep editor test", function() {
             stageInstance.setCanvas(canvas);
             spyOn(EkstepEditorAPI, 'getAngularScope').and.returnValue({ enableSave: function() {}, $safeApply: function() {} });
             spyOn(EkstepEditorAPI, 'dispatchEvent');
-            test1pluginInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance);
+
+            test1pluginInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance, {
+                added: function(instance, options, event) {
+                    callbackInvoked = true;
+                }
+            }); 
         });
 
         afterAll(function() {
@@ -326,6 +332,11 @@ describe("Ekstep editor test", function() {
             spyOn(EkstepEditorAPI, "getCurrentGroup").and.callThrough();
             expect(EkstepEditorAPI.getCurrentGroup().length).toEqual(2);
         });
+
+        it('should override functions dynamically while instantiating a plugin', function() {
+            test1pluginInstance.added();
+            expect(callbackInvoked).toBe(true);
+        })
     });
 
 

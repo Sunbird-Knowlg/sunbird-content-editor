@@ -167,6 +167,34 @@ describe("Plugin Manager test cases", function() {
         //expect(console.error).objectContaining('Unable to load editor plugin');        
     });
 
+    it("should load packaged core plugin invoking register function directly", function() {
+        spyOn(EkstepEditor.pluginManager, "registerPlugin").and.callThrough();
+        EkstepEditor.pluginManager.registerPlugin({"id":"org.ekstep.delete","ver":"1.0","author":"Santhosh Vasabhaktula","title":"Delete Plugin","description":"","publishedDate":"","editor":{"main":"editor/plugin.js","menu":[{"id":"delete","category":"context","type":"icon","toolTip":"Delete","title":"Delete","iconClass":"trash outline icon","state":"HIDE","onclick":{"id":"delete:invoke","data":{}}}]}},eval('EkstepEditor.basePlugin.extend({type:"delete",picker:void 0,initialize:function(){var e=this;EkstepEditorAPI.addEventListener("delete:invoke",this.deleteObject,this),EkstepEditorAPI.addEventListener("object:selected",this.objectSelected,this),EkstepEditorAPI.addEventListener("object:unselected",this.objectUnSelected,this),EkstepEditorAPI.registerKeyboardCommand("del",function(){e.deleteObject()})},deleteObject:function(e,t){var d=EkstepEditorAPI.getEditorGroup(),i=EkstepEditorAPI.getEditorObject(),o=this;i?o.remove(i):d&&(EkstepEditorAPI.getCanvas().discardActiveGroup(),d.getObjects().forEach(function(e){o.remove(e)}))},remove:function(e){EkstepEditorAPI.dispatchEvent("delete:invoked",{editorObj:EkstepEditorAPI.getPluginInstance(e.id).attributes}),EkstepEditorAPI.getCanvas().remove(e),EkstepEditorAPI.dispatchEvent("stage:modified",{id:e.id})},objectSelected:function(e,t){EkstepEditorAPI.updateContextMenu({id:"delete",state:"SHOW",data:{}})},objectUnSelected:function(e,t){EkstepEditorAPI.updateContextMenu({id:"delete",state:"HIDE",data:{}})}});'))
+        expect(EkstepEditor.pluginManager.registerPlugin).toHaveBeenCalled();
+    });
+
+    it('should handle plugin instance failures gracefully', function() {
+        
+        var pluginsCount = _.keys(EkstepEditor.pluginManager.pluginObjs).length;
+        EkstepEditor.pluginManager.loadPlugin("org.ekstep.test7", "1.0");
+        var newCount = _.keys(EkstepEditor.pluginManager.pluginObjs).length;
+        expect(newCount).toBe(pluginsCount + 1);
+
+        spyOn(EkstepEditorAPI, "dispatchEvent").and.callThrough();
+        var pluginInstancesCount = _.keys(EkstepEditor.pluginManager.pluginInstances).length;
+        var error = undefined;
+        try {
+            EkstepEditor.pluginManager.invoke('org.ekstep.test7', {}, undefined, undefined);
+        } catch(e) {
+            console.log('Error:', e);
+            error = e;
+        }
+        var newPluginInstancesCount = _.keys(EkstepEditor.pluginManager.pluginInstances).length;
+        expect(error).toBe('Unable to create a new instance');
+        expect(pluginInstancesCount).toBe(newPluginInstancesCount);
+        expect(EkstepEditorAPI.dispatchEvent).not.toHaveBeenCalled();
+    })
+
     xit('should not load plugin js file', function() {
         spyOn(EkstepEditor.pluginManager, "loadPluginByManifest").and.callThrough();
         spyOn(console, "error").and.callThrough();

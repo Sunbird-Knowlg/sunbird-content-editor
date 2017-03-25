@@ -47,7 +47,7 @@ EkstepEditor.init = function(context, config, $scope, $document, callback) {
 
 EkstepEditor._mergeConfig = function(config) {
     config = config || {};
-    EkstepEditor.config = Object.assign(config, EkstepEditor.config);
+    EkstepEditor.config = Object.assign(EkstepEditor.config, config);
 }
 
 EkstepEditor._loadDefaultPlugins = function(context, callback) {
