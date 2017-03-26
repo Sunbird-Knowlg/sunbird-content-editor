@@ -40,7 +40,7 @@ EkstepEditor.basePlugin = Class.extend({
             console.log(manifest.id + " plugin initialized");
         } else {
             this.editorObj = undefined, this.event = undefined, this.attributes = { x: 0, y: 0, w: 0, h: 0, visible: true }, this.params = undefined, this.data = undefined, this.media = undefined;
-            this.editorData = data;
+            this.editorData = data || {};
             this.children = [];
             this.id = this.editorData.id || UUID();
             this.parent = parent;

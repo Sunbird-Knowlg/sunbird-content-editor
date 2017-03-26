@@ -11,6 +11,6 @@ EkstepEditor.publishedRepo = new(EkstepEditor.iRepo.extend({
         }, publishedTime);
     },
     resolveResource: function(id, ver, resource) {
-    	return this.basePath + "/" + id + "-" + ver + "/" + resource;
+    	return EkstepEditor.config.pluginRepo + "/" + id + "-" + ver + "/" + resource;
     }
 }));

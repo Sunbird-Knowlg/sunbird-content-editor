@@ -16,12 +16,13 @@ describe("Ekstep editor test", function() {
         };
 
         //load core plugins from s3
-        EkstepEditor.publishedRepo.basePath = "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins";
+        EkstepEditorAPI.setConfig('pluginRepo', "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins");
         _.forIn(corePlugins, function(value, key) {
             EkstepEditor.pluginManager.loadPlugin(key, value);
         });
 
         EkstepEditor.publishedRepo.basePath = "base/test/data/published";
+        EkstepEditorAPI.setConfig('pluginRepo', "base/test/data/published");
         EkstepEditor.hostRepo.basePath = "base/test/data/hosted";
         EkstepEditor.draftRepo.basePath = "base/test/data/draft";
         EkstepEditor.hostRepo.connected = true;
