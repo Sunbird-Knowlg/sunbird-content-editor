@@ -47,7 +47,7 @@ EkstepEditor.init = function(context, config, $scope, $document, callback) {
 
 EkstepEditor._mergeConfig = function(config) {
     config = config || {};
-    EkstepEditor.config = Object.assign(EkstepEditor.config, config);
+    EkstepEditor.config = _.assign(EkstepEditor.config, config);
 }
 
 EkstepEditor._loadDefaultPlugins = function(context, callback) {
@@ -61,17 +61,5 @@ EkstepEditor._loadDefaultPlugins = function(context, callback) {
         }, EkstepEditor.config.dispatcher);
         callback();
         EkstepEditor.telemetryService.startEvent().append("loadtimes", { plugins: ((new Date()).getTime() - startTime) });
-    });
-}
-
-EkstepEditor.loadBaseConfigManifest = function (cb) {
-    EkstepEditor.resourceManager.loadResource(EkstepEditor.config.baseConfigManifest, 'json', function(err, data) {
-        EkstepEditor.baseConfigManifest = [];
-        if (err) {
-            console.log('Unable to load baseConfigManifest');
-        } else {
-            EkstepEditor.baseConfigManifest = data;
-        }
-        cb(EkstepEditor.baseConfigManifest)
     });
 }

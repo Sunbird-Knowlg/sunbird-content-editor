@@ -46,13 +46,7 @@ EkstepEditor.basePlugin = Class.extend({
             this.parent = parent;
             this.config = { opacity: 100, strokeWidth: 1, stroke: "rgba(255, 255, 255, 0)", autoplay: false, visible: true };
         }
-        if (!EkstepEditor.baseConfigManifest) {
-            EkstepEditor.loadBaseConfigManifest(function() {
-                instance.configManifest = _.clone(EkstepEditor.baseConfigManifest, true);
-            })
-        } else {
-            this.configManifest = _.clone(EkstepEditor.baseConfigManifest, true);
-        }
+        this.configManifest = _.clone(EkstepEditor.baseConfigManifest, true);
     },
 
     /**

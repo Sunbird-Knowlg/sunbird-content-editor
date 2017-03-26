@@ -430,7 +430,13 @@ describe("plugin framework integration test: ", function() {
 
         it('instance can get its own config manifest data', function() {
             var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, _.cloneDeep(test1ECML), stageInstance);
-            expect(newInstance.getConfigManifest()).toEqual([{ "propertyName": "color", "title": "Fill Color", "description": "Choose a color from the color picker", "dataType": "colorpicker", "required": true, "defaultValue": "#000000" }]);
+            var pluginManifest = newInstance.getConfigManifest();
+            expect(pluginManifest.length).toEqual(3);
+            var colorManifest = _.find(pluginManifest, {propertyName: 'color'});
+            expect(colorManifest.dataType).toBe('colorpicker');
+
+            var visibleManifest = _.find(pluginManifest, {propertyName: 'visible'});
+            expect(visibleManifest.dataType).toBe('boolean');
         });
 
         it('instance can get relative URL of its own resource', function() {
