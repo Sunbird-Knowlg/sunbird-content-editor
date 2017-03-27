@@ -258,9 +258,6 @@ var corePlugins = [
     "org.ekstep.quiz-1.0",
     "org.ekstep.stageconfig-1.0",
     "org.ekstep.telemetry-1.0",
-    "org.ekstep.copypaste-1.0",
-    "org.ekstep.delete-1.0",
-    "org.ekstep.reorder-1.0",
     "org.ekstep.preview-1.0",
     "org.ekstep.todo-1.0",
     "org.ekstep.activitybrowser-1.0",
@@ -268,7 +265,8 @@ var corePlugins = [
     "org.ekstep.download-1.0",
     "org.ekstep.unsupported-1.0",
     "org.ekstep.wordinfobrowser-1.0",
-    "org.ekstep.viewecml-1.0"
+    "org.ekstep.viewecml-1.0",
+    "org.ekstep.utils-1.0"
 ]
 
 gulp.task('minifyCorePlugins', function() {
