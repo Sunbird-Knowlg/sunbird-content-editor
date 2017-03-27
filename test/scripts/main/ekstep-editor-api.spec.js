@@ -294,6 +294,15 @@ describe("Ekstep editor test", function() {
             expect(EkstepEditorAPI.getStage).toHaveBeenCalledWith(EkstepEditorAPI.getCurrentStage().id);
         });
 
+        it('should call getStagePluginInstances without excludeTypes and excludeIds', function() {
+            spyOn(EkstepEditorAPI, "getStagePluginInstances").and.callThrough();
+            spyOn(EkstepEditorAPI, "getStage").and.callThrough()
+            var returnValue = EkstepEditorAPI.getStagePluginInstances(EkstepEditorAPI.getCurrentStage().id, ['org.ekstep.test2']);
+            expect(returnValue.length).toBe(0);
+            expect(EkstepEditorAPI.getStage).toHaveBeenCalled();
+            expect(EkstepEditorAPI.getStage).toHaveBeenCalledWith(EkstepEditorAPI.getCurrentStage().id);
+        });
+
         it('should call getPluginInstances without includeTypes', function() {
             spyOn(EkstepEditorAPI, "getPluginInstances").and.callThrough();
             var returnValue = EkstepEditorAPI.getPluginInstances(null, ['org.ekstep.audio'], [EkstepEditorAPI.getCurrentObject().id]);
@@ -304,6 +313,12 @@ describe("Ekstep editor test", function() {
             spyOn(EkstepEditorAPI, "getPluginInstances").and.callThrough();
             var returnValue = EkstepEditorAPI.getPluginInstances(['org.ekstep.test1'], ['org.ekstep.audio'], [EkstepEditorAPI.getCurrentObject().id]);
             expect(returnValue.length).toBe(1);
+        });
+
+        it('should call getPluginInstances without excludeTypes and excludeIds', function() {
+            spyOn(EkstepEditorAPI, "getPluginInstances").and.callThrough();
+            var returnValue = EkstepEditorAPI.getPluginInstances(['org.ekstep.test1']);
+            expect(returnValue.length).toBeGreaterThan(0);
         });
 
         it("should return help.md path by calling resolvePluginResource", function() {
