@@ -11,6 +11,7 @@ EkstepEditor.pluginManager = new(Class.extend({
     },
     registerPlugin: function(manifest, plugin, repo) {
         repo = repo || EkstepEditor.publishedRepo;
+        this._registerNameSpace(manifest.id, plugin);
         this.plugins[manifest.id] = { p: plugin, m: manifest, 'repo': repo };
         var p = new plugin(manifest); // Initialize plugin
         this.pluginObjs[manifest.id] = p;
@@ -58,6 +59,24 @@ EkstepEditor.pluginManager = new(Class.extend({
                 }
             }
         }, publishedTime);
+    },
+    _registerNameSpace: function(pluginId, clazz) {
+        var names = pluginId.split('.')
+        var baseNameSpace = names[0];
+        names.splice(0, 1);
+        names = names.join('.')
+        if(!window[baseNameSpace]) {
+            window[baseNameSpace] = {};
+        }
+        var pluginClazz = Class.extend({
+            init: function(data, parent, override) {
+                EkstepEditorAPI.instantiatePlugin(pluginId, data, parent, override);
+            }
+        });
+        pluginClazz.extend = function(subClazz) {
+            return clazz.extend(subClazz);
+        }
+        _.set(window[baseNameSpace], names, pluginClazz);
     },
     loadDependencies: function(manifest, repo, publishedTime) {
         var instance = this;

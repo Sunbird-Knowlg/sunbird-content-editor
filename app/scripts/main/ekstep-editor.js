@@ -10,6 +10,10 @@ window.fabric.Object.prototype.toObject = (function(toObject) {
     };
 })(window.fabric.Object.prototype.toObject);
 
+window.org = {
+    
+}
+
 var ekstep_editor = function() {};
 ekstep_editor.prototype.jQuery = window.$;
 ekstep_editor.prototype._ = window._;
