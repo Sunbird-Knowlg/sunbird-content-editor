@@ -427,7 +427,11 @@ describe("plugin framework integration test: ", function() {
 
             expect(helpText).toBeDefined();
         });
-
+        it('instance can get its displayName', function() {  
+            var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, _.cloneDeep(test1ECML), stageInstance);
+            var displayName = newInstance.getDisplayName();
+            expect(displayName).toEqual("Shape");
+        });
         it('instance can get its own config manifest data', function() {
             var newInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, _.cloneDeep(test1ECML), stageInstance);
             var pluginManifest = newInstance.getConfigManifest();
@@ -634,5 +638,6 @@ describe("plugin framework integration test: ", function() {
         it('should generate stageIcons when toECML', function() {
             expect(Object.keys(EkstepEditor.stageManager.getStageIcons()).length).toBe(getPluginCount('stage'));
         });
+
     });
 });

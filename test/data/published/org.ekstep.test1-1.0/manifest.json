@@ -2,6 +2,7 @@
     "id": "org.ekstep.test1",
     "ver": "1.0",
     "shortId": "shape",
+    "displayName": "Shape",
     "author": "Santhosh Vasabhaktula",
     "title": "Shape Plugin",
     "description": "",
