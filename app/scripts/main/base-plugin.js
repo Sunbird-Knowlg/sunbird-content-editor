@@ -774,5 +774,13 @@ EkstepEditor.basePlugin = Class.extend({
      */
     getManifestId: function () {
       return (this.manifest.shortId || this.manifest.id);
+    },
+
+    /**
+     * Returns the displayName of this object
+     * @memberof EkstepEditor.BasePlugin
+     */
+    getDisplayName: function () {
+         return (this.manifest.displayName || this.manifest.id);
     }
 });
