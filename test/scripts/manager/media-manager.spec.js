@@ -29,7 +29,7 @@ describe('Media manager', function() {
         EkstepEditorAPI.setConfig('baseURL', 'https://dev.ekstep.in');
         EkstepEditorAPI.setConfig('absURL', '');
         var url = EkstepEditor.mediaManager.getMediaOriginURL('https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/assets/test.png');
-        expect(url).toBe('/assets/public/assets/test.png');
+        expect(url).toBe('https://dev.ekstep.in/assets/public/assets/test.png');
 
         url = EkstepEditor.mediaManager.getMediaOriginURL('https://s3.ap-southeast-1.amazonaws.com/ekstep-public-dev/assets/test.png');
         expect(url).toBe('https://s3.ap-southeast-1.amazonaws.com/ekstep-public-dev/assets/test.png');
