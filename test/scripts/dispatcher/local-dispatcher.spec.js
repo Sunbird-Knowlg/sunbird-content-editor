@@ -3,10 +3,10 @@
 describe('local dispatcher', function() {
 
 	it('should log data to localhost', function() {
-		spyOn(EkstepEditor.localDispatcher.http, 'post');
+		spyOn(org.ekstep.pluginframework.localDispatcher.http, 'post');
 
-		EkstepEditor.localDispatcher.dispatch({});
+		org.ekstep.pluginframework.localDispatcher.dispatch({});
 
-		expect(EkstepEditor.localDispatcher.http.post).toHaveBeenCalledWith('telemetry', {}, jasmine.any(Function));
+		expect(org.ekstep.pluginframework.localDispatcher.http.post).toHaveBeenCalledWith('telemetry', {}, jasmine.any(Function));
 	});
 });
