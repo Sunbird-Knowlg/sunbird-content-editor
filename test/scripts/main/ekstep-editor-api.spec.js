@@ -6,7 +6,7 @@ describe("Ekstep editor test", function() {
         };
 
         // test plugins
-        EkstepEditor.config.plugins = {
+        org.ekstep.contenteditor.config.plugins = {
             "org.ekstep.test1": "1.0",
             "org.ekstep.test2": "1.0",
             "org.ekstep.test3": "1.0",
@@ -16,115 +16,115 @@ describe("Ekstep editor test", function() {
         };
 
         //load core plugins from s3
-        EkstepEditorAPI.setConfig('pluginRepo', "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins");
+        org.ekstep.contenteditor.api.setConfig('pluginRepo', "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins");
         _.forIn(corePlugins, function(value, key) {
-            EkstepEditor.pluginManager.loadPlugin(key, value);
+            org.ekstep.pluginframework.pluginManager.loadPlugin(key, value);
         });
 
-        EkstepEditor.publishedRepo.basePath = "base/test/data/published";
-        EkstepEditorAPI.setConfig('pluginRepo', "base/test/data/published");
-        EkstepEditor.hostRepo.basePath = "base/test/data/hosted";
-        EkstepEditor.draftRepo.basePath = "base/test/data/draft";
-        EkstepEditor.hostRepo.connected = true;
+        org.ekstep.pluginframework.publishedRepo.basePath = "base/test/data/published";
+        org.ekstep.contenteditor.api.setConfig('pluginRepo', "base/test/data/published");
+        org.ekstep.pluginframework.hostRepo.basePath = "base/test/data/hosted";
+        org.ekstep.pluginframework.draftRepo.basePath = "base/test/data/draft";
+        org.ekstep.pluginframework.hostRepo.connected = true;
 
-        EkstepEditor.stageManager.canvas = canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true, width: 720, height: 405 });
-        EkstepEditor.stageManager.registerEvents();
+        org.ekstep.contenteditor.stageManager.canvas = canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true, width: 720, height: 405 });
+        org.ekstep.contenteditor.stageManager.registerEvents();
     });
 
     afterAll(function() {
-        EkstepEditor.pluginManager.cleanUp();
-        EkstepEditor.stageManager.cleanUp();
+        org.ekstep.pluginframework.pluginManager.cleanUp();
+        org.ekstep.contenteditor.stageManager.cleanUp();
     });
 
     it('should load plugin', function() {
-        spyOn(EkstepEditorAPI, "loadPlugin").and.callThrough();
-        spyOn(EkstepEditor.pluginManager, "loadPlugin").and.callThrough();
-        EkstepEditorAPI.loadPlugin("org.ekstep.test1", "1.0");
-        expect(EkstepEditorAPI.loadPlugin).toHaveBeenCalled();
-        expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalled();
-        expect(EkstepEditor.pluginManager.loadPlugin).toHaveBeenCalledWith("org.ekstep.test1", "1.0");
+        spyOn(org.ekstep.contenteditor.api, "loadPlugin").and.callThrough();
+        spyOn(org.ekstep.pluginframework.pluginManager, "loadPlugin").and.callThrough();
+        org.ekstep.contenteditor.api.loadPlugin("org.ekstep.test1", "1.0");
+        expect(org.ekstep.contenteditor.api.loadPlugin).toHaveBeenCalled();
+        expect(org.ekstep.pluginframework.pluginManager.loadPlugin).toHaveBeenCalled();
+        expect(org.ekstep.pluginframework.pluginManager.loadPlugin).toHaveBeenCalledWith("org.ekstep.test1", "1.0");
     });
 
     it('should get plugin repo', function() {
-        spyOn(EkstepEditorAPI, "getPluginRepo").and.callThrough();
-        var returnValue = EkstepEditorAPI.getPluginRepo();
-        expect(returnValue).toBe(EkstepEditor.config.pluginRepo);
-        expect(EkstepEditorAPI.getPluginRepo).toHaveBeenCalled();
+        spyOn(org.ekstep.contenteditor.api, "getPluginRepo").and.callThrough();
+        var returnValue = org.ekstep.contenteditor.api.getPluginRepo();
+        expect(returnValue).toBe(org.ekstep.contenteditor.config.pluginRepo);
+        expect(org.ekstep.contenteditor.api.getPluginRepo).toHaveBeenCalled();
     });
 
     it('should call loadAndInitPlugin', function() {
-        spyOn(EkstepEditorAPI, "loadAndInitPlugin").and.callThrough();
-        spyOn(EkstepEditor.pluginManager, "loadAndInitPlugin").and.callThrough();
-        EkstepEditorAPI.loadAndInitPlugin("org.ekstep.test1", "1.0");
-        var returnValue = EkstepEditor.pluginManager.loadAndInitPlugin("rg.ekstep.test1-1.0");
+        spyOn(org.ekstep.contenteditor.api, "loadAndInitPlugin").and.callThrough();
+        spyOn(org.ekstep.pluginframework.pluginManager, "loadAndInitPlugin").and.callThrough();
+        org.ekstep.contenteditor.api.loadAndInitPlugin("org.ekstep.test1", "1.0");
+        var returnValue = org.ekstep.pluginframework.pluginManager.loadAndInitPlugin("rg.ekstep.test1-1.0");
         expect(returnValue).toBe(1);
-        expect(EkstepEditorAPI.loadAndInitPlugin).toHaveBeenCalled();
-        expect(EkstepEditor.pluginManager.loadAndInitPlugin).toHaveBeenCalled();
+        expect(org.ekstep.contenteditor.api.loadAndInitPlugin).toHaveBeenCalled();
+        expect(org.ekstep.pluginframework.pluginManager.loadAndInitPlugin).toHaveBeenCalled();
     });
 
     it("should load help for plugin", function(done) {
-        spyOn(EkstepEditorAPI, "loadPluginResource").and.callThrough();
-        EkstepEditorAPI.loadPluginResource("org.ekstep.test2", "1.0", "editor/help.md", "text", function(err, res) {
+        spyOn(org.ekstep.contenteditor.api, "loadPluginResource").and.callThrough();
+        org.ekstep.contenteditor.api.loadPluginResource("org.ekstep.test2", "1.0", "editor/help.md", "text", function(err, res) {
             done();
         })
     });
 
     it('should return canvas for rendering on the editor', function() {
-        spyOn(EkstepEditorAPI, "getCanvas").and.callThrough();
-        var returnValue = EkstepEditorAPI.getCanvas();
-        expect(EkstepEditorAPI.getCanvas).toHaveBeenCalled();
+        spyOn(org.ekstep.contenteditor.api, "getCanvas").and.callThrough();
+        var returnValue = org.ekstep.contenteditor.api.getCanvas();
+        expect(org.ekstep.contenteditor.api.getCanvas).toHaveBeenCalled();
         expect(returnValue).toBeDefined();
     });
 
     it('should return respective services', function() {
-        spyOn(EkstepEditorAPI, "getService").and.callThrough();
-        expect(EkstepEditorAPI.getService("popup")).toBe(EkstepEditor.popupService);
-        expect(EkstepEditorAPI.getService("content")).toBe(EkstepEditor.contentService);
-        expect(EkstepEditorAPI.getService("assessment")).toBe(EkstepEditor.assessmentService);
-        expect(EkstepEditorAPI.getService("language")).toBe(EkstepEditor.languageService);
-        expect(EkstepEditorAPI.getService("search")).toBe(EkstepEditor.searchService);
-        expect(EkstepEditorAPI.getService("meta")).toBe(EkstepEditor.metaService);
-        expect(EkstepEditorAPI.getService("asset")).toBe(EkstepEditor.assetService);
-        expect(EkstepEditorAPI.getService("telemetry")).toBe(EkstepEditor.telemetryService);
+        spyOn(org.ekstep.contenteditor.api, "getService").and.callThrough();
+        expect(org.ekstep.contenteditor.api.getService("popup")).toBe(org.ekstep.services.popupService);
+        expect(org.ekstep.contenteditor.api.getService("content")).toBe(org.ekstep.services.contentService);
+        expect(org.ekstep.contenteditor.api.getService("assessment")).toBe(org.ekstep.services.assessmentService);
+        expect(org.ekstep.contenteditor.api.getService("language")).toBe(org.ekstep.services.languageService);
+        expect(org.ekstep.contenteditor.api.getService("search")).toBe(org.ekstep.services.searchService);
+        expect(org.ekstep.contenteditor.api.getService("meta")).toBe(org.ekstep.services.metaService);
+        expect(org.ekstep.contenteditor.api.getService("asset")).toBe(org.ekstep.services.assetService);
+        expect(org.ekstep.contenteditor.api.getService("telemetry")).toBe(org.ekstep.services.telemetryService);
     });
 
     it('should call updateContextMenu', function() {
-        spyOn(EkstepEditorAPI, "updateContextMenus").and.callThrough();
-        EkstepEditorAPI.updateContextMenus([{ id: 'paste', state: 'SHOW', data: {} }]);
-        expect(EkstepEditorAPI.updateContextMenus).toHaveBeenCalled();
-        expect(EkstepEditor.toolbarManager.contextMenuItems.length).toEqual(3);
-        expect(EkstepEditor.toolbarManager.contextMenuItems[0].id).toBe("copy");
+        spyOn(org.ekstep.contenteditor.api, "updateContextMenus").and.callThrough();
+        org.ekstep.contenteditor.api.updateContextMenus([{ id: 'paste', state: 'SHOW', data: {} }]);
+        expect(org.ekstep.contenteditor.api.updateContextMenus).toHaveBeenCalled();
+        expect(org.ekstep.contenteditor.toolbarManager.contextMenuItems.length).toEqual(3);
+        expect(org.ekstep.contenteditor.toolbarManager.contextMenuItems[0].id).toBe("copy");
     });
 
     it('should set contentid in config ', function() {
-        spyOn(EkstepEditorAPI, "setConfig").and.callThrough();
-        EkstepEditorAPI.setConfig('contentId', 'do_1122069161408757761139');
-        expect(EkstepEditorAPI.setConfig).toHaveBeenCalled();
+        spyOn(org.ekstep.contenteditor.api, "setConfig").and.callThrough();
+        org.ekstep.contenteditor.api.setConfig('contentId', 'do_1122069161408757761139');
+        expect(org.ekstep.contenteditor.api.setConfig).toHaveBeenCalled();
     });
 
     it('should return all config values', function() {
-        spyOn(EkstepEditorAPI, "getAllConfig").and.callThrough();
-        EkstepEditorAPI.setConfig('contentId', 'do_1122069161408757761139');
-        var returnValue = EkstepEditorAPI.getAllConfig();
-        expect(EkstepEditorAPI.getAllConfig).toHaveBeenCalled();
+        spyOn(org.ekstep.contenteditor.api, "getAllConfig").and.callThrough();
+        org.ekstep.contenteditor.api.setConfig('contentId', 'do_1122069161408757761139');
+        var returnValue = org.ekstep.contenteditor.api.getAllConfig();
+        expect(org.ekstep.contenteditor.api.getAllConfig).toHaveBeenCalled();
         expect(returnValue.contentId).toEqual('do_1122069161408757761139');
     });
 
     it('should return all global context values', function() {
-        spyOn(EkstepEditorAPI, "getAllContext").and.callThrough();
-        EkstepEditorAPI.setContext('contentId', 'do_1122069161408757761139');
-        var returnValue = EkstepEditorAPI.getAllContext();
-        expect(EkstepEditorAPI.getAllContext).toHaveBeenCalled();
+        spyOn(org.ekstep.contenteditor.api, "getAllContext").and.callThrough();
+        org.ekstep.contenteditor.api.setContext('contentId', 'do_1122069161408757761139');
+        var returnValue = org.ekstep.contenteditor.api.getAllContext();
+        expect(org.ekstep.contenteditor.api.getAllContext).toHaveBeenCalled();
         expect(returnValue.contentId).toEqual('do_1122069161408757761139');
     });
 
     it('should remove event listener', function() {
-        spyOn(EkstepEditorAPI, "addEventListener").and.callThrough();
-        spyOn(EkstepEditorAPI, "removeEventListener").and.callThrough();
-        EkstepEditorAPI.addEventListener("stage:delete", function(){}, undefined);
-        EkstepEditorAPI.removeEventListener("stage:delete", function(){}, undefined);
-        expect(EkstepEditorAPI.removeEventListener).toHaveBeenCalled();
-        expect(EkstepEditorAPI.addEventListener).toHaveBeenCalled();
+        spyOn(org.ekstep.contenteditor.api, "addEventListener").and.callThrough();
+        spyOn(org.ekstep.contenteditor.api, "removeEventListener").and.callThrough();
+        org.ekstep.contenteditor.api.addEventListener("stage:delete", function(){}, undefined);
+        org.ekstep.contenteditor.api.removeEventListener("stage:delete", function(){}, undefined);
+        expect(org.ekstep.contenteditor.api.removeEventListener).toHaveBeenCalled();
+        expect(org.ekstep.contenteditor.api.addEventListener).toHaveBeenCalled();
     });
 
     describe('when stage plugin instantiated', function() {
@@ -169,12 +169,12 @@ describe("Ekstep editor test", function() {
                 "z-index": "0",
                 "id": "2113ee4e-b090-458e-a0b0-5ee6668cb6dc"
             };
-            stageInstance = EkstepEditorAPI.instantiatePlugin(stagePlugin, stageECML);
+            stageInstance = org.ekstep.contenteditor.api.instantiatePlugin(stagePlugin, stageECML);
             stageInstance.setCanvas(canvas);
-            spyOn(EkstepEditorAPI, 'getAngularScope').and.returnValue({ enableSave: function() {}, $safeApply: function() {} });
-            spyOn(EkstepEditorAPI, 'dispatchEvent');
+            spyOn(org.ekstep.contenteditor.api, 'getAngularScope').and.returnValue({ enableSave: function() {}, $safeApply: function() {} });
+            spyOn(org.ekstep.contenteditor.api, 'dispatchEvent');
 
-            test1pluginInstance = EkstepEditorAPI.instantiatePlugin(test1Plugin, test1ECML, stageInstance, {
+            test1pluginInstance = org.ekstep.contenteditor.api.instantiatePlugin(test1Plugin, test1ECML, stageInstance, {
                 added: function(instance, options, event) {
                     callbackInvoked = true;
                 }
@@ -182,171 +182,171 @@ describe("Ekstep editor test", function() {
         });
 
         afterAll(function() {
-            EkstepEditor.pluginManager.cleanUp();
-            EkstepEditor.stageManager.cleanUp();
+            org.ekstep.pluginframework.pluginManager.cleanUp();
+            org.ekstep.contenteditor.stageManager.cleanUp();
         });
 
         it('should retrns the current stage', function() {
-            spyOn(EkstepEditorAPI, "getCurrentStage").and.callThrough();
-            var returnValue = EkstepEditorAPI.getCurrentStage();
-            expect(EkstepEditorAPI.getCurrentStage).toHaveBeenCalled();
+            spyOn(org.ekstep.contenteditor.api, "getCurrentStage").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getCurrentStage();
+            expect(org.ekstep.contenteditor.api.getCurrentStage).toHaveBeenCalled();
             expect(returnValue).toBeDefined();
         });
 
         it('should retrns the specified stage', function() {
-            spyOn(EkstepEditorAPI, "getStage").and.callThrough();
-            var returnValue = EkstepEditorAPI.getStage(stageInstance.id);
-            expect(EkstepEditorAPI.getStage).toHaveBeenCalled();
+            spyOn(org.ekstep.contenteditor.api, "getStage").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getStage(stageInstance.id);
+            expect(org.ekstep.contenteditor.api.getStage).toHaveBeenCalled();
             expect(returnValue).toBeDefined();
         });
 
         it('should return currently selected active object on the canvas', function() {
-            spyOn(EkstepEditorAPI, "getCurrentObject").and.callThrough();
-            spyOn(EkstepEditorAPI, "getPluginInstance").and.callThrough();
-            var currentObject = EkstepEditorAPI.getCurrentObject();
-            var currentObject = EkstepEditorAPI.getPluginInstance(currentObject.id);
-            expect(EkstepEditorAPI.getCurrentObject).toHaveBeenCalled();
-            expect(EkstepEditorAPI.getPluginInstance).toHaveBeenCalled();
+            spyOn(org.ekstep.contenteditor.api, "getCurrentObject").and.callThrough();
+            spyOn(org.ekstep.contenteditor.api, "getPluginInstance").and.callThrough();
+            var currentObject = org.ekstep.contenteditor.api.getCurrentObject();
+            var currentObject = org.ekstep.contenteditor.api.getPluginInstance(currentObject.id);
+            expect(org.ekstep.contenteditor.api.getCurrentObject).toHaveBeenCalled();
+            expect(org.ekstep.contenteditor.api.getPluginInstance).toHaveBeenCalled();
             expect(currentObject).toBeDefined();
         });
 
         it('should return false there is no selected object on the canvas', function() {
-            spyOn(EkstepEditorAPI, "getCurrentObject").and.callThrough();
-            EkstepEditor.stageManager.canvas.deactivateAll().renderAll();
-            var currentObject = EkstepEditorAPI.getCurrentObject();
-            expect(EkstepEditorAPI.getCurrentObject).toHaveBeenCalled();
+            spyOn(org.ekstep.contenteditor.api, "getCurrentObject").and.callThrough();
+            org.ekstep.contenteditor.stageManager.canvas.deactivateAll().renderAll();
+            var currentObject = org.ekstep.contenteditor.api.getCurrentObject();
+            expect(org.ekstep.contenteditor.api.getCurrentObject).toHaveBeenCalled();
         });
 
         it('should retrns current group', function() {
-            spyOn(EkstepEditorAPI, "getEditorGroup").and.callThrough();
-            var returnValue = EkstepEditorAPI.getEditorGroup();
-            expect(EkstepEditorAPI.getEditorGroup).toHaveBeenCalled();
+            spyOn(org.ekstep.contenteditor.api, "getEditorGroup").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getEditorGroup();
+            expect(org.ekstep.contenteditor.api.getEditorGroup).toHaveBeenCalled();
             expect(returnValue).toBe(null);
         });
 
         it('should retrns current object on the fabric canvas', function() {
-            spyOn(EkstepEditorAPI, "getEditorObject").and.callThrough();
-            var returnValue = EkstepEditorAPI.getEditorObject();
-            expect(EkstepEditorAPI.getEditorObject).toHaveBeenCalled();
+            spyOn(org.ekstep.contenteditor.api, "getEditorObject").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getEditorObject();
+            expect(org.ekstep.contenteditor.api.getEditorObject).toHaveBeenCalled();
             expect(returnValue).toBeDefined();
         });
 
         it('should refresh the canvas', function() {
-            spyOn(EkstepEditorAPI, "render").and.callThrough();
-            EkstepEditorAPI.render();
-            expect(EkstepEditorAPI.render).toHaveBeenCalled();
+            spyOn(org.ekstep.contenteditor.api, "render").and.callThrough();
+            org.ekstep.contenteditor.api.render();
+            expect(org.ekstep.contenteditor.api.render).toHaveBeenCalled();
         });
 
         it('should return plugin instance', function() {
-            spyOn(EkstepEditorAPI, "getPlugin").and.callThrough();
-            var pluginid = EkstepEditorAPI.getPlugin("org.ekstep.test1");
-            expect(EkstepEditorAPI.getPlugin).toHaveBeenCalled();
+            spyOn(org.ekstep.contenteditor.api, "getPlugin").and.callThrough();
+            var pluginid = org.ekstep.contenteditor.api.getPlugin("org.ekstep.test1");
+            expect(org.ekstep.contenteditor.api.getPlugin).toHaveBeenCalled();
             expect(pluginid).toBeDefined();
         });
 
         it('should adds a plugin instance to the manager', function() {
-            spyOn(EkstepEditorAPI, "addPluginInstance").and.callThrough();
-            EkstepEditorAPI.addPluginInstance(test1pluginInstance);
-            expect(EkstepEditorAPI.addPluginInstance).toHaveBeenCalled();
-            expect(Object.keys(EkstepEditor.pluginManager.pluginInstances).length).toEqual(2);
+            spyOn(org.ekstep.contenteditor.api, "addPluginInstance").and.callThrough();
+            org.ekstep.contenteditor.api.addPluginInstance(test1pluginInstance);
+            expect(org.ekstep.contenteditor.api.addPluginInstance).toHaveBeenCalled();
+            expect(Object.keys(org.ekstep.pluginframework.pluginManager.pluginInstances).length).toEqual(2);
         });
 
         it("should remove plugin instance by calling removePluginInstance", function() {
-            var PIlength = Object.keys(EkstepEditor.pluginManager.pluginInstances).length;
-            var lastPI = EkstepEditor.pluginManager.pluginInstances[Object.keys(EkstepEditor.pluginManager.pluginInstances)[0]];
-            spyOn(EkstepEditorAPI, "removePluginInstance").and.callThrough();
-            EkstepEditorAPI.removePluginInstance(lastPI);
-            expect(EkstepEditorAPI.removePluginInstance).toHaveBeenCalled();
-            expect(Object.keys(EkstepEditor.pluginManager.pluginInstances).length).not.toEqual(PIlength);
+            var PIlength = Object.keys(org.ekstep.pluginframework.pluginManager.pluginInstances).length;
+            var lastPI = org.ekstep.pluginframework.pluginManager.pluginInstances[Object.keys(org.ekstep.pluginframework.pluginManager.pluginInstances)[0]];
+            spyOn(org.ekstep.contenteditor.api, "removePluginInstance").and.callThrough();
+            org.ekstep.contenteditor.api.removePluginInstance(lastPI);
+            expect(org.ekstep.contenteditor.api.removePluginInstance).toHaveBeenCalled();
+            expect(Object.keys(org.ekstep.pluginframework.pluginManager.pluginInstances).length).not.toEqual(PIlength);
         });
 
         it('should get all stages', function() {
-            spyOn(EkstepEditorAPI, "getAllStages").and.callThrough();
-            EkstepEditorAPI.getAllStages();
-            expect(EkstepEditorAPI.getAllStages).toHaveBeenCalled();
-            expect(EkstepEditor.stageManager.stages.length).toEqual(1);
+            spyOn(org.ekstep.contenteditor.api, "getAllStages").and.callThrough();
+            org.ekstep.contenteditor.api.getAllStages();
+            expect(org.ekstep.contenteditor.api.getAllStages).toHaveBeenCalled();
+            expect(org.ekstep.contenteditor.stageManager.stages.length).toEqual(1);
         });
 
         it('should copy of the given plugin object', function() {
-            spyOn(EkstepEditorAPI, "cloneInstance").and.callThrough();
-            spyOn(EkstepEditorAPI, "instantiatePlugin").and.callThrough();
-            EkstepEditorAPI.cloneInstance(test1pluginInstance);
-            expect(EkstepEditorAPI.cloneInstance).toHaveBeenCalled();
-            expect(EkstepEditorAPI.instantiatePlugin).toHaveBeenCalled();
-            expect(test1pluginInstance.parent.id).toEqual(EkstepEditorAPI.getCurrentStage().id);
+            spyOn(org.ekstep.contenteditor.api, "cloneInstance").and.callThrough();
+            spyOn(org.ekstep.contenteditor.api, "instantiatePlugin").and.callThrough();
+            org.ekstep.contenteditor.api.cloneInstance(test1pluginInstance);
+            expect(org.ekstep.contenteditor.api.cloneInstance).toHaveBeenCalled();
+            expect(org.ekstep.contenteditor.api.instantiatePlugin).toHaveBeenCalled();
+            expect(test1pluginInstance.parent.id).toEqual(org.ekstep.contenteditor.api.getCurrentStage().id);
         });
 
         it('should call getStagePluginInstances without includeTypes', function() {
-            spyOn(EkstepEditorAPI, "getStagePluginInstances").and.callThrough();
-            spyOn(EkstepEditorAPI, "getStage").and.callThrough()
-            var returnValue = EkstepEditorAPI.getStagePluginInstances(EkstepEditorAPI.getCurrentStage().id, null, ['org.ekstep.audio'], [EkstepEditorAPI.getCurrentObject().id]);
+            spyOn(org.ekstep.contenteditor.api, "getStagePluginInstances").and.callThrough();
+            spyOn(org.ekstep.contenteditor.api, "getStage").and.callThrough()
+            var returnValue = org.ekstep.contenteditor.api.getStagePluginInstances(org.ekstep.contenteditor.api.getCurrentStage().id, null, ['org.ekstep.audio'], [org.ekstep.contenteditor.api.getCurrentObject().id]);
             expect(returnValue.length).toBeGreaterThan(0);
-            expect(EkstepEditorAPI.getStage).toHaveBeenCalled();
-            expect(EkstepEditorAPI.getStage).toHaveBeenCalledWith(EkstepEditorAPI.getCurrentStage().id);
+            expect(org.ekstep.contenteditor.api.getStage).toHaveBeenCalled();
+            expect(org.ekstep.contenteditor.api.getStage).toHaveBeenCalledWith(org.ekstep.contenteditor.api.getCurrentStage().id);
         });
 
         it('should call getStagePluginInstances with includeTypes', function() {
-            spyOn(EkstepEditorAPI, "getStagePluginInstances").and.callThrough();
-            spyOn(EkstepEditorAPI, "getStage").and.callThrough()
-            var returnValue = EkstepEditorAPI.getStagePluginInstances(EkstepEditorAPI.getCurrentStage().id, ['org.ekstep.test2'], ['org.ekstep.audio'], [EkstepEditorAPI.getCurrentObject().id]);
+            spyOn(org.ekstep.contenteditor.api, "getStagePluginInstances").and.callThrough();
+            spyOn(org.ekstep.contenteditor.api, "getStage").and.callThrough()
+            var returnValue = org.ekstep.contenteditor.api.getStagePluginInstances(org.ekstep.contenteditor.api.getCurrentStage().id, ['org.ekstep.test2'], ['org.ekstep.audio'], [org.ekstep.contenteditor.api.getCurrentObject().id]);
             expect(returnValue.length).toBe(0);
-            expect(EkstepEditorAPI.getStage).toHaveBeenCalled();
-            expect(EkstepEditorAPI.getStage).toHaveBeenCalledWith(EkstepEditorAPI.getCurrentStage().id);
+            expect(org.ekstep.contenteditor.api.getStage).toHaveBeenCalled();
+            expect(org.ekstep.contenteditor.api.getStage).toHaveBeenCalledWith(org.ekstep.contenteditor.api.getCurrentStage().id);
         });
 
         it('should call getStagePluginInstances without excludeTypes and excludeIds', function() {
-            spyOn(EkstepEditorAPI, "getStagePluginInstances").and.callThrough();
-            spyOn(EkstepEditorAPI, "getStage").and.callThrough()
-            var returnValue = EkstepEditorAPI.getStagePluginInstances(EkstepEditorAPI.getCurrentStage().id, ['org.ekstep.test2']);
+            spyOn(org.ekstep.contenteditor.api, "getStagePluginInstances").and.callThrough();
+            spyOn(org.ekstep.contenteditor.api, "getStage").and.callThrough()
+            var returnValue = org.ekstep.contenteditor.api.getStagePluginInstances(org.ekstep.contenteditor.api.getCurrentStage().id, ['org.ekstep.test2']);
             expect(returnValue.length).toBe(0);
-            expect(EkstepEditorAPI.getStage).toHaveBeenCalled();
-            expect(EkstepEditorAPI.getStage).toHaveBeenCalledWith(EkstepEditorAPI.getCurrentStage().id);
+            expect(org.ekstep.contenteditor.api.getStage).toHaveBeenCalled();
+            expect(org.ekstep.contenteditor.api.getStage).toHaveBeenCalledWith(org.ekstep.contenteditor.api.getCurrentStage().id);
         });
 
         it('should call getPluginInstances without includeTypes', function() {
-            spyOn(EkstepEditorAPI, "getPluginInstances").and.callThrough();
-            var returnValue = EkstepEditorAPI.getPluginInstances(null, ['org.ekstep.audio'], [EkstepEditorAPI.getCurrentObject().id]);
+            spyOn(org.ekstep.contenteditor.api, "getPluginInstances").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getPluginInstances(null, ['org.ekstep.audio'], [org.ekstep.contenteditor.api.getCurrentObject().id]);
             expect(returnValue.length).toBeGreaterThan(0);
         });
 
         it('should call getPluginInstances without includeTypes', function() {
-            spyOn(EkstepEditorAPI, "getPluginInstances").and.callThrough();
-            var returnValue = EkstepEditorAPI.getPluginInstances(['org.ekstep.test1'], ['org.ekstep.audio'], [EkstepEditorAPI.getCurrentObject().id]);
+            spyOn(org.ekstep.contenteditor.api, "getPluginInstances").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getPluginInstances(['org.ekstep.test1'], ['org.ekstep.audio'], [org.ekstep.contenteditor.api.getCurrentObject().id]);
             expect(returnValue.length).toBe(1);
         });
 
         it('should call getPluginInstances without excludeTypes and excludeIds', function() {
-            spyOn(EkstepEditorAPI, "getPluginInstances").and.callThrough();
-            var returnValue = EkstepEditorAPI.getPluginInstances(['org.ekstep.test1']);
+            spyOn(org.ekstep.contenteditor.api, "getPluginInstances").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getPluginInstances(['org.ekstep.test1']);
             expect(returnValue.length).toBeGreaterThan(0);
         });
 
         it("should return help.md path by calling resolvePluginResource", function() {
-            spyOn(EkstepEditorAPI, "resolvePluginResource").and.callThrough();
-            spyOn(EkstepEditor.pluginManager, "resolvePluginResource").and.callThrough();
-            var src = EkstepEditorAPI.resolvePluginResource("org.ekstep.test2", "1.0", "editor/help.md");
-            expect(EkstepEditor.pluginManager.resolvePluginResource).toHaveBeenCalled();
+            spyOn(org.ekstep.contenteditor.api, "resolvePluginResource").and.callThrough();
+            spyOn(org.ekstep.pluginframework.pluginManager, "resolvePluginResource").and.callThrough();
+            var src = org.ekstep.contenteditor.api.resolvePluginResource("org.ekstep.test2", "1.0", "editor/help.md");
+            expect(org.ekstep.pluginframework.pluginManager.resolvePluginResource).toHaveBeenCalled();
             expect(src).toBe("base/test/data/published/org.ekstep.test2-1.0/editor/help.md");
         });
 
         it("should return media object", function() {
             var audio = '{"asset" : "do_10095959","assetMedia" : {"id" : "do_10095959", "name" : "test ","preload" : "true","src : https://ekstep-public-dev.s3-ap-south-1.amazonaws.com/content/1475505176audio_1475505049712.mp3","type" : "audio"}}';
-            EkstepEditor.mediaManager.mediaMap["do_10095959"] = audio;
-            spyOn(EkstepEditorAPI, "getMedia").and.callThrough();
-            var returnValue = EkstepEditorAPI.getMedia("do_10095959");
-            expect(EkstepEditorAPI.getMedia).toHaveBeenCalled();
+            org.ekstep.contenteditor.mediaManager.mediaMap["do_10095959"] = audio;
+            spyOn(org.ekstep.contenteditor.api, "getMedia").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getMedia("do_10095959");
+            expect(org.ekstep.contenteditor.api.getMedia).toHaveBeenCalled();
             expect(returnValue).toEqual(audio);
         });
 
         it("should return the plugins group array", function() {
-            var canvas = EkstepEditor.stageManager.canvas,
+            var canvas = org.ekstep.contenteditor.stageManager.canvas,
                 group = new fabric.Group();
-            group.add(EkstepEditor.stageManager.canvas.getObjects()[0]);
-            group.add(EkstepEditor.stageManager.canvas.getObjects()[1]);
+            group.add(org.ekstep.contenteditor.stageManager.canvas.getObjects()[0]);
+            group.add(org.ekstep.contenteditor.stageManager.canvas.getObjects()[1]);
             canvas.setActiveGroup(group);
             canvas.add(group);
-            spyOn(EkstepEditorAPI, "getCurrentGroup").and.callThrough();
-            expect(EkstepEditorAPI.getCurrentGroup().length).toEqual(2);
+            spyOn(org.ekstep.contenteditor.api, "getCurrentGroup").and.callThrough();
+            expect(org.ekstep.contenteditor.api.getCurrentGroup().length).toEqual(2);
         });
 
         it('should override functions dynamically while instantiating a plugin', function() {

@@ -3,8 +3,7 @@
 describe('iservice', function() {
     it('should serve GET request', function() {
         var callbackInvoked = false;
-        var iservice = new EkstepEditor.iService({});
-        console.log('IService', iservice.prototype);
+        var iservice = new org.ekstep.services.iService({});
         spyOn(iservice.http.$http, 'get').and.returnValue({
             then: function(fn1, fn2) {
                 fn1();

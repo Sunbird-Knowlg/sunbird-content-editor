@@ -4,27 +4,27 @@ describe('Ekstep Editor', function() {
         var config = { apislug: true, baseURL: true, absURL: true };
         var $scope = {};
         var $document = {};
-        spyOn(EkstepEditor.toolbarManager, 'setScope');
-        spyOn(EkstepEditor.keyboardManager, 'initialize');
-        spyOn(EkstepEditor, '_mergeConfig');
-        spyOn(EkstepEditor, '_loadDefaultPlugins');
+        spyOn(org.ekstep.contenteditor.toolbarManager, 'setScope');
+        spyOn(org.ekstep.contenteditor.keyboardManager, 'initialize');
+        spyOn(org.ekstep.contenteditor, '_mergeConfig');
+        spyOn(org.ekstep.contenteditor, '_loadDefaultPlugins');
 
-        EkstepEditor.init(context, config, $scope, $document, function() {});
+        org.ekstep.contenteditor.init(context, config, $scope, $document, function() {});
 
-        expect(EkstepEditorAPI.globalContext).toEqual(context);
-        expect(EkstepEditor.globalContext).toEqual(context);
-        expect(EkstepEditor.toolbarManager.setScope).toHaveBeenCalledWith($scope);
-        expect(EkstepEditor.keyboardManager.initialize).toHaveBeenCalledWith($document);
-        expect(EkstepEditor._mergeConfig).toHaveBeenCalledWith(config);
-        expect(EkstepEditor._loadDefaultPlugins).toHaveBeenCalledWith(context, jasmine.any(Function));
+        expect(org.ekstep.contenteditor.globalContext).toEqual(context);
+        expect(org.ekstep.contenteditor.globalContext).toEqual(context);
+        expect(org.ekstep.contenteditor.toolbarManager.setScope).toHaveBeenCalledWith($scope);
+        expect(org.ekstep.pluginframework.keyboardManager.initialize).toHaveBeenCalledWith($document);
+        expect(org.ekstep.contenteditor._mergeConfig).toHaveBeenCalledWith(config);
+        expect(org.ekstep.contenteditor._loadDefaultPlugins).toHaveBeenCalledWith(context, jasmine.any(Function));
     });
 
     it('should load default plugins', function() {
     	var context = { contentId: "do_123123123123", uid: 346 };
-    	spyOn(EkstepEditor.pluginManager, 'loadAllPlugins');
+    	spyOn(org.ekstep.pluginframework.pluginManager, 'loadAllPlugins');
 
-    	EkstepEditor._loadDefaultPlugins(context, function(){});
+    	org.ekstep.contenteditor._loadDefaultPlugins(context, function(){});
 
-    	expect(EkstepEditor.pluginManager.loadAllPlugins).toHaveBeenCalledWith(EkstepEditor.config.plugins, jasmine.any(Function));
+    	expect(org.ekstep.pluginframework.pluginManager.loadAllPlugins).toHaveBeenCalledWith(org.ekstep.contenteditor.config.plugins, jasmine.any(Function));
     });
 });

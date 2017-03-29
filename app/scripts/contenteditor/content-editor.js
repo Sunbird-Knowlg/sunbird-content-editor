@@ -5,7 +5,6 @@
 org.ekstep.contenteditor.init = function(context, config, $scope, $document, callback) {
     org.ekstep.contenteditor._mergeConfig(config);
     org.ekstep.contenteditor._initServices();
-    org.ekstep.contenteditor.api.globalContext = context; // TODO: Deprecate after the April release
     org.ekstep.contenteditor.globalContext = context;
     org.ekstep.contenteditor.toolbarManager.setScope($scope);
     org.ekstep.pluginframework.keyboardManager.initialize($document);

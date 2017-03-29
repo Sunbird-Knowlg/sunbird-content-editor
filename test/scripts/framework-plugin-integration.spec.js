@@ -44,16 +44,21 @@ describe("plugin framework integration test: ", function() {
         };
 
         org.ekstep.contenteditor.config.useProxyForURL = false;
-
+        org.ekstep.pluginframework.resourceManager.initialize(org.ekstep.contenteditor.jQuery);
         //load core plugins from s3
-        org.ekstep.contenteditor.api.setConfig('pluginRepo', "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins");
+        org.ekstep.contenteditor.config.pluginRepo = "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins";
+        org.ekstep.pluginframework.config = {
+            pluginRepo: org.ekstep.contenteditor.config.pluginRepo,
+            draftRepo: "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins"
+        };
         _.forIn(corePlugins, function(value, key) {
             org.ekstep.pluginframework.pluginManager.loadPlugin(key, value);
         });
 
-        org.ekstep.contenteditor.api.setConfig('pluginRepo', "base/test/data/published");
+        org.ekstep.contenteditor.config.pluginRepo = org.ekstep.pluginframework.config.pluginRepo = "base/test/data/published";
+        org.ekstep.contenteditor.config.draftRepo = org.ekstep.pluginframework.config.draftRepo = "base/test/data/draft";
+
         org.ekstep.pluginframework.hostRepo.basePath = "base/test/data/hosted";
-        org.ekstep.pluginframework.config.draftRepo = "base/test/data/draft";
         org.ekstep.pluginframework.hostRepo.connected = true;
 
         org.ekstep.contenteditor.stageManager.canvas = canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true, width: 720, height: 405 });
@@ -211,6 +216,8 @@ describe("plugin framework integration test: ", function() {
             stageInstance.setCanvas(canvas);
             spyOn(org.ekstep.contenteditor.api, 'getAngularScope').and.returnValue({ enableSave: function() {}, $safeApply: function() {} });
             spyOn(org.ekstep.contenteditor.api, 'dispatchEvent').and.callThrough();
+            spyOn(org.ekstep.pluginframework.eventManager, 'dispatchEvent').and.callThrough();
+            
             spyOn(org.ekstep.contenteditor.basePlugin.prototype, 'added').and.callThrough();
             spyOn(org.ekstep.contenteditor.basePlugin.prototype, 'selected').and.callThrough();
             test1pluginInstance = org.ekstep.contenteditor.api.instantiatePlugin(test1Plugin, _.cloneDeep(test1ECML), stageInstance);
@@ -241,8 +248,8 @@ describe("plugin framework integration test: ", function() {
 
         it('should fire plugin lifecycle event', function() {
             var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest(test1Plugin);
-            expect(org.ekstep.contenteditor.api.dispatchEvent).toHaveBeenCalledWith('plugin:add', jasmine.objectContaining({ plugin: manifest.id, version: manifest.ver, instanceId: test1pluginInstance.id }));
-            expect(org.ekstep.contenteditor.api.dispatchEvent).toHaveBeenCalledWith(manifest.id + ':add');
+            expect(org.ekstep.pluginframework.eventManager.dispatchEvent).toHaveBeenCalledWith('plugin:add', jasmine.objectContaining({ plugin: manifest.id, version: manifest.ver, instanceId: test1pluginInstance.id }));
+            expect(org.ekstep.pluginframework.eventManager.dispatchEvent).toHaveBeenCalledWith(manifest.id + ':add');
         });
 
         it('instance editor object should be defined', function() {
@@ -296,7 +303,7 @@ describe("plugin framework integration test: ", function() {
 
             expect(test1pluginInstance.getCopy).toHaveBeenCalled();
             expect(org.ekstep.contenteditor.api.instantiatePlugin).toHaveBeenCalled();
-            expect(org.ekstep.contenteditor.api.dispatchEvent).toHaveBeenCalledWith(test1pluginInstance.manifest.id + ':add');
+            expect(org.ekstep.pluginframework.eventManager.dispatchEvent).toHaveBeenCalledWith(test1pluginInstance.manifest.id + ':add');
         });
 
         it('on plugin instance delete, it should remove that instance', function() {

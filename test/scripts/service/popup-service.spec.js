@@ -1,24 +1,28 @@
 describe('popup service', function() {
     beforeAll(function() {
-        EkstepEditor.popupService.openModal = function() {}
-        EkstepEditor.popupService.loadModules = function() {}
+        org.ekstep.services.popupService.openModal = function() {}
+        org.ekstep.services.popupService.loadModules = function() {}
+        org.ekstep.services.config = {
+            baseURL: org.ekstep.contenteditor.config.baseURL,
+            apislug: org.ekstep.contenteditor.config.apislug
+        };
     });
 
     it('should open the modal and dispacth telemetry', function() {
-        spyOn(EkstepEditor.popupService, 'openModal');
-        spyOn(EkstepEditorAPI, 'getCurrentStage').and.returnValue({ id: 1234 });
-        spyOn(EkstepEditor.telemetryService, 'interact');
-        EkstepEditor.popupService.open({}, function() {})
+        spyOn(org.ekstep.services.popupService, 'openModal');
+        spyOn(org.ekstep.contenteditor.api, 'getCurrentStage').and.returnValue({ id: 1234 });
+        spyOn(org.ekstep.services.telemetryService, 'interact');
+        org.ekstep.services.popupService.open({}, function() {})
 
-        expect(EkstepEditor.popupService.openModal).toHaveBeenCalledWith({}, jasmine.any(Function));
-        expect(EkstepEditor.telemetryService.interact).toHaveBeenCalledWith({ "type": "click", "subtype": "open", "target": "popup", "pluginid": "", "pluginver": '', "objectid": "", "stage": 1234 })
+        expect(org.ekstep.services.popupService.openModal).toHaveBeenCalledWith({}, jasmine.any(Function));
+        expect(org.ekstep.services.telemetryService.interact).toHaveBeenCalledWith({ "type": "click", "subtype": "open", "target": "popup", "pluginid": "", "pluginver": '', "objectid": "", "stage": 1234 })
     });
 
     it('should load angular module and template', function() {
-        spyOn(EkstepEditor.popupService, 'loadModules');
+        spyOn(org.ekstep.services.popupService, 'loadModules');
 
-        EkstepEditor.popupService.loadNgModules("path_to_template", "path_to_controller");
+        org.ekstep.services.popupService.loadNgModules("path_to_template", "path_to_controller");
 
-        expect(EkstepEditor.popupService.loadModules).toHaveBeenCalledWith("path_to_template", "path_to_controller");
+        expect(org.ekstep.services.popupService.loadModules).toHaveBeenCalledWith("path_to_template", "path_to_controller");
     });
 });

@@ -1,14 +1,14 @@
 'use strict';
 
 describe('telemetry service', function() {
-    var uid, service = EkstepEditor.telemetryService;
+    var uid, service = org.ekstep.services.telemetryService;
 
     beforeAll(function() {
         service.dispatchers = [];
         uid = "346";
-        EkstepEditor.pluginManager.cleanUp();
-        EkstepEditor.stageManager.cleanUp();
-        EkstepEditor.toolbarManager.cleanUp();
+        org.ekstep.pluginframework.pluginManager.cleanUp();
+        org.ekstep.contenteditor.stageManager.cleanUp();
+        org.ekstep.contenteditor.toolbarManager.cleanUp();
         spyOn(window,'Date').and.returnValue({ getTime: function() { return 100 }});
     });
 
@@ -18,7 +18,7 @@ describe('telemetry service', function() {
         service.initialize({
             uid: uid,
             sid: "",
-            content_id: EkstepEditorAPI.getContext('contentId')
+            content_id: org.ekstep.contenteditor.api.getContext('contentId')
         });
 
         expect(service.initialized).toBe(true);
@@ -34,9 +34,9 @@ describe('telemetry service', function() {
     });
 
     it('should get dispatcher', function() {
-        expect(service.getDispatcher("local")).toBe(EkstepEditor.localDispatcher);
-        expect(service.getDispatcher("piwik")).toBe(EkstepEditor.piwikDispatcher);
-        expect(service.getDispatcher()).toBe(EkstepEditor.consoleDispatcher);
+        expect(service.getDispatcher("local")).toBe(org.ekstep.pluginframework.localDispatcher);
+        expect(service.getDispatcher("piwik")).toBe(org.ekstep.pluginframework.piwikDispatcher);
+        expect(service.getDispatcher()).toBe(org.ekstep.pluginframework.consoleDispatcher);
     });
 
     it('should append plugin and content load time to startEvent', function() {
@@ -54,7 +54,7 @@ describe('telemetry service', function() {
         expect(empty_event.ver).toBe("1.0");
         expect(empty_event.pdata).toEqual({ "id": "ATTool", "pid": "ContentEditor", "ver": "2.0" });
         expect(empty_event.cdata).toEqual([]);
-        expect(empty_event.context).toEqual({ "sid": "", "content_id": EkstepEditorAPI.getContext('contentId') });
+        expect(empty_event.context).toEqual({ "sid": "", "content_id": org.ekstep.contenteditor.api.getContext('contentId') });
         expect(empty_event.rid).toBe("");
         expect(empty_event.edata).toEqual({ "eks": {} });
         expect(empty_event.tags).toEqual([]);
@@ -125,7 +125,7 @@ describe('telemetry service', function() {
         service.initialize({
             uid: uid,
             sid: undefined,
-            content_id: EkstepEditorAPI.getContext('contentId')
+            content_id: org.ekstep.contenteditor.api.getContext('contentId')
         });
 
         expect(service.initialized).toBe(false);
