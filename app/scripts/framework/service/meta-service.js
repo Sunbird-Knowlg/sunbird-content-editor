@@ -17,7 +17,7 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.metaService
      */
     configURL: function() {
-        return this.getBaseURL() + '/api/config/'
+        return this.getBaseURL() + this.getAPISlug() + '/config/'
     },
     /** 
      * @member {object} requestHeaders
@@ -30,7 +30,7 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
         }
     },
     /**
-     * 
+     * Returns the schema of the specified object. The schema will contain all the properties details (name, code, datatype, identifier etc,.).
      * @param  {string}   objectType  eg.AssessmentItem, Language etc.
      * @param  {Function} callback    returns error and response as arguments
      * @memberof org.ekstep.services.metaService
@@ -39,7 +39,7 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
         this.getFromService(this.learningURL() + 'taxonomy/domain/definition/'+ objectType, this.requestHeaders, callback);
     },
     /**
-     * 
+     * Returns all property values in the specified language.
      * @param  {string}   languageCode  eg. en, hi etc.
      * @param  {Function} callback      returns error and response as arguments
      * @memberof org.ekstep.services.metaService
