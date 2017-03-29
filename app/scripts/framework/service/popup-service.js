@@ -33,7 +33,7 @@ org.ekstep.services.popupService = new(org.ekstep.services.iService.extend({
         /* istanbul ignore else */
         if (this.openModal) {
             this.openModal(config, callback);
-            EkstepEditor.telemetryService.interact({ "type": "click", "subtype": "open", "target": "popup", "pluginid": "", "pluginver": '', "objectid": "", "stage": EkstepEditorAPI.getCurrentStage().id });
+            org.ekstep.services.telemetryService.interact({ "type": "click", "subtype": "open", "target": "popup", "pluginid": "", "pluginver": '', "objectid": "", "stage": EkstepEditorAPI.getCurrentStage().id });
         }
     }
 }));
