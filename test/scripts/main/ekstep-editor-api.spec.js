@@ -16,15 +16,20 @@ describe("Ekstep editor test", function() {
         };
 
         //load core plugins from s3
-        org.ekstep.contenteditor.api.setConfig('pluginRepo', "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins");
+        org.ekstep.pluginframework.resourceManager.initialize(org.ekstep.contenteditor.jQuery);
+        //load core plugins from s3
+        org.ekstep.contenteditor.config.pluginRepo = "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins";
+        org.ekstep.pluginframework.config = {
+            pluginRepo: org.ekstep.contenteditor.config.pluginRepo,
+            draftRepo: "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins"
+        };
         _.forIn(corePlugins, function(value, key) {
             org.ekstep.pluginframework.pluginManager.loadPlugin(key, value);
         });
 
-        org.ekstep.pluginframework.publishedRepo.basePath = "base/test/data/published";
-        org.ekstep.contenteditor.api.setConfig('pluginRepo', "base/test/data/published");
+        org.ekstep.contenteditor.config.pluginRepo = org.ekstep.pluginframework.config.pluginRepo = "base/test/data/published";
+        org.ekstep.contenteditor.config.draftRepo = org.ekstep.pluginframework.config.draftRepo = "base/test/data/draft";
         org.ekstep.pluginframework.hostRepo.basePath = "base/test/data/hosted";
-        org.ekstep.pluginframework.draftRepo.basePath = "base/test/data/draft";
         org.ekstep.pluginframework.hostRepo.connected = true;
 
         org.ekstep.contenteditor.stageManager.canvas = canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true, width: 720, height: 405 });

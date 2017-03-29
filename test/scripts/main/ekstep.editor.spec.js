@@ -5,7 +5,7 @@ describe('Ekstep Editor', function() {
         var $scope = {};
         var $document = {};
         spyOn(org.ekstep.contenteditor.toolbarManager, 'setScope');
-        spyOn(org.ekstep.contenteditor.keyboardManager, 'initialize');
+        spyOn(org.ekstep.pluginframework.keyboardManager, 'initialize');
         spyOn(org.ekstep.contenteditor, '_mergeConfig');
         spyOn(org.ekstep.contenteditor, '_loadDefaultPlugins');
 

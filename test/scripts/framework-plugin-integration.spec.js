@@ -476,8 +476,8 @@ describe("plugin framework integration test: ", function() {
 
             org.ekstep.contenteditor.api.dispatchEvent("org.ekstep.test1:create", _.cloneDeep(test1ECML));
             expect(org.ekstep.contenteditor.api.instantiatePlugin).toHaveBeenCalled();
-            expect(org.ekstep.contenteditor.api.dispatchEvent).toHaveBeenCalledWith('plugin:add', jasmine.any(Object));
-            expect(org.ekstep.contenteditor.api.dispatchEvent).toHaveBeenCalledWith('org.ekstep.test1:add');
+            expect(org.ekstep.pluginframework.eventManager.dispatchEvent).toHaveBeenCalledWith('plugin:add', jasmine.any(Object));
+            expect(org.ekstep.pluginframework.eventManager.dispatchEvent).toHaveBeenCalledWith('org.ekstep.test1:add');
         });
 
         it('instance can get its own properties', function() {
