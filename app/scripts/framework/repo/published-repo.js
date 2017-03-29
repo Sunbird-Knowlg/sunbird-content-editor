@@ -3,7 +3,6 @@
  */
 org.ekstep.pluginframework.publishedRepo = new(org.ekstep.pluginframework.iRepo.extend({
     id: "published",
-    basePath: org.ekstep.pluginframework.config.pluginRepo,
     discoverManifest: function(pluginId, pluginVer, callback, publishedTime) {
         var instance = this;
         org.ekstep.pluginframework.resourceManager.loadResource(this.resolveResource(pluginId, pluginVer, "manifest.json"), "json", function(err, response) {

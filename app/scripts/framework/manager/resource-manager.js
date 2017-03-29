@@ -51,7 +51,7 @@ org.ekstep.pluginframework.resourceManager = new(Class.extend({
         }
     },
     loadResource: function(url, dataType, callback, publishedTime) {
-        url = url + "?" + org.ekstep.pluginframework.config.build_number;
+        url = url + "?" + (org.ekstep.pluginframework.config ? org.ekstep.pluginframework.config.build_number : '');
         if (publishedTime) {
             url = url + "&" + publishedTime;
         }

@@ -24,42 +24,6 @@ window.org.ekstep.contenteditor.api = {
     _: org.ekstep.contenteditor._,
 
     /**
-     * @deprecated since current version. This will be removed after April Release
-     * Object to hold global context
-     * 
-     * @member {Object} _
-     * @memberof org.ekstep.contenteditor.api
-     */
-    globalContext: undefined, // TODO: Deprecate the variable
-
-    /**
-     * @deprecated since current version. This will be removed after April Release
-     * Object to hold Base URL
-     * 
-     * @member {String} baseURL
-     * @memberof org.ekstep.contenteditor.api
-     */
-    baseURL: org.ekstep.contenteditor.config.baseURL,
-
-    /**
-     * @deprecated since current version. This will be removed after April Release
-     * Object to hold absolute URL
-     * 
-     * @member {String} absURL
-     * @memberof org.ekstep.contenteditor.api
-     */
-    absURL: undefined,
-
-    /**
-     * @deprecated since current version. This will be removed after April Release
-     * Object to hold API slug for API reverse proxy
-     * 
-     * @member {String} apislug
-     * @memberof org.ekstep.contenteditor.api
-     */
-    apislug: org.ekstep.contenteditor.config.apislug,
-
-    /**
      * Add an object to the context
      * 
      * @param {String} key   Key
@@ -518,17 +482,6 @@ window.org.ekstep.contenteditor.api = {
     },
 
     /**
-     * @deprecated
-     * Method to get plugin rep
-     * 
-     * @return {String} Repo location of published plugins
-     * @memberof org.ekstep.contenteditor.api
-     */
-    getPluginRepo: function() {
-        return org.ekstep.contenteditor.config.pluginRepo;
-    },
-
-    /**
      * Utility API to update the plugin dimenstions once any action like - move, resize etc are performed
      * 
      * @param  {Object} inst Plugin Instance
@@ -580,6 +533,14 @@ window.org.ekstep.contenteditor.api = {
      */
     registerKeyboardCommand: function(command, callback) {
         org.ekstep.pluginframework.keyboardManager.registerKeyCombination(command, callback);
+    },
+
+    setHostRepoBasePath: function(path) {
+        org.ekstep.pluginframework.hostRepo.basePath = path;
+    },
+
+    getHostRepoBasePath: function() {
+        return org.ekstep.pluginframework.hostRepo.basePath;
     }
 }
 

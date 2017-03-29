@@ -1,7 +1,11 @@
 /* istanbul ignore next */
 org.ekstep.services.iService = Class.extend({
-    baseURL: org.ekstep.services.config.baseURL,
-    apislug: org.ekstep.services.config.apislug,
+    getBaseURL: function() {
+        return org.ekstep.services.config.baseURL;
+    },
+    getAPISlug: function() {
+        return org.ekstep.services.config.apislug;
+    },
     init: function(config) {
         this.initService(config);
     },

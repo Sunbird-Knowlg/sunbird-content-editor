@@ -11,6 +11,6 @@ angular.module('editorApp').controller('popupController', ['ngDialog', '$ocLazyL
         if (config) ngDialog.open(config);
     };
 
-    EkstepEditorAPI.getService('popup').initService(loadNgModules, openModal);
+    org.ekstep.contenteditor.api.getService('popup').initService(loadNgModules, openModal);
 
 }]);

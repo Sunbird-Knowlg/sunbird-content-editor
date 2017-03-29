@@ -6,7 +6,9 @@
  * @author Sunil A S <sunils@ilimi.in>
  */
 org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
-    serviceURL: this.baseURL + this.apislug + '/learning/',
+    serviceURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + '/learning/'
+    },
     content: {},
     initService: function() {},
     /**
@@ -100,7 +102,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             if (update) {
                 var headers = { "headers": { "content-type": "application/json", "user-id": "ATTool" } }
                 var requestObj = { request: { content: content } };
-                instance.http.patch(this.serviceURL + 'v2/content/' + contentId, requestObj, headers, function(err, res) {
+                instance.http.patch(this.serviceURL() + 'v2/content/' + contentId, requestObj, headers, function(err, res) {
                     /* istanbul ignore else */
                     if (res) {
                         instance.content[contentId].versionKey = res.data.result.versionKey;
@@ -127,7 +129,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
         var instance = this;
         if (contentId) {
             var metaDataFields = "?fields=" + instance.contentFields;
-            instance.http.get(this.serviceURL + 'v2/content/' + contentId + metaDataFields, {}, function(err, res) {
+            instance.http.get(this.serviceURL() + 'v2/content/' + contentId + metaDataFields, {}, function(err, res) {
                 /* istanbul ignore else */
                 if (err) callback(err, undefined);
                 if (!err && res.data && res.data.result && res.data.result.content) {
@@ -151,7 +153,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
     getTemplateData: function(templateId, callback){
         var instance = this;
         var templateMetaFields = "?taxonomyId=literacy_v2&fields=body,editorState,templateId,languageCode";
-        instance.http.get(this.serviceURL + 'v2/content/' + templateId + templateMetaFields, this.requestHeaders, function(err, res) {
+        instance.http.get(this.serviceURL() + 'v2/content/' + templateId + templateMetaFields, this.requestHeaders, function(err, res) {
             callback(err, res)
         });
     },
@@ -167,6 +169,6 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
     */
     downloadContent: function(contentId, fileName, callback) {
         var data = { "request": { "content_identifiers": [contentId], "file_name": fileName } };
-        this.postFromService(this.serviceURL + 'v2/content/bundle', data, this.requestHeaders, callback);
+        this.postFromService(this.serviceURL() + 'v2/content/bundle', data, this.requestHeaders, callback);
     }
 }));

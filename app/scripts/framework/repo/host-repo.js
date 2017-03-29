@@ -7,15 +7,14 @@ org.ekstep.pluginframework.hostRepo = new(org.ekstep.pluginframework.iRepo.exten
     connected: false,
     init: function() {
     	var instance = this;
-    	this.checkConnection(function(err, res) {
-    		if(!err) {
-            	instance.connected = true;
-            }
-    	});
     },
     checkConnection: function(cb) {
     	var instance = this;
-    	org.ekstep.pluginframework.resourceManager.loadResource(this.basePath + "/list", "json", cb);
+    	org.ekstep.pluginframework.resourceManager.loadResource(this.basePath + "/list", "json", function(err, res) {
+            if(!err) {
+                instance.connected = true;
+            }
+        });
     },
     discoverManifest: function(pluginId, pluginVer, callback, publishedTime) {
         if(this.connected) {

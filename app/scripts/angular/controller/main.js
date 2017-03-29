@@ -56,7 +56,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.stageAttachments = {};
 
         // TODO: Figure out what the below code does
-        EkstepEditorAPI.jQuery('.browse.item.at').popup({ on: 'click', setFluidWidth: false, position: 'bottom right' });
+        org.ekstep.contenteditor.api.jQuery('.browse.item.at').popup({ on: 'click', setFluidWidth: false, position: 'bottom right' });
 
         // Functions
         $scope.closeLoadScreen = function(flag) {
@@ -73,18 +73,18 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.previewContent = function(fromBeginning) {
-            EkstepEditorAPI.getCanvas().deactivateAll().renderAll();
+            org.ekstep.contenteditor.api.getCanvas().deactivateAll().renderAll();
             var currentStage = _.isUndefined(fromBeginning) ? true : false;
-            EkstepEditor.eventManager.dispatchEvent("atpreview:show", { contentBody: EkstepEditor.stageManager.toECML(), 'currentStage': currentStage });
-            EkstepEditorAPI.dispatchEvent('config:settings:show', { id: $scope.currentStage.id });
+            org.ekstep.pluginframework.eventManager.dispatchEvent("atpreview:show", { contentBody: org.ekstep.contenteditor.stageManager.toECML(), 'currentStage': currentStage });
+            org.ekstep.contenteditor.api.dispatchEvent('config:settings:show', { id: $scope.currentStage.id });
         };
 
         $scope.saveContent = function() {
             if ($scope.saveBtnEnabled) {
                 $scope.saveBtnEnabled = false;
                 // TODO: Show saving dialog
-                var contentBody = EkstepEditor.stageManager.toECML();
-                $scope.patchContent({ stageIcons: JSON.stringify(EkstepEditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
+                var contentBody = org.ekstep.contenteditor.stageManager.toECML();
+                $scope.patchContent({ stageIcons: JSON.stringify(org.ekstep.contenteditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
                     if (res) $scope.saveNotification('success');
                     if (err) $scope.saveNotification('error'); 
                     $scope.saveBtnEnabled = true;                                                           
@@ -97,25 +97,25 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 if (!metadata) metadata = {};
                 metadata.oldContentBody = $scope.oldContentBody;
                 var migrationPopupCb = function() {
-                    $scope.contentService.saveContent(EkstepEditorAPI.getContext('contentId'), metadata, body, cb);
+                    $scope.contentService.saveContent(org.ekstep.contenteditor.api.getContext('contentId'), metadata, body, cb);
                 }
                 $scope.showMigratedContentSaveDialog(migrationPopupCb);
             } else {
-                $scope.contentService.saveContent(EkstepEditorAPI.getContext('contentId'), metadata, body, cb);
+                $scope.contentService.saveContent(org.ekstep.contenteditor.api.getContext('contentId'), metadata, body, cb);
             }
         }
 
         $scope.toggleGenieControl = function() {
             if (!$scope.showGenieControls) {
                 //Position the transparent image correctly on top of image
-                var canvasOffset = EkstepEditorAPI.jQuery('#canvas').offset();
+                var canvasOffset = org.ekstep.contenteditor.api.jQuery('#canvas').offset();
                 setTimeout(function() {
-                    EkstepEditorAPI.jQuery('#geniecontrols').offset({
+                    org.ekstep.contenteditor.api.jQuery('#geniecontrols').offset({
                         "top": canvasOffset.top,
                         "left": canvasOffset.left,
                     });
 
-                    EkstepEditorAPI.jQuery('#geniecontrols').css({
+                    org.ekstep.contenteditor.api.jQuery('#geniecontrols').css({
                         "display": 'block'
                     });
                 }, 500);
@@ -150,8 +150,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.onStageDragDrop = function(dragEl, dropEl) {
-            EkstepEditor.stageManager.onStageDragDrop(EkstepEditor.jQuery('#' + dragEl).attr('data-id'), EkstepEditor.jQuery('#' + dropEl).attr('data-id'));
-            EkstepEditorAPI.refreshStages();
+            org.ekstep.contenteditor.stageManager.onStageDragDrop(org.ekstep.contenteditor.jQuery('#' + dragEl).attr('data-id'), org.ekstep.contenteditor.jQuery('#' + dropEl).attr('data-id'));
+            org.ekstep.contenteditor.api.refreshStages();
         }
 
         $scope.editContentMeta = function() {
@@ -171,14 +171,14 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 showClose: false
             };
 
-            EkstepEditorAPI.getService('popup').open(config);
+            org.ekstep.contenteditor.api.getService('popup').open(config);
         }
 
         $scope.routeToContentMeta = function(save) {
             $scope.enableSave();
             if (save) {
-                var contentBody = EkstepEditor.stageManager.toECML();
-                $scope.patchContent({ stageIcons: JSON.stringify(EkstepEditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
+                var contentBody = org.ekstep.contenteditor.stageManager.toECML();
+                $scope.patchContent({ stageIcons: JSON.stringify(org.ekstep.contenteditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
                     if (res) {
                         $scope.saveNotification('success');
                         $window.location.assign(window.context.editMetaLink);                    
@@ -236,7 +236,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
          * Load Content - Invoked once the content editor has loaded
          */
         $scope.loadContent = function() {
-            EkstepEditorAPI.getService(ServiceConstants.CONTENT_SERVICE).getContent(EkstepEditorAPI.getContext('contentId'), function(err, content) {
+            org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContent(org.ekstep.contenteditor.api.getContext('contentId'), function(err, content) {
                 if (err) {
                     $scope.contentLoadedFlag = true;
                     $scope.onLoadCustomMessage.show = true;
@@ -244,12 +244,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     $scope.telemetryService.error({ "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to fetch content from remote", "type": "API", "data": err, "severity": "fatal" });
                 }
                 if (!(content && content.body) && !err) {
-                    EkstepEditor.stageManager.onContentLoad((new Date()).getTime());
+                    org.ekstep.contenteditor.stageManager.onContentLoad((new Date()).getTime());
                     $scope.closeLoadScreen(true);
                 } else if (content && content.body) {
                     $scope.oldContentBody = angular.copy(content.body);
                     var parsedBody = $scope.parseContentBody(content.body);
-                    if (parsedBody) EkstepEditorAPI.dispatchEvent("content:migration:start", { body: parsedBody, stageIcons: content.stageIcons });
+                    if (parsedBody) org.ekstep.contenteditor.api.dispatchEvent("content:migration:start", { body: parsedBody, stageIcons: content.stageIcons });
                 }
                 if (content) {
                     var concepts = "";
@@ -273,21 +273,21 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
          * @param  {function} $scope Scope of the controller
          * @param  {function} callback Function to be invoked once the editor is loaded
          */
-        EkstepEditor.init(context, config, $scope, $document, function() {
+        org.ekstep.contenteditor.init(context, config, $scope, $document, function() {
             var obj = _.find($scope.appLoadMessage, { 'id': 1 });
             if (_.isObject(obj)) {
                 obj.message = "Getting things ready for you";
                 obj.status = true;
             }
-            $scope.contentService = EkstepEditorAPI.getService(ServiceConstants.CONTENT_SERVICE);
-            $scope.popupService = EkstepEditorAPI.getService(ServiceConstants.POPUP_SERVICE);
-            $scope.telemetryService = EkstepEditorAPI.getService(ServiceConstants.TELEMETRY_SERVICE);
-            $scope.menus = EkstepEditor.toolbarManager.menuItems;
-            $scope.contextMenus = EkstepEditor.toolbarManager.contextMenuItems;
-            $scope.stages = EkstepEditorAPI.getAllStages();
-            $scope.currentStage = EkstepEditorAPI.getCurrentStage();
+            $scope.contentService = org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE);
+            $scope.popupService = org.ekstep.contenteditor.api.getService(ServiceConstants.POPUP_SERVICE);
+            $scope.telemetryService = org.ekstep.contenteditor.api.getService(ServiceConstants.TELEMETRY_SERVICE);
+            $scope.menus = org.ekstep.contenteditor.toolbarManager.menuItems;
+            $scope.contextMenus = org.ekstep.contenteditor.toolbarManager.contextMenuItems;
+            $scope.stages = org.ekstep.contenteditor.api.getAllStages();
+            $scope.currentStage = org.ekstep.contenteditor.api.getCurrentStage();
             $scope.configMenus = $scope.configMenus || [];
-            _.forEach(EkstepEditor.toolbarManager.configMenuItems,function (menu) {
+            _.forEach(org.ekstep.contenteditor.toolbarManager.configMenuItems,function (menu) {
                 $scope.configMenus.push(menu);
             });
 
@@ -296,13 +296,13 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $document.on("keydown", function(event) {
                 if ((event.metaKey || event.ctrlKey) && event.shiftKey && event.keyCode == 69) { /*ctrl+shift+e or command+shift+e*/
                     event.preventDefault();
-                    EkstepEditorAPI.dispatchEvent("org.ekstep.viewecml:show", {});
+                    org.ekstep.contenteditor.api.dispatchEvent("org.ekstep.viewecml:show", {});
                 }
             });
         });
 
         $scope.fireEvent = function(event) {
-            if (event) EkstepEditorAPI.dispatchEvent(event.id, event.data);
+            if (event) org.ekstep.contenteditor.api.dispatchEvent(event.id, event.data);
         };
 
         $scope.setTitleBarText = function(text) {
@@ -310,23 +310,23 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         };
 
         $scope.fireToolbarTelemetry = function(menu, menuType) {
-            $scope.telemetryService.interact({ "type": "click", "subtype": "menu", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": EkstepEditor.stageManager.currentStage.id });
+            $scope.telemetryService.interact({ "type": "click", "subtype": "menu", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
         }
 
         $scope.fireSidebarTelemetry = function(menu, menuType) {
             var pluginId = "", pluginVer = "", objectId = "";
-            var pluginObject = EkstepEditorAPI.getCurrentObject() || EkstepEditorAPI.getCurrentStage();
+            var pluginObject = org.ekstep.contenteditor.api.getCurrentObject() || org.ekstep.contenteditor.api.getCurrentStage();
             if(pluginObject) {
                 pluginId = pluginObject.manifest.id;
                 pluginVer = pluginObject.manifest.ver;
                 objectId = pluginObject.id;
             }
-            $scope.telemetryService.interact({ "type": "modify", "subtype": "sidebar", "target": menuType, "pluginid": pluginId, 'pluginver': pluginVer, "objectid": objectId, "stage": EkstepEditor.stageManager.currentStage.id });
+            $scope.telemetryService.interact({ "type": "modify", "subtype": "sidebar", "target": menuType, "pluginid": pluginId, 'pluginver': pluginVer, "objectid": objectId, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
         }
     }
 ]);
 
-EkstepEditor.jQuery(document).ready(function() {
+org.ekstep.contenteditor.jQuery(document).ready(function() {
     var newheight = $(window).innerHeight() - 114;  
-    EkstepEditor.jQuery('.scrollable-slides').css("height",newheight + "px");  
+    org.ekstep.contenteditor.jQuery('.scrollable-slides').css("height",newheight + "px");  
 });

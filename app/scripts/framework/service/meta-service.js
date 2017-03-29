@@ -9,12 +9,16 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @member {string} learningURL
      * @memberof org.ekstep.services.metaService
      */
-    learningURL: this.baseURL + this.apislug + '/learning/',
+    learningURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + '/learning/'
+    },
     /** 
      * @member {string} configURL
      * @memberof org.ekstep.services.metaService
      */
-    configURL: this.baseURL + '/api/config/',
+    configURL: function() {
+        return this.baseURL + '/api/config/'
+    },
     /** 
      * @member {object} requestHeaders
      * @memberof org.ekstep.services.metaService
@@ -32,7 +36,7 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.metaService
      */
     getDefinitions: function(objectType, callback) {
-        this.getFromService(this.learningURL + 'taxonomy/domain/definition/'+ objectType, this.requestHeaders, callback);
+        this.getFromService(this.learningURL() + 'taxonomy/domain/definition/'+ objectType, this.requestHeaders, callback);
     },
     /**
      * 
@@ -41,6 +45,6 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.metaService
      */
     getResourceBundles: function(languageCode ,callback) {
-        this.getFromService(this.configURL + 'v2/config/resourcebundles/'+ languageCode, this.requestHeaders, callback);
+        this.getFromService(this.configURL() + 'v2/config/resourcebundles/'+ languageCode, this.requestHeaders, callback);
     }
 }));

@@ -19,8 +19,8 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         //fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
         this.canvas = new fabric.Canvas('canvas', { backgroundColor: '#FFFFFF', preserveObjectStacking: true, perPixelTargetFind: false });
         console.log("Stage manager initialized");
-        org.ekstep.contenteditor.eventManager.addEventListener("stage:delete", this.deleteConfirmationDialog, this);
-        org.ekstep.contenteditor.eventManager.addEventListener("stage:duplicate", this.duplicateStage, this);
+        org.ekstep.pluginframework.eventManager.addEventListener("stage:delete", this.deleteConfirmationDialog, this);
+        org.ekstep.pluginframework.eventManager.addEventListener("stage:duplicate", this.duplicateStage, this);
     },
     clearCanvas: function(canvas) {
         canvas.clear();
@@ -49,13 +49,13 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         this.canvas.on("object:scaling", function(options, event) {
             org.ekstep.contenteditor.stageManager.dispatchObjectEvent('scaling', options, event);
         });
-        org.ekstep.contenteditor.eventManager.addEventListener("stage:select", this.selectStage, this);
+        org.ekstep.pluginframework.eventManager.addEventListener("stage:select", this.selectStage, this);
     },
     dispatchObjectEvent: function(eventType, options, event) {
         var meta = org.ekstep.contenteditor.stageManager.getObjectMeta(options);
-        org.ekstep.contenteditor.eventManager.dispatchEvent('object:' + eventType, meta);
+        org.ekstep.pluginframework.eventManager.dispatchEvent('object:' + eventType, meta);
         if (meta.type != '') {
-            org.ekstep.contenteditor.eventManager.dispatchEvent(meta.type + ':' + eventType, meta);
+            org.ekstep.pluginframework.eventManager.dispatchEvent(meta.type + ':' + eventType, meta);
         }
     },
     selectStage: function(event, data) {
@@ -66,7 +66,7 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             this.currentStage.render(this.canvas);
         } else {
             this.currentStage.isSelected = false;
-            org.ekstep.contenteditor.eventManager.dispatchEvent('stage:unselect', { stageId: this.currentStage.id });
+            org.ekstep.pluginframework.eventManager.dispatchEvent('stage:unselect', { stageId: this.currentStage.id });
             this.clearCanvas(this.canvas);
             this.currentStage = _.find(this.stages, { id: data.stageId });
             this.currentStage.isSelected = true;

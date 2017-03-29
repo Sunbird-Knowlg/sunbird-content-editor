@@ -9,7 +9,9 @@ org.ekstep.services.searchService = new(org.ekstep.services.iService.extend({
      * @member {string} searchURL
      * @memberof org.ekstep.services.searchService
      */
-    searchURL: this.baseURL + this.apislug + '/search/',
+    searchURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + '/search/'
+    },
     /** 
      * @member {object} requestHeaders
      * @memberof org.ekstep.services.searchService
@@ -28,6 +30,6 @@ org.ekstep.services.searchService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.searchService
      */
     search: function(request, callback) {
-        this.postFromService(this.searchURL + 'v2/search', request, this.requestHeaders, callback);
+        this.postFromService(this.searchURL() + 'v2/search', request, this.requestHeaders, callback);
     }
 }));

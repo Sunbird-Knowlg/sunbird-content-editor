@@ -10,12 +10,16 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @member {string} learningURL
      * @memberof org.ekstep.services.languageService
      */
-    learningURL: this.baseURL + this.apislug + '/learning/',
+    learningURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + '/learning/'
+    },
     /** 
      * @member {string} languageURL
      * @memberof org.ekstep.services.languageService
      */
-    languageURL: this.baseURL + '/api/language/',
+    languageURL: function() { 
+        return this.baseURL + '/api/language/'
+    },
     /** 
      * @member {object} requestHeaders
      * @memberof org.ekstep.services.languageService
@@ -42,7 +46,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getLanguages: function(callback) {
-        this.getFromService(this.learningURL + 'v1/language', this.requestHeaders, callback);
+        this.getFromService(this.learningURL() + 'v1/language', this.requestHeaders, callback);
     },
     /**
      * Get all list of vowel available in selected language
@@ -51,7 +55,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getVowel: function(language, callback) {
-        this.getFromService(this.languageURL + 'v1/language/dictionary/varna/Vowel/list/' + language, this.requestHeaders, callback);
+        this.getFromService(this.languageURL() + 'v1/language/dictionary/varna/Vowel/list/' + language, this.requestHeaders, callback);
     },
     /**
      * Get all list of consonant available in selected language
@@ -60,7 +64,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getConsonant: function(language, callback) {
-        this.getFromService(this.languageURL + 'v1/language/dictionary/varna/Consonant/list/' + language, this.requestHeaders, callback);
+        this.getFromService(this.languageURL() + 'v1/language/dictionary/varna/Consonant/list/' + language, this.requestHeaders, callback);
     },
     /**
      * Get all avalible words in given content
@@ -69,7 +73,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getWords: function(data, callback) {
-        this.postFromService(this.languageURL + 'v2/language/search', data, this.wordHeaders, callback);
+        this.postFromService(this.languageURL() + 'v2/language/search', data, this.wordHeaders, callback);
     },
     /**
      * Get types of word. eg. Nouns, verbs etc 
@@ -77,7 +81,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getWordDefinition: function(callback) {
-        this.getFromService(this.learningURL + 'taxonomy/en/definition/Word', this.requestHeaders, callback);
+        this.getFromService(this.learningURL() + 'taxonomy/en/definition/Word', this.requestHeaders, callback);
     },
     /**
      * Get all avalible keywords in given content
@@ -86,7 +90,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getKeyWords: function(data, callback) {
-        this.postFromService(this.languageURL + 'v1/language/parser', data, this.requestHeaders, callback);
+        this.postFromService(this.languageURL() + 'v1/language/parser', data, this.requestHeaders, callback);
     }
 
 }));
