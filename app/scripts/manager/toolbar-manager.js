@@ -1,7 +1,7 @@
 /**
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
-EkstepEditor.toolbarManager = new(Class.extend({
+org.ekstep.contenteditor.toolbarManager = new(Class.extend({
     menuItems: [],
     contextMenuItems: [],
     configMenuItems: [],
@@ -14,8 +14,8 @@ EkstepEditor.toolbarManager = new(Class.extend({
             this.menuItems.push(menu);
         }
         //TODO: should be moved if possible
-        EkstepEditor.jQuery(".ui.dropdown").dropdown();
-        EkstepEditor.jQuery(".popup-item").popup();
+        org.ekstep.contenteditor.jQuery(".ui.dropdown").dropdown();
+        org.ekstep.contenteditor.jQuery(".popup-item").popup();
     },
     registerContextMenu: function(menu) {
         if (!_.isObject(_.find(this.contextMenuItems, { id: menu.id }))) {
@@ -40,12 +40,12 @@ EkstepEditor.toolbarManager = new(Class.extend({
             instance._updateContextMenu(cmenu.id, cmenu);
         });
         /* istanbul ignore next. Angular functions cannot be tested now */
-        EkstepEditorAPI.ngSafeApply(this.scope, function() {
+        org.ekstep.contenteditor.api.ngSafeApply(this.scope, function() {
             instance.scope.contextMenus = instance.contextMenuItems;
         });
-        EkstepEditor.jQuery(document).ready(function() {
-            EkstepEditor.jQuery(".ui.dropdown").dropdown();
-            EkstepEditor.jQuery(".popup-item").popup();
+        org.ekstep.contenteditor.jQuery(document).ready(function() {
+            org.ekstep.contenteditor.jQuery(".ui.dropdown").dropdown();
+            org.ekstep.contenteditor.jQuery(".popup-item").popup();
         });
 
     },
@@ -55,7 +55,7 @@ EkstepEditor.toolbarManager = new(Class.extend({
         _.forIn(props, function(value, key) {
             if (key != 'data') {
                 menu[key] = value;
-                EkstepEditor.eventManager.dispatchEvent(menuId + ':' + key, props.data);
+                org.ekstep.pluginframework.eventManager.dispatchEvent(menuId + ':' + key, props.data);
             }
         });
     },

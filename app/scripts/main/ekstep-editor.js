@@ -10,15 +10,21 @@ window.fabric.Object.prototype.toObject = (function(toObject) {
     };
 })(window.fabric.Object.prototype.toObject);
 
+// Declare Namespace
 window.org = {
-    
+    ekstep: {
+    }
 }
 
-var ekstep_editor = function() {};
-ekstep_editor.prototype.jQuery = window.$;
-ekstep_editor.prototype._ = window._;
-var editor = new ekstep_editor();
-window.EkstepEditor = editor;
+var content_editor = function() {};
+content_editor.prototype.jQuery = window.$;
+content_editor.prototype._ = window._;
+window.org.ekstep.contenteditor = new content_editor();
+content_editor = undefined;
+
+var plugin_framework = function() {};
+window.org.ekstep.pluginframework = new plugin_framework();
+plugin_framework = undefined;
 
 window.ServiceConstants = {
     SEARCH_SERVICE: "search",
@@ -40,30 +46,30 @@ window.ManagerConstants = {
     TOOLBAR_MANAGER: "toolbar"
 }
 
-EkstepEditor.init = function(context, config, $scope, $document, callback) {
-    EkstepEditorAPI.globalContext = context; // TODO: Deprecate after the April release
-    EkstepEditor.globalContext = context;
-    EkstepEditor.toolbarManager.setScope($scope);
-    EkstepEditor.keyboardManager.initialize($document);
-    EkstepEditor._mergeConfig(config);
-    EkstepEditor._loadDefaultPlugins(context, callback);
+org.ekstep.contenteditor.init = function(context, config, $scope, $document, callback) {
+    org.ekstep.contenteditor.api.globalContext = context; // TODO: Deprecate after the April release
+    org.ekstep.contenteditor.globalContext = context;
+    org.ekstep.contenteditor.toolbarManager.setScope($scope);
+    org.ekstep.pluginframework.keyboardManager.initialize($document);
+    org.ekstep.contenteditor._mergeConfig(config);
+    org.ekstep.contenteditor._loadDefaultPlugins(context, callback);
 }
 
-EkstepEditor._mergeConfig = function(config) {
+org.ekstep.contenteditor._mergeConfig = function(config) {
     config = config || {};
-    EkstepEditor.config = _.assign(EkstepEditor.config, config);
+    org.ekstep.contenteditor.config = _.assign(org.ekstep.contenteditor.config, config);
 }
 
-EkstepEditor._loadDefaultPlugins = function(context, callback) {
+org.ekstep.contenteditor._loadDefaultPlugins = function(context, callback) {
     var startTime = (new Date()).getTime();
-    if(EkstepEditor.config.corePluginsPackaged === true) EkstepEditor.jQuery("body").append($("<script type='text/javascript' src='scripts/coreplugins.js?" + EkstepEditor.config.build_number + "'>"));
-    EkstepEditor.pluginManager.loadAllPlugins(EkstepEditor.config.plugins, function () {
-        EkstepEditor.telemetryService.initialize({
+    if(org.ekstep.contenteditor.config.corePluginsPackaged === true) org.ekstep.contenteditor.jQuery("body").append($("<script type='text/javascript' src='scripts/coreplugins.js?" + org.ekstep.contenteditor.config.build_number + "'>"));
+    org.ekstep.pluginframework.pluginManager.loadAllPlugins(org.ekstep.contenteditor.config.plugins, function () {
+        org.ekstep.services.telemetryService.initialize({
             uid: context.uid,
             sid: context.sid,
             content_id: context.contentId
-        }, EkstepEditor.config.dispatcher);
+        }, org.ekstep.contenteditor.config.dispatcher);
         callback();
-        EkstepEditor.telemetryService.startEvent().append("loadtimes", { plugins: ((new Date()).getTime() - startTime) });
+        org.ekstep.services.telemetryService.startEvent().append("loadtimes", { plugins: ((new Date()).getTime() - startTime) });
     });
 }

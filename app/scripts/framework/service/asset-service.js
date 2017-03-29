@@ -1,18 +1,18 @@
 /**
  * Asset service provides access to the content API to save assets.
- * @class EkstepEditor.assetService
+ * @class org.ekstep.services.assetService
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
-EkstepEditor.assetService = new(EkstepEditor.iService.extend({
+org.ekstep.services.assetService = new(org.ekstep.services.iService.extend({
      /** 
      * @member {string} searchURL
-     * @memberof EkstepEditor.assetService
+     * @memberof org.ekstep.services.assetService
      */
-    learningURL: EkstepEditor.config.baseURL + EkstepEditorAPI.getConfig('apislug') + '/learning/',
+    learningURL: this.baseURL + this.apislug + '/learning/',
     asset: {},
      /** 
      * @member {object} requestHeaders
-     * @memberof EkstepEditor.assetService
+     * @memberof org.ekstep.services.assetService
      */
     requestHeaders: {
         "headers": {
@@ -25,7 +25,7 @@ EkstepEditor.assetService = new(EkstepEditor.iService.extend({
      * Set asset object
      * @param {string} id        
      * @param {object} assetMeta 
-     * @memberof EkstepEditor.assetService
+     * @memberof org.ekstep.services.assetService
      */
     setAssetMeta: function(id, assetMeta) {
         if (id && assetMeta) {
@@ -36,7 +36,7 @@ EkstepEditor.assetService = new(EkstepEditor.iService.extend({
     /**
      * get asset object
      * @param  {string} id 
-     * @memberof EkstepEditor.assetService
+     * @memberof org.ekstep.services.assetService
      */
     getAssetMeta: function(id) {
         return this.asset[id] || {};
@@ -46,7 +46,7 @@ EkstepEditor.assetService = new(EkstepEditor.iService.extend({
      * @param  {string}   assetId
      * @param  {string}   content
      * @param  {Function} callback returns error and response as arguments
-     * @memberof EkstepEditor.assetService
+     * @memberof org.ekstep.services.assetService
      */
     saveAsset: function(assetId, content, callback) {
         var instance = this;

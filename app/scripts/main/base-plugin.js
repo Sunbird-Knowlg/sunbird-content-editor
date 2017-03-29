@@ -3,10 +3,10 @@
  * Plugins can override specific methods to change the behavior. The most common scenario would be to override the
  * implementation of fabric callback methods to detect interactivity on the canvas.
  *
- * @class EkstepEditor.BasePlugin
+ * @class org.ekstep.contenteditor.basePlugin
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
-EkstepEditor.basePlugin = Class.extend({
+org.ekstep.contenteditor.basePlugin = Class.extend({
     id: undefined,
     parent: undefined,
     children: [],
@@ -28,7 +28,7 @@ EkstepEditor.basePlugin = Class.extend({
      * @param data {object} Init parameters for the plugin
      * @param parent {object} Parent plugin object that instantiated this
      * @constructor
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     init: function(manifest, data, parent) {
         var instance = this;
@@ -36,7 +36,7 @@ EkstepEditor.basePlugin = Class.extend({
         if (arguments.length == 1) {
             this.registerMenu();
             this.initialize();
-            EkstepEditorAPI.addEventListener(this.manifest.id + ":create", this.create, this);
+            org.ekstep.contenteditor.api.addEventListener(this.manifest.id + ":create", this.create, this);
             console.log(manifest.id + " plugin initialized");
         } else {
             this.editorObj = undefined, this.event = undefined, this.attributes = { x: 0, y: 0, w: 0, h: 0, visible: true }, this.params = undefined, this.data = undefined, this.media = undefined;
@@ -46,13 +46,13 @@ EkstepEditor.basePlugin = Class.extend({
             this.parent = parent;
             this.config = { opacity: 100, strokeWidth: 1, stroke: "rgba(255, 255, 255, 0)", autoplay: false, visible: true };
         }
-        this.configManifest = _.clone(EkstepEditor.baseConfigManifest, true);
+        this.configManifest = _.clone(org.ekstep.contenteditor.baseConfigManifest, true);
     },
 
     /**
      * Initializes the plugin by reading from ECML.
      * @private
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     initPlugin: function() {
         this.fromECML(this.editorData);
@@ -63,7 +63,7 @@ EkstepEditor.basePlugin = Class.extend({
     /**
      * Post init tasks for the plugin
      * @private
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     postInit: function() {
         this.registerFabricEvents();
@@ -74,13 +74,13 @@ EkstepEditor.basePlugin = Class.extend({
             }
         }
         if (this.parent) this.parent.addChild(this);
-        if (this.parent && this.parent.type !== 'stage') EkstepEditorAPI.dispatchEvent('object:modified', { id: this.id });
+        if (this.parent && this.parent.type !== 'stage') org.ekstep.contenteditor.api.dispatchEvent('object:modified', { id: this.id });
     },
 
     /**
      * Registers the menu for this plugin. By default, the base plugin handles the menu additions.
      * Child implementations can use this method to override and register additional menu items.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     registerMenu: function() {
         var instance = this;
@@ -93,11 +93,11 @@ EkstepEditor.basePlugin = Class.extend({
                 });
             }
             if (menu.category === 'main') {
-                EkstepEditor.toolbarManager.registerMenu(menu);
+                org.ekstep.contenteditor.toolbarManager.registerMenu(menu);
             } else if (menu.category === 'context') {
-                EkstepEditor.toolbarManager.registerContextMenu(menu);
+                org.ekstep.contenteditor.toolbarManager.registerContextMenu(menu);
             } else if (menu.category === 'config') {
-                EkstepEditor.toolbarManager.registerConfigMenu(menu);
+                org.ekstep.contenteditor.toolbarManager.registerConfigMenu(menu);
             }
         });
     },
@@ -105,15 +105,15 @@ EkstepEditor.basePlugin = Class.extend({
     /**
      * Returns relative URL for a particular asset. Plugins should use this method instead of
      * hard-coding the asset URLs.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     relativeURL: function(src) {
-        return EkstepEditorAPI.resolvePluginResource(this.manifest.id, this.manifest.ver, src);
+        return org.ekstep.contenteditor.api.resolvePluginResource(this.manifest.id, this.manifest.ver, src);
     },
 
     /**
      * Returns the type of this plugin (manifest ID)
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getType: function() {
         return this.manifest.id;
@@ -121,7 +121,7 @@ EkstepEditor.basePlugin = Class.extend({
 
     /**
      * Returns the version of this plugin (manifest ID)
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getVersion: function() {
         return this.manifest.ver;
@@ -131,20 +131,20 @@ EkstepEditor.basePlugin = Class.extend({
      * Registers listeners for Fabricjs events from the canvas. Child implementations should override
      * the actual callback methods instead of overriding this one.
      * @private
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     registerFabricEvents: function() {
         if (this.editorObj) {
             this.editorObj.on({
                 added: function(options, event) {
-                    var inst = EkstepEditorAPI.getPluginInstance(this.id);
+                    var inst = org.ekstep.contenteditor.api.getPluginInstance(this.id);
                     inst.added(inst, options, event);
                     if (inst.editorObj) {
-                        EkstepEditorAPI.updatePluginDimensions(inst);
+                        org.ekstep.contenteditor.api.updatePluginDimensions(inst);
                     }
                 },
                 removed: function(options, event) {
-                    var inst = EkstepEditorAPI.getPluginInstance(this.id);
+                    var inst = org.ekstep.contenteditor.api.getPluginInstance(this.id);
                     inst.removed(inst, options, event);
                     _.forEach(inst.children, function(child, index) {
                         child.editorObj.remove();
@@ -152,35 +152,35 @@ EkstepEditor.basePlugin = Class.extend({
                     inst.remove();
                 },
                 selected: function(options, event) {
-                    var inst = EkstepEditorAPI.getPluginInstance(this.id);
+                    var inst = org.ekstep.contenteditor.api.getPluginInstance(this.id);
                     inst.selected(inst, options, event)
                 },
                 deselected: function(options, event) {
-                    var inst = EkstepEditorAPI.getPluginInstance(this.id);
+                    var inst = org.ekstep.contenteditor.api.getPluginInstance(this.id);
                     inst.deselected(inst, options, event)
                 },
                 modified: function(options, event) {
-                    var inst = EkstepEditorAPI.getPluginInstance(this.id);
+                    var inst = org.ekstep.contenteditor.api.getPluginInstance(this.id);
                     /* istanbul ignore else. This cannot be reached */
                     if (inst.editorObj) {
-                        EkstepEditorAPI.updatePluginDimensions(inst);
+                        org.ekstep.contenteditor.api.updatePluginDimensions(inst);
                     }
                     inst.changed(inst, options, event)
                 },
                 rotating: function(options, event) {
-                    var inst = EkstepEditorAPI.getPluginInstance(this.id);
+                    var inst = org.ekstep.contenteditor.api.getPluginInstance(this.id);
                     inst.rotating(inst, options, event)
                 },
                 scaling: function(options, event) {
-                    var inst = EkstepEditorAPI.getPluginInstance(this.id);
+                    var inst = org.ekstep.contenteditor.api.getPluginInstance(this.id);
                     inst.scaling(inst, options, event);
                 },
                 moving: function(options, event) {
-                    var inst = EkstepEditorAPI.getPluginInstance(this.id);
+                    var inst = org.ekstep.contenteditor.api.getPluginInstance(this.id);
                     inst.moving(inst, options, event)
                 },
                 skewing: function(options, event) {
-                    var inst = EkstepEditorAPI.getPluginInstance(this.id);
+                    var inst = org.ekstep.contenteditor.api.getPluginInstance(this.id);
                     inst.skewing(inst, options, event)
                 }
             });
@@ -189,37 +189,37 @@ EkstepEditor.basePlugin = Class.extend({
 
     /**
      * Helper method to load a given resource relative to the plugin.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     loadResource: function(src, dataType, cb) {
-        EkstepEditorAPI.loadPluginResource(this.manifest.id, this.manifest.ver, src, dataType, cb);
+        org.ekstep.contenteditor.api.loadPluginResource(this.manifest.id, this.manifest.ver, src, dataType, cb);
     },
 
     /**
      * Removes the plugin from the stage. This can be used to perform self cleanup. If this method is called
      * from newInstance(), plugin won't be added to stage children.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     remove: function() {
         if (this.parent) {
             this.parent.removeChild(this);
             this.parent =  undefined; // if this method is called from newInstance(), plugin won't be added to stage children    
         }
-        delete EkstepEditor.pluginManager.pluginInstances[this.id];
+        delete org.ekstep.pluginframework.pluginManager.pluginInstances[this.id];
     },
 
     /**
      * Creates the instance of the plugin when a new object is added to the canvas.
      * @private
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     create: function(event, data) {
-        EkstepEditorAPI.instantiatePlugin(this.manifest.id, _.clone(data), EkstepEditor.stageManager.currentStage);
+        org.ekstep.contenteditor.api.instantiatePlugin(this.manifest.id, _.clone(data), org.ekstep.contenteditor.stageManager.currentStage);
     },
 
     /**
      * Adds a child to this object. This can be useful for composite scenarios.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     addChild: function(plugin) {
         this.children.push(plugin);
@@ -227,7 +227,7 @@ EkstepEditor.basePlugin = Class.extend({
 
     /**
      * Removes a child from this plugin. Use this to dynamically manage composite children.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     removeChild: function(plugin) {
         this.children = _.reject(this.children, { id: plugin.id });
@@ -236,84 +236,84 @@ EkstepEditor.basePlugin = Class.extend({
     /**
      * Initialize the plugin when it is loaded. This is a no-op implementation and child classes must
      * provide the complete functional implementation.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     /* istanbul ignore next */initialize: function(data) {},
 
     /**
      * Instantiate an object of the plugin type. This is a no-op implementation and child classes must
      * provide the complete functional implementation.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     /* istanbul ignore next */newInstance: function(data) {},
 
     /**
      * Called when the plugin is added to the canvas. This is a no-op implementation and child classes must
      * provide the complete functional implementation.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     added: function(instance, options, event) {},
 
     /**
      * Called when the plugin is removed from the canvas. This is a no-op implementation and child classes must
      * provide the complete functional implementation.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     removed: function(instance, options, event) {},
 
     /**
      * Called when the object is selected on the canvas. This is a no-op implementation and child classes must
      * provide the complete functional implementation.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     selected: function(instance, options, event) {},
 
     /**
      * Called when the object loses focus on the canvas. This is a no-op implementation and child classes must
      * provide the complete functional implementation.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     deselected: function(instance, options, event) {},
 
     /**
      * Called when the object is modified (dragged, resized or rotated). This is a no-op implementation and child classes must
      * provide the complete functional implementation.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     changed: function(instance, options, event) {},
 
     /**
      * Called continuously while the object is rotating. This is a no-op implementation and child classes must
      * provide the complete functional implementation.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     rotating: function(instance, options, event) {},
 
     /**
      * Called continuously while the object is scaling. This is a no-op implementation and child classes must
      * provide the complete functional implementation.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     scaling: function(instance, options, event) {},
 
     /**
      * Called continuously while the object is being dragged. This is a no-op implementation and child classes must
      * provide the complete functional implementation.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     moving: function(instance, options, event) {},
 
     /**
      * Called continuously while the object is being skewed. This is a no-op implementation and child classes must
      * provide the complete functional implementation.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     skewing: function(instance, options, event) {},
 
     /**
      * Allows plugins to create a copy of the object. Default implementation just creates a clone. Child
      * classes can override the logic to customize how copy is done.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     doCopy: function() {
         return this.editorObj;
@@ -322,7 +322,7 @@ EkstepEditor.basePlugin = Class.extend({
     /**
      * Returns a copy of the object by converting it to ECML markup.
      * @private
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getCopy: function() {
         return this.toECML();
@@ -331,7 +331,7 @@ EkstepEditor.basePlugin = Class.extend({
     /**
      * Renders the plugin to canvas. Default implementation adds the editor fabric object to canvas.
      * Complex plugins and templates should override this if necessary.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     render: function(canvas) {
         canvas.add(this.editorObj);
@@ -340,7 +340,7 @@ EkstepEditor.basePlugin = Class.extend({
     /**
      * Returns the metadata of the object. This is a no-op implementation. Child plugins should override
      * this method to return custom metadata.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */    
     /* istanbul ignore next */
     getMeta: function() {},
@@ -349,7 +349,7 @@ EkstepEditor.basePlugin = Class.extend({
      * Utility method to convert canvas pixels to relative units. By design, all rendering must work with
      * relative units to allow content to be rendered on different types of devices with different pixel
      * ratios and density. Plugins must always use the relative units for rendering.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     pixelToPercent: function(obj) {
         obj.x = parseFloat(((obj.x / 720) * 100).toFixed(2));
@@ -363,7 +363,7 @@ EkstepEditor.basePlugin = Class.extend({
      * Utility method to convert relative units to pixels on canvas. By design, all rendering must work with
      * relative units to allow content to be rendered on different types of devices with different pixel
      * ratios and density. Plugins must always use the relative units for rendering.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     percentToPixel: function(obj) {
         obj.x = obj.x * (720 / 100);
@@ -375,7 +375,7 @@ EkstepEditor.basePlugin = Class.extend({
 
     /**
      * Sets the config for this object. Override this method to parse the config if necessary.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     setConfig: function(data) {
         this.config = data;
@@ -383,7 +383,7 @@ EkstepEditor.basePlugin = Class.extend({
 
     /**
      * Adds a given config key and value pair to the config for this plugin instance.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     addConfig: function(key, value) {
         if (_.isUndefined(this.config)) this.config = {};
@@ -393,7 +393,7 @@ EkstepEditor.basePlugin = Class.extend({
     /**
      * Returns the config for this plugin. Child plugins should override this method to generate the
      * custom plugin JSON objects.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getConfig: function() {
         return this.config;
@@ -403,7 +403,7 @@ EkstepEditor.basePlugin = Class.extend({
      * Returns the data that this plugin might set and use at runtime. As a best practice, plugins should
      * differentiate between config (e.g. rendering colors, font size, levels etc) and data (actual
      * word details to use).
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     setData: function(data) {
         this.data = data;
@@ -413,7 +413,7 @@ EkstepEditor.basePlugin = Class.extend({
      * Returns the data for this plugin. Data includes actual drivers - such as the words in a word game
      * or questions in a quiz. Plugins should set their data is they want to differentiate from
      * the config.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getData: function() {
         return this.data;
@@ -423,7 +423,7 @@ EkstepEditor.basePlugin = Class.extend({
      * Manages the ECML attributes for the plugins. This includes x,y,w,h and rotation related attributes
      * that are common to all plugins.
      * @private
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     setAttributes: function(attr) {
         _.merge(this.attributes, attr);
@@ -433,7 +433,7 @@ EkstepEditor.basePlugin = Class.extend({
      * Returns the ECML attributes for the plugins. This includes x,y,w,h and rotation related attributes
      * that are common to all plugins.
      * @private
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getAttributes: function() {
         return _.omit(this.attributes, ['top', 'left', 'width', 'height']);
@@ -443,7 +443,7 @@ EkstepEditor.basePlugin = Class.extend({
      * Modigies the ECML attributes for the plugins. This includes x,y,w,h and rotation related attributes
      * that are common to all plugins.
      * @private
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     setAttribute: function(key, value) {
         this.attributes[key] = value;
@@ -454,7 +454,7 @@ EkstepEditor.basePlugin = Class.extend({
      * that are common to all plugins.
      * @param key {string} Attribute name
      * @private
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getAttribute: function(key) {
         return this.attributes[key];
@@ -465,7 +465,7 @@ EkstepEditor.basePlugin = Class.extend({
      * such as stage entry, exit or results of evaluation.
      * @param event {object} Event object
      * @private
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     addEvent: function(event) {
         if (_.isUndefined(this.event)) this.event = [];
@@ -476,7 +476,7 @@ EkstepEditor.basePlugin = Class.extend({
      * Returns the list of runtime events configured for this plugin. Plugins can respond to events on the renderer
      * such as stage entry, exit or results of evaluation.
      * @param event {object} Event object
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getEvents: function() {
         return this.event;
@@ -487,7 +487,7 @@ EkstepEditor.basePlugin = Class.extend({
      * that can be used for evaluation across stages on the renderer.
      * @param key {string} Name of the runtime parameter
      * @param value {object} Data of the parameter
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     addParam: function(key, value) {
         if (_.isUndefined(this.params)) this.params = {};
@@ -497,7 +497,7 @@ EkstepEditor.basePlugin = Class.extend({
     /**
      * Removes a runtime param for this plugin.
      * @param key {string} Name of the param to remove.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     deleteParam: function(key){
         if(this.params) delete this.params[key];
@@ -505,7 +505,7 @@ EkstepEditor.basePlugin = Class.extend({
 
     /**
      * Returns the list of runtime params for this plugin.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getParams: function() {
         return this.params;
@@ -515,7 +515,7 @@ EkstepEditor.basePlugin = Class.extend({
      * Returns the specified runtime parameter details. Note that the value of the parameter
      * is only available at runtime.
      * @param key {string} Name of the param to return.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getParam: function(key) {
         return this.params ? this.params[key] : undefined;
@@ -526,7 +526,7 @@ EkstepEditor.basePlugin = Class.extend({
      * other runtime dependencies such as JS, CSS and other plugin files. If you don't declare a
      * media, it will not be included in the content download archive.
      * @param media {object} Media to be included at runtime.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     addMedia: function(media) {
         if (_.isUndefined(this.media)) this.media = {};
@@ -538,7 +538,7 @@ EkstepEditor.basePlugin = Class.extend({
      * other runtime dependencies such as JS, CSS and other plugin files. If you don't declare a
      * media, it will not be included in the content download archive.
      * @param media {object} Media to be included at runtime.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getMedia: function() {
         return this.media;
@@ -547,7 +547,7 @@ EkstepEditor.basePlugin = Class.extend({
     /**
      * Returns the renderer dimensions for this plugin. This includes the x,y,w,h bounding box,
      * and the rotation of the object.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getRendererDimensions: function() {
         var attr = this.getAttributes();
@@ -565,10 +565,10 @@ EkstepEditor.basePlugin = Class.extend({
     /**
      * Generates and returns the ECML string for this plugin.
      * @private
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     toECML: function() {
-        if(this.editorObj) EkstepEditorAPI.updatePluginDimensions(this);
+        if(this.editorObj) org.ekstep.contenteditor.api.updatePluginDimensions(this);
         var attr = _.clone(this.getAttributes());
         attr.id = this.id;
         this.pixelToPercent(attr);
@@ -601,7 +601,7 @@ EkstepEditor.basePlugin = Class.extend({
      * Parses the ECML to construct this object.
      * @private
      * @param data {object} ECML to recontruct from
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     fromECML: function(data) {
         var instance = this;
@@ -634,7 +634,7 @@ EkstepEditor.basePlugin = Class.extend({
                 instance.addMedia(this.attributes.assetMedia);
                 delete this.attributes.assetMedia;
             } else {
-                var media = EkstepEditor.mediaManager.getMedia(this.attributes.asset);
+                var media = org.ekstep.contenteditor.mediaManager.getMedia(this.attributes.asset);
                 if (!_.isUndefined(media)) {
                     instance.addMedia(media);
                 }
@@ -647,7 +647,7 @@ EkstepEditor.basePlugin = Class.extend({
      * Utility function to conver the data of the object to Fabric properties - a simple variable
      * transformation that returns the corresponding fabric parameter names.
      * @param data {object} Data of the current plugin instance.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     convertToFabric: function(data) {
         var retData = _.clone(data);
@@ -675,13 +675,13 @@ EkstepEditor.basePlugin = Class.extend({
     /**
      * Allows a plugin to update the context menu when the plugin instance is selected. Plugins can use
      * this method to change any specific custom context menu actions.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     /* istanbul ignore next */updateContextMenu: function() {},
 
     /**
      * Plugins can override this to reset their configuration.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */    
     /* istanbul ignore next */reConfig: function() {},
 
@@ -690,11 +690,11 @@ EkstepEditor.basePlugin = Class.extend({
      * has to provide WYSIWYG feedback on the fabric canvas.
      * @param key {string} Config property name
      * @param value {string} Value of the config setting.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     _onConfigChange: function(key, value) {
         this.addConfig(key, value);
-        var currentInstace = EkstepEditorAPI.getCurrentObject();
+        var currentInstace = org.ekstep.contenteditor.api.getCurrentObject();
         if (currentInstace) {
             if (currentInstace.config === undefined) { currentInstace.config = {} }
             switch (key) {
@@ -724,17 +724,18 @@ EkstepEditor.basePlugin = Class.extend({
                     currentInstace.config.visible = value;
                     break;
             }
-            EkstepEditorAPI.render();
-            EkstepEditorAPI.dispatchEvent('object:modified', { target: EkstepEditorAPI.getEditorObject() });
+            org.ekstep.contenteditor.api.render();
+            org.ekstep.contenteditor.api.dispatchEvent('object:modified', { target: org.ekstep.contenteditor.api.getEditorObject() });
         }
     },
 
     /**
      * Returns the help text for this plugin by reading the help markdown file. Plugins can override this
      * to return custom help.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
-    /* istanbul ignore next. test case failing */getHelp: function(cb) {        
+    /* istanbul ignore next. test case failing */
+    getHelp: function(cb) {        
         var helpText = "Help is not available."
         try {
             this.loadResource(this.manifest.editor.help.src, this.manifest.editor.help.dataType, function(err, help) {
@@ -752,7 +753,7 @@ EkstepEditor.basePlugin = Class.extend({
     /**
      * Returns the properties that editable for this plugin instance.
      * @private
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getProperties: function() {
         var props = _.omitBy(_.clone(this.attributes), _.isObject);
@@ -764,13 +765,13 @@ EkstepEditor.basePlugin = Class.extend({
     /**
      * Renders the configuration view for this plugin. Default functionality is to launch the config
      * property editor. Plugins can override this method to change the way config is rendered.
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */    
     /* istanbul ignore next */renderConfig: function() {},
 
     /**
      * Returns the manifest ID of this object
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getManifestId: function () {
       return (this.manifest.shortId || this.manifest.id);
@@ -778,7 +779,7 @@ EkstepEditor.basePlugin = Class.extend({
 
     /**
      * Returns the displayName of this object
-     * @memberof EkstepEditor.BasePlugin
+     * @memberof org.ekstep.contenteditor.basePlugin
      */
     getDisplayName: function () {
          return (this.manifest.displayName || this.manifest.id);

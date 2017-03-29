@@ -1,6 +1,6 @@
 'use strict';
 
-EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
+org.ekstep.contenteditor.migration.assessmentmigration_task = new(Class.extend({
     init: function() {
         console.log('assessment migration task initialized');
     },
@@ -41,7 +41,7 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
 
         quiz = _.cloneDeep(instance.quiz);
         ctrl = instance.getController(stage.iterate);
-        _.isUndefined(ctrl) ? EkstepEditor.migration.migrationErrors.push('controller not found for assessment on stage: '+ stage.id) : (controllerData = ctrl.__cdata);
+        _.isUndefined(ctrl) ? org.ekstep.contenteditor.migration.migrationErrors.push('controller not found for assessment on stage: '+ stage.id) : (controllerData = ctrl.__cdata);
         if(typeof controllerData === 'string') controllerData = JSON.parse(controllerData);
         questionnaire = quiz.data.__cdata.questionnaire = controllerData;
         if (questionnaire) {
@@ -50,7 +50,7 @@ EkstepEditor.migration.assessmentmigration_task = new(Class.extend({
                 _.forEach(questionnaire.items[itemset.id], function(items) {
                     if (items.template) {
                         tmplt = instance.getTemplate(items.template);
-                        _.isUndefined(tmplt) ? EkstepEditor.migration.migrationErrors.push('Template not found for assessment on stage: ' + stage.id) : quiz.data.__cdata.template.push(tmplt);
+                        _.isUndefined(tmplt) ? org.ekstep.contenteditor.migration.migrationErrors.push('Template not found for assessment on stage: ' + stage.id) : quiz.data.__cdata.template.push(tmplt);
                         //instance.removeObsoleteTemplate(items.template);
                     }
                 });

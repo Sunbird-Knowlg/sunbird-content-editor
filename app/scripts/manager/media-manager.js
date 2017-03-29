@@ -1,7 +1,7 @@
 /**
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
-EkstepEditor.mediaManager = new(Class.extend({
+org.ekstep.contenteditor.mediaManager = new(Class.extend({
     mediaMap: {},
     migratedMediaMap: {},
     addMedia: function(media) {
@@ -14,9 +14,9 @@ EkstepEditor.mediaManager = new(Class.extend({
     },
     getMediaOriginURL: function(src) {
         var assetReverseProxyUrl = "/assets/public/";
-        var replaceText = EkstepEditor.config.baseURL + assetReverseProxyUrl;
+        var replaceText = org.ekstep.contenteditor.config.baseURL + assetReverseProxyUrl;
 
-        _.forEach(EkstepEditor.config.aws_s3_urls, function(url){
+        _.forEach(org.ekstep.contenteditor.config.aws_s3_urls, function(url){
             if(src.indexOf(url) !== -1){
                 src = src.replace(url, replaceText);
             }

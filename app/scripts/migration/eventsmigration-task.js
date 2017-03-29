@@ -1,6 +1,6 @@
 'use strict';
 
-EkstepEditor.migration.eventsmigration_task = new(Class.extend({
+org.ekstep.contenteditor.migration.eventsmigration_task = new(Class.extend({
     init: function() {
         console.log('events migration task initialized');
     },

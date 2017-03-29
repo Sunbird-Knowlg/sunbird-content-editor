@@ -1,6 +1,6 @@
-EkstepEditor.piwikDispatcher = new(EkstepEditor.IDispatcher.extend({
+org.ekstep.pluginframework.piwikDispatcher = new(org.ekstep.pluginframework.IDispatcher.extend({
     type: "piwikDispatcher",
-    piwikEndPoint: EkstepEditor.config.baseURL + "/piwik/piwik.php",
+    piwikEndPoint: org.ekstep.services.config.baseURL + "/piwik/piwik.php",
     idsite: 1,
     initDispatcher: function() {},
     dispatch: function(event) {
@@ -9,7 +9,7 @@ EkstepEditor.piwikDispatcher = new(EkstepEditor.IDispatcher.extend({
         try {
             event = (typeof event === "string") ? event : JSON.stringify(event);
             /* istanbul ignore next. Cannot test jquery post */
-            EkstepEditorAPI.jQuery.post(this.piwikEndPoint + '?idsite=' + this.idsite + '&url=' + EkstepEditor.config.absURL + location.pathname + '&e_c=ContentEditor&e_a=' + event + '&rec=1', function() {
+            org.ekstep.pluginframework.resourceManager.jQuery.post(this.piwikEndPoint + '?idsite=' + this.idsite + '&url=' + org.ekstep.services.config.absURL + location.pathname + '&e_c=ContentEditor&e_a=' + event + '&rec=1', function() {
             })
             .fail(function() {
                 console.log("error: while piwik dispatch");

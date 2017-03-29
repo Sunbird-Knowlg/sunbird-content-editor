@@ -1,7 +1,7 @@
 /**
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
-EkstepEditor.pluginManager = new(Class.extend({
+org.ekstep.pluginframework.pluginManager = new(Class.extend({
     plugins: {},
     pluginObjs: {},
     pluginInstances: {},
@@ -10,20 +10,20 @@ EkstepEditor.pluginManager = new(Class.extend({
         console.log("Plugin manager initialized");
     },
     registerPlugin: function(manifest, plugin, repo) {
-        repo = repo || EkstepEditor.publishedRepo;
+        repo = repo || org.ekstep.pluginframework.publishedRepo;
         this._registerNameSpace(manifest.id, plugin);
         this.plugins[manifest.id] = { p: plugin, m: manifest, 'repo': repo };
         var p = new plugin(manifest); // Initialize plugin
         this.pluginObjs[manifest.id] = p;
-        EkstepEditorAPI.dispatchEvent('plugin:load', { plugin: manifest.id, version: manifest.ver });
-        EkstepEditorAPI.dispatchEvent(manifest.id + ':load');
+        org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:load', { plugin: manifest.id, version: manifest.ver });
+        org.ekstep.pluginframework.eventManager.dispatchEvent(manifest.id + ':load');
     },
-    loadAndInitPlugin: function(pluginId, version, publishedTime) {
+    loadAndInitPlugin: function(pluginId, version, publishedTime, parent) {
         this.loadPlugin(pluginId, version, publishedTime);
         if(this.isDefined(pluginId)) {
             var pluginManifest = this.getPluginManifest(pluginId);
-            if (pluginManifest.type && EkstepEditorAPI._.lowerCase(pluginManifest.type) === "widget") {
-                this.invoke(pluginId, _.cloneDeep(pluginManifest.editor['init-data'] || {}), EkstepEditorAPI.getCurrentStage());    
+            if (pluginManifest.type && _.lowerCase(pluginManifest.type) === "widget") {
+                this.invoke(pluginId, _.cloneDeep(pluginManifest.editor['init-data'] || {}), parent);
             }
             return 0;
         } else {
@@ -35,7 +35,7 @@ EkstepEditor.pluginManager = new(Class.extend({
         if (this.plugins[pluginId]) {
             console.log('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded');
         } else {
-            EkstepEditor.resourceManager.discoverManifest(pluginId, pluginVer, function(err, data) {
+            org.ekstep.pluginframework.resourceManager.discoverManifest(pluginId, pluginVer, function(err, data) {
                 if (err || _.isUndefined(data)) {
                     console.error('Unable to load plugin manifest', 'plugin:' + pluginId + '-' + pluginVer, 'Error:', err);
                 } else {
@@ -47,13 +47,13 @@ EkstepEditor.pluginManager = new(Class.extend({
     },
     loadPluginByManifest: function(manifest, repo, publishedTime) {
         var instance = this;
-        EkstepEditor.resourceManager.getResource(manifest.id, manifest.ver, manifest.editor.main, 'text', repo, function(err, data) {
+        org.ekstep.pluginframework.resourceManager.getResource(manifest.id, manifest.ver, manifest.editor.main, 'text', repo, function(err, data) {
             if (err) {
                 console.error('Unable to load editor plugin', 'plugin:' + manifest.id + '-' + manifest.ver, 'resource:' + manifest.editor.main, 'Error:', err);
             } else {
                 try {
                     instance.registerPlugin(manifest, eval(data), repo);
-                    EkstepEditorAPI.dispatchEvent('plugin:load', { plugin: manifest.id, version: manifest.ver });
+                    org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:load', { plugin: manifest.id, version: manifest.ver });
                 } catch (e) {
                     console.error("Error while loading plugin", 'plugin:' + manifest.id + '-' + manifest.ver, 'Error:', e);
                 }
@@ -70,7 +70,7 @@ EkstepEditor.pluginManager = new(Class.extend({
         }
         var pluginClazz = Class.extend({
             init: function(data, parent, override) {
-                EkstepEditorAPI.instantiatePlugin(pluginId, data, parent, override);
+                org.ekstep.pluginframework.pluginManager.invoke(pluginId, data, parent, override);
             }
         });
         pluginClazz.extend = function(subClazz) {
@@ -85,7 +85,7 @@ EkstepEditor.pluginManager = new(Class.extend({
                 if (dependency.type == 'plugin') {
                     instance.loadPlugin(dependency.plugin, dependency.ver, publishedTime);
                 } else {
-                    EkstepEditor.resourceManager.loadExternalResource(dependency.type, manifest.id, manifest.ver, dependency.src, repo, publishedTime);
+                    org.ekstep.pluginframework.resourceManager.loadExternalResource(dependency.type, manifest.id, manifest.ver, dependency.src, repo, publishedTime);
                 }
             });
         }
@@ -112,15 +112,15 @@ EkstepEditor.pluginManager = new(Class.extend({
                         p = new pluginClass(pluginManifest, d, parent);
                         instance.addPluginInstance(p);
                         p.initPlugin();
-                        EkstepEditorAPI.dispatchEvent('plugin:add', { plugin: pluginManifest.id, version: pluginManifest.ver, instanceId: p.id });
-                        EkstepEditorAPI.dispatchEvent(pluginManifest.id + ':add');
+                        org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:add', { plugin: pluginManifest.id, version: pluginManifest.ver, instanceId: p.id });
+                        org.ekstep.pluginframework.eventManager.dispatchEvent(pluginManifest.id + ':add');
                     })
                 } else {
                     p = new pluginClass(pluginManifest, data, parent);
                     instance.addPluginInstance(p);
                     p.initPlugin();
-                    EkstepEditorAPI.dispatchEvent('plugin:add', { plugin: pluginManifest.id, version: pluginManifest.ver, instanceId: p.id });
-                    EkstepEditorAPI.dispatchEvent(pluginManifest.id + ':add');                    
+                    org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:add', { plugin: pluginManifest.id, version: pluginManifest.ver, instanceId: p.id });
+                    org.ekstep.pluginframework.eventManager.dispatchEvent(pluginManifest.id + ':add');                    
                 }
             } catch(e) {
                 delete instance.pluginInstances[p.id];
@@ -186,7 +186,7 @@ EkstepEditor.pluginManager = new(Class.extend({
     },
     loadPluginResource: function(pluginId, pluginVer, src, dataType, callback) {
         if (this.plugins[pluginId]) {
-            EkstepEditor.resourceManager.getResource(pluginId, pluginVer, src, dataType, this.plugins[pluginId]['repo'], callback)
+            org.ekstep.pluginframework.resourceManager.getResource(pluginId, pluginVer, src, dataType, this.plugins[pluginId]['repo'], callback)
         } else {
             callback(new Error("unable load plugin resource " + src), undefined)
         }

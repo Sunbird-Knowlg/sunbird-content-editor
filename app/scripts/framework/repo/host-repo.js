@@ -1,7 +1,7 @@
 /**
  * @author Harish kumar Gangula<harishg@ilimi.in>
  */
-EkstepEditor.hostRepo = new(EkstepEditor.iRepo.extend({
+org.ekstep.pluginframework.hostRepo = new(org.ekstep.pluginframework.iRepo.extend({
     id: "host",
     basePath: "https://localhost:8081",
     connected: false,
@@ -15,12 +15,12 @@ EkstepEditor.hostRepo = new(EkstepEditor.iRepo.extend({
     },
     checkConnection: function(cb) {
     	var instance = this;
-    	EkstepEditor.resourceManager.loadResource(this.basePath + "/list", "json", cb);
+    	org.ekstep.pluginframework.resourceManager.loadResource(this.basePath + "/list", "json", cb);
     },
     discoverManifest: function(pluginId, pluginVer, callback, publishedTime) {
         if(this.connected) {
             var instance = this;
-            EkstepEditor.resourceManager.loadResource(this.resolveResource(pluginId, pluginVer, "manifest.json"), "json", function(err, response) {
+            org.ekstep.pluginframework.resourceManager.loadResource(this.resolveResource(pluginId, pluginVer, "manifest.json"), "json", function(err, response) {
                 callback(undefined, { "manifest": response, "repo": instance });
             }, publishedTime);
         } else {

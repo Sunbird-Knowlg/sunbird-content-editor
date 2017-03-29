@@ -1,6 +1,6 @@
 'use strict';
 
-EkstepEditor.migration.scribblemigration_task = new(Class.extend({
+org.ekstep.contenteditor.migration.scribblemigration_task = new(Class.extend({
     init: function() {
         console.log('scribble migration task initialized');
     },
@@ -14,7 +14,7 @@ EkstepEditor.migration.scribblemigration_task = new(Class.extend({
                 stage[instance.id] = stage.scribble;
                 delete stage.scribble;
             }            
-            EkstepEditor.migration.imagemigration_task.removeImage(stage, 'domain_38441_trash');                
+            org.ekstep.contenteditor.migration.imagemigration_task.removeImage(stage, 'domain_38441_trash');                
             instance.removeEraserMedia(contentbody);
         });
     },

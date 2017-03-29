@@ -1,7 +1,7 @@
 /**
  * @author Harish kumar Gangula<harishg@ilimi.in>
  */
-EkstepEditor.iRepo = Class.extend({
+org.ekstep.pluginframework.iRepo = Class.extend({
     discoverManifest: function(pluginId, pluginVer, callback) {
     	callback(undefined, undefined);
     },

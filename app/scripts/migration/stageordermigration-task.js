@@ -1,6 +1,6 @@
 'use strict';
 
-EkstepEditor.migration.orderstage_task = new(Class.extend({
+org.ekstep.contenteditor.migration.orderstage_task = new(Class.extend({
     init: function() {
         console.log('orderstage-task initialized');
     },

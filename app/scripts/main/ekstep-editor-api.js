@@ -1,34 +1,34 @@
 /**
- * The EkStep Editor API is the core interface of the plugins with the rest of the editor framework. It allows the plugins
+ * The Content Editor API is the core interface of the plugins with the rest of the editor framework. It allows the plugins
  * to access the framework resources, launch popups, and handle events raised by the framework. Plugins should not call any
  * other framework classes directly.
  * 
- * @class EkstepEditorAPI
+ * @class org.ekstep.contenteditor.api
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
-window.EkstepEditorAPI = {
+window.org.ekstep.contenteditor.api = {
     /**
      * Handle for JQuery. All plugins should use this instead of using '$' directly
      * 
      * @member {Object} jQuery
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
-    jQuery: EkstepEditor.jQuery,
+    jQuery: org.ekstep.contenteditor.jQuery,
 
     /**
      * Handle for Lodash Library. All plugins should use this instead of using '_' directly
      * 
      * @member {Object} _
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
-    _: EkstepEditor._,
+    _: org.ekstep.contenteditor._,
 
     /**
      * @deprecated since current version. This will be removed after April Release
      * Object to hold global context
      * 
      * @member {Object} _
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     globalContext: undefined, // TODO: Deprecate the variable
 
@@ -37,16 +37,16 @@ window.EkstepEditorAPI = {
      * Object to hold Base URL
      * 
      * @member {String} baseURL
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
-    baseURL: EkstepEditor.config.baseURL,
+    baseURL: org.ekstep.contenteditor.config.baseURL,
 
     /**
      * @deprecated since current version. This will be removed after April Release
      * Object to hold absolute URL
      * 
      * @member {String} absURL
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     absURL: undefined,
 
@@ -55,19 +55,19 @@ window.EkstepEditorAPI = {
      * Object to hold API slug for API reverse proxy
      * 
      * @member {String} apislug
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
-    apislug: EkstepEditor.config.apislug,
+    apislug: org.ekstep.contenteditor.config.apislug,
 
     /**
      * Add an object to the context
      * 
      * @param {String} key   Key
      * @param {Object} value Value
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     setContext: function(key, value) {
-        EkstepEditor.globalContext[key] = value;
+        org.ekstep.contenteditor.globalContext[key] = value;
     },
 
     /**
@@ -75,10 +75,10 @@ window.EkstepEditorAPI = {
      * 
      * @param  {String} key Key
      * @return {object}     Value
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getContext: function(key) {
-        return EkstepEditor.globalContext[key];
+        return org.ekstep.contenteditor.globalContext[key];
     },
 
     /**
@@ -86,7 +86,7 @@ window.EkstepEditorAPI = {
      * @return {map} Map of key values
      */
     getAllContext: function() {
-        return EkstepEditor.globalContext;
+        return org.ekstep.contenteditor.globalContext;
     },
 
     /**
@@ -94,10 +94,10 @@ window.EkstepEditorAPI = {
      * 
      * @param {String} key   Key
      * @param {Object} value Value
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     setConfig: function(key, value) {
-        EkstepEditor.config[key] = value;
+        org.ekstep.contenteditor.config[key] = value;
     },
 
     /**
@@ -105,10 +105,10 @@ window.EkstepEditorAPI = {
      * 
      * @param  {String} key Key
      * @return {object}     Value
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getConfig: function(key) {
-        return EkstepEditor.config[key];
+        return org.ekstep.contenteditor.config[key];
     },
 
     /**
@@ -116,7 +116,7 @@ window.EkstepEditorAPI = {
      * @return {map} Map of key values
      */
     getAllConfig: function() {
-        return EkstepEditor.config;
+        return org.ekstep.contenteditor.config;
     },
 
     /**
@@ -124,10 +124,10 @@ window.EkstepEditorAPI = {
      * @param type {string} name of the event (e.g. org.ekstep.quickstart:configure)
      * @param callback {function} callback function
      * @param scope {object} the scope of the callback (use this)
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     addEventListener: function(type, callback, scope) {
-        EkstepEditor.eventManager.addEventListener(type, callback, scope);
+        org.ekstep.pluginframework.eventManager.addEventListener(type, callback, scope);
     },
 
     /**
@@ -136,10 +136,10 @@ window.EkstepEditorAPI = {
      * @param type {string} name of the event to fire (e.g. org.ekstep.quickstart:configure)
      * @param data {object} event data to carry along with the notification
      * @param target {object} the scope of the event (use this)
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     dispatchEvent: function(type, data, target) {
-        EkstepEditor.eventManager.dispatchEvent(type, data, target);
+        org.ekstep.pluginframework.eventManager.dispatchEvent(type, data, target);
     },
 
     /**
@@ -147,10 +147,10 @@ window.EkstepEditorAPI = {
      * @param type {string} name of the event registered with (e.g. org.ekstep.quickstart:configure)
      * @param callback {function} remove the callback function
      * @param scope {object} the scope of the event (use this)
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     removeEventListener: function(type, callback, scope) {
-        EkstepEditor.eventManager.removeEventListener(type, callback, scope);
+        org.ekstep.pluginframework.eventManager.removeEventListener(type, callback, scope);
     },
 
     /**
@@ -160,10 +160,10 @@ window.EkstepEditorAPI = {
      * @param src {string} URL of the resource to be loaded
      * @param dataType {object} dataType of the resource (image, or audio)
      * @param callback {function} callback function whent he resource is available
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     loadPluginResource: function(pluginId, pluginVer, src, dataType, callback) {
-        EkstepEditor.pluginManager.loadPluginResource(pluginId, pluginVer, src, dataType, callback);
+        org.ekstep.pluginframework.pluginManager.loadPluginResource(pluginId, pluginVer, src, dataType, callback);
     },
 
     /**
@@ -178,34 +178,34 @@ window.EkstepEditorAPI = {
      *     asset - Provides access to the content API (for save assets)
      *     telemetry - Service to genarate and log telemetry events
      * @param serviceId {string} id of the service to return. Returns undefined if the id is invalid
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getService: function(serviceId) {
         var service = '';
         switch (serviceId) {
             case ServiceConstants.POPUP_SERVICE:
-                service = EkstepEditor.popupService;
+                service = org.ekstep.services.popupService;
                 break;
             case ServiceConstants.CONTENT_SERVICE:
-                service = EkstepEditor.contentService;
+                service = org.ekstep.services.contentService;
                 break;
             case ServiceConstants.ASSESSMENT_SERVICE:
-                service = EkstepEditor.assessmentService;
+                service = org.ekstep.services.assessmentService;
                 break;
             case ServiceConstants.LANGUAGE_SERVICE:
-                service = EkstepEditor.languageService;
+                service = org.ekstep.services.languageService;
                 break;
             case ServiceConstants.SEARCH_SERVICE:
-                service = EkstepEditor.searchService;
+                service = org.ekstep.services.searchService;
                 break;
             case ServiceConstants.META_SERVICE:
-                service = EkstepEditor.metaService;
+                service = org.ekstep.services.metaService;
                 break;
             case ServiceConstants.ASSET_SERVICE:
-                service = EkstepEditor.assetService;
+                service = org.ekstep.services.assetService;
                 break;
             case ServiceConstants.TELEMETRY_SERVICE:
-                service = EkstepEditor.telemetryService;
+                service = org.ekstep.services.telemetryService;
                 break;
         }
         return service;
@@ -215,10 +215,10 @@ window.EkstepEditorAPI = {
      * Returns the angular scope object for the plugins that need angular framework to render. The editor
      * uses Angular 2 and plugins must use this to access the scope instead of instantiating Angular by
      * themselves.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getAngularScope: function() {
-        return EkstepEditor.toolbarManager.scope;
+        return org.ekstep.contenteditor.toolbarManager.scope;
     },
 
     /**
@@ -226,63 +226,62 @@ window.EkstepEditorAPI = {
      * the plugins to also use Fabric.js for rendering the WYSIWYG components on the editor canvas. However,
      * this method provides access to the underlying native HTML5 canvas if needed. For example, if your plugin
      * uses some other third-party graphics library for rendering.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getCanvas: function() {
-        return EkstepEditor.stageManager.canvas;
+        return org.ekstep.contenteditor.stageManager.canvas;
     },
 
     /**
      * Retrns the current stage object to the plugin. Plugins might use this to query other objects on the
      * canvas or access other stage context.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getCurrentStage: function() {
-        return EkstepEditor.stageManager.currentStage;
+        return org.ekstep.contenteditor.stageManager.currentStage;
     },
 
     /**
      * Retrns the specified stage to the plugin. This can be used to build scenarios where a plugin might be
      * linking multiple stages together (e.g. when building navigation plugins).
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getStage: function(stageId) {
-        return EkstepEditor.stageManager.getStage(stageId);
+        return org.ekstep.contenteditor.stageManager.getStage(stageId);
     },
 
     /**
      * Refreshes the rendering of stages - plugins can request the stages to be refreshed if any change
      * has been made.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     refreshStages: function() {
-        //EkstepEditor.toolbarManager.scope.safeApply(function() { EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages; });
         /* istanbul ignore next */
-        EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope(), function() { EkstepEditor.toolbarManager.scope.stages = EkstepEditor.stageManager.stages; });
+        org.ekstep.contenteditor.api.ngSafeApply(org.ekstep.contenteditor.api.getAngularScope(), function() { org.ekstep.contenteditor.toolbarManager.scope.stages = org.ekstep.contenteditor.stageManager.stages; });
     },
 
     /**
      * Returns the currently selected active object on the canvas. This can be used by plugins to provide
      * contextual support - e.g. show words for a given text object when the text is selected.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getCurrentObject: function() {
-        var activeObj = EkstepEditor.stageManager.canvas.getActiveObject();
+        var activeObj = org.ekstep.contenteditor.stageManager.canvas.getActiveObject();
         if (!activeObj) return false;
         var pluginId = activeObj.id;
-        return EkstepEditorAPI.getPluginInstance(pluginId);
+        return org.ekstep.contenteditor.api.getPluginInstance(pluginId);
     },
 
     /**
      * Returns the current group of selected objects. This is possible when a user does multi-select by
      * clicking on multiple objects or by panning on the canvas.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getCurrentGroup: function() {
-        var plugins = EkstepEditor.stageManager.canvas.getActiveGroup()._objects;
+        var plugins = org.ekstep.contenteditor.stageManager.canvas.getActiveGroup()._objects;
         var group = [];
         _.forEach(plugins, function(plugins, index) {
-            var obj = EkstepEditorAPI.getPluginInstance(plugins.id);
+            var obj = org.ekstep.contenteditor.api.getPluginInstance(plugins.id);
             group.push(obj);
         });
         return group;
@@ -291,38 +290,38 @@ window.EkstepEditorAPI = {
     /**
      * Retrns the current group on the fabric canvas. This provides access to the fabric object. If you
      * want to access the plugin instance that is currently selected, use getCurrentGroup() instead.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getEditorGroup: function() {
-        var group = EkstepEditor.stageManager.canvas.getActiveGroup();
+        var group = org.ekstep.contenteditor.stageManager.canvas.getActiveGroup();
         return group;
     },
 
     /**
      * Retrns the current object on the fabric canvas. This provides access to the fabric object. If you
      * want to access the plugin instance that is currently selected, use getCurrentObject() instead.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getEditorObject: function() {
-        return EkstepEditor.stageManager.canvas.getActiveObject();
+        return org.ekstep.contenteditor.stageManager.canvas.getActiveObject();
     },
 
     /**
      * Notifies the framework to render the canvas once again. This can be done by the plugin when
      * its config or state is modified via the config views.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     render: function() {
-        EkstepEditor.stageManager.canvas.renderAll();
+        org.ekstep.contenteditor.stageManager.canvas.renderAll();
     },
 
     /**
      * Returns a plugin instance for the given plugin ID. Plugins can use this work with dependencies
      * or build plugins that enhance the behavior of other plugins.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getPluginInstance: function(pluginId) {
-        return EkstepEditor.pluginManager.getPluginInstance(pluginId);
+        return org.ekstep.pluginframework.pluginManager.getPluginInstance(pluginId);
     },
 
     /**
@@ -330,10 +329,10 @@ window.EkstepEditorAPI = {
      * This can be used by a plugin to add more actions to the context menu - e.g. when a text is selected,
      * a word parser plugin can add context menu for spell check, or for adding word definition popups.
      * @param menu {object} Menu item to add - see the manifest for the structre of the menu item
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     updateContextMenu: function(menu) {
-        EkstepEditor.toolbarManager.updateContextMenu([menu]);
+        org.ekstep.contenteditor.toolbarManager.updateContextMenu([menu]);
     },
 
     /**
@@ -341,10 +340,10 @@ window.EkstepEditorAPI = {
      * This can be used by a plugin to add more actions to the context menu - e.g. when a text is selected,
      * a word parser plugin can add context menu for spell check, or for adding word definition popups.
      * @param menu {array} Array of menu items to add - see the manifest for the structre of the menu item
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     updateContextMenus: function(menus) {
-        EkstepEditor.toolbarManager.updateContextMenu(menus);
+        org.ekstep.contenteditor.toolbarManager.updateContextMenu(menus);
     },
 
     /**
@@ -355,29 +354,29 @@ window.EkstepEditorAPI = {
      * @param parent {object} Parent scope - use this
      * @param override {object} Any function overrides - e.g. you can override the handlers of the plugin
      * @see org.ekstep.composite-text-image-shape plugin for a sample of leveraging this.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     instantiatePlugin: function(id, data, parent, override) {
-        return EkstepEditor.pluginManager.invoke(id, data, parent, override);
+        return org.ekstep.pluginframework.pluginManager.invoke(id, data, parent, override);
     },
 
     /**
      * Plugins can instantiate a stage and add it to the content. This can be done by special plugins that
      * work at a stage level or cause multiple stages to be added based on the configuration.
      * @param stage {object} Stage to add to the content
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     addStage: function(stage) {
-        EkstepEditor.stageManager.addStage(stage);
+        org.ekstep.contenteditor.stageManager.addStage(stage);
     },
 
     /**
      * Lookup for another plugin in the current plugin manager scope.
      * @param id {string} Plugin id to return. Undefined if the plugin has not been loaded.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getPlugin: function(id) {
-        return EkstepEditor.pluginManager.plugins[id];
+        return org.ekstep.pluginframework.pluginManager.plugins[id];
     },
 
     /**
@@ -385,45 +384,45 @@ window.EkstepEditorAPI = {
      * newly instantiated plugins are added to the framework's registry, making them discoverable by others.
      * Useful for scenarios where plugins depend on others, or composite plugins.
      * @param pluginInstance {object} Plugin object instantiated by this plugin.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     addPluginInstance: function(pluginInstance) {
-        EkstepEditor.pluginManager.addPluginInstance(pluginInstance);
+        org.ekstep.pluginframework.pluginManager.addPluginInstance(pluginInstance);
     },
 
     /**
      * Removes a plugin instance from the manager. Do this only if you instantiated the plugin using addPluginInstance()
      * @param pluginInstance {object} Plugin object instantiated by this plugin.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     removePluginInstance: function(pluginInstance) {
-        EkstepEditor.pluginManager.removePluginInstance(pluginInstance);
+        org.ekstep.pluginframework.pluginManager.removePluginInstance(pluginInstance);
     },
 
     /**
      * Creates a deep copy of the given plugin object with an offset x and y position. This is useful when
      * you are building plugins that enable copy paste type functionality for example.
      * @param pluginInstance {object} Plugin object instantiated by this plugin.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     cloneInstance: function(plugin) {
         var data = plugin.getCopy();
         data = _.omit(data, ["id", "event"]);
-        if (plugin.parent.id == EkstepEditorAPI.getCurrentStage().id) {
+        if (plugin.parent.id == org.ekstep.contenteditor.api.getCurrentStage().id) {
             data.x = data.x + 2;
             data.y = data.y + 2;
         }
-        EkstepEditorAPI.instantiatePlugin(plugin.manifest.id, data, EkstepEditorAPI.getCurrentStage());
+        org.ekstep.contenteditor.api.instantiatePlugin(plugin.manifest.id, data, org.ekstep.contenteditor.api.getCurrentStage());
     },
 
     /**
      * Returns all stages in the current document. This could be useful when plugins work across stages
      * such as timers that work across stages or page number plugins. Using this, a plugin can get access to all
      * stages, and instantiate plugins on each stage.
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getAllStages: function() {
-        return EkstepEditor.stageManager.stages;
+        return org.ekstep.contenteditor.stageManager.stages;
     },
 
     /**
@@ -436,11 +435,11 @@ window.EkstepEditorAPI = {
      * @param  {Array} excludeTypes Exclude plugins
      * @param  {Array} excludeIds   Exclude specific plugin instances
      * @return {Array}              Array of plugin instances matching the given criteria
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getStagePluginInstances: function(stage, includeTypes, excludeTypes, excludeIds) {
         // TODO: Add logic to check if stage exists
-        var instances = _.clone(EkstepEditorAPI.getStage(stage).children);
+        var instances = _.clone(org.ekstep.contenteditor.api.getStage(stage).children);
         if (includeTypes) {
             instances = _.filter(instances, function(obj) {
                 return includeTypes.indexOf(obj.manifest.id) != -1;
@@ -466,10 +465,10 @@ window.EkstepEditorAPI = {
      * @param  {Array} excludeTypes Exclude plugins
      * @param  {Array} excludeIds   Exclude specific plugin instances
      * @return {Array}              Array of plugin instances matching the given criteria
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getPluginInstances: function(includeTypes, excludeTypes, excludeIds) {
-        var instances = _.clone(EkstepEditor.pluginManager.pluginInstances);
+        var instances = _.clone(org.ekstep.pluginframework.pluginManager.pluginInstances);
         if (includeTypes) {
             instances = _.filter(instances, function(obj) {
                 return includeTypes.indexOf(obj.manifest.id) != -1;
@@ -491,20 +490,20 @@ window.EkstepEditorAPI = {
     /**
      * Allows plugins to load a media object that they may depend upon.
      * @param assetId {string} ID of the media asset to load
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getMedia: function(assetId) {
-        return EkstepEditor.mediaManager.getMedia(assetId);
+        return org.ekstep.contenteditor.mediaManager.getMedia(assetId);
     },
 
     /**
      * Get the media asset's reverse proxy URL
      * @param  {String} url Fully qualified URL
      * @return {String}     Reverse proxied URL
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getMediaReverseProxyURL: function(url) {
-        return EkstepEditor.mediaManager.getMediaOriginURL(url);
+        return org.ekstep.contenteditor.mediaManager.getMediaOriginURL(url);
     },
 
     /**
@@ -512,10 +511,10 @@ window.EkstepEditorAPI = {
      * 
      * @param  {String} pluginId      Plugin ID
      * @param  {String} pluginVersion Plugin Version
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     loadPlugin: function(pluginId, pluginVersion) {
-        EkstepEditor.pluginManager.loadPlugin(pluginId, pluginVersion);
+        org.ekstep.pluginframework.pluginManager.loadPlugin(pluginId, pluginVersion);
     },
 
     /**
@@ -523,17 +522,17 @@ window.EkstepEditorAPI = {
      * Method to get plugin rep
      * 
      * @return {String} Repo location of published plugins
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     getPluginRepo: function() {
-        return EkstepEditor.config.pluginRepo;
+        return org.ekstep.contenteditor.config.pluginRepo;
     },
 
     /**
      * Utility API to update the plugin dimenstions once any action like - move, resize etc are performed
      * 
      * @param  {Object} inst Plugin Instance
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     updatePluginDimensions: function(inst) {
         inst.attributes.x = inst.editorObj.getLeft();
@@ -553,10 +552,10 @@ window.EkstepEditorAPI = {
      * @param  {String} pluginId      Plugin ID
      * @param  {String} pluginVersion Plugin Version
      * @param  {Long} publishedTime   Plugin published timestamp (for cache busting)
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     loadAndInitPlugin: function(pluginId, pluginVersion, publishedTime) {
-        EkstepEditor.pluginManager.loadAndInitPlugin(pluginId, pluginVersion, publishedTime);
+        org.ekstep.pluginframework.pluginManager.loadAndInitPlugin(pluginId, pluginVersion, publishedTime);
     },
 
     /**
@@ -566,10 +565,10 @@ window.EkstepEditorAPI = {
      * @param  {String} pluginVersion Plugin Version
      * @param  {String} resource resource relative URL
      * @return {String}          Resolved URL
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     resolvePluginResource: function (id, ver, resource) {
-         return EkstepEditor.pluginManager.resolvePluginResource(id, ver, resource);
+         return org.ekstep.pluginframework.pluginManager.resolvePluginResource(id, ver, resource);
     },
 
     /**
@@ -577,9 +576,11 @@ window.EkstepEditorAPI = {
      * 
      * @param  {String}   command  Key combination. For ex: ctrl+s, ctrl+c etc
      * @param  {Function} callback Callback to invoke when the key is pressed
-     * @memberof EkstepEditorAPI
+     * @memberof org.ekstep.contenteditor.api
      */
     registerKeyboardCommand: function(command, callback) {
-        EkstepEditor.keyboardManager.registerKeyCombination(command, callback);
+        org.ekstep.pluginframework.keyboardManager.registerKeyCombination(command, callback);
     }
 }
+
+window.ceEditor = window.org.ekstep.contenteditor.api;

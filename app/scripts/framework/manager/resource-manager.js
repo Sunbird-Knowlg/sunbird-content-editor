@@ -1,23 +1,28 @@
 /**
  * @author Harish kumar Gangula<harishg@ilimi.in>
  */
-EkstepEditor.resourceManager = new(Class.extend({
+org.ekstep.pluginframework.resourceManager = new(Class.extend({
     init: function() {},
+    jQuery: undefined,
+    buildNumber: undefined,
+    initialize: function(jQuery) {
+        this.jQuery = jQuery;
+    },
     discoverManifest: function(pluginId, pluginVer, cb, publishedTime) {
         async.waterfall([
             function(callback) {
-                    EkstepEditor.hostRepo.discoverManifest(pluginId, pluginVer, callback, publishedTime); 
+                org.ekstep.pluginframework.hostRepo.discoverManifest(pluginId, pluginVer, callback, publishedTime); 
             },
             function(data, callback) {
                 if (_.isUndefined(data.manifest)) {
-                    EkstepEditor.draftRepo.discoverManifest(pluginId, pluginVer, callback, publishedTime);
+                    org.ekstep.pluginframework.draftRepo.discoverManifest(pluginId, pluginVer, callback, publishedTime);
                 } else {
                     callback(null, data);
                 }
             },
             function(data, callback) {
                 if (_.isUndefined(data.manifest)) {
-                    EkstepEditor.publishedRepo.discoverManifest(pluginId, pluginVer, callback, publishedTime); 
+                    org.ekstep.pluginframework.publishedRepo.discoverManifest(pluginId, pluginVer, callback, publishedTime); 
                 } else {
                     callback(null, data);
                 }
@@ -38,19 +43,19 @@ EkstepEditor.resourceManager = new(Class.extend({
         var resource = repo.resolveResource(pluginId, pluginVer, src) + "?" + (publishedTime || "");
         switch (type) {
             case 'js':
-                EkstepEditor.jQuery("body").append($("<script type='text/javascript' src=" + resource + ">"));
+                this.jQuery("body").append($("<script type='text/javascript' src=" + resource + ">"));
                 break;
             case 'css':
-                EkstepEditor.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + resource + "'>");
+                this.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + resource + "'>");
                 break;
         }
     },
     loadResource: function(url, dataType, callback, publishedTime) {
-        url = url + "?" + EkstepEditor.config.build_number
+        url = url + "?" + org.ekstep.pluginframework.config.build_number;
         if (publishedTime) {
             url = url + "&" + publishedTime;
         }
-        EkstepEditor.jQuery.ajax({
+        this.jQuery.ajax({
             async: false,
             url: url ,
             dataType: dataType

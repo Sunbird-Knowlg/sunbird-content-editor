@@ -1,7 +1,7 @@
 /**
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
-EkstepEditor.keyboardManager = new (Class.extend({
+org.ekstep.pluginframework.keyboardManager = new (Class.extend({
 	document: undefined,
 	registry: {},
 	initialize: function($document) {

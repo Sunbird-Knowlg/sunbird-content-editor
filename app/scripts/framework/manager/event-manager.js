@@ -1,7 +1,7 @@
 /**
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
-EkstepEditor.eventManager = new (Class.extend({
+org.ekstep.pluginframework.eventManager = new (Class.extend({
 	enableEvents: true,
 	addEventListener: function(type, callback, scope) {
 		EventBus.addEventListener(type, callback, scope)

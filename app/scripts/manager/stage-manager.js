@@ -1,7 +1,7 @@
 /**
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
-EkstepEditor.stageManager = new(Class.extend({
+org.ekstep.contenteditor.stageManager = new(Class.extend({
     stages: [],
     thumbnails: {},
     currentStage: undefined,
@@ -19,8 +19,8 @@ EkstepEditor.stageManager = new(Class.extend({
         //fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
         this.canvas = new fabric.Canvas('canvas', { backgroundColor: '#FFFFFF', preserveObjectStacking: true, perPixelTargetFind: false });
         console.log("Stage manager initialized");
-        EkstepEditor.eventManager.addEventListener("stage:delete", this.deleteConfirmationDialog, this);
-        EkstepEditor.eventManager.addEventListener("stage:duplicate", this.duplicateStage, this);
+        org.ekstep.contenteditor.eventManager.addEventListener("stage:delete", this.deleteConfirmationDialog, this);
+        org.ekstep.contenteditor.eventManager.addEventListener("stage:duplicate", this.duplicateStage, this);
     },
     clearCanvas: function(canvas) {
         canvas.clear();
@@ -29,33 +29,33 @@ EkstepEditor.stageManager = new(Class.extend({
     registerEvents: function() {
         var instance = this;        
         this.canvas.on("object:modified", function(options, event) {
-            EkstepEditor.stageManager.dispatchObjectEvent('modified', options, event);
+            org.ekstep.contenteditor.stageManager.dispatchObjectEvent('modified', options, event);
         });
         this.canvas.on("object:selected", function(options, event) {
-            EkstepEditor.stageManager.dispatchObjectEvent('selected', options, event);
+            org.ekstep.contenteditor.stageManager.dispatchObjectEvent('selected', options, event);
         });
         this.canvas.on("selection:cleared", function(options, event) {
-            EkstepEditor.stageManager.dispatchObjectEvent('unselected', options, event);
+            org.ekstep.contenteditor.stageManager.dispatchObjectEvent('unselected', options, event);
         });
         this.canvas.on("object:added", function(options, event) {
-            EkstepEditor.stageManager.dispatchObjectEvent('added', options, event);
+            org.ekstep.contenteditor.stageManager.dispatchObjectEvent('added', options, event);
         });
         this.canvas.on("object:removed", function(options, event) {
-            EkstepEditor.stageManager.dispatchObjectEvent('removed', options, event);
+            org.ekstep.contenteditor.stageManager.dispatchObjectEvent('removed', options, event);
         });
         this.canvas.on("object:moving", function(options, event) {
-            EkstepEditor.stageManager.dispatchObjectEvent('moving', options, event);
+            org.ekstep.contenteditor.stageManager.dispatchObjectEvent('moving', options, event);
         });
         this.canvas.on("object:scaling", function(options, event) {
-            EkstepEditor.stageManager.dispatchObjectEvent('scaling', options, event);
+            org.ekstep.contenteditor.stageManager.dispatchObjectEvent('scaling', options, event);
         });
-        EkstepEditor.eventManager.addEventListener("stage:select", this.selectStage, this);
+        org.ekstep.contenteditor.eventManager.addEventListener("stage:select", this.selectStage, this);
     },
     dispatchObjectEvent: function(eventType, options, event) {
-        var meta = EkstepEditor.stageManager.getObjectMeta(options);
-        EkstepEditor.eventManager.dispatchEvent('object:' + eventType, meta);
+        var meta = org.ekstep.contenteditor.stageManager.getObjectMeta(options);
+        org.ekstep.contenteditor.eventManager.dispatchEvent('object:' + eventType, meta);
         if (meta.type != '') {
-            EkstepEditor.eventManager.dispatchEvent(meta.type + ':' + eventType, meta);
+            org.ekstep.contenteditor.eventManager.dispatchEvent(meta.type + ':' + eventType, meta);
         }
     },
     selectStage: function(event, data) {
@@ -66,7 +66,7 @@ EkstepEditor.stageManager = new(Class.extend({
             this.currentStage.render(this.canvas);
         } else {
             this.currentStage.isSelected = false;
-            EkstepEditor.eventManager.dispatchEvent('stage:unselect', { stageId: this.currentStage.id });
+            org.ekstep.contenteditor.eventManager.dispatchEvent('stage:unselect', { stageId: this.currentStage.id });
             this.clearCanvas(this.canvas);
             this.currentStage = _.find(this.stages, { id: data.stageId });
             this.currentStage.isSelected = true;
@@ -74,26 +74,26 @@ EkstepEditor.stageManager = new(Class.extend({
             this.currentStage.setCanvas(this.canvas);
             this.currentStage.render(this.canvas);
             this.canvas.on("object:added", function(options, event) {
-                EkstepEditor.stageManager.dispatchObjectEvent('added', options, event);
+                org.ekstep.contenteditor.stageManager.dispatchObjectEvent('added', options, event);
             });
         }
-        EkstepEditorAPI.dispatchEvent('config:showSettingsTab', {id: this.currentStage.id});        
+        org.ekstep.contenteditor.api.dispatchEvent('config:showSettingsTab', {id: this.currentStage.id});        
     },
     addStage: function(stage) {
         var prevStageId = _.isUndefined(this.currentStage) ? undefined : this.currentStage.id;
         this.addStageAt(stage, stage.attributes.position);
         this.selectStage(null, { stageId: stage.id });
-        EkstepEditorAPI.dispatchEvent('stage:add', { stageId: stage.id, prevStageId: prevStageId });
+        org.ekstep.contenteditor.api.dispatchEvent('stage:add', { stageId: stage.id, prevStageId: prevStageId });
     },
     deleteStage: function(event, data) {
         var currentStage = _.find(this.stages, { id: data.stageId });
         this.deleteStageInstances(currentStage);
         var currentStageIndex = this.getStageIndex(currentStage);
         this.stages.splice(currentStageIndex, 1);
-        if (this.stages.length === 0) EkstepEditorAPI.dispatchEvent('stage:create', { "position": "next" });
+        if (this.stages.length === 0) org.ekstep.contenteditor.api.dispatchEvent('stage:create', { "position": "next" });
         else if (currentStageIndex === this.stages.length) this.selectStage(null, { stageId: this.stages[currentStageIndex - 1].id });
         else this.selectStage(null, { stageId: this.stages[currentStageIndex].id });
-        EkstepEditorAPI.dispatchEvent('stage:removed', { stageId: data.stageId});
+        org.ekstep.contenteditor.api.dispatchEvent('stage:removed', { stageId: data.stageId});
     },
     deleteStageInstances: function(stage) {
         _.forEach(_.clone(stage.canvas.getObjects()), function(obj) {
@@ -101,7 +101,7 @@ EkstepEditor.stageManager = new(Class.extend({
         });
     },
     getStageIndex: function(stage) {
-        return EkstepEditorAPI.getAllStages().findIndex(function(obj) {
+        return org.ekstep.contenteditor.api.getAllStages().findIndex(function(obj) {
             return obj.id === stage.id
         });
     },
@@ -111,26 +111,26 @@ EkstepEditor.stageManager = new(Class.extend({
     duplicateStage: function(event, data) {
         var currentStage = _.find(this.stages, { id: data.stageId }), instance = this, plugins = [];
         var stage = this.stages[this.getStageIndex(currentStage)];
-        EkstepEditorAPI.dispatchEvent('stage:create', { "position": "afterCurrent" });        
-        EkstepEditor.eventManager.enableEvents = false;
+        org.ekstep.contenteditor.api.dispatchEvent('stage:create', { "position": "afterCurrent" });        
+        org.ekstep.pluginframework.eventManager.enableEvents = false;
         _.forEach(stage.children, function(plugin) {
             plugins.push({'z-index': plugin.attributes['z-index'], data: plugin });
         });
         _.forEach(_.sortBy(plugins, 'z-index'), function(plugin) {            
-            EkstepEditorAPI.cloneInstance(plugin.data);
+            org.ekstep.contenteditor.api.cloneInstance(plugin.data);
         });
         this.currentStage.destroyOnLoad(stage.children.length, this.canvas, function(){
-            EkstepEditor.eventManager.enableEvents = true;
+            org.ekstep.pluginframework.eventManager.enableEvents = true;
         });
-        EkstepEditorAPI.dispatchEvent('stage:select', { stageId: this.currentStage.id });      
+        org.ekstep.contenteditor.api.dispatchEvent('stage:select', { stageId: this.currentStage.id });      
 
     },
     getObjectMeta: function(options) {
         var pluginId = (options && options.target) ? options.target.id : '';
         return {
             'id': pluginId,
-            'type': EkstepEditor.pluginManager.getPluginType(pluginId),
-            'ver': EkstepEditor.pluginManager.getPluginVersion(pluginId)
+            'type': org.ekstep.pluginframework.pluginManager.getPluginType(pluginId),
+            'ver': org.ekstep.pluginframework.pluginManager.getPluginVersion(pluginId)
         }
     },
     addStageAt: function(stage, position) {
@@ -145,7 +145,7 @@ EkstepEditor.stageManager = new(Class.extend({
                 break;
             case "afterCurrent":
             case "beforeCurrent":
-                currentIndex = this.getStageIndex(EkstepEditorAPI.getCurrentStage());
+                currentIndex = this.getStageIndex(org.ekstep.contenteditor.api.getCurrentStage());
                 if (position === "afterCurrent" && currentIndex >= 0) this.stages.splice(currentIndex + 1, 0, stage);
                 if (position === "beforeCurrent" && currentIndex >= 0) this.stages.splice(currentIndex, 0, stage);
                 break;
@@ -172,7 +172,7 @@ EkstepEditor.stageManager = new(Class.extend({
             }
         }
 
-        EkstepEditorAPI.dispatchEvent('stage:reorder', { stageId: srcStageId, fromIndex: srcIdx, toIndex: destIdx });
+        org.ekstep.contenteditor.api.dispatchEvent('stage:reorder', { stageId: srcStageId, fromIndex: srcIdx, toIndex: destIdx });
     },
     getStageIndexById: function(stageId) {
         return _.findIndex(this.stages, function(stage) {
@@ -181,7 +181,7 @@ EkstepEditor.stageManager = new(Class.extend({
     },
     deleteConfirmationDialog: function(event, data) {
         var instance = this;
-        EkstepEditorAPI.getService('popup').open({
+        org.ekstep.contenteditor.api.getService('popup').open({
             template: 'deleteStageDialog.html',
             controller: ['$scope', function($scope) {
                 $scope.delete = function() {
@@ -193,14 +193,14 @@ EkstepEditor.stageManager = new(Class.extend({
         });
     },
     showLoadScreenMessage: function() {
-        var obj = _.find(EkstepEditorAPI.getAngularScope().appLoadMessage, { 'id': 3});
+        var obj = _.find(org.ekstep.contenteditor.api.getAngularScope().appLoadMessage, { 'id': 3});
         if (_.isObject(obj)) {
             obj.message = "Loading your lesson";
             obj.status = true;
         }
-        EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
+        org.ekstep.contenteditor.api.ngSafeApply(org.ekstep.contenteditor.api.getAngularScope());
         setTimeout(function() {
-            EkstepEditorAPI.getAngularScope().closeLoadScreen(); // added 2 sec set timeout to show the content load message           
+            org.ekstep.contenteditor.api.getAngularScope().closeLoadScreen(); // added 2 sec set timeout to show the content load message           
         }, 2000)
     },
     getStageIcons: function() {
@@ -228,20 +228,20 @@ EkstepEditor.stageManager = new(Class.extend({
             stageBody.manifest.media = _.map(_.uniq(stageAssets), function(asset) { return {assetId: asset}});
             content.theme.stage.push(stageBody);
         });    
-        if(!_.isEmpty(EkstepEditor.mediaManager.migratedMediaMap)) {            
+        if(!_.isEmpty(org.ekstep.contenteditor.mediaManager.migratedMediaMap)) {            
             instance.mergeMediaMap(mediaMap);
             content.theme["migration-media"] = {};
-            content.theme["migration-media"].media =  _.values(EkstepEditor.mediaManager.migratedMediaMap);
+            content.theme["migration-media"].media =  _.values(org.ekstep.contenteditor.mediaManager.migratedMediaMap);
         }
         content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mediaMap)), 'id');
         
         return _.cloneDeep(content);
     },
     mergeMediaMap: function(mediaMap) {
-        _.forIn(EkstepEditor.mediaManager.migratedMediaMap, function(value, key) {
+        _.forIn(org.ekstep.contenteditor.mediaManager.migratedMediaMap, function(value, key) {
             if (_.isUndefined(mediaMap[key])) {
                 mediaMap[key] = value;
-                value.src = EkstepEditor.mediaManager.getMediaOriginURL(value.src);
+                value.src = org.ekstep.contenteditor.mediaManager.getMediaOriginURL(value.src);
             }
         });
     },
@@ -251,7 +251,7 @@ EkstepEditor.stageManager = new(Class.extend({
             _.forIn(media, function(value, key) {
                 if(!mediaMap[key]) {
                     mediaMap[key] = value;
-                    value.src = EkstepEditor.mediaManager.getMediaOriginURL(value.src);
+                    value.src = org.ekstep.contenteditor.mediaManager.getMediaOriginURL(value.src);
                     if(_.indexOf(pluginType, mediaMap[key].type) != -1) {
                         mediaMap[key].plugin = manifest.id;
                         mediaMap[key].ver = manifest.ver;
@@ -282,7 +282,7 @@ EkstepEditor.stageManager = new(Class.extend({
     },
     updateContentManifest: function(content, id, pluginManifest) {
         var instance = this;
-        if (_.indexOf(EkstepEditor.config.corePlugins, id) == 1) {
+        if (_.indexOf(org.ekstep.contenteditor.config.corePlugins, id) == 1) {
             return;
         }
         if (_.isUndefined(pluginManifest.renderer) || _.isUndefined(pluginManifest.renderer.main)) {
@@ -317,10 +317,10 @@ EkstepEditor.stageManager = new(Class.extend({
     fromECML: function(contentBody, stageIcons) {
         var instance = this;
         var startTime = (new Date()).getTime();
-        EkstepEditorAPI.getAngularScope().appLoadMessage.push({ 'id': 3, 'message': 'Loading your lesson', 'status': false });
-        EkstepEditorAPI.ngSafeApply(EkstepEditorAPI.getAngularScope());
-        EkstepEditor.stageManager.contentLoading = true;
-        EkstepEditor.eventManager.enableEvents = false;
+        org.ekstep.contenteditor.api.getAngularScope().appLoadMessage.push({ 'id': 3, 'message': 'Loading your lesson', 'status': false });
+        org.ekstep.contenteditor.api.ngSafeApply(org.ekstep.contenteditor.api.getAngularScope());
+        org.ekstep.contenteditor.stageManager.contentLoading = true;
+        org.ekstep.pluginframework.eventManager.enableEvents = false;
         this._loadMedia(contentBody);
         this._loadPlugins(contentBody, function(err, res) {
             if(!err) {
@@ -331,14 +331,14 @@ EkstepEditor.stageManager = new(Class.extend({
     },
     _loadMedia: function(contentBody) {
         _.forEach(contentBody.theme.manifest.media, function(media) {
-            if (media.type == 'plugin' && EkstepEditor.pluginManager.isDefined(media.id)) {} else {
-                EkstepEditor.mediaManager.addMedia(media);
+            if (media.type == 'plugin' && org.ekstep.pluginframework.pluginManager.isDefined(media.id)) {} else {
+                org.ekstep.contenteditor.mediaManager.addMedia(media);
             }
         });
         //if migratedMedia present inside theme, add to migrated media
         if (contentBody.theme["migration-media"]) {
             _.forEach(contentBody.theme["migration-media"].media, function(media){
-                EkstepEditor.mediaManager.addToMigratedMedia(media);
+                org.ekstep.contenteditor.mediaManager.addToMigratedMedia(media);
             });
         }
     },
@@ -350,7 +350,7 @@ EkstepEditor.stageManager = new(Class.extend({
         _.forEach(plugins, function(plugin) {
             pluginMap[plugin.id] = plugin.ver;
         });
-        EkstepEditor.pluginManager.loadAllPlugins(pluginMap, cb);
+        org.ekstep.pluginframework.pluginManager.loadAllPlugins(pluginMap, cb);
     },
     _loadStages: function(stages, stageIcons, startTime) {
         var instance = this;
@@ -397,7 +397,7 @@ EkstepEditor.stageManager = new(Class.extend({
             }
         }
         
-        var stageInstance = EkstepEditorAPI.instantiatePlugin(EkstepEditor.config.corePluginMapping['stage'], stage);
+        var stageInstance = org.ekstep.contenteditor.api.instantiatePlugin(org.ekstep.contenteditor.config.corePluginMapping['stage'], stage);
         stageInstance.setCanvas(canvas);
         var pluginCount = 0;
         var props = _.pickBy(stage, _.isObject);
@@ -411,18 +411,18 @@ EkstepEditor.stageManager = new(Class.extend({
         })
 
         _.forIn(_.sortBy(plugins, 'z-index'), function(plugin) {
-            var pluginId = EkstepEditor.config.corePluginMapping[plugin.id] || plugin.id;
+            var pluginId = org.ekstep.contenteditor.config.corePluginMapping[plugin.id] || plugin.id;
             var pluginInstance;
             try {
-                pluginInstance = EkstepEditorAPI.instantiatePlugin(pluginId, plugin.data, stageInstance);
+                pluginInstance = org.ekstep.contenteditor.api.instantiatePlugin(pluginId, plugin.data, stageInstance);
                 if (_.isUndefined(pluginInstance)) {
                     console.log('Unable to instantiate', plugin.id); // TODO: Add telemetry that plugin is not found
-                    EkstepEditorAPI.instantiatePlugin("org.ekstep.unsupported", {data: plugin}, stageInstance);
+                    org.ekstep.contenteditor.api.instantiatePlugin("org.ekstep.unsupported", {data: plugin}, stageInstance);
                 }
                 pluginCount++;
             } catch(e) { 
                 console.warn('error when instantiating plugin:', pluginId, plugin.data, stageInstance.id, e);                   
-                EkstepEditor.telemetryService.error({ "env": "content", "stage": stageInstance.id, "action": "console log error", "err": "plugin instantiation", "type": "PORTAL", "data": "", "severity": "warn" });
+                org.ekstep.services.telemetryService.error({ "env": "content", "stage": stageInstance.id, "action": "console log error", "err": "plugin instantiation", "type": "PORTAL", "data": "", "severity": "warn" });
             }                
         });
         if (stageEvents) {
@@ -435,26 +435,26 @@ EkstepEditor.stageManager = new(Class.extend({
         stageInstance.destroyOnLoad(pluginCount, canvas, callback);
     },
     onContentLoad: function(startTime) {
-        EkstepEditorAPI.jQuery('#thumbnailCanvasContainer').empty();
-        EkstepEditorAPI.getAngularScope().toggleGenieControl();
-        EkstepEditor.eventManager.enableEvents = true;
-        EkstepEditor.stageManager.registerEvents();
+        org.ekstep.contenteditor.api.jQuery('#thumbnailCanvasContainer').empty();
+        org.ekstep.contenteditor.api.getAngularScope().toggleGenieControl();
+        org.ekstep.pluginframework.eventManager.enableEvents = true;
+        org.ekstep.contenteditor.stageManager.registerEvents();
         this.showLoadScreenMessage();
-        EkstepEditor.stageManager.contentLoading = false;
-        EkstepEditor.telemetryService.startEvent(true).append("loadtimes", {"contentLoad": ((new Date()).getTime() - startTime)});
-        EkstepEditorAPI.dispatchEvent('content:load:complete');
-        if(EkstepEditorAPI._.isEmpty(this.stages)) {
-            EkstepEditor.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
+        org.ekstep.contenteditor.stageManager.contentLoading = false;
+        org.ekstep.services.telemetryService.startEvent(true).append("loadtimes", {"contentLoad": ((new Date()).getTime() - startTime)});
+        org.ekstep.contenteditor.api.dispatchEvent('content:load:complete');
+        if(org.ekstep.contenteditor.api._.isEmpty(this.stages)) {
+            org.ekstep.pluginframework.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
         } else {
-            EkstepEditor.eventManager.dispatchEvent('stage:select', { stageId: this.stages[0].id });
+            org.ekstep.pluginframework.eventManager.dispatchEvent('stage:select', { stageId: this.stages[0].id });
         }
     },
     _resolveManifestMediaPath : function (id, ver, resource) {
-        var src = EkstepEditor.pluginManager.resolvePluginResource(id, ver, resource);
+        var src = org.ekstep.pluginframework.pluginManager.resolvePluginResource(id, ver, resource);
         if (src === false) {
             return ""
         } else if(src.indexOf("http") === -1) {
-            src = EkstepEditor.config.absURL + src;
+            src = org.ekstep.contenteditor.config.absURL + src;
         } 
         return src;
     },

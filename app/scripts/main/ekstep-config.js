@@ -1,4 +1,4 @@
-EkstepEditor.config = {
+org.ekstep.contenteditor.config = {
     baseURL: 'https://dev.ekstep.in',
     apislug: '/api',
     defaultSettings: 'config/editorSettings.json',
@@ -25,7 +25,7 @@ EkstepEditor.config = {
     useProxyForURL: true
 }
 
-EkstepEditor.baseConfigManifest = [{
+org.ekstep.contenteditor.baseConfigManifest = [{
     "propertyName": "autoplay",
     "title": "Auto play",
     "description": "Set the element's playability",

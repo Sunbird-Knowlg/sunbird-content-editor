@@ -1,18 +1,18 @@
 /**
  *
  * Assessment service helps to get questions(items)
- * @class EkstepEditor.assessmentService
+ * @class org.ekstep.services.assessmentService
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
-EkstepEditor.assessmentService = new(EkstepEditor.iService.extend({
+org.ekstep.services.assessmentService = new(org.ekstep.services.iService.extend({
     /** 
      * @member {string} learningURL
-     * @memberof EkstepEditor.assessmentService
+     * @memberof org.ekstep.services.assessmentService
      */
-    learningURL: EkstepEditor.config.baseURL + EkstepEditorAPI.getConfig('apislug') + '/learning/',
+    learningURL: this.baseURL + this.apislug + '/learning/',
      /** 
      * @member {object} requestHeaders
-     * @memberof EkstepEditor.assessmentService
+     * @memberof org.ekstep.services.assessmentService
      */
     requestHeaders: {
         "headers": {
@@ -24,16 +24,16 @@ EkstepEditor.assessmentService = new(EkstepEditor.iService.extend({
      * Get Questions from search API
      * @param  {object}   data     search filter data
      * @param  {Function} callback returns error and response as arguments
-     * @memberof EkstepEditor.assessmentService
+     * @memberof org.ekstep.services.assessmentService
      */
     getQuestions: function(data, callback) {
-        EkstepEditorAPI.getService('search').search(data, callback);
+        org.ekstep.services.searchService.search(data, callback);
     },
     /**
      * Get selected Question(assessmentitem)
      * @param  {string}   itemId   selected question(assessmentitem) id
      * @param  {Function} callback returns error and response as arguments
-     * @memberof EkstepEditor.assessmentService
+     * @memberof org.ekstep.services.assessmentService
      */
     getItem: function(itemId, callback) {
         this.getFromService(this.learningURL + 'v1/assessmentitem/' + itemId, this.requestHeaders, callback);
@@ -42,22 +42,9 @@ EkstepEditor.assessmentService = new(EkstepEditor.iService.extend({
      * Get template data of selected question from content service API
      * @param  {string}   templateId selected question(assessmentitem) template id
      * @param  {Function} callback   returns error and response as arguments
-     * @memberof EkstepEditor.assessmentService
+     * @memberof org.ekstep.services.assessmentService
      */
     getTemplate: function(templateId, callback) {
-        EkstepEditorAPI.getService('content').getTemplateData(templateId, callback);
-    },
-    /**
-     * Utility function which is used to call http get request
-     * @param  {string}   url      API url
-     * @param  {object}   headers  API headers
-     * @param  {Function} callback returns error and response as arguments
-     * @memberof EkstepEditor.metaService
-     */
-    getFromService: function(url, headers, callback) {
-        var instance = this;
-        instance.http.get(url, headers, function(err, res) {
-            callback(err, res);
-        });
+        org.ekstep.services.contentService.getTemplateData(templateId, callback);
     }
 }));

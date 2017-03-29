@@ -1,6 +1,6 @@
 'use strict';
 
-EkstepEditor.migration.basestage_task = new(Class.extend({
+org.ekstep.contenteditor.migration.basestage_task = new(Class.extend({
     init: function() {
         console.log('basestage_task initialized');
     },

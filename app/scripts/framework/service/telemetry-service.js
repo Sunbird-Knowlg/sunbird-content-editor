@@ -11,10 +11,10 @@
  *  <li>CE_END
  * </ol>
  *
- * @class EkstepEditor.telemetryService
+ * @class org.ekstep.services.telemetryService
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
-EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
+org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     context: {},
     dispatchers: [],
     initialized: true,
@@ -33,7 +33,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     *   <li>console dispatcher - logs to client console, default dispatcher - value: undefined
     * </ol>
     * 
-    * @memberof EkstepEditor.telemetryService
+    * @memberof org.ekstep.services.telemetryService
     *
     */
     initialize: function(context, dispatcher) {
@@ -53,7 +53,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
             instance.end();
         }); 
 
-        this.startEventData = { defaultPlugins: Object.keys(EkstepEditor.pluginManager.plugins), loadtimes: {}, client: {} };
+        this.startEventData = { defaultPlugins: Object.keys(org.ekstep.pluginframework.pluginManager.plugins), loadtimes: {}, client: {} };
     },
     /**
     *
@@ -64,7 +64,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     *   <li> <pre>getData()</pre>: return start event data
     *   <li> <pre>append(param, dataObj)</pre>: appends only "loadtimes" param of CE_START with dataObj(type: object). 
     * <ol> 
-    * @memberof EkstepEditor.telemetryService
+    * @memberof org.ekstep.services.telemetryService
     *
     */
     startEvent: function(autopublish) {
@@ -91,17 +91,17 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     *   <li>(default) console dispatcher: value: undefined 
     * </ol>
     * @returns dispatcher {object}
-    * @memberof EkstepEditor.telemetryService
+    * @memberof org.ekstep.services.telemetryService
     *
     */
     getDispatcher: function(dispatcherId) {
         switch(dispatcherId) {
             case "local":
-                return EkstepEditor.localDispatcher;
+                return org.ekstep.pluginframework.localDispatcher;
             case "piwik":
-                return EkstepEditor.piwikDispatcher;
+                return org.ekstep.pluginframework.piwikDispatcher;
             default:
-                return EkstepEditor.consoleDispatcher;
+                return org.ekstep.pluginframework.consoleDispatcher;
         }
     },
     /**
@@ -113,7 +113,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     *   <li>piwik dispatcher: value: "piwik"
     *   <li>(default) console dispatcher: value: undefined 
     * </ol>
-    * @memberof EkstepEditor.telemetryService
+    * @memberof org.ekstep.services.telemetryService
     *
     */
     addDispatcher: function(dispatcherId) {
@@ -128,7 +128,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
      * dispatch event to all registered dipatchers
      * @private
      * @param message {event} structured event
-     * @memberof EkstepEditor.telemetryService
+     * @memberof org.ekstep.services.telemetryService
      *
      */
     _dispatch: function(message) {
@@ -151,7 +151,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     *  <li>CE_END
     * </ol>
     * @param data {object} telemetry data object specified for each telemetry event.
-    * @memberof EkstepEditor.telemetryService
+    * @memberof org.ekstep.services.telemetryService
     *
     */
     getEvent: function(eventId, data) {
@@ -173,7 +173,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     * validates telemetry data with mandatory fields
     * @param data {object} telemetry data
     * @param mandatoryFields {array} required fields for the specific telemetry to validate
-    * @memberof EkstepEditor.telemetryService
+    * @memberof org.ekstep.services.telemetryService
     *
     */
     hasRequiredData: function(data, mandatoryFields) {
@@ -191,7 +191,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     *
     * dispatches interact event (CE_INTERACT)
     * @param data {object} interact event data
-    * @memberof EkstepEditor.telemetryService
+    * @memberof org.ekstep.services.telemetryService
     *
     */
     interact: function(data) {
@@ -204,7 +204,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     /**
     *
     * dispatches end event (CE_END)
-    * @memberof EkstepEditor.telemetryService
+    * @memberof org.ekstep.services.telemetryService
     *
     */
     end: function() {
@@ -216,7 +216,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     *
     * dispatches plugin lifecycle event (CE_PLUGIN_LIFECYCLE)
     * @param data {object} plugin lifecycle event data
-    * @memberof EkstepEditor.telemetryService
+    * @memberof org.ekstep.services.telemetryService
     *
     */
     pluginLifeCycle: function(data) {
@@ -230,7 +230,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     *
     * dispatches error event (CE_ERROR)
     * @param data {object} error event data
-    * @memberof EkstepEditor.telemetryService
+    * @memberof org.ekstep.services.telemetryService
     *
     */
     error: function(data) {
@@ -243,7 +243,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     /**
     *
     * dispatches start event (CE_START)
-    * @memberof EkstepEditor.telemetryService
+    * @memberof org.ekstep.services.telemetryService
     *
     */
     start: function() {
@@ -255,7 +255,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     *
     * dispatches api call event (CE_API_CALL)
     * @param data {object} api call event data
-    * @memberof EkstepEditor.telemetryService
+    * @memberof org.ekstep.services.telemetryService
     *
     */
     apiCall: function(data) {
@@ -268,7 +268,7 @@ EkstepEditor.telemetryService = new(EkstepEditor.iService.extend({
     /**
     *
     * returns client machine info such as OS, browser, browser version
-    * @memberof EkstepEditor.telemetryService
+    * @memberof org.ekstep.services.telemetryService
     *
     */
     detectClient: function() {        

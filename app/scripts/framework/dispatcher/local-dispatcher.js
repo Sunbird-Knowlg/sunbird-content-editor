@@ -1,4 +1,4 @@
-EkstepEditor.localDispatcher = new(EkstepEditor.IDispatcher.extend({
+org.ekstep.pluginframework.localDispatcher = new(org.ekstep.pluginframework.IDispatcher.extend({
     type: "localDispatcher",
     initDispatcher: function() {},
     http: angular.injector(["ng"]).get("$http"),

@@ -1,6 +1,6 @@
 'use strict';
 
-EkstepEditor.migration.readalongmigration_task = new(Class.extend({
+org.ekstep.contenteditor.migration.readalongmigration_task = new(Class.extend({
     init: function() {
         console.log('read along migration task initialized');
     },
