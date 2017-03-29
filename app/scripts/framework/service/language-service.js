@@ -18,7 +18,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     languageURL: function() { 
-        return this.baseURL + '/api/language/'
+        return this.baseURL + this.getAPISlug() + '/language/'
     },
     /** 
      * @member {object} requestHeaders
