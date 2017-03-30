@@ -71,7 +71,6 @@ var scriptfiles = [
     "app/scripts/contenteditor/migration/assessmentmigration-task.js",
     "app/scripts/contenteditor/migration/eventsmigration-task.js",
     "app/scripts/contenteditor/migration/settagmigration-task.js",
-    "app/scripts/contenteditor/backward-compatibility.js",
     "app/scripts/angular/controller/main.js",
     "app/scripts/angular/controller/popup-controller.js",
     "app/scripts/angular/directive/draggable-directive.js",
@@ -93,7 +92,8 @@ var scriptfiles = [
     "app/scripts/framework/dispatcher/idispatcher.js",
     "app/scripts/framework/dispatcher/console-dispatcher.js",
     "app/scripts/framework/dispatcher/local-dispatcher.js",
-    "app/scripts/framework/dispatcher/piwik-dispatcher.js"
+    "app/scripts/framework/dispatcher/piwik-dispatcher.js",
+    "app/scripts/contenteditor/backward-compatibility.js",
 ];
 
 gulp.task('setup', function() {

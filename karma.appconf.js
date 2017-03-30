@@ -63,7 +63,6 @@ module.exports = function(config) {
             "app/scripts/contenteditor/migration/assessmentmigration-task.js",
             "app/scripts/contenteditor/migration/eventsmigration-task.js",
             "app/scripts/contenteditor/migration/settagmigration-task.js",
-            "app/scripts/contenteditor/backward-compatibility.js",
             "app/scripts/angular/controller/main.js",
             "app/scripts/angular/controller/popup-controller.js",
             "app/scripts/angular/directive/draggable-directive.js",
@@ -86,6 +85,7 @@ module.exports = function(config) {
             "app/scripts/framework/dispatcher/console-dispatcher.js",
             "app/scripts/framework/dispatcher/local-dispatcher.js",
             "app/scripts/framework/dispatcher/piwik-dispatcher.js",
+            "app/scripts/contenteditor/backward-compatibility.js",
             'test/**/*.js',
             // fixtures
             { pattern: 'test/**/*.json', watched: true, served: true, included: false },
