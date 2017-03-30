@@ -23,7 +23,6 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         if(this.isDefined(pluginId)) {
             var pluginManifest = this.getPluginManifest(pluginId);
             if (pluginManifest.type && _.lowerCase(pluginManifest.type) === "widget") {
-                parent = parent || EkstepEditorAPI.getCurrentStage();
                 this.invoke(pluginId, _.cloneDeep(pluginManifest.editor['init-data'] || {}), parent);
             }
             return 0;

@@ -505,10 +505,12 @@ window.org.ekstep.contenteditor.api = {
      * @param  {String} pluginId      Plugin ID
      * @param  {String} pluginVersion Plugin Version
      * @param  {Long} publishedTime   Plugin published timestamp (for cache busting)
+     * @param {Class} parent          Parent for the plugin
      * @memberof org.ekstep.contenteditor.api
      */
-    loadAndInitPlugin: function(pluginId, pluginVersion, publishedTime) {
-        org.ekstep.pluginframework.pluginManager.loadAndInitPlugin(pluginId, pluginVersion, publishedTime);
+    loadAndInitPlugin: function(pluginId, pluginVersion, publishedTime, parent) {
+        parent = parent || this.getCurrentStage();
+        org.ekstep.pluginframework.pluginManager.loadAndInitPlugin(pluginId, pluginVersion, publishedTime, parent);
     },
 
     /**
