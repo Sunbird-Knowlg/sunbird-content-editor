@@ -6,84 +6,88 @@ describe('Content service test cases', function() {
     var contentRes = {"data": { "result":content}};
     var downloadContentRes = '{"id":"ekstep.content.archive","ver":"2.0","ts":"2017-03-22T07:35:09ZZ","params":{"resmsgid":"75e4c7df-a7bf-4867-96b2-09d1b823c166","msgid":null,"err":null,"status":"successful","errmsg":null},"responseCode":"OK","result":{"ECAR_URL":"https://ekstep-public-dev.s3-ap-south-1.amazonaws.com/content/do_112188493884006400173/bundle1490168109620/test.ecar"}}';
     beforeAll(function(){
-        EkstepEditor.contentService.content = JSON.parse(content);
-        EkstepEditor.contentService.http.patch = jasmine.createSpy().and.callFake(function(url, requestObj, headers, cb) {
+        org.ekstep.services.config = {
+            baseURL: org.ekstep.contenteditor.config.baseURL,
+            apislug: org.ekstep.contenteditor.config.apislug
+        };
+        org.ekstep.services.contentService.content = JSON.parse(content);
+        org.ekstep.services.contentService.http.patch = jasmine.createSpy().and.callFake(function(url, requestObj, headers, cb) {
             cb(undefined, contentRes);
         });
-        spyOn(EkstepEditor.contentService, "saveContent").and.callThrough();
-        spyOn(EkstepEditor.contentService, "getContentMeta").and.callThrough();
-        spyOn(EkstepEditor.contentService, "getContent").and.callThrough();
+        spyOn(org.ekstep.services.contentService, "saveContent").and.callThrough();
+        spyOn(org.ekstep.services.contentService, "getContentMeta").and.callThrough();
+        spyOn(org.ekstep.services.contentService, "getContent").and.callThrough();
     })
     
     it("should return content meta on getContent Meta call", function() {
         
-        var meta = EkstepEditor.contentService.getContentMeta(contentId);
+        var meta = org.ekstep.services.contentService.getContentMeta(contentId);
         var contentParsed = JSON.parse(content)[contentId];
         expect(meta).toEqual(contentParsed);
     });
 
     it("should call save content method", function() {
-        spyOn(EkstepEditor.contentService,"_saveContent").and.callThrough();
-        EkstepEditor.contentService.saveContent(contentId, metaData, contentBody, function(err, res){
+        spyOn(org.ekstep.services.contentService,"_saveContent").and.callThrough();
+        org.ekstep.services.contentService.saveContent(contentId, metaData, contentBody, function(err, res){
             expect(res).toBe(contentRes);
-            expect(EkstepEditor.contentService._saveContent).toHaveBeenCalled();
-            expect(EkstepEditor.contentService._saveContent.calls.count()).toBe(1);
+            expect(org.ekstep.services.contentService._saveContent).toHaveBeenCalled();
+            expect(org.ekstep.services.contentService._saveContent.calls.count()).toBe(1);
         });
     });
 
     it("should call download content method", function() {
-        EkstepEditor.contentService.http.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
+        org.ekstep.services.contentService.http.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
             cb(undefined, downloadContentRes);
         });
-        spyOn(EkstepEditor.contentService, "downloadContent").and.callThrough();
-        spyOn(EkstepEditor.contentService, "postFromService").and.callThrough()
-        EkstepEditor.contentService.downloadContent(contentId, "test", function(err, res){
+        spyOn(org.ekstep.services.contentService, "downloadContent").and.callThrough();
+        spyOn(org.ekstep.services.contentService, "postFromService").and.callThrough()
+        org.ekstep.services.contentService.downloadContent(contentId, "test", function(err, res){
             expect(res).toBe(downloadContentRes);
-            expect(EkstepEditor.contentService.postFromService).toHaveBeenCalled();
-            expect(EkstepEditor.contentService.postFromService.calls.count()).toBe(1);
+            expect(org.ekstep.services.contentService.postFromService).toHaveBeenCalled();
+            expect(org.ekstep.services.contentService.postFromService.calls.count()).toBe(1);
         });
     });
 
     it("should call save content method return error for version key", function() {
-        EkstepEditor.contentService.content  = {};
-        EkstepEditor.contentService.saveContent(contentId, metaData, contentBody, function(err, res){
+        org.ekstep.services.contentService.content  = {};
+        org.ekstep.services.contentService.saveContent(contentId, metaData, contentBody, function(err, res){
             expect(err).toBe("Cannot find content id or version key to update content");
         });
     });
 
     it("should return error on getContent method call without contentId", function() {
-        EkstepEditor.contentService.getContent(undefined, function(err, res){
+        org.ekstep.services.contentService.getContent(undefined, function(err, res){
             expect(err).toBe("Content id is required to get content from platform");
         })
     });
 
     it("should return error on getContent method call", function() {
-        EkstepEditor.contentService.http.get = jasmine.createSpy().and.callFake(function(url, object, cb) {
+        org.ekstep.services.contentService.http.get = jasmine.createSpy().and.callFake(function(url, object, cb) {
             cb("Error: no content found!", undefined);
         });
-        EkstepEditor.contentService.getContent(contentId, function(err, res){
+        org.ekstep.services.contentService.getContent(contentId, function(err, res){
             expect(err).toBeDefined();
         });
     });
 
     it("should set content meta once the API call is successful", function() {
-        EkstepEditor.contentService.http.get = jasmine.createSpy().and.callFake(function(url, object, cb) {
+        org.ekstep.services.contentService.http.get = jasmine.createSpy().and.callFake(function(url, object, cb) {
             cb(undefined, {data: contentResponse});
         });
-        EkstepEditor.contentService.getContent('do_112206722833612800186', function(err, res){
+        org.ekstep.services.contentService.getContent('do_112206722833612800186', function(err, res){
             expect(res).toBeDefined();
             expect(res.identifier).toEqual('do_112206722833612800186');
         });
         
-        var contentMeta = EkstepEditor.contentService.getContentMeta('do_112206722833612800186');
+        var contentMeta = org.ekstep.services.contentService.getContentMeta('do_112206722833612800186');
         console.log('contentMeta', contentMeta);
         expect(contentMeta.identifier).toEqual('do_112206722833612800186');
         expect(contentMeta.languageCode).toEqual('en');
         expect(contentMeta.concepts).toBeDefined();
 
-        expect(EkstepEditor.contentService.getContentMeta('xyz')).toEqual({});
+        expect(org.ekstep.services.contentService.getContentMeta('xyz')).toEqual({});
 
-        EkstepEditor.contentService.saveContent('do_112206722833612800186', undefined, undefined, function(err, res) {
+        org.ekstep.services.contentService.saveContent('do_112206722833612800186', undefined, undefined, function(err, res) {
             expect(err).toEqual('Nothing to save');
         });
     });

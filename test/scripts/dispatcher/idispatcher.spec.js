@@ -1,5 +1,5 @@
 describe('idispatcher', function() {	
-	var dispatcher = EkstepEditor.IDispatcher.extend({});
+	var dispatcher = org.ekstep.pluginframework.IDispatcher.extend({});
 
 	it('should throw error when tried to invoke abstract methods', function() {
 		var testFn1 = function() {
