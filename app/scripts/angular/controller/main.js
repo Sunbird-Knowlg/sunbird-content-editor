@@ -67,6 +67,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.$safeApply();
         }
 
+        $scope.updateConfigProperty = function(property) {
+            setTimeout(function() {
+                $scope.updateConfig(property);
+            }, 100);
+        }
+
         $scope.enableSave = function() {
             //$scope.saveBtnEnabled = true;
             //$scope.$safeApply();

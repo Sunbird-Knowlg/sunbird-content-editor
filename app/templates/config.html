@@ -10,14 +10,14 @@
     <div class="ui form" ng-switch-when="input">
         <div class="field">
             <label ng-if="config.title">{{config.title}}</label>
-            <input type="{{config.valueType || text}}" placeholder="{{config.placeholder}}" ng-model="configData[config.propertyName]" min="{{config.minimumValue}}" max="{{config.maximumValue}}" id="{{config.propertyName}}" ng-if="config.valueType == 'number'" onkeypress="return event.charCode>= 48" ng-click="fireSidebarTelemetry({id: config.propertyName}, config.dataType)"/>
-            <input type="{{config.valueType || text}}" placeholder="{{config.placeholder}}" ng-model="configData[config.propertyName]" id="{{config.propertyName}}" ng-if="config.valueType != 'number'" ng-click="fireSidebarTelemetry({id: config.propertyName}, config.dataType)"/>
+            <input type="{{config.valueType || text}}" placeholder="{{config.placeholder}}" ng-model="configData[config.propertyName]" min="{{config.minimumValue}}" max="{{config.maximumValue}}" id="{{config.propertyName}}" ng-if="config.valueType == 'number'" onkeypress="return event.charCode>= 48" ng-click="fireSidebarTelemetry({id: config.propertyName}, config.dataType)" ng-paste="updateModel()"/>
+            <input type="{{config.valueType || text}}" placeholder="{{config.placeholder}}" ng-model="configData[config.propertyName]" id="{{config.propertyName}}" ng-if="config.valueType != 'number'" ng-click="fireSidebarTelemetry({id: config.propertyName}, config.dataType)" ng-paste="updateConfigProperty(config.propertyName)"/>
         </div>
     </div>
     <div class="ui form" ng-switch-when="textarea">
         <div class="field">
             <label ng-if="config.title">{{config.title}}</label>
-            <textarea rows="6" ng-maxlength="1000" ng-model="configData[config.propertyName]" id="{{config.propertyName}}" ng-click="fireSidebarTelemetry({id: config.propertyName}, config.dataType)"></textarea>
+            <textarea rows="6" ng-maxlength="1000" ng-model="configData[config.propertyName]" id="{{config.propertyName}}" ng-click="fireSidebarTelemetry({id: config.propertyName}, config.dataType)" ng-paste="updateConfigProperty(config.propertyName)"></textarea>
         </div>
     </div>
     <div class="ui form" ng-switch-when="select">

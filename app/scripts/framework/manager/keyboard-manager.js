@@ -35,7 +35,6 @@ org.ekstep.pluginframework.keyboardManager = new (Class.extend({
 	resolveKeyCombination: function(event) {
 		var registryKey = ((event.metaKey || event.ctrlKey) ? 'ctrl' : '') + (event.shiftKey ? 'shift': '') + (event.altKey ? 'alt' : '') + event.keyCode;
 		if(this.registry[registryKey]) {
-			event.preventDefault();
 			this.registry[registryKey]();
 		}
 	}
