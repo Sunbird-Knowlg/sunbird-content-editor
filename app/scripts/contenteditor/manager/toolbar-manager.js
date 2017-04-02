@@ -13,14 +13,13 @@ org.ekstep.contenteditor.toolbarManager = new(Class.extend({
         if (!_.isObject(_.find(this.menuItems, { id: menu.id }))) {
             this.menuItems.push(menu);
         }
-        //TODO: should be moved if possible
-        org.ekstep.contenteditor.jQuery(".ui.dropdown").dropdown();
-        org.ekstep.contenteditor.jQuery(".popup-item").popup();
+        if(this.scope) this.scope.refreshToolbar();
     },
     registerContextMenu: function(menu) {
         if (!_.isObject(_.find(this.contextMenuItems, { id: menu.id }))) {
             this.contextMenuItems.push(menu);
         }
+        if(this.scope) this.scope.refreshToolbar();
     },
     registerConfigMenu: function(menu) {
         /* istanbul ignore else */
