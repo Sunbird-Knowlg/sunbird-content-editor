@@ -39,14 +39,18 @@ org.ekstep.pluginframework.resourceManager = new(Class.extend({
         var resource = repo.resolveResource(pluginId, pluginVer, src);
         this.loadResource(resource, dataType, callback, publishedTime);
     },
-    loadExternalResource: function(type, pluginId, pluginVer, src, repo, publishedTime) {
+    loadExternalResource: function(type, pluginId, pluginVer, src, repo, publishedTime, callback) {
         var resource = repo.resolveResource(pluginId, pluginVer, src) + "?" + (publishedTime || "");
         switch (type) {
             case 'js':
-                this.jQuery("body").append($("<script type='text/javascript' src=" + resource + ">"));
+                if(callback)
+                    this.loadResource(resource, 'script', callback, publishedTime);
+                else 
+                    this.jQuery("body").append($("<script type='text/javascript' src=" + resource + ">"));
                 break;
             case 'css':
                 this.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + resource + "'>");
+                if(callback) callback();
                 break;
         }
     },
