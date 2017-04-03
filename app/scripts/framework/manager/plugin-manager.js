@@ -53,7 +53,6 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             } else {
                 try {
                     instance.registerPlugin(manifest, eval(data), repo);
-                    org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:load', { plugin: manifest.id, version: manifest.ver });
                 } catch (e) {
                     console.error("Error while loading plugin", 'plugin:' + manifest.id + '-' + manifest.ver, 'Error:', e);
                 }

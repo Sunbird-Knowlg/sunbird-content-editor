@@ -3,15 +3,18 @@
  */
 'use strict';
 
-angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).config(['$locationProvider', '$httpProvider', function($locationProvider, $httpProvider) {
+angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).config(['$locationProvider', '$httpProvider', '$ocLazyLoadProvider', function($locationProvider, $httpProvider, $ocLazyLoadProvider) {
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
     });
     $httpProvider.interceptors.push('apiTimeStamp');
+    $ocLazyLoadProvider.config({
+       events: true 
+    });
 }]);
-angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document',
-    function($scope, $timeout, $http, $location, $q, $window, $document) {
+angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document', '$ocLazyLoad',
+    function($scope, $timeout, $http, $location, $q, $window, $document, $ocLazyLoad) {
 
         // Declare global variables
         $scope.showAppLoadScreen = true;
@@ -36,6 +39,40 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             show: false,
             text: undefined
         }
+        //sidebar
+        $scope.cutomiseTabLoaded = false;
+        $scope.actionsTabLoaded = false;
+        $scope.propertiesTabLoaded = false;
+        $scope.cutomiseTabTemplate = [];
+        $scope.actionsTabTemplate = [];
+        $scope.propertiesTabTemplate = [];
+
+        //toolbar(sidebar menu)
+        $scope.configCategory = { selected: 'settings' };
+        $scope.showdeveloperTab = function(event, data) {
+            $scope.configCategory.selected = 'developer';
+            org.ekstep.contenteditor.api.dispatchEvent("org.ekstep.developer:getPlugins");
+        };
+        $scope.showHelpTab = function(event, data) {
+            $scope.configCategory.selected = 'help'; 
+            $scope.showHelp(event, data);
+            $scope.$safeApply();                         
+        }
+
+        $scope.showHelp = function(event, data) {
+            if (org.ekstep.contenteditor.api.getCurrentObject()) {
+                org.ekstep.contenteditor.api.getCurrentObject().getHelp(function(helpText) {
+                    org.ekstep.contenteditor.api.jQuery("#pluginHelpContent").html(micromarkdown.parse(helpText));
+                });
+            } else {
+                org.ekstep.contenteditor.api.getCurrentStage().getHelp(function(helpText) {
+                    org.ekstep.contenteditor.api.jQuery("#pluginHelpContent").html(micromarkdown.parse(helpText));
+                });
+            }            
+        };
+        org.ekstep.contenteditor.api.addEventListener("config:developer:show", $scope.showdeveloperTab, $scope);
+        org.ekstep.contenteditor.api.addEventListener("config:help:show", $scope.showHelpTab, $scope);
+
         $scope.cancelLink = (($window.context && $window.context.cancelLink) ? $window.context.cancelLink : "");
         $scope.reportIssueLink = (($window.context && $window.context.reportIssueLink) ? $window.context.reportIssueLink : "");
 
@@ -67,10 +104,14 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.$safeApply();
         }
 
-        $scope.enableSave = function() {
-            //$scope.saveBtnEnabled = true;
-            //$scope.$safeApply();
-        }
+        $scope.loadNgModules = function(templatePath, controllerPath) {
+            $ocLazyLoad.load([
+                { type: 'html', path: templatePath },
+                { type: 'js', path: controllerPath }
+            ]);
+        };
+
+        org.ekstep.contenteditor.sidebarManager.initialize({ loadNgModules: $scope.loadNgModules, scope: $scope });
 
         $scope.previewContent = function(fromBeginning) {
             org.ekstep.contenteditor.api.getCanvas().deactivateAll().renderAll();
