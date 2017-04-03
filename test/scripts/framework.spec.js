@@ -9,7 +9,7 @@ describe(" framework integration", function() {
         cleanUp();
         var corePlugins = {
             "org.ekstep.stage": "1.0",
-            "org.ekstep.copypaste": "1.0"
+            "org.ekstep.utils": "1.0"
         };
 
         // test plugins
@@ -106,15 +106,15 @@ describe(" framework integration", function() {
     });
 
     it("should register context menu", function() {
-        var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.copypaste");
+        var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.utils");
         spyOn(org.ekstep.contenteditor.toolbarManager, "registerContextMenu").and.callThrough();
         org.ekstep.contenteditor.toolbarManager.registerContextMenu(manifest.editor.menu);
         expect(org.ekstep.contenteditor.toolbarManager.registerContextMenu).toHaveBeenCalled();
-        expect(org.ekstep.contenteditor.toolbarManager.contextMenuItems.length).toEqual(3);                
+        expect(org.ekstep.contenteditor.toolbarManager.contextMenuItems.length).toEqual(5);                
     });
 
     it("should update context menu", function() {
-        var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.copypaste");
+        var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.utils");
         spyOn(org.ekstep.contenteditor.toolbarManager, "updateContextMenu").and.callThrough();
         org.ekstep.contenteditor.toolbarManager.updateContextMenu(manifest.editor.menu);
         expect(org.ekstep.contenteditor.toolbarManager.updateContextMenu).toHaveBeenCalled();
