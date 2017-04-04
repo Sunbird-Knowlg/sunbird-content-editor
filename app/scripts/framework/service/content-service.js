@@ -128,7 +128,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
     getContent: function(contentId, callback) {
         var instance = this;
         if (contentId) {
-            var metaDataFields = "?fields=" + instance.contentFields;
+            var metaDataFields = "?mode=edit&fields=" + instance.contentFields;
             instance.http.get(this.serviceURL() + 'v2/content/' + contentId + metaDataFields, {}, function(err, res) {
                 /* istanbul ignore else */
                 if (err) callback(err, undefined);
