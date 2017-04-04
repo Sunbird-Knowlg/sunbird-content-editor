@@ -37,7 +37,7 @@ a.item.at-menu-item.popup-item.active {
             <a class="item" data-tab="info" ng-click="showProperties(); fireSidebarTelemetry({id: 'properties'}, 'config')"><i class="info icon"></i> Properties </a>
         </div>
         <div class="ui active tab segment sidebarContent" data-tab="settings">
-            <span ng-if="cutomiseTabLoaded" ng-repeat="cutomiseTab in cutomiseTabTemplate" ng-include="cutomiseTab.id"></span>
+            <span ng-if="customiseTabLoaded" ng-repeat="customiseTab in customiseTabTemplate" ng-include="customiseTab.id"></span>
         </div>
         <div class="ui tab segment sidebarContent" data-tab="actions">
             <span ng-if="actionsTabLoaded" ng-repeat="actionsTab in actionsTabTemplate" ng-include="actionsTab.id"></span>

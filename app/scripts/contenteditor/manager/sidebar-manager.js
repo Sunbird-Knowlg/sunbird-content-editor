@@ -28,7 +28,7 @@ org.ekstep.contenteditor.sidebarManager = new(Class.extend({
         _.forEach(modules.template, function(template) {
             template.path = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, template.path);
             instance.loadNgModules(template.path);
-            if (template.tab == 'customise') instance.angularScope.cutomiseTabTemplate.push({ id: template.id });
+            if (template.tab == 'customise') instance.angularScope.customiseTabTemplate.push({ id: template.id });
             if (template.tab == 'events') instance.angularScope.actionsTabTemplate.push({ id: template.id });
             if (template.tab == 'properties') instance.angularScope.propertiesTabTemplate.push({ id: template.id });
             instance.angularScope.$safeApply();

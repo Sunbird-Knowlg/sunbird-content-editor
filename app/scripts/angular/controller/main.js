@@ -40,10 +40,10 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             text: undefined
         }
         //sidebar
-        $scope.cutomiseTabLoaded = false;
+        $scope.customiseTabLoaded = false;
         $scope.actionsTabLoaded = false;
         $scope.propertiesTabLoaded = false;
-        $scope.cutomiseTabTemplate = [];
+        $scope.customiseTabTemplate = [];
         $scope.actionsTabTemplate = [];
         $scope.propertiesTabTemplate = [];
 

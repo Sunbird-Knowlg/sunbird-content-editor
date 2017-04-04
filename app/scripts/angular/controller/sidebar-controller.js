@@ -66,13 +66,13 @@ angular.module('editorApp')
         });
 
         $scope.enableTemplates = function() {
-            $scope.cutomiseTabLoaded = true;
+            $scope.customiseTabLoaded = true;
             $scope.actionsTabLoaded = true;
             $scope.propertiesTabLoaded = true;            
         };
 
         $scope.disableTemplates = function() {
-            $scope.cutomiseTabLoaded = false;
+            $scope.customiseTabLoaded = false;
             $scope.actionsTabLoaded = false;
             $scope.propertiesTabLoaded = false;            
         };
