@@ -1,34 +1,3 @@
-<style type="text/css">
-.sidebarContent {
-    width: 100%;
-    overflow-y: scroll;
-    margin: 0px !important;
-    border: none !important;
-    border-radius: 0px !important;
-    background: none !important;
-    box-shadow: none !important;
-}
-
-.sidebarHeadTab {
-    box-shadow: none !important;
-    border: 0px !important;
-    border-bottom: 1px solid #ccc !important;
-    border-radius: 0px !important;
-}
-
-.sidebarHeadTab .item {
-    padding: 0px !important;
-}
-
-.sidebarHeadTab .item.active {
-    background-color: #D7D7D7 !important;
-    border-radius: 0px !important;
-}
-
-a.item.at-menu-item.popup-item.active {
-    background-color: #D7D7D7 !important;
-}
-</style>
 <div ng-controller="sidebarController">
     <div ng-show="configCategory.selected == 'settings'" ng-hide="configCategory.selected !='settings'">
         <div class="ui mini compact menu item sidebarConfig sidebarHeadTab three">
@@ -120,11 +89,10 @@ a.item.at-menu-item.popup-item.active {
     <a class="ui basic small button " ng-click="fireSidebarTelemetry({id: 'reportIssue'}, 'reportIssueButton') " ng-href="{{reportIssueLink}} " target="_blank " style="position: absolute; bottom:0; right: 30px "><i class="help circle medium icon "></i>Report an issue</a>
 </div>
 </div>
-<script type="text/javascript ">
+<script type="text/javascript">
 $('.sidebarConfig .item, .sidebarHelp .item').tab({
-    history: false
+    history: false 
 });
 var newheight = $(window).innerHeight() - 212;
-EkstepEditor.jQuery('.sidebarContent').css("height ",newheight + "px ");  
-
+$('.sidebarContent').css("height", newheight + "px"); 
 </script>
