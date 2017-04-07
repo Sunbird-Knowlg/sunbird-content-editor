@@ -3,29 +3,44 @@ org.ekstep.contenteditor.sidebarManager = new(Class.extend({
     loadNgModules: undefined,
     angularScope: undefined,
     configControllerRegistered: false,
+    customTemplates: [],
     init: function() {
-        org.ekstep.pluginframework.eventManager.addEventListener("plugin:load", this.register, this);
+        org.ekstep.pluginframework.eventManager.addEventListener("plugin:load", this.registerCustomTemplate, this);
     },
     initialize: function(config) {
         this.loadNgModules = config.loadNgModules;
         this.angularScope = config.scope;
     },
-    register: function(event, data) {
+    registerCustomTemplate: function(event, data) {
         var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest(data.plugin);
         var instance = this;
-        if (manifest && manifest.editor && manifest.editor.config) {
+        if (manifest.editor && manifest.editor.config) {
             _.forEach(manifest.editor.config, function(config) {
-                if (config.type === "custom") instance.load(config, manifest);
+                if (config.type === "custom") instance.loadSidebar(config, manifest);
+            });
+        } else if(manifest.editor && manifest.editor.configManifest) {
+            _.forEach(manifest.editor.configManifest, function(config) {
+               if (config.type == "custom_template") instance.customTemplates.push(config); 
+               if (config.controllerURL) {
+                    config.controllerURL = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, config.controllerURL);
+                    instance.loadNgModules(undefined, config.controllerURL);
+               }
+
+               if(config.templateURL) {
+                    var templatePath = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, config.templateURL);
+                    org.ekstep.pluginframework.resourceManager.loadResource(templatePath, 'HTML', function(err, data) {
+                        if(err) throw "Invalid path for config template!";
+                        if(data) config.template = data;
+                    });
+               }
             });
         }
     },
-    load: function(modules, manifest) {
+    loadSidebar: function(config, manifest) {
         var instance = this;
-        if (!modules.template) throw "Template object is undefined for the config! :plugin: " + manifest.id;
-
-        if (modules.template && !_.isArray(modules.template)) modules.template = [modules.template];
-        if (modules.controller && !_.isArray(modules.controller)) modules.controller = [modules.controller];
-        _.forEach(modules.template, function(template) {
+        if (config.template && !_.isArray(config.template)) config.template = [config.template];
+        if (config.controller && !_.isArray(config.controller)) config.controller = [config.controller];
+        _.forEach(config.template, function(template) {
             template.path = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, template.path);
             instance.loadNgModules(template.path);
             if (template.tab == 'customise') instance.angularScope.customiseTabTemplate.push({ id: template.id });
@@ -34,11 +49,14 @@ org.ekstep.contenteditor.sidebarManager = new(Class.extend({
             instance.angularScope.$safeApply();
         });
 
-        if (modules.controller) {
-            _.forEach(modules.controller, function(controller) {
+        if (config.controller) {
+            _.forEach(config.controller, function(controller) {
                 controller.path = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, controller.path);
                 instance.loadNgModules(undefined, controller.path);
             });
         }
+    },
+    getCustomTemplates: function() {
+        return this.customTemplates;
     }
 }));

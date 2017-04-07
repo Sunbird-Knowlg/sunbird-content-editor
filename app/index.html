@@ -92,9 +92,9 @@
                                             <div class="meta">
                                                 <span>{{userDetails.email}}</span>
                                             </div>
-                                            <div class="extra">
-                                                <a class="ui tiny button " ng-href="{{cancelLink}}" ng-click="location.reload(); fireToolbarTelemetry({id: 'close'}, 'closeButton')" target="_self">close</a>
-                                                <a class="ui tiny button " ng-href="{{userDetails.logout}}" ng-click="location.reload(); fireToolbarTelemetry({id: 'logout'}, 'logoutButton')" target="_self">logout</a>
+                                            <div class="extra" ng-init="disableRedirectBtn = false">
+                                                <a ng-class="disableRedirectBtn ? 'ui tiny button disabled': 'ui tiny button'" ng-href="{{cancelLink}}" ng-click="disableRedirectBtn = true; fireToolbarTelemetry({id: 'close'}, 'closeButton')" target="_self">close</a>
+                                                <a ng-class="disableRedirectBtn ? 'ui tiny button disabled': 'ui tiny button'" ng-href="{{userDetails.logout}}" ng-click="disableRedirectBtn = true; fireToolbarTelemetry({id: 'logout'}, 'logoutButton')" target="_self">logout</a>
                                             </div>
                                         </div>
                                     </div>
@@ -239,6 +239,8 @@
     <script src="scripts/angular/controller/sidebar-controller.js"></script>
     <script src="scripts/angular/directive/draggable-directive.js"></script>
     <script src="scripts/angular/directive/droppable-directive.js"></script>
+    <script src="scripts/angular/directive/template-compiler-directive.js"></script>
+    <script src="scripts/angular/directive/colorpicker-directive.js"></script>
     <script src="scripts/angular/service/api-timestamp-service.js"></script>
 
     <!-- Load Services -->

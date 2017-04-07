@@ -1,10 +1,12 @@
 angular.module('editorApp')
-    .controller('sidebarController', ['$scope', function($scope) {                       
+    .controller('sidebarController', ['$scope', '$rootScope', function($scope, $rootScope) {
 
         $scope.fireSidebarTelemetry = function(menu, menuType) {
-            var pluginId = "", pluginVer = "", objectId = "";
+            var pluginId = "",
+                pluginVer = "",
+                objectId = "";
             var pluginObject = org.ekstep.contenteditor.api.getCurrentObject() || org.ekstep.contenteditor.api.getCurrentStage();
-            if(pluginObject) {
+            if (pluginObject) {
                 pluginId = pluginObject.manifest.id;
                 pluginVer = pluginObject.manifest.ver;
                 objectId = pluginObject.id;
@@ -12,18 +14,18 @@ angular.module('editorApp')
             $scope.telemetryService.interact({ "type": "modify", "subtype": "sidebar", "target": menuType, "pluginid": pluginId, 'pluginver': pluginVer, "objectid": objectId, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
         };
 
-                       
+
         $scope.settingsCategory = {};
         $scope.settingsCategory.selected = 'customize';
         $scope.selectedObject = { stage: true };
-        $scope.currentObject =  {};
+        $scope.currentObject = {};
         $scope.currentObjectActions = [];
 
         $scope.showSettingsTab = function(event, data) {
             switch ($scope.settingsCategory.selected) {
                 case 'properties':
                     $scope.showProperties(event, data);
-                    break;                
+                    break;
                 case 'actions':
                     $scope.showActions(event, data);
                     break;
@@ -35,7 +37,7 @@ angular.module('editorApp')
 
 
         $scope.showActions = function() {
-          org.ekstep.contenteditor.api.dispatchEvent('config:show:actions');
+            org.ekstep.contenteditor.api.dispatchEvent('config:show:actions');
         };
 
         $scope.showCustomize = function(event, data) {
@@ -62,26 +64,26 @@ angular.module('editorApp')
         //});
 
         org.ekstep.contenteditor.api.addEventListener("content:load:complete", function() {
-            $scope.refreshTemplates();
+            $scope.refreshTemplates();            
         });
 
         $scope.enableTemplates = function() {
             $scope.customiseTabLoaded = true;
             $scope.actionsTabLoaded = true;
-            $scope.propertiesTabLoaded = true;            
+            $scope.propertiesTabLoaded = true;
         };
 
         $scope.disableTemplates = function() {
             $scope.customiseTabLoaded = false;
             $scope.actionsTabLoaded = false;
-            $scope.propertiesTabLoaded = false;            
+            $scope.propertiesTabLoaded = false;
         };
 
         $scope.refreshTemplates = function() {
-           $scope.disableTemplates();
-           $scope.enableTemplates();
-        };   
+            $scope.disableTemplates();
+            $scope.enableTemplates();
+        };
 
-        
-             
+
+
     }]);
