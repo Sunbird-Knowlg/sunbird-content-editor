@@ -14,16 +14,13 @@ org.ekstep.contenteditor.sidebarManager = new(Class.extend({
         var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest(data.plugin);
         if (manifest.editor && manifest.editor.sidebar) {
             _.forEach(manifest.editor.sidebar, function(config) {
-                _.forEach(config.template, function(template) {
-                    var path = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, template.path);
+                if(config.templateURL) {
+                    var path = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, config.templateURL);
                     instance.loadNgModules(path);
                     instance.sidebarMenu.push({ category: config.id, template: path });
-                });
+                };
 
-                _.forEach(config.controller, function(controller) {
-                    var path = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, controller.path);
-                    instance.loadNgModules(undefined, path);
-                });
+                if(config.controllerURL) instance.loadNgModules(undefined, org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, config.controllerURL));
             });
         }
 
