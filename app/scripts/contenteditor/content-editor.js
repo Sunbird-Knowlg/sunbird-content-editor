@@ -9,6 +9,15 @@ org.ekstep.contenteditor.init = function(context, config, $scope, $document, cal
     org.ekstep.contenteditor.toolbarManager.setScope($scope);
     org.ekstep.pluginframework.keyboardManager.initialize($document);
     org.ekstep.contenteditor._loadDefaultPlugins(context, callback);
+    org.ekstep.contenteditor._backwardCompatibility();
+}
+
+org.ekstep.contenteditor._backwardCompatibility = function() {
+    /* Deprecated variables */
+    EkstepEditorAPI.apislug = org.ekstep.contenteditor.config.apislug;
+    EkstepEditorAPI.baseURL = org.ekstep.contenteditor.config.baseURL;
+    EkstepEditorAPI.absURL = org.ekstep.contenteditor.config.absURL;
+    EkstepEditorAPI.globalContext = org.ekstep.contenteditor.globalContext;
 }
 
 org.ekstep.contenteditor._initServices = function() {
