@@ -6,7 +6,7 @@ angular.module('editorApp').directive('uiColorpicker', function() {
         link: function(scope, element) {
             var input = element.find('input');
             input.spectrum({
-                color: "#ffffff"
+                color: "#eeeeee"
             });
         }
     };

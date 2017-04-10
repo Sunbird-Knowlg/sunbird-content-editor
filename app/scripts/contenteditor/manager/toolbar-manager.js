@@ -59,6 +59,9 @@ org.ekstep.contenteditor.toolbarManager = new(Class.extend({
             }
         });
     },
+    getRegisterConfigMenu: function() {
+        return this.configMenuItems;
+    },
     cleanUp: function() {
         this.menuItems = [];
         this.contextMenus = [];

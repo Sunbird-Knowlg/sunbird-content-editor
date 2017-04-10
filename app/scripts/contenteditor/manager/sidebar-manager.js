@@ -1,62 +1,53 @@
 org.ekstep.contenteditor.sidebarManager = new(Class.extend({
-    configInstance: undefined,
     loadNgModules: undefined,
     angularScope: undefined,
-    configControllerRegistered: false,
-    customTemplates: [],
+    sidebarMenu: [],
     init: function() {
-        org.ekstep.pluginframework.eventManager.addEventListener("plugin:load", this.registerCustomTemplate, this);
+        org.ekstep.pluginframework.eventManager.addEventListener("plugin:load", this.loadAndRegister, this);
     },
     initialize: function(config) {
         this.loadNgModules = config.loadNgModules;
         this.angularScope = config.scope;
     },
-    registerCustomTemplate: function(event, data) {
+    loadAndRegister: function(event, data) {
+        var instance = this;
         var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest(data.plugin);
-        var instance = this;
-        if (manifest.editor && manifest.editor.config) {
-            _.forEach(manifest.editor.config, function(config) {
-                if (config.type === "custom") instance.loadSidebar(config, manifest);
+        if (manifest.editor && manifest.editor.sidebar) {
+            _.forEach(manifest.editor.sidebar, function(config) {
+                _.forEach(config.template, function(template) {
+                    var path = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, template.path);
+                    instance.loadNgModules(path);
+                    instance.sidebarMenu.push({ category: config.id, template: path });
+                });
+
+                _.forEach(config.controller, function(controller) {
+                    var path = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, controller.path);
+                    instance.loadNgModules(undefined, path);
+                });
             });
-        } else if(manifest.editor && manifest.editor.configManifest) {
+        }
+
+        if (manifest.editor && manifest.editor.configManifest) {
             _.forEach(manifest.editor.configManifest, function(config) {
-               if (config.type == "custom_template") instance.customTemplates.push(config); 
-               if (config.controllerURL) {
-                    config.controllerURL = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, config.controllerURL);
-                    instance.loadNgModules(undefined, config.controllerURL);
-               }
-
-               if(config.templateURL) {
-                    var templatePath = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, config.templateURL);
-                    org.ekstep.pluginframework.resourceManager.loadResource(templatePath, 'HTML', function(err, data) {
-                        if(err) throw "Invalid path for config template!";
-                        if(data) config.template = data;
-                    });
-               }
+                if (config.type == "custom_template") instance.loadCustomTemplates(config, manifest);
             });
         }
     },
-    loadSidebar: function(config, manifest) {
+    loadCustomTemplates: function(config, manifest) {
         var instance = this;
-        if (config.template && !_.isArray(config.template)) config.template = [config.template];
-        if (config.controller && !_.isArray(config.controller)) config.controller = [config.controller];
-        _.forEach(config.template, function(template) {
-            template.path = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, template.path);
-            instance.loadNgModules(template.path);
-            if (template.tab == 'customise') instance.angularScope.customiseTabTemplate.push({ id: template.id });
-            if (template.tab == 'events') instance.angularScope.actionsTabTemplate.push({ id: template.id });
-            if (template.tab == 'properties') instance.angularScope.propertiesTabTemplate.push({ id: template.id });
-            instance.angularScope.$safeApply();
-        });
+        if(config.controllerURL) {
+            var path = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, config.controllerURL);
+            instance.loadNgModules(undefined, path);
+        }
 
-        if (config.controller) {
-            _.forEach(config.controller, function(controller) {
-                controller.path = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, controller.path);
-                instance.loadNgModules(undefined, controller.path);
+        if(config.templateURL) {
+            var path = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, config.templateURL);
+            org.ekstep.pluginframework.resourceManager.loadResource(path, 'HTML', function(err, data) {
+               if (data) config.template = data; 
             });
         }
     },
-    getCustomTemplates: function() {
-        return this.customTemplates;
+    getSidebarMenu: function() {
+        return this.sidebarMenu;
     }
 }));

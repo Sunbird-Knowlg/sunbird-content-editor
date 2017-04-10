@@ -318,11 +318,8 @@ body {
     height: 430px;
     overflow-y: auto;
 }
-.disabled-link{
-    pointer-events: none;
-}
 
-.sidebarContent {
+.sidebar-holder {
     width: 100%;
     overflow-y: scroll;
     margin: 0px !important;
@@ -330,28 +327,4 @@ body {
     border-radius: 0px !important;
     background: none !important;
     box-shadow: none !important;
-}
-
-.sidebarContent div label{
-    text-transform: capitalize !important;
-}
-
-.sidebarHeadTab {
-    box-shadow: none !important;
-    border: 0px !important;
-    border-bottom: 1px solid #ccc !important;
-    border-radius: 0px !important;
-}
-
-.sidebarHeadTab .item {
-    padding: 0px !important;
-}
-
-.sidebarHeadTab .item.active {
-    background-color: #D7D7D7 !important;
-    border-radius: 0px !important;
-}
-
-a.item.at-menu-item.popup-item.active {
-    background-color: #D7D7D7 !important;
 }

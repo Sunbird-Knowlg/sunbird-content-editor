@@ -49,30 +49,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         //toolbar(sidebar menu)
         $scope.configCategory = { selected: 'settings' };
-        $scope.showdeveloperTab = function(event, data) {
-            $scope.configCategory.selected = 'developer';
-            org.ekstep.contenteditor.api.dispatchEvent("org.ekstep.developer:getPlugins");
-        };
-        $scope.showHelpTab = function(event, data) {
-            $scope.configCategory.selected = 'help'; 
-            $scope.showHelp(event, data);
-            $scope.$safeApply();                         
-        }
-
-        $scope.showHelp = function(event, data) {
-            if (org.ekstep.contenteditor.api.getCurrentObject()) {
-                org.ekstep.contenteditor.api.getCurrentObject().getHelp(function(helpText) {
-                    org.ekstep.contenteditor.api.jQuery("#pluginHelpContent").html(micromarkdown.parse(helpText));
-                });
-            } else {
-                org.ekstep.contenteditor.api.getCurrentStage().getHelp(function(helpText) {
-                    org.ekstep.contenteditor.api.jQuery("#pluginHelpContent").html(micromarkdown.parse(helpText));
-                });
-            }            
-        };
-        org.ekstep.contenteditor.api.addEventListener("config:developer:show", $scope.showdeveloperTab, $scope);
-        org.ekstep.contenteditor.api.addEventListener("config:help:show", $scope.showHelpTab, $scope);
-
+        
         $scope.cancelLink = (($window.context && $window.context.cancelLink) ? $window.context.cancelLink : "");
         $scope.reportIssueLink = (($window.context && $window.context.reportIssueLink) ? $window.context.reportIssueLink : "");
 
@@ -113,11 +90,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         org.ekstep.contenteditor.sidebarManager.initialize({ loadNgModules: $scope.loadNgModules, scope: $scope });
 
-        $scope.previewContent = function(fromBeginning) {
-            org.ekstep.contenteditor.api.getCanvas().deactivateAll().renderAll();
+        $scope.previewContent = function(fromBeginning) {            
             var currentStage = _.isUndefined(fromBeginning) ? true : false;
-            org.ekstep.pluginframework.eventManager.dispatchEvent("atpreview:show", { contentBody: org.ekstep.contenteditor.stageManager.toECML(), 'currentStage': currentStage });
-            org.ekstep.contenteditor.api.dispatchEvent('config:settings:show', { id: $scope.currentStage.id });
+            org.ekstep.pluginframework.eventManager.dispatchEvent("atpreview:show", { contentBody: org.ekstep.contenteditor.stageManager.toECML(), 'currentStage': currentStage });            
         };
 
         $scope.saveContent = function() {
