@@ -92,5 +92,13 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
     getKeyWords: function(data, callback) {
         this.postFromService(this.languageURL() + 'v1/language/parser', data, this.requestHeaders, callback);
     }
-
+    /**
+    * Transliterates english text to specified language and invokes a callback
+    * @param {Object} data - object containing english text and array of languages
+    * @param {Function} callback - Callback when api call returns
+    * @return {void}
+    */
+    getTransliteration: function(data, callback) {
+    ​    this.getFromService(this.languageURL() + "v2/language/transliteration/"+ data.text + "?languages=" + data.languages.toString(), this.requestHeaders, callback);
+    }
 }));
