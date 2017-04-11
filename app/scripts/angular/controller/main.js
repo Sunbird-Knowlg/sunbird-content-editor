@@ -39,17 +39,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             show: false,
             text: undefined
         }
-        //sidebar
-        $scope.customiseTabLoaded = false;
-        $scope.actionsTabLoaded = false;
-        $scope.propertiesTabLoaded = false;
-        $scope.customiseTabTemplate = [];
-        $scope.actionsTabTemplate = [];
-        $scope.propertiesTabTemplate = [];
 
         //toolbar(sidebar menu)
-        $scope.configCategory = { selected: 'settings' };
-        
+        $scope.configCategory = { selected: 'settings' };        
         $scope.cancelLink = (($window.context && $window.context.cancelLink) ? $window.context.cancelLink : "");
         $scope.reportIssueLink = (($window.context && $window.context.reportIssueLink) ? $window.context.reportIssueLink : "");
 
