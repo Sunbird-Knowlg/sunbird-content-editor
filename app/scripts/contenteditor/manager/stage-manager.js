@@ -454,7 +454,7 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         if (src === false) {
             return ""
         } else if(src.indexOf("http") === -1) {
-            src = org.ekstep.contenteditor.config.absURL + src;
+            src = org.ekstep.contenteditor.config.baseURL + src;
         } 
         return src;
     },

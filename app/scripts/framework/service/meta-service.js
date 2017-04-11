@@ -17,7 +17,7 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.metaService
      */
     configURL: function() {
-        return this.getBaseURL() + this.getAPISlug() + '/config/'
+        return this.getBaseURL() + '/api/config/'
     },
     /** 
      * @member {object} requestHeaders

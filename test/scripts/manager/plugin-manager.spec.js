@@ -3,7 +3,7 @@ describe("Plugin Manager test cases", function() {
     beforeAll(function() {
         var corePlugins = {
             "org.ekstep.stage": "1.0",
-            "org.ekstep.copypaste": "1.0"
+            "org.ekstep.utils": "1.0"
         };
 
         //load core plugins from s3
