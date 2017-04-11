@@ -2,7 +2,7 @@ describe("Ekstep editor test", function() {
     beforeAll(function() {
         var corePlugins = {
             "org.ekstep.stage": "1.0",
-            "org.ekstep.copypaste": "1.0"
+            "org.ekstep.utils": "1.0"
         };
 
         // test plugins
@@ -97,7 +97,7 @@ describe("Ekstep editor test", function() {
         spyOn(org.ekstep.contenteditor.api, "updateContextMenus").and.callThrough();
         org.ekstep.contenteditor.api.updateContextMenus([{ id: 'paste', state: 'SHOW', data: {} }]);
         expect(org.ekstep.contenteditor.api.updateContextMenus).toHaveBeenCalled();
-        expect(org.ekstep.contenteditor.toolbarManager.contextMenuItems.length).toEqual(3);
+        expect(org.ekstep.contenteditor.toolbarManager.contextMenuItems.length).toEqual(5);
         expect(org.ekstep.contenteditor.toolbarManager.contextMenuItems[0].id).toBe("copy");
     });
 
