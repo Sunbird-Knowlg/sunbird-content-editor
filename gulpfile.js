@@ -268,7 +268,8 @@ var corePlugins = [
     "org.ekstep.unsupported-1.0",
     "org.ekstep.wordinfobrowser-1.0",
     "org.ekstep.viewecml-1.0",
-    "org.ekstep.utils-1.0"
+    "org.ekstep.utils-1.0",
+    "org.ekstep.help-1.0"
 ]
 
 gulp.task('minifyCorePlugins', function() {
