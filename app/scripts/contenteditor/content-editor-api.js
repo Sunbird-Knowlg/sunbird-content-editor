@@ -546,4 +546,4 @@ window.org.ekstep.contenteditor.api = {
     }
 }
 
-window.ceEditor = window.org.ekstep.contenteditor.api;
+window.ecEditor = window.org.ekstep.contenteditor.api;

@@ -677,13 +677,17 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
      * this method to change any specific custom context menu actions.
      * @memberof org.ekstep.contenteditor.basePlugin
      */
-    /* istanbul ignore next */updateContextMenu: function() {},
+    /* istanbul ignore next */
+    updateContextMenu: function() {},
 
     /**
      * Plugins can override this to reset their configuration.
      * @memberof org.ekstep.contenteditor.basePlugin
      */    
-    /* istanbul ignore next */reConfig: function() {},
+    /* istanbul ignore next */
+    reConfig: function() {},
+
+    onConfigChange: function() {},
 
     /**
      * Called when the configuration is modified for the plugin. This is useful if the plugin

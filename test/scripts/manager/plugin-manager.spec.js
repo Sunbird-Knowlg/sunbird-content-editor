@@ -27,15 +27,15 @@ describe("Plugin Manager test cases", function() {
     });
     it("should load and init plugin", function() {
         spyOn(org.ekstep.pluginframework.pluginManager, "loadAndInitPlugin").and.callThrough();
-        spyOn(org.ekstep.pluginframework.pluginManager, "loadPlugin").and.callThrough();
+        spyOn(org.ekstep.pluginframework.pluginManager, "loadPluginWithDependencies").and.callThrough();
         spyOn(org.ekstep.pluginframework.pluginManager, "isDefined").and.callThrough();
         spyOn(org.ekstep.pluginframework.pluginManager, "invoke").and.callThrough();
         spyOn(org.ekstep.pluginframework.pluginManager, "getPluginManifest").and.callThrough();
 
         var returnValue = org.ekstep.pluginframework.pluginManager.loadAndInitPlugin("org.ekstep.test2", "1.0");
         expect(returnValue).toBe(0);
-        expect(org.ekstep.pluginframework.pluginManager.loadPlugin).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.pluginManager.loadPlugin).toHaveBeenCalledWith("org.ekstep.test2", "1.0", undefined);
+        expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalled();
+        expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalledWith("org.ekstep.test2", "1.0", undefined);
         expect(org.ekstep.pluginframework.pluginManager.isDefined).toHaveBeenCalled();
         expect(org.ekstep.pluginframework.pluginManager.isDefined).toHaveBeenCalledWith("org.ekstep.test2");
         expect(org.ekstep.pluginframework.pluginManager.invoke).toHaveBeenCalled();
@@ -45,14 +45,14 @@ describe("Plugin Manager test cases", function() {
 
     it("should not load and init plugin", function() {
         spyOn(org.ekstep.pluginframework.pluginManager, "loadAndInitPlugin").and.callThrough();
-        spyOn(org.ekstep.pluginframework.pluginManager, "loadPlugin").and.callThrough();
+        spyOn(org.ekstep.pluginframework.pluginManager, "loadPluginWithDependencies").and.callThrough();
         spyOn(org.ekstep.pluginframework.pluginManager, "isDefined").and.callThrough();
         spyOn(org.ekstep.pluginframework.pluginManager, "invoke").and.callThrough();
         spyOn(org.ekstep.pluginframework.pluginManager, "getPluginManifest").and.callThrough();
         var returnValue = org.ekstep.pluginframework.pluginManager.loadAndInitPlugin("org.ekstep.jsdklghfksjd","1.0");
         expect(returnValue).toBe(1);
-        expect(org.ekstep.pluginframework.pluginManager.loadPlugin).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.pluginManager.loadPlugin).toHaveBeenCalledWith("org.ekstep.jsdklghfksjd", "1.0", undefined);
+        expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalled();
+        expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalledWith("org.ekstep.jsdklghfksjd", "1.0", undefined);
         expect(org.ekstep.pluginframework.pluginManager.isDefined).toHaveBeenCalled();
         expect(org.ekstep.pluginframework.pluginManager.isDefined).toHaveBeenCalledWith("org.ekstep.jsdklghfksjd");
         expect(org.ekstep.pluginframework.pluginManager.invoke).not.toHaveBeenCalled();

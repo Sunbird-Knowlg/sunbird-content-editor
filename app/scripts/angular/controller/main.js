@@ -233,6 +233,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 closeByEscape: false
             });
         }
+        $scope.refreshToolbar = function() {
+            setTimeout(function() {
+                org.ekstep.contenteditor.jQuery(".ui.dropdown").dropdown();
+                org.ekstep.contenteditor.jQuery(".popup-item").popup();
+            }, 500);
+        }
 
         /** 
          * Content Editor Initialization

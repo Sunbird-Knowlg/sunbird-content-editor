@@ -18,18 +18,6 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:load', { plugin: manifest.id, version: manifest.ver });
         org.ekstep.pluginframework.eventManager.dispatchEvent(manifest.id + ':load');
     },
-    loadAndInitPlugin: function(pluginId, version, publishedTime, parent) {
-        this.loadPlugin(pluginId, version, publishedTime);
-        if(this.isDefined(pluginId)) {
-            var pluginManifest = this.getPluginManifest(pluginId);
-            if (pluginManifest.type && _.lowerCase(pluginManifest.type) === "widget") {
-                this.invoke(pluginId, _.cloneDeep(pluginManifest.editor['init-data'] || {}), parent);
-            }
-            return 0;
-        } else {
-            return 1;
-        }
-    },
     loadPlugin: function(pluginId, pluginVer, publishedTime) {
         var instance = this;
         if (this.plugins[pluginId]) {
@@ -43,6 +31,18 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                     instance.loadPluginByManifest(data.manifest, data.repo, publishedTime);
                 }
             }, publishedTime);
+        }
+    },
+    loadDependencies: function(manifest, repo, publishedTime) {
+        var instance = this;
+        if (_.isArray(manifest.editor.dependencies)) {
+            _.forEach(manifest.editor.dependencies, function(dependency) {
+                if (dependency.type == 'plugin') {
+                    instance.loadPlugin(dependency.plugin, dependency.ver, publishedTime);
+                } else {
+                    org.ekstep.pluginframework.resourceManager.loadExternalResource(dependency.type, manifest.id, manifest.ver, dependency.src, repo, publishedTime);
+                }
+            });
         }
     },
     loadPluginByManifest: function(manifest, repo, publishedTime) {
@@ -77,17 +77,57 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         }
         _.set(window[baseNameSpace], names, pluginClazz);
     },
-    loadDependencies: function(manifest, repo, publishedTime) {
+    loadAndInitPlugin: function(pluginId, version, publishedTime, parent) {
+        this.loadPluginWithDependencies(pluginId, version, publishedTime);
+        if(this.isDefined(pluginId)) {
+            var pluginManifest = this.getPluginManifest(pluginId);
+            if (pluginManifest.type && _.lowerCase(pluginManifest.type) === "widget") {
+                this.invoke(pluginId, _.cloneDeep(pluginManifest.editor['init-data'] || {}), parent);
+            }
+            return 0;
+        } else {
+            return 1;
+        }
+    },
+    loadPluginWithDependencies: function(pluginId, pluginVer, publishedTime) {
+        var instance = this;
+        if (this.plugins[pluginId]) {
+            console.log('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded');
+        } else {
+            org.ekstep.pluginframework.resourceManager.discoverManifest(pluginId, pluginVer, function(err, data) {
+                if (err || _.isUndefined(data)) {
+                    console.error('Unable to load plugin manifest', 'plugin:' + pluginId + '-' + pluginVer, 'Error:', err);
+                } else {
+                    var queue = instance.queueDependencies(data.manifest, data.repo, publishedTime);
+                    if(queue.length() > 0) {
+                        queue.drain = function() {
+                            instance.loadPluginByManifest(data.manifest, data.repo, publishedTime);
+                        };
+                    } else {
+                        instance.loadPluginByManifest(data.manifest, data.repo, publishedTime);
+                    }
+                }
+            }, publishedTime);
+        }
+    },
+    queueDependencies: function(manifest, repo, publishedTime) {
+
+        var queue = async.queue(function (task, callback) {
+            org.ekstep.pluginframework.resourceManager.loadExternalResource(task.type, task.id, task.ver, task.src, task.repo, task.publishedTime, callback);
+        }, 1);
         var instance = this;
         if (_.isArray(manifest.editor.dependencies)) {
             _.forEach(manifest.editor.dependencies, function(dependency) {
                 if (dependency.type == 'plugin') {
-                    instance.loadPlugin(dependency.plugin, dependency.ver, publishedTime);
+                    instance.loadPluginWithDependencies(dependency.plugin, dependency.ver, publishedTime);
                 } else {
-                    org.ekstep.pluginframework.resourceManager.loadExternalResource(dependency.type, manifest.id, manifest.ver, dependency.src, repo, publishedTime);
+                    queue.push({
+                        type: dependency.type, id: manifest.id, ver: manifest.ver, src: dependency.src, repo: repo, publishedTime: publishedTime
+                    }, function() {});
                 }
             });
         }
+        return queue;
     },
     isDefined: function(id) {
         if (this.plugins[id]) {
