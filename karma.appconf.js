@@ -53,6 +53,7 @@ module.exports = function(config) {
             "app/scripts/contenteditor/manager/stage-manager.js",
             "app/scripts/contenteditor/manager/toolbar-manager.js",
             "app/scripts/contenteditor/manager/media-manager.js",
+            "app/scripts/contenteditor/manager/sidebar-manager.js",
             "app/scripts/contenteditor/migration/1_migration-task.js",
             "app/scripts/contenteditor/migration/mediamigration-task.js",
             "app/scripts/contenteditor/migration/stageordermigration-task.js",
@@ -89,6 +90,7 @@ module.exports = function(config) {
             'test/**/*.js',
             // fixtures
             { pattern: 'test/**/*.json', watched: true, served: true, included: false },
+            { pattern: 'test/data/**/*.html', watched: true, served: true, included: false },
             { pattern: 'plugins/org.ekstep.stage-1.0/**/*.json', watched: true, served: true, included: false }
         ],
 
@@ -131,7 +133,7 @@ module.exports = function(config) {
 
 
         // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: false,
+        autoWatch: true,
 
 
         // start these browsers
@@ -143,7 +145,7 @@ module.exports = function(config) {
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
-        singleRun: true,
+        singleRun: false,
 
         // Concurrency level
         // how many browser should be started simultaneous
