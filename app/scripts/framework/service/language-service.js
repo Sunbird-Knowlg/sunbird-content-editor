@@ -99,6 +99,14 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
     * @return {void}
     */
     getTransliteration: function(data, callback) {
-        this.getFromService(this.languageURL() + "v2/language/transliteration/"+ data.text + "?languages=" + data.languages.toString(), this.requestHeaders, callback);
+        this.getFromService(this.getBaseURL() + "/api/language/v2/language/transliteration/"+ data.text + "?languages=" + data.languages.toString(), this.requestHeaders, callback);
+    },
+    /**
+     * Translates word in provided languages
+     * @param {Object} req contain requested data
+     * @param {Function} callback, callback function
+     */
+    getTranslation:  function(data, callback) {
+        this.getFromService(this.getBaseURL() + "/api/language/v2/language/translations/"+ data.wordLang + '/' + data.word + '?languages=' + data.languages, this.requestHeaders, callback);
     }
 }));
