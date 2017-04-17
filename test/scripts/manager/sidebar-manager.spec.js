@@ -1,46 +1,38 @@
 'use strict';
 
 describe('sidebar manager', function() {
-    beforeAll(function() {
-        org.ekstep.contenteditor.sidebarManager.initialize({ loadNgModules: function() {} });
-        org.ekstep.pluginframework.pluginManager.loadPlugin('org.ekstep.test_config', '1.0');
-        org.ekstep.pluginframework.pluginManager.loadPlugin('org.ekstep.test_config_2', '1.0');
+    beforeAll(function(done) {
         org.ekstep.contenteditor.sidebarManager.sidebarMenu = [];
+        org.ekstep.contenteditor.sidebarManager.initialize({ loadNgModules: function() {}, scope: { refreshSidebar: function() {}, addToSidebar: function() {} } });
+        spyOn(org.ekstep.contenteditor.sidebarManager, 'registerSidebarMenu').and.callThrough();
+        spyOn(org.ekstep.contenteditor.sidebarManager, 'loadSidebar').and.callThrough();
+        spyOn(org.ekstep.contenteditor.sidebarManager, 'loadCustomTemplate').and.callThrough();
+        spyOn(org.ekstep.contenteditor.sidebarManager, 'loadNgModules').and.returnValue({ then: function(cb1, cb2) {} });
+        org.ekstep.pluginframework.pluginManager.loadPlugin('org.ekstep.test_config', '1.0');
+        setTimeout(function() {
+            done();
+        }, 1000);
     });
 
-    it('should load and register sidebar template and controller', function() {
-        spyOn(org.ekstep.contenteditor.sidebarManager, 'loadNgModules');
-        spyOn(org.ekstep.contenteditor.sidebarManager, 'loadCustomTemplates');
-        org.ekstep.contenteditor.sidebarManager.loadAndRegister({}, { plugin: 'org.ekstep.test_config' });
-        expect(org.ekstep.contenteditor.sidebarManager.getSidebarMenu().length).toBe(1);
-        expect(org.ekstep.contenteditor.sidebarManager.getSidebarMenu()).toEqual([{ category: 'settings', template: 'base/test/data/published/org.ekstep.test_config-1.0/editor/partials/sidebarSettingTemplate.html' }]);
-        expect(org.ekstep.contenteditor.sidebarManager.loadCustomTemplates).toHaveBeenCalled();
-        expect(org.ekstep.contenteditor.sidebarManager.loadNgModules.calls.count()).toEqual(2);
+    it('should register the sidebar menu', function() {
+        expect(org.ekstep.contenteditor.sidebarManager.registerSidebarMenu.calls.count()).toEqual(1);
+        expect(org.ekstep.contenteditor.sidebarManager.loadSidebar.calls.count()).toEqual(1);
+        expect(org.ekstep.contenteditor.sidebarManager.sidebarMenu.length).toEqual(1);
+        expect(EventBus.hasEventListener('sidebar:settings')).toBe(true);
     });
 
-    it('should load custom templates for sidebar category', function() {
-        var config = {
-            type: 'custom_template',
-            templateURL: "editor/partials/sidebarSettingTemplate.html",
-            controllerURL: "editor/sidebar-settings-controller.js"
-        };
-        spyOn(org.ekstep.contenteditor.sidebarManager, 'loadNgModules');
-        org.ekstep.contenteditor.sidebarManager.loadCustomTemplates(config, { id: 'org.ekstep.test_config', ver: '1.0' });
-        expect(config.template).toBeDefined();
-        expect(org.ekstep.contenteditor.sidebarManager.loadNgModules.calls.count()).toEqual(1);
+    it('should load custom template', function() {
+        var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest('org.ekstep.test_config');
+        _.forEach(manifest.editor.configManifest, function(config) {
+            if (config.type == "custom_template") {
+                expect(config.template).toBeDefined();             
+            }
+        });
+        expect(org.ekstep.contenteditor.sidebarManager.loadNgModules.calls.count()).toEqual(3);
     });
 
-    it('should not load custom template for invalid path', function() {
-        var config = {
-            type: 'custom_template',
-            templateURL: "editor/path/sidebarSettingTemplate.html", //inavlid path
-            controllerURL: "editor/path/someController.js" //invalid path
-        };
-        spyOn(org.ekstep.contenteditor.sidebarManager, 'loadNgModules');
-        var testFn = function() {
-            org.ekstep.contenteditor.sidebarManager.loadCustomTemplates(config, { id: 'org.ekstep.test_config', ver: '1.0' });
-        };
-        expect(config.template).toBeUndefined();
-        expect(testFn).toThrow("unable to load custom template");
+    it('should update the sidebar menu', function() {
+        org.ekstep.contenteditor.sidebarManager.updateSidebarMenu({ id: 'settings', 'state': 'HIDDEN' });
+        expect(org.ekstep.contenteditor.sidebarManager.getSidebarMenu()[0].state).toBe('HIDDEN');
     });
 });
