@@ -11,7 +11,7 @@ describe('Content service test cases', function() {
             apislug: org.ekstep.contenteditor.config.apislug
         };
         org.ekstep.services.contentService.content = JSON.parse(content);
-        org.ekstep.services.contentService.http.patch = jasmine.createSpy().and.callFake(function(url, requestObj, headers, cb) {
+        org.ekstep.services.contentService.patch = jasmine.createSpy().and.callFake(function(url, requestObj, headers, cb) {
             cb(undefined, contentRes);
         });
         spyOn(org.ekstep.services.contentService, "saveContent").and.callThrough();
@@ -36,7 +36,7 @@ describe('Content service test cases', function() {
     });
 
     it("should call download content method", function() {
-        org.ekstep.services.contentService.http.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
+        org.ekstep.services.contentService.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
             cb(undefined, downloadContentRes);
         });
         spyOn(org.ekstep.services.contentService, "downloadContent").and.callThrough();
@@ -50,7 +50,7 @@ describe('Content service test cases', function() {
 
     it("should call save content method return error for version key", function() {
         org.ekstep.services.contentService.content  = {};
-        org.ekstep.services.contentService.saveContent(contentId, metaData, contentBody, function(err, res){
+        org.ekstep.services.contentService.saveContent(contentId, metaData, contentBody, function(err, res){            
             expect(err).toBe("Cannot find content id or version key to update content");
         });
     });
@@ -62,7 +62,7 @@ describe('Content service test cases', function() {
     });
 
     it("should return error on getContent method call", function() {
-        org.ekstep.services.contentService.http.get = jasmine.createSpy().and.callFake(function(url, object, cb) {
+        org.ekstep.services.contentService.get = jasmine.createSpy().and.callFake(function(url, object, cb) {
             cb("Error: no content found!", undefined);
         });
         org.ekstep.services.contentService.getContent(contentId, function(err, res){
@@ -71,7 +71,7 @@ describe('Content service test cases', function() {
     });
 
     it("should set content meta once the API call is successful", function() {
-        org.ekstep.services.contentService.http.get = jasmine.createSpy().and.callFake(function(url, object, cb) {
+        org.ekstep.services.contentService.get = jasmine.createSpy().and.callFake(function(url, object, cb) {
             cb(undefined, {data: contentResponse});
         });
         org.ekstep.services.contentService.getContent('do_112206722833612800186', function(err, res){

@@ -10,8 +10,9 @@ org.ekstep.services.iService = Class.extend({
         this.initService(config);
     },
     initService: function(config) {},                
-    _dispatchTelemetry: function(data) {        
-        org.ekstep.services.telemetryService.apiCall({ "path": data.url, "method": data.method, "request": data.request, "response": "", "responseTime": data.res.data.responseTime, "status": data.res.status, "uip": "" });
+    _dispatchTelemetry: function(data) {
+        var status = data.res.responseCode || data.res.statusText;
+        org.ekstep.services.telemetryService.apiCall({ "path": data.url, "method": data.method, "request": data.request, "response": "", "responseTime": data.res.responseTime, "status": status, "uip": "" });
     },
     get: function(url, config, cb) {
         var requestTimestamp, instance = this;
@@ -27,13 +28,14 @@ org.ekstep.services.iService = Class.extend({
             },
             success: function(res) {
                 res.responseTime = (new Date()).getTime() - requestTimestamp;
-                res = { data: res };
-                cb(null, res);
                 instance._dispatchTelemetry({url: url, method: "GET", request: "", res: res }); 
+                res = { data: res };
+                cb(null, res);                
             },
             error: function(err) {
+                err.responseTime = (new Date()).getTime() - requestTimestamp;
                 cb(err, null);
-                instance._dispatchTelemetry({url: url, method: "GET", request: "", res: err.responseText });
+                instance._dispatchTelemetry({url: url, method: "GET", request: "", res: err });
             }
         });
     },
@@ -54,13 +56,14 @@ org.ekstep.services.iService = Class.extend({
             },
             success: function(res) {
                 res.responseTime = (new Date()).getTime() - requestTimestamp;
-                res = { data: res };
-                cb(null, res);
                 instance._dispatchTelemetry({url: url, method: "POST", request: data, res: res }); 
+                res = { data: res };
+                cb(null, res);                
             },
             error: function(err) {
+                err.responseTime = (new Date()).getTime() - requestTimestamp;
                 cb(err, null);
-                instance._dispatchTelemetry({url: url, method: "POST", request: data, res: err.responseText });
+                instance._dispatchTelemetry({url: url, method: "POST", request: data, res: err });
             }
         });
     },
@@ -81,13 +84,14 @@ org.ekstep.services.iService = Class.extend({
             },
             success: function(res) {
                 res.responseTime = (new Date()).getTime() - requestTimestamp;
-                res = { data: res };
-                cb(null, res);
                 instance._dispatchTelemetry({url: url, method: "PATCH", request: data, res: res });
+                res = { data: res };
+                cb(null, res);                
             },
             error: function(err) {
+                err.responseTime = (new Date()).getTime() - requestTimestamp;
                 cb(err, null);
-                instance._dispatchTelemetry({url: url, method: "PATCH", request: data, res: err.responseText });
+                instance._dispatchTelemetry({url: url, method: "PATCH", request: data, res: err });
             }
         });
     },

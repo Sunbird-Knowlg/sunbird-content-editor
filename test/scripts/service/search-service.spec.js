@@ -5,7 +5,7 @@ describe('Search service test cases', function() {
             baseURL: org.ekstep.contenteditor.config.baseURL,
             apislug: org.ekstep.contenteditor.config.apislug
         };
-        org.ekstep.services.searchService.http.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
+        org.ekstep.services.searchService.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
             cb(undefined, activities);
         })
     });
@@ -22,7 +22,7 @@ describe('Search service test cases', function() {
     });
 
     it("should return error on search method call", function() {
-        org.ekstep.services.searchService.http.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
+        org.ekstep.services.searchService.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
             cb("no data found", undefined);
         })
         var request = '{ "request": { "query": "", "filters":{ "contentType": ["Plugin"], "status": ["Live"], "category": [] }, "sort_by": { "lastUpdatedOn": "desc" }, "limit": 1 } }';

@@ -45,32 +45,8 @@ module.exports = function(config) {
             "app/scripts/framework/manager/event-manager.js",
             "app/scripts/framework/manager/plugin-manager.js",
             "app/scripts/framework/manager/keyboard-manager.js",
-            "app/scripts/contenteditor/bootstrap-editor.js",
-            "app/scripts/contenteditor/ce-config.js",
-            "app/scripts/contenteditor/content-editor.js",
-            "app/scripts/contenteditor/content-editor-api.js",
-            "app/scripts/contenteditor/base-plugin.js",
-            "app/scripts/contenteditor/manager/stage-manager.js",
-            "app/scripts/contenteditor/manager/toolbar-manager.js",
-            "app/scripts/contenteditor/manager/media-manager.js",
-            "app/scripts/contenteditor/migration/1_migration-task.js",
-            "app/scripts/contenteditor/migration/mediamigration-task.js",
-            "app/scripts/contenteditor/migration/stageordermigration-task.js",
-            "app/scripts/contenteditor/migration/basestagemigration-task.js",
-            "app/scripts/contenteditor/migration/imagemigration-task.js",
-            "app/scripts/contenteditor/migration/scribblemigration-task.js",
-            "app/scripts/contenteditor/migration/readalongmigration-task.js",
-            "app/scripts/contenteditor/migration/assessmentmigration-task.js",
-            "app/scripts/contenteditor/migration/eventsmigration-task.js",
-            "app/scripts/contenteditor/migration/settagmigration-task.js",
-            "app/scripts/angular/controller/main.js",
-            "app/scripts/angular/controller/popup-controller.js",
-            "app/scripts/angular/directive/draggable-directive.js",
-            "app/scripts/angular/directive/droppable-directive.js",
-            "app/scripts/angular/service/api-timestamp-service.js",
             "app/scripts/framework/service/iservice.js",
             "app/scripts/framework/service/content-service.js",
-            "app/scripts/framework/service/popup-service.js",
             "app/scripts/framework/service/telemetry-service.js",
             "app/scripts/framework/service/assessment-service.js",
             "app/scripts/framework/service/asset-service.js",
@@ -85,6 +61,30 @@ module.exports = function(config) {
             "app/scripts/framework/dispatcher/console-dispatcher.js",
             "app/scripts/framework/dispatcher/local-dispatcher.js",
             "app/scripts/framework/dispatcher/piwik-dispatcher.js",
+            "app/scripts/contenteditor/bootstrap-editor.js",
+            "app/scripts/contenteditor/ce-config.js",
+            "app/scripts/contenteditor/content-editor.js",
+            "app/scripts/contenteditor/content-editor-api.js",
+            "app/scripts/contenteditor/base-plugin.js",
+            "app/scripts/contenteditor/manager/stage-manager.js",
+            "app/scripts/contenteditor/manager/toolbar-manager.js",
+            "app/scripts/contenteditor/manager/media-manager.js",
+            "app/scripts/contenteditor/service/popup-service.js",            
+            "app/scripts/contenteditor/migration/1_migration-task.js",
+            "app/scripts/contenteditor/migration/mediamigration-task.js",
+            "app/scripts/contenteditor/migration/stageordermigration-task.js",
+            "app/scripts/contenteditor/migration/basestagemigration-task.js",
+            "app/scripts/contenteditor/migration/imagemigration-task.js",
+            "app/scripts/contenteditor/migration/scribblemigration-task.js",
+            "app/scripts/contenteditor/migration/readalongmigration-task.js",
+            "app/scripts/contenteditor/migration/assessmentmigration-task.js",
+            "app/scripts/contenteditor/migration/eventsmigration-task.js",
+            "app/scripts/contenteditor/migration/settagmigration-task.js",
+            "app/scripts/angular/controller/main.js",
+            "app/scripts/angular/controller/popup-controller.js",
+            "app/scripts/angular/directive/draggable-directive.js",
+            "app/scripts/angular/directive/droppable-directive.js",
+            "app/scripts/angular/service/api-timestamp-service.js",            
             "app/scripts/contenteditor/backward-compatibility.js",
             'test/**/*.js',
             // fixtures
@@ -131,7 +131,7 @@ module.exports = function(config) {
 
 
         // enable / disable watching file and executing tests whenever any file changes
-        autoWatch: false,
+        autoWatch: true,
 
 
         // start these browsers
@@ -143,7 +143,7 @@ module.exports = function(config) {
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits
-        singleRun: true,
+        singleRun: false,
 
         // Concurrency level
         // how many browser should be started simultaneous
