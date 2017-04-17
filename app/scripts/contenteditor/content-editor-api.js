@@ -309,7 +309,9 @@ window.org.ekstep.contenteditor.api = {
     updateContextMenus: function(menus) {
         org.ekstep.contenteditor.toolbarManager.updateContextMenu(menus);
     },
-
+    updateSidebarMenu: function(menu) {
+        org.ekstep.contenteditor.sidebarManager.updateSidebarMenu(menu);        
+    },
     /**
      * Allows the plugins to request loading and instantiating another plugin. This is useful when
      * a plugin depends upon other plugins - e.g. a wordpicker might dependend upon an asset picker.
