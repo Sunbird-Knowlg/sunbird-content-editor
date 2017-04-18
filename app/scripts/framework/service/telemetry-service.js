@@ -40,14 +40,14 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         var instance = this;
         this.context = context;
         /* istanbul ignore else */
-        if(_.isUndefined(this.context.cdata)) {
+        if(this.context.cdata == undefined) {
             this.context.cdata = [];
         }
-        if(_.isUndefined(this.context.uid) || _.isUndefined(this.context.sid) || _.isUndefined(this.context.content_id)) {
+        if((this.context.uid == undefined) || (this.context.sid == undefined) || (this.context.content_id == undefined)) {
             console.error('Unable to instantiate telemetry service');
             this.initialized = false;
         }
-        if (!_.isUndefined(dispatcher)) this.addDispatcher(dispatcher);
+        if (!dispatcher) this.addDispatcher(dispatcher);
 
         window.addEventListener('beforeunload', /* istanbul ignore next */ function() {
             instance.end();
@@ -74,9 +74,9 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
                 return instance.startEventData;
             },
             append: function(param, dataObj) {
-                _.forIn(dataObj, function(value, key) {
-                    instance.startEventData[param][key] = value;
-                });
+                for (var key in dataObj) {
+                    instance.startEventData[param][key] = dataObj[key];
+                }
                 if (autopublish) instance.start();
             }
         }
@@ -118,7 +118,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     */
     addDispatcher: function(dispatcherId) {
         var dispatcher = this.getDispatcher(dispatcherId);
-        var dispatcherExist = _.find(this.dispatchers, function(obj){
+        var dispatcherExist = this.dispatchers.find(function(obj){
            return  obj.type === dispatcher.type;
         });
         if(!dispatcherExist) this.dispatchers.push(dispatcher);
@@ -133,9 +133,9 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      */
     _dispatch: function(message) {
         if (this.initialized) {
-            _.forEach(this.dispatchers, function(dispatcher) {
+            this.dispatchers.forEach(function(dispatcher) {
                 dispatcher.dispatch(message);
-            })
+            });
         }
     },
     /**
@@ -178,8 +178,8 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     */
     hasRequiredData: function(data, mandatoryFields) {
         var isValid = true;
-        _.forEach(mandatoryFields, function(key) {
-            if (!_.has(data, key)) isValid = false;
+        mandatoryFields.forEach(function(key) {
+            if (!data.hasOwnProperty(key)) isValid = false;
         });
         return isValid;
     },

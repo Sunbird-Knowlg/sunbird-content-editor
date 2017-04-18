@@ -2,25 +2,23 @@
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
 org.ekstep.pluginframework.keyboardManager = new (Class.extend({
-	document: undefined,
 	registry: {},
-	initialize: function($document) {
-		this.document = $document;
+	init: function() {		
 		var instance = this;
-		$document.on("keydown", function(event) {
+		document.addEventListener("keydown", function(event) {
             instance.resolveKeyCombination(event);
         });
 	},
 	registerKeyCombination: function(command, callback) {
-		commands = _.map(command.toUpperCase().split('+'), function(key) {
-			return key.trim();
+		commands = command.toUpperCase().split('+').map(function(value) {
+			return value.trim();
 		});
 		if(commands.length > 4) {
 			throw "Cannot register a command with more than 3 keys";
 		}
-		var registryKey = ((_.indexOf(commands, 'CTRL') != -1 || _.indexOf(commands, 'CMD') != -1)  ? 'ctrl' : '') + (_.indexOf(commands, 'SHIFT') != -1 ? 'shift' : '') + (_.indexOf(commands, 'ALT') != -1 ? 'alt' : '');
-		commands = _.filter(commands, function(key) {
-			return _.indexOf(["CTRL", "CMD", "ALT", "SHIFT"], key) == -1
+		var registryKey = ((commands.indexOf('CTRL') != -1 || commands.indexOf('CMD') != -1)  ? 'ctrl' : '') + (commands.indexOf('SHIFT') != -1 ? 'shift' : '') + (commands.indexOf('ALT') != -1 ? 'alt' : '');
+		commands = commands.filter(function(value) {
+			return ["CTRL", "CMD", "ALT", "SHIFT"].indexOf(value) == -1
 		});
 		if(commands.length == 0) {
 			throw "Cannot register a command only with modifier keys. Need one key character";

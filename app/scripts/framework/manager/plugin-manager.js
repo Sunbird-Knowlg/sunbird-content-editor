@@ -24,7 +24,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             console.log('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded');
         } else {
             org.ekstep.pluginframework.resourceManager.discoverManifest(pluginId, pluginVer, function(err, data) {
-                if (err || _.isUndefined(data)) {
+                if (err || (data == undefined)) {
                     console.error('Unable to load plugin manifest', 'plugin:' + pluginId + '-' + pluginVer, 'Error:', err);
                 } else {
                     instance.loadDependencies(data.manifest, data.repo, publishedTime);
@@ -35,8 +35,8 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     },
     loadDependencies: function(manifest, repo, publishedTime) {
         var instance = this;
-        if (_.isArray(manifest.editor.dependencies)) {
-            _.forEach(manifest.editor.dependencies, function(dependency) {
+        if (Array.isArray(manifest.editor.dependencies)) {
+            manifest.editor.dependencies.forEach(function(dependency) {
                 if (dependency.type == 'plugin') {
                     instance.loadPlugin(dependency.plugin, dependency.ver, publishedTime);
                 } else {
@@ -75,14 +75,15 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         pluginClazz.extend = function(subClazz) {
             return clazz.extend(subClazz);
         }
-        _.set(window[baseNameSpace], names, pluginClazz);
+        window[baseNameSpace] = window[baseNameSpace] || {};
+        window[baseNameSpace].names = pluginClazz;
     },
     loadAndInitPlugin: function(pluginId, version, publishedTime, parent) {
         this.loadPluginWithDependencies(pluginId, version, publishedTime);
         if(this.isDefined(pluginId)) {
             var pluginManifest = this.getPluginManifest(pluginId);
-            if (pluginManifest.type && _.lowerCase(pluginManifest.type) === "widget") {
-                this.invoke(pluginId, _.cloneDeep(pluginManifest.editor['init-data'] || {}), parent);
+            if (pluginManifest.type && (pluginManifest.type.toLowerCase() === "widget")) {
+                this.invoke(pluginId, JSON.parse(JSON.stringify(pluginManifest.editor['init-data'] || {})), parent);
             }
             return 0;
         } else {
@@ -95,7 +96,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             console.log('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded');
         } else {
             org.ekstep.pluginframework.resourceManager.discoverManifest(pluginId, pluginVer, function(err, data) {
-                if (err || _.isUndefined(data)) {
+                if (err || (data == undefined)) {
                     console.error('Unable to load plugin manifest', 'plugin:' + pluginId + '-' + pluginVer, 'Error:', err);
                 } else {
                     var queue = instance.queueDependencies(data.manifest, data.repo, publishedTime);
@@ -116,8 +117,8 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             org.ekstep.pluginframework.resourceManager.loadExternalResource(task.type, task.id, task.ver, task.src, task.repo, task.publishedTime, callback);
         }, 1);
         var instance = this;
-        if (_.isArray(manifest.editor.dependencies)) {
-            _.forEach(manifest.editor.dependencies, function(dependency) {
+        if (Array.isArray(manifest.editor.dependencies)) {
+            manifest.editor.dependencies.forEach(function(dependency) {
                 if (dependency.type == 'plugin') {
                     instance.loadPluginWithDependencies(dependency.plugin, dependency.ver, publishedTime);
                 } else {
@@ -146,7 +147,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             var pluginClass = override ? plugin.p.extend(override) : plugin.p;
             var pluginManifest = plugin.m;
             try {
-                if (_.isArray(data)) {
+                if (Array.isArray(data)) {
                     data.forEach(function(d) {
                         p = new pluginClass(pluginManifest, d, parent);
                         instance.addPluginInstance(p);
@@ -208,7 +209,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         }
     },
     loadAllPlugins: function(plugins, callback) {
-        if (_.isEmpty(plugins)) {
+        if (org.ekstep.pluginframework.jQuery.isEmptyObject(plugins)) {
             callback();
         }
         var instance = this;
@@ -219,9 +220,9 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         q.drain = function() {
             callback();
         };
-        _.forIn(plugins, function(value, key) {
-            q.push({ "key": key, "value": value }, function(err) {});
-        });
+        for (var pluginsKey in plugins) {
+            q.push({ "key": pluginsKey, "value": plugins[pluginsKey] }, function(err) {});
+        }
     },
     loadPluginResource: function(pluginId, pluginVer, src, dataType, callback) {
         if (this.plugins[pluginId]) {

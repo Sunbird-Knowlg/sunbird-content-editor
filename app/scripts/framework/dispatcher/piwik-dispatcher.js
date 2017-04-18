@@ -11,7 +11,7 @@ org.ekstep.pluginframework.piwikDispatcher = new(org.ekstep.pluginframework.IDis
         try {
             event = (typeof event === "string") ? event : JSON.stringify(event);
             /* istanbul ignore next. Cannot test jquery post */
-            org.ekstep.pluginframework.resourceManager.jQuery.post(this.piwikEndPoint() + '?idsite=' + this.idsite + '&url=' + org.ekstep.services.config.absURL + location.pathname + '&e_c=ContentEditor&e_a=' + event + '&rec=1', function() {
+            org.ekstep.pluginframework.jQuery.post(this.piwikEndPoint() + '?idsite=' + this.idsite + '&url=' + org.ekstep.services.config.absURL + location.pathname + '&e_c=ContentEditor&e_a=' + event + '&rec=1', function() {
             })
             .fail(function() {
                 console.log("error: while piwik dispatch");

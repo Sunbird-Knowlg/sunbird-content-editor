@@ -7,7 +7,6 @@ org.ekstep.contenteditor.init = function(context, config, $scope, $document, cal
     org.ekstep.contenteditor._initServices();
     org.ekstep.contenteditor.globalContext = context;
     org.ekstep.contenteditor.toolbarManager.setScope($scope);
-    org.ekstep.pluginframework.keyboardManager.initialize($document);
     org.ekstep.contenteditor._loadDefaultPlugins(context, callback);
     org.ekstep.contenteditor._backwardCompatibility();
 }
@@ -25,12 +24,13 @@ org.ekstep.contenteditor._initServices = function() {
         baseURL: org.ekstep.contenteditor.config.baseURL,
         apislug: org.ekstep.contenteditor.config.apislug
     }
-    org.ekstep.pluginframework.config = {
+    org.ekstep.pluginframework.initialize({ 
+        jQuery: org.ekstep.contenteditor.jQuery, 
         pluginRepo: org.ekstep.contenteditor.config.pluginRepo,
         draftRepo: org.ekstep.contenteditor.config.pluginRepo,
-        build_number: org.ekstep.contenteditor.config.build_number
-    }
-    org.ekstep.pluginframework.resourceManager.initialize(org.ekstep.contenteditor.jQuery);
+        build_number: org.ekstep.contenteditor.config.build_number,
+        repos: [org.ekstep.pluginframework.hostRepo, org.ekstep.pluginframework.draftRepo, org.ekstep.pluginframework.publishedRepo]
+    });
     org.ekstep.pluginframework.hostRepo.checkConnection();
 }
 
