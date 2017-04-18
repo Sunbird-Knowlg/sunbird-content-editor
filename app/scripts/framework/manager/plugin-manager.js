@@ -113,7 +113,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     },
     queueDependencies: function(manifest, repo, publishedTime) {
 
-        var queue = async.queue(function (task, callback) {
+        var queue = org.ekstep.pluginframework.async.queue(function (task, callback) {
             org.ekstep.pluginframework.resourceManager.loadExternalResource(task.type, task.id, task.ver, task.src, task.repo, task.publishedTime, callback);
         }, 1);
         var instance = this;
@@ -213,7 +213,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             callback();
         }
         var instance = this;
-        var q = async.queue(function(plugin, pluginCallback) {
+        var q = org.ekstep.pluginframework.async.queue(function(plugin, pluginCallback) {
             instance.loadPlugin(plugin.key, plugin.value);
             pluginCallback();
         }, 6);

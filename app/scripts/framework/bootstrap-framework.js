@@ -10,6 +10,7 @@ plugin_framework.prototype.initialize = function(config) {
     config = config || {};
     org.ekstep.pluginframework.config = org.ekstep.pluginframework.config || {};
     org.ekstep.pluginframework.jQuery = config.jQuery || window.$;
+    org.ekstep.pluginframework.async = config.async || window.async;
     if (config.pluginRepo) org.ekstep.pluginframework.config.pluginRepo = config.pluginRepo;
     if (config.draftRepo) org.ekstep.pluginframework.config.draftRepo = config.draftRepo;
     if (config.build_number) org.ekstep.pluginframework.config.build_number = config.build_number;

@@ -29,7 +29,7 @@ org.ekstep.pluginframework.resourceManager = new(Class.extend({
             ayncTasks.push(Fns());
         });
 
-        async.waterfall(ayncTasks, function(err, result) {
+        org.ekstep.pluginframework.async.waterfall(ayncTasks, function(err, result) {
             if (result.manifest !== undefined)
                 cb(undefined, result);
             else

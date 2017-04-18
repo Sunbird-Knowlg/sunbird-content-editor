@@ -96,6 +96,32 @@ var scriptfiles = [
     "app/scripts/contenteditor/backward-compatibility.js",
 ];
 
+
+var pluginFramework = [
+    "app/scripts/framework/class.js",
+    "app/scripts/framework/bootstrap-framework.js",
+    "app/scripts/framework/manager/resource-manager.js",
+    "app/scripts/framework/manager/event-manager.js",
+    "app/scripts/framework/manager/plugin-manager.js",
+    "app/scripts/framework/manager/keyboard-manager.js",
+    "app/scripts/framework/service/iservice.js",
+    "app/scripts/framework/service/content-service.js",
+    "app/scripts/framework/service/telemetry-service.js",
+    "app/scripts/framework/service/assessment-service.js",
+    "app/scripts/framework/service/asset-service.js",
+    "app/scripts/framework/service/meta-service.js",
+    "app/scripts/framework/service/language-service.js",
+    "app/scripts/framework/service/search-service.js",
+    "app/scripts/framework/repo/irepo.js",
+    "app/scripts/framework/repo/published-repo.js",
+    "app/scripts/framework/repo/draft-repo.js",
+    "app/scripts/framework/repo/host-repo.js",
+    "app/scripts/framework/dispatcher/idispatcher.js",
+    "app/scripts/framework/dispatcher/console-dispatcher.js",
+    "app/scripts/framework/dispatcher/local-dispatcher.js",
+    "app/scripts/framework/dispatcher/piwik-dispatcher.js",
+];
+
 gulp.task('setup', function() {
     gulp.src('semantic/dist', {
         read: false
@@ -118,7 +144,24 @@ gulp.task('minifyJS', function() {
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
-gulp.task('dist', function(){
+gulp.task('minifyFramework', function() {
+    return gulp.src(pluginFramework)
+        .pipe(concat('genie-framework.min.js'))
+        .pipe(minify({
+            minify: true,
+            collapseWhitespace: true,
+            conservativeCollapse: true,
+            minifyJS: true,
+            minifyCSS: true,
+            getKeptComment: function(content, filePath) {
+                var m = content.match(/\/\*![\s\S]*?\*\//img);
+                return m && m.join('\n') + '\n' || '';
+            }
+        }))
+        .pipe(gulp.dest('content-editor/scripts'));
+});
+
+gulp.task('dist', function() {
     var cesrc = gulp.src(scriptfiles).pipe(concat('script.min.js')).pipe(gulp.dest('dist/'));
     var celibs = gulp.src(bower_components).pipe(concat('external.min.js')).pipe(gulp.dest('dist/'));
 
