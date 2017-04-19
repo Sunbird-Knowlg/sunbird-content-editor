@@ -97,11 +97,11 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     getDispatcher: function(dispatcherId) {
         switch(dispatcherId) {
             case "local":
-                return org.ekstep.pluginframework.localDispatcher;
+                return org.ekstep.contenteditor.localDispatcher;
             case "piwik":
-                return org.ekstep.pluginframework.piwikDispatcher;
+                return org.ekstep.contenteditor.piwikDispatcher;
             default:
-                return org.ekstep.pluginframework.consoleDispatcher;
+                return org.ekstep.contenteditor.consoleDispatcher;
         }
     },
     /**
@@ -133,6 +133,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      */
     _dispatch: function(message) {
         if (this.initialized) {
+            message.mid = 'CE:' + CryptoJS.MD5(JSON.stringify(message)).toString();
             _.forEach(this.dispatchers, function(dispatcher) {
                 dispatcher.dispatch(message);
             })
@@ -157,6 +158,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     getEvent: function(eventId, data) {
         return {
             "eid": eventId,
+            "mid": "",
             "ets": (new Date()).getTime(), 
             "ver": "1.0",
             "pdata": {"id": "ATTool","pid": "ContentEditor","ver": "2.0"},

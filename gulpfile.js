@@ -36,7 +36,8 @@ var bower_components = [
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.jsLoader.js",
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.templatesLoader.js",
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
-    "app/bower_components/oclazyload/dist/ocLazyLoad.js"
+    "app/bower_components/oclazyload/dist/ocLazyLoad.js",
+    "app/scripts/contenteditor/md5.js"
 ];
 
 var bower_css = [
@@ -55,7 +56,6 @@ var scriptfiles = [
     "app/scripts/framework/manager/keyboard-manager.js",
     "app/scripts/framework/service/iservice.js",
     "app/scripts/framework/service/content-service.js",
-    "app/scripts/framework/service/telemetry-service.js",
     "app/scripts/framework/service/assessment-service.js",
     "app/scripts/framework/service/asset-service.js",
     "app/scripts/framework/service/meta-service.js",
@@ -65,10 +65,6 @@ var scriptfiles = [
     "app/scripts/framework/repo/published-repo.js",
     "app/scripts/framework/repo/draft-repo.js",
     "app/scripts/framework/repo/host-repo.js",
-    "app/scripts/framework/dispatcher/idispatcher.js",
-    "app/scripts/framework/dispatcher/console-dispatcher.js",
-    "app/scripts/framework/dispatcher/local-dispatcher.js",
-    "app/scripts/framework/dispatcher/piwik-dispatcher.js",
     "app/scripts/contenteditor/bootstrap-editor.js",
     "app/scripts/contenteditor/ce-config.js",
     "app/scripts/contenteditor/content-editor.js",
@@ -88,11 +84,15 @@ var scriptfiles = [
     "app/scripts/contenteditor/migration/assessmentmigration-task.js",
     "app/scripts/contenteditor/migration/eventsmigration-task.js",
     "app/scripts/contenteditor/migration/settagmigration-task.js",
+    "app/scripts/contenteditor/service/telemetry-service.js",
+    "app/scripts/contenteditor/dispatcher/idispatcher.js",
+    "app/scripts/contenteditor/dispatcher/console-dispatcher.js",
+    "app/scripts/contenteditor/dispatcher/local-dispatcher.js",
+    "app/scripts/contenteditor/dispatcher/piwik-dispatcher.js",
     "app/scripts/angular/controller/main.js",
     "app/scripts/angular/controller/popup-controller.js",
     "app/scripts/angular/directive/draggable-directive.js",
     "app/scripts/angular/directive/droppable-directive.js",
-    
     "app/scripts/contenteditor/backward-compatibility.js",
 ];
 
