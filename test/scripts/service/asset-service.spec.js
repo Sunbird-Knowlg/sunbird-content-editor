@@ -7,10 +7,10 @@ describe('Asset service test cases', function() {
             baseURL: org.ekstep.contenteditor.config.baseURL,
             apislug: org.ekstep.contenteditor.config.apislug
         };
-        spyOn(org.ekstep.services.assetService.http, "post").and.callFake(function(url, data, headers, cb) {
+        spyOn(org.ekstep.services.assetService, "post").and.callFake(function(url, data, headers, cb) {
             cb(undefined, postResponse);
         });
-        spyOn(org.ekstep.services.assetService.http, "patch").and.callFake(function(url, data, headers, cb) {
+        spyOn(org.ekstep.services.assetService, "patch").and.callFake(function(url, data, headers, cb) {
             cb(undefined, patchResponse);
         });
     });
@@ -20,8 +20,8 @@ describe('Asset service test cases', function() {
 
         org.ekstep.services.assetService.saveAsset(undefined, content, function(err, res){
             expect(res).toBe(postResponse);
-            expect(org.ekstep.services.assetService.http.patch).not.toHaveBeenCalled();
-            expect(org.ekstep.services.assetService.http.post).toHaveBeenCalled();
+            expect(org.ekstep.services.assetService.patch).not.toHaveBeenCalled();
+            expect(org.ekstep.services.assetService.post).toHaveBeenCalled();
         });
     });
 
@@ -30,7 +30,7 @@ describe('Asset service test cases', function() {
         spyOn(org.ekstep.services.assetService, "saveAsset").and.callThrough();
         org.ekstep.services.assetService.saveAsset(assetId, content, function(err, res){
             expect(res).toBe(patchResponse);
-            expect(org.ekstep.services.assetService.http.patch).toHaveBeenCalled();
+            expect(org.ekstep.services.assetService.patch).toHaveBeenCalled();
         });
     });
 
