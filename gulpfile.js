@@ -99,7 +99,8 @@ var scriptfiles = [
 
 var pluginFramework = [
     "app/scripts/framework/class.js",
-    "app/scripts/framework/bootstrap-framework.js",
+    "app/scripts/framework/libs/eventbus.min.js",
+    "app/scripts/framework/bootstrap-framework.js",    
     "app/scripts/framework/manager/resource-manager.js",
     "app/scripts/framework/manager/event-manager.js",
     "app/scripts/framework/manager/plugin-manager.js",

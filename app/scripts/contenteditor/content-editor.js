@@ -25,13 +25,11 @@ org.ekstep.contenteditor._initServices = function() {
         apislug: org.ekstep.contenteditor.config.apislug
     }
     org.ekstep.pluginframework.initialize({ 
+        env: 'editor',
         jQuery: org.ekstep.contenteditor.jQuery, 
         pluginRepo: org.ekstep.contenteditor.config.pluginRepo,
-        draftRepo: org.ekstep.contenteditor.config.pluginRepo,
-        build_number: org.ekstep.contenteditor.config.build_number,
-        repos: [org.ekstep.pluginframework.hostRepo, org.ekstep.pluginframework.draftRepo, org.ekstep.pluginframework.publishedRepo]
+        build_number: org.ekstep.contenteditor.config.build_number        
     });
-    org.ekstep.pluginframework.hostRepo.checkConnection();
 }
 
 org.ekstep.contenteditor._mergeConfig = function(config) {

@@ -35,8 +35,8 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     },
     loadDependencies: function(manifest, repo, publishedTime) {
         var instance = this;
-        if (Array.isArray(manifest.editor.dependencies)) {
-            manifest.editor.dependencies.forEach(function(dependency) {
+        if (Array.isArray(manifest[org.ekstep.pluginframework.env].dependencies)) {
+            manifest[org.ekstep.pluginframework.env].dependencies.forEach(function(dependency) {
                 if (dependency.type == 'plugin') {
                     instance.loadPlugin(dependency.plugin, dependency.ver, publishedTime);
                 } else {
@@ -47,9 +47,9 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     },
     loadPluginByManifest: function(manifest, repo, publishedTime) {
         var instance = this;
-        org.ekstep.pluginframework.resourceManager.getResource(manifest.id, manifest.ver, manifest.editor.main, 'text', repo, function(err, data) {
+        org.ekstep.pluginframework.resourceManager.getResource(manifest.id, manifest.ver, manifest[org.ekstep.pluginframework.env].main, 'text', repo, function(err, data) {
             if (err) {
-                console.error('Unable to load editor plugin', 'plugin:' + manifest.id + '-' + manifest.ver, 'resource:' + manifest.editor.main, 'Error:', err);
+                console.error('Unable to load editor plugin', 'plugin:' + manifest.id + '-' + manifest.ver, 'resource:' + manifest[org.ekstep.pluginframework.env].main, 'Error:', err);
             } else {
                 try {
                     instance.registerPlugin(manifest, eval(data), repo);
@@ -83,7 +83,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         if(this.isDefined(pluginId)) {
             var pluginManifest = this.getPluginManifest(pluginId);
             if (pluginManifest.type && (pluginManifest.type.toLowerCase() === "widget")) {
-                this.invoke(pluginId, JSON.parse(JSON.stringify(pluginManifest.editor['init-data'] || {})), parent);
+                this.invoke(pluginId, JSON.parse(JSON.stringify(pluginManifest[org.ekstep.pluginframework.env]['init-data'] || {})), parent);
             }
             return 0;
         } else {
@@ -117,8 +117,8 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             org.ekstep.pluginframework.resourceManager.loadExternalResource(task.type, task.id, task.ver, task.src, task.repo, task.publishedTime, callback);
         }, 1);
         var instance = this;
-        if (Array.isArray(manifest.editor.dependencies)) {
-            manifest.editor.dependencies.forEach(function(dependency) {
+        if (Array.isArray(manifest[org.ekstep.pluginframework.env].dependencies)) {
+            manifest[org.ekstep.pluginframework.env].dependencies.forEach(function(dependency) {
                 if (dependency.type == 'plugin') {
                     instance.loadPluginWithDependencies(dependency.plugin, dependency.ver, publishedTime);
                 } else {

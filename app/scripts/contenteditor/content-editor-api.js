@@ -536,13 +536,8 @@ window.org.ekstep.contenteditor.api = {
     registerKeyboardCommand: function(command, callback) {
         org.ekstep.pluginframework.keyboardManager.registerKeyCombination(command, callback);
     },
-
-    setHostRepoBasePath: function(path) {
-        org.ekstep.pluginframework.hostRepo.basePath = path;
-    },
-
-    getHostRepoBasePath: function() {
-        return org.ekstep.pluginframework.hostRepo.basePath;
+    addResourceRepository: function(repo) {
+        if (repo) org.ekstep.pluginframework.resourceManager.addRepo(repo);
     }
 }
 
