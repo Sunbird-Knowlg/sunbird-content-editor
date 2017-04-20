@@ -94,6 +94,7 @@ module.exports = function(config) {
         ],
 
         plugins: [
+            'karma-chrome-launcher',
             'karma-jasmine',
             'karma-jasmine-matchers',
             'karma-coverage',
@@ -138,8 +139,15 @@ module.exports = function(config) {
         // start these browsers
         // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
         browsers: [
-            "PhantomJS"
+            "Chrome", "Chrome_without_security"
         ],
+        // you can define custom flags 
+        customLaunchers: {
+          Chrome_without_security: {
+            base: 'Chrome',
+            flags: ['--disable-web-security']
+          }
+        },
 
         browserNoActivityTimeout: 100000,
 
