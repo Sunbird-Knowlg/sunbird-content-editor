@@ -1,13 +1,10 @@
-'use strict';
-
-
-describe('Keyboard manager', function() {
+xdescribe('Keyboard manager', function() {
 
     beforeEach(function() {
         org.ekstep.pluginframework.keyboardManager.registry = {};
     });
 
-    it('should register the key combination with callback', function() {
+    xit('should register the key combination with callback', function() {
 
         org.ekstep.pluginframework.keyboardManager.registerKeyCombination("ctrl+h", function() {});
 
@@ -15,7 +12,7 @@ describe('Keyboard manager', function() {
         expect(Object.keys(org.ekstep.pluginframework.keyboardManager.registry)[0]).toBe("ctrl72");
     });
 
-    it('should invoke the callback on key combination keydown event', function() {
+    xit('should invoke the callback on key combination keydown event', function() {
 
         var $document = {
             cb: undefined,
@@ -53,7 +50,7 @@ describe('Keyboard manager', function() {
         expect(callbackInvoked).toBe(false);
     });
 
-    it('should throw error on multiple register of same key combination', function() {
+    xit('should throw error on multiple register of same key combination', function() {
         org.ekstep.pluginframework.keyboardManager.registerKeyCombination("ctrl+x", function() {});
         var testFn = function() {
             org.ekstep.pluginframework.keyboardManager.registerKeyCombination("ctrl+x", function() {});
@@ -61,21 +58,21 @@ describe('Keyboard manager', function() {
         expect(testFn).toThrow("The given key combination is already registered. Please provide a different combination");
     });
 
-    it('should throw error when register command with only modifier key', function() {
+    xit('should throw error when register command with only modifier key', function() {
         var testFn = function() {
             org.ekstep.pluginframework.keyboardManager.registerKeyCombination("ctrl", function() {});
         };
         expect(testFn).toThrow("Cannot register a command only with modifier keys. Need one key character");
     });
 
-    it('should throw error when register command with multiple key', function() {
+    xit('should throw error when register command with multiple key', function() {
         var testFn = function() {
             org.ekstep.pluginframework.keyboardManager.registerKeyCombination("ctrl+x+h", function() {});
         };
         expect(testFn).toThrow("Cannot register a command with multiple key characters");
     });
 
-    it('should throw error when register command with more than 4 key combination', function() {
+    xit('should throw error when register command with more than 4 key combination', function() {
         var testFn = function() {
             org.ekstep.pluginframework.keyboardManager.registerKeyCombination("ctrl+x+h+j+K", function() {});
         };

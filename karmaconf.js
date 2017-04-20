@@ -39,6 +39,7 @@ module.exports = function(config) {
             "test/data/ECMLcontent.fixture.js",
             "app/scripts/dev/localhost-ce.js",
             "app/libs/semantic.min.js",
+            "app/libs/mousetrap.min.js",
             "app/scripts/framework/class.js",
             "app/scripts/framework/bootstrap-framework.js",
             "app/scripts/framework/manager/resource-manager.js",

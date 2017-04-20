@@ -242,6 +242,7 @@ window.org.ekstep.contenteditor.api = {
      * @memberof org.ekstep.contenteditor.api
      */
     getCurrentGroup: function() {
+        if(org.ekstep.contenteditor.stageManager.canvas.getActiveGroup()){
         var plugins = org.ekstep.contenteditor.stageManager.canvas.getActiveGroup()._objects;
         var group = [];
         _.forEach(plugins, function(plugins, index) {
@@ -249,6 +250,7 @@ window.org.ekstep.contenteditor.api = {
             group.push(obj);
         });
         return group;
+        }
     },
 
     /**
