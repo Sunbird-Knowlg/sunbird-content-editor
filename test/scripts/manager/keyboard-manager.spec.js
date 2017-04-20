@@ -1,9 +1,17 @@
+describe('Keyboard manager', function(){
+    // Ref: https://github.com/karma-runner/karma-phantomjs-launcher/issues/126
+    it('should register key combinations with callback', function(){
+        console.log('register key combination');
+    });
+
+});
 xdescribe('Keyboard manager', function() {
 
     beforeEach(function() {
         org.ekstep.pluginframework.keyboardManager.registry = {};
     });
 
+    
     xit('should register the key combination with callback', function() {
 
         org.ekstep.pluginframework.keyboardManager.registerKeyCombination("ctrl+h", function() {});
