@@ -167,6 +167,12 @@ gulp.task('copyfonts', function() {
     })
         .pipe(gulp.dest('content-editor/styles'));
 });
+gulp.task('copyfontawsomefonts', function() {
+    return gulp.src(['app/bower_components/font-awesome/fonts/fontawesome-webfont.ttf', 'app/bower_components/font-awesome/fonts/fontawesome-webfont.woff'], {
+        base: 'app/bower_components/font-awesome/fonts/'
+    })
+        .pipe(gulp.dest('content-editor/styles/fonts'));
+});
 gulp.task('copyFiles', function() {
     return gulp.src(['app/templates/**/*', 'app/images/content-logo.png', 'app/images/geniecontrols.png', 'app/images/editor-frame.png', 'app/config/*.json', 'app/config/*.js', 'app/index.html'], {
         base: 'app/'
@@ -181,7 +187,7 @@ gulp.task('copydeploydependencies', function() {
         .pipe(gulp.dest('content-editor'));
 });
 
-gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyFiles', 'copydeploydependencies']);
+gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyfontawsomefonts','copyFiles', 'copydeploydependencies']);
 
 gulp.task('inject', ['minify'], function() {
     var target = gulp.src('content-editor/index.html');
@@ -214,7 +220,7 @@ gulp.task('copyFilesDev', function() {
         .pipe(gulp.dest('content-editor'));
 });
 
-gulp.task('minifyDev', ['minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyFilesDev']);
+gulp.task('minifyDev', ['minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyfontawsomefonts', 'copyFilesDev']);
 
 gulp.task('injectDev', ['minifyDev'], function() {
     var target = gulp.src('content-editor/index.html');
