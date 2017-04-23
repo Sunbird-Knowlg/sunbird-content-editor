@@ -543,11 +543,11 @@ describe("plugin framework integration test: ", function() {
             spyOn(org.ekstep.contenteditor.stageManager, 'registerEvents').and.callThrough();
             spyOn(org.ekstep.services.telemetryService, 'start').and.callThrough();            
 
-            org.ekstep.contenteditor.stageManager.fromECML(JSON.parse(contentResponse.result.content.body), contentResponse.result.content.stageIcons);
-
             setTimeout(function() {
                 done();
-            }, 2000);
+            }, 3000);
+
+            org.ekstep.contenteditor.stageManager.fromECML(JSON.parse(contentResponse.result.content.body), contentResponse.result.content.stageIcons);            
 
             (function initTelemetry() {
                 org.ekstep.services.telemetryService.initialize({
