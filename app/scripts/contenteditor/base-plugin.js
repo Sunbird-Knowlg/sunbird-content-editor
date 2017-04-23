@@ -85,6 +85,7 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
     registerMenu: function() {
         var instance = this;
         this.manifest.editor.menu = this.manifest.editor.menu || [];
+        this.manifest.editor.sidebarMenu = this.manifest.editor.sidebarMenu || [];
         _.forEach(this.manifest.editor.menu, function(menu) {
             menu.iconImage = menu.iconImage ? instance.relativeURL(menu.iconImage) : menu.iconImage;
             if (menu.submenu) {
@@ -96,10 +97,14 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
                 org.ekstep.contenteditor.toolbarManager.registerMenu(menu);
             } else if (menu.category === 'context') {
                 org.ekstep.contenteditor.toolbarManager.registerContextMenu(menu);
-            } else if (menu.category === 'config') {
-                org.ekstep.contenteditor.toolbarManager.registerConfigMenu(menu);
             }
         });
+
+        _.forEach(instance.manifest.editor.sidebarMenu, function(sidebarMenu) {
+            org.ekstep.contenteditor.sidebarManager.registerSidebarMenu(sidebarMenu, instance.manifest);
+        });
+
+        org.ekstep.contenteditor.sidebarManager.loadCustomTemplate(instance.manifest.id);
     },
 
     /**

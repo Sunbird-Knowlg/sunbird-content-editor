@@ -74,6 +74,7 @@ var scriptfiles = [
     "app/scripts/contenteditor/manager/stage-manager.js",
     "app/scripts/contenteditor/manager/toolbar-manager.js",
     "app/scripts/contenteditor/manager/media-manager.js",
+    "app/scripts/contenteditor/manager/sidebar-manager.js",
     "app/scripts/contenteditor/service/popup-service.js",    
     "app/scripts/contenteditor/migration/1_migration-task.js",
     "app/scripts/contenteditor/migration/mediamigration-task.js",
@@ -94,6 +95,7 @@ var scriptfiles = [
     "app/scripts/angular/controller/popup-controller.js",
     "app/scripts/angular/directive/draggable-directive.js",
     "app/scripts/angular/directive/droppable-directive.js",
+    "app/scripts/angular/directive/template-compiler-directive.js",
     "app/scripts/contenteditor/backward-compatibility.js",
 ];
 
@@ -276,6 +278,7 @@ var corePlugins = [
     "org.ekstep.wordinfobrowser-1.0",
     "org.ekstep.viewecml-1.0",
     "org.ekstep.utils-1.0",
+    "org.ekstep.help-1.0",
     "org.ekstep.video-1.0"
 ]
 

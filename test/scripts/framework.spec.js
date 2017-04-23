@@ -97,14 +97,6 @@ describe(" framework integration", function() {
         expect(org.ekstep.contenteditor.toolbarManager.menuItems.length).toEqual(3);
     });
 
-    it("should register config menu", function() {
-        var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.test1");
-        spyOn(org.ekstep.contenteditor.toolbarManager, "registerConfigMenu").and.callThrough();
-        org.ekstep.contenteditor.toolbarManager.registerConfigMenu(manifest.editor.menu);
-        expect(org.ekstep.contenteditor.toolbarManager.registerConfigMenu).toHaveBeenCalled();
-        expect(org.ekstep.contenteditor.toolbarManager.configMenuItems.length).toEqual(1);
-    });
-
     it("should register context menu", function() {
         var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.utils");
         spyOn(org.ekstep.contenteditor.toolbarManager, "registerContextMenu").and.callThrough();
