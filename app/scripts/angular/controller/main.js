@@ -37,7 +37,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         //toolbar(sidebar menu)
-        $scope.configCategory = { selected: 'settings' };        
+        $scope.configCategory = { selected: '' };        
         $scope.cancelLink = (($window.context && $window.context.cancelLink) ? $window.context.cancelLink : "");
         $scope.reportIssueLink = (($window.context && $window.context.reportIssueLink) ? $window.context.reportIssueLink : "");
 
@@ -72,12 +72,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.showSidebar = function(event, data) {
             $scope.configCategory.selected = event.type.substring(event.type.indexOf(':') + 1);
             $scope.$safeApply();
-        };
-
-        $scope.configCategory.selected = 'settings';
+        };        
 
         $scope.addToSidebar = function(sidebar) {
             $scope.registeredCategories.push(sidebar);                                                
+            $scope.configCategory.selected = sidebar.id;
             $scope.$safeApply();
         };
 
