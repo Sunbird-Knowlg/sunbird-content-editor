@@ -212,6 +212,7 @@
     <script src="bower_components/oclazyload/dist/ocLazyLoad.js"></script>
     <script src="scripts/dev/localhost-ce.js"></script>
     <script src="libs/semantic.min.js"></script>
+    <script src="libs/mousetrap.min.js"></script>
     <!-- Load Framework -->
     <script src="scripts/framework/class.js"></script>
     <script src="scripts/framework/bootstrap-framework.js"></script>
@@ -222,8 +223,7 @@
     
     <!-- Load Services -->
     <script src="scripts/framework/service/iservice.js"></script>
-    <script src="scripts/framework/service/content-service.js"></script>    
-    <script src="scripts/framework/service/telemetry-service.js"></script>
+    <script src="scripts/framework/service/content-service.js"></script>
     <script src="scripts/framework/service/assessment-service.js"></script>
     <script src="scripts/framework/service/asset-service.js"></script>
     <script src="scripts/framework/service/meta-service.js"></script>
@@ -233,10 +233,6 @@
     <script src="scripts/framework/repo/published-repo.js"></script>
     <script src="scripts/framework/repo/draft-repo.js"></script>
     <script src="scripts/framework/repo/host-repo.js"></script>
-    <script src="scripts/framework/dispatcher/idispatcher.js"></script>
-    <script src="scripts/framework/dispatcher/console-dispatcher.js"></script>
-    <script src="scripts/framework/dispatcher/local-dispatcher.js"></script>
-    <script src="scripts/framework/dispatcher/piwik-dispatcher.js"></script>
 
     <!-- Load Content Editor -->
     <script src="scripts/contenteditor/bootstrap-editor.js"></script>
@@ -259,13 +255,18 @@
     <script src="scripts/contenteditor/migration/assessmentmigration-task.js"></script>
     <script src="scripts/contenteditor/migration/eventsmigration-task.js"></script>
     <script src="scripts/contenteditor/migration/settagmigration-task.js"></script>
+    <script src="scripts/contenteditor/service/telemetry-service.js"></script>
+    <script src="scripts/contenteditor/dispatcher/idispatcher.js"></script>
+    <script src="scripts/contenteditor/dispatcher/console-dispatcher.js"></script>
+    <script src="scripts/contenteditor/dispatcher/local-dispatcher.js"></script>
+    <script src="scripts/contenteditor/dispatcher/piwik-dispatcher.js"></script>
+    <script src="scripts/contenteditor/md5.js"></script>
     <!-- Load Angular Controllers -->
     <script src="scripts/angular/controller/main.js"></script>
     <script src="scripts/angular/controller/popup-controller.js"></script>
     <script src="scripts/angular/directive/draggable-directive.js"></script>
     <script src="scripts/angular/directive/droppable-directive.js"></script>
     <script src="scripts/angular/directive/template-compiler-directive.js"></script>
-    
     <script src="scripts/contenteditor/backward-compatibility.js"></script>
     <!-- endinject -->
 </body>

@@ -19,6 +19,7 @@ var bower_components = [
     "app/bower_components/jquery/dist/jquery.js",
     "app/bower_components/async/dist/async.min.js",
     "app/libs/semantic.min.js",
+    "app/libs/mousetrap.min.js",
     "app/bower_components/angular/angular.js",
     "app/bower_components/fabric/dist/fabric.min.js",
     "app/bower_components/lodash/lodash.js",
@@ -36,7 +37,8 @@ var bower_components = [
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.jsLoader.js",
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.templatesLoader.js",
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
-    "app/bower_components/oclazyload/dist/ocLazyLoad.js"
+    "app/bower_components/oclazyload/dist/ocLazyLoad.js",
+    "app/scripts/contenteditor/md5.js"
 ];
 
 var bower_css = [
@@ -55,7 +57,6 @@ var scriptfiles = [
     "app/scripts/framework/manager/keyboard-manager.js",
     "app/scripts/framework/service/iservice.js",
     "app/scripts/framework/service/content-service.js",
-    "app/scripts/framework/service/telemetry-service.js",
     "app/scripts/framework/service/assessment-service.js",
     "app/scripts/framework/service/asset-service.js",
     "app/scripts/framework/service/meta-service.js",
@@ -65,10 +66,6 @@ var scriptfiles = [
     "app/scripts/framework/repo/published-repo.js",
     "app/scripts/framework/repo/draft-repo.js",
     "app/scripts/framework/repo/host-repo.js",
-    "app/scripts/framework/dispatcher/idispatcher.js",
-    "app/scripts/framework/dispatcher/console-dispatcher.js",
-    "app/scripts/framework/dispatcher/local-dispatcher.js",
-    "app/scripts/framework/dispatcher/piwik-dispatcher.js",
     "app/scripts/contenteditor/bootstrap-editor.js",
     "app/scripts/contenteditor/ce-config.js",
     "app/scripts/contenteditor/content-editor.js",
@@ -77,6 +74,7 @@ var scriptfiles = [
     "app/scripts/contenteditor/manager/stage-manager.js",
     "app/scripts/contenteditor/manager/toolbar-manager.js",
     "app/scripts/contenteditor/manager/media-manager.js",
+    "app/scripts/contenteditor/manager/sidebar-manager.js",
     "app/scripts/contenteditor/service/popup-service.js",    
     "app/scripts/contenteditor/migration/1_migration-task.js",
     "app/scripts/contenteditor/migration/mediamigration-task.js",
@@ -88,11 +86,16 @@ var scriptfiles = [
     "app/scripts/contenteditor/migration/assessmentmigration-task.js",
     "app/scripts/contenteditor/migration/eventsmigration-task.js",
     "app/scripts/contenteditor/migration/settagmigration-task.js",
+    "app/scripts/contenteditor/service/telemetry-service.js",
+    "app/scripts/contenteditor/dispatcher/idispatcher.js",
+    "app/scripts/contenteditor/dispatcher/console-dispatcher.js",
+    "app/scripts/contenteditor/dispatcher/local-dispatcher.js",
+    "app/scripts/contenteditor/dispatcher/piwik-dispatcher.js",
     "app/scripts/angular/controller/main.js",
     "app/scripts/angular/controller/popup-controller.js",
     "app/scripts/angular/directive/draggable-directive.js",
     "app/scripts/angular/directive/droppable-directive.js",
-    
+    "app/scripts/angular/directive/template-compiler-directive.js",
     "app/scripts/contenteditor/backward-compatibility.js",
 ];
 
@@ -167,6 +170,12 @@ gulp.task('copyfonts', function() {
     })
         .pipe(gulp.dest('content-editor/styles'));
 });
+gulp.task('copyfontawsomefonts', function() {
+    return gulp.src(['app/bower_components/font-awesome/fonts/fontawesome-webfont.ttf', 'app/bower_components/font-awesome/fonts/fontawesome-webfont.woff'], {
+        base: 'app/bower_components/font-awesome/fonts/'
+    })
+        .pipe(gulp.dest('content-editor/styles/fonts'));
+});
 gulp.task('copyFiles', function() {
     return gulp.src(['app/templates/**/*', 'app/images/content-logo.png', 'app/images/geniecontrols.png', 'app/images/editor-frame.png', 'app/config/*.json', 'app/config/*.js', 'app/index.html'], {
         base: 'app/'
@@ -181,7 +190,7 @@ gulp.task('copydeploydependencies', function() {
         .pipe(gulp.dest('content-editor'));
 });
 
-gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyFiles', 'copydeploydependencies']);
+gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyfontawsomefonts','copyFiles', 'copydeploydependencies']);
 
 gulp.task('inject', ['minify'], function() {
     var target = gulp.src('content-editor/index.html');
@@ -214,7 +223,7 @@ gulp.task('copyFilesDev', function() {
         .pipe(gulp.dest('content-editor'));
 });
 
-gulp.task('minifyDev', ['minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyFilesDev']);
+gulp.task('minifyDev', ['minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyfontawsomefonts', 'copyFilesDev']);
 
 gulp.task('injectDev', ['minifyDev'], function() {
     var target = gulp.src('content-editor/index.html');
@@ -269,7 +278,7 @@ var corePlugins = [
     "org.ekstep.wordinfobrowser-1.0",
     "org.ekstep.viewecml-1.0",
     "org.ekstep.utils-1.0",
-    "org.ekstep.help-1.0"
+    "org.ekstep.help-1.0",
     "org.ekstep.video-1.0"
 ]
 

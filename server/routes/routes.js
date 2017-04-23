@@ -22,7 +22,7 @@ module.exports = function(app, dirname) {
 	});
 
 	app.post('/app/telemetry', function(req, res) {
-		fs.appendFile('telemetry.log', JSON.stringify(req.body) + "\n");
+		fs.appendFile('telemetry.json', req.body.event + "\n");
 		res.end();
 	});
 };
