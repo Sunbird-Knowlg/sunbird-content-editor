@@ -1,17 +1,14 @@
 'use strict';
 
 describe('sidebar manager', function() {
-    beforeAll(function(done) {
+    beforeAll(function() {
         org.ekstep.contenteditor.sidebarManager.sidebarMenu = [];
         org.ekstep.contenteditor.sidebarManager.initialize({ loadNgModules: function() {}, scope: { refreshSidebar: function() {}, addToSidebar: function() {} } });
         spyOn(org.ekstep.contenteditor.sidebarManager, 'registerSidebarMenu').and.callThrough();
         spyOn(org.ekstep.contenteditor.sidebarManager, 'loadSidebar').and.callThrough();
         spyOn(org.ekstep.contenteditor.sidebarManager, 'loadCustomTemplate').and.callThrough();
         spyOn(org.ekstep.contenteditor.sidebarManager, 'loadNgModules').and.returnValue({ then: function(cb1, cb2) {} });
-        org.ekstep.pluginframework.pluginManager.loadPlugin('org.ekstep.test_config', '1.0');
-        setTimeout(function() {
-            done();
-        }, 1000);
+        org.ekstep.pluginframework.pluginManager.loadPlugin('org.ekstep.test_config', '1.0');                    
     });
 
     it('should register the sidebar menu', function() {
