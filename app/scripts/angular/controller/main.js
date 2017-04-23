@@ -326,10 +326,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.contextMenus = org.ekstep.contenteditor.toolbarManager.contextMenuItems;
             $scope.stages = org.ekstep.contenteditor.api.getAllStages();
             $scope.currentStage = org.ekstep.contenteditor.api.getCurrentStage();
-            $scope.sidebarMenus = $scope.sidebarMenus || [];
-            _.forEach(org.ekstep.contenteditor.sidebarManager.getSidebarMenu(),function (menu) {
-                $scope.sidebarMenus.push(menu);
-            });
+            $scope.sidebarMenus = org.ekstep.contenteditor.sidebarManager.getSidebarMenu();
 
             $scope.loadContent();
             /* KeyDown event to show ECML */
