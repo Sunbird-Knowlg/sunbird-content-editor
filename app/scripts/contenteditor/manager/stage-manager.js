@@ -285,7 +285,7 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         if (_.indexOf(org.ekstep.contenteditor.config.corePlugins, id) == 1) {
             return;
         }
-        if (_.isUndefined(pluginManifest.renderer) || _.isUndefined(pluginManifest.renderer.main)) {
+        if (_.isUndefined(pluginManifest) || _.isUndefined(pluginManifest.renderer) || _.isUndefined(pluginManifest.renderer.main)) {
             return;
         }
         var manifestEntry = _.find(content.theme.manifest.media, { id: id });
@@ -293,26 +293,36 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             //Add renderer dependencies first 
              if(!_.isUndefined(pluginManifest.renderer.dependencies) && pluginManifest.renderer.dependencies.length > 0) {
                 _.forEach(pluginManifest.renderer.dependencies, function(dependency) {
-                    
-                    content.theme.manifest.media.push({
-                        id: dependency.id,
-                        type: dependency.type,
-                        plugin: dependency.id,
-                        ver: pluginManifest.ver,
-                        src: instance._resolveManifestMediaPath(pluginManifest.id, pluginManifest.ver, dependency.src)
-                    });
-                });
-            }
-            //then push the main renderer file
-            content.theme.manifest.media.push({
-                id: id,
-                plugin: id,
-                ver: pluginManifest.ver,
-                src: instance._resolveManifestMediaPath(pluginManifest.id, pluginManifest.ver, pluginManifest.renderer.main),
-                type: "plugin"
-            });
-           
+                    if (dependency.type == "plugin") {
+                        var depManifest = org.ekstep.pluginframework.pluginManager.getPluginManifest(dependency.plugin);                        
+                        if (depManifest) instance.updateContentManifest(content, dependency.plugin, depManifest);                        
+                    } else {          
+                        dependency.id = id + '-' + UUID();              
+                        dependency.plugin = id;
+                        instance.addToManifestMedia(content, dependency, pluginManifest, dependency.src);
+                    }                    
+                });                
+            };
+
+            instance.addToManifestMedia(content, { plugin: id, id: id + '.plugin', type: "plugin" }, pluginManifest, pluginManifest.renderer.main);
+            instance.addToManifestMedia(content, { plugin: id, id: id + '.manifest', type: "json" }, pluginManifest, "manifest.json");           
         }
+    },
+    addToManifestMedia: function(content, dependency, pluginManifest, src) {
+        var instance = this;        
+        var mediaFound = _.find(content.theme.manifest.media, function(media) {
+           return media.src ==  instance._resolveManifestMediaPath(pluginManifest.id, pluginManifest.ver, src)
+        });
+
+        if(mediaFound) return;
+
+        content.theme.manifest.media.push({
+            id: dependency.id,
+            plugin: dependency.plugin,
+            ver: pluginManifest.ver,
+            src: instance._resolveManifestMediaPath(pluginManifest.id, pluginManifest.ver, src),
+            type: dependency.type
+        });
     },
     fromECML: function(contentBody, stageIcons) {
         var instance = this;
