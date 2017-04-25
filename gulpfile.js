@@ -95,8 +95,7 @@ var scriptfiles = [
     "app/scripts/angular/controller/popup-controller.js",
     "app/scripts/angular/directive/draggable-directive.js",
     "app/scripts/angular/directive/droppable-directive.js",
-    "app/scripts/angular/directive/template-compiler-directive.js",
-    "app/scripts/contenteditor/backward-compatibility.js",
+    "app/scripts/angular/directive/template-compiler-directive.js"
 ];
 
 gulp.task('setup', function() {

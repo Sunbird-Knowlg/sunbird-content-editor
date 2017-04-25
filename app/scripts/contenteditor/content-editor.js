@@ -9,7 +9,7 @@ org.ekstep.contenteditor.init = function(context, config, $scope, $document, cal
     org.ekstep.contenteditor.toolbarManager.setScope($scope);
     org.ekstep.pluginframework.keyboardManager.initialize($document);
     org.ekstep.contenteditor._loadDefaultPlugins(context, callback);
-    org.ekstep.contenteditor._backwardCompatibility();
+    //org.ekstep.contenteditor._backwardCompatibility();
 }
 
 org.ekstep.contenteditor._backwardCompatibility = function() {
