@@ -53,8 +53,11 @@ org.ekstep.pluginframework.resourceManager = new(Class.extend({
         var resource = repo.resolveResource(pluginId, pluginVer, src);
         this.loadResource(resource, dataType, callback, publishedTime);
     },
-    loadExternalResource: function(type, pluginId, pluginVer, src, repo, publishedTime, callback) {
+    loadExternalPluginResource: function(type, pluginId, pluginVer, src, repo, publishedTime, callback) {
         var resource = repo.resolveResource(pluginId, pluginVer, src) + "?" + (publishedTime || "");
+        this.loadExternalResource(resource, callback);
+    },
+    loadExternalResource: function(resource, callback) {
         switch (type) {
             case 'js':
                 if (callback)

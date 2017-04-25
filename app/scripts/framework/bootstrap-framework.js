@@ -13,15 +13,8 @@ plugin_framework.prototype.initialize = function(config) {
     org.ekstep.pluginframework.env = config.env;
     org.ekstep.pluginframework.jQuery = config.jQuery || window.$;
     org.ekstep.pluginframework.async = config.async || window.async;
-    if (config.build_number) org.ekstep.pluginframework.config.build_number = config.build_number;
-    if (config.pluginRepo) org.ekstep.pluginframework.config.pluginRepo = config.pluginRepo;
-    if (config.repos) {
-    	config.repos.forEach(function(repo, index) {
-    		org.ekstep.pluginframework.resourceManager.addRepo(repo, index);
-    	});
-    }
-    //default repo
-    org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.publishedRepo);
+    org.ekstep.pluginframework.config.build_number = config.build_number || 'BUILD_NUMBER';
+    org.ekstep.pluginframework.config.pluginRepo = config.pluginRepo || '/content-plugins';
 };
 
 window.org.ekstep.pluginframework = new plugin_framework();
