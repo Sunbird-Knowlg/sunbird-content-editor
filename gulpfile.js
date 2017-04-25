@@ -119,11 +119,7 @@ var pluginFramework = [
     "app/scripts/framework/repo/irepo.js",
     "app/scripts/framework/repo/published-repo.js",
     "app/scripts/framework/repo/draft-repo.js",
-    "app/scripts/framework/repo/host-repo.js",
-    "app/scripts/framework/dispatcher/idispatcher.js",
-    "app/scripts/framework/dispatcher/console-dispatcher.js",
-    "app/scripts/framework/dispatcher/local-dispatcher.js",
-    "app/scripts/framework/dispatcher/piwik-dispatcher.js",
+    "app/scripts/framework/repo/host-repo.js"
 ];
 
 gulp.task('setup', function() {
