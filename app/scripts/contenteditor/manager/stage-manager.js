@@ -481,12 +481,12 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         this.showLoadScreenMessage();
         org.ekstep.contenteditor.stageManager.contentLoading = false;
         org.ekstep.services.telemetryService.startEvent(true).append("loadtimes", {"contentLoad": ((new Date()).getTime() - startTime)});
-        org.ekstep.contenteditor.api.dispatchEvent('content:load:complete');
         if(org.ekstep.contenteditor.api._.isEmpty(this.stages)) {
             org.ekstep.pluginframework.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
         } else {
             org.ekstep.pluginframework.eventManager.dispatchEvent('stage:select', { stageId: this.stages[0].id });
         }
+        org.ekstep.contenteditor.api.dispatchEvent('content:load:complete');
     },
     _resolveManifestMediaPath : function (id, ver, resource) {
         var src = org.ekstep.pluginframework.pluginManager.resolvePluginResource(id, ver, resource);

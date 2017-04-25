@@ -21,12 +21,6 @@ org.ekstep.contenteditor.toolbarManager = new(Class.extend({
         }
         if(this.scope) this.scope.refreshToolbar();
     },
-    registerConfigMenu: function(menu) {
-        /* istanbul ignore else */
-        if (!_.isObject(_.find(this.configMenuItems, { id: menu.id }))) {
-            this.configMenuItems.push(menu);
-        }
-    },
     resetContextMenu: function() {
         _.forEach(this.contextMenuItems, function(cmenu) {
             cmenu.state = 'HIDE';
@@ -58,9 +52,11 @@ org.ekstep.contenteditor.toolbarManager = new(Class.extend({
             }
         });
     },
+    getRegisterConfigMenu: function() {
+        return this.configMenuItems;
+    },
     cleanUp: function() {
         this.menuItems = [];
         this.contextMenus = [];
-        this.configMenuItems = [];
     }
 }));

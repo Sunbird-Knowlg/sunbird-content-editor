@@ -9,8 +9,8 @@ angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).conf
         requireBase: false
     });
 }]);
-angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document',
-    function($scope, $timeout, $http, $location, $q, $window, $document) {
+angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document', '$ocLazyLoad',
+    function($scope, $timeout, $http, $location, $q, $window, $document, $ocLazyLoad) {
 
         // Declare global variables
         $scope.showAppLoadScreen = true;
@@ -39,6 +39,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             show: false,
             text: undefined
         }
+
+        //toolbar(sidebar menu)
+        $scope.configCategory = { selected: '' };        
         $scope.cancelLink = (($window.context && $window.context.cancelLink) ? $window.context.cancelLink : "");
         $scope.reportIssueLink = (($window.context && $window.context.reportIssueLink) ? $window.context.reportIssueLink : "");
 
@@ -47,6 +50,45 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         if (_.isUndefined($scope.contentId)) {
             $scope.contentId = (($window.context && $window.context.content_id) ? $window.context.content_id : undefined)
         }
+
+        //sidebar scope starts
+        $scope.registeredCategories = [];
+        $scope.loadNgModules = function(templatePath, controllerPath) {
+            var files = [];
+            if (templatePath) files.push({ type: 'html', path: templatePath });
+            if (controllerPath) files.push({ type: 'js', path: controllerPath });
+            if (files.length) return $ocLazyLoad.load(files)           
+        };  
+
+        org.ekstep.contenteditor.sidebarManager.initialize({ loadNgModules: $scope.loadNgModules, scope: $scope });
+
+        $scope.fireSidebarTelemetry = function(menu, menuType) {
+            var pluginId = "", pluginVer = "", objectId = "";
+            var pluginObject = org.ekstep.contenteditor.api.getCurrentObject() || org.ekstep.contenteditor.api.getCurrentStage();
+            if(pluginObject) {
+                pluginId = pluginObject.manifest.id;
+                pluginVer = pluginObject.manifest.ver;
+                objectId = pluginObject.id;
+            }
+            $scope.telemetryService.interact({ "type": "modify", "subtype": "sidebar", "target": menuType, "pluginid": pluginId, 'pluginver': pluginVer, "objectid": objectId, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
+        };        
+
+        $scope.showSidebar = function(event, data) {
+            $scope.configCategory.selected = event.type.substring(event.type.indexOf(':') + 1);
+            $scope.$safeApply();
+        };        
+
+        $scope.addToSidebar = function(sidebar) {
+            $scope.registeredCategories.push(sidebar);                                                
+            $scope.configCategory.selected = sidebar.id;
+            $scope.$safeApply();
+        };
+
+        $scope.refreshSidebar = function() {
+            $scope.$safeApply();
+        };
+        //sidebar scope ends
+
 
         $scope.contentDetails = {
             contentTitle: "Untitled Content",
@@ -70,22 +112,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.$safeApply();
         }
 
-        $scope.updateConfigProperty = function(property) {
-            setTimeout(function() {
-                $scope.updateConfig(property);
-            }, 100);
-        }
-
-        $scope.enableSave = function() {
-            //$scope.saveBtnEnabled = true;
-            //$scope.$safeApply();
-        }
-
-        $scope.previewContent = function(fromBeginning) {
-            org.ekstep.contenteditor.api.getCanvas().deactivateAll().renderAll();
+        $scope.previewContent = function(fromBeginning) {            
             var currentStage = _.isUndefined(fromBeginning) ? true : false;
-            org.ekstep.pluginframework.eventManager.dispatchEvent("atpreview:show", { contentBody: org.ekstep.contenteditor.stageManager.toECML(), 'currentStage': currentStage });
-            org.ekstep.contenteditor.api.dispatchEvent('config:settings:show', { id: $scope.currentStage.id });
+            org.ekstep.pluginframework.eventManager.dispatchEvent("atpreview:show", { contentBody: org.ekstep.contenteditor.stageManager.toECML(), 'currentStage': currentStage });            
         };
 
         $scope.saveContent = function() {
@@ -184,7 +213,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.routeToContentMeta = function(save) {
-            $scope.enableSave();
             if (save) {
                 var contentBody = org.ekstep.contenteditor.stageManager.toECML();
                 $scope.patchContent({ stageIcons: JSON.stringify(org.ekstep.contenteditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
@@ -301,10 +329,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.contextMenus = org.ekstep.contenteditor.toolbarManager.contextMenuItems;
             $scope.stages = org.ekstep.contenteditor.api.getAllStages();
             $scope.currentStage = org.ekstep.contenteditor.api.getCurrentStage();
-            $scope.configMenus = $scope.configMenus || [];
-            _.forEach(org.ekstep.contenteditor.toolbarManager.configMenuItems,function (menu) {
-                $scope.configMenus.push(menu);
-            });
+            $scope.sidebarMenus = org.ekstep.contenteditor.sidebarManager.getSidebarMenu();
 
             $scope.loadContent();
             /* KeyDown event to show ECML */
@@ -326,18 +351,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         $scope.fireToolbarTelemetry = function(menu, menuType) {
             $scope.telemetryService.interact({ "type": "click", "subtype": "menu", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
-        }
+        };
 
-        $scope.fireSidebarTelemetry = function(menu, menuType) {
-            var pluginId = "", pluginVer = "", objectId = "";
-            var pluginObject = org.ekstep.contenteditor.api.getCurrentObject() || org.ekstep.contenteditor.api.getCurrentStage();
-            if(pluginObject) {
-                pluginId = pluginObject.manifest.id;
-                pluginVer = pluginObject.manifest.ver;
-                objectId = pluginObject.id;
-            }
-            $scope.telemetryService.interact({ "type": "modify", "subtype": "sidebar", "target": menuType, "pluginid": pluginId, 'pluginver': pluginVer, "objectid": objectId, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
-        }
     }
 ]);
 

@@ -1,4 +1,4 @@
-org.ekstep.pluginframework.consoleDispatcher = new(org.ekstep.pluginframework.IDispatcher.extend({
+org.ekstep.contenteditor.consoleDispatcher = new(org.ekstep.contenteditor.IDispatcher.extend({
     type: "consoleDispatcher",
     initDispatcher: function() {},
     dispatch: function(event) {

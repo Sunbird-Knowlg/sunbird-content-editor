@@ -242,6 +242,7 @@ window.org.ekstep.contenteditor.api = {
      * @memberof org.ekstep.contenteditor.api
      */
     getCurrentGroup: function() {
+        if(org.ekstep.contenteditor.stageManager.canvas.getActiveGroup()){
         var plugins = org.ekstep.contenteditor.stageManager.canvas.getActiveGroup()._objects;
         var group = [];
         _.forEach(plugins, function(plugins, index) {
@@ -249,6 +250,7 @@ window.org.ekstep.contenteditor.api = {
             group.push(obj);
         });
         return group;
+        }
     },
 
     /**
@@ -309,7 +311,9 @@ window.org.ekstep.contenteditor.api = {
     updateContextMenus: function(menus) {
         org.ekstep.contenteditor.toolbarManager.updateContextMenu(menus);
     },
-
+    updateSidebarMenu: function(menu) {
+        org.ekstep.contenteditor.sidebarManager.updateSidebarMenu(menu);        
+    },
     /**
      * Allows the plugins to request loading and instantiating another plugin. This is useful when
      * a plugin depends upon other plugins - e.g. a wordpicker might dependend upon an asset picker.

@@ -1,7 +1,7 @@
-org.ekstep.pluginframework.piwikDispatcher = new(org.ekstep.pluginframework.IDispatcher.extend({
+org.ekstep.contenteditor.piwikDispatcher = new(org.ekstep.contenteditor.IDispatcher.extend({
     type: "piwikDispatcher",
     piwikEndPoint: function() {
-        return org.ekstep.services.config.baseURL + "/piwik/piwik.php";
+        return org.ekstep.contenteditor.config.baseURL + "/piwik/piwik.php";
     },
     idsite: 1,
     initDispatcher: function() {},

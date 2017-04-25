@@ -1,4 +1,5 @@
 describe("plugin framework integration test: ", function() {
+    jasmine.getEnv().defaultTimeoutInterval = 15000;
     var corePlugins,
         canvas,
         cleanUp;
@@ -505,9 +506,9 @@ describe("plugin framework integration test: ", function() {
     });
 
     describe('when new ECML content is loaded to framework', function() {
-        var getPluginCount;
+        var getPluginCount;       
 
-        beforeAll(function(done) {
+        beforeAll(function(done) {            
             console.log('-------STAGE MANAGER ECML TEST STARTS----- ');
             org.ekstep.pluginframework.pluginManager.pluginInstances = {};
             org.ekstep.contenteditor.stageManager.stages = [];
@@ -540,13 +541,13 @@ describe("plugin framework integration test: ", function() {
             spyOn(org.ekstep.contenteditor.stageManager, 'onContentLoad').and.callThrough();
             spyOn(org.ekstep.pluginframework.eventManager, 'dispatchEvent');
             spyOn(org.ekstep.contenteditor.stageManager, 'registerEvents').and.callThrough();
-            spyOn(org.ekstep.services.telemetryService, 'start').and.callThrough();
+            spyOn(org.ekstep.services.telemetryService, 'start').and.callThrough();            
 
-            org.ekstep.contenteditor.stageManager.fromECML(JSON.parse(contentResponse.result.content.body), contentResponse.result.content.stageIcons);
-
-            setTimeout(function() { // let stage load all its plugins
+            setTimeout(function() {
                 done();
-            }, 2000);
+            }, 3000);
+
+            org.ekstep.contenteditor.stageManager.fromECML(JSON.parse(contentResponse.result.content.body), contentResponse.result.content.stageIcons);            
 
             (function initTelemetry() {
                 org.ekstep.services.telemetryService.initialize({

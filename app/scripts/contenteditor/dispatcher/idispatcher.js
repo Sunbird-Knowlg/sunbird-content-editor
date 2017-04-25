@@ -1,4 +1,4 @@
-org.ekstep.pluginframework.IDispatcher = Class.extend({
+org.ekstep.contenteditor.IDispatcher = Class.extend({
     init: function() {
         this.initDispatcher();
     },

@@ -34,9 +34,9 @@ describe('telemetry service', function() {
     });
 
     it('should get dispatcher', function() {
-        expect(service.getDispatcher("local")).toBe(org.ekstep.pluginframework.localDispatcher);
-        expect(service.getDispatcher("piwik")).toBe(org.ekstep.pluginframework.piwikDispatcher);
-        expect(service.getDispatcher()).toBe(org.ekstep.pluginframework.consoleDispatcher);
+        expect(service.getDispatcher("local")).toBe(org.ekstep.contenteditor.localDispatcher);
+        expect(service.getDispatcher("piwik")).toBe(org.ekstep.contenteditor.piwikDispatcher);
+        expect(service.getDispatcher()).toBe(org.ekstep.contenteditor.consoleDispatcher);
     });
 
     it('should append plugin and content load time to startEvent', function() {

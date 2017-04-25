@@ -1,0 +1,28 @@
+{
+    "id": "org.ekstep.test_config",
+    "ver": "1.0",
+    "author": "Santhosh Vasabhaktula",
+    "title": "Config Plugin",
+    "description": "",
+    "publishedDate": "",
+    "editor": {
+        "main": "editor/plugin.js",
+        "dependencies": [
+            {"type": "js", "src": "editor/libs/jquery-ui.min.js"}            
+		],
+        "sidebarMenu": [{
+            "id": "settings",
+            "type": "icon",
+            "toolTip": "Settings",
+            "title": "Settings",
+            "iconClass": "settings icon",
+            "templateURL": "editor/partials/sidebarSettingTemplate.html",
+            "controllerURL": "editor/sidebar-settings-controller.js"
+        }],
+        "configManifest": [{
+            "type": "custom_template",
+            "templateURL": "editor/custom_template/template.html",
+            "controllerURL": "editor/custom_template/controller.js"
+        }]
+    }
+}

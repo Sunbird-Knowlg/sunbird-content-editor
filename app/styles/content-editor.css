@@ -318,9 +318,13 @@ body {
     height: 430px;
     overflow-y: auto;
 }
-.disabled-link{
-    pointer-events: none;
-}
-.sidebarContent div label{
-    text-transform: capitalize !important;
+
+.sidebar-holder {
+    width: 100%;
+    overflow-y: scroll;
+    margin: 0px !important;
+    border: none !important;
+    border-radius: 0px !important;
+    background: none !important;
+    box-shadow: none !important;
 }

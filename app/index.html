@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-default.min.css">
     <link rel="stylesheet" type="text/css" href="styles/iconfont.css">
     <link rel="stylesheet" type="text/css" href="styles/noto.css">
-
     <!-- endinject -->
 </head>
 
@@ -135,8 +134,8 @@
                     </div>
                 </div>
                 <div class="ui three wide column">
-                    <div class="ui icon menu sidebar-menu" >
-                        <span ng-repeat="menu in configMenus" ng-include="'templates/toolbar.html'" class="at-config-menu"></span>
+                    <div class="ui icon menu sidebar-menu">
+                        <span ng-repeat="menu in sidebarMenus" ng-if="menu.state == 'SHOW'" ng-include="'templates/toolbar.html'" class="at-config-menu"></span>
                     </div>
                 </div>
             </div>
@@ -174,7 +173,16 @@
                         -->
                     </div>
                     <div class="ui three wide column" style="background-color: #EEEEEE; padding: 0px !important;">
-                        <span ng-include="'templates/sidebar.html'"></span>
+                        <div class="sidebar-holder">                        
+                            <div ng-repeat="sidebar in registeredCategories">
+                                <div ng-show="(configCategory.selected == sidebar.id && sidebar.state == 'SHOW')">
+                                    <div ng-include="sidebar.templateURL"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sidebar-reportissue " style="position: fixed; right: 0; bottom: 0;width: 100%;margin-bottom: 10px; ">
+                            <a class="ui basic small button " ng-click="fireSidebarTelemetry({id: 'reportIssue'}, 'reportIssueButton') " ng-href="{{reportIssueLink}} " target="_blank " style="position: absolute; bottom:0; right: 30px "><i class="help circle medium icon "></i>Report an issue</a>
+                        </div>                        
                     </div>
                 </div>
             </div>
@@ -204,6 +212,7 @@
     <script src="bower_components/oclazyload/dist/ocLazyLoad.js"></script>
     <script src="scripts/dev/localhost-ce.js"></script>
     <script src="libs/semantic.min.js"></script>
+    <script src="libs/mousetrap.min.js"></script>
     <!-- Load Framework -->
     <script src="scripts/framework/class.js"></script>
     <script src="scripts/framework/bootstrap-framework.js"></script>
@@ -214,8 +223,7 @@
     
     <!-- Load Services -->
     <script src="scripts/framework/service/iservice.js"></script>
-    <script src="scripts/framework/service/content-service.js"></script>    
-    <script src="scripts/framework/service/telemetry-service.js"></script>
+    <script src="scripts/framework/service/content-service.js"></script>
     <script src="scripts/framework/service/assessment-service.js"></script>
     <script src="scripts/framework/service/asset-service.js"></script>
     <script src="scripts/framework/service/meta-service.js"></script>
@@ -223,10 +231,6 @@
     <script src="scripts/framework/service/search-service.js"></script>
     <script src="scripts/framework/repo/irepo.js"></script>
     <script src="scripts/framework/repo/published-repo.js"></script>
-    <script src="scripts/framework/dispatcher/idispatcher.js"></script>
-    <script src="scripts/framework/dispatcher/console-dispatcher.js"></script>
-    <script src="scripts/framework/dispatcher/local-dispatcher.js"></script>
-    <script src="scripts/framework/dispatcher/piwik-dispatcher.js"></script>
 
     <!-- Load Content Editor -->
     <script src="scripts/contenteditor/bootstrap-editor.js"></script>
@@ -237,6 +241,7 @@
     <script src="scripts/contenteditor/manager/stage-manager.js"></script>
     <script src="scripts/contenteditor/manager/toolbar-manager.js"></script>
     <script src="scripts/contenteditor/manager/media-manager.js"></script>
+    <script src="scripts/contenteditor/manager/sidebar-manager.js"></script>
     <script src="scripts/contenteditor/service/popup-service.js"></script>
     <script src="scripts/contenteditor/migration/1_migration-task.js"></script>
     <script src="scripts/contenteditor/migration/mediamigration-task.js"></script>
@@ -248,17 +253,19 @@
     <script src="scripts/contenteditor/migration/assessmentmigration-task.js"></script>
     <script src="scripts/contenteditor/migration/eventsmigration-task.js"></script>
     <script src="scripts/contenteditor/migration/settagmigration-task.js"></script>
-
+    <script src="scripts/contenteditor/service/telemetry-service.js"></script>
+    <script src="scripts/contenteditor/dispatcher/idispatcher.js"></script>
+    <script src="scripts/contenteditor/dispatcher/console-dispatcher.js"></script>
+    <script src="scripts/contenteditor/dispatcher/local-dispatcher.js"></script>
+    <script src="scripts/contenteditor/dispatcher/piwik-dispatcher.js"></script>
+    <script src="scripts/contenteditor/md5.js"></script>
     <!-- Load Angular Controllers -->
     <script src="scripts/angular/controller/main.js"></script>
     <script src="scripts/angular/controller/popup-controller.js"></script>
     <script src="scripts/angular/directive/draggable-directive.js"></script>
     <script src="scripts/angular/directive/droppable-directive.js"></script>
-
-    
-
+    <script src="scripts/angular/directive/template-compiler-directive.js"></script>
     <script src="scripts/contenteditor/backward-compatibility.js"></script>
-    
     <!-- endinject -->
 </body>
 
