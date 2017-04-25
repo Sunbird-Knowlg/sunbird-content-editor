@@ -104,10 +104,12 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
                 var requestObj = { request: { content: content } };
                 instance.patch(this.serviceURL() + 'v2/content/' + contentId, requestObj, headers, function(err, res) {
                     /* istanbul ignore else */
-                    if (res) {
+                    if (res && res.data.responseCode == "OK") {                        
                         instance.content[contentId].versionKey = res.data.result.versionKey;
-                    }
-                    callback(err, res);
+                        callback(undefined, res);                        
+                    } else {
+                        callback(true, undefined);
+                    } 
                 });
             } else {
                 callback('Nothing to save');
