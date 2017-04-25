@@ -29,7 +29,6 @@ describe('Content service test cases', function() {
     it("should call save content method", function() {
         spyOn(org.ekstep.services.contentService,"_saveContent").and.callThrough();
         org.ekstep.services.contentService.saveContent(contentId, metaData, contentBody, function(err, res){
-            expect(res).toBe(contentRes);
             expect(org.ekstep.services.contentService._saveContent).toHaveBeenCalled();
             expect(org.ekstep.services.contentService._saveContent.calls.count()).toBe(1);
         });
