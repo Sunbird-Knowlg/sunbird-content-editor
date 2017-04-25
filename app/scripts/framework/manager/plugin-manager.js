@@ -2,6 +2,7 @@
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
 org.ekstep.pluginframework.pluginManager = new(Class.extend({
+    pluginManifests: {},
     plugins: {},
     pluginObjs: {},
     pluginInstances: {},
@@ -108,16 +109,21 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                     console.error('Unable to load plugin manifest', 'plugin:' + pluginId + '-' + pluginVer, 'Error:', err);
                     callback(); // TODO: probably pass the error
                 } else {
+                    instance.pluginManifests[manifest.id] = manifest;
                     instance.loadManifestDependencies(data.manifest.dependencies, function() {
-                        var queue = instance.queueDependencies(data.manifest, data.repo, publishedTime);
-                        if (queue.length() > 0) {
-                            queue.drain = function() {
+                        if(pluginType === 'renderer') {
+                            callback();
+                        } else {
+                            var queue = instance.queueDependencies(data.manifest, data.repo, publishedTime);
+                            if (queue.length() > 0) {
+                                queue.drain = function() {
+                                    instance.loadPluginByManifest(data.manifest, data.repo, pluginType, publishedTime);
+                                    callback();
+                                };
+                            } else {
                                 instance.loadPluginByManifest(data.manifest, data.repo, pluginType, publishedTime);
                                 callback();
-                            };
-                        } else {
-                            instance.loadPluginByManifest(data.manifest, data.repo, pluginType, publishedTime);
-                            callback();
+                            }
                         }
                     });
                 }
@@ -155,8 +161,12 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 instance.loadPluginWithDependencies(plugin.id, plugin.ver, plugin.type, plugin.pt, pluginCallback);
             }, 6);
             dependencies.forEach(function(dep) {
-                if (dep.scope == org.ekstep.pluginframework.env || dep.scope == 'all') {
-                    queue.push({ 'id': dep.plugin, 'ver': dep.ver, 'type': dep.type, 'pt':  publishedTime}, function(err) {});
+                if(org.ekstep.pluginframework.env == 'renderer') {
+                    if (dep.scope == org.ekstep.pluginframework.env || dep.scope == 'all') {
+                        queue.push({ 'id': dep.plugin, 'ver': dep.ver, 'type': dep.type, 'pt':  publishedTime}, function(err) {});
+                    }
+                } else {
+                    queue.push({ 'id': dep.plugin, 'ver': dep.ver, 'type': dep.type, 'pt':  publishedTime}, function(err) {});    
                 }
             });
             if (queue.length() > 0) {
