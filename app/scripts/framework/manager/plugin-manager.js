@@ -13,8 +13,10 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         repo = repo || org.ekstep.pluginframework.publishedRepo;
         this.plugins[manifest.id] = { p: plugin, m: manifest, 'repo': repo };
         this._registerNameSpace(manifest.id, plugin);
-        var p = new plugin(manifest); // Initialize plugin
-        this.pluginObjs[manifest.id] = p;
+        if (org.ekstep.pluginframework.env != "renderer") {
+            var p = new plugin(manifest); // Initialize plugin
+            this.pluginObjs[manifest.id] = p;
+        }    
         org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:load', { plugin: manifest.id, version: manifest.ver });
         org.ekstep.pluginframework.eventManager.dispatchEvent(manifest.id + ':load');
     },
