@@ -58,7 +58,11 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             } else {
                 try {
                     data = (scope == org.ekstep.pluginframework.env) ? eval(data) : undefined;
-                    if (data) instance.registerPlugin(manifest, data, repo);
+                    if(!instance.isDefined(manifest.id)) {
+                        if (data) instance.registerPlugin(manifest, data, repo);    
+                    } else {
+                        console.info("Plugin is already registered: ",manifest.id);
+                    }                    
                 } catch (e) {
                     console.error("Error while loading plugin", 'plugin:' + manifest.id + '-' + manifest.ver, 'Error:', e);
                 }
