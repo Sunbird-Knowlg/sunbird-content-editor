@@ -40,7 +40,7 @@ org.ekstep.contenteditor._mergeConfig = function(config) {
 org.ekstep.contenteditor._loadDefaultPlugins = function(context, callback) {
     var startTime = (new Date()).getTime();
     if(org.ekstep.contenteditor.config.corePluginsPackaged === true) org.ekstep.contenteditor.jQuery("body").append($("<script type='text/javascript' src='scripts/coreplugins.js?" + org.ekstep.contenteditor.config.build_number + "'>"));
-    org.ekstep.pluginframework.pluginManager.loadAllPlugins(org.ekstep.contenteditor.config.plugins, function () {
+    org.ekstep.pluginframework.pluginManager.loadAllPlugins(org.ekstep.contenteditor.config.plugins, undefined, function () {
         org.ekstep.services.telemetryService.initialize({
             uid: context.uid,
             sid: context.sid,

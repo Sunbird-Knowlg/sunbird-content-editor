@@ -385,11 +385,11 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         var instance = this;
         contentBody.theme.manifest.media = _.isArray(contentBody.theme.manifest.media) ? contentBody.theme.manifest.media : [contentBody.theme.manifest.media];
         var plugins = _.filter(contentBody.theme.manifest.media, { type: 'plugin' });
-        var pluginMap = {}
+        var pluginList = []
         _.forEach(plugins, function(plugin) {
-            pluginMap[plugin.id] = plugin.ver;
+            pluginList.push({ id: plugin.id, ver: plugin.ver, type: 'plugin' });
         });
-        org.ekstep.pluginframework.pluginManager.loadAllPlugins(pluginMap, cb);
+        org.ekstep.pluginframework.pluginManager.loadAllPlugins(pluginList, undefined, cb);
     },
     _loadStages: function(stages, stageIcons, startTime) {
         var instance = this;
