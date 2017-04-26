@@ -284,10 +284,11 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             }
         });
     },
-    updateManifestDependencies: function(content, pluginManifest) {
+    updateManifestDependencies: function(content, pluginManifest, pluginVisited) {
         var instance = this;
+        pluginVisited = pluginVisited || {};
         if (!pluginManifest) return;
-        if (!_.isUndefined(pluginManifest.dependencies) && pluginManifest.dependencies.length > 0) {
+        if (!_.isUndefined(pluginManifest.dependencies) && pluginManifest.dependencies.length > 0 && !pluginVisited[pluginManifest.id]) {
             instance.addToPluginManifest(content, pluginManifest);
             instance.updateRendererDependencies(content, pluginManifest.id, pluginManifest);
 
@@ -298,8 +299,9 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
                         if (depManifest.renderer && depManifest.renderer.main) {
                             instance.updatePluginManifest(content, dependency, pluginManifest);
                         }
+                        pluginVisited[dependency.plugin] = true;
                         instance.updateRendererDependencies(content, dependency.plugin, depManifest);
-                        instance.updateManifestDependencies(content, depManifest);                                                          
+                        instance.updateManifestDependencies(content, depManifest, pluginVisited);                                                          
                     }
                 }
             });
@@ -307,8 +309,9 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             instance.updateRendererDependencies(content, pluginManifest.id, pluginManifest);
         }
     },
-    updateRendererDependencies: function(content, id, pluginManifest) {
+    updateRendererDependencies: function(content, id, pluginManifest, pluginVisited) {
         var instance = this;
+        pluginVisited = pluginVisited || {};
         if (_.indexOf(org.ekstep.contenteditor.config.corePlugins, id) == 1) {
             return;
         }
@@ -316,13 +319,16 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             return;
         }
 
-        if (!_.isUndefined(pluginManifest.renderer.dependencies) && pluginManifest.renderer.dependencies.length > 0) {
+        instance.addToPluginManifest(content, pluginManifest);
+
+        if (!_.isUndefined(pluginManifest.renderer.dependencies) && pluginManifest.renderer.dependencies.length > 0 && !pluginVisited[pluginManifest.id]) {
             _.forEach(pluginManifest.renderer.dependencies, function(dependency) {
                 if (dependency.type == "plugin") {
                     var depManifest = org.ekstep.pluginframework.pluginManager.getPluginManifest(dependency.plugin);
                     if (depManifest) {
+                        pluginVisited[dependency.plugin] = true;
                         instance.updatePluginManifest(content, dependency, pluginManifest);
-                        instance.updateRendererDependencies(content, dependency.plugin, depManifest);
+                        instance.updateRendererDependencies(content, dependency.plugin, depManifest, pluginVisited);
                     }
                 } else {
                     dependency.id = id + '-' + UUID();
