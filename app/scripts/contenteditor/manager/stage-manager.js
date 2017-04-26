@@ -392,7 +392,7 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
     },
     _loadMedia: function(contentBody) {
         _.forEach(contentBody.theme.manifest.media, function(media) {
-            if (media.type == 'plugin' && org.ekstep.pluginframework.pluginManager.isDefined(media.id)) {} else {
+            if (media.type == 'plugin' && org.ekstep.pluginframework.pluginManager.isPluginDefined(media.id)) {} else {
                 org.ekstep.contenteditor.mediaManager.addMedia(media);
             }
         });

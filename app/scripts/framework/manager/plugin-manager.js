@@ -31,7 +31,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 console.error('Unable to load editor plugin', 'plugin:' + dependency.id + '-' + dependency.ver, 'resource:' + dependency[scope].main, 'Error:', err);
             } else {
                 try {
-                    if (!instance.isDefined(dependency.id)) {
+                    if (!instance.isPluginDefined(dependency.id)) {
                         data = eval(data);
                         instance._registerPlugin(dependency.id, undefined, data, undefined, undefined);
                     } else {
@@ -51,7 +51,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 console.error('Unable to load editor plugin', 'plugin:' + manifest.id + '-' + manifest.ver, 'resource:' + manifest[scope].main, 'Error:', err);
             } else {
                 try {
-                    if (!instance.isDefined(manifest.id)) {
+                    if (!instance.isPluginDefined(manifest.id)) {
                         if (pluginType == 'library') {
                             org.ekstep.pluginframework.jQuery.globalEval(data);
                         } else {
@@ -87,7 +87,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     },
     loadAndInitPlugin: function(pluginId, version, publishedTime, parent) {
         this.loadPluginWithDependencies(pluginId, version, undefined, publishedTime, function() {});
-        if (this.isDefined(pluginId)) {
+        if (this.isPluginDefined(pluginId)) {
             var pluginManifest = this.getPluginManifest(pluginId);
             if (pluginManifest.type && (pluginManifest.type.toLowerCase() === "widget")) {
                 this.invoke(pluginId, JSON.parse(JSON.stringify(pluginManifest[org.ekstep.pluginframework.env]['init-data'] || {})), parent);
@@ -178,8 +178,15 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             callback();
         }
     },
-    isDefined: function(id) {
+    isManifestDefined: function(id) {
         if (this.pluginManifests[id]) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+    isPluginDefined: function(id) {
+        if (this.plugins[id]) {
             return true;
         } else {
             return false;
@@ -214,7 +221,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 }
             }, 1);
             otherDependencies.forEach(function(dep) {
-                if (!dep.plugin || !instance.isDefined(dep.plugin)) {
+                if (!dep.plugin || !instance.isPluginDefined(dep.plugin)) {
                     queue.push(dep, function(err) {});
                 }
             });
