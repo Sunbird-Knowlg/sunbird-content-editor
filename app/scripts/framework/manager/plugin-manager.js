@@ -25,7 +25,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     },
     loadCustomPlugin: function(dependency, callback, publishedTime) {
         var instance = this;
-        scope = scope || org.ekstep.pluginframework.env;
+        var scope = org.ekstep.pluginframework.env;
         org.ekstep.pluginframework.resourceManager.loadResource(dependency.src, 'script', function(err, data) {
             if (err) {
                 console.error('Unable to load editor plugin', 'plugin:' + dependency.id + '-' + dependency.ver, 'resource:' + dependency[scope].main, 'Error:', err);
