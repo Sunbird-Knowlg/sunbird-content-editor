@@ -101,7 +101,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     },
     loadPluginWithDependencies: function(pluginId, pluginVer, pluginType, publishedTime, callback) {
         var instance = this;
-        if (this.plugins[pluginId]) {
+        if (this.plugins[pluginId] || this.pluginVisited[pluginId]) {
             console.log('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded');
             callback();
         } else {
@@ -109,7 +109,8 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 if (err || (data == undefined)) {
                     console.error('Unable to load plugin manifest', 'plugin:' + pluginId + '-' + pluginVer, 'Error:', err);
                     callback(); // TODO: probably pass the error
-                } else {                                      
+                } else {
+                    instance.pluginVisited[pluginId] = true;                                      
                     instance.loadManifestDependencies(data.manifest.dependencies, publishedTime, function() {
                         if (pluginType === 'renderer') {
                             callback();
@@ -158,16 +159,15 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         var instance = this;
         if (Array.isArray(dependencies) && dependencies.length > 0) {
             var queue = org.ekstep.pluginframework.async.queue(function(plugin, pluginCallback) {
-                instance.pluginVisited[plugin.id] = true; 
                 instance.loadPluginWithDependencies(plugin.id, plugin.ver, plugin.type, plugin.pt, pluginCallback);
             }, 6);
             dependencies.forEach(function(dep) {
                 if (org.ekstep.pluginframework.env == 'renderer') {
                     if (dep.scope == org.ekstep.pluginframework.env || dep.scope == 'all') {
-                        if (!instance.pluginVisited[dep.plugin]) queue.push({ 'id': dep.plugin, 'ver': dep.ver, 'type': dep.type, 'pt': publishedTime }, function(err) {});
+                        queue.push({ 'id': dep.plugin, 'ver': dep.ver, 'type': dep.type, 'pt': publishedTime }, function(err) {});
                     }
                 } else {
-                    if (!instance.pluginVisited[dep.plugin]) queue.push({ 'id': dep.plugin, 'ver': dep.ver, 'type': dep.type, 'pt': publishedTime }, function(err) {});
+                    queue.push({ 'id': dep.plugin, 'ver': dep.ver, 'type': dep.type, 'pt': publishedTime }, function(err) {});
                 }
             });
             if (queue.length() > 0) {
