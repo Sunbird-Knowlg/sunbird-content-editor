@@ -13,7 +13,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     _registerPlugin: function(pluginId, pluginVer, plugin, manifest, repo) {
         this.plugins[pluginId] = { p: plugin, m: manifest, repo: repo };
         this._registerNameSpace(pluginId, plugin);
-        this.pluginManifests[manifest.id] = manifest;
+        if (manifest) this.pluginManifests[manifest.id] =  manifest;
         org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:load', { plugin: pluginId, version: pluginVer });
         org.ekstep.pluginframework.eventManager.dispatchEvent(pluginId + ':load');
     },
@@ -23,22 +23,22 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         var p = new plugin(manifest); // Initialize Global instance of the plugin
         this.pluginObjs[manifest.id] = p;
     },
-    loadCustomPlugin: function(dependency, callback) {
+    loadCustomPlugin: function(dependency, callback, publishedTime) {
         var instance = this;
         scope = scope || org.ekstep.pluginframework.env;
-        org.ekstep.pluginframework.resourceManager.loadResource(dependency.src, function(err, data) {
+        org.ekstep.pluginframework.resourceManager.loadResource(dependency.src, 'script', function(err, data) {
             if (err) {
-                console.error('Unable to load editor plugin', 'plugin:' + manifest.id + '-' + manifest.ver, 'resource:' + manifest[scope].main, 'Error:', err);
+                console.error('Unable to load editor plugin', 'plugin:' + dependency.id + '-' + dependency.ver, 'resource:' + dependency[scope].main, 'Error:', err);
             } else {
                 try {
                     if (!instance.isDefined(dependency.id)) {
                         data = eval(data);
                         instance._registerPlugin(dependency.id, undefined, data, undefined, undefined);
                     } else {
-                        console.info("Plugin is already registered: ", manifest.id);
+                        console.info("Plugin is already registered: ", dependency.id);
                     }
                 } catch (e) {
-                    console.error("Error while loading plugin", 'plugin:' + manifest.id + '-' + manifest.ver, 'Error:', e);
+                    console.error("Error while loading plugin", 'plugin:' + dependency.id + '-' + dependency.ver, 'Error:', e);
                 }
             }
         }, publishedTime);
@@ -107,7 +107,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 if (err || (data == undefined)) {
                     console.error('Unable to load plugin manifest', 'plugin:' + pluginId + '-' + pluginVer, 'Error:', err);
                     callback(); // TODO: probably pass the error
-                } else {
+                } else {                    
                     instance.loadManifestDependencies(data.manifest.dependencies, publishedTime, function() {
                         if (pluginType === 'renderer') {
                             callback();
@@ -186,8 +186,8 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         }
     },
     loadAllPlugins: function(plugins, otherDependencies, callback) {
-        if (!org.ekstep.pluginframework.jQuery.isEmptyObject(plugins)) {
-            var instance = this;
+        var instance = this;
+        if (Array.isArray(plugins) && plugins.length) {            
             var q = org.ekstep.pluginframework.async.queue(function(plugin, pluginCallback) {
                 instance.loadPluginWithDependencies(plugin.id, plugin.ver, plugin.type, plugin.pt, pluginCallback);
             }, 6);
@@ -197,14 +197,15 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             plugins.forEach(function(plugin) {
                 q.push({ 'id': plugin.id, 'ver': plugin.ver, 'type': plugin.type, 'pt': undefined }, function(err) {});
             });
-        } else if (!org.ekstep.pluginframework.jQuery.isEmptyObject(otherDependencies)) {
+        } else if (Array.isArray(otherDependencies) && otherDependencies.length) {
             instance.loadOtherDependencies(otherDependencies, callback);
         } else {
             callback();
         }
     },
     loadOtherDependencies: function(otherDependencies, callback) {
-        if (!org.ekstep.pluginframework.jQuery.isEmptyObject(otherDependencies)) {
+        var instance = this;
+        if (Array.isArray(otherDependencies) && otherDependencies.length) {
             var queue = org.ekstep.pluginframework.async.queue(function(dependency, cb) {
                 if (dependency.type == 'plugin') {
                     instance.loadCustomPlugin(dependency, cb);
