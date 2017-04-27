@@ -101,6 +101,7 @@ var scriptfiles = [
 
 
 var pluginFramework = [
+    "app/scripts/framework/ES5Polyfill.js",
     "app/scripts/framework/class.js",
     "app/scripts/framework/libs/eventbus.min.js",
     "app/scripts/framework/libs/mousetrap.min.js",
@@ -147,7 +148,7 @@ gulp.task('minifyJS', function() {
 
 gulp.task('minifyFramework', function() {
     return gulp.src(pluginFramework)
-        .pipe(concat('genie-framework.min.js'))
+        .pipe(concat('plugin-framework.min.js'))
         .pipe(gulp.dest('content-editor/scripts'));
 });
 

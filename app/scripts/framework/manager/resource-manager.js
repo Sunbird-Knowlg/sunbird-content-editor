@@ -80,10 +80,13 @@ org.ekstep.pluginframework.resourceManager = new(Class.extend({
             async: false,
             url: url,
             dataType: dataType
-        }).fail(function(err) {
-            callback(err)
         }).done(function(data) {
             callback(null, data);
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            if(jqXHR.statusText === 'OK') {
+                console.log('Unable to load resource:', url, 'error:', errorThrown);
+            }
+            callback(errorThrown)
         });
     }
 }));
