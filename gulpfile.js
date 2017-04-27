@@ -101,7 +101,7 @@ var scriptfiles = [
 
 
 var pluginFramework = [
-    "app/scripts/framework/ES5Polyfill.js",
+    "app/scripts/framework/libs/ES5Polyfill.js",
     "app/scripts/framework/class.js",
     "app/scripts/framework/libs/eventbus.min.js",
     "app/scripts/framework/libs/mousetrap.min.js",
