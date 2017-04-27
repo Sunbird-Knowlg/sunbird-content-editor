@@ -481,8 +481,8 @@ window.org.ekstep.contenteditor.api = {
      * @param  {String} pluginVersion Plugin Version
      * @memberof org.ekstep.contenteditor.api
      */
-    loadPlugin: function(pluginId, pluginVersion) {
-        org.ekstep.pluginframework.pluginManager.loadPlugin(pluginId, pluginVersion);
+    loadPlugin: function(pluginId, pluginVersion, callback) {
+        org.ekstep.pluginframework.pluginManager.loadPlugin(pluginId, pluginVersion, callback);
     },
 
     /**

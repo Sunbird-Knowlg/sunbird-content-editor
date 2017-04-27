@@ -194,6 +194,12 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             return false;
         }
     },
+    loadPlugin: function(pluginId, pluginVer, callback) {
+        this.loadPluginWithDependencies(pluginId, pluginVer, "plugin", undefined, function() {
+           console.log('Plugin loaded: ', pluginId); 
+           callback && callback();
+        });
+    },
     loadAllPlugins: function(plugins, otherDependencies, callback) {
         var instance = this;
         if (Array.isArray(plugins) && plugins.length) {            
@@ -229,13 +235,13 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             });
             if (queue.length() > 0) {
                 queue.drain = function() {
-                    callback();
+                    callback && callback();
                 };
             } else {
-                callback();
+                callback && callback();
             }
         } else {
-            callback();
+            callback && callback();
         }
     },
     invoke: function(id, data, parent, override) {
@@ -326,6 +332,8 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     },
     cleanUp: function() {
         this.pluginInstances = {};
+        this.pluginManifests = {};
+        this.pluginVisited = {};
         this.plugins = {};
         this.errors = [];
     },

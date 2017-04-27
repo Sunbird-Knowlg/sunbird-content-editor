@@ -7,21 +7,8 @@ describe("Resource Manager test cases", function() {
         done();
     });
 
-    it("should discover Manifest from host repo", function() {
-        spyOn(org.ekstep.pluginframework.hostRepo, "discoverManifest").and.callThrough();
-        spyOn(org.ekstep.pluginframework.resourceManager, "loadResource").and.callFake(function(url, dataType, callback, publishedTime) {
-            if (url.indexOf("manifest.json")) {
-                callback(undefined, pluginManifest)
-            }
-        });
-        org.ekstep.pluginframework.resourceManager.discoverManifest("org.ekstep.config", "1.0", function(err, res) {}, new Date().toString());
-        expect(org.ekstep.pluginframework.hostRepo.discoverManifest).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.hostRepo.discoverManifest.calls.count()).toEqual(1);
-    });
-    it("should discover Manifest from all repos and throw error", function() {
+    it("should discover Manifest from registered repos and throw error", function() {
         spyOn(org.ekstep.pluginframework.publishedRepo, "discoverManifest").and.callThrough();
-        spyOn(org.ekstep.pluginframework.draftRepo, "discoverManifest").and.callThrough();
-        spyOn(org.ekstep.pluginframework.hostRepo, "discoverManifest").and.callThrough();
         spyOn(org.ekstep.pluginframework.resourceManager, "loadResource").and.callFake(function(url, dataType, callback, publishedTime) {
             if (url.indexOf("manifest.json")) {
                 callback("manifest not found", undefined)
@@ -30,10 +17,6 @@ describe("Resource Manager test cases", function() {
         org.ekstep.pluginframework.resourceManager.discoverManifest("org.ekstep.hajsgdj", "1.0", function(err, res) {}); 
         expect(org.ekstep.pluginframework.publishedRepo.discoverManifest).toHaveBeenCalled();
         expect(org.ekstep.pluginframework.publishedRepo.discoverManifest.calls.count()).toEqual(1);
-        expect(org.ekstep.pluginframework.draftRepo.discoverManifest).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.draftRepo.discoverManifest.calls.count()).toEqual(1);
-        expect(org.ekstep.pluginframework.hostRepo.discoverManifest).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.hostRepo.discoverManifest.calls.count()).toEqual(1);
     });
    
 

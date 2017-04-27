@@ -14,8 +14,8 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            // bower:js
-            "app/bower_components/jquery/dist/jquery.js",
+            // bower:js                        
+            "app/bower_components/jquery/dist/jquery.js",                
             "app/bower_components/async/dist/async.min.js",
             "app/bower_components/angular/angular.js",
             "app/bower_components/fabric/dist/fabric.min.js",
@@ -41,8 +41,11 @@ module.exports = function(config) {
             "app/libs/semantic.min.js",
             "app/libs/mousetrap.min.js",
             "app/scripts/framework/class.js",
+            "app/scripts/framework/libs/ES5Polyfill.js",
             "app/scripts/framework/bootstrap-framework.js",
+            "app/scripts/framework/repo/irepo.js",
             "app/scripts/framework/manager/resource-manager.js",
+            "app/scripts/framework/repo/published-repo.js",            
             "app/scripts/framework/manager/event-manager.js",
             "app/scripts/framework/manager/plugin-manager.js",
             "app/scripts/framework/manager/keyboard-manager.js",
@@ -52,11 +55,7 @@ module.exports = function(config) {
             "app/scripts/framework/service/asset-service.js",
             "app/scripts/framework/service/meta-service.js",
             "app/scripts/framework/service/language-service.js",
-            "app/scripts/framework/service/search-service.js",
-            "app/scripts/framework/repo/irepo.js",
-            "app/scripts/framework/repo/published-repo.js",
-            "app/scripts/framework/repo/draft-repo.js",
-            "app/scripts/framework/repo/host-repo.js",
+            "app/scripts/framework/service/search-service.js",            
             "app/scripts/contenteditor/bootstrap-editor.js",
             "app/scripts/contenteditor/ce-config.js",
             "app/scripts/contenteditor/content-editor.js",
