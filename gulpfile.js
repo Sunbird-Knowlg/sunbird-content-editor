@@ -1,4 +1,4 @@
-
+var gulp = require('gulp');
 var chug = require('gulp-chug');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
