@@ -316,6 +316,9 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     getPluginInstance: function(id) {
         return this.pluginInstances[id];
     },
+    getPluginInstances: function() {
+        return this.pluginInstances;
+    },
     getPluginManifest: function(id) {
         var plugin = this.plugins[id];
         if (plugin) {

@@ -1,4 +1,4 @@
-var gulp = require('gulp');
+
 var chug = require('gulp-chug');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
@@ -76,6 +76,7 @@ var scriptfiles = [
     "app/scripts/contenteditor/manager/media-manager.js",
     "app/scripts/contenteditor/manager/sidebar-manager.js",
     "app/scripts/contenteditor/service/popup-service.js",    
+    "app/scripts/contenteditor/service/manifest-generator.js",
     "app/scripts/contenteditor/migration/1_migration-task.js",
     "app/scripts/contenteditor/migration/mediamigration-task.js",
     "app/scripts/contenteditor/migration/stageordermigration-task.js",

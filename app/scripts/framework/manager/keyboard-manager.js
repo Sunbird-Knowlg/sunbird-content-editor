@@ -3,9 +3,7 @@
  */
 org.ekstep.pluginframework.keyboardManager = new (Class.extend({
 	registry: {},
-	initialize: function($document) {
-		this.document = $document;
-	},
+	initialize: function() {},
 	registerKeyCombination: function(command, callback) {
 		if(command !== undefined && callback !== undefined){
 			Mousetrap.bind(command, callback);

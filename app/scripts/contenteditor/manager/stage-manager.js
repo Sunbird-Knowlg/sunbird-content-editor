@@ -221,8 +221,7 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             _.forEach(stage.children, function(plugin) {
                 var id = plugin.getManifestId();
                 if (_.isUndefined(stageBody[id])) stageBody[id] = [];
-                stageBody[id].push(plugin.toECML());
-                instance.updateManifestDependencies(content, plugin.manifest);                
+                stageBody[id].push(plugin.toECML());                                                               
                 var pluginMedia = plugin.getMedia();
                 instance.addMediaToMediaMap(mediaMap, pluginMedia, plugin.manifest);
                 stageAssets = _.concat(stageAssets, _.keys(pluginMedia));
@@ -231,15 +230,27 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
                 return { assetId: asset }
             });
             content.theme.stage.push(stageBody);
-        });
+        });    
+
+        instance.manifestGenerator(content);       
+
         if (!_.isEmpty(org.ekstep.contenteditor.mediaManager.migratedMediaMap)) {
             instance.mergeMediaMap(mediaMap);
             content.theme["migration-media"] = {};
             content.theme["migration-media"].media = _.values(org.ekstep.contenteditor.mediaManager.migratedMediaMap);
         }
-        content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mediaMap)), 'id');
+        content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mediaMap)), 'id');       
 
         return _.cloneDeep(content);
+    },
+    manifestGenerator: function(content) {
+        var pluginsUsed = {};
+        _.forEach(org.ekstep.pluginframework.pluginManager.getPluginInstances(), function(plugin) {
+            pluginsUsed[plugin.manifest.id] = plugin.manifest.id;
+        });
+        ManifestGenerator.generate(_.drop(_.values(pluginsUsed)), 'org.ekstep.stage');        
+        content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, ManifestGenerator.getMediaManifest()), 'id');
+        content.theme['plugin-manifest'].plugin = ManifestGenerator.getPluginManifest();
     },
     mergeMediaMap: function(mediaMap) {
         _.forIn(org.ekstep.contenteditor.mediaManager.migratedMediaMap, function(value, key) {
@@ -283,103 +294,6 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
                 stage.deleteParam('next'); // last stage should not have next param.
             }
         });
-    },
-    updateManifestDependencies: function(content, pluginManifest, pluginVisited) {
-        var instance = this;
-        pluginVisited = pluginVisited || {};
-        if (!pluginManifest) return;
-        if (!_.isUndefined(pluginManifest.dependencies) && pluginManifest.dependencies.length > 0 && !pluginVisited[pluginManifest.id]) {
-            instance.addToPluginManifest(content, pluginManifest);
-            instance.updateRendererDependencies(content, pluginManifest.id, pluginManifest);
-
-            _.forEach(pluginManifest.dependencies, function(dependency) {
-                if (dependency.scope === "renderer" || dependency.scope === "all") {
-                    var depManifest = org.ekstep.pluginframework.pluginManager.getPluginManifest(dependency.plugin);
-                    if (depManifest && (dependency.plugin != pluginManifest.id)) {
-                        if (depManifest.renderer && depManifest.renderer.main) {
-                            instance.updatePluginManifest(content, dependency, pluginManifest);
-                        }
-                        pluginVisited[dependency.plugin] = true;
-                        instance.updateRendererDependencies(content, dependency.plugin, depManifest);
-                        instance.updateManifestDependencies(content, depManifest, pluginVisited);                                                          
-                    }
-                }
-            });
-        } else {
-            instance.updateRendererDependencies(content, pluginManifest.id, pluginManifest);
-        }
-    },
-    updateRendererDependencies: function(content, id, pluginManifest, pluginVisited) {
-        var instance = this;
-        pluginVisited = pluginVisited || {};
-        if (_.indexOf(org.ekstep.contenteditor.config.corePlugins, id) == 1) {
-            return;
-        }
-        if (_.isUndefined(pluginManifest) || _.isUndefined(pluginManifest.renderer) || _.isUndefined(pluginManifest.renderer.main)) {
-            return;
-        }
-
-        instance.addToPluginManifest(content, pluginManifest);
-
-        if (!_.isUndefined(pluginManifest.renderer.dependencies) && pluginManifest.renderer.dependencies.length > 0 && !pluginVisited[pluginManifest.id]) {
-            _.forEach(pluginManifest.renderer.dependencies, function(dependency) {
-                if (dependency.type == "plugin") {
-                    var depManifest = org.ekstep.pluginframework.pluginManager.getPluginManifest(dependency.plugin);
-                    if (depManifest) {
-                        pluginVisited[dependency.plugin] = true;
-                        instance.updatePluginManifest(content, dependency, pluginManifest);
-                        instance.updateRendererDependencies(content, dependency.plugin, depManifest, pluginVisited);
-                    }
-                } else {
-                    dependency.id = id + '-' + UUID();
-                    dependency.plugin = id;
-                    instance.addToManifestMedia(content, dependency, pluginManifest, dependency.src);
-                }
-            });
-        };
-
-        instance.addToManifestMedia(content, { plugin: id, id: id + '.plugin', type: "plugin" }, pluginManifest, pluginManifest.renderer.main);
-        instance.addToManifestMedia(content, { plugin: id, id: id + '.manifest', type: "json" }, pluginManifest, "manifest.json");
-    },
-    addToManifestMedia: function(content, dependency, pluginManifest, src) {
-        var instance = this;
-        var mediaFound = _.find(content.theme.manifest.media, function(media) {
-            return media.src == instance._resolveManifestMediaPath(pluginManifest.id, pluginManifest.ver, src)
-        });
-
-        if (mediaFound) return;
-
-        content.theme.manifest.media.push({
-            id: dependency.id,
-            plugin: dependency.plugin,
-            ver: pluginManifest.ver,
-            src: instance._resolveManifestMediaPath(pluginManifest.id, pluginManifest.ver, src),
-            type: dependency.type
-        });
-    },
-    addToPluginManifest: function(content, pluginManifest) {
-        var pluginFound = _.find(content.theme['plugin-manifest'].plugin, function(plugin) {
-            return plugin.id == pluginManifest.id;
-        });
-
-        if (pluginFound) return;
-
-        content.theme['plugin-manifest'].plugin.push({
-            id: pluginManifest.id,
-            ver: pluginManifest.ver
-        });
-    },
-    updatePluginManifest: function(content, dependency, pluginManifest) {
-        var instance = this;
-        var plugin = _.find(content.theme['plugin-manifest'].plugin, function(plugin) {
-            return pluginManifest.id === plugin.id;
-        });
-
-        if (plugin) {
-            if (plugin.depends) {
-                if (plugin.depends.indexOf(dependency.plugin) == -1) plugin.depends = plugin.depends.concat("," + dependency.plugin);
-            } else plugin.depends = dependency.plugin;
-        }
     },
     fromECML: function(contentBody, stageIcons) {
         var instance = this;

@@ -37,13 +37,10 @@ describe("Ekstep editor test", function() {
         org.ekstep.contenteditor.stageManager.cleanUp();
     });
 
-    it('should load plugin', function() {
-        spyOn(org.ekstep.contenteditor.api, "loadPlugin").and.callThrough();
-        spyOn(org.ekstep.pluginframework.pluginManager, "loadPlugin").and.callThrough();
-        org.ekstep.contenteditor.api.loadPlugin("org.ekstep.test1", "1.0");
-        expect(org.ekstep.contenteditor.api.loadPlugin).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.pluginManager.loadPlugin).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.pluginManager.loadPlugin).toHaveBeenCalledWith("org.ekstep.test1", "1.0", undefined);
+    it('should load plugin', function() {                
+        spyOn(org.ekstep.pluginframework.pluginManager, "loadPluginWithDependencies").and.callThrough();
+        org.ekstep.contenteditor.api.loadPlugin("org.ekstep.test1", "1.0", function() {});                
+        expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalledWith("org.ekstep.test1", "1.0", "plugin", undefined, jasmine.any(Function));
     });
 
     it('should get plugin repo', function() {

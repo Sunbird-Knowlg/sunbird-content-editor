@@ -77,6 +77,7 @@ module.exports = function(config) {
             "app/scripts/contenteditor/migration/eventsmigration-task.js",
             "app/scripts/contenteditor/migration/settagmigration-task.js",
             "app/scripts/contenteditor/service/telemetry-service.js",
+            "app/scripts/contenteditor/service/manifest-generator.js",
             "app/scripts/contenteditor/dispatcher/idispatcher.js",
             "app/scripts/contenteditor/dispatcher/console-dispatcher.js",
             "app/scripts/contenteditor/dispatcher/local-dispatcher.js",

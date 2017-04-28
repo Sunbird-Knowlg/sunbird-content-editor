@@ -482,7 +482,7 @@ window.org.ekstep.contenteditor.api = {
      * @memberof org.ekstep.contenteditor.api
      */
     loadPlugin: function(pluginId, pluginVersion, callback) {
-        org.ekstep.pluginframework.pluginManager.loadPlugin(pluginId, pluginVersion, callback);
+        org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies(pluginId, pluginVersion, "plugin", undefined, callback);
     },
 
     /**
