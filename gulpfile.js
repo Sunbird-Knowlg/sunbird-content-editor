@@ -221,7 +221,7 @@ gulp.task('copydeploydependencies', function() {
         .pipe(gulp.dest('content-editor'));
 });
 
-gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyCssBower', 'copyfonts', 'copyfontawsomefonts','copyFiles', 'copydeploydependencies']);
+gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyFramework','minifyCssBower', 'copyfonts', 'copyfontawsomefonts','copyFiles', 'copydeploydependencies']);
 
 gulp.task('inject', ['minify'], function() {
     var target = gulp.src('content-editor/index.html');
