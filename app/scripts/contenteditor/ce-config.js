@@ -17,9 +17,9 @@ org.ekstep.contenteditor.config = {
         "audio": "org.ekstep.audio"
     },
     baseConfigManifest: "config/baseConfigManifest.json",
-    plugins: {
-        "org.ekstep.developer":"1.0",
-    },
+    plugins: [
+        { "id": "org.ekstep.developer", "ver": "1.0", "type": "plugin" }
+    ],
     corePluginsPackaged: true,
     dispatcher: "local",
     useProxyForURL: true
