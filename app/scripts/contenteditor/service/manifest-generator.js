@@ -72,14 +72,12 @@ var ManifestGenerator = new(Class.extend({
     _generatePluginManifest: function(manifest) {
         var depends = this._getDependencies(manifest);
         var dependsStr = '';
-        if(!_.isUndefined(depends)) {
-            if (depends.length > 0) {
-                this._generate(depends);
-                dependsStr = depends.join(',');    
-            }            
-            manifest.type = manifest.type || "plugin";
-            this.pluginManifest.push({id: manifest.id, ver: manifest.ver, type: manifest.type, depends: dependsStr});
-        }        
+        if(!_.isUndefined(depends) && depends.length > 0) {
+            this._generate(depends);
+            dependsStr = depends.join(',');    
+        } 
+        manifest.type = manifest.type || "plugin";
+        if (manifest.renderer) this.pluginManifest.push({id: manifest.id, ver: manifest.ver, type: manifest.type, depends: dependsStr});       
     },
     _generateMediaManifest: function(manifest) {
         var instance = this;
