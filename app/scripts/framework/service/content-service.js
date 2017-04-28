@@ -83,11 +83,14 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
 
         var instance = this;
         var versionKey = instance.content[contentId] && instance.content[contentId].versionKey;
+        var DEFAULT_COMPATIBILITY_LEVEL = 2; //renderer
 
         if (contentId && versionKey) {
             var update = false;
             var content = {
-                versionKey: versionKey
+                versionKey: versionKey,
+                lastUpdatedBy: window.context.user.id,
+                compatibilityLevel: ManifestGenerator.getCompatibilityVersion() || DEFAULT_COMPATIBILITY_LEVEL
             }
             if (metadata) {
                 update = true;

@@ -19,6 +19,7 @@ var ManifestGenerator = new(Class.extend({
     visitedPlugins: {},
     pluginManifest: [],
     mediaManifest: [],
+    compatibilityVersion: 0,
     reset: function() {
         this.visitedPlugins = {};
         this.pluginManifest = [];
@@ -83,6 +84,8 @@ var ManifestGenerator = new(Class.extend({
     _generateMediaManifest: function(manifest) {
         var instance = this;
         if(manifest.renderer) {
+            if (manifest.renderer.compatibilityVersion && (manifest.renderer.compatibilityVersion > instance.compatibilityVersion)) instance.compatibilityVersion = manifest.renderer.compatibilityVersion;
+
             // Add js/css/custom plugin dependencies
             if(manifest.renderer.dependencies && manifest.renderer.dependencies.length > 0) {
                 _.forEach(manifest.renderer.dependencies, function(dependency) {
@@ -114,5 +117,9 @@ var ManifestGenerator = new(Class.extend({
                 type: 'json'
             });
         }
+    },
+    getCompatibilityVersion: function() {
+        if (this.compatibilityVersion) return this.compatibilityVersion;
+        return;
     }
 }));
