@@ -31,7 +31,7 @@ org.ekstep.services.assetService = new(org.ekstep.services.iService.extend({
      */
     setAssetMeta: function(id, assetMeta) {
         if (id && assetMeta) {
-            if(_.isUndefined(this.asset[id])) this.asset[id] = {};
+            if(this.asset[id] == undefined) this.asset[id] = {};
             this.asset[id].assetMeta = assetMeta;
         }
     },

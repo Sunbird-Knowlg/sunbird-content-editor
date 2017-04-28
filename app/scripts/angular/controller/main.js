@@ -16,7 +16,10 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.showAppLoadScreen = true;
         $scope.contentLoadedFlag = false;
         $scope.showGenieControls = false;
+
+
         $scope.developerMode = $location.search().developerMode;
+        
         $scope.appLoadMessage = [
             { 'id': 1, 'message': 'Getting things ready for you', 'status': false }
         ];

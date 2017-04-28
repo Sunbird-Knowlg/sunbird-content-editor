@@ -19,7 +19,7 @@ org.ekstep.services.iService = Class.extend({
         config = config || {};
         config.headers = config.headers || {};
         if (typeof cb !== 'function') throw "iservice expects callback to be function";
-        org.ekstep.contenteditor.jQuery.ajax({
+        org.ekstep.pluginframework.jQuery.ajax({
             type: "GET",
             url: url,
             headers: config.headers,
@@ -46,7 +46,7 @@ org.ekstep.services.iService = Class.extend({
         config.headers = config.headers || {};
         if (typeof cb !== 'function') throw "iservice expects callback to be function";
         if (typeof data === 'object') data = JSON.stringify(data);
-        org.ekstep.contenteditor.jQuery.ajax({
+        org.ekstep.pluginframework.jQuery.ajax({
             type: "POST",
             url: url,
             data: data,
@@ -74,7 +74,7 @@ org.ekstep.services.iService = Class.extend({
         config.headers = config.headers || {};
         if (typeof cb !== 'function') throw "iservice expects callback to be function";
         if (typeof data === 'object') data = JSON.stringify(data);
-        org.ekstep.contenteditor.jQuery.ajax({
+        org.ekstep.pluginframework.jQuery.ajax({
             type: "PATCH",
             url: url,
             data: data,

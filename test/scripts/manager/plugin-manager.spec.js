@@ -1,72 +1,59 @@
 describe("Plugin Manager test cases", function() {
-    
-    beforeAll(function() {
-        var corePlugins = {
-            "org.ekstep.stage": "1.0",
-            "org.ekstep.utils": "1.0"
-        };
+    var unregisterPlugin = function(id) {
+        delete org.ekstep.pluginframework.pluginManager.plugins[id];
+        delete org.ekstep.pluginframework.pluginManager.pluginObjs[id];
+        delete org.ekstep.pluginframework.pluginManager.pluginManifests[id];
+        delete org.ekstep.pluginframework.pluginManager.pluginVisited[id];
+    };
 
-        //load core plugins from s3
-        org.ekstep.pluginframework.config = {
-            pluginRepo: "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins",
-            draftRepo: "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins"
-        }
-        _.forIn(corePlugins, function(value, key) {
-            org.ekstep.pluginframework.pluginManager.loadPlugin(key, value);
-        });
+    beforeAll(function(done) {                
+        org.ekstep.pluginframework.pluginManager.cleanUp();
+
+        var corePlugins = [
+            { "id": "org.ekstep.test1", "ver": "1.0", "type": "plugin" }
+        ];
+
+        org.ekstep.services.config = {
+            baseURL: org.ekstep.contenteditor.config.baseURL,
+            apislug: org.ekstep.contenteditor.config.apislug
+        }        
         
-        org.ekstep.pluginframework.config.pluginRepo = "base/test/data/published";
-        org.ekstep.pluginframework.config.draftRepo = "base/test/data/draft";
-        org.ekstep.pluginframework.hostRepo.basePath = "base/test/data/hosted";        
-        org.ekstep.pluginframework.hostRepo.connected = true;
+        org.ekstep.pluginframework.initialize({
+            env: 'editor',
+            pluginRepo: "base/test/data/published",
+            build_number: undefined
+        });
+
+        org.ekstep.pluginframework.pluginManager.loadAllPlugins(corePlugins, undefined, function() {            
+            done();
+        }); 
+
     });
 
     afterAll(function() {
         org.ekstep.pluginframework.pluginManager.cleanUp();
         org.ekstep.contenteditor.stageManager.cleanUp();
     });
+
     it("should load and init plugin", function() {
-        spyOn(org.ekstep.pluginframework.pluginManager, "loadAndInitPlugin").and.callThrough();
+        unregisterPlugin("org.ekstep.test3");
         spyOn(org.ekstep.pluginframework.pluginManager, "loadPluginWithDependencies").and.callThrough();
-        spyOn(org.ekstep.pluginframework.pluginManager, "isDefined").and.callThrough();
-        spyOn(org.ekstep.pluginframework.pluginManager, "invoke").and.callThrough();
-        spyOn(org.ekstep.pluginframework.pluginManager, "getPluginManifest").and.callThrough();
-
-        var returnValue = org.ekstep.pluginframework.pluginManager.loadAndInitPlugin("org.ekstep.test2", "1.0");
-        expect(returnValue).toBe(0);
-        expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalledWith("org.ekstep.test2", "1.0", undefined);
-        expect(org.ekstep.pluginframework.pluginManager.isDefined).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.pluginManager.isDefined).toHaveBeenCalledWith("org.ekstep.test2");
-        expect(org.ekstep.pluginframework.pluginManager.invoke).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.pluginManager.getPluginManifest).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.pluginManager.getPluginManifest).toHaveBeenCalledWith("org.ekstep.test2");
-    });
-
-    it("should not load and init plugin", function() {
-        spyOn(org.ekstep.pluginframework.pluginManager, "loadAndInitPlugin").and.callThrough();
-        spyOn(org.ekstep.pluginframework.pluginManager, "loadPluginWithDependencies").and.callThrough();
-        spyOn(org.ekstep.pluginframework.pluginManager, "isDefined").and.callThrough();
-        spyOn(org.ekstep.pluginframework.pluginManager, "invoke").and.callThrough();
-        spyOn(org.ekstep.pluginframework.pluginManager, "getPluginManifest").and.callThrough();
-        var returnValue = org.ekstep.pluginframework.pluginManager.loadAndInitPlugin("org.ekstep.jsdklghfksjd","1.0");
+        spyOn(org.ekstep.pluginframework.pluginManager, "isPluginDefined").and.callThrough();
+        var returnValue = org.ekstep.pluginframework.pluginManager.loadAndInitPlugin("org.ekstep.test3", "1.0");
         expect(returnValue).toBe(1);
         expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalledWith("org.ekstep.jsdklghfksjd", "1.0", undefined);
-        expect(org.ekstep.pluginframework.pluginManager.isDefined).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.pluginManager.isDefined).toHaveBeenCalledWith("org.ekstep.jsdklghfksjd");
-        expect(org.ekstep.pluginframework.pluginManager.invoke).not.toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.pluginManager.getPluginManifest).not.toHaveBeenCalled();
+        expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalledWith("org.ekstep.test3", "1.0", undefined, undefined, jasmine.any(Function));
+        expect(org.ekstep.pluginframework.pluginManager.isPluginDefined).toHaveBeenCalled();
+        expect(org.ekstep.pluginframework.pluginManager.isPluginDefined).toHaveBeenCalledWith("org.ekstep.test3");
     });
 
-    it("get plugins should return plugins array", function() {
-        spyOn(org.ekstep.pluginframework.pluginManager, "getPlugins").and.callThrough();
-        expect(org.ekstep.pluginframework.pluginManager.getPlugins().length).toEqual(3);
+    it("get plugins should return plugins array", function() {        
+        expect(org.ekstep.pluginframework.pluginManager.getPlugins().length > 0).toBe(true);
     });
 
     it("should load help for plugin", function(done) {
         spyOn(org.ekstep.pluginframework.pluginManager, "loadPluginResource").and.callThrough();
-        org.ekstep.pluginframework.pluginManager.loadPluginResource("org.ekstep.test2", "1.0", "editor/help.md", "text", function(err, res) {
+        org.ekstep.pluginframework.pluginManager.loadPluginResource("org.ekstep.test1", "1.0", "editor/help.md", "text", function(err, res) {
             done();
         })
     });
@@ -81,11 +68,11 @@ describe("Plugin Manager test cases", function() {
     it("should resolve resource path", function() {
         spyOn(org.ekstep.pluginframework.pluginManager, "resolvePluginResource").and.callThrough();
         spyOn(org.ekstep.pluginframework.publishedRepo, "resolveResource").and.callThrough();
-        var path = org.ekstep.pluginframework.pluginManager.resolvePluginResource("org.ekstep.test2", "1.0", "editor/help.md");
-        expect(path).toBe("base/test/data/published/org.ekstep.test2-1.0/editor/help.md");
+        var path = org.ekstep.pluginframework.pluginManager.resolvePluginResource("org.ekstep.test1", "1.0", "editor/help.md");
+        expect(path).toBe("base/test/data/published/org.ekstep.test1-1.0/editor/help.md");
         expect(org.ekstep.pluginframework.publishedRepo.resolveResource).toHaveBeenCalled();
         expect(org.ekstep.pluginframework.publishedRepo.resolveResource.calls.count()).toEqual(1);
-        expect(org.ekstep.pluginframework.publishedRepo.resolveResource).toHaveBeenCalledWith("org.ekstep.test2", "1.0", "editor/help.md");
+        expect(org.ekstep.pluginframework.publishedRepo.resolveResource).toHaveBeenCalledWith("org.ekstep.test1", "1.0", "editor/help.md");
     });
 
     it("should not resolve resource path", function() {
@@ -95,14 +82,13 @@ describe("Plugin Manager test cases", function() {
         expect(path).toBe(false);
         expect(org.ekstep.pluginframework.publishedRepo.resolveResource).not.toHaveBeenCalled();
         expect(org.ekstep.pluginframework.publishedRepo.resolveResource.calls.count()).not.toEqual(1);
-        expect(org.ekstep.pluginframework.publishedRepo.resolveResource).not.toHaveBeenCalledWith("org.ekstep.test2", "1.0", "editor/help.md");
+        expect(org.ekstep.pluginframework.publishedRepo.resolveResource).not.toHaveBeenCalledWith("org.ekstep.test1", "1.0", "editor/help.md");
     });
 
     it("should call load plugins with empty object and should call callback method", function() {
-        spyOn(org.ekstep.pluginframework.pluginManager, "loadAllPlugins").and.callThrough();
-        org.ekstep.pluginframework.pluginManager.loadAllPlugins({}, function() {
-            expect(Object.keys(org.ekstep.pluginframework.pluginManager.plugins).length).toEqual(3);
-        })
+        var loadAllPluginCb = jasmine.createSpy('loadAllPluginCb');
+        org.ekstep.pluginframework.pluginManager.loadAllPlugins([], undefined, loadAllPluginCb);
+        expect(loadAllPluginCb).toHaveBeenCalled();
     });
 
     it("should call invoke and addError", function() {
@@ -138,13 +124,13 @@ describe("Plugin Manager test cases", function() {
             "opacity": 1
         }];
         spyOn(org.ekstep.pluginframework.pluginManager, "invoke").and.callThrough();
-        org.ekstep.pluginframework.pluginManager.invoke("org.ekstep.test2", data);
+        org.ekstep.pluginframework.pluginManager.invoke("org.ekstep.test1", data);
 
     });
 
     xit("should call invoke and throw error", function() {
         spyOn(org.ekstep.pluginframework.pluginManager, "invoke").and.callThrough();
-        expect(org.ekstep.pluginframework.pluginManager.invoke("org.ekstep.test2", undefined)).toThrowError();
+        expect(org.ekstep.pluginframework.pluginManager.invoke("org.ekstep.test1", undefined)).toThrowError();
     });
 
     it("get manifest should return undefined", function() {
@@ -162,7 +148,7 @@ describe("Plugin Manager test cases", function() {
     });
 
     it("should not load plugin js file", function() {
-        var defectManifest = JSON.parse('{ "id": "org.ekstep.test2", "ver": "1.0", "shortId": "shape", "author": "Santhosh Vasabhaktula", "title": "Shape Plugin", "type": "widget", "description": "", "publishedDate": "", "editor": { "main": "plugin.js", "dependencies": [], "menu": [{ "id": "shape", "category": "main", "type": "icon", "toolTip": "Add Shapes", "title": "Shapes", "iconClass": "icon-shape icon", "submenu": [{ "id": "rectangle", "type": "icon", "toolTip": "Add Rectangle", "title": "Rectangle", "iconClass": "icon-rectangle icon", "onclick": { "id": "org.ekstep.test2:create", "data": { "type": "rect", "x": 10, "y": 20, "fill": "#FFFF00", "w": 14, "h": 25, "stroke": "rgba(255, 255, 255, 0)", "strokeWidth": 1, "opacity": 1 } } }] }], "behaviour": { "rotatable": true }, "configManifest": [{ "propertyName": "color", "title": "Fill Color", "description": "Choose a color from the color picker", "dataType": "colorpicker", "required": true, "defaultValue": "#000000" }], "help": { "src": "editor/help.md", "dataType": "text" }, "init-data": { "type": "rect", "x": 10, "y": 20, "fill": "#FFFF00", "w": 14, "h": 25 } } } ');
+        var defectManifest = JSON.parse('{ "id": "org.ekstep.test1", "ver": "1.0", "shortId": "shape", "author": "Santhosh Vasabhaktula", "title": "Shape Plugin", "type": "widget", "description": "", "publishedDate": "", "editor": { "main": "plugin.js", "dependencies": [], "menu": [{ "id": "shape", "category": "main", "type": "icon", "toolTip": "Add Shapes", "title": "Shapes", "iconClass": "icon-shape icon", "submenu": [{ "id": "rectangle", "type": "icon", "toolTip": "Add Rectangle", "title": "Rectangle", "iconClass": "icon-rectangle icon", "onclick": { "id": "org.ekstep.test1:create", "data": { "type": "rect", "x": 10, "y": 20, "fill": "#FFFF00", "w": 14, "h": 25, "stroke": "rgba(255, 255, 255, 0)", "strokeWidth": 1, "opacity": 1 } } }] }], "behaviour": { "rotatable": true }, "configManifest": [{ "propertyName": "color", "title": "Fill Color", "description": "Choose a color from the color picker", "dataType": "colorpicker", "required": true, "defaultValue": "#000000" }], "help": { "src": "editor/help.md", "dataType": "text" }, "init-data": { "type": "rect", "x": 10, "y": 20, "fill": "#FFFF00", "w": 14, "h": 25 } } } ');
         spyOn(org.ekstep.pluginframework.pluginManager, "loadPluginByManifest").and.callThrough();
         spyOn(console, "error").and.callThrough();
         org.ekstep.pluginframework.pluginManager.loadPluginByManifest(defectManifest, org.ekstep.pluginframework.publishedRepo);
@@ -178,25 +164,28 @@ describe("Plugin Manager test cases", function() {
     });
 
     it('should handle plugin instance failures gracefully', function() {
-        
+        unregisterPlugin("org.ekstep.test2");
         var pluginsCount = _.keys(org.ekstep.pluginframework.pluginManager.pluginObjs).length;
-        org.ekstep.pluginframework.pluginManager.loadPlugin("org.ekstep.test7", "1.0");
-        var newCount = _.keys(org.ekstep.pluginframework.pluginManager.pluginObjs).length;
-        expect(newCount).toBe(pluginsCount + 1);
-
-        spyOn(org.ekstep.pluginframework.eventManager, "dispatchEvent").and.callThrough();
-        var pluginInstancesCount = _.keys(org.ekstep.pluginframework.pluginManager.pluginInstances).length;
-        var error = undefined;
-        try {
-            org.ekstep.pluginframework.pluginManager.invoke('org.ekstep.test7', {}, undefined, undefined);
-        } catch(e) {
-            console.log('Error:', e);
-            error = e;
-        }
-        var newPluginInstancesCount = _.keys(org.ekstep.pluginframework.pluginManager.pluginInstances).length;
-        expect(error).toBe('Unable to create a new instance');
-        expect(pluginInstancesCount).toBe(newPluginInstancesCount);
-        expect(org.ekstep.pluginframework.eventManager.dispatchEvent).not.toHaveBeenCalled();
+        org.ekstep.pluginframework.pluginManager.loadPlugin("org.ekstep.test2", "1.0", function() {
+            var newCount = _.keys(org.ekstep.pluginframework.pluginManager.pluginObjs).length;
+            expect(newCount).toBe(pluginsCount + 1);    
+        });        
+        
+        org.ekstep.pluginframework.pluginManager.loadPlugin("org.ekstep.test7", "1.0", function() {
+            spyOn(org.ekstep.pluginframework.eventManager, "dispatchEvent").and.callThrough();
+            var pluginInstancesCount = _.keys(org.ekstep.pluginframework.pluginManager.pluginInstances).length;
+            var error = undefined;
+            try {
+                org.ekstep.pluginframework.pluginManager.invoke('org.ekstep.test7', {}, undefined, undefined);
+            } catch(e) {
+                console.log('Error:', e);
+                error = e;
+            }
+            var newPluginInstancesCount = _.keys(org.ekstep.pluginframework.pluginManager.pluginInstances).length;
+            expect(error).toBe('Unable to create a new instance');
+            expect(pluginInstancesCount).toBe(newPluginInstancesCount);
+            expect(org.ekstep.pluginframework.eventManager.dispatchEvent).not.toHaveBeenCalled();
+        });
     })
 
     xit('should not load plugin js file', function() {

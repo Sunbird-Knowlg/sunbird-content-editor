@@ -13,3 +13,4 @@ org.ekstep.pluginframework.publishedRepo = new(org.ekstep.pluginframework.iRepo.
     	return org.ekstep.pluginframework.config.pluginRepo + "/" + id + "-" + ver + "/" + resource;
     }
 }));
+org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.publishedRepo);

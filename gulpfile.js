@@ -1,4 +1,4 @@
-var gulp = require('gulp');
+
 var chug = require('gulp-chug');
 var clean = require('gulp-clean');
 var concat = require('gulp-concat');
@@ -76,6 +76,7 @@ var scriptfiles = [
     "app/scripts/contenteditor/manager/media-manager.js",
     "app/scripts/contenteditor/manager/sidebar-manager.js",
     "app/scripts/contenteditor/service/popup-service.js",    
+    "app/scripts/contenteditor/service/manifest-generator.js",
     "app/scripts/contenteditor/migration/1_migration-task.js",
     "app/scripts/contenteditor/migration/mediamigration-task.js",
     "app/scripts/contenteditor/migration/stageordermigration-task.js",
@@ -96,6 +97,31 @@ var scriptfiles = [
     "app/scripts/angular/directive/draggable-directive.js",
     "app/scripts/angular/directive/droppable-directive.js",
     "app/scripts/angular/directive/template-compiler-directive.js"
+];
+
+
+var pluginFramework = [
+    "app/scripts/framework/libs/ES5Polyfill.js",
+    "app/scripts/framework/class.js",
+    "app/scripts/framework/libs/eventbus.min.js",
+    "app/scripts/framework/libs/mousetrap.min.js",
+    "app/scripts/framework/bootstrap-framework.js",    
+    "app/scripts/framework/manager/resource-manager.js",
+    "app/scripts/framework/manager/event-manager.js",
+    "app/scripts/framework/manager/plugin-manager.js",
+    "app/scripts/framework/manager/keyboard-manager.js",
+    "app/scripts/framework/service/iservice.js",
+    "app/scripts/framework/service/content-service.js",
+    "app/scripts/framework/service/telemetry-service.js",
+    "app/scripts/framework/service/assessment-service.js",
+    "app/scripts/framework/service/asset-service.js",
+    "app/scripts/framework/service/meta-service.js",
+    "app/scripts/framework/service/language-service.js",
+    "app/scripts/framework/service/search-service.js",
+    "app/scripts/framework/repo/irepo.js",
+    "app/scripts/framework/repo/published-repo.js",
+    "app/scripts/framework/repo/draft-repo.js",
+    "app/scripts/framework/repo/host-repo.js"
 ];
 
 gulp.task('setup', function() {
@@ -120,7 +146,13 @@ gulp.task('minifyJS', function() {
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
-gulp.task('dist', function(){
+gulp.task('minifyFramework', function() {
+    return gulp.src(pluginFramework)
+        .pipe(concat('plugin-framework.min.js'))
+        .pipe(gulp.dest('content-editor/scripts'));
+});
+
+gulp.task('dist', function() {
     var cesrc = gulp.src(scriptfiles).pipe(concat('script.min.js')).pipe(gulp.dest('dist/'));
     var celibs = gulp.src(bower_components).pipe(concat('external.min.js')).pipe(gulp.dest('dist/'));
 

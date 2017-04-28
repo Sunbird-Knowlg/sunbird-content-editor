@@ -3,18 +3,15 @@ describe('Ekstep Editor', function() {
         var context = { contentId: "do_123123123123", uid: 346 };
         var config = { apislug: true, baseURL: true, absURL: true };
         var $scope = {};
-        var $document = {};
-        spyOn(org.ekstep.contenteditor.toolbarManager, 'setScope');
-        spyOn(org.ekstep.pluginframework.keyboardManager, 'initialize');
+        spyOn(org.ekstep.contenteditor.toolbarManager, 'setScope');        
         spyOn(org.ekstep.contenteditor, '_mergeConfig');
         spyOn(org.ekstep.contenteditor, '_loadDefaultPlugins');
 
-        org.ekstep.contenteditor.init(context, config, $scope, $document, function() {});
+        org.ekstep.contenteditor.init(context, config, $scope, undefined, function() {});
 
         expect(org.ekstep.contenteditor.globalContext).toEqual(context);
         expect(org.ekstep.contenteditor.globalContext).toEqual(context);
-        expect(org.ekstep.contenteditor.toolbarManager.setScope).toHaveBeenCalledWith($scope);
-        expect(org.ekstep.pluginframework.keyboardManager.initialize).toHaveBeenCalledWith($document);
+        expect(org.ekstep.contenteditor.toolbarManager.setScope).toHaveBeenCalledWith($scope);        
         expect(org.ekstep.contenteditor._mergeConfig).toHaveBeenCalledWith(config);
         expect(org.ekstep.contenteditor._loadDefaultPlugins).toHaveBeenCalledWith(context, jasmine.any(Function));
     });
@@ -25,6 +22,6 @@ describe('Ekstep Editor', function() {
 
     	org.ekstep.contenteditor._loadDefaultPlugins(context, function(){});
 
-    	expect(org.ekstep.pluginframework.pluginManager.loadAllPlugins).toHaveBeenCalledWith(org.ekstep.contenteditor.config.plugins, jasmine.any(Function));
+    	expect(org.ekstep.pluginframework.pluginManager.loadAllPlugins).toHaveBeenCalledWith(org.ekstep.contenteditor.config.plugins, undefined, jasmine.any(Function));
     });
 });

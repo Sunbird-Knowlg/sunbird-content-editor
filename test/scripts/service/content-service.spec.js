@@ -77,10 +77,11 @@ describe('Content service test cases', function() {
             expect(res).toBeDefined();
             expect(res.identifier).toEqual('do_112206722833612800186');
         });
+
+        org.ekstep.services.contentService._setContentMeta('do_112206722833612800186', JSON.parse(content)['do_112188493884006400173']);
         
         var contentMeta = org.ekstep.services.contentService.getContentMeta('do_112206722833612800186');
-        console.log('contentMeta', contentMeta);
-        expect(contentMeta.identifier).toEqual('do_112206722833612800186');
+        expect(contentMeta.identifier).toEqual('do_112188493884006400173');
         expect(contentMeta.languageCode).toEqual('en');
         expect(contentMeta.concepts).toBeDefined();
 

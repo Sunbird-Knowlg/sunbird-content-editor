@@ -1,36 +1,32 @@
 describe("Ekstep editor test", function() {
-    beforeAll(function() {
-        var corePlugins = {
-            "org.ekstep.stage": "1.0",
-            "org.ekstep.utils": "1.0"
-        };
+    beforeAll(function(done) {
+        var corePlugins = [
+            { "id": "org.ekstep.stage", "ver": "1.0", "type": "plugin" },
+            { "id": "org.ekstep.utils", "ver": "1.0", "type": "plugin" }
+        ];
 
         // test plugins
-        org.ekstep.contenteditor.config.plugins = {
-            "org.ekstep.test1": "1.0",
-            "org.ekstep.test2": "1.0",
-            "org.ekstep.test3": "1.0",
-            "org.ekstep.test4": "1.0",
-            "org.ekstep.test5": "1.0",
-            "org.ekstep.test6": "1.0"
-        };
-
-        //load core plugins from s3
-        org.ekstep.pluginframework.resourceManager.initialize(org.ekstep.contenteditor.jQuery);
-        //load core plugins from s3
-        org.ekstep.contenteditor.config.pluginRepo = "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins";
-        org.ekstep.pluginframework.config = {
-            pluginRepo: org.ekstep.contenteditor.config.pluginRepo,
-            draftRepo: "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins"
-        };
-        _.forIn(corePlugins, function(value, key) {
-            org.ekstep.pluginframework.pluginManager.loadPlugin(key, value);
+        org.ekstep.contenteditor.config.plugins = [
+            { "id": "org.ekstep.test1", "ver": "1.0", "type": "plugin" },
+            { "id": "org.ekstep.test2", "ver": "1.0", "type": "plugin" },
+            { "id": "org.ekstep.test3", "ver": "1.0", "type": "plugin" }
+        ];
+        
+        org.ekstep.services.config = {
+            baseURL: org.ekstep.contenteditor.config.baseURL,
+            apislug: org.ekstep.contenteditor.config.apislug
+        }        
+        
+        org.ekstep.pluginframework.initialize({
+            env: 'editor',
+            pluginRepo: "https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/content-plugins",
+            build_number: undefined
         });
-
-        org.ekstep.contenteditor.config.pluginRepo = org.ekstep.pluginframework.config.pluginRepo = "base/test/data/published";
-        org.ekstep.contenteditor.config.draftRepo = org.ekstep.pluginframework.config.draftRepo = "base/test/data/draft";
-        org.ekstep.pluginframework.hostRepo.basePath = "base/test/data/hosted";
-        org.ekstep.pluginframework.hostRepo.connected = true;
+        
+        org.ekstep.pluginframework.pluginManager.loadAllPlugins(corePlugins, undefined, function() {
+            org.ekstep.pluginframework.config.pluginRepo = "base/test/data/published";
+            done();
+        });        
 
         org.ekstep.contenteditor.stageManager.canvas = canvas = new fabric.Canvas('canvas', { backgroundColor: "#FFFFFF", preserveObjectStacking: true, width: 720, height: 405 });
         org.ekstep.contenteditor.stageManager.registerEvents();
@@ -41,13 +37,10 @@ describe("Ekstep editor test", function() {
         org.ekstep.contenteditor.stageManager.cleanUp();
     });
 
-    it('should load plugin', function() {
-        spyOn(org.ekstep.contenteditor.api, "loadPlugin").and.callThrough();
-        spyOn(org.ekstep.pluginframework.pluginManager, "loadPlugin").and.callThrough();
-        org.ekstep.contenteditor.api.loadPlugin("org.ekstep.test1", "1.0");
-        expect(org.ekstep.contenteditor.api.loadPlugin).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.pluginManager.loadPlugin).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.pluginManager.loadPlugin).toHaveBeenCalledWith("org.ekstep.test1", "1.0");
+    it('should load plugin', function() {                
+        spyOn(org.ekstep.pluginframework.pluginManager, "loadPluginWithDependencies").and.callThrough();
+        org.ekstep.contenteditor.api.loadPlugin("org.ekstep.test1", "1.0", function() {});                
+        expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalledWith("org.ekstep.test1", "1.0", "plugin", undefined, jasmine.any(Function));
     });
 
     it('should get plugin repo', function() {
@@ -173,8 +166,8 @@ describe("Ekstep editor test", function() {
                 "rotate": "0",
                 "z-index": "0",
                 "id": "2113ee4e-b090-458e-a0b0-5ee6668cb6dc"
-            };
-            stageInstance = org.ekstep.contenteditor.api.instantiatePlugin(stagePlugin, stageECML);
+            };            
+            stageInstance = org.ekstep.contenteditor.api.instantiatePlugin(stagePlugin, stageECML);            
             stageInstance.setCanvas(canvas);
             spyOn(org.ekstep.contenteditor.api, 'getAngularScope').and.returnValue({ enableSave: function() {}, $safeApply: function() {} });
             spyOn(org.ekstep.contenteditor.api, 'dispatchEvent');

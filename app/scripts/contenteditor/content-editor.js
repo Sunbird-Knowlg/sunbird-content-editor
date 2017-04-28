@@ -7,7 +7,6 @@ org.ekstep.contenteditor.init = function(context, config, $scope, $document, cal
     org.ekstep.contenteditor._initServices();
     org.ekstep.contenteditor.globalContext = context;
     org.ekstep.contenteditor.toolbarManager.setScope($scope);
-    org.ekstep.pluginframework.keyboardManager.initialize($document);
     org.ekstep.contenteditor._loadDefaultPlugins(context, callback);
     //org.ekstep.contenteditor._backwardCompatibility();
 }
@@ -25,13 +24,12 @@ org.ekstep.contenteditor._initServices = function() {
         baseURL: org.ekstep.contenteditor.config.baseURL,
         apislug: org.ekstep.contenteditor.config.apislug
     }
-    org.ekstep.pluginframework.config = {
+    org.ekstep.pluginframework.initialize({ 
+        env: 'editor',
+        jQuery: org.ekstep.contenteditor.jQuery, 
         pluginRepo: org.ekstep.contenteditor.config.pluginRepo,
-        draftRepo: org.ekstep.contenteditor.config.pluginRepo,
-        build_number: org.ekstep.contenteditor.config.build_number
-    }
-    org.ekstep.pluginframework.resourceManager.initialize(org.ekstep.contenteditor.jQuery);
-    org.ekstep.pluginframework.hostRepo.checkConnection();
+        build_number: org.ekstep.contenteditor.config.build_number        
+    });
 }
 
 org.ekstep.contenteditor._mergeConfig = function(config) {
@@ -42,7 +40,7 @@ org.ekstep.contenteditor._mergeConfig = function(config) {
 org.ekstep.contenteditor._loadDefaultPlugins = function(context, callback) {
     var startTime = (new Date()).getTime();
     if(org.ekstep.contenteditor.config.corePluginsPackaged === true) org.ekstep.contenteditor.jQuery("body").append($("<script type='text/javascript' src='scripts/coreplugins.js?" + org.ekstep.contenteditor.config.build_number + "'>"));
-    org.ekstep.pluginframework.pluginManager.loadAllPlugins(org.ekstep.contenteditor.config.plugins, function () {
+    org.ekstep.pluginframework.pluginManager.loadAllPlugins(org.ekstep.contenteditor.config.plugins, undefined, function () {
         org.ekstep.services.telemetryService.initialize({
             uid: context.uid,
             sid: context.sid,
