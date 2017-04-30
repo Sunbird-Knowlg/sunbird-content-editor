@@ -111,7 +111,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
                         instance.content[contentId].versionKey = res.data.result.versionKey;
                         callback(undefined, res);                        
                     } else {
-                        callback(true, undefined);
+                        callback(true, res);
                     } 
                 });
             } else {
@@ -147,6 +147,34 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             });
         } else {
             callback('Content id is required to get content from platform', undefined);
+        }
+    },
+    /**
+    *
+    *
+    * retrieves the versionKey
+    * @param contentId {string} content id
+    * @param callback {function} callback function
+    *
+    * @memberof org.ekstep.services.contentService
+    */
+    getContentVersionKey: function(contentId, callback) {
+        var instance = this;
+        if (contentId) {
+            var metaDataFields = "?mode=edit&fields=" + "versionKey";
+            instance.get(this.serviceURL() + 'v2/content/' + contentId + metaDataFields, {}, function(err, res) {
+                /* istanbul ignore else */
+                if (err) callback(err, undefined);
+                if (!err && res.data && res.data.result && res.data.result.content) {
+                    instance._setContentMeta(contentId, res.data.result.content);
+                    callback(err, res.data.result.content);
+                } else {
+                    callback(new Error('no content found!'), undefined)
+                }
+
+            });
+        } else {
+            callback('Content id is required to get versionKey from platform', undefined);
         }
     },
     /**

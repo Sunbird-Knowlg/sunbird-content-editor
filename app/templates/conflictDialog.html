@@ -1,0 +1,49 @@
+<script type="text/ng-template" id="conflictDialog.html">
+    <div class="ui page active dimmer popupZindex">
+  <div class="content">
+    <div>
+      <div style="background-color: #ffe8e6;max-width:650px;max-height: auto; border: 1px solid #333333; padding: 2px 2px; margin: 0 auto;box-shadow: 0 0 0 1px #db2828 inset, 0 0 0 0 transparent;">
+        <div class="ui large negative message" style="box-shadow:none;">
+          <div class="header" style="text-align:left;">
+            Conflicting changes
+          </div>
+          <ul class="list">
+            <li>There is an existing copy of your lesson on the platform</li>
+            <li>Please select which copy you would like to keep</li>
+          </ul>
+        </div>
+        <div class="ui grid" style="padding-bottom:10px;padding-left:6px;">
+          <div class="sixteen column row">
+            <div class="left floated ten wide column">
+             
+              <div class="ui accordion" style="text-align:left;">
+                <div class="title">
+                  <i class="dropdown icon"></i> Advanced options
+                </div><!-- accordion title -->
+                <div class="content">
+                  <div class="ui primary button" ng-click="previewContent();"><i class="fa fa-eye"></i> Preview content</div>
+                  <div class="ui secondary button" ng-click="previewPlatformContent();"><i class="fa fa-eye"></i> Preview platform copy</div>
+                </div> <!-- accordion content -->
+              </div> <!-- main accordion -->
+            </div><!-- close column -->
+              <!--close advanced options -->
+              <div class="right floated six wide column">
+                <div>
+                  <div class="ui primary basic button" ng-click="saveBrowserContent();"><i class="cloud upload icon"></i> Save</div>
+                  <div class="ui primary basic button" ng-click="refreshContent();"><i class="refresh icon"></i> Refresh</div>
+                </div><!-- 2 buttons container -->
+              </div> <!-- rigth floated div close -->
+          </div> <!-- close row -->
+        </div> <!-- close grid -->
+        </div>
+        <!--border div -->
+      </div>
+      <!-- center div -->
+    </div>
+    <!-- content -->
+  </div>
+  <!-- ui page -->
+
+
+</script>
+
