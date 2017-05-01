@@ -78,8 +78,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         };        
 
         $scope.addToSidebar = function(sidebar) {
-            $scope.registeredCategories.push(sidebar);                                                
-            $scope.configCategory.selected = sidebar.id;
+            $scope.registeredCategories.push(sidebar);                                                            
             $scope.$safeApply();
         };
 
@@ -329,6 +328,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.stages = org.ekstep.contenteditor.api.getAllStages();
             $scope.currentStage = org.ekstep.contenteditor.api.getCurrentStage();
             $scope.sidebarMenus = org.ekstep.contenteditor.sidebarManager.getSidebarMenu();
+            $scope.configCategory.selected = $scope.sidebarMenus[0].id;
 
             $scope.loadContent();
             /* KeyDown event to show ECML */
