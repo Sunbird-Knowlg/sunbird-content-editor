@@ -82,15 +82,14 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
     _saveContent: function(contentId, metadata, body, callback) {
 
         var instance = this;
-        var versionKey = instance.content[contentId] && instance.content[contentId].versionKey;
-        var DEFAULT_COMPATIBILITY_LEVEL = 2; //renderer
+        var versionKey = instance.content[contentId] && instance.content[contentId].versionKey;        
 
         if (contentId && versionKey) {
             var update = false;
             var content = {
                 versionKey: versionKey,
                 lastUpdatedBy: window.context.user.id,
-                compatibilityLevel: ManifestGenerator.getCompatibilityVersion() || DEFAULT_COMPATIBILITY_LEVEL
+                compatibilityLevel: body.theme.compatibilityVersion
             }
             if (metadata) {
                 update = true;
