@@ -88,8 +88,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             var update = false;
             var content = {
                 versionKey: versionKey,
-                lastUpdatedBy: window.context.user.id,
-                compatibilityLevel: body.theme.compatibilityVersion
+                lastUpdatedBy: window.context.user.id                
             }
             if (metadata) {
                 update = true;
@@ -98,6 +97,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
                 }
             }
             if (body) {
+                content.compatibilityLevel = body.theme.compatibilityVersion;
                 content['body'] = JSON.stringify(body);
                 update = true;
             }
