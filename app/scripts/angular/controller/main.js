@@ -121,12 +121,76 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 // TODO: Show saving dialog
                 var contentBody = org.ekstep.contenteditor.stageManager.toECML();
                 $scope.patchContent({ stageIcons: JSON.stringify(org.ekstep.contenteditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
-                    if (res) $scope.saveNotification('success');
-                    if (err) $scope.saveNotification('error'); 
+                    if (res && res.data.responseCode == "OK") $scope.saveNotification('success');
+                    if (err) {
+                        if(res && (res.responseJSON.params.err == "ERR_STALE_VERSION_KEY")){
+                            $scope.showConflictDialog();
+                        } else {
+                            $scope.saveNotification('error'); 
+                            // $scope.showConflictDialog();
+                        }
+                    }
                     $scope.saveBtnEnabled = true;                                                           
                 });
             }
         }
+
+        $scope.saveBrowserContent = function() {
+            // Fetch latest versionKey and then save the content from browser
+            $scope.fetchPlatformContentVersionKey(function(platformContentVersionKey){
+                //Invoke save function here...
+                $scope.saveContent();
+            });
+        }
+
+        $scope.refreshContent = function() {
+            // Refresh the browser as user want to fetch the version from platform
+            location.reload();
+        }
+
+        $scope.previewPlatformContent = function(){
+            debugger;
+            // Fetch latest content body from Platform and then show preview
+            $scope.fetchPlatformContentBody(function(platformContentBody){
+                org.ekstep.pluginframework.eventManager.dispatchEvent("atpreview:show", { contentBody: platformContentBody, 'currentStage': true }); 
+            });
+        };
+
+        $scope.fetchPlatformContentBody = function(cb) {
+            // Get the latest VersionKey and then save content
+            org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContent(org.ekstep.contenteditor.api.getContext('contentId'), function(err, content) {
+                if (err) {
+                    alert("Failed to get updated content. Please report an issue.");
+                }
+                if (content && content.body) {
+                    try {
+                        debugger;
+                        var contentBody = JSON.parse(content.body);
+                        cb(contentBody);
+                    } catch (e) {
+                        alert("Failed to parse body from platform. Please report an issue.");
+                        //contentBody = $scope.convertToJSON(content.body);
+                    }
+                }
+            });
+        };
+
+        $scope.fetchPlatformContentVersionKey = function(cb) {
+            // Get the latest VersionKey and then save content
+            org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContentVersionKey(org.ekstep.contenteditor.api.getContext('contentId'), function(err, content) {
+                if (err) {
+                    alert("Failed to get updated version key. Please report an issue.");
+                }
+                // if versionKey is available, pass success and save
+                if (content.versionKey) {
+                    cb(content);
+                }
+            });
+        };
+
+
+
+        
 
         $scope.patchContent = function(metadata, body, cb) {
             if ($scope.migrationFlag) {
@@ -233,6 +297,34 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             }
             $scope.popupService.open(config);
         };
+
+        $scope.showConflictDialog = function(){
+            var instance = $scope;
+            $scope.popupService.open({
+                template: 'conflictDialog.html',
+                controller: ['$scope', function($scope) {
+                    //Platform copy
+                    $scope.previewPlatformContent = function(){
+                        instance.previewPlatformContent();
+                    };
+                    $scope.saveBrowserContent = function(){
+                        instance.saveBrowserContent();
+                        $scope.closeThisDialog();
+                    };
+                    //Existing copy
+                    $scope.previewContent = function(){
+                        instance.previewContent();
+                    };
+                    $scope.refreshContent = function(){
+                        instance.refreshContent();
+                    };
+                }],
+                showClose: false,
+                closeByDocument: false,
+                closeByEscape: false
+            });
+        };
+
         $scope.showMigratedContentSaveDialog = function(callback) {
             var instance = $scope;
             $scope.popupService.open({
@@ -256,6 +348,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             setTimeout(function() {
                 org.ekstep.contenteditor.jQuery(".ui.dropdown").dropdown();
                 org.ekstep.contenteditor.jQuery(".popup-item").popup();
+                org.ekstep.contenteditor.jQuery(".ui.accordion").accordion();
             }, 500);
         }
 

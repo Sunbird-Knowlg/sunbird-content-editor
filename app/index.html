@@ -105,6 +105,7 @@
                         </button> -->
                         <div ng-include="'templates/saveSuccessMessage.html'"></div>
                         <div ng-include="'templates/saveErrorMessage.html'"></div>
+                        <div ng-include="'templates/conflictDialog.html'"></div>
                         <div ng-include="'templates/migratedContentSaveMsg.html'"></div>
                         <button ng-class="saveBtnEnabled ? 'ui compact icon button right floated ce-button' : 'ui compact icon button right floated disabled'" ng-click="saveContent(); fireToolbarTelemetry({id: 'save'}, 'saveButton')" ng-disabled="!contentId" style="margin-left: 5px;">
                             <i class="icon-save icon"></i> Save
