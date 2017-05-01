@@ -149,7 +149,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         $scope.previewPlatformContent = function(){
-            debugger;
             // Fetch latest content body from Platform and then show preview
             $scope.fetchPlatformContentBody(function(platformContentBody){
                 org.ekstep.pluginframework.eventManager.dispatchEvent("atpreview:show", { contentBody: platformContentBody, 'currentStage': true }); 
@@ -164,7 +163,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 }
                 if (content && content.body) {
                     try {
-                        debugger;
                         var contentBody = JSON.parse(content.body);
                         cb(contentBody);
                     } catch (e) {
@@ -318,7 +316,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     $scope.refreshContent = function(){
                         instance.refreshContent();
                     };
+                    $scope.showAdvancedOption = false;
                 }],
+                className: 'ngdialog-theme-plain',
                 showClose: false,
                 closeByDocument: false,
                 closeByEscape: false
@@ -347,8 +347,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.refreshToolbar = function() {
             setTimeout(function() {
                 org.ekstep.contenteditor.jQuery(".ui.dropdown").dropdown();
-                org.ekstep.contenteditor.jQuery(".popup-item").popup();
-                org.ekstep.contenteditor.jQuery(".ui.accordion").accordion();
+                org.ekstep.contenteditor.jQuery(".popup-item").popup();                
             }, 500);
         }
 

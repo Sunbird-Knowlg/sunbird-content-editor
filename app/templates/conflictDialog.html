@@ -1,4 +1,9 @@
 <script type="text/ng-template" id="conflictDialog.html">
+<style>
+  .ngdialog-content {
+    padding: 0 !important;
+  }
+</style>
     <div class="ui page active dimmer popupZindex">
   <div class="content">
     <div>
@@ -17,12 +22,15 @@
             <div class="left floated ten wide column">
              
               <div class="ui accordion" style="text-align:left;">
-                <div class="title">
-                  <i class="dropdown icon"></i> Advanced options
+                <div class="title" ng-click="showAdvancedOption = !showAdvancedOption">
+                  <i class="dropdown icon" ng-if="!showAdvancedOption"></i>
+                  <i class="dropdown icon" ng-if="showAdvancedOption" style="transform: rotate(90deg);"></i> Advanced options
                 </div><!-- accordion title -->
-                <div class="content">
+                <div class="content transition {{showAdvancedOption ? 'visible': 'hidden'}}">
                   <div class="ui primary button" ng-click="previewContent();"><i class="fa fa-eye"></i> Preview content</div>
                   <div class="ui secondary button" ng-click="previewPlatformContent();"><i class="fa fa-eye"></i> Preview platform copy</div>
+                  <br>
+                  <br>
                 </div> <!-- accordion content -->
               </div> <!-- main accordion -->
             </div><!-- close column -->
