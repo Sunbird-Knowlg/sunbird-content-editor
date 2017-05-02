@@ -88,10 +88,10 @@ org.ekstep.services.iService = Class.extend({
                 res = { data: res };
                 cb(null, res);                
             },
-            error: function(err) {
-                err.responseTime = (new Date()).getTime() - requestTimestamp;
-                cb(err, null);
-                instance._dispatchTelemetry({url: url, method: "PATCH", request: data, res: err });
+            error: function(xhr, status, error) {
+                xhr.responseTime = (new Date()).getTime() - requestTimestamp;
+                cb(xhr, null);
+                instance._dispatchTelemetry({url: url, method: "PATCH", request: data, res: xhr });
             }
         });
     },
