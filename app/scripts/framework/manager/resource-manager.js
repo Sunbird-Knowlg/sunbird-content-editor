@@ -43,7 +43,7 @@ org.ekstep.pluginframework.resourceManager = new(Class.extend({
         });
 
         if (!repoFound) {
-            if (!_.isUndefined(position)) this.registeredRepos.splice(position, 0, repo)
+            if (typeof position === 'number') this.registeredRepos.splice(position, 0, repo)
             else this.registeredRepos.push(repo);
         } else {
             console.error(repo.id + ': Repo already registered!');
