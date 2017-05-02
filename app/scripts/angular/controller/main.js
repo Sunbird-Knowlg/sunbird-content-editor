@@ -122,11 +122,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 var contentBody = org.ekstep.contenteditor.stageManager.toECML();
                 $scope.patchContent({ stageIcons: JSON.stringify(org.ekstep.contenteditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
                     if (err) {
-                        if(res && (res.responseJSON.params.err == "ERR_STALE_VERSION_KEY")){
+                        if(res && !ecEditor._.isUndefined(res.responseJSON)){
+                            // This could be converted to switch..case to handle different error codes
+                            if (res.responseJSON.params.err == "ERR_STALE_VERSION_KEY")
                             $scope.showConflictDialog();
                         } else {
                             $scope.saveNotification('error'); 
-                            // $scope.showConflictDialog();
                         }
                     }else if(res && res.data.responseCode == "OK"){
                         $scope.saveNotification('success');
@@ -322,8 +323,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 }],
                 className: 'ngdialog-theme-plain',
                 showClose: false,
-                closeByDocument: false,
-                closeByEscape: false
+                closeByDocument: true,
+                closeByEscape: true
             });
         };
 
