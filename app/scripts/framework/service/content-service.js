@@ -110,7 +110,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
                         instance.content[contentId].versionKey = res.data.result.versionKey;
                         callback(undefined, res);                        
                     } else {
-                        callback(true, res);
+                        callback(true, err);
                     } 
                 });
             } else {
