@@ -88,7 +88,7 @@ var ManifestGenerator = new(Class.extend({
             if(manifest.renderer.dependencies && manifest.renderer.dependencies.length > 0) {
                 _.forEach(manifest.renderer.dependencies, function(dependency) {
                     instance.mediaManifest.push({
-                        id: UUID(),
+                        id: dependency.id || UUID(),
                         plugin: manifest.id,
                         ver: manifest.ver,
                         src: _PM_.resolvePluginResource(manifest.id, manifest.ver, dependency.src),
