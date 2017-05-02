@@ -69,6 +69,8 @@ org.ekstep.pluginframework.resourceManager = new(Class.extend({
                 org.ekstep.pluginframework.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + resource + "'>");
                 if (callback) callback();
                 break;
+            default:
+                if (callback) callback();
         }
     },
     loadResource: function(url, dataType, callback, publishedTime) {
