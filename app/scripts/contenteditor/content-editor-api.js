@@ -540,8 +540,8 @@ window.org.ekstep.contenteditor.api = {
     registerKeyboardCommand: function(command, callback) {
         org.ekstep.pluginframework.keyboardManager.registerKeyCombination(command, callback);
     },
-    addResourceRepository: function(repo) {
-        if (repo) org.ekstep.pluginframework.resourceManager.addRepo(repo);
+    addResourceRepository: function(repo, position) {
+        if (repo) org.ekstep.pluginframework.resourceManager.addRepo(repo, position);
     }
 }
 
