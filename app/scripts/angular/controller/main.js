@@ -121,7 +121,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 // TODO: Show saving dialog
                 var contentBody = org.ekstep.contenteditor.stageManager.toECML();
                 $scope.patchContent({ stageIcons: JSON.stringify(org.ekstep.contenteditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
-                    if (res && res.data.responseCode == "OK") $scope.saveNotification('success');
                     if (err) {
                         if(res && (res.responseJSON.params.err == "ERR_STALE_VERSION_KEY")){
                             $scope.showConflictDialog();
@@ -129,7 +128,10 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                             $scope.saveNotification('error'); 
                             // $scope.showConflictDialog();
                         }
+                    }else if(res && res.data.responseCode == "OK"){
+                        $scope.saveNotification('success');
                     }
+                    
                     $scope.saveBtnEnabled = true;                                                           
                 });
             }
