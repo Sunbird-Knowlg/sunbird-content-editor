@@ -70,11 +70,12 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     _registerNameSpace: function(pluginId, clazz) {
         var names = pluginId.split('.')
         var baseNameSpace = names[0];
+        var lastKey = names[names.length-1];
         names.splice(0, 1);
-        names = names.join('.')
         if (!window[baseNameSpace]) {
             window[baseNameSpace] = {};
         }
+        
         var pluginClazz = Class.extend({
             init: function(data, parent, override) {
                 org.ekstep.pluginframework.pluginManager.invoke(pluginId, data, parent, override);
@@ -83,8 +84,10 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         pluginClazz.extend = function(subClazz) {
             return clazz.extend(subClazz);
         }
-        window[baseNameSpace] = window[baseNameSpace] || {};
-        window[baseNameSpace].names = pluginClazz;
+        names.reduce(function(o, s) {
+            var val = ((s === lastKey) ? pluginClazz : {});
+            return (o[s] === undefined) ? o[s] = val : o[s] 
+        }, window[baseNameSpace]);
     },
     loadAndInitPlugin: function(pluginId, version, publishedTime, parent) {
         this.loadPluginWithDependencies(pluginId, version, undefined, publishedTime, function() {});
