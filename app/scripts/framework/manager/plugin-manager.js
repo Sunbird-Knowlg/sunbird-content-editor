@@ -274,9 +274,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 }
             }, 1);
             otherDependencies.forEach(function(dep) {
-                if (!dep.id || !instance.isPluginDefined(dep.id)) {
-                    queue.push(dep, function(err) {});
-                }
+                queue.push(dep, function(err) {});
             });
             if (queue.length() > 0) {
                 queue.drain = function() {
