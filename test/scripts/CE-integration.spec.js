@@ -1,4 +1,4 @@
-describe("plugin framework integration test: ", function() {
+describe("content editor integration test: ", function() {
     jasmine.getEnv().defaultTimeoutInterval = 15000;
     var corePlugins,
         canvas,
@@ -10,6 +10,10 @@ describe("plugin framework integration test: ", function() {
         org.ekstep.contenteditor.toolbarManager.cleanUp();
     }
 
+    afterAll(function() {
+        cleanUp();
+    });
+
     beforeAll(function(done) {
         cleanUp();
 
@@ -17,14 +21,16 @@ describe("plugin framework integration test: ", function() {
         org.ekstep.contenteditor.globalContext = {};
         corePlugins = [
             { "id": "org.ekstep.stage", "ver": "1.0", "type": "plugin" },
-            { "id": "org.ekstep.shape", "ver": "1.0", "type": "plugin" }
+            { "id": "org.ekstep.shape", "ver": "1.0", "type": "plugin" },
+            { "id": "org.ekstep.utils", "ver": "1.0", "type": "plugin" }
         ];
 
         // test plugins
         org.ekstep.contenteditor.config = {
             plugins: [
                 { "id": "org.ekstep.test1", "ver": "1.0", "type": "plugin" },
-                { "id": "org.ekstep.test2", "ver": "1.0", "type": "plugin" }
+                { "id": "org.ekstep.test2", "ver": "1.0", "type": "plugin" },
+                { "id": "org.ekstep.test3", "ver": "1.0", "type": "plugin" }
             ],
             corePlugins: ["text", "audio", "div", "hotspot", "image", "shape", "scribble", "htext"],
             corePluginMapping: {
@@ -69,17 +75,63 @@ describe("plugin framework integration test: ", function() {
         org.ekstep.contenteditor.stageManager.registerEvents();
     });
 
-    describe('when plugin load and register', function() {
-        it("should register plugins with plugin manager", function(done) {
-            org.ekstep.pluginframework.pluginManager.loadAllPlugins(org.ekstep.contenteditor.config.plugins, undefined, function() {
-                _.forEach(org.ekstep.contenteditor.config.plugins, function(plugin) {
-                    expect(org.ekstep.pluginframework.pluginManager.isPluginDefined(plugin.id)).toBe(true);
-                    expect(org.ekstep.pluginframework.pluginManager.getPluginManifest(plugin.id)).toBeDefined();
-                });
-                done();
+    it("should register plugins with plugin manager", function(done) {
+        spyOn(org.ekstep.pluginframework.resourceManager, "discoverManifest").and.callThrough();
+        spyOn(org.ekstep.pluginframework.publishedRepo, "discoverManifest").and.callThrough();                
+        spyOn(org.ekstep.pluginframework.resourceManager, "loadExternalResource").and.callThrough();        
+        
+        org.ekstep.pluginframework.pluginManager.loadAllPlugins(org.ekstep.contenteditor.config.plugins, undefined, function() {
+            expect(org.ekstep.pluginframework.resourceManager.discoverManifest).toHaveBeenCalled();
+            expect(org.ekstep.pluginframework.resourceManager.discoverManifest.calls.count()).toEqual(3);
+            expect(org.ekstep.pluginframework.publishedRepo.discoverManifest).toHaveBeenCalled();
+            expect(org.ekstep.pluginframework.publishedRepo.discoverManifest.calls.count()).toEqual(3);
+            expect(org.ekstep.pluginframework.resourceManager.loadExternalResource).toHaveBeenCalled();
+            expect(org.ekstep.pluginframework.resourceManager.loadExternalResource.calls.count()).toEqual(2);  
+            expect(org.ekstep.pluginframework.pluginManager.plugins).not.toBe({});            
+            expect(Object.keys(org.ekstep.pluginframework.pluginManager.plugins).length).toEqual(6);
+            _.forEach(org.ekstep.contenteditor.config.plugins, function(plugin) {
+                expect(org.ekstep.pluginframework.pluginManager.isPluginDefined(plugin.id)).toBe(true);
+                expect(org.ekstep.pluginframework.pluginManager.getPluginManifest(plugin.id)).toBeDefined();
             });
+            done();
         });
 
+    });
+
+    it("should register menu", function() {
+        var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.test1");
+        spyOn(org.ekstep.contenteditor.toolbarManager, "registerMenu").and.callThrough();
+        org.ekstep.contenteditor.toolbarManager.registerMenu(manifest.editor.menu);
+        expect(org.ekstep.contenteditor.toolbarManager.registerMenu).toHaveBeenCalled();
+        expect(org.ekstep.contenteditor.toolbarManager.menuItems.length).toEqual(3);
+    });
+
+    it("should register context menu", function() {
+        var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.utils");
+        spyOn(org.ekstep.contenteditor.toolbarManager, "registerContextMenu").and.callThrough();
+        org.ekstep.contenteditor.toolbarManager.registerContextMenu(manifest.editor.menu);
+        expect(org.ekstep.contenteditor.toolbarManager.registerContextMenu).toHaveBeenCalled();
+        expect(org.ekstep.contenteditor.toolbarManager.contextMenuItems.length).toEqual(5);                
+    });
+
+    it("should update context menu", function() {
+        var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.utils");
+        spyOn(org.ekstep.contenteditor.toolbarManager, "updateContextMenu").and.callThrough();
+        org.ekstep.contenteditor.toolbarManager.updateContextMenu(manifest.editor.menu);
+        expect(org.ekstep.contenteditor.toolbarManager.updateContextMenu).toHaveBeenCalled();
+    });
+
+    it("should reset context menu", function() {
+        spyOn(org.ekstep.contenteditor.toolbarManager, "resetContextMenu").and.callThrough();
+        org.ekstep.contenteditor.toolbarManager.resetContextMenu();
+        expect(org.ekstep.contenteditor.toolbarManager.resetContextMenu).toHaveBeenCalled();
+    });
+
+    it("should setscope", function() {
+        spyOn(org.ekstep.contenteditor.toolbarManager, "setScope").and.callThrough();
+        org.ekstep.contenteditor.toolbarManager.setScope(org.ekstep.contenteditor.api.getAngularScope());
+        expect(org.ekstep.contenteditor.toolbarManager.setScope).toHaveBeenCalled();
+        expect(org.ekstep.contenteditor.toolbarManager.scope).toBe(org.ekstep.contenteditor.api.getAngularScope());
     });
 
     describe('when stage plugin instantiated', function() {
@@ -506,6 +558,171 @@ describe("plugin framework integration test: ", function() {
             //expect(dims.w.toString()).toBe(test1ECML.w); 
             expect(dims.rotate.toString()).toBe(test1ECML.rotate);
         });
+
+        // API test case starts
+
+        it('should retrns the current stage', function() {
+            spyOn(org.ekstep.contenteditor.api, "getCurrentStage").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getCurrentStage();
+            expect(org.ekstep.contenteditor.api.getCurrentStage).toHaveBeenCalled();
+            expect(returnValue).toBeDefined();
+        });
+
+        it('should retrns the specified stage', function() {
+            spyOn(org.ekstep.contenteditor.api, "getStage").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getStage(stageInstance.id);
+            expect(org.ekstep.contenteditor.api.getStage).toHaveBeenCalled();
+            expect(returnValue).toBeDefined();
+        });
+
+        it('should return currently selected active object on the canvas', function() {
+            spyOn(org.ekstep.contenteditor.api, "getCurrentObject").and.callThrough();
+            spyOn(org.ekstep.contenteditor.api, "getPluginInstance").and.callThrough();
+            var currentObject = org.ekstep.contenteditor.api.getCurrentObject();
+            var currentObject = org.ekstep.contenteditor.api.getPluginInstance(currentObject.id);
+            expect(org.ekstep.contenteditor.api.getCurrentObject).toHaveBeenCalled();
+            expect(org.ekstep.contenteditor.api.getPluginInstance).toHaveBeenCalled();
+            expect(currentObject).toBeDefined();
+        });
+
+        it('should return false there is no selected object on the canvas', function() {
+            spyOn(org.ekstep.contenteditor.api, "getCurrentObject").and.callThrough();
+            org.ekstep.contenteditor.stageManager.canvas.deactivateAll().renderAll();
+            var currentObject = org.ekstep.contenteditor.api.getCurrentObject();
+            expect(org.ekstep.contenteditor.api.getCurrentObject).toHaveBeenCalled();
+        });
+
+        it('should retrns current group', function() {
+            spyOn(org.ekstep.contenteditor.api, "getEditorGroup").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getEditorGroup();
+            expect(org.ekstep.contenteditor.api.getEditorGroup).toHaveBeenCalled();
+            expect(returnValue).toBe(null);
+        });
+
+        it('should retrns current object on the fabric canvas', function() {
+            spyOn(org.ekstep.contenteditor.api, "getEditorObject").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getEditorObject();
+            expect(org.ekstep.contenteditor.api.getEditorObject).toHaveBeenCalled();
+            expect(returnValue).toBeDefined();
+        });
+
+        it('should refresh the canvas', function() {
+            spyOn(org.ekstep.contenteditor.api, "render").and.callThrough();
+            org.ekstep.contenteditor.api.render();
+            expect(org.ekstep.contenteditor.api.render).toHaveBeenCalled();
+        });
+
+        it('should return plugin instance', function() {
+            spyOn(org.ekstep.contenteditor.api, "getPlugin").and.callThrough();
+            var pluginid = org.ekstep.contenteditor.api.getPlugin("org.ekstep.test1");
+            expect(org.ekstep.contenteditor.api.getPlugin).toHaveBeenCalled();
+            expect(pluginid).toBeDefined();
+        });
+
+        it('should adds a plugin instance to the manager', function() {
+            spyOn(org.ekstep.pluginframework.pluginManager, "addPluginInstance").and.callThrough();
+            var length = Object.keys(org.ekstep.pluginframework.pluginManager.pluginInstances).length;
+            org.ekstep.contenteditor.api.addPluginInstance(test1pluginInstance);
+            expect(org.ekstep.pluginframework.pluginManager.addPluginInstance).toHaveBeenCalledWith(test1pluginInstance);
+        });
+
+        it("should remove plugin instance by calling removePluginInstance", function() {
+            var PIlength = Object.keys(org.ekstep.pluginframework.pluginManager.pluginInstances).length;
+            var lastPI = org.ekstep.pluginframework.pluginManager.pluginInstances[Object.keys(org.ekstep.pluginframework.pluginManager.pluginInstances)[0]];
+            spyOn(org.ekstep.contenteditor.api, "removePluginInstance").and.callThrough();
+            org.ekstep.contenteditor.api.removePluginInstance(lastPI);
+            expect(org.ekstep.contenteditor.api.removePluginInstance).toHaveBeenCalled();
+            expect(Object.keys(org.ekstep.pluginframework.pluginManager.pluginInstances).length).not.toEqual(PIlength);
+        });
+
+        it('should get all stages', function() {            
+            var length = org.ekstep.contenteditor.stageManager.stages.length;            
+            expect(org.ekstep.contenteditor.api.getAllStages().length).toEqual(length);
+        });
+
+        it('should copy of the given plugin object', function() {
+            spyOn(org.ekstep.contenteditor.api, "cloneInstance").and.callThrough();
+            spyOn(org.ekstep.contenteditor.api, "instantiatePlugin").and.callThrough();
+            org.ekstep.contenteditor.api.cloneInstance(test1pluginInstance);
+            expect(org.ekstep.contenteditor.api.cloneInstance).toHaveBeenCalled();
+            expect(org.ekstep.contenteditor.api.instantiatePlugin).toHaveBeenCalled();
+            expect(test1pluginInstance.parent.id).toEqual(org.ekstep.contenteditor.api.getCurrentStage().id);
+        });
+
+        it('should call getStagePluginInstances without includeTypes (a)', function() {
+            spyOn(org.ekstep.contenteditor.api, "getStagePluginInstances").and.callThrough();
+            spyOn(org.ekstep.contenteditor.api, "getStage").and.returnValue(stageInstance);                        
+            var returnValue = org.ekstep.contenteditor.api.getStagePluginInstances(stageInstance.id, null, ['org.ekstep.audio'], undefined);            
+            expect(returnValue.length).toBeGreaterThan(0);
+            expect(org.ekstep.contenteditor.api.getStage).toHaveBeenCalled();
+            expect(org.ekstep.contenteditor.api.getStage).toHaveBeenCalledWith(org.ekstep.contenteditor.api.getCurrentStage().id);
+        });
+
+        it('should call getStagePluginInstances with includeTypes', function() {
+            spyOn(org.ekstep.contenteditor.api, "getStagePluginInstances").and.callThrough();
+            spyOn(org.ekstep.contenteditor.api, "getStage").and.callThrough()
+            var returnValue = org.ekstep.contenteditor.api.getStagePluginInstances(org.ekstep.contenteditor.api.getCurrentStage().id, ['org.ekstep.test2'], ['org.ekstep.audio'], [org.ekstep.contenteditor.api.getCurrentObject().id]);
+            expect(returnValue.length).toBe(0);
+            expect(org.ekstep.contenteditor.api.getStage).toHaveBeenCalled();
+            expect(org.ekstep.contenteditor.api.getStage).toHaveBeenCalledWith(org.ekstep.contenteditor.api.getCurrentStage().id);
+        });
+
+        it('should call getStagePluginInstances without excludeTypes and excludeIds', function() {
+            spyOn(org.ekstep.contenteditor.api, "getStagePluginInstances").and.callThrough();
+            spyOn(org.ekstep.contenteditor.api, "getStage").and.callThrough()
+            var returnValue = org.ekstep.contenteditor.api.getStagePluginInstances(org.ekstep.contenteditor.api.getCurrentStage().id, ['org.ekstep.test2']);
+            expect(returnValue.length).toBe(0);
+            expect(org.ekstep.contenteditor.api.getStage).toHaveBeenCalled();
+            expect(org.ekstep.contenteditor.api.getStage).toHaveBeenCalledWith(org.ekstep.contenteditor.api.getCurrentStage().id);
+        });
+
+        it('should call getPluginInstances without includeTypes (b)', function() {
+            spyOn(org.ekstep.contenteditor.api, "getPluginInstances").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getPluginInstances(null, ['org.ekstep.shape'], [org.ekstep.contenteditor.api.getCurrentObject().id]);
+            expect(returnValue.length).toBeGreaterThan(0);
+        });
+
+        it('should call getPluginInstances without includeTypes (c)', function() {
+            spyOn(org.ekstep.contenteditor.api, "getPluginInstances").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getPluginInstances(['org.ekstep.test1'], ['org.ekstep.shape'], [org.ekstep.contenteditor.api.getCurrentObject().id]);
+            expect(returnValue.length).toBe(1);
+        });
+
+        it('should call getPluginInstances without excludeTypes and excludeIds', function() {
+            spyOn(org.ekstep.contenteditor.api, "getPluginInstances").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getPluginInstances(['org.ekstep.test1']);
+            expect(returnValue.length).toBeGreaterThan(0);
+        });
+
+        it("should return help.md path by calling resolvePluginResource", function() {
+            spyOn(org.ekstep.contenteditor.api, "resolvePluginResource").and.callThrough();
+            spyOn(org.ekstep.pluginframework.pluginManager, "resolvePluginResource").and.callThrough();
+            var src = org.ekstep.contenteditor.api.resolvePluginResource("org.ekstep.test2", "1.0", "editor/help.md");
+            expect(org.ekstep.pluginframework.pluginManager.resolvePluginResource).toHaveBeenCalled();
+            expect(src).toBe("base/test/data/published/org.ekstep.test2-1.0/editor/help.md");
+        });
+
+        it("should return media object", function() {
+            var audio = '{"asset" : "do_10095959","assetMedia" : {"id" : "do_10095959", "name" : "test ","preload" : "true","src : https://ekstep-public-dev.s3-ap-south-1.amazonaws.com/content/1475505176audio_1475505049712.mp3","type" : "audio"}}';
+            org.ekstep.contenteditor.mediaManager.mediaMap["do_10095959"] = audio;
+            spyOn(org.ekstep.contenteditor.api, "getMedia").and.callThrough();
+            var returnValue = org.ekstep.contenteditor.api.getMedia("do_10095959");
+            expect(org.ekstep.contenteditor.api.getMedia).toHaveBeenCalled();
+            expect(returnValue).toEqual(audio);
+        });
+
+        it("should return the plugins group array", function() {
+            var canvas = org.ekstep.contenteditor.stageManager.canvas,
+                group = new fabric.Group();
+            group.add(org.ekstep.contenteditor.stageManager.canvas.getObjects()[0]);
+            group.add(org.ekstep.contenteditor.stageManager.canvas.getObjects()[1]);
+            canvas.setActiveGroup(group);
+            canvas.add(group);
+            spyOn(org.ekstep.contenteditor.api, "getCurrentGroup").and.callThrough();
+            expect(org.ekstep.contenteditor.api.getCurrentGroup().length).toEqual(2);
+        });
+        // API test case ends
+
     });
 
     describe('when new ECML content is loaded to framework', function() {
@@ -652,3 +869,4 @@ describe("plugin framework integration test: ", function() {
 
     });
 });
+
