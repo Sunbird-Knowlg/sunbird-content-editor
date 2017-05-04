@@ -47,7 +47,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             console.error('Unable to instantiate telemetry service');
             this.initialized = false;
         }
-        if (!dispatcher) this.addDispatcher(dispatcher);
+        this.addDispatcher(dispatcher);
 
         window.addEventListener('beforeunload', /* istanbul ignore next */ function() {
             instance.end();
