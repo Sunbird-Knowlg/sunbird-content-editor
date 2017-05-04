@@ -350,7 +350,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.refreshToolbar = function() {
             setTimeout(function() {
                 org.ekstep.contenteditor.jQuery(".ui.dropdown").dropdown();
-                org.ekstep.contenteditor.jQuery(".popup-item").popup();                
+                org.ekstep.contenteditor.jQuery(".popup-item").popup();
+                $scope.$safeApply();                
             }, 500);
         }
 
