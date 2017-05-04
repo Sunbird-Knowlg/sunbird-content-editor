@@ -17,12 +17,12 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         if (manifest) this.pluginManifests[manifest.id] =  manifest;
         org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:load', { plugin: pluginId, version: pluginVer });
         org.ekstep.pluginframework.eventManager.dispatchEvent(pluginId + ':load');
+        var p = new plugin(manifest); 
+        if (manifest) this.pluginObjs[manifest.id] = p;                
     },
     registerPlugin: function(manifest, plugin, repo) {
         repo = repo || org.ekstep.pluginframework.publishedRepo;
-        this._registerPlugin(manifest.id, manifest.ver, plugin, manifest, repo);
-        var p = new plugin(manifest); // Initialize Global instance of the plugin
-        this.pluginObjs[manifest.id] = p;
+        this._registerPlugin(manifest.id, manifest.ver, plugin, manifest, repo);        
     },
     loadCustomPlugin: function(dependency, callback, publishedTime) {
         var instance = this;
