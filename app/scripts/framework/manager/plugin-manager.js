@@ -191,7 +191,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         if (Array.isArray(dependencies) && dependencies.length > 0) {
             var queue = org.ekstep.pluginframework.async.queue(function(plugin, pluginCallback) {
                 instance.loadPluginWithDependencies(plugin.id, plugin.ver, plugin.type, plugin.pt, pluginCallback);
-            }, 6);
+            }, 1);
             dependencies.forEach(function(dep) {
                 if (org.ekstep.pluginframework.env == 'renderer') {
                     if (dep.scope == org.ekstep.pluginframework.env || dep.scope == 'all') {
