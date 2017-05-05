@@ -78,6 +78,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         }, publishedTime);
     },
     _registerNameSpace: function(pluginId, clazz) {
+        console.info("Registering namespace for plugin:", pluginId);
         var names = pluginId.split('.')
         var baseNameSpace = names[0];
         var lastKey = names[names.length-1];
