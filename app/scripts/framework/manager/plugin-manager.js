@@ -131,18 +131,18 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             instance.pluginDepCallbacks[pluginId] = instance.pluginDepCallbacks[pluginId] || [];
             instance.pluginDepCallbacks[pluginId].push(callback);
         } else {
+            instance.pluginVisited[pluginId] = true;
             org.ekstep.pluginframework.resourceManager.discoverManifest(pluginId, pluginVer, function(err, data) {
                 if (err || (data == undefined)) {
                     console.error('Unable to load plugin manifest', 'plugin:' + pluginId + '-' + pluginVer, 'Error:', err);
                     callback(); // TODO: probably pass the error
                 } else {
-                    instance.pluginVisited[pluginId] = true;                                      
                     instance.loadManifestDependencies(data.manifest.dependencies, publishedTime, function() {
                         if (pluginType === 'renderer') {
                             callback();
                         } else {
                             var queue = instance.queueDependencies(data.manifest, data.repo, publishedTime);
-                            console.log('queue.length', queue.length());
+                            console.log(pluginId + ' - queue.length', queue.length());
                             if (queue.length() > 0) {
                                 queue.drain = function() {
                                     instance.loadPluginByManifest(data.manifest, data.repo, pluginType, publishedTime);
