@@ -319,6 +319,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     $scope.refreshContent = function(){
                         instance.refreshContent();
                     };
+                    $scope.firetelemetry = function(menu, menuType){
+                        instance.telemetryService.interact({ "type": "click", "subtype": "popup", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
+                    };
                     $scope.showAdvancedOption = false;
                 }],
                 className: 'ngdialog-theme-plain',
