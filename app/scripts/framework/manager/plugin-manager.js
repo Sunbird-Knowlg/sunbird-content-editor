@@ -6,17 +6,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     plugins: {},
     pluginObjs: {},
     pluginInstances: {},
-    pluginVisited: {},
-    pluginDepCallbacks: {},
     errors: [],
-    firePluginCallbacks: function(pluginId) {
-        var instance = this;
-        return function() {
-            if(instance.pluginDepCallbacks[pluginId] && instance.pluginDepCallbacks[pluginId].length > 0) {
-                instance.pluginDepCallbacks[pluginId].forEach(function(cb) { cb();});
-            }
-        }
-    },
     init: function() {
         console.log("Plugin manager initialized");
     },
@@ -27,8 +17,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:load', { plugin: pluginId, version: pluginVer });
         org.ekstep.pluginframework.eventManager.dispatchEvent(pluginId + ':load');
         var p = new plugin(manifest); 
-        if (manifest) this.pluginObjs[manifest.id] = p;
-        this.firePluginCallbacks(pluginId)();               
+        if (manifest) this.pluginObjs[manifest.id] = p;        
     },
     registerPlugin: function(manifest, plugin, repo) {
         repo = repo || org.ekstep.pluginframework.publishedRepo;
@@ -135,14 +124,6 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             return;
         }
 
-        if(this.pluginVisited[pluginId]) {
-            console.warn('A plugin with id "' + pluginId + '" is already visited. Queuing the callback...');
-            instance.pluginDepCallbacks[pluginId] = instance.pluginDepCallbacks[pluginId] || [];
-            instance.pluginDepCallbacks[pluginId].push(callback);
-            return;
-        }
-
-        instance.pluginVisited[pluginId] = true;
         parents.push(pluginId);
         org.ekstep.pluginframework.resourceManager.discoverManifest(pluginId, pluginVer, function(err, data) {
             if (err || (data == undefined)) {
@@ -403,7 +384,6 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     cleanUp: function() {
         this.pluginInstances = {};
         this.pluginManifests = {};
-        this.pluginVisited = {};
         this.plugins = {};
         this.errors = [];
     },
