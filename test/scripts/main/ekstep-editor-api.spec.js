@@ -44,7 +44,7 @@ describe("Ekstep editor test", function() {
     it('should load plugin', function() {                
         spyOn(org.ekstep.pluginframework.pluginManager, "loadPluginWithDependencies").and.callThrough();
         org.ekstep.contenteditor.api.loadPlugin("org.ekstep.test1", "1.0", function() {});                
-        expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalledWith("org.ekstep.test1", "1.0", "plugin", undefined, jasmine.any(Function));
+        expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalledWith("org.ekstep.test1", "1.0", "plugin", undefined, ['org.ekstep.test1'],jasmine.any(Function));
     });
 
     it('should get plugin repo', function() {
