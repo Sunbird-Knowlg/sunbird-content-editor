@@ -208,14 +208,12 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 instance.loadPluginWithDependencies(plugin.id, plugin.ver, plugin.type, plugin.pt, pluginCallback);
             }, 1);
             dependencies.forEach(function(dep) {
-                if (!instance.pluginVisited[dep.plugin]) {
-                    if (org.ekstep.pluginframework.env == 'renderer') {
-                        if (dep.scope == org.ekstep.pluginframework.env || dep.scope == 'all') {
-                            queue.push({ 'id': dep.plugin, 'ver': dep.ver, 'type': dep.type, 'pt': publishedTime }, function(err) {});
-                        }
-                    } else {
+                if (org.ekstep.pluginframework.env == 'renderer') {
+                    if (dep.scope == org.ekstep.pluginframework.env || dep.scope == 'all') {
                         queue.push({ 'id': dep.plugin, 'ver': dep.ver, 'type': dep.type, 'pt': publishedTime }, function(err) {});
                     }
+                } else {
+                    queue.push({ 'id': dep.plugin, 'ver': dep.ver, 'type': dep.type, 'pt': publishedTime }, function(err) {});
                 }
             });
             if (queue.length() > 0) {
