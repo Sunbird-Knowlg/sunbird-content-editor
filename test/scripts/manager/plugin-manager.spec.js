@@ -3,7 +3,6 @@ describe("Plugin Manager test cases", function() {
         delete org.ekstep.pluginframework.pluginManager.plugins[id];
         delete org.ekstep.pluginframework.pluginManager.pluginObjs[id];
         delete org.ekstep.pluginframework.pluginManager.pluginManifests[id];
-        delete org.ekstep.pluginframework.pluginManager.pluginVisited[id];
     };
 
     beforeAll(function(done) {                
