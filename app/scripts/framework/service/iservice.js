@@ -12,7 +12,7 @@ org.ekstep.services.iService = Class.extend({
     initService: function(config) {},                
     _dispatchTelemetry: function(data) {
         var status = data.res.responseCode || data.res.statusText;
-        org.ekstep.services.telemetryService.apiCall({ "path": data.url, "method": data.method, "request": data.request, "response": "", "responseTime": data.res.responseTime, "status": status, "uip": "" });
+        org.ekstep.services.telemetryService.apiCall({ "path": encodeURIComponent(data.url), "method": data.method, "request": data.request, "response": "", "responseTime": data.res.responseTime, "status": status, "uip": "" });
     },
     get: function(url, config, cb) {
         var requestTimestamp, instance = this;
