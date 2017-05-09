@@ -6,7 +6,6 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     plugins: {},
     pluginObjs: {},
     pluginInstances: {},
-    pluginVisited: {},
     errors: [],
     init: function() {
         console.log("Plugin manager initialized");
@@ -17,16 +16,16 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         if (manifest) this.pluginManifests[manifest.id] =  manifest;
         org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:load', { plugin: pluginId, version: pluginVer });
         org.ekstep.pluginframework.eventManager.dispatchEvent(pluginId + ':load');
+        var p = new plugin(manifest); 
+        if (manifest) this.pluginObjs[manifest.id] = p;        
     },
     registerPlugin: function(manifest, plugin, repo) {
         repo = repo || org.ekstep.pluginframework.publishedRepo;
-        this._registerPlugin(manifest.id, manifest.ver, plugin, manifest, repo);
-        var p = new plugin(manifest); // Initialize Global instance of the plugin
-        this.pluginObjs[manifest.id] = p;
+        this._registerPlugin(manifest.id, manifest.ver, plugin, manifest, repo);        
     },
     loadCustomPlugin: function(dependency, callback, publishedTime) {
         var instance = this;
-        org.ekstep.pluginframework.resourceManager.loadResource(dependency.src, 'script', function(err, data) {
+        org.ekstep.pluginframework.resourceManager.loadResource(dependency.src, 'text', function(err, data) {
             if (err) {
                 console.error('Unable to load editor plugin', 'plugin:' + dependency.id + '-' + dependency.ver, 'resource:', 'Error:', err);
             } else {
@@ -41,8 +40,8 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                     console.error("Error while loading plugin", 'plugin:' + dependency.id + '-' + dependency.ver, 'Error:', e);
                 }
             }
+            callback && callback();
         }, publishedTime);
-        callback && callback();
     },
     loadPluginByManifest: function(manifest, repo, pluginType, publishedTime) {
         var instance = this;
@@ -68,29 +67,39 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         }, publishedTime);
     },
     _registerNameSpace: function(pluginId, clazz) {
+        console.info("Registering namespace for plugin:", pluginId);
         var names = pluginId.split('.')
         var baseNameSpace = names[0];
         var lastKey = names[names.length-1];
         names.splice(0, 1);
-        if (!window[baseNameSpace]) {
-            window[baseNameSpace] = {};
-        }
-        
-        var pluginClazz = Class.extend({
+
+        var pluginClazz = (org.ekstep.pluginframework.env === 'editor') ? Class.extend({
             init: function(data, parent, override) {
                 org.ekstep.pluginframework.pluginManager.invoke(pluginId, data, parent, override);
+            }
+        }) : Class.extend({
+            init: function(data, parent, stage, theme) {
+                org.ekstep.pluginframework.pluginManager.invokeRenderer(pluginId, data, parent, stage, theme);
             }
         });
         pluginClazz.extend = function(subClazz) {
             return clazz.extend(subClazz);
         }
-        names.reduce(function(o, s) {
-            var val = ((s === lastKey) ? pluginClazz : {});
-            return (o[s] === undefined) ? o[s] = val : o[s] 
-        }, window[baseNameSpace]);
+
+        if(names.length > 0) {
+            if (!window[baseNameSpace]) {
+                window[baseNameSpace] = {};
+            }
+            names.reduce(function(o, s) {
+                var val = ((s === lastKey) ? pluginClazz : {});
+                return (o[s] === undefined) ? o[s] = val : o[s] 
+            }, window[baseNameSpace]);
+        } else {
+            if(window[baseNameSpace] === undefined) window[baseNameSpace] = pluginClazz;
+        }
     },
     loadAndInitPlugin: function(pluginId, version, publishedTime, parent) {
-        this.loadPluginWithDependencies(pluginId, version, undefined, publishedTime, function() {});
+        this.loadPluginWithDependencies(pluginId, version, undefined, publishedTime, [], function() {});
         if (this.isPluginDefined(pluginId)) {
             var pluginManifest = this.getPluginManifest(pluginId);
             if (pluginManifest.type && (pluginManifest.type.toLowerCase() === "widget")) {
@@ -101,49 +110,75 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             return 1;
         }
     },
-    loadPluginWithDependencies: function(pluginId, pluginVer, pluginType, publishedTime, callback) {
+    loadPluginWithDependencies: function(pluginId, pluginVer, pluginType, publishedTime, parents, callback) {
         var instance = this;
-        if (this.plugins[pluginId] || this.pluginVisited[pluginId]) {
-            console.log('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded');
+        if (this.plugins[pluginId]) {
+            console.info('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded');
             callback();
-        } else {
-            org.ekstep.pluginframework.resourceManager.discoverManifest(pluginId, pluginVer, function(err, data) {
-                if (err || (data == undefined)) {
-                    console.error('Unable to load plugin manifest', 'plugin:' + pluginId + '-' + pluginVer, 'Error:', err);
-                    callback(); // TODO: probably pass the error
-                } else {
-                    instance.pluginVisited[pluginId] = true;                                      
-                    instance.loadManifestDependencies(data.manifest.dependencies, publishedTime, function() {
-                        if (pluginType === 'renderer') {
-                            callback();
-                        } else {
-                            var queue = instance.queueDependencies(data.manifest, data.repo, publishedTime);
-                            if (queue.length() > 0) {
-                                queue.drain = function() {
-                                    instance.loadPluginByManifest(data.manifest, data.repo, pluginType, publishedTime);
-                                    callback();
-                                };
-                            } else {
+            return;
+        }
+
+        if(parents.indexOf(pluginId) != -1) {
+            console.warn('Detected a cyclic dependency with the plugin: "' + pluginId + '". Breaking the chain...');
+            callback();
+            return;
+        }
+
+        parents.push(pluginId);
+        org.ekstep.pluginframework.resourceManager.discoverManifest(pluginId, pluginVer, function(err, data) {
+            if (err || (data == undefined)) {
+                console.error('Unable to load plugin manifest', 'plugin:' + pluginId + '-' + pluginVer, 'Error:', err);
+                callback(); // TODO: probably pass the error
+            } else {
+                instance.loadManifestDependencies(data.manifest.dependencies, publishedTime, parents, function() {
+                    if (pluginType === 'renderer') {
+                        callback();
+                    } else {
+                        var queue = instance.queueDependencies(data.manifest, data.repo, publishedTime, parents);
+                        if (queue.length() > 0) {
+                            queue.drain = function() {
                                 instance.loadPluginByManifest(data.manifest, data.repo, pluginType, publishedTime);
                                 callback();
-                            }
+                            };
+                        } else {
+                            instance.loadPluginByManifest(data.manifest, data.repo, pluginType, publishedTime);
+                            callback();
                         }
-                    });
-                }
-            }, publishedTime);
-        }
+                    }
+                });
+            }
+        }, publishedTime);
     },
-    queueDependencies: function(manifest, repo, publishedTime) {
+    queueDependencies: function(manifest, repo, publishedTime, parents) {
         var scope = org.ekstep.pluginframework.env;
         var queue = org.ekstep.pluginframework.async.queue(function(task, callback) {
-            org.ekstep.pluginframework.resourceManager.loadExternalPluginResource(task.type, task.id, task.ver, task.src, task.repo, task.publishedTime, callback);
+            if (task.type == 'plugin') {
+                if (org.ekstep.pluginframework.env == 'renderer') {
+                    instance.loadCustomPlugin({id: task.plugin, src: task.repo.resolveResource(task.id, task.ver, task.src)}, callback, undefined);
+                } else {
+                    instance.loadPluginWithDependencies(task.plugin, task.ver, task.type, publishedTime, parents, callback);
+                }
+            } else {
+                org.ekstep.pluginframework.resourceManager.loadExternalPluginResource(task.type, task.id, task.ver, task.src, task.repo, task.publishedTime, callback);
+            }
         }, 1);
         var instance = this;
         if (Array.isArray(manifest[scope].dependencies)) {
             manifest[scope].dependencies.forEach(function(dependency) {
                 if (dependency.type == 'plugin') {
-                    instance.loadPluginWithDependencies(dependency.plugin, dependency.ver, dependency.type, publishedTime, function() {});
-                } else {
+                    if (org.ekstep.pluginframework.env == 'renderer') {
+                        queue.push({
+                            type: dependency.type,
+                            id: manifest.id,
+                            ver: manifest.ver,
+                            src: dependency.src,
+                            repo: repo,
+                            plugin: dependency.id
+                        }, function() {});
+                    } else {
+                        queue.push(dependency, function() {});
+                    }
+                } else if(dependency.type == 'js' || dependency.type == 'css') {
                     queue.push({
                         type: dependency.type,
                         id: manifest.id,
@@ -157,12 +192,12 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         }
         return queue;
     },
-    loadManifestDependencies: function(dependencies, publishedTime, callback) {
+    loadManifestDependencies: function(dependencies, publishedTime, parents, callback) {
         var instance = this;
         if (Array.isArray(dependencies) && dependencies.length > 0) {
             var queue = org.ekstep.pluginframework.async.queue(function(plugin, pluginCallback) {
-                instance.loadPluginWithDependencies(plugin.id, plugin.ver, plugin.type, plugin.pt, pluginCallback);
-            }, 6);
+                instance.loadPluginWithDependencies(plugin.id, plugin.ver, plugin.type, plugin.pt, parents, pluginCallback);
+            }, 1);
             dependencies.forEach(function(dep) {
                 if (org.ekstep.pluginframework.env == 'renderer') {
                     if (dep.scope == org.ekstep.pluginframework.env || dep.scope == 'all') {
@@ -198,28 +233,40 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         }
     },
     loadPlugin: function(pluginId, pluginVer, callback) {
-        this.loadPluginWithDependencies(pluginId, pluginVer, "plugin", undefined, function() {
-           console.log('Plugin loaded: ', pluginId); 
+        this.loadPluginWithDependencies(pluginId, pluginVer, "plugin", undefined, [], function() {
            callback && callback();
         });
     },
     loadAllPlugins: function(plugins, otherDependencies, callback) {
         var instance = this;
-        if (Array.isArray(plugins) && plugins.length) {            
-            var q = org.ekstep.pluginframework.async.queue(function(plugin, pluginCallback) {
-                instance.loadPluginWithDependencies(plugin.id, plugin.ver, plugin.type, plugin.pt, pluginCallback);
-            }, 6);
-            q.drain = function() {
-                instance.loadOtherDependencies(otherDependencies, callback);
-            };
-            plugins.forEach(function(plugin) {
-                q.push({ 'id': plugin.id, 'ver': plugin.ver, 'type': plugin.type, 'pt': undefined }, function(err) {});
+        if (Array.isArray(plugins) && plugins.length) {
+            var preloadPlugin = plugins.find(function(plugin) {
+                return (plugin.preload === true || plugin.preload === 'true');
             });
+            if(preloadPlugin) {
+                instance.loadPlugin(preloadPlugin.id, preloadPlugin.ver, function() {
+                    instance._loadPlugins(plugins, otherDependencies, callback);
+                })
+            } else {
+                instance._loadPlugins(plugins, otherDependencies, callback);
+            }
         } else if (Array.isArray(otherDependencies) && otherDependencies.length) {
             instance.loadOtherDependencies(otherDependencies, callback);
         } else {
             callback();
         }
+    },
+    _loadPlugins: function(plugins, otherDependencies, callback) {
+        var instance = this;
+        var q = org.ekstep.pluginframework.async.queue(function(plugin, pluginCallback) {
+            instance.loadPluginWithDependencies(plugin.id, plugin.ver, plugin.type, plugin.pt, [], pluginCallback);
+        }, 6);
+        q.drain = function() {
+            instance.loadOtherDependencies(otherDependencies, callback);
+        };
+        plugins.forEach(function(plugin) {
+            q.push({ 'id': plugin.id, 'ver': plugin.ver, 'type': plugin.type, 'pt': undefined }, function(err) {});
+        });
     },
     loadOtherDependencies: function(otherDependencies, callback) {
         var instance = this;
@@ -232,9 +279,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 }
             }, 1);
             otherDependencies.forEach(function(dep) {
-                if (!dep.plugin || !instance.isPluginDefined(dep.plugin)) {
-                    queue.push(dep, function(err) {});
-                }
+                queue.push(dep, function(err) {});
             });
             if (queue.length() > 0) {
                 queue.drain = function() {
@@ -339,7 +384,6 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     cleanUp: function() {
         this.pluginInstances = {};
         this.pluginManifests = {};
-        this.pluginVisited = {};
         this.plugins = {};
         this.errors = [];
     },

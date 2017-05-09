@@ -245,12 +245,14 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
     },
     manifestGenerator: function(content) {
         var pluginsUsed = {};
+        var DEFAULT_COMPATIBILITY_VER = 2; //renderer
         _.forEach(org.ekstep.pluginframework.pluginManager.getPluginInstances(), function(plugin) {
             pluginsUsed[plugin.manifest.id] = plugin.manifest.id;
         });
         ManifestGenerator.generate(_.drop(_.values(pluginsUsed)), 'org.ekstep.stage');        
         content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, ManifestGenerator.getMediaManifest()), 'id');
         content.theme['plugin-manifest'].plugin = ManifestGenerator.getPluginManifest();
+        content.theme.compatibilityVersion = ManifestGenerator.getCompatibilityVersion() || DEFAULT_COMPATIBILITY_VER;
     },
     mergeMediaMap: function(mediaMap) {
         _.forIn(org.ekstep.contenteditor.mediaManager.migratedMediaMap, function(value, key) {

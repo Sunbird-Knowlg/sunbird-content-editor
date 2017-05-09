@@ -1,54 +1,40 @@
 <script type="text/ng-template" id="conflictDialog.html">
 <style>
-  .ngdialog-content {
-    padding: 0 !important;
-  }
+.conflictdialog.ui.modal{
+    position: inherit !important;
+    top: 0 !important;
+}
+
+.ngdialog-content {
+  top: 30% !important;
+  width: 100% !important;
+  position: absolute !important;
+  background: none !important;
+}
 </style>
-    <div class="ui page active dimmer popupZindex">
+<div class="conflictdialog ui modal small active">
   <div class="content">
-    <div>
-      <div style="background-color: #ffe8e6;max-width:650px;max-height: auto; border: 1px solid #333333; padding: 2px 2px; margin: 0 auto;box-shadow: 0 0 0 1px #db2828 inset, 0 0 0 0 transparent;">
-        <div class="ui large negative message" style="box-shadow:none;">
-          <div class="header" style="text-align:left;">
-            Conflicting changes
-          </div>
-          <ul class="list">
-            <li>There is an existing copy of your lesson on the platform</li>
-            <li>Please select which copy you would like to keep</li>
-          </ul>
-        </div>
-        <div class="ui grid" style="padding-bottom:10px;padding-left:6px;">
-          <div class="sixteen column row">
-            <div class="left floated ten wide column">
-             
-              <div class="ui accordion" style="text-align:left;">
-                <div class="title" ng-click="showAdvancedOption = !showAdvancedOption">
-                  <i class="dropdown icon" ng-if="!showAdvancedOption"></i>
-                  <i class="dropdown icon" ng-if="showAdvancedOption" style="transform: rotate(90deg);"></i> Advanced options
-                </div><!-- accordion title -->
-                <div class="content transition {{showAdvancedOption ? 'visible': 'hidden'}}">
-                  <div class="ui primary button" ng-click="previewContent();"><i class="fa fa-eye"></i> Preview content</div>
-                  <div class="ui secondary button" ng-click="previewPlatformContent();"><i class="fa fa-eye"></i> Preview platform copy</div>
-                  <br>
-                  <br>
-                </div> <!-- accordion content -->
-              </div> <!-- main accordion -->
-            </div><!-- close column -->
-              <!--close advanced options -->
-              <div class="right floated six wide column">
-                <div>
-                  <div class="ui primary basic button" ng-click="saveBrowserContent();"><i class="cloud upload icon"></i> Save</div>
-                  <div class="ui primary basic button" ng-click="refreshContent();"><i class="refresh icon"></i> Refresh</div>
-                </div><!-- 2 buttons container -->
-              </div> <!-- rigth floated div close -->
-          </div> <!-- close row -->
-        </div> <!-- close grid -->
-        </div>
-        <!--border div -->
+    <div class="ui icon negative message">
+      <i class="warning icon"></i>
+      <div class="content">
+      <div class="header">
+        Unable to save
       </div>
-      <!-- center div -->
+      <p>Someone else has modified the content. You can overwrite with your copy, or discard your changes and load the latest content.</p>
+      </div><!-- close content -->
     </div>
+  </div>
     <!-- content -->
+    <div class="actions" style="height: 66px; ">
+        <div class="ui left floated buttons">
+          <div class="ui secondary button" ng-click="previewPlatformContent();firetelemetry({id: 'previewplatformcopy'}, 'preview_platform_copy_button')"><i class="icon-preview icon"></i> Preview platform copy</div>
+        </div>
+        <div class="ui right floated buttons">
+          <div class="ui orange button" ng-click="saveBrowserContent();firetelemetry({id: 'forceupdate'}, 'force_update_button')"><i class="cloud upload icon"></i> Force update</div>
+          <div class="or"></div>
+          <div class="ui blue button" ng-click="refreshContent();firetelemetry({id: 'discardcontent'}, 'discard_content_button')"><i class="refresh icon"></i> Discard</div>
+        </div>
+    </div><!-- close actions -->
   </div>
   <!-- ui page -->
 

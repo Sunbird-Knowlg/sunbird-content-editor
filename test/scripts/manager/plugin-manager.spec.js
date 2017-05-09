@@ -3,7 +3,6 @@ describe("Plugin Manager test cases", function() {
         delete org.ekstep.pluginframework.pluginManager.plugins[id];
         delete org.ekstep.pluginframework.pluginManager.pluginObjs[id];
         delete org.ekstep.pluginframework.pluginManager.pluginManifests[id];
-        delete org.ekstep.pluginframework.pluginManager.pluginVisited[id];
     };
 
     beforeAll(function(done) {                
@@ -42,7 +41,7 @@ describe("Plugin Manager test cases", function() {
         var returnValue = org.ekstep.pluginframework.pluginManager.loadAndInitPlugin("org.ekstep.test3", "1.0");
         expect(returnValue).toBe(1);
         expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalled();
-        expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalledWith("org.ekstep.test3", "1.0", undefined, undefined, jasmine.any(Function));
+        expect(org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies).toHaveBeenCalledWith("org.ekstep.test3", "1.0", undefined, undefined, ['org.ekstep.test3'], jasmine.any(Function));
         expect(org.ekstep.pluginframework.pluginManager.isPluginDefined).toHaveBeenCalled();
         expect(org.ekstep.pluginframework.pluginManager.isPluginDefined).toHaveBeenCalledWith("org.ekstep.test3");
     });

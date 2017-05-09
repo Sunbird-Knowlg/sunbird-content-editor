@@ -140,9 +140,17 @@ gulp.task('setup', function() {
         }))
 });
 
-gulp.task('minifyJS', function() {
-    return gulp.src(scriptfiles)
+var allscripts = pluginFramework.concat(scriptfiles);
+
+gulp.task('minifyallJS', function() {
+    return gulp.src(allscripts)
         .pipe(concat('script.min.js'))
+        .pipe(gulp.dest('content-editor/scripts'));
+});
+
+gulp.task('minifyCE', function() {
+    return gulp.src(scriptfiles)
+        .pipe(concat('contenteditor.min.js'))
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
@@ -221,7 +229,7 @@ gulp.task('copydeploydependencies', function() {
         .pipe(gulp.dest('content-editor'));
 });
 
-gulp.task('minify', ['minifyJS', 'minifyCSS', 'minifyJsBower', 'minifyFramework','minifyCssBower', 'copyfonts', 'copyfontawsomefonts','copyFiles', 'copydeploydependencies']);
+gulp.task('minify', ['minifyallJS', 'minifyCE', 'minifyCSS', 'minifyJsBower', 'minifyFramework','minifyCssBower', 'copyfonts', 'copyfontawsomefonts','copyFiles', 'copydeploydependencies']);
 
 gulp.task('inject', ['minify'], function() {
     var target = gulp.src('content-editor/index.html');

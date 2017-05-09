@@ -82,15 +82,13 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
     _saveContent: function(contentId, metadata, body, callback) {
 
         var instance = this;
-        var versionKey = instance.content[contentId] && instance.content[contentId].versionKey;
-        var DEFAULT_COMPATIBILITY_LEVEL = 2; //renderer
+        var versionKey = instance.content[contentId] && instance.content[contentId].versionKey;        
 
         if (contentId && versionKey) {
             var update = false;
             var content = {
                 versionKey: versionKey,
-                lastUpdatedBy: window.context.user.id,
-                compatibilityLevel: ManifestGenerator.getCompatibilityVersion() || DEFAULT_COMPATIBILITY_LEVEL
+                lastUpdatedBy: window.context.user.id                
             }
             if (metadata) {
                 update = true;
@@ -99,6 +97,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
                 }
             }
             if (body) {
+                content.compatibilityLevel = body.theme.compatibilityVersion;
                 content['body'] = JSON.stringify(body);
                 update = true;
             }
@@ -111,7 +110,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
                         instance.content[contentId].versionKey = res.data.result.versionKey;
                         callback(undefined, res);                        
                     } else {
-                        callback(true, res);
+                        callback(true, err);
                     } 
                 });
             } else {

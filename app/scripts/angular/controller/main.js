@@ -121,15 +121,18 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 // TODO: Show saving dialog
                 var contentBody = org.ekstep.contenteditor.stageManager.toECML();
                 $scope.patchContent({ stageIcons: JSON.stringify(org.ekstep.contenteditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
-                    if (res && res.data.responseCode == "OK") $scope.saveNotification('success');
                     if (err) {
-                        if(res && (res.responseJSON.params.err == "ERR_STALE_VERSION_KEY")){
+                        if(res && !ecEditor._.isUndefined(res.responseJSON)){
+                            // This could be converted to switch..case to handle different error codes
+                            if (res.responseJSON.params.err == "ERR_STALE_VERSION_KEY")
                             $scope.showConflictDialog();
                         } else {
                             $scope.saveNotification('error'); 
-                            // $scope.showConflictDialog();
                         }
+                    }else if(res && res.data.responseCode == "OK"){
+                        $scope.saveNotification('success');
                     }
+                    
                     $scope.saveBtnEnabled = true;                                                           
                 });
             }
@@ -316,12 +319,15 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     $scope.refreshContent = function(){
                         instance.refreshContent();
                     };
+                    $scope.firetelemetry = function(menu, menuType){
+                        instance.telemetryService.interact({ "type": "click", "subtype": "popup", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
+                    };
                     $scope.showAdvancedOption = false;
                 }],
                 className: 'ngdialog-theme-plain',
                 showClose: false,
-                closeByDocument: false,
-                closeByEscape: false
+                closeByDocument: true,
+                closeByEscape: true
             });
         };
 
@@ -347,7 +353,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.refreshToolbar = function() {
             setTimeout(function() {
                 org.ekstep.contenteditor.jQuery(".ui.dropdown").dropdown();
-                org.ekstep.contenteditor.jQuery(".popup-item").popup();                
+                org.ekstep.contenteditor.jQuery(".popup-item").popup();
+                $scope.$safeApply();                
             }, 500);
         }
 

@@ -482,7 +482,7 @@ window.org.ekstep.contenteditor.api = {
      * @memberof org.ekstep.contenteditor.api
      */
     loadPlugin: function(pluginId, pluginVersion, callback) {
-        org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies(pluginId, pluginVersion, "plugin", undefined, callback);
+        org.ekstep.pluginframework.pluginManager.loadPluginWithDependencies(pluginId, pluginVersion, "plugin", undefined, [], callback);
     },
 
     /**
@@ -540,8 +540,8 @@ window.org.ekstep.contenteditor.api = {
     registerKeyboardCommand: function(command, callback) {
         org.ekstep.pluginframework.keyboardManager.registerKeyCombination(command, callback);
     },
-    addResourceRepository: function(repo) {
-        if (repo) org.ekstep.pluginframework.resourceManager.addRepo(repo);
+    addResourceRepository: function(repo, position) {
+        if (repo) org.ekstep.pluginframework.resourceManager.addRepo(repo, position);
     }
 }
 

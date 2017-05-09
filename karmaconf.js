@@ -99,25 +99,49 @@ module.exports = function(config) {
             'karma-jasmine',
             'karma-jasmine-matchers',
             'karma-coverage',
-            'karma-phantomjs-launcher'
+            'karma-phantomjs-launcher',
+            'karma-mocha-reporter'
         ],
 
 
         // list of files to exclude
         exclude: [],
 
+        client: {
+            captureConsole: false
+        },
+
 
         // preprocess matching files before serving them to the browser
         // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessor
-        preprocessors: {
-            'app/scripts/**/!(migration|directive|controller)/!(api-timestamp-service)*.js': ['coverage'],
+        preprocessors: {            
+            'app/scripts/**/!(migration|directive|controller|libs)/*.js': ['coverage'],
             'plugins/org.ekstep.stage-1.0/**/*.js': ['coverage']
         },
 
         // test results reporter to use
         // possible values: 'dots', 'progress'
         // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-        reporters: ['progress', 'coverage'],
+        //reporters: ['dots', 'coverage'],
+
+        // reporters configuration 
+        reporters: ['mocha', 'coverage'],
+     
+        // reporter options 
+        mochaReporter: {
+          colors: {
+            success: 'green',
+            info: 'bgYellow',
+            warning: 'cyan',
+            error: 'bgRed'
+          },
+          symbols: {
+            success: '✔',
+            info: '#',
+            warning: '!',
+            error: 'x'
+            }
+        },
 
 
         // web server port
