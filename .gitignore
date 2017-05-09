@@ -3,6 +3,7 @@ app/bower_components
 /node_modules
 plugins
 /coverage
+/coverage_framework
 /bower_components
 /semantic
 semantic.json

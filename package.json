@@ -50,7 +50,8 @@
   },
   "scripts": {
     "apptest": "karma start karmaconf.js",
-    "test": "karma start karmaconf.js"
+    "test": "karma start karmaconf.js",
+    "testpluginframework": "karma start karmaconf.pluginframework.js"
   },
   "repository": {
     "type": "git",
