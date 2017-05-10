@@ -114,13 +114,13 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         var instance = this;
         if (this.plugins[pluginId]) {
             console.info('A plugin with id "' + pluginId + '" and ver "' + pluginVer + '" is already loaded');
-            callback();
+            callback && callback();
             return;
         }
 
         if(parents.indexOf(pluginId) != -1) {
             console.warn('Detected a cyclic dependency with the plugin: "' + pluginId + '". Breaking the chain...');
-            callback();
+            callback && callback();
             return;
         }
 
@@ -128,21 +128,21 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         org.ekstep.pluginframework.resourceManager.discoverManifest(pluginId, pluginVer, function(err, data) {
             if (err || (data == undefined)) {
                 console.error('Unable to load plugin manifest', 'plugin:' + pluginId + '-' + pluginVer, 'Error:', err);
-                callback(); // TODO: probably pass the error
+                callback && callback(); // TODO: probably pass the error
             } else {
                 instance.loadManifestDependencies(data.manifest.dependencies, publishedTime, parents, function() {
                     if (pluginType === 'renderer') {
-                        callback();
+                        callback && callback();
                     } else {
                         var queue = instance.queueDependencies(data.manifest, data.repo, publishedTime, parents);
                         if (queue.length() > 0) {
                             queue.drain = function() {
                                 instance.loadPluginByManifest(data.manifest, data.repo, pluginType, publishedTime);
-                                callback();
+                                callback && callback();
                             };
                         } else {
                             instance.loadPluginByManifest(data.manifest, data.repo, pluginType, publishedTime);
-                            callback();
+                            callback && callback();
                         }
                     }
                 });
@@ -319,7 +319,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 }
             } catch (e) {
                 delete instance.pluginInstances[p.id];
-                throw e;
+                throw "Error: when instantiating plugin: "+ id;
             }
         }
         return p;
@@ -349,7 +349,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 }
             } catch (e) {
                 delete instance.pluginInstances[p.id];
-                throw e;
+                throw "Error: when instantiating plugin: "+ id;
             }
         }
         return p;
@@ -357,8 +357,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     addPluginInstance: function(pluginObj) {
         this.pluginInstances[pluginObj.id] = pluginObj;
     },
-    removePluginInstance: function(pluginObj) {
-        /* istanbul ignore else */
+    removePluginInstance: function(pluginObj) {        
         if (pluginObj) pluginObj.remove();
     },
     getPluginInstance: function(id) {

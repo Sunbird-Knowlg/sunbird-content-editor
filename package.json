@@ -49,9 +49,9 @@
     "karma-mocha-reporter": "^2.2.3"
   },
   "scripts": {
-    "apptest": "karma start karmaconf.js",
-    "test": "karma start karmaconf.js",
-    "testpluginframework": "karma start karmaconf.pluginframework.js"
+    "apptest": "karma start karmaconf.js",    
+    "testpluginframework": "karma start karmaconf.pluginframework.js",
+    "test": "karma start karmaconf.js && karma start karmaconf.pluginframework.js"
   },
   "repository": {
     "type": "git",

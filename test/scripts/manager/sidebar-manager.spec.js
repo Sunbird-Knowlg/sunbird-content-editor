@@ -1,7 +1,9 @@
 'use strict';
 
 describe('sidebar manager', function() {
+
     beforeAll(function(done) {
+        org.ekstep.pluginframework.config.pluginRepo = "base/test/data/published";
         org.ekstep.contenteditor.sidebarManager.sidebarMenu = [];
         org.ekstep.contenteditor.sidebarManager.initialize({ loadNgModules: function() {}, scope: { refreshSidebar: function() {}, addToSidebar: function() {} } });
         spyOn(org.ekstep.contenteditor.sidebarManager, 'registerSidebarMenu').and.callThrough();
