@@ -173,4 +173,18 @@ describe('language service test cases', function() {
         });
     });
 
+    it("getTransliteration method should call getFromService", function() {
+        spyOn(org.ekstep.services.languageService, "getFromService");
+        var data= { text: "hello", languages: "hindi" };
+        org.ekstep.services.languageService.getTransliteration(data, function() {});
+        expect(org.ekstep.services.languageService.getFromService).toHaveBeenCalledWith(org.ekstep.services.languageService.getBaseURL() + "/api/language/v2/language/transliteration/"+ data.text + "?languages=" + data.languages.toString(), org.ekstep.services.languageService.requestHeaders, jasmine.any(Function));
+    });
+
+    it("getTranslation method should call getFromService", function() {
+        spyOn(org.ekstep.services.languageService, "getFromService");
+        var data= { wordLang: "english", word: "tree", languages: "hindi,english" };
+        org.ekstep.services.languageService.getTranslation(data, function() {});
+        expect(org.ekstep.services.languageService.getFromService).toHaveBeenCalledWith(org.ekstep.services.languageService.getBaseURL() + "/api/language/v2/language/translations/"+ data.wordLang + '/' + data.word + '?languages=' + data.languages, org.ekstep.services.languageService.requestHeaders, jasmine.any(Function));
+    });
+
 });
