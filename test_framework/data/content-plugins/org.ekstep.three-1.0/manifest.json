@@ -1,0 +1,61 @@
+{
+    "id": "org.ekstep.three",
+    "ver": "1.0",
+    "author": "Kartheek Palla",
+    "title": "Three Plugin",
+    "description": "",
+    "publishedDate": "",
+    "type":"plugin",
+    "editor": {
+        "main": "editor/plugin.js",
+        "dependencies": [
+             { "type": "js", "src": "editor/libs/threelib.js" },
+             { "type": "css", "src": "editor/libs/three.css" }
+        ],
+        "menu": [{
+            "id": "three",
+            "category": "main",
+            "type": "icon",
+            "toolTip": "Add Three",
+            "title": "Three",
+            "iconClass": "hashtag icon",
+            "onclick": {
+                    "id": "org.ekstep.three:create",
+                    "data": {
+                        "type": "rect",
+                        "x": 40,
+                        "y": 40,
+                        "fill": "#00FF2B",
+                        "w": 14,
+                        "h": 25,
+                        "stroke": "rgba(255, 255, 255, 0)",
+                        "strokeWidth": 1,
+                        "opacity": 1
+                    }
+                }
+            
+        }],
+        "configManifest": [
+            {
+                "propertyName": "color",
+                "title": "Fill Color",
+                "description": "Choose a color from the color picker",
+                "dataType": "colorpicker",
+                "required": true,
+                "defaultValue": "#000000"
+            }
+        ],
+        "help": {
+            "src": "editor/help.md",
+            "dataType": "text"
+        }
+    },
+    "renderer": {
+        "main": "renderer/three.js"
+    },
+     "dependencies":[
+        {"plugin":"org.ekstep.four", "ver":"1.0", "scope":"all"},
+        {"plugin":"org.ekstep.six", "ver":"1.0", "scope":"editor"},
+        {"plugin":"org.ekstep.seven", "ver":"1.0", "scope":"renderer"}
+    ]
+}

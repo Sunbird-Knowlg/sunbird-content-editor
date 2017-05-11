@@ -1,0 +1,58 @@
+{
+    "id": "org.ekstep.two",
+    "ver": "1.0",
+    "author": "Kartheek Palla",
+    "title": "Two Plugin",
+    "description": "",
+    "publishedDate": "",
+    "type":"plugin",
+    "editor": {
+        "main": "editor/plugin.js",
+        "dependencies": [
+            { "type": "css", "src": "editor/libs/two.css" }
+        ],
+        "menu": [{
+            "id": "two",
+            "category": "main",
+            "type": "icon",
+            "toolTip": "Add Two",
+            "title": "Two",
+            "iconClass": "copyright icon",
+            "onclick": {
+                    "id": "org.ekstep.two:create",
+                    "data": {
+                        "type": "rect",
+                        "x": 50,
+                        "y": 50,
+                        "fill": "#FF005A",
+                        "w": 14,
+                        "h": 25,
+                        "stroke": "rgba(255, 255, 255, 0)",
+                        "strokeWidth": 1,
+                        "opacity": 1
+                    }
+                }
+            
+        }],
+        "configManifest": [
+            {
+                "propertyName": "color",
+                "title": "Fill Color",
+                "description": "Choose a color from the color picker",
+                "dataType": "colorpicker",
+                "required": true,
+                "defaultValue": "#000000"
+            }
+        ],
+        "help": {
+            "src": "editor/help.md",
+            "dataType": "text"
+        }
+    },
+    "renderer": {
+        "main": "renderer/two.js"
+    },
+     "dependencies":[
+        {"plugin":"org.ekstep.one", "ver":"1.0", "scope":"all"}
+    ]
+}

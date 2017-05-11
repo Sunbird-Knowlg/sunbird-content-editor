@@ -1,0 +1,60 @@
+{
+    "id": "org.ekstep.seven",
+    "ver": "1.0",
+    "author": "Kartheek Palla",
+    "title": "seven Plugin",
+    "description": "",
+    "publishedDate": "",
+    "type":"plugin",
+    "editor": {
+        "main": "editor/plugin.js",
+        "dependencies": [
+            { "type": "js", "src": "editor/libs/spectrum.js" },
+            { "type": "css", "src": "editor/libs/spectrum.css" }
+        ],
+        "menu": [{
+            "id": "seven",
+            "category": "main",
+            "type": "icon",
+            "toolTip": "Add seven",
+            "title": "seven",
+            "iconClass": "at icon",
+            "onclick": {
+                    "id": "org.ekstep.seven:create",
+                    "data": {
+                        "type": "rect",
+                        "x": 10,
+                        "y": 20,
+                        "fill": "#FFFF00",
+                        "w": 14,
+                        "h": 25,
+                        "stroke": "rgba(255, 255, 255, 0)",
+                        "strokeWidth": 1,
+                        "opacity": 1
+                    }
+                }
+            
+        }],
+        "configManifest": [
+            {
+                "propertyName": "color",
+                "title": "Fill Color",
+                "description": "Choose a color from the color picker",
+                "dataType": "colorpicker",
+                "required": true,
+                "defaultValue": "#000000"
+            }
+        ],
+        "help": {
+            "src": "editor/help.md",
+            "dataType": "text"
+        }
+    },
+    "renderer": {
+        "main": "renderer/seven.js",
+        "dependencies": [
+            { "type": "js", "src": "editor/libs/spectrum.js" },
+            { "type": "css", "src": "editor/libs/spectrum.css" }
+        ]
+    }
+}

@@ -1,0 +1,53 @@
+{
+    "id": "org.ekstep.four",
+    "ver": "1.0",
+    "author": "Kartheek Palla",
+    "title": "Four Plugin",
+    "description": "",
+    "publishedDate": "",
+    "type":"plugin",
+    "editor": {
+        "main": "editor/plugin.js",
+        "dependencies": [],
+        "menu": [{
+            "id": "four",
+            "category": "main",
+            "type": "icon",
+            "toolTip": "Add four",
+            "title": "Four",
+            "iconClass": "at icon",
+            "onclick": {
+                    "id": "org.ekstep.four:create",
+                    "data": {
+                        "type": "rect",
+                        "x": 10,
+                        "y": 20,
+                        "fill": "#FFFF00",
+                        "w": 14,
+                        "h": 25,
+                        "stroke": "rgba(255, 255, 255, 0)",
+                        "strokeWidth": 1,
+                        "opacity": 1
+                    }
+                }
+            
+        }],
+        "configManifest": [
+            {
+                "propertyName": "color",
+                "title": "Fill Color",
+                "description": "Choose a color from the color picker",
+                "dataType": "colorpicker",
+                "required": true,
+                "defaultValue": "#000000"
+            }
+        ],
+        "help": {
+            "src": "editor/help.md",
+            "dataType": "text"
+        }
+    },
+    "renderer": {
+        "main": "renderer/four.js"
+    }
+}
