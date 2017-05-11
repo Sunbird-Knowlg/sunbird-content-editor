@@ -4,8 +4,7 @@
 org.ekstep.pluginframework.resourceManager = new(Class.extend({
     init: function() {},
     buildNumber: undefined,
-    registeredRepos: [],
-    initialize: function() {},
+    registeredRepos: [],    
     discoverManifest: function(pluginId, pluginVer, cb, publishedTime) {
         var ayncTasks = [];
 
@@ -30,7 +29,7 @@ org.ekstep.pluginframework.resourceManager = new(Class.extend({
         });
 
         org.ekstep.pluginframework.async.waterfall(ayncTasks, function(err, result) {
-            if (result.manifest !== undefined)
+            if (result && result.manifest !== undefined)
                 cb(undefined, result);
             else
                 cb('Plugin not found in any repo or manifest', undefined);

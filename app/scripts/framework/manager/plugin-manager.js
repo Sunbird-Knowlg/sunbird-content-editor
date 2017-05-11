@@ -253,7 +253,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         } else if (Array.isArray(otherDependencies) && otherDependencies.length) {
             instance.loadOtherDependencies(otherDependencies, callback);
         } else {
-            callback();
+            callback && callback();
         }
     },
     _loadPlugins: function(plugins, otherDependencies, callback) {

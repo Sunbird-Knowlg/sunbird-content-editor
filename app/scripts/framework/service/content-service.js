@@ -161,16 +161,13 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
         var instance = this;
         if (contentId) {
             var metaDataFields = "?mode=edit&fields=" + "versionKey";
-            instance.get(this.serviceURL() + 'v2/content/' + contentId + metaDataFields, {}, function(err, res) {
-                /* istanbul ignore else */
-                if (err) callback(err, undefined);
+            instance.get(this.serviceURL() + 'v2/content/' + contentId + metaDataFields, {}, function(err, res) {                
                 if (!err && res.data && res.data.result && res.data.result.content) {
                     instance._setContentMeta(contentId, res.data.result.content);
                     callback(err, res.data.result.content);
                 } else {
                     callback(new Error('no content found!'), undefined)
                 }
-
             });
         } else {
             callback('Content id is required to get versionKey from platform', undefined);

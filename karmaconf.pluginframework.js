@@ -39,6 +39,7 @@ module.exports = function(config) {
             "test_framework/data/ECMLcontent.fixture.js",   
             "test_framework/base-spec.js",            
             "test_framework/dependency-scripts/**/*.js",
+            "test_framework/data/repos/*.js",
             "test_framework/**/*.spec.js",
             // fixtures
             { pattern: 'test_framework/data/**/*.json', watched: true, served: true, included: false },
