@@ -209,13 +209,13 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             });
             if (queue.length() > 0) {
                 queue.drain = function() {
-                    callback();
+                    callback && callback();
                 };
             } else {
-                callback();
+                callback && callback();
             }
         } else {
-            callback();
+            callback && callback();
         }
     },
     isManifestDefined: function(id) {
