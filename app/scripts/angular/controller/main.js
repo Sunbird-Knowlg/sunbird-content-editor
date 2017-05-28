@@ -62,11 +62,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         org.ekstep.contenteditor.sidebarManager.initialize({ loadNgModules: $scope.loadNgModules, scope: $scope });
 
         $scope.fireSidebarTelemetry = function(menu, menuType) {
-            var pluginId = "",
-                pluginVer = "",
-                objectId = "";
+            var pluginId = "", pluginVer = "", objectId = "";
             var pluginObject = org.ekstep.contenteditor.api.getCurrentObject() || org.ekstep.contenteditor.api.getCurrentStage();
-            if (pluginObject) {
+            if(pluginObject) {
                 pluginId = pluginObject.manifest.id;
                 pluginVer = pluginObject.manifest.ver;
                 objectId = pluginObject.id;
@@ -124,14 +122,14 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 var contentBody = org.ekstep.contenteditor.stageManager.toECML();
                 $scope.patchContent({ stageIcons: JSON.stringify(org.ekstep.contenteditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
                     if (err) {
-                        if (res && !ecEditor._.isUndefined(res.responseJSON)) {
+                        if(res && !ecEditor._.isUndefined(res.responseJSON)){
                             // This could be converted to switch..case to handle different error codes
                             if (res.responseJSON.params.err == "ERR_STALE_VERSION_KEY")
-                                $scope.showConflictDialog();
+                            $scope.showConflictDialog();
                         } else {
                             $scope.saveNotification('error');
                         }
-                    } else if (res && res.data.responseCode == "OK") {
+                    }else if(res && res.data.responseCode == "OK"){
                         $scope.saveNotification('success');
                     }
 
@@ -142,7 +140,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         $scope.saveBrowserContent = function() {
             // Fetch latest versionKey and then save the content from browser
-            $scope.fetchPlatformContentVersionKey(function(platformContentVersionKey) {
+            $scope.fetchPlatformContentVersionKey(function(platformContentVersionKey){
                 //Invoke save function here...
                 $scope.saveContent();
             });
@@ -153,9 +151,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             location.reload();
         }
 
-        $scope.previewPlatformContent = function() {
+        $scope.previewPlatformContent = function(){
             // Fetch latest content body from Platform and then show preview
-            $scope.fetchPlatformContentBody(function(platformContentBody) {
+            $scope.fetchPlatformContentBody(function(platformContentBody){
                 org.ekstep.pluginframework.eventManager.dispatchEvent("atpreview:show", { contentBody: platformContentBody, 'currentStage': true });
             });
         };
@@ -190,6 +188,10 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 }
             });
         };
+
+
+
+
 
         $scope.patchContent = function(metadata, body, cb) {
             if ($scope.migrationFlag) {
@@ -297,27 +299,27 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.popupService.open(config);
         };
 
-        $scope.showConflictDialog = function() {
+        $scope.showConflictDialog = function(){
             var instance = $scope;
             $scope.popupService.open({
                 template: 'conflictDialog.html',
                 controller: ['$scope', function($scope) {
                     //Platform copy
-                    $scope.previewPlatformContent = function() {
+                    $scope.previewPlatformContent = function(){
                         instance.previewPlatformContent();
                     };
-                    $scope.saveBrowserContent = function() {
+                    $scope.saveBrowserContent = function(){
                         instance.saveBrowserContent();
                         $scope.closeThisDialog();
                     };
                     //Existing copy
-                    $scope.previewContent = function() {
+                    $scope.previewContent = function(){
                         instance.previewContent();
                     };
-                    $scope.refreshContent = function() {
+                    $scope.refreshContent = function(){
                         instance.refreshContent();
                     };
-                    $scope.firetelemetry = function(menu, menuType) {
+                    $scope.firetelemetry = function(menu, menuType){
                         instance.telemetryService.interact({ "type": "click", "subtype": "popup", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
                     };
                     $scope.showAdvancedOption = false;
@@ -361,11 +363,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
          */
         // Set the context
         var context = {
-                uid: $window.context.user.id,
-                sid: $window.context.sid,
-                contentId: $scope.contentId
-            }
-            // Config to override
+            uid: $window.context.user.id,
+            sid: $window.context.sid,
+            contentId: $scope.contentId
+        }
+        // Config to override
         var config = {
             absURL: $location.protocol() + '://' + $location.host() + ':' + $location.port() // Required
         }
@@ -374,43 +376,43 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
          * Load Content - Invoked once the content editor has loaded
          */
         $scope.loadContent = function() {
-                org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContent(org.ekstep.contenteditor.api.getContext('contentId'), function(err, content) {
-                    if (err) {
-                        $scope.contentLoadedFlag = true;
-                        $scope.onLoadCustomMessage.show = true;
-                        $scope.onLoadCustomMessage.text = ":( Unable to fetch the content! Please try again later!";
-                        $scope.telemetryService.error({ "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to fetch content from remote", "type": "API", "data": err, "severity": "fatal" });
+            org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContent(org.ekstep.contenteditor.api.getContext('contentId'), function(err, content) {
+                if (err) {
+                    $scope.contentLoadedFlag = true;
+                    $scope.onLoadCustomMessage.show = true;
+                    $scope.onLoadCustomMessage.text = ":( Unable to fetch the content! Please try again later!";
+                    $scope.telemetryService.error({ "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to fetch content from remote", "type": "API", "data": err, "severity": "fatal" });
+                }
+                if (!(content && content.body) && !err) {
+                    org.ekstep.contenteditor.stageManager.onContentLoad((new Date()).getTime());
+                    $scope.closeLoadScreen(true);
+                } else if (content && content.body) {
+                    $scope.oldContentBody = angular.copy(content.body);
+                    var parsedBody = $scope.parseContentBody(content.body);
+                    if (parsedBody) org.ekstep.contenteditor.api.dispatchEvent("content:migration:start", { body: parsedBody, stageIcons: content.stageIcons });
+                }
+                if (content) {
+                    var concepts = "";
+                    if (!_.isUndefined(content.concepts)) {
+                        concepts = _.size(content.concepts) <= 1 ? content.concepts[0].name : content.concepts[0].name + ' & ' + (_.size(content.concepts) - 1) + ' more';
                     }
-                    if (!(content && content.body) && !err) {
-                        org.ekstep.contenteditor.stageManager.onContentLoad((new Date()).getTime());
-                        $scope.closeLoadScreen(true);
-                    } else if (content && content.body) {
-                        $scope.oldContentBody = angular.copy(content.body);
-                        var parsedBody = $scope.parseContentBody(content.body);
-                        if (parsedBody) org.ekstep.contenteditor.api.dispatchEvent("content:migration:start", { body: parsedBody, stageIcons: content.stageIcons });
-                    }
-                    if (content) {
-                        var concepts = "";
-                        if (!_.isUndefined(content.concepts)) {
-                            concepts = _.size(content.concepts) <= 1 ? content.concepts[0].name : content.concepts[0].name + ' & ' + (_.size(content.concepts) - 1) + ' more';
-                        }
-                        $scope.contentDetails = {
-                            contentTitle: content.name,
-                            contentImage: content.appIcon,
-                            contentType: '| ' + content.contentType,
-                            contentConcepts: concepts
-                        };
-                        $scope.setTitleBarText($scope.contentDetails.contentTitle);
-                    }
-                });
-            }
-            /**
-             * Initialize the ekstep editor
-             * @param  {object} context The context for the editor to load
-             * @param  {object} config The config for the editor to override/set
-             * @param  {function} $scope Scope of the controller
-             * @param  {function} callback Function to be invoked once the editor is loaded
-             */
+                    $scope.contentDetails = {
+                        contentTitle: content.name,
+                        contentImage: content.appIcon,
+                        contentType: '| ' + content.contentType,
+                        contentConcepts: concepts
+                    };
+                    $scope.setTitleBarText($scope.contentDetails.contentTitle);
+                }
+            });
+        }
+        /**
+         * Initialize the ekstep editor
+         * @param  {object} context The context for the editor to load
+         * @param  {object} config The config for the editor to override/set
+         * @param  {function} $scope Scope of the controller
+         * @param  {function} callback Function to be invoked once the editor is loaded
+         */
         org.ekstep.contenteditor.init(context, config, $scope, $document, function() {
             var obj = _.find($scope.appLoadMessage, { 'id': 1 });
             if (_.isObject(obj)) {
@@ -460,5 +462,5 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
 org.ekstep.contenteditor.jQuery(document).ready(function() {
     var newheight = $(window).innerHeight() - 114;
-    org.ekstep.contenteditor.jQuery('.scrollable-slides').css("height", newheight + "px");
+    org.ekstep.contenteditor.jQuery('.scrollable-slides').css("height",newheight + "px");
 });
