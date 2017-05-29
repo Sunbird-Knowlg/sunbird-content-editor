@@ -10,6 +10,7 @@ org.ekstep.pluginframework.publishedRepo = new(org.ekstep.pluginframework.iRepo.
         }, publishedTime);
     },
     resolveResource: function(id, ver, resource) {
+        if (typeof ver === "number") ver = ver.toFixed(1);
     	return org.ekstep.pluginframework.config.pluginRepo + "/" + id + "-" + ver + "/" + resource;
     }
 }));
