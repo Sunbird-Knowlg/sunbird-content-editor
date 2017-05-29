@@ -9,8 +9,7 @@ org.ekstep.pluginframework.publishedRepo = new(org.ekstep.pluginframework.iRepo.
             callback(undefined, { "manifest": response, "repo": instance });
         }, publishedTime);
     },
-    resolveResource: function(id, ver, resource) {
-        if (typeof ver === "number") ver = ver.toFixed(1);
+    resolveResource: function(id, ver, resource) {        
     	return org.ekstep.pluginframework.config.pluginRepo + "/" + id + "-" + ver + "/" + resource;
     }
 }));
