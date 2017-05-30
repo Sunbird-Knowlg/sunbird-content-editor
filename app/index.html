@@ -121,8 +121,9 @@
                             </div>
                         </div>
                         <div class="download-collaborator-icon">
-                            <i class="large add user link icon" ng-click="fireEvent({id: 'collaborator:add', data: undefined});" title="Add Collaborator"></i>
-                            <i class="large download link icon" ng-click="fireEvent({id: 'download:content', data: undefined});" title="Download" style="line-height: 26px;"></i>
+                            <i class="large add user link icon" ng-click="fireEvent({id: 'collaborator:add'});" title="Add Collaborator"></i>
+                            <i class="large download link icon" ng-click="fireEvent({id: 'download:content'});" title="Download" style="line-height: 26px;"></i>
+                            <i class="large send link icon" title="Send For Review" ng-click="fireEvent({id: 'org.ekstep.review:review'});"></i>
                         </div>
                     </div>
                 </div>
@@ -174,7 +175,7 @@
                         -->
                     </div>
                     <div class="ui three wide column" style="background-color: #EEEEEE; padding: 0px !important;">
-                        <div class="sidebar-holder">                        
+                        <div class="sidebar-holder">
                             <div ng-repeat="sidebar in registeredCategories">
                                 <div ng-show="(configCategory.selected == sidebar.id && sidebar.state == 'SHOW')">
                                     <div ng-include="sidebar.templateURL"></div>
@@ -183,7 +184,7 @@
                         </div>
                         <div class="sidebar-reportissue " style="position: fixed; right: 0; bottom: 0;width: 100%;margin-bottom: 10px; ">
                             <a class="ui basic small button " ng-click="fireSidebarTelemetry({id: 'reportIssue'}, 'reportIssueButton') " ng-href="{{reportIssueLink}} " target="_blank " style="position: absolute; bottom:0; right: 30px "><i class="help circle medium icon "></i>Help</a>
-                        </div>                        
+                        </div>
                     </div>
                 </div>
             </div>
@@ -222,7 +223,6 @@
     <script src="scripts/framework/manager/event-manager.js"></script>
     <script src="scripts/framework/manager/plugin-manager.js"></script>
     <script src="scripts/framework/manager/keyboard-manager.js"></script>
-    
     <!-- Load Services -->
     <script src="scripts/framework/service/iservice.js"></script>
     <script src="scripts/framework/service/content-service.js"></script>
@@ -233,7 +233,6 @@
     <script src="scripts/framework/service/search-service.js"></script>
     <script src="scripts/framework/repo/irepo.js"></script>
     <script src="scripts/framework/repo/published-repo.js"></script>
-
     <!-- Load Content Editor -->
     <script src="scripts/contenteditor/bootstrap-editor.js"></script>
     <script src="scripts/contenteditor/ce-config.js"></script>
