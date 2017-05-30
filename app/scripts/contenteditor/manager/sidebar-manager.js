@@ -70,5 +70,18 @@ org.ekstep.contenteditor.sidebarManager = new(Class.extend({
     setSidebarHeight: function() {
         var newheight = $(window).innerHeight() - 212;
         $('.sidebar-holder').css("height", newheight + "px");
+    },
+    getState: function() {
+        return {
+            selectedMenu: this.scope.configCategory.selected
+        }
+    },
+    setState: function() {
+        var instance = this;
+        var editorState = org.ekstep.services.contentService.getEditorState();
+        if (editorState && editorState.sidebar) {
+            instance.scope.configCategory.selected = editorState.sidebar.selectedMenu;
+            instance.scope.refreshSidebar();
+        }        
     }
 }));

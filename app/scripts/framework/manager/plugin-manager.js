@@ -7,8 +7,13 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     pluginObjs: {},
     pluginInstances: {},
     errors: [],
+    extPluginsList: [],
     init: function() {
+        var instance = this;
         console.log("Plugin manager initialized");
+        org.ekstep.pluginframework.eventManager.addEventListener('plugin:load', function(event, data) {
+            instance.extPluginsList.push({ plugin: data.plugin, version: data.version });
+        });
     },
     _registerPlugin: function(pluginId, pluginVer, plugin, manifest, repo) {
         this.plugins[pluginId] = { p: plugin, m: manifest, repo: repo };
@@ -423,6 +428,24 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             return this.plugins[id]["repo"].resolveResource(id, ver, resource);
         } else {
             return false;
+        }
+    },
+    getState: function() {        
+        return {
+            noOfPluginsLoaded: Object.keys(this.plugins).length,
+            noOfExtPlugins: this.extPluginsList.length,
+            extPlugins: this.extPluginsList,
+            noOfPluginInstances: Object.keys(this.pluginInstances).length            
+        }
+    },
+    setState: function() {
+        var instance = this;
+        var editorState = org.ekstep.services.contentService.getEditorState();
+        if (editorState && editorState.plugin) {
+            // load external plugins used by the user
+             editorState.plugin.extPlugins.forEach(function(data) {
+                instance.loadPlugin(data.plugin, data.version);
+             });
         }
     }
 }));
