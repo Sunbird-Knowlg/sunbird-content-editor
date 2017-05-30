@@ -7,6 +7,8 @@ org.ekstep.pluginframework.resourceManager = new(Class.extend({
     registeredRepos: [],    
     discoverManifest: function(pluginId, pluginVer, cb, publishedTime) {
         var ayncTasks = [];
+        
+        if (typeof pluginVer === "number") pluginVer = pluginVer.toFixed(1);
 
         this.registeredRepos.forEach(function(repo, index) {
             var Fns = function() {

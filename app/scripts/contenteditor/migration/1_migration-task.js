@@ -11,7 +11,7 @@ org.ekstep.contenteditor.migration = new(Class.extend({
     execute: function(event, data) {
         var contentbody = data.body, stageIcons = data.stageIcons;
 
-        if (!_.has(contentbody, 'theme.stage')) org.ekstep.services.telemetryService.error({ "env": "migration", "stage": "", "action": "log the error", "err": "migration has errors", "type": "PORTAL", "data": "", "severity": "warn" });  
+        if (!_.has(contentbody, 'theme.stage')) org.ekstep.services.telemetryService.error({ "env": "content", "stage": "", "action": "migration", "objectId": "", objectType: "", "err": "migration has errors", "type": "PORTAL", "data": "", "severity": "error" });  
         if (this.isOldContent(contentbody)) {            
             this.initLoadScreenMsg();
             this._startTime = (new Date()).getTime();
@@ -33,7 +33,7 @@ org.ekstep.contenteditor.migration = new(Class.extend({
         console.log('after migration content:', _.cloneDeep(content));
         if (instance.migrationErrors.length) {            
             console.info('Migration has errors: ', instance.migrationErrors);
-            org.ekstep.services.telemetryService.error({ "env": "migration", "stage": "", "action": "log the error", "err": "migration has errors", "type": "PORTAL", "data": "", "severity": "warn" });
+            org.ekstep.services.telemetryService.error({ "env": "content", "stage": "", "action": "migration", "objectId": "", objectType: "", "err": "migration has errors", "type": "PORTAL", "data": "", "severity": "error" });
         }
 
         org.ekstep.contenteditor.stageManager.fromECML(content, stageIcons);

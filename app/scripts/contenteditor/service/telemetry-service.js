@@ -187,7 +187,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     },
     interactRequiredFields: ["type", "subtype", "target", "pluginid", "pluginver", "objectid", "stage"],
     lifecycleRequiredFields: ["type", "pluginid", "pluginver", "objectid", "stage"],
-    errorRequiredFields: ["env", "stage", "action", "err", "type", "data", "severity"],
+    errorRequiredFields: ["env", "stage", "action", "err", "type", "data", "severity", "objectId", "objectType"],
     apiCallRequiredFields: ["path", "method", "request", "response","responseTime", "status", "uip"],
     /**
     *
