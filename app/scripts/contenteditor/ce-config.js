@@ -18,6 +18,7 @@ org.ekstep.contenteditor.config = {
     },
     baseConfigManifest: "config/baseConfigManifest.json",
     plugins: [
+        { "id": "org.ekstep.iframeevent", "ver": "1.0", "type": "plugin" },
         { "id": "org.ekstep.developer", "ver": "1.0", "type": "plugin" }
     ],
     corePluginsPackaged: true,
