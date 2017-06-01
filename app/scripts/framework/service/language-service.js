@@ -46,7 +46,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getLanguages: function(callback) {
-        this.getFromService(this.learningURL() + 'v1/language', this.requestHeaders, callback);
+        this.getFromService(this.learningURL() + 'v3/language/list', this.requestHeaders, callback);
     },
     /**
      * Get all list of vowel available in selected language
@@ -73,7 +73,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getWords: function(data, callback) {
-        this.postFromService(this.languageURL() + 'v2/language/search', data, this.wordHeaders, callback);
+        this.postFromService(this.languageURL() + 'v3/search', data, this.wordHeaders, callback);
     },
     /**
      * Get types of word. eg. Nouns, verbs etc 
@@ -81,7 +81,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getWordDefinition: function(callback) {
-        this.getFromService(this.learningURL() + 'taxonomy/en/definition/Word', this.requestHeaders, callback);
+        this.getFromService(this.learningURL() + 'v3/system/definitions/read/word?graphId=en', this.requestHeaders, callback);
     },
     /**
      * Get all avalible keywords in given content
@@ -90,7 +90,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getKeyWords: function(data, callback) {
-        this.postFromService(this.languageURL() + 'v1/language/parser', data, this.requestHeaders, callback);
+        this.postFromService(this.languageURL() + 'v3/tools/parser', data, this.requestHeaders, callback);
     },
     /**
     * Transliterates english text to specified language and invokes a callback
@@ -99,7 +99,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
     * @return {void}
     */
     getTransliteration: function(data, callback) {
-        this.getFromService(this.getBaseURL() + "/api/language/v2/language/transliteration/"+ data.text + "?languages=" + data.languages.toString(), this.requestHeaders, callback);
+        this.getFromService(this.getBaseURL() + "/api/language/v3/tools/transliterate?language_id="+ data.languages.toString() +"&addClosingVirama=true&text="+data.text, this.requestHeaders, callback);
     },
     /**
      * Translates word in provided languages
@@ -107,6 +107,8 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @param {Function} callback, callback function
      */
     getTranslation:  function(data, callback) {
-        this.getFromService(this.getBaseURL() + "/api/language/v2/language/translations/"+ data.wordLang + '/' + data.word + '?languages=' + data.languages, this.requestHeaders, callback);
+        //v3/tools/translate?language_id=ka&lemma=ಅಜಾತ&languages=ta,en
+        //this.getFromService(this.getBaseURL() + "/api/language/v2/language/translations/"+ data.wordLang + '/' + data.word + '?languages=' + data.languages, this.requestHeaders, callback);
+        this.getFromService(this.getBaseURL() + "/api/language/v3/tools/translate?language_id="+ data.wordLang + '&lemma=' + data.word + '&languages=' + data.languages, this.requestHeaders, callback);
     }
 }));
