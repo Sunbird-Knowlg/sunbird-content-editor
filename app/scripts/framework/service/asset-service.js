@@ -59,11 +59,11 @@ org.ekstep.services.assetService = new(org.ekstep.services.iService.extend({
             }
         };
         if (assetId) {
-            instance.patch(this.learningURL() + 'v2/content/', requestObj, this.requestHeaders, function(err, res) {
+            instance.patch(this.learningURL() + 'v3/content/update/', requestObj, this.requestHeaders, function(err, res) {
                 callback(err, res)
             });
         } else {
-            instance.post(this.learningURL() + 'v2/content', requestObj, this.requestHeaders, function(err, res) {
+            instance.post(this.learningURL() + 'v3/content/update/', requestObj, this.requestHeaders, function(err, res) {
                 callback(err, res)
             });
         }
