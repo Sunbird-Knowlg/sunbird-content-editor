@@ -63,7 +63,7 @@ org.ekstep.services.assetService = new(org.ekstep.services.iService.extend({
                 callback(err, res)
             });
         } else {
-            instance.post(this.learningURL() + 'v3/content/update/', requestObj, this.requestHeaders, function(err, res) {
+            instance.post(this.learningURL() + 'v3/content/create/', requestObj, this.requestHeaders, function(err, res) {
                 callback(err, res)
             });
         }
