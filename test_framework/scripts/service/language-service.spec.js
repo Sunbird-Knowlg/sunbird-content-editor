@@ -177,14 +177,14 @@ describe('language service test cases', function() {
         spyOn(org.ekstep.services.languageService, "getFromService");
         var data= { text: "hello", languages: "hindi" };
         org.ekstep.services.languageService.getTransliteration(data, function() {});
-        expect(org.ekstep.services.languageService.getFromService).toHaveBeenCalledWith(org.ekstep.services.languageService.getBaseURL() + "/api/language/v2/language/transliteration/"+ data.text + "?languages=" + data.languages.toString(), org.ekstep.services.languageService.requestHeaders, jasmine.any(Function));
+        expect(org.ekstep.services.languageService.getFromService).toHaveBeenCalledWith(org.ekstep.services.languageService.getBaseURL() + "/api/language/v3/tools/transliterate?language_id="+ data.languages.toString() +"&addClosingVirama=true&text="+data.text, org.ekstep.services.languageService.requestHeaders, jasmine.any(Function));
     });
 
     it("getTranslation method should call getFromService", function() {
         spyOn(org.ekstep.services.languageService, "getFromService");
         var data= { wordLang: "english", word: "tree", languages: "hindi,english" };
         org.ekstep.services.languageService.getTranslation(data, function() {});
-        expect(org.ekstep.services.languageService.getFromService).toHaveBeenCalledWith(org.ekstep.services.languageService.getBaseURL() + "/api/language/v2/language/translations/"+ data.wordLang + '/' + data.word + '?languages=' + data.languages, org.ekstep.services.languageService.requestHeaders, jasmine.any(Function));
+        expect(org.ekstep.services.languageService.getFromService).toHaveBeenCalledWith(org.ekstep.services.languageService.getBaseURL() + "/api/language/v3/tools/translate?language_id="+ data.wordLang + '&lemma=' + data.word + '&languages=' + data.languages, org.ekstep.services.languageService.requestHeaders, jasmine.any(Function));
     });
 
 });
