@@ -36,7 +36,7 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.metaService
      */
     getDefinitions: function(objectType, callback) {
-        this.getFromService(this.learningURL() + 'taxonomy/domain/definition/'+ objectType, this.requestHeaders, callback);
+        this.getFromService(this.learningURL() + 'v3/system/definitions/read/'+ objectType, this.requestHeaders, callback);
     },
     /**
      * Returns all property values in the specified language.
@@ -45,6 +45,6 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.metaService
      */
     getResourceBundles: function(languageCode ,callback) {
-        this.getFromService(this.configURL() + 'v2/config/resourcebundles/'+ languageCode, this.requestHeaders, callback);
+        this.getFromService(this.configURL() + 'v3/resourcebundles/read/'+ languageCode, this.requestHeaders, callback);
     }
 }));
