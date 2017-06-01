@@ -104,7 +104,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             if (update) {
                 var headers = { "headers": { "content-type": "application/json", "user-id": "ATTool" } }
                 var requestObj = { request: { content: content } };
-                instance.patch(this.serviceURL() + 'v3/content/read/' + contentId, requestObj, headers, function(err, res) {
+                instance.patch(this.serviceURL() + 'v3/content/update/' + contentId, requestObj, headers, function(err, res) {
                     /* istanbul ignore else */
                     if (res && res.data.responseCode == "OK") {
                         instance.content[contentId].versionKey = res.data.result.versionKey;
