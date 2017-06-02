@@ -8,8 +8,8 @@ org.ekstep.services.assetService = new(org.ekstep.services.iService.extend({
      * @member {string} searchURL
      * @memberof org.ekstep.services.assetService
      */
-    learningURL: function() {
-        return this.getBaseURL() + this.getAPISlug() + '/learning/'
+    contentURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + '/content/'
     },
     asset: {},
      /** 
@@ -59,11 +59,11 @@ org.ekstep.services.assetService = new(org.ekstep.services.iService.extend({
             }
         };
         if (assetId) {
-            instance.patch(this.learningURL() + 'v3/content/update/', requestObj, this.requestHeaders, function(err, res) {
+            instance.patch(this.contentURL() + 'v3/update/', requestObj, this.requestHeaders, function(err, res) {
                 callback(err, res)
             });
         } else {
-            instance.post(this.learningURL() + 'v3/content/create/', requestObj, this.requestHeaders, function(err, res) {
+            instance.post(this.contentURL() + 'v3/create/', requestObj, this.requestHeaders, function(err, res) {
                 callback(err, res)
             });
         }

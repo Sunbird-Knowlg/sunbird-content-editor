@@ -46,7 +46,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getLanguages: function(callback) {
-        this.getFromService(this.learningURL() + 'v3/language/list', this.requestHeaders, callback);
+        this.getFromService(this.languageURL() + 'v3/list', this.requestHeaders, callback);
     },
     /**
      * Get all list of vowel available in selected language
