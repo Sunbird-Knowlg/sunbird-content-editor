@@ -7,7 +7,6 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     pluginObjs: {},
     pluginInstances: {},
     errors: [],
-    extPluginsList: [],
     init: function() {        
         console.log("Plugin manager initialized");        
     },
