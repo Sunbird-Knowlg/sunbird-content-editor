@@ -817,7 +817,8 @@ describe("content editor integration test: ", function() {
             expect(org.ekstep.contenteditor.api.dispatchEvent).toHaveBeenCalledWith("content:load:complete");
         });
 
-        it('after content load: should fire select stage event', function() {
+        // moved this logic to editor state plugin
+        xit('after content load: should fire select stage event', function() {
             expect(org.ekstep.pluginframework.eventManager.dispatchEvent).toHaveBeenCalledWith('stage:select', { stageId: org.ekstep.contenteditor.stageManager.stages[0].id });
         });
 
