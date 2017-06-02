@@ -17,7 +17,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      *
      * @memberof org.ekstep.services.contentService
      */
-    contentFields: "body,editorState,stageIcons,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType,owner,domain,code,visibility,portalOwner,description,language,mediaType,mimeType,osId,languageCode,createdOn,lastUpdatedOn,audience,ageGroup,attributions",
+    contentFields: "body,editorState,stageIcons,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType,owner,domain,code,visibility,createdBy,description,language,mediaType,mimeType,osId,languageCode,createdOn,lastUpdatedOn,audience,ageGroup,attributions",
     requestHeaders: {
         "headers": {
             "content-type": "application/json",
