@@ -30,6 +30,6 @@ org.ekstep.services.searchService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.searchService
      */
     search: function(request, callback) {
-        this.postFromService(this.searchURL() + 'v2/search', request, this.requestHeaders, callback);
+        this.postFromService(this.searchURL() + 'v3/search', request, this.requestHeaders, callback);
     }
 }));
