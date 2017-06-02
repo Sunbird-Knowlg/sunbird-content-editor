@@ -14,7 +14,9 @@ org.ekstep.contenteditor.sidebarManager = new(Class.extend({
             menu.onclick = menu.onclick || { id: "sidebar:" + menu.id };
             this.sidebarMenu.push(menu);
             this.loadSidebar(menu, manifest);
-            org.ekstep.contenteditor.api.addEventListener("sidebar:" + menu.id, instance.scope.showSidebar, instance.scope);
+            ecEditor.addEventListener("sidebar:" + menu.id, function(event, data) {
+                instance.showSidebarMenu(event.type.substring(event.type.indexOf(':') + 1));
+            }, instance);
         }
     },
     loadSidebar: function(menu, manifest) {
@@ -71,17 +73,13 @@ org.ekstep.contenteditor.sidebarManager = new(Class.extend({
         var newheight = $(window).innerHeight() - 212;
         $('.sidebar-holder').css("height", newheight + "px");
     },
-    getState: function() {
-        return {
-            selectedMenu: this.scope.configCategory.selected
-        }
+    getCurrentMenu: function() {
+        return this.scope.configCategory.selected;
     },
-    setState: function() {
-        var instance = this;
-        var editorState = org.ekstep.services.contentService.getEditorState();
-        if (editorState && editorState.sidebar) {
-            instance.scope.configCategory.selected = editorState.sidebar.selectedMenu;
-            instance.scope.refreshSidebar();
-        }        
+    showSidebarMenu: function(sidebarMenuId) {        
+        if (sidebarMenuId) {
+            this.scope.configCategory.selected = sidebarMenuId;
+            this.scope.refreshSidebar();
+        }
     }
 }));

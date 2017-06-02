@@ -424,13 +424,10 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         org.ekstep.contenteditor.stageManager.registerEvents();
         this.showLoadScreenMessage();
         org.ekstep.contenteditor.stageManager.contentLoading = false;
-        org.ekstep.services.telemetryService.startEvent(true).append("loadtimes", { "contentLoad": ((new Date()).getTime() - startTime) });
-        org.ekstep.contenteditor.sidebarManager.setState();
+        org.ekstep.services.telemetryService.startEvent(true).append("loadtimes", { "contentLoad": ((new Date()).getTime() - startTime) });        
         if (org.ekstep.contenteditor.api._.isEmpty(this.stages)) {
             org.ekstep.pluginframework.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
-        } else {
-            this.setState();
-        }        
+        }       
         org.ekstep.contenteditor.api.dispatchEvent('content:load:complete');
     },
     _resolveManifestMediaPath: function(id, ver, resource) {
@@ -441,28 +438,6 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             src = org.ekstep.contenteditor.config.baseURL + src;
         }
         return src;
-    },
-    getState: function() {
-        return {
-            noOfStages: this.stages.length,
-            currentStage: this.currentStage.id,
-            selectedPluginObject: ecEditor.getCurrentObject().id || undefined           
-        }
-    },
-    setState: function() {        
-        var instance = this;
-        var editorState = org.ekstep.services.contentService.getEditorState();
-        if (editorState && editorState.stage) {
-            instance.selectStage(undefined, { stageId: editorState.stage.currentStage });
-            //set current selected object
-            if (editorState.stage.selectedPluginObject) {
-                _.forEach(instance.getStage(editorState.stage.currentStage).children, function(child) {
-                    if (child.id === editorState.stage.selectedPluginObject) instance.currentStage.canvas.setActiveObject(child.editorObj);    
-                });                
-            }    
-        } else {
-            org.ekstep.pluginframework.eventManager.dispatchEvent('stage:select', { stageId: this.stages[0].id });
-        }       
     },
     cleanUp: function() {
         this.stages = [];

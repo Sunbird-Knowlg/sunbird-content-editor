@@ -47,8 +47,8 @@ org.ekstep.contenteditor._loadDefaultPlugins = function(context, callback) {
             sid: context.sid,
             content_id: context.contentId
         }, org.ekstep.contenteditor.config.dispatcher);
-        callback();
-        org.ekstep.services.telemetryService.startEvent().append("loadtimes", { plugins: ((new Date()).getTime() - startTime) });
         org.ekstep.pluginframework.eventManager.enableEvents = true;
+        callback();
+        org.ekstep.services.telemetryService.startEvent().append("loadtimes", { plugins: ((new Date()).getTime() - startTime) });        
     });
 }

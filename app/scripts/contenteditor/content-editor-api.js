@@ -542,7 +542,13 @@ window.org.ekstep.contenteditor.api = {
     },
     addResourceRepository: function(repo, position) {
         if (repo) org.ekstep.pluginframework.resourceManager.addRepo(repo, position);
-    }
+    },
+    showSidebarMenu: function(sidebarMenuId) {
+        org.ekstep.contenteditor.sidebarManager.showSidebarMenu(sidebarMenuId)
+    },
+    getCurrentSidebarMenu: function() {
+        return org.ekstep.contenteditor.sidebarManager.getCurrentMenu();
+    }     
 }
 
 window.ecEditor = window.org.ekstep.contenteditor.api;

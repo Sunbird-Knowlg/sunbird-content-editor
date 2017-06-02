@@ -88,8 +88,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             var update = false;
             var content = {
                 versionKey: versionKey,
-                lastUpdatedBy: window.context.user.id,
-                editorState: JSON.stringify(instance.constructEditorState())                
+                lastUpdatedBy: window.context.user.id                
             }
             if (metadata) {
                 update = true;
@@ -200,17 +199,5 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
     downloadContent: function(contentId, fileName, callback) {
         var data = { "request": { "content_identifiers": [contentId], "file_name": fileName } };
         this.postFromService(this.serviceURL() + 'v2/content/bundle', data, this.requestHeaders, callback);
-    },
-    constructEditorState: function() {
-        return {
-            stage: org.ekstep.contenteditor.stageManager.getState(),
-            plugin: org.ekstep.pluginframework.pluginManager.getState(),
-            sidebar: org.ekstep.contenteditor.sidebarManager.getState()
-        }
-    },
-    getEditorState: function() {        
-        var editorState = this.getContentMeta(ecEditor.getContext("contentId")).editorState;
-        if (editorState) return JSON.parse(editorState)
-        return;        
     }
 }));
