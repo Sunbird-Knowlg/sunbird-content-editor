@@ -10,17 +10,7 @@ org.ekstep.services.searchService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.searchService
      */
     searchURL: function() {
-        return this.getBaseURL() + this.getAPISlug() + '/search/'
-    },
-    /** 
-     * @member {object} requestHeaders
-     * @memberof org.ekstep.services.searchService
-     */
-    requestHeaders: {
-        "headers": {
-            "content-type": "application/json",
-            "user-id": "content-editor"
-        }
+        return this.getBaseURL() + this.getAPISlug() + '/composite/'
     },
     initService: function() {},
     /**

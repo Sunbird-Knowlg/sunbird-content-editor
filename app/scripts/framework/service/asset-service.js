@@ -12,16 +12,6 @@ org.ekstep.services.assetService = new(org.ekstep.services.iService.extend({
         return this.getBaseURL() + this.getAPISlug() + '/content/'
     },
     asset: {},
-     /** 
-     * @member {object} requestHeaders
-     * @memberof org.ekstep.services.assetService
-     */
-    requestHeaders: {
-        "headers": {
-            "content-type": "application/json",
-            "user-id": "content-editor"
-        }
-    },
     initService: function() {},
     /**
      * Set asset object

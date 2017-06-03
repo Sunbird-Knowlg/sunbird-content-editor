@@ -12,16 +12,6 @@ org.ekstep.services.assessmentService = new(org.ekstep.services.iService.extend(
     assessmentURL: function() {
         return this.getBaseURL() + this.getAPISlug() + '/assessment/'
     },
-     /** 
-     * @member {object} requestHeaders
-     * @memberof org.ekstep.services.assessmentService
-     */
-    requestHeaders: {
-        "headers": {
-            "content-type": "application/json",
-            "user-id": "content-editor"
-        }
-    },
     /**
      * Get Questions from search API
      * @param  {object}   data     search filter data
@@ -38,7 +28,7 @@ org.ekstep.services.assessmentService = new(org.ekstep.services.iService.extend(
      * @memberof org.ekstep.services.assessmentService
      */
     getItem: function(itemId, callback) {
-        this.getFromService(this.assessmentURL() + 'v3/read/' + itemId, this.requestHeaders, callback);
+        this.getFromService(this.assessmentURL() + '/v3/items/read/' + itemId, this.requestHeaders, callback);
     },
     /**
      * Get template data of selected question from content service API

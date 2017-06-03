@@ -21,16 +21,6 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
         return this.getBaseURL() + this.getAPISlug() + '/language/'
     },
     /** 
-     * @member {object} requestHeaders
-     * @memberof org.ekstep.services.languageService
-     */
-    requestHeaders: {
-        "headers": {
-            "content-type": "application/json",
-            "user-id": "content-editor"
-        }
-    },
-    /** 
      * @member {object} wordHeaders
      * @memberof org.ekstep.services.languageService
      */
@@ -81,7 +71,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getWordDefinition: function(callback) {
-        this.getFromService(this.learningURL() + 'v3/system/definitions/read/word?graphId=en', this.requestHeaders, callback);
+        this.getFromService(this.learningURL() + 'taxonomy/en/definition/Word', this.requestHeaders, callback);
     },
     /**
      * Get all avalible keywords in given content
@@ -99,7 +89,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
     * @return {void}
     */
     getTransliteration: function(data, callback) {
-        this.getFromService(this.getBaseURL() + "/api/language/v3/tools/transliterate?language_id="+ data.languages.toString() +"&addClosingVirama=true&text="+data.text, this.requestHeaders, callback);
+        this.postFromService(this.languageURL() + "v3/tools/transliterate?lemma=" + data.text + "languages="+ data.languages.toString() , {"request": {}}, this.requestHeaders, callback);
     },
     /**
      * Translates word in provided languages
@@ -107,8 +97,6 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @param {Function} callback, callback function
      */
     getTranslation:  function(data, callback) {
-        //v3/tools/translate?language_id=ka&lemma=ಅಜಾತ&languages=ta,en
-        //this.getFromService(this.getBaseURL() + "/api/language/v2/language/translations/"+ data.wordLang + '/' + data.word + '?languages=' + data.languages, this.requestHeaders, callback);
-        this.getFromService(this.getBaseURL() + "/api/language/v3/tools/translate?language_id="+ data.wordLang + '&lemma=' + data.word + '&languages=' + data.languages, this.requestHeaders, callback);
+        this.postFromService(this.languageURL() + "v3/tools/translate?language_id="+ data.wordLang + '&lemma=' + data.word + '&languages=' + data.languages, {"request": {}}, this.requestHeaders, callback);
     }
 }));

@@ -18,12 +18,6 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.contentService
      */
     contentFields: "body,editorState,stageIcons,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType,owner,domain,code,visibility,createdBy,description,language,mediaType,mimeType,osId,languageCode,createdOn,lastUpdatedOn,audience,ageGroup,attributions",
-    requestHeaders: {
-        "headers": {
-            "content-type": "application/json",
-            "user-id": "content-editor"
-        }
-    },
     /**
      *
      * sets content meta for the given content id
@@ -102,9 +96,8 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
                 update = true;
             }
             if (update) {
-                var headers = { "headers": { "content-type": "application/json", "user-id": "ATTool" } }
                 var requestObj = { request: { content: content } };
-                instance.patch(this.serviceURL() + 'v3/update/' + contentId, requestObj, headers, function(err, res) {
+                instance.patch(this.serviceURL() + 'v3/update/' + contentId, requestObj, this.requestHeaders, function(err, res) {
                     /* istanbul ignore else */
                     if (res && res.data.responseCode == "OK") {
                         instance.content[contentId].versionKey = res.data.result.versionKey;
