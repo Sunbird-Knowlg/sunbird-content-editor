@@ -8,7 +8,7 @@ org.ekstep.services.iService = Class.extend({
         "headers": {
             "content-type": "application/json",
             "user-id": "content-editor"
-            
+            ,"authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJiYWYyYzg1OWIxMDg0NzhkYjMyNmYwZDQxNjMwZWMzMSJ9.YZjU6kKNg9F5BvS7JrXTfrxyTEULjR49v7wRD-CT9sg"
         }
     },
     getBaseURL: function() {
