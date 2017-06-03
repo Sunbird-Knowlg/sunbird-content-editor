@@ -89,7 +89,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
     * @return {void}
     */
     getTransliteration: function(data, callback) {
-        this.postFromService(this.languageURL() + "v3/tools/transliterate?lemma=" + data.text + "languages="+ data.languages.toString() , {"request": {}}, this.requestHeaders, callback);
+        this.postFromService(this.languageURL() + "v3/tools/transliterate?lemma=" + data.text + "&languages="+ data.languages.toString() , {"request": {}}, this.requestHeaders, callback);
     },
     /**
      * Translates word in provided languages
