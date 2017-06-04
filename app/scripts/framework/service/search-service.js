@@ -10,17 +10,7 @@ org.ekstep.services.searchService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.searchService
      */
     searchURL: function() {
-        return this.getBaseURL() + this.getAPISlug() + '/search/'
-    },
-    /** 
-     * @member {object} requestHeaders
-     * @memberof org.ekstep.services.searchService
-     */
-    requestHeaders: {
-        "headers": {
-            "content-type": "application/json",
-            "user-id": "content-editor"
-        }
+        return this.getBaseURL() + this.getAPISlug() + '/composite/'
     },
     initService: function() {},
     /**
@@ -30,6 +20,6 @@ org.ekstep.services.searchService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.searchService
      */
     search: function(request, callback) {
-        this.postFromService(this.searchURL() + 'v2/search', request, this.requestHeaders, callback);
+        this.postFromService(this.searchURL() + 'v3/search', request, this.requestHeaders, callback);
     }
 }));

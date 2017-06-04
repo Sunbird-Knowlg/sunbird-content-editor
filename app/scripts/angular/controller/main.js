@@ -9,8 +9,8 @@ angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).conf
         requireBase: false
     });
 }]);
-angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document', '$ocLazyLoad',
-    function($scope, $timeout, $http, $location, $q, $window, $document, $ocLazyLoad) {
+angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document', '$ocLazyLoad', '$rootScope',
+    function($scope, $timeout, $http, $location, $q, $window, $document, $ocLazyLoad, $rootScope) {
 
         // Declare global variables
         $scope.showAppLoadScreen = true;
@@ -19,7 +19,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.editorState = undefined;
 
         $scope.developerMode = $location.search().developerMode;
-        
+
         $scope.appLoadMessage = [
             { 'id': 1, 'message': 'Getting things ready for you', 'status': false }
         ];
@@ -40,7 +40,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         }
 
         //toolbar(sidebar menu)
-        $scope.configCategory = { selected: '' };        
+        $scope.configCategory = { selected: '' };
         $scope.cancelLink = (($window.context && $window.context.cancelLink) ? $window.context.cancelLink : "");
         $scope.reportIssueLink = (($window.context && $window.context.reportIssueLink) ? $window.context.reportIssueLink : "");
 
@@ -56,8 +56,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             var files = [];
             if (templatePath) files.push({ type: 'html', path: templatePath });
             if (controllerPath) files.push({ type: 'js', path: controllerPath });
-            if (files.length) return $ocLazyLoad.load(files)           
-        };  
+            if (files.length) return $ocLazyLoad.load(files)
+        };
 
         org.ekstep.contenteditor.sidebarManager.initialize({ loadNgModules: $scope.loadNgModules, scope: $scope });
 
@@ -70,10 +70,10 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 objectId = pluginObject.id;
             }
             $scope.telemetryService.interact({ "type": "modify", "subtype": "sidebar", "target": menuType, "pluginid": pluginId, 'pluginver': pluginVer, "objectid": objectId, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
-        };        
+        };
 
         $scope.addToSidebar = function(sidebar) {
-            $scope.registeredCategories.push(sidebar);                                                            
+            $scope.registeredCategories.push(sidebar);
             $scope.$safeApply();
         };
 
@@ -105,9 +105,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.$safeApply();
         }
 
-        $scope.previewContent = function(fromBeginning) {            
+        $scope.previewContent = function(fromBeginning) {
             var currentStage = _.isUndefined(fromBeginning) ? true : false;
-            org.ekstep.pluginframework.eventManager.dispatchEvent("atpreview:show", { contentBody: org.ekstep.contenteditor.stageManager.toECML(), 'currentStage': currentStage });            
+            org.ekstep.pluginframework.eventManager.dispatchEvent("atpreview:show", { contentBody: org.ekstep.contenteditor.stageManager.toECML(), 'currentStage': currentStage });
         };
 
         $scope.saveContent = function() {
@@ -123,13 +123,13 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                             if (res.responseJSON.params.err == "ERR_STALE_VERSION_KEY")
                             $scope.showConflictDialog();
                         } else {
-                            $scope.saveNotification('error'); 
+                            $scope.saveNotification('error');
                         }
                     }else if(res && res.data.responseCode == "OK"){
                         $scope.saveNotification('success');
                     }
-                    
-                    $scope.saveBtnEnabled = true;                                                           
+
+                    $scope.saveBtnEnabled = true;
                 });
             }
         }
@@ -150,7 +150,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.previewPlatformContent = function(){
             // Fetch latest content body from Platform and then show preview
             $scope.fetchPlatformContentBody(function(platformContentBody){
-                org.ekstep.pluginframework.eventManager.dispatchEvent("atpreview:show", { contentBody: platformContentBody, 'currentStage': true }); 
+                org.ekstep.pluginframework.eventManager.dispatchEvent("atpreview:show", { contentBody: platformContentBody, 'currentStage': true });
             });
         };
 
@@ -187,7 +187,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
 
 
-        
+
 
         $scope.patchContent = function(metadata, body, cb) {
             if ($scope.migrationFlag) {
@@ -277,7 +277,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 $scope.patchContent({ stageIcons: JSON.stringify(org.ekstep.contenteditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
                     if (res) {
                         $scope.saveNotification('success');
-                        $window.location.assign(window.context.editMetaLink);                    
+                        $window.location.assign(window.context.editMetaLink);
                     }
                     if (err) $scope.saveNotification('error');
                 });
@@ -350,11 +350,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             setTimeout(function() {
                 org.ekstep.contenteditor.jQuery(".ui.dropdown").dropdown();
                 org.ekstep.contenteditor.jQuery(".popup-item").popup();
-                $scope.$safeApply();                
+                $scope.$safeApply();
             }, 500);
         }
 
-        /** 
+        /**
          * Content Editor Initialization
          */
         // Set the context
@@ -453,10 +453,16 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         org.ekstep.pluginframework.eventManager.addEventListener('org.ekstep.editorstate:state', $scope.setEditorState, $scope);
 
+        $rootScope.patchContent = $scope.patchContent;
+        $rootScope.editContentMeta = $scope.editContentMeta;
+        $rootScope.showConflictDialog = $scope.showConflictDialog;
+        $rootScope.saveNotification = $scope.saveNotification;
+        $rootScope.saveBtnEnabled = $scope.saveBtnEnabled;
+        $rootScope.fetchPlatformContentVersionKey = $scope.fetchPlatformContentVersionKey;
     }
 ]);
 
 org.ekstep.contenteditor.jQuery(document).ready(function() {
-    var newheight = $(window).innerHeight() - 114;  
-    org.ekstep.contenteditor.jQuery('.scrollable-slides').css("height",newheight + "px");  
+    var newheight = $(window).innerHeight() - 114;
+    org.ekstep.contenteditor.jQuery('.scrollable-slides').css("height",newheight + "px");
 });

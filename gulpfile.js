@@ -318,6 +318,7 @@ var corePlugins = [
     "org.ekstep.viewecml-1.0",
     "org.ekstep.utils-1.0",
     "org.ekstep.help-1.0",
+    "org.ekstep.review-1.0",
     "org.ekstep.video-1.0",
     "org.ekstep.editorstate-1.0"
 ]

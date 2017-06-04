@@ -102,7 +102,7 @@ describe('telemetry service', function() {
     it('should dispatch CE_ERROR event', function() {
         spyOn(service, '_dispatch');
 
-        var data = { "env": "content", "stage": "", "action": "migration", "objectId": "", objectType: "", "err": "migration has errors", "type": "PORTAL", "data": "", "severity": "error" };
+        var data = { "env": "content", "stage": "", "action": "migration", "objectid": "", "objecttype": "", "err": "migration has errors", "type": "PORTAL", "data": "", "severity": "error" };
         var testEvent = service.getEvent("CE_ERROR", data);
 
         service.error(data);
