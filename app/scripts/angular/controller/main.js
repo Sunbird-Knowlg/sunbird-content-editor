@@ -16,7 +16,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.showAppLoadScreen = true;
         $scope.contentLoadedFlag = false;
         $scope.showGenieControls = false;
-
+        $scope.editorState = undefined;
 
         $scope.developerMode = $location.search().developerMode;
 
@@ -72,11 +72,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.telemetryService.interact({ "type": "modify", "subtype": "sidebar", "target": menuType, "pluginid": pluginId, 'pluginver': pluginVer, "objectid": objectId, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
         };
 
-        $scope.showSidebar = function(event, data) {
-            $scope.configCategory.selected = event.type.substring(event.type.indexOf(':') + 1);
-            $scope.$safeApply();
-        };
-
         $scope.addToSidebar = function(sidebar) {
             $scope.registeredCategories.push(sidebar);
             $scope.$safeApply();
@@ -118,9 +113,10 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.saveContent = function() {
             if ($scope.saveBtnEnabled) {
                 $scope.saveBtnEnabled = false;
+                org.ekstep.pluginframework.eventManager.dispatchEvent('content:before:save');
                 // TODO: Show saving dialog
                 var contentBody = org.ekstep.contenteditor.stageManager.toECML();
-                $scope.patchContent({ stageIcons: JSON.stringify(org.ekstep.contenteditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
+                $scope.patchContent({ stageIcons: JSON.stringify(org.ekstep.contenteditor.stageManager.getStageIcons()), editorState: JSON.stringify($scope.editorState) }, contentBody, function(err, res) {
                     if (err) {
                         if(res && !ecEditor._.isUndefined(res.responseJSON)){
                             // This could be converted to switch..case to handle different error codes
@@ -450,6 +446,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.fireToolbarTelemetry = function(menu, menuType) {
             $scope.telemetryService.interact({ "type": "click", "subtype": "menu", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
         };
+
+        $scope.setEditorState = function(event, data) {            
+            if (data) $scope.editorState = data;
+        };
+
+        org.ekstep.pluginframework.eventManager.addEventListener('org.ekstep.editorstate:state', $scope.setEditorState, $scope);
 
         $rootScope.patchContent = $scope.patchContent;
         $rootScope.editContentMeta = $scope.editContentMeta;
