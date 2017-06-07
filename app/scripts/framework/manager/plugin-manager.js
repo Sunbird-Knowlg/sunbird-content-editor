@@ -47,8 +47,8 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     },
     loadPluginByManifest: function(manifest, repo, pluginType, publishedTime) {
         var instance = this;
-        var scope = org.ekstep.pluginframework.env;
-        org.ekstep.pluginframework.resourceManager.getResource(manifest.id, manifest.ver, manifest[scope].main, 'text', repo, function(err, data) {
+        var scope = org.ekstep.pluginframework.env;        
+        if(manifest[scope] && manifest[scope].main) org.ekstep.pluginframework.resourceManager.getResource(manifest.id, manifest.ver, manifest[scope].main, 'text', repo, function(err, data) {
             if (err) {
                 org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:error', { plugin: manifest.id, version: manifest.ver, action: "load", err: err });
                 console.error('Unable to load editor plugin', 'plugin:' + manifest.id + '-' + manifest.ver, 'resource:' + manifest[scope].main, 'Error:', err);
@@ -136,19 +136,18 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 callback && callback(); // TODO: probably pass the error
             } else {
                 instance.loadManifestDependencies(data.manifest.dependencies, publishedTime, parents, function() {
-                    if (pluginType === 'renderer') {
-                        callback && callback();
-                    } else {
-                        var queue = instance.queueDependencies(data.manifest, data.repo, publishedTime, parents);
-                        if (queue.length() > 0) {
-                            queue.drain = function() {
-                                instance.loadPluginByManifest(data.manifest, data.repo, pluginType, publishedTime);
-                                callback && callback();
-                            };
-                        } else {
+                    if (!data.manifest.editor || Object.keys(data.manifest.editor).length === 0) {
+                        instance.pluginManifests[data.manifest.id] = data.manifest;
+                    }                    
+                    var queue = instance.queueDependencies(data.manifest, data.repo, publishedTime, parents);
+                    if (queue.length() > 0) {
+                        queue.drain = function() {
                             instance.loadPluginByManifest(data.manifest, data.repo, pluginType, publishedTime);
                             callback && callback();
-                        }
+                        };
+                    } else {
+                        instance.loadPluginByManifest(data.manifest, data.repo, pluginType, publishedTime);
+                        callback && callback();
                     }
                 });
             }
@@ -168,7 +167,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             }
         }, 1);
         var instance = this;
-        if (Array.isArray(manifest[scope].dependencies)) {
+        if (manifest[scope] && Array.isArray(manifest[scope].dependencies)) {
             manifest[scope].dependencies.forEach(function(dependency) {
                 if (dependency.type == 'plugin') {
                     if (org.ekstep.pluginframework.env == 'renderer') {
@@ -374,7 +373,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         return this.pluginInstances;
     },
     getPluginManifest: function(id) {
-        var plugin = this.plugins[id];
+        var plugin = this.plugins[id] || { m: this.pluginManifests[id] };
         if (plugin) {
             return plugin.m;
         } else {
