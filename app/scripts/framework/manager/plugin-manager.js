@@ -13,7 +13,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     _registerPlugin: function(pluginId, pluginVer, plugin, manifest, repo) {
         this.plugins[pluginId] = { p: plugin, m: manifest, repo: repo };
         this._registerNameSpace(pluginId, plugin);
-        if (manifest) this.pluginManifests[manifest.id] =  manifest;
+        if (manifest) this.pluginManifests[manifest.id] =  { m: manifest, repo: repo };
         org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:load', { plugin: pluginId, version: pluginVer });
         org.ekstep.pluginframework.eventManager.dispatchEvent(pluginId + ':load');
         var p = new plugin(manifest); 
@@ -137,7 +137,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
             } else {
                 instance.loadManifestDependencies(data.manifest.dependencies, publishedTime, parents, function() {
                     if (!data.manifest.editor || Object.keys(data.manifest.editor).length === 0) {
-                        instance.pluginManifests[data.manifest.id] = data.manifest;
+                        instance.pluginManifests[data.manifest.id] = { m: data.manifest, repo: data.repo };                        
                     }                    
                     var queue = instance.queueDependencies(data.manifest, data.repo, publishedTime, parents);
                     if (queue.length() > 0) {
@@ -373,7 +373,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         return this.pluginInstances;
     },
     getPluginManifest: function(id) {
-        var plugin = this.plugins[id] || { m: this.pluginManifests[id] };
+        var plugin = this.plugins[id] || this.pluginManifests[id];
         if (plugin) {
             return plugin.m;
         } else {
@@ -420,6 +420,8 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
     resolvePluginResource: function(id, ver, resource) {
         if (this.plugins[id] && this.plugins[id]["repo"]) {
             return this.plugins[id]["repo"].resolveResource(id, ver, resource);
+        } else if(this.pluginManifests[id] && this.pluginManifests[id]["repo"]) {
+            return this.pluginManifests[id]["repo"].resolveResource(id, ver, resource);
         } else {
             return false;
         }
