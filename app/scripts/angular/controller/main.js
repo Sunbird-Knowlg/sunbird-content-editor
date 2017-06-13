@@ -394,10 +394,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                     }
                     $scope.contentDetails = {
                         contentTitle: content.name,
-                        contentImage: content.appIcon,
-                        contentType: '| ' + content.contentType,
+                        contentImage: content.appIcon,                        
                         contentConcepts: concepts
                     };
+
+                    content.contentType ? ($scope.contentDetails.contentType = '| ' + content.contentType) : ($scope.contentDetails.contentType = "");
                     $scope.setTitleBarText($scope.contentDetails.contentTitle);
                 }
             });
