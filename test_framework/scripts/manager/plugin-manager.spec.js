@@ -30,7 +30,7 @@ describe('plugin manager unit test cases', function() {
 
                 expect(pm.plugins[testPlugin.id]).toEqual({ p: plugin, m: pluginManifest, repo: publishedRepo });
                 expect(pm._registerNameSpace).toHaveBeenCalled();
-                expect(pm.pluginManifests[testPlugin.id]).toEqual(pluginManifest);
+                expect(pm.pluginManifests[testPlugin.id].m).toEqual(pluginManifest);
                 expect(pm.pluginObjs[testPlugin.id]).toBeDefined();
                 expect(em.dispatchEvent).toHaveBeenCalledWith("plugin:load", { plugin: testPlugin.id, version: testPlugin.ver });
                 expect(em.dispatchEvent).toHaveBeenCalledWith(testPlugin.id + ":load");
