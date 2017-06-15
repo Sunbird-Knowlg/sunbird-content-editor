@@ -15,16 +15,13 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         // Declare global variables
         $scope.showAppLoadScreen = true;
         $scope.contentLoadedFlag = false;
-        $scope.showGenieControls = false;
-        $scope.editorState = undefined;
+        $scope.showGenieControls = false;        
 
         $scope.developerMode = $location.search().developerMode;
 
         $scope.appLoadMessage = [
             { 'id': 1, 'message': 'Getting things ready for you', 'status': false }
-        ];
-        $scope.migrationFlag = false;
-        $scope.saveBtnEnabled = true;
+        ];        
         $scope.model = {
             teacherInstructions: undefined
         }
@@ -83,18 +80,27 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         //sidebar scope ends
 
 
+        //Header scope starts
+        $scope.headers = [];
+        
+        $scope.addToHeader = function(header) {
+            $scope.headers.push(header);
+            $scope.$safeApply();
+        }
+
+        org.ekstep.contenteditor.headerManager.initialize({ loadNgModules: $scope.loadNgModules, scope: $scope });
+
+        //Header scope ends
+
         $scope.contentDetails = {
             contentTitle: "Untitled Content",
             contentImage: "/images/com_ekcontent/default-images/default-content.png",
             contentConcepts: "No concepts selected",
             contentType: ""
         };
-        $scope.userDetails = !_.isUndefined(window.context) ? window.context.user : undefined;
+        
         $scope.showInstructions = true;
-        $scope.stageAttachments = {};
-
-        // TODO: Figure out what the below code does
-        org.ekstep.contenteditor.api.jQuery('.browse.item.at').popup({ on: 'click', setFluidWidth: false, position: 'bottom right' });
+        $scope.stageAttachments = {};        
 
         // Functions
         $scope.closeLoadScreen = function(flag) {
@@ -103,104 +109,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 $scope.showAppLoadScreen = false;
             }
             $scope.$safeApply();
-        }
-
-        $scope.previewContent = function(fromBeginning) {
-            var currentStage = _.isUndefined(fromBeginning) ? true : false;
-            org.ekstep.pluginframework.eventManager.dispatchEvent("atpreview:show", { contentBody: org.ekstep.contenteditor.stageManager.toECML(), 'currentStage': currentStage });
-        };
-
-        $scope.saveContent = function() {
-            if ($scope.saveBtnEnabled) {
-                $scope.saveBtnEnabled = false;
-                org.ekstep.pluginframework.eventManager.dispatchEvent('content:before:save');
-                // TODO: Show saving dialog
-                var contentBody = org.ekstep.contenteditor.stageManager.toECML();
-                $scope.patchContent({ stageIcons: JSON.stringify(org.ekstep.contenteditor.stageManager.getStageIcons()), editorState: JSON.stringify($scope.editorState) }, contentBody, function(err, res) {
-                    if (err) {
-                        if(res && !ecEditor._.isUndefined(res.responseJSON)){
-                            // This could be converted to switch..case to handle different error codes
-                            if (res.responseJSON.params.err == "ERR_STALE_VERSION_KEY")
-                            $scope.showConflictDialog();
-                        } else {
-                            $scope.saveNotification('error');
-                        }
-                    }else if(res && res.data.responseCode == "OK"){
-                        $scope.saveNotification('success');
-                    }
-
-                    $scope.saveBtnEnabled = true;
-                });
-            }
-        }
-
-        $scope.saveBrowserContent = function() {
-            // Fetch latest versionKey and then save the content from browser
-            $scope.fetchPlatformContentVersionKey(function(platformContentVersionKey){
-                //Invoke save function here...
-                $scope.saveContent();
-            });
-        }
-
-        $scope.refreshContent = function() {
-            // Refresh the browser as user want to fetch the version from platform
-            location.reload();
-        }
-
-        $scope.previewPlatformContent = function(){
-            // Fetch latest content body from Platform and then show preview
-            $scope.fetchPlatformContentBody(function(platformContentBody){
-                org.ekstep.pluginframework.eventManager.dispatchEvent("atpreview:show", { contentBody: platformContentBody, 'currentStage': true });
-            });
-        };
-
-        $scope.fetchPlatformContentBody = function(cb) {
-            // Get the latest VersionKey and then save content
-            org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContent(org.ekstep.contenteditor.api.getContext('contentId'), function(err, content) {
-                if (err) {
-                    alert("Failed to get updated content. Please report an issue.");
-                }
-                if (content && content.body) {
-                    try {
-                        var contentBody = JSON.parse(content.body);
-                        cb(contentBody);
-                    } catch (e) {
-                        alert("Failed to parse body from platform. Please report an issue.");
-                        //contentBody = $scope.convertToJSON(content.body);
-                    }
-                }
-            });
-        };
-
-        $scope.fetchPlatformContentVersionKey = function(cb) {
-            // Get the latest VersionKey and then save content
-            org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContentVersionKey(org.ekstep.contenteditor.api.getContext('contentId'), function(err, content) {
-                if (err) {
-                    alert("Failed to get updated version key. Please report an issue.");
-                }
-                // if versionKey is available, pass success and save
-                if (content.versionKey) {
-                    cb(content);
-                }
-            });
-        };
-
-
-
-
-
-        $scope.patchContent = function(metadata, body, cb) {
-            if ($scope.migrationFlag) {
-                if (!metadata) metadata = {};
-                metadata.oldContentBody = $scope.oldContentBody;
-                var migrationPopupCb = function() {
-                    $scope.contentService.saveContent(org.ekstep.contenteditor.api.getContext('contentId'), metadata, body, cb);
-                }
-                $scope.showMigratedContentSaveDialog(migrationPopupCb);
-            } else {
-                $scope.contentService.saveContent(org.ekstep.contenteditor.api.getContext('contentId'), metadata, body, cb);
-            }
-        }
+        }   
 
         $scope.toggleGenieControl = function() {
             if (!$scope.showGenieControls) {
@@ -249,103 +158,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.onStageDragDrop = function(dragEl, dropEl) {
             org.ekstep.contenteditor.stageManager.onStageDragDrop(org.ekstep.contenteditor.jQuery('#' + dragEl).attr('data-id'), org.ekstep.contenteditor.jQuery('#' + dropEl).attr('data-id'));
             org.ekstep.contenteditor.api.refreshStages();
-        }
+        }              
 
-        $scope.editContentMeta = function() {
-            var config = {
-                template: 'editContentMetaDialog',
-                controller: ['$scope', 'mainCtrlScope', function($scope, mainCtrlScope) {
-                    $scope.routeToContentMeta = function(save) {
-                        $scope.closeThisDialog();
-                        mainCtrlScope.routeToContentMeta(save);
-                    }
-                }],
-                resolve: {
-                    mainCtrlScope: function() {
-                        return $scope;
-                    }
-                },
-                showClose: false
-            };
-
-            org.ekstep.contenteditor.api.getService('popup').open(config);
-        }
-
-        $scope.routeToContentMeta = function(save) {
-            if (save) {
-                var contentBody = org.ekstep.contenteditor.stageManager.toECML();
-                $scope.patchContent({ stageIcons: JSON.stringify(org.ekstep.contenteditor.stageManager.getStageIcons()) }, contentBody, function(err, res) {
-                    if (res) {
-                        $scope.saveNotification('success');
-                        $window.location.assign(window.context.editMetaLink);
-                    }
-                    if (err) $scope.saveNotification('error');
-                });
-            } else {
-                $window.location.assign(window.context.editMetaLink);
-            }
-        };
-
-        $scope.saveNotification = function(message) {
-            message = (message === 'success') ? 'saveSuccessMessage.html' : 'saveErrorMessage.html';
-            var config = {
-                template: message,
-                showClose: false
-            }
-            $scope.popupService.open(config);
-        };
-
-        $scope.showConflictDialog = function(){
-            var instance = $scope;
-            $scope.popupService.open({
-                template: 'conflictDialog.html',
-                controller: ['$scope', function($scope) {
-                    //Platform copy
-                    $scope.previewPlatformContent = function(){
-                        instance.previewPlatformContent();
-                    };
-                    $scope.saveBrowserContent = function(){
-                        instance.saveBrowserContent();
-                        $scope.closeThisDialog();
-                    };
-                    //Existing copy
-                    $scope.previewContent = function(){
-                        instance.previewContent();
-                    };
-                    $scope.refreshContent = function(){
-                        instance.refreshContent();
-                    };
-                    $scope.firetelemetry = function(menu, menuType){
-                        instance.telemetryService.interact({ "type": "click", "subtype": "popup", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
-                    };
-                    $scope.showAdvancedOption = false;
-                }],
-                className: 'ngdialog-theme-plain',
-                showClose: false,
-                closeByDocument: true,
-                closeByEscape: true
-            });
-        };
-
-        $scope.showMigratedContentSaveDialog = function(callback) {
-            var instance = $scope;
-            $scope.popupService.open({
-                template: 'migratedContentSaveMsg.html',
-                controller: ['$scope', function($scope) {
-                    $scope.saveContent = function() {
-                        instance.migrationFlag = false;
-                        callback();
-                    }
-
-                    $scope.enableSaveBtn = function() {
-                        instance.saveBtnEnabled = true;
-                    }
-                }],
-                showClose: false,
-                closeByDocument: false,
-                closeByEscape: false
-            });
-        }
+        
         $scope.refreshToolbar = function() {
             setTimeout(function() {
                 org.ekstep.contenteditor.jQuery(".ui.dropdown").dropdown();
@@ -447,19 +262,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.fireToolbarTelemetry = function(menu, menuType) {
             $scope.telemetryService.interact({ "type": "click", "subtype": "menu", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
         };
-
-        $scope.setEditorState = function(event, data) {            
-            if (data) $scope.editorState = data;
-        };
-
-        org.ekstep.pluginframework.eventManager.addEventListener('org.ekstep.editorstate:state', $scope.setEditorState, $scope);
-
-        $rootScope.patchContent = $scope.patchContent;
-        $rootScope.editContentMeta = $scope.editContentMeta;
-        $rootScope.showConflictDialog = $scope.showConflictDialog;
-        $rootScope.saveNotification = $scope.saveNotification;
-        $rootScope.saveBtnEnabled = $scope.saveBtnEnabled;
-        $rootScope.fetchPlatformContentVersionKey = $scope.fetchPlatformContentVersionKey;
     }
 ]);
 

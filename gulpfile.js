@@ -75,6 +75,7 @@ var scriptfiles = [
     "app/scripts/contenteditor/manager/toolbar-manager.js",
     "app/scripts/contenteditor/manager/media-manager.js",
     "app/scripts/contenteditor/manager/sidebar-manager.js",
+    "app/scripts/contenteditor/manager/header-manager.js",
     "app/scripts/contenteditor/service/popup-service.js",    
     "app/scripts/contenteditor/service/manifest-generator.js",
     "app/scripts/contenteditor/migration/1_migration-task.js",
@@ -268,7 +269,7 @@ gulp.task('injectDev', ['minifyDev'], function() {
     var target = gulp.src('content-editor/index.html');
     var sources = gulp.src(['content-editor/scripts/external.min.js', 'content-editor/scripts/main/class.js', 'content-editor/scripts/main/ekstep-editor.js', 'content-editor/scripts/main/base-plugin.js',
         'content-editor/scripts/manager/event-manager.js', 'content-editor/scripts/manager/plugin-manager.js', 'content-editor/scripts/manager/stage-manager.js', 'content-editor/scripts/manager/toolbar-manager.js',
-        'content-editor/scripts/manager/media-manager.js', 'content-editor/scripts/main/ekstep-editor-api.js', 'content-editor/scripts/migration/1_migration-task.js', 'content-editor/scripts/migration/stageordermigration-task.js',
+        'content-editor/scripts/manager/media-manager.js', "app/scripts/contenteditor/manager/header-manager.js", "app/scripts/contenteditor/manager/sidebar-manager.js",'content-editor/scripts/main/ekstep-editor-api.js', 'content-editor/scripts/migration/1_migration-task.js', 'content-editor/scripts/migration/stageordermigration-task.js',
         'content-editor/scripts/migration/basestagemigration-task.js', 'content-editor/scripts/migration/imagemigration-task.js', 'content-editor/scripts/migration/scribblemigration-task.js', 'content-editor/scripts/service/iservice.js',
         'content-editor/scripts/service/content-serice.js', 'content-editor/scripts/service/popup-service.js', 'content-editor/scripts/angular/controller/main.js', 'content-editor/scripts/angular/controller/popup-controller.js',
         'content-editor/scripts/angular/directive/draggable-directive.js', 'content-editor/scripts/angular/directive/droppable-directive.js', 'content-editor/scripts/service/assessment-service.js', 'content-editor/scripts/service/asset-service.js',
@@ -320,7 +321,8 @@ var corePlugins = [
     "org.ekstep.help-1.0",
     "org.ekstep.review-1.0",
     "org.ekstep.video-1.0",
-    "org.ekstep.editorstate-1.0"
+    "org.ekstep.editorstate-1.0",
+    "org.ekstep.ceheader-1.0"
 ]
 
 gulp.task('minifyCorePlugins', function() {
