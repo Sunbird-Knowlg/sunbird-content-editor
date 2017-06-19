@@ -64,10 +64,10 @@ org.ekstep.pluginframework.resourceManager = new(Class.extend({
                 if (callback)
                     this.loadResource(resource, 'script', callback, publishedTime);
                 else
-                    org.ekstep.pluginframework.jQuery("body").append($("<script type='text/javascript' src=" + resource + ">"));
+                    org.ekstep.pluginframework.jQuery("body").append($("<script type='text/javascript' src=" + resource + "?" + org.ekstep.pluginframework.config.build_number + ">"));
                 break;
             case 'css':
-                org.ekstep.pluginframework.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + resource + "'>");
+                org.ekstep.pluginframework.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + resource + "?" + org.ekstep.pluginframework.config.build_number + "'>");
                 if (callback) callback();
                 break;
             default:

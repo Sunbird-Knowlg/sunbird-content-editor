@@ -508,8 +508,8 @@ describe("content editor integration test: ", function() {
 
         it('instance can get relative URL of its own resource', function() {
             var newInstance = org.ekstep.contenteditor.api.instantiatePlugin(test1Plugin, _.cloneDeep(test1ECML), stageInstance);
-
-            expect(newInstance.relativeURL("editor/help.md")).toBe("base/test/data/published/org.ekstep.test1-1.0/editor/help.md");
+            
+            expect(newInstance.relativeURL("editor/help.md")).toBe("base/test/data/published/org.ekstep.test1-1.0/editor/help.md?" + org.ekstep.pluginframework.config.build_number);
         });
 
         it('instance copy should retutn its editorObj', function() {
@@ -699,7 +699,7 @@ describe("content editor integration test: ", function() {
             spyOn(org.ekstep.pluginframework.pluginManager, "resolvePluginResource").and.callThrough();
             var src = org.ekstep.contenteditor.api.resolvePluginResource("org.ekstep.test2", "1.0", "editor/help.md");
             expect(org.ekstep.pluginframework.pluginManager.resolvePluginResource).toHaveBeenCalled();
-            expect(src).toBe("base/test/data/published/org.ekstep.test2-1.0/editor/help.md");
+            expect(src).toBe("base/test/data/published/org.ekstep.test2-1.0/editor/help.md?" + org.ekstep.pluginframework.config.build_number);
         });
 
         it("should return media object", function() {
