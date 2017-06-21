@@ -18,7 +18,8 @@
     <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-default.min.css">
     <link rel="stylesheet" type="text/css" href="styles/iconfont.css">
     <link rel="stylesheet" type="text/css" href="styles/noto.css">
-    <link rel="stylesheet" type="text/css" href="styles/css/ceNewHeader.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/ceNewHeader.css" />
+    <link rel="stylesheet" type="text/css" href="styles/css/ceNewMainContainer.css" />
     <!-- endinject -->
 </head>
 
@@ -72,49 +73,45 @@
                 </div>
             </div>
             <div ng-include="'templates/deleteStageDialog.html'"></div>
-            
-            <!-- <div id="anshu" class="ui grid container fluid">
+            <div id="mainContainerGrid" class="ui grid container fluid">
                 <div class="ui two wide left floated column scrollable-slides">
-                    <div class="ui two wide column scrollable-slides">
-                        <div ng-repeat="stage in stages track by $index" class="thumbnail-container" style="margin-bottom: 20px">
-                            <div class="ui centered raised card segment thumbnail">
-                                <span class="stage-number">{{$index+1}}</span>
-                                <div class="ui fluid image">
-                                    <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
-                                        <i class="trash outline icon link" ng-click="fireEvent(stage.ondelete)"></i> <i class="clone icon link" ng-click="fireEvent(stage.duplicate)"></i>
-                                    </div>
-                                    <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)" ng-click="fireEvent(stage.getOnClick())" />
+                    <div ng-repeat="stage in stages track by $index" class="thumbnail-container" style="margin-bottom: 20px">
+                        <div class="ui centered raised card segment thumbnail">
+                            <span class="stage-number">{{$index+1}}</span>
+                            <div class="ui fluid image">
+                                <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
+                                    <i class="trash outline icon link" ng-click="fireEvent(stage.ondelete)"></i> <i class="clone icon link" ng-click="fireEvent(stage.duplicate)"></i>
                                 </div>
+                                <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)" ng-click="fireEvent(stage.getOnClick())" />
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="ui seven wide column">
                     <div id="canvas-wrapper">
-                            <canvas id="canvas" class="ui card centered raised" width="720px" height="405px" style="margin: 0; border-radius: 0px; background: none"></canvas>
-                        </div>
-                        <div id="geniecontrols" ng-if="showGenieControls">
-                            <img id="geniecontrolsimage" class="ui card centered raised" src="images/geniecontrols.png">
-                        </div>
-                        <div class="row" style="margin-top: 10px">
-                            <div ng-include="'templates/attachmentHolder.html'"></div>
-                        </div>
+                        <canvas id="canvas" class="ui card centered raised" width="720px" height="405px" style="margin: 0; border-radius: 0px; background: none"></canvas>
+                    </div>
+                    <div id="geniecontrols" ng-if="showGenieControls">
+                        <img id="geniecontrolsimage" class="ui card centered raised" src="images/geniecontrols.png">
+                    </div>
+                    <div class="row" style="margin-top: 10px">
+                        <div ng-include="'templates/attachmentHolder.html'"></div>
+                    </div>
                 </div>
                 <div class="ui three wide right floated column" style="background-color: #EEEEEE; padding: 0px !important;">
                     <div class="sidebar-holder">
-                            <div ng-repeat="sidebar in registeredCategories">
-                                <div ng-show="(configCategory.selected == sidebar.id && sidebar.state == 'SHOW')">
-                                    <div ng-include="sidebar.templateURL"></div>
-                                </div>
+                        <div ng-repeat="sidebar in registeredCategories">
+                            <div ng-show="(configCategory.selected == sidebar.id && sidebar.state == 'SHOW')">
+                                <div ng-include="sidebar.templateURL"></div>
                             </div>
                         </div>
-                        <div class="sidebar-reportissue " style="position: fixed; right: 0; bottom: 0;width: 100%;margin-bottom: 10px; ">
-                            <a class="ui basic small button " ng-click="fireSidebarTelemetry({id: 'reportIssue'}, 'reportIssueButton') " ng-href="{{reportIssueLink}} " target="_blank " style="position: absolute; bottom:0; right: 30px "><i class="help circle medium icon "></i>Help</a>
-                        </div>
+                    </div>
+                    <div class="sidebar-reportissue " style="position: fixed; right: 0; bottom: 0;width: 100%;margin-bottom: 10px; ">
+                        <a class="ui basic small button " ng-click="fireSidebarTelemetry({id: 'reportIssue'}, 'reportIssueButton') " ng-href="{{reportIssueLink}} " target="_blank " style="position: absolute; bottom:0; right: 30px "><i class="help circle medium icon "></i>Help</a>
+                    </div>
                 </div>
-            </div> -->
-
-            <div id="mainContainerGrid" class="ui grid bottom attached celled">
+            </div>
+            <div id="mainContainerGrid" class="ui grid bottom attached celled" style="display:none;">
                 <div class="row">
                     <div class="ui two wide column scrollable-slides">
                         <div ng-repeat="stage in stages track by $index" class="thumbnail-container" style="margin-bottom: 20px">
@@ -163,6 +160,13 @@
         </div>
     </div>
     <div id="objectPointer" style="display: none;border: 1px dashed black;"></div>
+    
+
+    <!-- message for unsupported screen start -->
+    <div class="full-window-div">
+        <p class="unsupported-screen-notice">Resolution below 1024px are not supported, please switch to a higher resolution display.</p>
+    </div>
+    <!-- message for unsupported screen end -->
     <!-- inject:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/async/dist/async.min.js"></script>

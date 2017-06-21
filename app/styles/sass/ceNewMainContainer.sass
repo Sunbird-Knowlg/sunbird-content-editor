@@ -1,0 +1,43 @@
+=calc($property,$expression)
+	#{$property}:	-webkit-calc(#{$expression})!important
+	#{$property}:	-moz-calc(#{$expression})!important
+	#{$property}:	calc(#{$expression})!important
+
+$canvasContainerWidth:	730px
+$slidesContainerWidth:	11%
+
+#mainContainerGrid
+	.two.wide.left.floated.column
+		margin-right: 0!important
+
+
+@media only screen and (min-width: 1024px) and (max-width: 1200px)
+	#mainContainerGrid
+		.scrollable-slides,.ui.grid>*
+			padding-left: 0!important
+			padding-right: 0!important	
+
+
+@media only screen and (min-width: 1024px) and (max-width: 1200px)
+	$slidesContainerWidth:	12%
+	#mainContainerGrid
+		.two.wide.left.floated.column
+			max-width: $slidesContainerWidth!important
+		.three.wide.right.floated.column
+			+calc(max-width,"100% - (#{$slidesContainerWidth} + #{$canvasContainerWidth})")
+
+@media only screen and (min-width: 1200px)
+	$slidesContainerWidth:	13%
+	#mainContainerGrid
+		.two.wide.left.floated.column
+			max-width: 13%!important
+		.three.wide.right.floated.column
+			+calc(max-width,"100% - (#{$slidesContainerWidth} + #{$canvasContainerWidth})")
+
+#mainContainerGrid
+	margin: 0
+	background-color: #EEEEEE
+	.scrollable-slides
+		.thumbnail-container
+			.ui.centered.card
+				height: calc(9/16 * 100%)

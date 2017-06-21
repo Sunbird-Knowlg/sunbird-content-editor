@@ -1,0 +1,29 @@
+#mainContainerGrid .two.wide.left.floated.column {
+  margin-right: 0 !important; }
+
+@media only screen and (min-width: 1024px) and (max-width: 1200px) {
+  #mainContainerGrid .scrollable-slides, #mainContainerGrid .ui.grid > * {
+    padding-left: 0 !important;
+    padding-right: 0 !important; } }
+
+@media only screen and (min-width: 1024px) and (max-width: 1200px) {
+  #mainContainerGrid .two.wide.left.floated.column {
+    max-width: 12% !important; }
+  #mainContainerGrid .three.wide.right.floated.column {
+    max-width: -webkit-calc(100% - (12% + 730px)) !important;
+    max-width: -moz-calc(100% - (12% + 730px)) !important;
+    max-width: calc(100% - (12% + 730px)) !important; } }
+
+@media only screen and (min-width: 1200px) {
+  #mainContainerGrid .two.wide.left.floated.column {
+    max-width: 13% !important; }
+  #mainContainerGrid .three.wide.right.floated.column {
+    max-width: -webkit-calc(100% - (13% + 730px)) !important;
+    max-width: -moz-calc(100% - (13% + 730px)) !important;
+    max-width: calc(100% - (13% + 730px)) !important; } }
+
+#mainContainerGrid {
+  margin: 0;
+  background-color: #EEEEEE; }
+  #mainContainerGrid .scrollable-slides .thumbnail-container .ui.centered.card {
+    height: calc(9/16 * 100%); }
