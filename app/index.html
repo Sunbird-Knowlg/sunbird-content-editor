@@ -9,7 +9,8 @@
     <meta name="viewport" content="width=device-width">
     <!-- inject:css -->
     <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
-    <link rel="stylesheet" href="styles/semantic.min.css">
+    <link rel="stylesheet" href="bower_components/semantic/dist/semantic.min.css" />
+    <!-- <link rel="stylesheet" href="styles/semantic.min.css" /> -->
     <link rel="stylesheet" href="styles/content-editor.css" />
     <link rel="stylesheet" type="text/css" href="styles/MyFontsWebfontsKit.css">
     <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog.min.css">
@@ -17,6 +18,7 @@
     <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-default.min.css">
     <link rel="stylesheet" type="text/css" href="styles/iconfont.css">
     <link rel="stylesheet" type="text/css" href="styles/noto.css">
+    <link rel="stylesheet" type="text/css" href="styles/css/ceNewHeader.css">
     <!-- endinject -->
 </head>
 
@@ -56,9 +58,9 @@
                 </div>
             </div>
             <div ng-repeat="header in headers" ng-include="header.templateURL"></div>
-            <div class="ui grid">
+            <div class="ui grid toolbar">
                 <div class="ui nine wide column">
-                    <div class="ui icon menu" style="margin-bottom: 0; margin-top: 0;margin-left: 30px; border:none; box-shadow: none;">
+                    <div class="ui icon menu">
                         <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'"></span>
                         <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
                     </div>
@@ -70,7 +72,7 @@
                 </div>
             </div>
             <div ng-include="'templates/deleteStageDialog.html'"></div>
-            <div id="mainContainerGrid" class="ui grid bottom attached celled" style="margin: 0;background: #EEEEEE;">
+            <div id="mainContainerGrid" class="ui grid bottom attached celled">
                 <div class="row">
                     <div class="ui two wide column scrollable-slides">
                         <div ng-repeat="stage in stages track by $index" class="thumbnail-container" style="margin-bottom: 20px">
@@ -141,7 +143,7 @@
     <script src="bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js"></script>
     <script src="bower_components/oclazyload/dist/ocLazyLoad.js"></script>
     <script src="scripts/dev/localhost-ce.js"></script>
-    <script src="libs/semantic.min.js"></script>
+    <script src="bower_components/semantic/dist/semantic.min.js"></script>
     <script src="libs/mousetrap.min.js"></script>
     <!-- Load Framework -->
     <script src="scripts/framework/libs/ES5Polyfill.js"></script>
@@ -196,6 +198,7 @@
     <script src="scripts/angular/directive/draggable-directive.js"></script>
     <script src="scripts/angular/directive/droppable-directive.js"></script>
     <script src="scripts/angular/directive/template-compiler-directive.js"></script>
+    <script src="scripts/ceNewUI.js"></script>
     <!-- endinject -->
 </body>
 

@@ -5,8 +5,10 @@
   "main": "Gruntfile.js",
   "dependencies": {
     "body-parser": "*",
+    "clean-css": "^4.1.4",
     "express": "^4.14.0",
     "grunt-contrib-rename": "0.0.3",
+    "gulp-sass": "^3.1.0",
     "lodash": "^4.16.6",
     "request": "*",
     "xmlbuilder": "*"
@@ -49,7 +51,7 @@
     "karma-mocha-reporter": "^2.2.3"
   },
   "scripts": {
-    "apptest": "karma start karmaconf.js",    
+    "apptest": "karma start karmaconf.js",
     "testpluginframework": "karma start karmaconf.pluginframework.js",
     "test": "karma start karmaconf.js && karma start karmaconf.pluginframework.js"
   },

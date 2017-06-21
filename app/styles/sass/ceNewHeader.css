@@ -1,0 +1,158 @@
+.no-margin-no-padding, .cstm-1-wide {
+  margin: 0 !important;
+  padding: 0 !important; }
+
+.no-margin, .cstm-6-wide, .cstm-5-wide, .cstm-5-wide .cstm-row-2 .icn-grp-1 .comments-icn-grp .circle.icon {
+  margin: 0 !important; }
+
+.no-padding {
+  padding: 0 !important; }
+
+.xy-mid-align, .cstm-icn, .cstm-1-wide .ui.tiny.image {
+  position: absolute !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  margin: auto !important; }
+
+.icn-box {
+  height: 30px;
+  width: 31.67px;
+  border-radius: 4px;
+  background-color: transparent;
+  padding: 0;
+  display: inline-block;
+  position: relative; }
+
+.icn-box:hover {
+  background-color: #f9f9f9; }
+
+.cstm-icn {
+  line-height: normal; }
+
+.cstm-container {
+  margin-top: 0 !important;
+  margin-bottom: 10px !important;
+  border: 1px solid red; }
+  .cstm-container .one.wide.column {
+    width: 5.25% !important; }
+  .cstm-container .five.wide.column {
+    width: 44.75% !important;
+    padding-right: 0.3rem; }
+
+.content-masterhead {
+  padding: 0 !important; }
+
+.ui.grid > .column:not(.row) {
+  padding-top: 0.3rem; }
+
+.cstm-1-wide {
+  background-color: #2e9fd9;
+  -webkit-background-blend-mode: multiply;
+  -moz-background-blend-mode: multiply;
+  -ms-background-blend-mode: multiply;
+  -o-background-blend-mode: multiply;
+  background-blend-mode: multiply; }
+  .cstm-1-wide .ui.tiny.image {
+    width: 50px;
+    display: block; }
+
+.cstm-6-wide .cstm-row-1 {
+  position: relative;
+  top: 7px; }
+  .cstm-6-wide .cstm-row-1 .content-title {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important; }
+.cstm-6-wide .cstm-row-2 {
+  position: absolute;
+  bottom: 10px;
+  font-size: 12px !important; }
+  .cstm-6-wide .cstm-row-2 a {
+    cursor: pointer; }
+
+.cstm-5-wide .usr-detl-wrap {
+  height: 206px;
+  width: 123px !important;
+  border-radius: 4px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3); }
+  .cstm-5-wide .usr-detl-wrap img {
+    height: 35px;
+    width: 35px;
+    position: relative;
+    display: block;
+    margin: auto;
+    border-radius: 50%; }
+  .cstm-5-wide .usr-detl-wrap .usr-name, .cstm-5-wide .usr-detl-wrap .usr-email, .cstm-5-wide .usr-detl-wrap .usr-detl-edit {
+    color: #4A4A4A;
+    font-size: 9px;
+    line-height: 11px;
+    padding: 2px;
+    text-align: center; }
+  .cstm-5-wide .usr-detl-wrap .usr-email, .cstm-5-wide .usr-detl-wrap .usr-detl-edit {
+    color: #4A4A4A;
+    font-size: 9px;
+    font-weight: normal; }
+  .cstm-5-wide .usr-detl-wrap .usr-detl-edit {
+    color: #2E9FD9;
+    line-height: 9px; }
+  .cstm-5-wide .usr-detl-wrap .usr-details {
+    padding: 5px;
+    box-sizing: border-box;
+    border-bottom: 0.2px solid rgba(128, 128, 128, 0.15); }
+.cstm-5-wide .user-context {
+  position: relative;
+  font-size: 11px;
+  z-index: 1000; }
+  .cstm-5-wide .user-context .username {
+    width: 100%;
+    text-align: right;
+    cursor: default; }
+    .cstm-5-wide .user-context .username .cstm-crsr {
+      cursor: pointer; }
+    .cstm-5-wide .user-context .username .circle.icon {
+      margin: 0;
+      top: -3px;
+      position: relative; }
+.cstm-5-wide .hdr-icn-container {
+  bottom: -10px;
+  position: relative; }
+.cstm-5-wide .cstm-row-2 {
+  position: relative;
+  display: inline-block;
+  height: 70%;
+  float: right; }
+  .cstm-5-wide .cstm-row-2 .icon, .cstm-5-wide .cstm-row-2 .fa.fa-eye, .cstm-5-wide .cstm-row-2 .icon-save {
+    font-size: 14px !important;
+    color: #9B9B9B;
+    height: 14px;
+    width: 16px;
+    margin-right: 10px; }
+  .cstm-5-wide .cstm-row-2 .icn-grp-1 {
+    float: left;
+    border-right: 0.2px solid rgba(128, 128, 128, 0.15);
+    padding-right: 5px; }
+    .cstm-5-wide .cstm-row-2 .icn-grp-1 .comments-icn-grp {
+      position: relative;
+      display: inline-block; }
+      .cstm-5-wide .cstm-row-2 .icn-grp-1 .comments-icn-grp .circle.icon {
+        position: absolute;
+        top: 1px;
+        right: 7px; }
+  .cstm-5-wide .cstm-row-2 .icn-grp-2 {
+    float: right;
+    padding-left: 5px; }
+    .cstm-5-wide .cstm-row-2 .icn-grp-2 .icon-save {
+      color: #2e9fd9; }
+
+.usr-active-mark, .cstm-5-wide .cstm-row-2 .icn-grp-1 .comments-icn-grp .circle.icon {
+  font-size: 6px !important;
+  height: 4px !important;
+  width: 5.53px !important;
+  color: #D92B2F !important; }
+
+/*# sourceMappingURL=ceNewHeader.css.map */

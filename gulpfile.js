@@ -11,6 +11,8 @@ var CacheBuster = require('gulp-cachebust');
 var mergeStream = require('merge-stream');
 var rename = require("gulp-rename");
 var merge = require('merge-stream');
+var sass = require('gulp-sass');
+var cleanCSS = require('clean-css');
 
 var cachebust = new CacheBuster();
 const zip = require('gulp-zip');
@@ -402,3 +404,19 @@ gulp.task('packageCorePlugins', ["minify", "minifyCorePlugins"], function() {
     }).pipe(clean());
 });
 //Minification for dev End
+
+//edited by Anshu
+gulp.task('sassToCSS', function() {
+    return gulp.src('app/styles/sass/**/*.sass')
+        .pipe(sass().on('error', sass.logError))
+        // .pipe(cleanCSS())
+        .pipe(gulp.dest('app/styles/css'))
+
+});
+
+
+gulp.task('watch', function() {
+
+    gulp.watch('app/styles/sass/**/*.sass', ['sassToCSS']);
+});
+

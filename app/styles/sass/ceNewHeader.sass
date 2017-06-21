@@ -1,0 +1,367 @@
+// commmon styles
+// 
+//
+//to calculate width or height from mixed unit data (% and px here) 
+=calc($property,$expression)
+	#{$property}:	-webkit-calc(#{$expression})!important
+	#{$property}:	-moz-calc(#{$expression})!important
+	#{$property}:	calc(#{$expression})!important
+
+
+// #anshu
+// 	.two.wide.left.floated.column
+// 		margin-right: 0!important
+
+// @media only screen and (min-width: 1236px) and (max-width: 1256px)
+// 	#anshu
+// 		.two.wide.left.floated.column
+// 			width: 16%!important
+		
+
+// @media only screen and (min-width: 1216px) and (max-width: 1236px)
+// 	#anshu
+// 		.two.wide.left.floated.column
+// 			width: 15%!important
+		
+// @media only screen and (min-width: 1192px) and (max-width: 1216px)
+// 	#anshu
+// 		.two.wide.left.floated.column
+// 			width: 14%!important
+		
+// @media only screen and (min-width: 1168px) and (max-width: 1192px)
+// 	#anshu
+// 		.two.wide.left.floated.column
+// 			width: 13%!important
+		
+
+// @media only screen and (min-width: 1144px) and (max-width: 1168px)
+// 	#anshu
+// 		.two.wide.left.floated.column
+// 			width: 11%!important
+		
+
+// @media only screen and (min-width: 1120px) and (max-width: 1144px)
+// 	#anshu
+// 		.two.wide.left.floated.column
+// 			width: 11%!important
+// 		.three.wide.right.floated.column
+// 			width: 24%!important
+
+// @media only screen and (min-width: 1096px) and (max-width: 1120px)
+// 	#anshu
+// 		.two.wide.left.floated.column
+// 			width: 11%!important
+// 		.three.wide.right.floated.column
+// 			width: 23%!important
+
+// @media only screen and (min-width: 1072px) and (max-width: 1096px)
+// 	#anshu
+// 		.two.wide.left.floated.column
+// 			width: 11%!important
+// 		.three.wide.right.floated.column
+// 			width: 21%!important
+
+// @media only screen and (min-width: 1048px) and (max-width: 1072px)
+// 	#anshu
+// 		.two.wide.left.floated.column
+// 			width: 11%!important
+// 		.three.wide.right.floated.column
+// 			width: 19%!important
+
+// @media only screen and (min-width: 1024px) and (max-width: 1048px)
+// 	#anshu
+// 		.two.wide.left.floated.column
+// 			width: 11%!important
+// 		.three.wide.right.floated.column
+// 			width: 18%!important
+
+// @media only screen and (width: 1024px)
+// 	#anshu
+// 		.two.wide.left.floated.column
+// 			width: 10%!important
+// 		.three.wide.right.floated.column
+// 			width: 17%!important
+
+// @media only screen and (min-width: 950px) and (max-width: 1024px)
+// 	#anshu
+// 		.two.wide.left.floated.column
+// 			width: 8%!important
+// 		.three.wide.right.floated.column
+// 			width: 17%!important
+
+// @media only screen and (min-width: 876px) and (max-width: 950px)
+// 	#anshu
+// 		.two.wide.left.floated.column
+// 			width: 5%!important
+// 		.three.wide.right.floated.column
+// 			width: 12%!important
+
+
+body
+	min-width: 525px!important
+
+.no-margin-no-padding
+	margin: 0!important
+	padding: 0!important
+
+.no-margin
+	margin: 0!important
+
+.no-padding
+	padding: 0!important
+
+.xy-mid-align
+	position: absolute!important
+	top: 0!important
+	bottom: 0!important
+	left: 0!important
+	right: 0!important
+	margin: auto!important
+
+.icon-box
+	height: 25px
+	width: 25.67px
+	border-radius: 4px
+	background-color: transparent
+	padding: 0
+	display: inline-block
+	position: relative
+	
+.icon-box:hover
+	// background-color: #f9f9f9
+	background-color: rgba(155, 155, 155, 0.14)
+
+
+.custom-icon
+	@extend .xy-mid-align
+	line-height: normal
+	height: 14px
+	width: 15px
+//common styles
+
+.custom-container
+	margin-top: 0!important
+	margin-bottom: 10px!important
+	// border: 1px solid red
+	.one.wide.column,.six.wide.column,.five.wide.column
+		height: 55px!important
+	.one.wide.column
+		width: 60px !important
+	.five.wide.column
+		+calc(width, "100% - (50% + 60px)")
+		padding-right: 0.3rem
+
+
+.content-masterhead
+	padding: 0!important
+
+.ui.grid>.column:not(.row)
+	padding-top: 0.3rem
+
+
+// header first part:- contains ekstep logo
+.custom-1-wide
+	background-color: #2e9fd9
+	-webkit-background-blend-mode: multiply
+	-moz-background-blend-mode: multiply
+	-ms-background-blend-mode: multiply
+	-o-background-blend-mode: multiply
+	background-blend-mode: multiply
+	@extend .no-margin-no-padding
+	.ui.tiny.image
+		@extend .xy-mid-align
+		width: 32.94px
+		height: 33.9px
+		display: block
+		
+
+// header second part :- contains content-title and edit-content
+.custom-6-wide
+	@extend .no-margin 
+	.custom-row-1
+		position: relative
+		top: 4px
+		.content-title
+			font-size: 16px
+			font-weight: bold
+			padding: 0!important
+			border: 0!important
+			border-radius: 0!important
+			height: 19px
+			line-height: 19px
+	.custom-row-2
+		position: relative
+		font-size: 12px!important
+		height: 25px
+		line-height: 25px
+		a
+			cursor: pointer
+			position: relative
+			margin: 0
+			bottom: -4px
+
+
+// header third part:- contains user-name, user-profile-menu and header-icons
+.custom-5-wide
+	@extend .no-margin
+	.custom-row-1
+		position: relative
+		top: -2px
+	.user-details-wrapper:before
+		all: initial
+	.user-details-wrapper
+		@extend .no-padding
+		height: 195px
+		width: 123px!important
+		border-radius: 4px
+		background-color: #ffffff
+		display: inline-block!important
+		top: 10px
+		right: 30px
+		box-shadow: 0 2px 5px 0 rgba(0,0,0,0.3)
+		img
+			height: 35px
+			width: 35px
+			position: relative
+			display: block
+			margin: auto
+			border-radius: 50%
+		.user-name,.user-email,.user-details-edit
+			color: #4A4A4A
+			font-size: 9px
+			line-height: 11px
+			padding: 2px 10px
+			margin-top: 3px
+			text-align: center
+		.user-email,.user-details-edit,.user-profile-menu>.option
+			color: #4A4A4A
+			font-size: 9px
+			font-weight: normal
+		.user-details-edit
+			color: #2E9FD9
+			line-height: 9px
+		.user-details
+			padding: 5px 0
+			box-sizing: border-box
+			margin-top: 5px
+			border-bottom: 0.02px solid #F3F3F3
+		.user-profile-menu
+			.option
+				color: #9b9b9b
+				padding: 1px 10px
+				cursor: default
+				user-select: none
+			.option > *
+				width: 100%
+				display: inline-block
+			a, a:hover
+				color: #9b9b9b!important
+				cursor: default
+			.option:hover
+				background-color: #F3F3F3
+			.user-active-mark
+				display: inline-block
+				position: relative
+				float: right
+	.user-context
+		position: relative
+		z-index: 1000
+		color: #9b9b9b
+		margin-right: 2px
+		.username
+			width: 100%
+			text-align: right
+			cursor: default
+			.name
+				font-size: 12px
+				line-height: 14px
+			.caret.down.icon
+				font-size: 14px
+				line-height: 14px
+			.custom-cursor
+				cursor: pointer
+			.circle.icon
+				margin: 0
+				top: -3px
+				position: relative
+	.close
+		position: relative
+		display: inline-block
+		float: right
+		z-index: 10001
+		a
+			color: #9B9B9B
+			.remove.icon:hover
+				color: #D92B2F
+	.header-icon-container
+		position: relative
+	.custom-row-2
+		position: relative
+		display: inline-block
+		height: 30px
+		float: right
+		font-size: 12px!important
+		.icon,.fa.fa-eye,.icon-save
+			font-size: 14px!important
+			color: #9B9B9B
+			height: 14px
+			width: 16px
+			margin-right: 10px
+		.icon-group-1,.icon-group-2
+			position: relative
+			height: 90%
+			top: 10%
+		.icon-group-1
+			float: left
+			border-right: 0.2px solid rgba(128, 128, 128, 0.15)
+			padding-right: 5px
+			.comments-icon-group
+				position: relative
+				display: inline-block
+				.circle.icon
+					@extend .no-margin
+					@extend .user-active-mark
+					position: absolute
+					top: 0
+					right: 4px
+		.icon-group-2
+			float: right
+			padding-left: 5px
+			.icon-save
+				color: #2e9fd9
+			.ui.dropdown
+				box-shadow: none
+				color: #9b9b9b
+				.menu
+					left: -57px
+					top: 90%
+					.item
+						font-size: 10px!important
+						line-height: 11px
+						padding: 6px 10px!important
+						font-family: Helvetica
+					.item:hover
+						background-color: #F3F3F3
+
+
+.user-active-mark
+	font-size: 6px!important
+	height: 4px!important
+	width: 5.53px!important
+	color: #D92B2F!important
+
+
+#mainContainerGrid
+	margin: 0
+	background-color: #EEEEEE
+
+.toolbar
+	.ui.nine.wide.column,.ui.icon.menu,.ui.three.wide.column
+		background: linear-gradient(rgba(255,255,255,.05),rgba(0,0,0,.05)) #FFF!important
+	.ui.nine.wide.column
+		.ui.icon.menu
+			margin-bottom: 0
+			margin-top: 0
+			margin-left: 30px
+			border: none
+			box-shadow: none
