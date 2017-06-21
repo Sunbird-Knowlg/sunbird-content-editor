@@ -1,3 +1,74 @@
+#anshu .two.wide.left.floated.column {
+  margin-right: 0 !important; }
+
+@media only screen and (min-width: 1236px) and (max-width: 1256px) {
+  #anshu .two.wide.left.floated.column {
+    width: 16% !important; } }
+
+@media only screen and (min-width: 1216px) and (max-width: 1236px) {
+  #anshu .two.wide.left.floated.column {
+    width: 15% !important; } }
+
+@media only screen and (min-width: 1192px) and (max-width: 1216px) {
+  #anshu .two.wide.left.floated.column {
+    width: 14% !important; } }
+
+@media only screen and (min-width: 1168px) and (max-width: 1192px) {
+  #anshu .two.wide.left.floated.column {
+    width: 13% !important; } }
+
+@media only screen and (min-width: 1144px) and (max-width: 1168px) {
+  #anshu .two.wide.left.floated.column {
+    width: 11% !important; } }
+
+@media only screen and (min-width: 1120px) and (max-width: 1144px) {
+  #anshu .two.wide.left.floated.column {
+    width: 11% !important; }
+  #anshu .three.wide.right.floated.column {
+    width: 24% !important; } }
+
+@media only screen and (min-width: 1096px) and (max-width: 1120px) {
+  #anshu .two.wide.left.floated.column {
+    width: 11% !important; }
+  #anshu .three.wide.right.floated.column {
+    width: 23% !important; } }
+
+@media only screen and (min-width: 1072px) and (max-width: 1096px) {
+  #anshu .two.wide.left.floated.column {
+    width: 11% !important; }
+  #anshu .three.wide.right.floated.column {
+    width: 21% !important; } }
+
+@media only screen and (min-width: 1048px) and (max-width: 1072px) {
+  #anshu .two.wide.left.floated.column {
+    width: 11% !important; }
+  #anshu .three.wide.right.floated.column {
+    width: 19% !important; } }
+
+@media only screen and (min-width: 1024px) and (max-width: 1048px) {
+  #anshu .two.wide.left.floated.column {
+    width: 11% !important; }
+  #anshu .three.wide.right.floated.column {
+    width: 18% !important; } }
+
+@media only screen and (width: 1024px) {
+  #anshu .two.wide.left.floated.column {
+    width: 10% !important; }
+  #anshu .three.wide.right.floated.column {
+    width: 17% !important; } }
+
+@media only screen and (min-width: 950px) and (max-width: 1024px) {
+  #anshu .two.wide.left.floated.column {
+    width: 8% !important; }
+  #anshu .three.wide.right.floated.column {
+    width: 17% !important; } }
+
+@media only screen and (min-width: 876px) and (max-width: 950px) {
+  #anshu .two.wide.left.floated.column {
+    width: 5% !important; }
+  #anshu .three.wide.right.floated.column {
+    width: 12% !important; } }
+
 body {
   min-width: 525px !important; }
 
@@ -98,7 +169,7 @@ body {
   all: initial; }
 
 .custom-5-wide .user-details-wrapper {
-  height: 195px;
+  height: auto;
   width: 123px !important;
   border-radius: 4px;
   background-color: #ffffff;
@@ -138,8 +209,9 @@ body {
     cursor: default;
     user-select: none; }
   .custom-5-wide .user-details-wrapper .user-profile-menu .option > * {
-    width: 100%;
     display: inline-block; }
+  .custom-5-wide .user-details-wrapper .user-profile-menu a {
+    width: 100%; }
   .custom-5-wide .user-details-wrapper .user-profile-menu a, .custom-5-wide .user-details-wrapper .user-profile-menu a:hover {
     color: #9b9b9b !important;
     cursor: default; }
@@ -191,7 +263,7 @@ body {
   height: 30px;
   float: right;
   font-size: 12px !important; }
-  .custom-5-wide .custom-row-2 .icon, .custom-5-wide .custom-row-2 .fa.fa-eye, .custom-5-wide .custom-row-2 .icon-save {
+  .custom-5-wide .custom-row-2 .icon, .custom-5-wide .custom-row-2 .fa.fa-eye, .custom-5-wide .custom-row-2 .icon-save, .custom-5-wide .custom-row-2 .icon-whatsnew {
     font-size: 14px !important;
     color: #9B9B9B;
     height: 14px;
