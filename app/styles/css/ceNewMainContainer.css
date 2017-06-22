@@ -10,20 +10,40 @@
   #mainContainerGrid .two.wide.left.floated.column {
     max-width: 12% !important; }
   #mainContainerGrid .three.wide.right.floated.column {
-    max-width: -webkit-calc(100% - (12% + 730px)) !important;
-    max-width: -moz-calc(100% - (12% + 730px)) !important;
-    max-width: calc(100% - (12% + 730px)) !important; } }
+    max-width: -webkit-calc(100% - (12% + 750px)) !important;
+    max-width: -moz-calc(100% - (12% + 750px)) !important;
+    max-width: calc(100% - (12% + 750px)) !important; } }
 
 @media only screen and (min-width: 1200px) {
   #mainContainerGrid .two.wide.left.floated.column {
     max-width: 13% !important; }
   #mainContainerGrid .three.wide.right.floated.column {
-    max-width: -webkit-calc(100% - (13% + 730px)) !important;
-    max-width: -moz-calc(100% - (13% + 730px)) !important;
-    max-width: calc(100% - (13% + 730px)) !important; } }
+    max-width: -webkit-calc(100% - (13% + 750px)) !important;
+    max-width: -moz-calc(100% - (13% + 750px)) !important;
+    max-width: calc(100% - (13% + 750px)) !important; } }
 
 #mainContainerGrid {
   margin: 0;
   background-color: #EEEEEE; }
-  #mainContainerGrid .scrollable-slides .thumbnail-container .ui.centered.card {
-    height: calc(9/16 * 100%); }
+  #mainContainerGrid .scrollable-slides, #mainContainerGrid .ui.three.wide.column {
+    padding-top: 0 !important; }
+  #mainContainerGrid .scrollable-slides {
+    border-right: 0.2px solid rgba(192, 192, 192, 0.26); }
+    #mainContainerGrid .scrollable-slides .thumbnail-container {
+      margin-bottom: 20px; }
+      #mainContainerGrid .scrollable-slides .thumbnail-container .ui.centered.card {
+        height: calc(9/16 * 100%); }
+  #mainContainerGrid .ui.three.wide.column {
+    border-left: 0.2px solid rgba(192, 192, 192, 0.26);
+    background-color: #EEEEEE;
+    padding: 0 !important; }
+    #mainContainerGrid .ui.three.wide.column .sidebar-reportissue {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      margin-bottom: 10px; }
+      #mainContainerGrid .ui.three.wide.column .sidebar-reportissue .ui.basic.small.button {
+        position: absolute;
+        bottom: 0;
+        right: 30px; }

@@ -75,7 +75,7 @@
             <div ng-include="'templates/deleteStageDialog.html'"></div>
             <div id="mainContainerGrid" class="ui grid container fluid">
                 <div class="ui two wide left floated column scrollable-slides">
-                    <div ng-repeat="stage in stages track by $index" class="thumbnail-container" style="margin-bottom: 20px">
+                    <div ng-repeat="stage in stages track by $index" class="thumbnail-container">
                         <div class="ui centered raised card segment thumbnail">
                             <span class="stage-number">{{$index+1}}</span>
                             <div class="ui fluid image">
@@ -98,7 +98,7 @@
                         <div ng-include="'templates/attachmentHolder.html'"></div>
                     </div>
                 </div>
-                <div class="ui three wide right floated column" style="background-color: #EEEEEE; padding: 0px !important;">
+                <div class="ui three wide right floated column">
                     <div class="sidebar-holder">
                         <div ng-repeat="sidebar in registeredCategories">
                             <div ng-show="(configCategory.selected == sidebar.id && sidebar.state == 'SHOW')">
@@ -106,7 +106,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="sidebar-reportissue " style="position: fixed; right: 0; bottom: 0;width: 100%;margin-bottom: 10px; ">
+                    <div class="sidebar-reportissue ">
                         <a class="ui basic small button " ng-click="fireSidebarTelemetry({id: 'reportIssue'}, 'reportIssueButton') " ng-href="{{reportIssueLink}} " target="_blank " style="position: absolute; bottom:0; right: 30px "><i class="help circle medium icon "></i>Help</a>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
                         </div>
                         -->
                     </div>
-                    <div class="ui three wide column" style="background-color: #EEEEEE; padding: 0px !important;">
+                    <div class="ui three wide column">
                         <div class="sidebar-holder">
                             <div ng-repeat="sidebar in registeredCategories">
                                 <div ng-show="(configCategory.selected == sidebar.id && sidebar.state == 'SHOW')">
@@ -151,8 +151,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="sidebar-reportissue " style="position: fixed; right: 0; bottom: 0;width: 100%;margin-bottom: 10px; ">
-                            <a class="ui basic small button " ng-click="fireSidebarTelemetry({id: 'reportIssue'}, 'reportIssueButton') " ng-href="{{reportIssueLink}} " target="_blank " style="position: absolute; bottom:0; right: 30px "><i class="help circle medium icon "></i>Help</a>
+                        <div class="sidebar-reportissue">
+                            <a class="ui basic small button " ng-click="fireSidebarTelemetry({id: 'reportIssue'}, 'reportIssueButton') " ng-href="{{reportIssueLink}} " target="_blank "><i class="help circle medium icon "></i>Help</a>
                         </div>
                     </div>
                 </div>
@@ -160,11 +160,19 @@
         </div>
     </div>
     <div id="objectPointer" style="display: none;border: 1px dashed black;"></div>
-    
-
     <!-- message for unsupported screen start -->
-    <div class="full-window-div">
-        <p class="unsupported-screen-notice">Resolution below 1024px are not supported, please switch to a higher resolution display.</p>
+    <div class="unsupported-resolution">
+        <div class="ui icon negative message">
+            <i class="warning icon"></i>
+            <div class="content">
+                <div class="header">
+                    Unsupported resolution
+                </div>
+                <p id="ngdialog1-aria-describedby" tabindex="-1">
+                    Resolution below 1024px are not supported, please switch to a higher resolution display.
+                </p>
+            </div>
+        </div>
     </div>
     <!-- message for unsupported screen end -->
     <!-- inject:js -->

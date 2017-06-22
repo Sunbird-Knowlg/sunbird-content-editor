@@ -3,7 +3,7 @@
 	#{$property}:	-moz-calc(#{$expression})!important
 	#{$property}:	calc(#{$expression})!important
 
-$canvasContainerWidth:	730px
+$canvasContainerWidth:	750px
 $slidesContainerWidth:	11%
 
 #mainContainerGrid
@@ -37,7 +37,26 @@ $slidesContainerWidth:	11%
 #mainContainerGrid
 	margin: 0
 	background-color: #EEEEEE
+		
+	.scrollable-slides,.ui.three.wide.column
+		padding-top: 0!important
 	.scrollable-slides
+		border-right: 0.2px solid rgba(192, 192, 192, 0.26)
 		.thumbnail-container
+			margin-bottom: 20px
 			.ui.centered.card
 				height: calc(9/16 * 100%)
+	.ui.three.wide.column
+		border-left: 0.2px solid rgba(192, 192, 192, 0.26)
+		background-color: #EEEEEE
+		padding: 0!important
+		.sidebar-reportissue
+			position: fixed
+			right: 0
+			bottom: 0
+			width: 100%
+			margin-bottom: 10px
+			.ui.basic.small.button
+				position: absolute
+				bottom: 0
+				right: 30px
