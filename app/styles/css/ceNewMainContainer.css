@@ -48,3 +48,12 @@
         position: absolute;
         bottom: 0;
         right: 30px; }
+  #mainContainerGrid #geniecontrols {
+    background: url(../../images/geniecontrols.png);
+    -webkit-background-size: cover;
+    background-size: cover;
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    width: 720px;
+    height: 405px; }

@@ -122,8 +122,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 var canvasOffset = org.ekstep.contenteditor.api.jQuery('#canvas').offset();
                 setTimeout(function() {
                     org.ekstep.contenteditor.api.jQuery('#geniecontrols').offset({
-                        "top": canvasOffset.top,
-                        "left": canvasOffset.left,
+                        // "top": canvasOffset.top,
+                        // "left": canvasOffset.left,
+                        "top": "1rem",
+                        "left": "1rem",
+                        
                     });
 
                     org.ekstep.contenteditor.api.jQuery('#geniecontrols').css({
@@ -137,7 +140,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         $scope.toggleGenieControl = shiftGenieControlPosition;
 
-        $(window).resize(shiftGenieControlPosition);
+        // $(window).resize(shiftGenieControlPosition);
 
         $scope.convertToJSON = function(contentBody) {
             try {
