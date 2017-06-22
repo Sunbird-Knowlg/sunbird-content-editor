@@ -125,7 +125,7 @@ body {
     font-size: 9px;
     font-weight: normal; }
   .custom-5-wide .user-details-wrapper .user-details-edit {
-    color: #2E9FD9;
+    color: #2e9fd9;
     line-height: 9px; }
   .custom-5-wide .user-details-wrapper .user-details {
     padding: 5px 0;
@@ -239,27 +239,25 @@ body {
   border: none;
   box-shadow: none; }
 
-.unsupported-resolution, .message-container {
+.unsupported-resolution {
   height: 100%;
   width: 100%;
   position: absolute;
-  top: 0;
+  top: 55px;
   display: none;
   z-index: 10000000000;
-  background-color: #2e9fd9; }
+  background-color: rgba(192, 192, 192, 0.5); }
   @media only screen and (max-width: 1023px) {
-    .unsupported-resolution, .message-container {
+    .unsupported-resolution {
       display: block; } }
-  .unsupported-resolution .ui.icon.negative.message, .message-container .ui.icon.negative.message {
+  .unsupported-resolution .ui.icon.negative.message {
     position: relative;
     width: 50%;
     height: 20%;
     margin: 15% auto;
     min-width: 350px; }
 
-.message-container {
-  background: url("../../images/ekstep_logo_white.png") repeat; }
-  .message-container .fa.fa-exclamation-triangle {
-    font-size: 40px;
-    padding: 15px;
-    padding-left: 0; }
+.message-container .fa.fa-exclamation-triangle {
+  font-size: 40px;
+  padding: 15px;
+  padding-left: 0; }

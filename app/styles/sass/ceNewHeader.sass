@@ -2,6 +2,9 @@
 
 
 //to calculate width or height from mixed unit data (% and px here) 
+
+$primaryColor: #2e9fd9
+
 =calc($property,$expression)
 	#{$property}:	-webkit-calc(#{$expression})!important
 	#{$property}:	-moz-calc(#{$expression})!important
@@ -71,7 +74,7 @@ body
 
 // header first part:- contains ekstep logo
 .custom-1-wide
-	background-color: #2e9fd9
+	background-color: $primaryColor
 	-webkit-background-blend-mode: multiply
 	-moz-background-blend-mode: multiply
 	-ms-background-blend-mode: multiply
@@ -148,7 +151,7 @@ body
 			font-size: 9px
 			font-weight: normal
 		.user-details-edit
-			color: #2E9FD9
+			color: $primaryColor
 			line-height: 9px
 		.user-details
 			padding: 5px 0
@@ -226,7 +229,7 @@ body
 			float: right
 			padding-left: 5px
 			.icon-save,.fa.fa-eye
-				color: #2e9fd9
+				color: $primaryColor
 			.ui.dropdown
 				box-shadow: none
 				.menu
@@ -264,14 +267,14 @@ body
 
 
 
-.unsupported-resolution,.message-container	// style for unsupported resolution notice
+.unsupported-resolution	// style for unsupported resolution notice
 	height: 100%
 	width: 100%
 	position: absolute
-	top: 0
+	top: 55px
 	display: none
 	z-index: 10000000000
-	background-color: #2e9fd9
+	background-color: rgba(192, 192, 192, 0.5)
 	@media only screen and (max-width: 1023px)
 		display: block
 	.ui.icon.negative.message
@@ -282,7 +285,7 @@ body
 		min-width: 350px
 			
 .message-container
-	background: url('../../images/ekstep_logo_white.png') repeat
+	// background-color: rgba(192, 192, 192, 0.5) 
 	.fa.fa-exclamation-triangle
 				font-size: 40px
 				padding: 15px
