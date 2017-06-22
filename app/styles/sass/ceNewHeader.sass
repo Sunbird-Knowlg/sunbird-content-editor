@@ -1,6 +1,6 @@
 // commmon styles
-// 
-//
+
+
 //to calculate width or height from mixed unit data (% and px here) 
 =calc($property,$expression)
 	#{$property}:	-webkit-calc(#{$expression})!important
@@ -21,7 +21,7 @@ body
 .no-padding
 	padding: 0!important
 
-.xy-mid-align
+.xy-mid-align // to middle align a div both horizontaly and verticaly 
 	position: absolute!important
 	top: 0!important
 	bottom: 0!important
@@ -29,30 +29,29 @@ body
 	right: 0!important
 	margin: auto!important
 
-.icon-box
-	height: 25px
-	width: 25.67px
+.icon-box	// icon-container style
+	height: 30px
+	width: 31.67px
 	border-radius: 4px
 	background-color: transparent
 	padding: 0
 	display: inline-block
 	position: relative
 	
-.icon-box:hover
-	// background-color: #f9f9f9
-	background-color: rgba(155, 155, 155, 0.14)
+.icon-box:hover	// hover style for icon-container
+	background-color: #E0E1E2
 
 
-.custom-icon
+.custom-icon	// icon style
 	@extend .xy-mid-align
 	line-height: normal
 	height: 14px
 	width: 15px
 //common styles
 
-.custom-container
+.custom-container	// whole header container
 	margin-top: 0!important
-	margin-bottom: 10px!important
+	margin-bottom: 1rem!important
 	// border: 1px solid red
 	.one.wide.column,.six.wide.column,.five.wide.column
 		height: 55px!important
@@ -89,7 +88,7 @@ body
 // header second part :- contains content-title and edit-content
 .custom-6-wide
 	@extend .no-margin 
-	.custom-row-1
+	.custom-row-1	//contains content title
 		position: relative
 		top: 4px
 		.content-title
@@ -100,7 +99,7 @@ body
 			border-radius: 0!important
 			height: 19px
 			line-height: 19px
-	.custom-row-2
+	.custom-row-2	//contains edit lesson details
 		position: relative
 		font-size: 12px!important
 		height: 25px
@@ -115,14 +114,13 @@ body
 // header third part:- contains user-name, user-profile-menu and header-icons
 .custom-5-wide
 	@extend .no-margin
-	.custom-row-1
+	.custom-row-1	//container div for username, dropdown icon, remove icon and userprofile menu
 		position: relative
-		top: -2px
+		top: -3px
 	.user-details-wrapper:before
 		all: initial
-	.user-details-wrapper
+	.user-details-wrapper	//user profile menu wrapper
 		@extend .no-padding
-		// height: 195px
 		height: auto
 		width: 123px!important
 		border-radius: 4px
@@ -172,11 +170,7 @@ body
 				cursor: default
 			.option:hover
 				background-color: #F3F3F3
-			.user-active-mark
-				display: inline-block
-				position: relative
-				float: right
-	.user-context
+	.user-context	//for username, user-profile dropdown icon
 		position: relative
 		z-index: 1000
 		color: #9b9b9b
@@ -193,11 +187,7 @@ body
 				line-height: 14px
 			.custom-cursor
 				cursor: pointer
-			.circle.icon
-				margin: 0
-				top: -3px
-				position: relative
-	.close
+	.close	//close button in header
 		position: relative
 		display: inline-block
 		float: right
@@ -206,14 +196,16 @@ body
 			color: #9B9B9B
 			.remove.icon:hover
 				color: #D92B2F
-	.header-icon-container
+	.header-icon-container	//container div for all icons in header
 		position: relative
-	.custom-row-2
+		top: -5px
+	.custom-row-2	// inner conatainer div for all header icons
 		position: relative
 		display: inline-block
 		height: 30px
 		float: right
 		font-size: 12px!important
+		padding-top: 2px
 		.icon,.fa.fa-eye,.icon-save,.icon-whatsnew
 			font-size: 14px!important
 			color: #9B9B9B
@@ -222,9 +214,8 @@ body
 			margin-right: 10px
 		.icon-group-1,.icon-group-2
 			position: relative
-			height: 90%
-			top: 10%
-		.icon-group-1
+			height: 100%
+		.icon-group-1	// first group of icons
 			float: left
 			border-right: 0.2px solid rgba(128, 128, 128, 0.15)
 			padding-right: 5px
@@ -237,34 +228,36 @@ body
 					position: absolute
 					top: 0
 					right: 4px
-		.icon-group-2
+		.icon-group-2	// second group of icons
 			float: right
 			padding-left: 5px
-			.icon-save
+			.icon-save,.fa.fa-eye
 				color: #2e9fd9
 			.ui.dropdown
 				box-shadow: none
-				color: #9b9b9b
 				.menu
-					left: -57px
-					top: 90%
+					left: -104px
+					top: 60%
 					.item
-						font-size: 10px!important
+
+						font-size: 9px!important
 						line-height: 11px
 						padding: 6px 10px!important
 						font-family: Helvetica
+						color: #9b9b9b
 					.item:hover
 						background-color: #F3F3F3
+			.preview-icon-group	// content-preview icon-group
+				display: inline-block
+				position: relative
+				.ui.pointing.dropdown.icon-box
+					width: 15px
+					margin-left: -6px
+					.icon
+						font-size: 12px!important
 
 
-.user-active-mark
-	font-size: 6px!important
-	height: 4px!important
-	width: 5.53px!important
-	color: #D92B2F!important
-
-
-.toolbar
+.toolbar	//toolbar style
 	.ui.nine.wide.column,.ui.icon.menu,.ui.three.wide.column
 		background: linear-gradient(rgba(255,255,255,.05),rgba(0,0,0,.05)) #FFF!important
 	.ui.nine.wide.column
@@ -276,7 +269,8 @@ body
 			box-shadow: none
 
 
-.full-window-div
+
+.unsupported-resolution	// style for unsupported resolution notice
 	height: 100%
 	width: 100%
 	position: absolute
@@ -286,12 +280,10 @@ body
 	background-color: black
 	@media only screen and (max-width: 1023px)
 		display: block
-	.unsupported-screen-notice
-		@extend .xy-mid-align
-		height: 24%
-		width: 30%
-		background-color: whitesmoke
-		text-align: center
-		line-height: 180%
-		font-size: 1.6rem
-		padding: 1%
+	.ui.icon.negative.message
+		position: relative
+		width: 50%
+		height: 20%
+		margin: 15% auto
+		min-width: 350px
+

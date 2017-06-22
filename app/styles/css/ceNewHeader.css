@@ -11,7 +11,7 @@ body {
 .no-padding, .custom-5-wide .user-details-wrapper {
   padding: 0 !important; }
 
-.xy-mid-align, .custom-icon, .custom-1-wide .ui.tiny.image, .full-window-div .unsupported-screen-notice {
+.xy-mid-align, .custom-icon, .custom-1-wide .ui.tiny.image {
   position: absolute !important;
   top: 0 !important;
   bottom: 0 !important;
@@ -20,8 +20,8 @@ body {
   margin: auto !important; }
 
 .icon-box {
-  height: 25px;
-  width: 25.67px;
+  height: 30px;
+  width: 31.67px;
   border-radius: 4px;
   background-color: transparent;
   padding: 0;
@@ -29,7 +29,7 @@ body {
   position: relative; }
 
 .icon-box:hover {
-  background-color: rgba(155, 155, 155, 0.14); }
+  background-color: #E0E1E2; }
 
 .custom-icon {
   line-height: normal;
@@ -38,7 +38,7 @@ body {
 
 .custom-container {
   margin-top: 0 !important;
-  margin-bottom: 10px !important; }
+  margin-bottom: 1rem !important; }
   .custom-container .one.wide.column, .custom-container .six.wide.column, .custom-container .five.wide.column {
     height: 55px !important; }
   .custom-container .one.wide.column {
@@ -92,7 +92,7 @@ body {
 
 .custom-5-wide .custom-row-1 {
   position: relative;
-  top: -2px; }
+  top: -3px; }
 
 .custom-5-wide .user-details-wrapper:before {
   all: initial; }
@@ -184,14 +184,16 @@ body {
       color: #D92B2F; }
 
 .custom-5-wide .header-icon-container {
-  position: relative; }
+  position: relative;
+  top: -5px; }
 
 .custom-5-wide .custom-row-2 {
   position: relative;
   display: inline-block;
   height: 30px;
   float: right;
-  font-size: 12px !important; }
+  font-size: 12px !important;
+  padding-top: 2px; }
   .custom-5-wide .custom-row-2 .icon, .custom-5-wide .custom-row-2 .fa.fa-eye, .custom-5-wide .custom-row-2 .icon-save, .custom-5-wide .custom-row-2 .icon-whatsnew {
     font-size: 14px !important;
     color: #9B9B9B;
@@ -200,8 +202,7 @@ body {
     margin-right: 10px; }
   .custom-5-wide .custom-row-2 .icon-group-1, .custom-5-wide .custom-row-2 .icon-group-2 {
     position: relative;
-    height: 90%;
-    top: 10%; }
+    height: 100%; }
   .custom-5-wide .custom-row-2 .icon-group-1 {
     float: left;
     border-right: 0.2px solid rgba(128, 128, 128, 0.15);
@@ -216,21 +217,29 @@ body {
   .custom-5-wide .custom-row-2 .icon-group-2 {
     float: right;
     padding-left: 5px; }
-    .custom-5-wide .custom-row-2 .icon-group-2 .icon-save {
+    .custom-5-wide .custom-row-2 .icon-group-2 .icon-save, .custom-5-wide .custom-row-2 .icon-group-2 .fa.fa-eye {
       color: #2e9fd9; }
     .custom-5-wide .custom-row-2 .icon-group-2 .ui.dropdown {
-      box-shadow: none;
-      color: #9b9b9b; }
+      box-shadow: none; }
       .custom-5-wide .custom-row-2 .icon-group-2 .ui.dropdown .menu {
-        left: -57px;
-        top: 90%; }
+        left: -104px;
+        top: 60%; }
         .custom-5-wide .custom-row-2 .icon-group-2 .ui.dropdown .menu .item {
-          font-size: 10px !important;
+          font-size: 9px !important;
           line-height: 11px;
           padding: 6px 10px !important;
-          font-family: Helvetica; }
+          font-family: Helvetica;
+          color: #9b9b9b; }
         .custom-5-wide .custom-row-2 .icon-group-2 .ui.dropdown .menu .item:hover {
           background-color: #F3F3F3; }
+    .custom-5-wide .custom-row-2 .icon-group-2 .preview-icon-group {
+      display: inline-block;
+      position: relative; }
+      .custom-5-wide .custom-row-2 .icon-group-2 .preview-icon-group .ui.pointing.dropdown.icon-box {
+        width: 15px;
+        margin-left: -6px; }
+        .custom-5-wide .custom-row-2 .icon-group-2 .preview-icon-group .ui.pointing.dropdown.icon-box .icon {
+          font-size: 12px !important; }
 
 .user-active-mark, .custom-5-wide .custom-row-2 .icon-group-1 .comments-icon-group .circle.icon {
   font-size: 6px !important;
@@ -248,7 +257,7 @@ body {
   border: none;
   box-shadow: none; }
 
-.full-window-div {
+.unsupported-resolution {
   height: 100%;
   width: 100%;
   position: absolute;
@@ -257,13 +266,11 @@ body {
   z-index: 10000000000;
   background-color: black; }
   @media only screen and (max-width: 1023px) {
-    .full-window-div {
+    .unsupported-resolution {
       display: block; } }
-  .full-window-div .unsupported-screen-notice {
-    height: 24%;
-    width: 30%;
-    background-color: whitesmoke;
-    text-align: center;
-    line-height: 180%;
-    font-size: 1.6rem;
-    padding: 1%; }
+  .unsupported-resolution .ui.icon.negative.message {
+    position: relative;
+    width: 50%;
+    height: 20%;
+    margin: 15% auto;
+    min-width: 350px; }
