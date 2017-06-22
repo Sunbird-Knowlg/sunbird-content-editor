@@ -5,7 +5,7 @@ body {
   margin: 0 !important;
   padding: 0 !important; }
 
-.no-margin, .custom-6-wide, .custom-5-wide, .custom-5-wide .custom-row-2 .icon-group-1 .comments-icon-group .circle.icon {
+.no-margin, .custom-6-wide, .custom-5-wide {
   margin: 0 !important; }
 
 .no-padding, .custom-5-wide .user-details-wrapper {
@@ -146,10 +146,6 @@ body {
     cursor: default; }
   .custom-5-wide .user-details-wrapper .user-profile-menu .option:hover {
     background-color: #F3F3F3; }
-  .custom-5-wide .user-details-wrapper .user-profile-menu .user-active-mark, .custom-5-wide .user-details-wrapper .user-profile-menu .custom-row-2 .icon-group-1 .comments-icon-group .circle.icon, .custom-5-wide .custom-row-2 .icon-group-1 .comments-icon-group .user-details-wrapper .user-profile-menu .circle.icon {
-    display: inline-block;
-    position: relative;
-    float: right; }
 
 .custom-5-wide .user-context {
   position: relative;
@@ -168,10 +164,6 @@ body {
       line-height: 14px; }
     .custom-5-wide .user-context .username .custom-cursor {
       cursor: pointer; }
-    .custom-5-wide .user-context .username .circle.icon {
-      margin: 0;
-      top: -3px;
-      position: relative; }
 
 .custom-5-wide .close {
   position: relative;
@@ -210,10 +202,6 @@ body {
     .custom-5-wide .custom-row-2 .icon-group-1 .comments-icon-group {
       position: relative;
       display: inline-block; }
-      .custom-5-wide .custom-row-2 .icon-group-1 .comments-icon-group .circle.icon {
-        position: absolute;
-        top: 0;
-        right: 4px; }
   .custom-5-wide .custom-row-2 .icon-group-2 {
     float: right;
     padding-left: 5px; }
@@ -241,12 +229,6 @@ body {
         .custom-5-wide .custom-row-2 .icon-group-2 .preview-icon-group .ui.pointing.dropdown.icon-box .icon {
           font-size: 12px !important; }
 
-.user-active-mark, .custom-5-wide .custom-row-2 .icon-group-1 .comments-icon-group .circle.icon {
-  font-size: 6px !important;
-  height: 4px !important;
-  width: 5.53px !important;
-  color: #D92B2F !important; }
-
 .toolbar .ui.nine.wide.column, .toolbar .ui.icon.menu, .toolbar .ui.three.wide.column {
   background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.05)) #FFF !important; }
 
@@ -257,20 +239,23 @@ body {
   border: none;
   box-shadow: none; }
 
-.unsupported-resolution {
+.unsupported-resolution, .message-container {
   height: 100%;
   width: 100%;
   position: absolute;
   top: 0;
   display: none;
   z-index: 10000000000;
-  background-color: black; }
+  background-color: #2e9fd9; }
   @media only screen and (max-width: 1023px) {
-    .unsupported-resolution {
+    .unsupported-resolution, .message-container {
       display: block; } }
-  .unsupported-resolution .ui.icon.negative.message {
+  .unsupported-resolution .ui.icon.negative.message, .message-container .ui.icon.negative.message {
     position: relative;
     width: 50%;
     height: 20%;
     margin: 15% auto;
     min-width: 350px; }
+
+.message-container {
+  background: url("../../images/ekstep_logo_white.png") repeat; }
