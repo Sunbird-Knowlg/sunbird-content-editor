@@ -21,7 +21,8 @@
 
 #mainContainerGrid {
   margin: 0;
-  background-color: #EEEEEE; }
+  background-color: #EEEEEE;
+  position: relative; }
   #mainContainerGrid .ui.seven.wide.column {
     width: 720px !important; }
   #mainContainerGrid .scrollable-slides, #mainContainerGrid .ui.seven.wide.column {
@@ -36,7 +37,6 @@
   #mainContainerGrid .ui.three.wide.column {
     padding-top: 0 !important;
     border-left: 0.2px solid rgba(192, 192, 192, 0.26);
-    background-color: #EEEEEE;
     padding: 0 !important; }
     #mainContainerGrid .ui.three.wide.column .sidebar-reportissue {
       position: fixed;
