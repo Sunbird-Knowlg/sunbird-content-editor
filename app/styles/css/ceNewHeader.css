@@ -252,10 +252,11 @@ body {
       display: block; } }
   .unsupported-resolution .ui.icon.negative.message {
     position: relative;
-    width: 50%;
+    width: 35%;
     height: 20%;
     margin: 15% auto;
-    min-width: 350px; }
+    min-width: 350px;
+    padding: 1em 0em 1em 2em; }
 
 .message-container .fa.fa-exclamation-triangle {
   position: relative;
