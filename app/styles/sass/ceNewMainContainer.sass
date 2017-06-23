@@ -6,10 +6,6 @@
 $canvasContainerWidth:	750px
 $slidesContainerWidth:	11%
 
-#mainContainerGrid
-	.two.wide.left.floated.column
-		margin-right: 0!important
-
 
 @media only screen and (min-width: 1024px) and (max-width: 1200px)
 	// body
@@ -43,9 +39,11 @@ $slidesContainerWidth:	11%
 #mainContainerGrid
 	margin: 0
 	background-color: #EEEEEE
-		
+	.ui.seven.wide.column
+		width: 720px !important
 	.scrollable-slides,.ui.seven.wide.column
 		padding-top: 1rem!important
+		padding-left: 0
 	.scrollable-slides
 		border-right: 0.2px solid rgba(192, 192, 192, 0.26)
 		.thumbnail-container
@@ -76,3 +74,5 @@ $slidesContainerWidth:	11%
 		left: 1rem
 		width: 720px
 		height: 405px
+
+
