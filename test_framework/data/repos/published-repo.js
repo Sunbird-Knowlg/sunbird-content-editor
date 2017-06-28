@@ -10,7 +10,7 @@ org.ekstep.pluginframework.publishedRepo = new(org.ekstep.pluginframework.iRepo.
         }, publishedTime);
     },
     resolveResource: function(id, ver, resource) {
-    	return org.ekstep.pluginframework.config.pluginRepo + "/" + id + "-" + ver + "/" + resource + "?" + org.ekstep.pluginframework.config.build_number;
+    	return org.ekstep.pluginframework.config.pluginRepo + "/" + id + "-" + ver + "/" + resource;
     }
 }));
 //org.ekstep.pluginframework.resourceManager.addRepo(org.ekstep.pluginframework.publishedRepo);
