@@ -1,6 +1,7 @@
 'use strict';
 
 org.ekstep.contenteditor.migration = new(Class.extend({
+    migrationFlag: false,
     init: function() {
         console.log('migration task initialized');
         org.ekstep.contenteditor.api.addEventListener('content:migration:start', this.execute, this);
@@ -47,7 +48,7 @@ org.ekstep.contenteditor.migration = new(Class.extend({
     initLoadScreenMsg: function() {
         var scope = org.ekstep.contenteditor.api.getAngularScope();
         scope.appLoadMessage.push({ 'id': 2, 'message': 'Migrating Content', 'status': false });
-        scope.migrationFlag = true;
+        this.migrationFlag = true;
     },
     showLoadScreenMsg: function () {
         var scope = org.ekstep.contenteditor.api.getAngularScope();
@@ -63,5 +64,11 @@ org.ekstep.contenteditor.migration = new(Class.extend({
     setNewVersion: function(contentbody) {
         if (_.has(contentbody, 'theme.ver')) delete contentbody.theme.ver;
         contentbody.theme.version = "1.0";
+    },
+    isMigratedContent: function() {
+        return this.migrationFlag;
+    },
+    clearMigrationFlag: function() {
+        this.migrationFlag = false;
     }
 }));

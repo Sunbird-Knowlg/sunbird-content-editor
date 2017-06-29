@@ -8,20 +8,10 @@ org.ekstep.services.assetService = new(org.ekstep.services.iService.extend({
      * @member {string} searchURL
      * @memberof org.ekstep.services.assetService
      */
-    learningURL: function() {
-        return this.getBaseURL() + this.getAPISlug() + '/learning/'
+    contentURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + '/content/'
     },
     asset: {},
-     /** 
-     * @member {object} requestHeaders
-     * @memberof org.ekstep.services.assetService
-     */
-    requestHeaders: {
-        "headers": {
-            "content-type": "application/json",
-            "user-id": "content-editor"
-        }
-    },
     initService: function() {},
     /**
      * Set asset object
@@ -59,11 +49,11 @@ org.ekstep.services.assetService = new(org.ekstep.services.iService.extend({
             }
         };
         if (assetId) {
-            instance.patch(this.learningURL() + 'v2/content/', requestObj, this.requestHeaders, function(err, res) {
+            instance.patch(this.contentURL() + 'v3/update/', requestObj, this.requestHeaders, function(err, res) {
                 callback(err, res)
             });
         } else {
-            instance.post(this.learningURL() + 'v2/content', requestObj, this.requestHeaders, function(err, res) {
+            instance.post(this.contentURL() + 'v3/create/', requestObj, this.requestHeaders, function(err, res) {
                 callback(err, res)
             });
         }

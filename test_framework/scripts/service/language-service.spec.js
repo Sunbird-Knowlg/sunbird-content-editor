@@ -173,18 +173,30 @@ describe('language service test cases', function() {
         });
     });
 
-    it("getTransliteration method should call getFromService", function() {
-        spyOn(org.ekstep.services.languageService, "getFromService");
+    it("getTransliteration method should call postFromService", function() {
+        org.ekstep.services.languageService.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
+            cb("no data found", undefined);
+        });
         var data= { text: "hello", languages: "hindi" };
-        org.ekstep.services.languageService.getTransliteration(data, function() {});
-        expect(org.ekstep.services.languageService.getFromService).toHaveBeenCalledWith(org.ekstep.services.languageService.getBaseURL() + "/api/language/v2/language/transliteration/"+ data.text + "?languages=" + data.languages.toString(), org.ekstep.services.languageService.requestHeaders, jasmine.any(Function));
+        spyOn(org.ekstep.services.languageService, "getTransliteration").and.callThrough();
+        spyOn(org.ekstep.services.languageService, "postFromService").and.callThrough();
+        org.ekstep.services.languageService.getTransliteration(data, function(err, res) {
+            expect(err).toBe("no data found");
+            expect(org.ekstep.services.languageService.postFromService).toHaveBeenCalled();
+        });
     });
 
-    it("getTranslation method should call getFromService", function() {
-        spyOn(org.ekstep.services.languageService, "getFromService");
-        var data= { wordLang: "english", word: "tree", languages: "hindi,english" };
-        org.ekstep.services.languageService.getTranslation(data, function() {});
-        expect(org.ekstep.services.languageService.getFromService).toHaveBeenCalledWith(org.ekstep.services.languageService.getBaseURL() + "/api/language/v2/language/translations/"+ data.wordLang + '/' + data.word + '?languages=' + data.languages, org.ekstep.services.languageService.requestHeaders, jasmine.any(Function));
+    it("getTranslation method should call postFromService", function() {
+        org.ekstep.services.languageService.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
+            cb("no data found", undefined);
+        });
+        var data= { text: "hello", languages: "hindi" };
+        spyOn(org.ekstep.services.languageService, "getTransliteration").and.callThrough();
+        spyOn(org.ekstep.services.languageService, "postFromService").and.callThrough();
+        org.ekstep.services.languageService.getTranslation(data, function(err, res) {
+            expect(err).toBe("no data found");
+            expect(org.ekstep.services.languageService.postFromService).toHaveBeenCalled();
+        });
     });
 
 });

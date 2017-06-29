@@ -508,7 +508,7 @@ describe("content editor integration test: ", function() {
 
         it('instance can get relative URL of its own resource', function() {
             var newInstance = org.ekstep.contenteditor.api.instantiatePlugin(test1Plugin, _.cloneDeep(test1ECML), stageInstance);
-
+            
             expect(newInstance.relativeURL("editor/help.md")).toBe("base/test/data/published/org.ekstep.test1-1.0/editor/help.md");
         });
 
@@ -817,7 +817,8 @@ describe("content editor integration test: ", function() {
             expect(org.ekstep.contenteditor.api.dispatchEvent).toHaveBeenCalledWith("content:load:complete");
         });
 
-        it('after content load: should fire select stage event', function() {
+        // moved this logic to editor state plugin
+        xit('after content load: should fire select stage event', function() {
             expect(org.ekstep.pluginframework.eventManager.dispatchEvent).toHaveBeenCalledWith('stage:select', { stageId: org.ekstep.contenteditor.stageManager.stages[0].id });
         });
 

@@ -55,7 +55,7 @@ org.ekstep.pluginframework.resourceManager = new(Class.extend({
         this.loadResource(resource, dataType, callback, publishedTime);
     },
     loadExternalPluginResource: function(type, pluginId, pluginVer, src, repo, publishedTime, callback) {
-        var resource = repo.resolveResource(pluginId, pluginVer, src) + "?" + (publishedTime || "");
+        var resource = repo.resolveResource(pluginId, pluginVer, src);
         this.loadExternalResource(resource, type, publishedTime, callback);
     },
     loadExternalResource: function(resource, type, publishedTime, callback) {
@@ -64,10 +64,10 @@ org.ekstep.pluginframework.resourceManager = new(Class.extend({
                 if (callback)
                     this.loadResource(resource, 'script', callback, publishedTime);
                 else
-                    org.ekstep.pluginframework.jQuery("body").append($("<script type='text/javascript' src=" + resource + ">"));
+                    org.ekstep.pluginframework.jQuery("body").append($("<script type='text/javascript' src=" + resource + "?" + org.ekstep.pluginframework.config.build_number + "&" + (publishedTime || "") + ">"));
                 break;
             case 'css':
-                org.ekstep.pluginframework.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + resource + "'>");
+                org.ekstep.pluginframework.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + resource + "?" + org.ekstep.pluginframework.config.build_number + "&" + (publishedTime || "") + "'>");
                 if (callback) callback();
                 break;
             default:
