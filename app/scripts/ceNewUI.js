@@ -24,7 +24,7 @@ $(window).resize(function() {
 
 });
 
-(function(){
-    $(".icon-box").popup();
+// (function(){
+//     $(".icon-box").popup();
 
-})();
+// })();
