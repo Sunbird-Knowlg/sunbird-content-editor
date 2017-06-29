@@ -15,7 +15,10 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         // Declare global variables
         $scope.showAppLoadScreen = true;
         $scope.contentLoadedFlag = false;
-        $scope.showGenieControls = false;        
+
+        $scope.showGenieControls = false;
+
+        $window.context = $window.context || window.parent.context;
 
         $scope.developerMode = $location.search().developerMode;
 
@@ -172,17 +175,17 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         /**
          * Content Editor Initialization
          */
+        // Get context from url or window or parentwindow
         // Set the context
-        var context = {
-            uid: $window.context.user.id,
-            sid: $window.context.sid,
-            contentId: $scope.contentId
-        }
-        // Config to override
-        var config = {
-            absURL: $location.protocol() + '://' + $location.host() + ':' + $location.port() // Required
-        }
+        var context = org.ekstep.contenteditor.getWindowContext();
+        context.contentId = context.contentId ||  $scope.contentId;      
 
+        // Get config from url or window or parentwindow
+        // Add the absURL as below
+        // Config to override
+        var config = org.ekstep.contenteditor.getWindowConfig();
+            config.absURL = $location.protocol() + '://' + $location.host() + ':' + $location.port() // Required
+        
         /**
          * Load Content - Invoked once the content editor has loaded
          */
