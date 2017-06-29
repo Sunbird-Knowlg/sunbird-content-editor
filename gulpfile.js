@@ -405,7 +405,7 @@ gulp.task('packageCorePlugins', ["minify", "minifyCorePlugins"], function() {
 });
 //Minification for dev End
 
-//edited by Anshu
+//edited by Anshu <anshu.mishra@goodworklabs.com>
 gulp.task('sassToCSS', function() {
     return gulp.src('app/styles/sass/**/*.sass')
         .pipe(sass().on('error', sass.logError))
@@ -414,14 +414,7 @@ gulp.task('sassToCSS', function() {
 
 });
 
-gulp.task('concatCSS', function() {
-    return gulp.src('app/styles/css/*.css')
-        .pipe(concat('newContentEditorUI.css'))
-        .pipe(gulp.dest('app/styles/css'));
-});
-
 gulp.task('watch', function() {
     gulp.watch('app/styles/sass/**/*.sass', ['sassToCSS']);
-    gulp.watch('app/styles/css/**/*.css', ['concatCSS']);
 
 });

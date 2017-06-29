@@ -23,8 +23,3 @@ $(window).resize(function() {
     }
 
 });
-
-// (function(){
-//     $(".icon-box").popup();
-
-// })();
