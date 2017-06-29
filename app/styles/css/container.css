@@ -22,15 +22,15 @@ body {
 @media only screen and (min-width: 1024px) and (max-width: 1200px) {
   #mainContainerGrid .scrollable-slides, #mainContainerGrid .ui.grid > * {
     padding-left: 0 !important;
-    padding-right: 2px !important; } }
-
-@media only screen and (min-width: 1024px) and (max-width: 1200px) {
+    padding-right: 2px !important; }
   #mainContainerGrid .two.wide.left.floated.column {
     max-width: 12% !important; }
   #mainContainerGrid .three.wide.right.floated.column {
     max-width: -webkit-calc(100% - (12% + 750px)) !important;
     max-width: -moz-calc(100% - (12% + 750px)) !important;
-    max-width: calc(100% - (12% + 750px)) !important; } }
+    max-width: calc(100% - (12% + 750px)) !important; }
+  #mainContainerGrid .large-screen-only {
+    display: none; } }
 
 @media only screen and (min-width: 1200px) {
   #mainContainerGrid .two.wide.left.floated.column {
@@ -38,7 +38,9 @@ body {
   #mainContainerGrid .three.wide.right.floated.column {
     max-width: -webkit-calc(100% - (13% + 750px)) !important;
     max-width: -moz-calc(100% - (13% + 750px)) !important;
-    max-width: calc(100% - (13% + 750px)) !important; } }
+    max-width: calc(100% - (13% + 750px)) !important; }
+  #mainContainerGrid .large-screen-only {
+    display: inline; } }
 
 #mainContainerGrid {
   margin: 0;

@@ -5,19 +5,17 @@ $slidesContainerWidth:	11%
 
 
 @media only screen and (min-width: 1024px) and (max-width: 1200px)
+	$slidesContainerWidth:	12%
 	#mainContainerGrid
 		.scrollable-slides,.ui.grid>*
 			padding-left: 0!important
-			padding-right: 2px!important	
-
-
-@media only screen and (min-width: 1024px) and (max-width: 1200px)
-	$slidesContainerWidth:	12%
-	#mainContainerGrid
+			padding-right: 2px!important
 		.two.wide.left.floated.column
 			max-width: $slidesContainerWidth!important
 		.three.wide.right.floated.column
 			+calc(max-width,"100% - (#{$slidesContainerWidth} + #{$canvasContainerWidth})")
+		.large-screen-only
+			display: none
 
 @media only screen and (min-width: 1200px)
 	$slidesContainerWidth:	13%
@@ -26,6 +24,8 @@ $slidesContainerWidth:	11%
 			max-width: 13%!important
 		.three.wide.right.floated.column
 			+calc(max-width,"100% - (#{$slidesContainerWidth} + #{$canvasContainerWidth})")
+		.large-screen-only
+			display: inline
 
 #mainContainerGrid
 	margin: 0
