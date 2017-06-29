@@ -11,6 +11,8 @@ var CacheBuster = require('gulp-cachebust');
 var mergeStream = require('merge-stream');
 var rename = require("gulp-rename");
 var merge = require('merge-stream');
+var sass = require('gulp-sass');
+var cleanCSS = require('clean-css');
 
 var cachebust = new CacheBuster();
 const zip = require('gulp-zip');
@@ -76,7 +78,7 @@ var scriptfiles = [
     "app/scripts/contenteditor/manager/media-manager.js",
     "app/scripts/contenteditor/manager/sidebar-manager.js",
     "app/scripts/contenteditor/manager/header-manager.js",
-    "app/scripts/contenteditor/service/popup-service.js",    
+    "app/scripts/contenteditor/service/popup-service.js",
     "app/scripts/contenteditor/service/manifest-generator.js",
     "app/scripts/contenteditor/migration/1_migration-task.js",
     "app/scripts/contenteditor/migration/mediamigration-task.js",
@@ -106,7 +108,7 @@ var pluginFramework = [
     "app/scripts/framework/class.js",
     "app/scripts/framework/libs/eventbus.min.js",
     "app/scripts/framework/libs/mousetrap.min.js",
-    "app/scripts/framework/bootstrap-framework.js",    
+    "app/scripts/framework/bootstrap-framework.js",
     "app/scripts/framework/manager/resource-manager.js",
     "app/scripts/framework/manager/event-manager.js",
     "app/scripts/framework/manager/plugin-manager.js",
@@ -170,12 +172,16 @@ gulp.task('dist', function() {
 
 gulp.task('minifyCSS', function() {
     return gulp.src([
-        'app/styles/semantic.min.css',
-        'app/styles/content-editor.css',
-        'app/styles/MyFontsWebfontsKit.css',
-        'app/styles/iconfont.css',
-        'app/styles/noto.css'
-    ])
+            'app/styles/semantic.min.css',
+            'app/styles/content-editor.css',
+            'app/styles/MyFontsWebfontsKit.css',
+            'app/styles/iconfont.css',
+            'app/styles/noto.css',
+            'app/styles/css/header.css',
+            'app/styles/css/container.css',
+            'app/styles/css/commonStyles.css'
+
+        ])
         .pipe(concat('style.min.css'))
         .pipe(minify({
             minify: true,
@@ -206,31 +212,31 @@ gulp.task('minifyCssBower', function() {
 
 gulp.task('copyfonts', function() {
     return gulp.src(['app/styles/themes/**/*', 'app/styles/webfonts/**/*', 'app/styles/fonts/*'], {
-        base: 'app/styles/'
-    })
+            base: 'app/styles/'
+        })
         .pipe(gulp.dest('content-editor/styles'));
 });
 gulp.task('copyfontawsomefonts', function() {
     return gulp.src(['app/bower_components/font-awesome/fonts/fontawesome-webfont.ttf', 'app/bower_components/font-awesome/fonts/fontawesome-webfont.woff'], {
-        base: 'app/bower_components/font-awesome/fonts/'
-    })
+            base: 'app/bower_components/font-awesome/fonts/'
+        })
         .pipe(gulp.dest('content-editor/styles/fonts'));
 });
 gulp.task('copyFiles', function() {
     return gulp.src(['app/templates/**/*', 'app/images/content-logo.png', 'app/images/geniecontrols.png', 'app/images/editor-frame.png', 'app/config/*.json', 'app/config/*.js', 'app/index.html'], {
-        base: 'app/'
-    })
+            base: 'app/'
+        })
         .pipe(gulp.dest('content-editor'));
 });
 
 gulp.task('copydeploydependencies', function() {
     return gulp.src(['deploy/gulpfile.js', 'deploy/package.json'], {
-        base: ''
-    })
+            base: ''
+        })
         .pipe(gulp.dest('content-editor'));
 });
 
-gulp.task('minify', ['minifyallJS', 'minifyCE', 'minifyCSS', 'minifyJsBower', 'minifyFramework','minifyCssBower', 'copyfonts', 'copyfontawsomefonts','copyFiles', 'copydeploydependencies']);
+gulp.task('minify', ['minifyallJS', 'minifyCE', 'minifyCSS', 'minifyJsBower', 'minifyFramework', 'minifyCssBower', 'copyfonts', 'copyfontawsomefonts', 'copyFiles', 'copydeploydependencies']);
 
 gulp.task('inject', ['minify'], function() {
     var target = gulp.src('content-editor/index.html');
@@ -256,10 +262,10 @@ gulp.task('build', ['minify', 'inject', 'zip']);
 //Minification for dev Start
 gulp.task('copyFilesDev', function() {
     return gulp.src(['app/scripts/**', 'app/templates/**/*', 'app/images/content-logo.png', 'app/images/geniecontrols.png',
-        'app/config/*.json', 'app/config/*.js', 'app/index.html'
-    ], {
-        base: 'app/'
-    })
+            'app/config/*.json', 'app/config/*.js', 'app/index.html'
+        ], {
+            base: 'app/'
+        })
         .pipe(gulp.dest('content-editor'));
 });
 
@@ -269,7 +275,7 @@ gulp.task('injectDev', ['minifyDev'], function() {
     var target = gulp.src('content-editor/index.html');
     var sources = gulp.src(['content-editor/scripts/external.min.js', 'content-editor/scripts/main/class.js', 'content-editor/scripts/main/ekstep-editor.js', 'content-editor/scripts/main/base-plugin.js',
         'content-editor/scripts/manager/event-manager.js', 'content-editor/scripts/manager/plugin-manager.js', 'content-editor/scripts/manager/stage-manager.js', 'content-editor/scripts/manager/toolbar-manager.js',
-        'content-editor/scripts/manager/media-manager.js', "app/scripts/contenteditor/manager/header-manager.js", "app/scripts/contenteditor/manager/sidebar-manager.js",'content-editor/scripts/main/ekstep-editor-api.js', 'content-editor/scripts/migration/1_migration-task.js', 'content-editor/scripts/migration/stageordermigration-task.js',
+        'content-editor/scripts/manager/media-manager.js', "app/scripts/contenteditor/manager/header-manager.js", "app/scripts/contenteditor/manager/sidebar-manager.js", 'content-editor/scripts/main/ekstep-editor-api.js', 'content-editor/scripts/migration/1_migration-task.js', 'content-editor/scripts/migration/stageordermigration-task.js',
         'content-editor/scripts/migration/basestagemigration-task.js', 'content-editor/scripts/migration/imagemigration-task.js', 'content-editor/scripts/migration/scribblemigration-task.js', 'content-editor/scripts/service/iservice.js',
         'content-editor/scripts/service/content-serice.js', 'content-editor/scripts/service/popup-service.js', 'content-editor/scripts/angular/controller/main.js', 'content-editor/scripts/angular/controller/popup-controller.js',
         'content-editor/scripts/angular/directive/draggable-directive.js', 'content-editor/scripts/angular/directive/droppable-directive.js', 'content-editor/scripts/service/assessment-service.js', 'content-editor/scripts/service/asset-service.js',
@@ -278,9 +284,9 @@ gulp.task('injectDev', ['minifyDev'], function() {
         read: false
     });
     return target.pipe(inject(sources, {
-        ignorePath: 'content-editor/',
-        addRootSlash: false
-    }))
+            ignorePath: 'content-editor/',
+            addRootSlash: false
+        }))
         .pipe(gulp.dest('./content-editor'));
 });
 
@@ -331,16 +337,16 @@ gulp.task('minifyCorePlugins', function() {
     corePlugins.forEach(function(plugin) {
         tasks.push(
             gulp.src('plugins/' + plugin + '/editor/plugin.js')
-                .pipe(minify({
-                    minify: true,
-                    collapseWhitespace: true,
-                    conservativeCollapse: true,
-                    minifyJS: true,
-                    minifyCSS: true,
-                    mangle: false
-                }))
-                .pipe(rename('plugin.min.js'))
-                .pipe(gulp.dest('plugins/' + plugin + '/editor'))
+            .pipe(minify({
+                minify: true,
+                collapseWhitespace: true,
+                conservativeCollapse: true,
+                minifyJS: true,
+                minifyCSS: true,
+                mangle: false
+            }))
+            .pipe(rename('plugin.min.js'))
+            .pipe(gulp.dest('plugins/' + plugin + '/editor'))
         );
     });
     return mergeStream(tasks);
@@ -402,3 +408,17 @@ gulp.task('packageCorePlugins', ["minify", "minifyCorePlugins"], function() {
     }).pipe(clean());
 });
 //Minification for dev End
+
+//edited by Anshu <anshu.mishra@goodworklabs.com>
+gulp.task('sassToCSS', function() {
+    return gulp.src('app/styles/sass/**/*.sass')
+        .pipe(sass().on('error', sass.logError))
+        // .pipe(cleanCSS())
+        .pipe(gulp.dest('app/styles/css'))
+
+});
+
+gulp.task('watch', function() {
+    gulp.watch('app/styles/sass/**/*.sass', ['sassToCSS']);
+
+});

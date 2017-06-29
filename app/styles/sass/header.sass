@@ -1,0 +1,271 @@
+@import 'commonStyles'
+
+// commmon styles
+
+
+//to calculate width or height from mixed unit data (% and px here) 
+
+
+
+.icon-box	// icon-container style
+	height: 30px
+	width: 31.67px
+	border-radius: 4px
+	background-color: transparent
+	padding: 0
+	display: inline-block
+	position: relative
+	
+.icon-box:hover	// hover style for icon-container
+	background-color: #E0E1E2
+
+
+.custom-icon	// icon style
+	@extend .xy-mid-align
+	line-height: normal
+	height: 14px
+	width: 15px
+//common styles
+
+.custom-container	// whole header container
+	margin-top: 0!important
+	margin-bottom: 1rem!important
+	// border: 1px solid red
+	.one.wide.column,.six.wide.column,.five.wide.column
+		height: 55px!important
+	.one.wide.column
+		width: 60px !important
+	.five.wide.column
+		+calc(width, "100% - (50% + 60px)")
+		padding-right: 0.3rem
+
+
+.content-masterhead
+	padding: 0!important
+
+.ui.grid>.column:not(.row)
+	padding-top: 0.3rem
+
+
+// header first part:- contains ekstep logo
+.custom-1-wide
+	background-color: $primaryColor
+	-webkit-background-blend-mode: multiply
+	-moz-background-blend-mode: multiply
+	-ms-background-blend-mode: multiply
+	-o-background-blend-mode: multiply
+	background-blend-mode: multiply
+	@extend .no-margin-no-padding
+	.ui.tiny.image
+		@extend .xy-mid-align
+		width: 32.94px
+		height: 33.9px
+		display: block
+		
+
+// header second part :- contains content-title and edit-content
+.custom-6-wide
+	@extend .no-margin 
+	.custom-row-1	//contains content title
+		position: relative
+		top: 4px
+		.content-title
+			font-size: 16px
+			font-weight: bold
+			padding: 0!important
+			border: 0!important
+			border-radius: 0!important
+			height: 19px
+			line-height: 19px
+	.custom-row-2	//contains edit lesson details
+		position: relative
+		font-size: 12px!important
+		height: 25px
+		line-height: 25px
+		a
+			cursor: pointer
+			position: relative
+			margin: 0
+			bottom: -4px
+
+
+// header third part:- contains user-name, user-profile-menu and header-icons
+.custom-5-wide
+	@extend .no-margin
+	.custom-row-1	//container div for username, dropdown icon, remove icon and userprofile menu
+		position: relative
+		top: -3px
+	.user-details-wrapper:before
+		all: initial
+	.user-details-wrapper	//user profile menu wrapper
+		@extend .no-padding
+		height: auto
+		width: 123px!important
+		border-radius: 4px
+		background-color: #ffffff
+		display: inline-block!important
+		top: 10px
+		right: 30px
+		box-shadow: 0 2px 5px 0 rgba(0,0,0,0.3)
+		img
+			height: 35px
+			width: 35px
+			position: relative
+			display: block
+			margin: auto
+			border-radius: 50%
+		.user-name,.user-email,.user-details-edit
+			color: #4A4A4A
+			font-size: 9px
+			line-height: 11px
+			padding: 2px 10px
+			margin-top: 3px
+			text-align: center
+		.user-email,.user-details-edit,.user-profile-menu>.option
+			color: #4A4A4A
+			font-size: 9px
+			font-weight: normal
+		.user-details-edit
+			color: $primaryColor
+			line-height: 9px
+		.user-details
+			padding: 5px 0
+			box-sizing: border-box
+			margin-top: 5px
+			border-bottom: 0.02px solid #F3F3F3
+		.user-profile-menu
+			.option
+				color: #9b9b9b
+				padding: 1px 10px
+				cursor: default
+				user-select: none
+			.option > *
+				display: inline-block
+			a
+				width: 100%
+			a, a:hover
+				color: #9b9b9b!important
+				cursor: default
+			.option:hover
+				background-color: #F3F3F3
+	.user-context	//for username, user-profile dropdown icon
+		position: relative
+		z-index: 1000
+		color: #9b9b9b
+		margin-right: 2px
+		.username
+			width: 100%
+			text-align: right
+			cursor: default
+			.name
+				font-size: 12px
+				line-height: 14px
+			.caret.down.icon
+				font-size: 14px
+				line-height: 14px
+			.custom-cursor
+				cursor: pointer
+	.close	//close button in header
+		position: relative
+		display: inline-block
+		float: right
+		z-index: 10001
+		a
+			color: #9B9B9B
+			.remove.icon:hover
+				color: #D92B2F
+	.header-icon-container	//container div for all icons in header
+		position: relative
+		top: -5px
+	.custom-row-2	// inner conatainer div for all header icons
+		position: relative
+		display: inline-block
+		height: 30px
+		float: right
+		font-size: 12px!important
+		padding-top: 2px
+		.icon,.fa.fa-eye,.icon-save,.icon-whatsnew
+			font-size: 14px!important
+			color: #9B9B9B
+			height: 14px
+			width: 16px
+			margin-right: 10px
+		.icon-group-1,.icon-group-2
+			position: relative
+			height: 100%
+		.icon-group-1	// first group of icons
+			float: left
+			border-right: 0.2px solid rgba(128, 128, 128, 0.15)
+			padding-right: 5px
+			.comments-icon-group
+				position: relative
+				display: inline-block
+		.icon-group-2	// second group of icons
+			float: right
+			padding-left: 5px
+			.icon-save,.fa.fa-eye
+				color: $primaryColor
+			.ui.dropdown
+				box-shadow: none
+				.menu
+					left: -85px!important
+					top: 70%
+					.item
+
+						font-size: 9px!important
+						line-height: 11px
+						padding: 9px 10px!important
+						font-family: Helvetica
+						color: #9b9b9b
+					.item:hover
+						background-color: #F3F3F3
+			.preview-icon-group	// content-preview icon-group
+				display: inline-block
+				position: relative
+				.ui.pointing.dropdown.icon-box
+					width: 15px
+					margin-left: -6px
+					.icon
+						font-size: 12px!important
+
+
+.toolbar	//toolbar style
+	.ui.nine.wide.column,.ui.icon.menu,.ui.three.wide.column
+		background: linear-gradient(rgba(255,255,255,.05),rgba(0,0,0,.05)) #FFF!important
+	.ui.nine.wide.column
+		.ui.icon.menu
+			margin-bottom: 0
+			margin-top: 0
+			margin-left: 30px
+			border: none
+			box-shadow: none
+
+
+
+.unsupported-resolution	// style for unsupported resolution notice
+	height: 100%
+	width: 100%
+	position: absolute
+	top: 55px
+	display: none
+	z-index: 10000000000
+	background-color: rgba(192, 192, 192, 0.5)
+	@media only screen and (max-width: 1023px)
+		display: block
+	.ui.icon.negative.message
+		position: relative
+		width: 35%
+		height: 20%
+		margin: 15% auto
+		min-width: 350px
+		padding: 1em 0em 1em 2em
+			
+.message-container
+	// background-color: rgba(192, 192, 192, 0.5) 
+	.fa.fa-exclamation-triangle
+				position: relative
+				font-size: 40px
+				// top: -30px
+				left: -10px
+
+

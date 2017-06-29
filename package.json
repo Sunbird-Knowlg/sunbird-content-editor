@@ -5,8 +5,10 @@
   "main": "Gruntfile.js",
   "dependencies": {
     "body-parser": "*",
+    "clean-css": "^4.1.4",
     "express": "^4.14.0",
     "grunt-contrib-rename": "0.0.3",
+    "gulp-sass": "^3.1.0",
     "lodash": "^4.16.6",
     "request": "*",
     "xmlbuilder": "*"
@@ -26,6 +28,7 @@
     "gulp-chug": "^0.5.1",
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.1",
+    "gulp-concat-css": "^2.3.0",
     "gulp-filter": "^4.0.0",
     "gulp-inject": "^4.2.0",
     "gulp-main-bower-files": "^1.6.0",
@@ -43,13 +46,13 @@
     "karma-coverage": "^1.1.1",
     "karma-jasmine": "1.0.2",
     "karma-jasmine-matchers": "3.7.0",
+    "karma-mocha-reporter": "^2.2.3",
     "karma-phantomjs-launcher": "1.0.2",
     "merge-stream": "1.0.1",
-    "phantomjs": "2.1.7",
-    "karma-mocha-reporter": "^2.2.3"
+    "phantomjs": "2.1.7"
   },
   "scripts": {
-    "apptest": "karma start karmaconf.js",    
+    "apptest": "karma start karmaconf.js",
     "testpluginframework": "karma start karmaconf.pluginframework.js",
     "test": "karma start karmaconf.js && karma start karmaconf.pluginframework.js"
   },

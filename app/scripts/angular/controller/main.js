@@ -24,7 +24,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         $scope.appLoadMessage = [
             { 'id': 1, 'message': 'Getting things ready for you', 'status': false }
-        ];        
+        ];
         $scope.model = {
             teacherInstructions: undefined
         }
@@ -62,9 +62,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         org.ekstep.contenteditor.sidebarManager.initialize({ loadNgModules: $scope.loadNgModules, scope: $scope });
 
         $scope.fireSidebarTelemetry = function(menu, menuType) {
-            var pluginId = "", pluginVer = "", objectId = "";
+            var pluginId = "",
+                pluginVer = "",
+                objectId = "";
             var pluginObject = org.ekstep.contenteditor.api.getCurrentObject() || org.ekstep.contenteditor.api.getCurrentStage();
-            if(pluginObject) {
+            if (pluginObject) {
                 pluginId = pluginObject.manifest.id;
                 pluginVer = pluginObject.manifest.ver;
                 objectId = pluginObject.id;
@@ -85,7 +87,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
         //Header scope starts
         $scope.headers = [];
-        
+
         $scope.addToHeader = function(header) {
             $scope.headers.push(header);
             $scope.$safeApply();
@@ -101,9 +103,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             contentConcepts: "No concepts selected",
             contentType: ""
         };
-        
+
         $scope.showInstructions = true;
-        $scope.stageAttachments = {};        
+        $scope.stageAttachments = {};
 
         // Functions
         $scope.closeLoadScreen = function(flag) {
@@ -112,18 +114,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 $scope.showAppLoadScreen = false;
             }
             $scope.$safeApply();
-        }   
+        }
 
-        $scope.toggleGenieControl = function() {
+        function toggleGenieControls() {
             if (!$scope.showGenieControls) {
                 //Position the transparent image correctly on top of image
-                var canvasOffset = org.ekstep.contenteditor.api.jQuery('#canvas').offset();
                 setTimeout(function() {
-                    org.ekstep.contenteditor.api.jQuery('#geniecontrols').offset({
-                        "top": canvasOffset.top,
-                        "left": canvasOffset.left,
-                    });
-
                     org.ekstep.contenteditor.api.jQuery('#geniecontrols').css({
                         "display": 'block'
                     });
@@ -132,6 +128,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             }
             $scope.showGenieControls = !$scope.showGenieControls;
         }
+
+        $scope.toggleGenieControl = toggleGenieControls;
 
         $scope.convertToJSON = function(contentBody) {
             try {
@@ -161,9 +159,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.onStageDragDrop = function(dragEl, dropEl) {
             org.ekstep.contenteditor.stageManager.onStageDragDrop(org.ekstep.contenteditor.jQuery('#' + dragEl).attr('data-id'), org.ekstep.contenteditor.jQuery('#' + dropEl).attr('data-id'));
             org.ekstep.contenteditor.api.refreshStages();
-        }              
+        }
 
-        
+
         $scope.refreshToolbar = function() {
             setTimeout(function() {
                 org.ekstep.contenteditor.jQuery(".ui.dropdown").dropdown();
@@ -190,44 +188,44 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
          * Load Content - Invoked once the content editor has loaded
          */
         $scope.loadContent = function() {
-            org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContent(org.ekstep.contenteditor.api.getContext('contentId'), function(err, content) {
-                if (err) {
-                    $scope.contentLoadedFlag = true;
-                    $scope.onLoadCustomMessage.show = true;
-                    $scope.onLoadCustomMessage.text = ":( Unable to fetch the content! Please try again later!";
-                    $scope.telemetryService.error({ "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to fetch content from remote", "type": "API", "data": err, "severity": "fatal" });
-                }
-                if (!(content && content.body) && !err) {
-                    org.ekstep.contenteditor.stageManager.onContentLoad((new Date()).getTime());
-                    $scope.closeLoadScreen(true);
-                } else if (content && content.body) {
-                    $scope.oldContentBody = angular.copy(content.body);
-                    var parsedBody = $scope.parseContentBody(content.body);
-                    if (parsedBody) org.ekstep.contenteditor.api.dispatchEvent("content:migration:start", { body: parsedBody, stageIcons: content.stageIcons });
-                }
-                if (content) {
-                    var concepts = "";
-                    if (!_.isUndefined(content.concepts)) {
-                        concepts = _.size(content.concepts) <= 1 ? content.concepts[0].name : content.concepts[0].name + ' & ' + (_.size(content.concepts) - 1) + ' more';
+                org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContent(org.ekstep.contenteditor.api.getContext('contentId'), function(err, content) {
+                    if (err) {
+                        $scope.contentLoadedFlag = true;
+                        $scope.onLoadCustomMessage.show = true;
+                        $scope.onLoadCustomMessage.text = ":( Unable to fetch the content! Please try again later!";
+                        $scope.telemetryService.error({ "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to fetch content from remote", "type": "API", "data": err, "severity": "fatal" });
                     }
-                    $scope.contentDetails = {
-                        contentTitle: content.name,
-                        contentImage: content.appIcon,                        
-                        contentConcepts: concepts
-                    };
+                    if (!(content && content.body) && !err) {
+                        org.ekstep.contenteditor.stageManager.onContentLoad((new Date()).getTime());
+                        $scope.closeLoadScreen(true);
+                    } else if (content && content.body) {
+                        $scope.oldContentBody = angular.copy(content.body);
+                        var parsedBody = $scope.parseContentBody(content.body);
+                        if (parsedBody) org.ekstep.contenteditor.api.dispatchEvent("content:migration:start", { body: parsedBody, stageIcons: content.stageIcons });
+                    }
+                    if (content) {
+                        var concepts = "";
+                        if (!_.isUndefined(content.concepts)) {
+                            concepts = _.size(content.concepts) <= 1 ? content.concepts[0].name : content.concepts[0].name + ' & ' + (_.size(content.concepts) - 1) + ' more';
+                        }
+                        $scope.contentDetails = {
+                            contentTitle: content.name,
+                            contentImage: content.appIcon,
+                            contentConcepts: concepts
+                        };
 
-                    content.contentType ? ($scope.contentDetails.contentType = '| ' + content.contentType) : ($scope.contentDetails.contentType = "");
-                    $scope.setTitleBarText($scope.contentDetails.contentTitle);
-                }
-            });
-        }
-        /**
-         * Initialize the ekstep editor
-         * @param  {object} context The context for the editor to load
-         * @param  {object} config The config for the editor to override/set
-         * @param  {function} $scope Scope of the controller
-         * @param  {function} callback Function to be invoked once the editor is loaded
-         */
+                        content.contentType ? ($scope.contentDetails.contentType = '| ' + content.contentType) : ($scope.contentDetails.contentType = "");
+                        $scope.setTitleBarText($scope.contentDetails.contentTitle);
+                    }
+                });
+            }
+            /**
+             * Initialize the ekstep editor
+             * @param  {object} context The context for the editor to load
+             * @param  {object} config The config for the editor to override/set
+             * @param  {function} $scope Scope of the controller
+             * @param  {function} callback Function to be invoked once the editor is loaded
+             */
         org.ekstep.contenteditor.init(context, config, $scope, $document, function() {
             var obj = _.find($scope.appLoadMessage, { 'id': 1 });
             if (_.isObject(obj)) {
@@ -270,5 +268,5 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
 org.ekstep.contenteditor.jQuery(document).ready(function() {
     var newheight = $(window).innerHeight() - 114;
-    org.ekstep.contenteditor.jQuery('.scrollable-slides').css("height",newheight + "px");
+    org.ekstep.contenteditor.jQuery('.scrollable-slides').css("height", newheight + "px");
 });

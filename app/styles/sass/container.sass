@@ -1,0 +1,67 @@
+@import 'commonStyles'
+
+$canvasContainerWidth:	750px
+$slidesContainerWidth:	11%
+
+
+@media only screen and (min-width: 1024px) and (max-width: 1200px)
+	$slidesContainerWidth:	12%
+	#mainContainerGrid
+		.scrollable-slides,.ui.grid>*
+			padding-left: 0!important
+			padding-right: 2px!important
+		.two.wide.left.floated.column
+			max-width: $slidesContainerWidth!important
+		.three.wide.right.floated.column
+			+calc(max-width,"100% - (#{$slidesContainerWidth} + #{$canvasContainerWidth})")
+		.large-screen-only
+			display: none
+
+@media only screen and (min-width: 1200px)
+	$slidesContainerWidth:	13%
+	#mainContainerGrid
+		.two.wide.left.floated.column
+			max-width: 13%!important
+		.three.wide.right.floated.column
+			+calc(max-width,"100% - (#{$slidesContainerWidth} + #{$canvasContainerWidth})")
+		.large-screen-only
+			display: inline
+
+#mainContainerGrid
+	margin: 0
+	background-color: #EEEEEE
+	position: relative
+	.ui.seven.wide.column
+		width: 720px !important
+	.scrollable-slides,.ui.seven.wide.column
+		padding-top: 1rem!important
+		padding-left: 0
+	.scrollable-slides
+		border-right: 0.2px solid rgba(192, 192, 192, 0.26)
+		.thumbnail-container
+			margin-bottom: 20px
+			.ui.centered.card
+				height: calc(9/16 * 100%)
+	.ui.three.wide.column
+		padding-top: 0!important
+		border-left: 0.2px solid rgba(192, 192, 192, 0.26)
+		padding: 0!important
+		.sidebar-reportissue
+			position: fixed
+			right: 0
+			bottom: 0
+			width: 100%
+			margin-bottom: 10px
+			.ui.basic.small.button
+				position: absolute
+				bottom: 0
+				right: 30px
+	#geniecontrols
+		background: url(../../images/geniecontrols.png)
+		-webkit-background-size: cover
+		background-size: cover
+		position: absolute
+		top: 1rem
+		left: 0rem
+		width: 720px
+		height: 405px
