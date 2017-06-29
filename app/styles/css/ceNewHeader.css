@@ -210,7 +210,7 @@ body {
     .custom-5-wide .custom-row-2 .icon-group-2 .ui.dropdown {
       box-shadow: none; }
       .custom-5-wide .custom-row-2 .icon-group-2 .ui.dropdown .menu {
-        left: -105px;
+        left: -85px !important;
         top: 70%; }
         .custom-5-wide .custom-row-2 .icon-group-2 .ui.dropdown .menu .item {
           font-size: 9px !important;
