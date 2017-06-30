@@ -49,11 +49,11 @@ body {
     width: calc(100% - (50% + 60px)) !important;
     padding-right: 0.3rem; }
 
+.ui.grid.custom-container > .column:not(.row) {
+  padding-top: 0.3rem; }
+
 .content-masterhead {
   padding: 0 !important; }
-
-.ui.grid > .column:not(.row) {
-  padding-top: 0.3rem; }
 
 .custom-1-wide {
   background-color: #2e9fd9;
