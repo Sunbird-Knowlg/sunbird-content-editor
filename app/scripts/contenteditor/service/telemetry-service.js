@@ -49,7 +49,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         }
         this.addDispatcher(dispatcher);
 
-        window.addEventListener('beforeunload', /* istanbul ignore next */ function() {
+        window.addEventListener('unload', /* istanbul ignore next */ function() {
             instance.end();
         }); 
 
