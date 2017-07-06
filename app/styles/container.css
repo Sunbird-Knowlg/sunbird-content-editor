@@ -72,7 +72,7 @@ body {
         bottom: 0;
         right: 30px; }
   #mainContainerGrid #geniecontrols {
-    background: url(../../images/geniecontrols.png);
+    background: url(../images/geniecontrols.png);
     -webkit-background-size: cover;
     background-size: cover;
     position: absolute;

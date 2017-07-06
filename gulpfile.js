@@ -414,7 +414,7 @@ gulp.task('sassToCSS', function() {
     return gulp.src('app/styles/sass/**/*.sass')
         .pipe(sass().on('error', sass.logError))
         // .pipe(cleanCSS())
-        .pipe(gulp.dest('app/styles/css'))
+        .pipe(gulp.dest('app/styles/'))
 
 });
 
