@@ -19,7 +19,8 @@ org.ekstep.contenteditor.config = {
     baseConfigManifest: "config/baseConfigManifest.json",
     plugins: [
         { "id": "org.ekstep.developer", "ver": "1.0", "type": "plugin" },
-        { "id": "org.ekstep.ceheader", "ver": "1.0", "type": "plugin" }
+        { "id": "org.ekstep.ceheader", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.whatsnew", "ver": "1.0", "type": "plugin" }
     ],
     corePluginsPackaged: true,
     dispatcher: "local",
