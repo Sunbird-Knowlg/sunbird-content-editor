@@ -47,7 +47,7 @@ org.ekstep.contenteditor._loadDefaultPlugins = function(context, callback) {
             uid: context.uid,
             sid: context.sid,
             content_id: context.contentId,
-            etags: context.etags || {},
+            etags: context.etags,
             channel:context.channel || "",
             pdata: context.pdata || {}
 
