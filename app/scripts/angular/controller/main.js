@@ -176,7 +176,11 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         // Get context from url or window or parentwindow
         // Set the context
         var context = org.ekstep.contenteditor.getWindowContext();
-        context.contentId = context.contentId ||  $scope.contentId;      
+        context.contentId = context.contentId ||  $scope.contentId; 
+        context.etags = {};
+        context.etags.app = context.app || [];
+        context.etags.partner = context.partner || [];
+        context.etags.dims = context.dims || [];
 
         // Get config from url or window or parentwindow
         // Add the absURL as below

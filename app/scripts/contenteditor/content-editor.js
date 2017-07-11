@@ -46,7 +46,11 @@ org.ekstep.contenteditor._loadDefaultPlugins = function(context, callback) {
         org.ekstep.services.telemetryService.initialize({
             uid: context.uid,
             sid: context.sid,
-            content_id: context.contentId
+            content_id: context.contentId,
+            etags: context.etags,
+            channel:context.channel || "",
+            pdata: context.pdata || {}
+
         }, org.ekstep.contenteditor.config.dispatcher);
         org.ekstep.pluginframework.eventManager.enableEvents = true;
         callback();
