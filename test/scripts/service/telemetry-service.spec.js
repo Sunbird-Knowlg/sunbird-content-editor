@@ -18,7 +18,10 @@ describe('telemetry service', function() {
         service.initialize({
             uid: uid,
             sid: "",
-            content_id: org.ekstep.contenteditor.api.getContext('contentId')
+            content_id: org.ekstep.contenteditor.api.getContext('contentId'),
+            etags: {},
+            channel: "",
+            pdata: {}
         });
 
         expect(service.initialized).toBe(true);
@@ -49,15 +52,16 @@ describe('telemetry service', function() {
 
     it('should get event template', function() {
         var empty_event = service.getEvent("CE_TEST", {});
+        console.log('empty_event', empty_event);
         expect(empty_event.eid).toBe("CE_TEST");
         expect(empty_event.ets).toBeDefined();
         expect(empty_event.ver).toBe("1.0");
-        expect(empty_event.pdata).toEqual({ "id": "ATTool", "pid": "ContentEditor", "ver": "2.0" });
+        expect(empty_event.pdata).toEqual({});
         expect(empty_event.cdata).toEqual([]);
         expect(empty_event.context).toEqual({ "sid": "", "content_id": org.ekstep.contenteditor.api.getContext('contentId') });
         expect(empty_event.rid).toBe("");
         expect(empty_event.edata).toEqual({ "eks": {} });
-        expect(empty_event.tags).toEqual([]);
+        expect(empty_event.etags).toEqual({});
     });
 
     it('should dispatch CE_START event', function() {
