@@ -55,7 +55,7 @@ describe('telemetry service', function() {
         console.log('empty_event', empty_event);
         expect(empty_event.eid).toBe("CE_TEST");
         expect(empty_event.ets).toBeDefined();
-        expect(empty_event.ver).toBe("1.0");
+        expect(empty_event.ver).toBe("2.1");
         expect(empty_event.pdata).toEqual({});
         expect(empty_event.cdata).toEqual([]);
         expect(empty_event.context).toEqual({ "sid": "", "content_id": org.ekstep.contenteditor.api.getContext('contentId') });
