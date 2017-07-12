@@ -36,5 +36,21 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      */
     getResourceBundles: function(languageCode ,callback) {
         this.getFromService(this.metaURL() + 'v3/resourcebundles/read/'+ languageCode, this.requestHeaders, callback);
+    },
+    /**
+     * Get config items from learning api terms list
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.configService
+     */
+    getLearningConfig: function(callback) {
+        this.getFromService(this.learningURL() + 'v2/terms/list', this.requestHeaders, callback);
+    },
+    /**
+     * Get config items from config api ordinals
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.configService
+     */
+    getConfigOrdinals: function(callback) {
+        this.getFromService(this.configURL() + 'v2/config/ordinals', this.requestHeaders, callback);
     }
 }));
