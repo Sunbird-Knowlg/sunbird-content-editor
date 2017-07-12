@@ -9,6 +9,13 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @member {string} learningURL
      * @memberof org.ekstep.services.metaService
      */
+    learningURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + '/learning/'
+    },
+    /** 
+     * @member {string} learningURL
+     * @memberof org.ekstep.services.metaService
+     */
     metaURL: function() {
         return this.getBaseURL() + this.getAPISlug() + '/meta/'
     },
