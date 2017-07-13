@@ -166,7 +166,7 @@ gulp.task('minifyFramework', function() {
 gulp.task('dist', function() {
     var cesrc = gulp.src(scriptfiles).pipe(concat('script.min.js')).pipe(gulp.dest('dist/'));
     var celibs = gulp.src(bower_components).pipe(concat('external.min.js')).pipe(gulp.dest('dist/'));
-
+    var pluginframework = gulp.src(pluginFramework).pipe(concat('plugin-framework.min.js')).pipe(gulp.dest('dist/'));
     return merge(cesrc, celibs);
 });
 

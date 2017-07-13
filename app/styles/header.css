@@ -32,7 +32,7 @@ body {
   background-color: #E0E1E2; }
 
 .custom-icon {
-  line-height: normal;
+  line-height: initial;
   height: 14px;
   width: 15px; }
 
@@ -113,9 +113,11 @@ body {
     display: block;
     margin: auto;
     border-radius: 50%; }
+  .custom-5-wide .user-details-wrapper .user-name {
+    font-weight: bold; }
   .custom-5-wide .user-details-wrapper .user-name, .custom-5-wide .user-details-wrapper .user-email, .custom-5-wide .user-details-wrapper .user-details-edit {
     color: #4A4A4A;
-    font-size: 9px;
+    font-size: 10px;
     line-height: 11px;
     padding: 2px 10px;
     margin-top: 3px;
@@ -185,7 +187,7 @@ body {
   height: 30px;
   float: right;
   font-size: 12px !important;
-  padding-top: 2px; }
+  top: 4px; }
   .custom-5-wide .custom-row-2 .icon, .custom-5-wide .custom-row-2 .fa.fa-eye, .custom-5-wide .custom-row-2 .icon-save, .custom-5-wide .custom-row-2 .icon-whatsnew {
     font-size: 14px !important;
     color: #9B9B9B;
@@ -197,23 +199,26 @@ body {
     height: 100%; }
   .custom-5-wide .custom-row-2 .icon-group-1 {
     float: left;
-    border-right: 0.2px solid rgba(128, 128, 128, 0.15);
-    padding-right: 5px; }
+    border-right: 0.2px solid rgba(128, 128, 128, 0.15); }
     .custom-5-wide .custom-row-2 .icon-group-1 .comments-icon-group {
       position: relative;
       display: inline-block; }
   .custom-5-wide .custom-row-2 .icon-group-2 {
-    float: right;
-    padding-left: 5px; }
+    float: right; }
     .custom-5-wide .custom-row-2 .icon-group-2 .icon-save, .custom-5-wide .custom-row-2 .icon-group-2 .fa.fa-eye {
       color: #2e9fd9; }
     .custom-5-wide .custom-row-2 .icon-group-2 .ui.dropdown {
       box-shadow: none; }
+      .custom-5-wide .custom-row-2 .icon-group-2 .ui.dropdown:hover {
+        background: none !important; }
+        .custom-5-wide .custom-row-2 .icon-group-2 .ui.dropdown:hover .custom-icon {
+          color: #4a4a4a !important; }
       .custom-5-wide .custom-row-2 .icon-group-2 .ui.dropdown .menu {
-        left: -85px !important;
-        top: 70%; }
+        left: initial !important;
+        right: -14px !important;
+        top: 50% !important; }
         .custom-5-wide .custom-row-2 .icon-group-2 .ui.dropdown .menu .item {
-          font-size: 9px !important;
+          font-size: 10px !important;
           line-height: 11px;
           padding: 9px 10px !important;
           font-family: Helvetica;
