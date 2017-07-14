@@ -328,6 +328,7 @@ var corePlugins = [
     "org.ekstep.review-1.0",
     "org.ekstep.video-1.0",
     "org.ekstep.editorstate-1.0",
+    "org.ekstep.contenteditorfunctions-1.0",
     "org.ekstep.ceheader-1.0",
     "org.ekstep.keyboardshortcuts-1.0"
 ]

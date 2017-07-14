@@ -7,11 +7,10 @@
     "body-parser": "*",
     "clean-css": "^4.1.4",
     "express": "^4.14.0",
-    "grunt-contrib-rename": "0.0.3",
-    "gulp-sass": "^3.1.0",
     "lodash": "^4.16.6",
     "request": "*",
-    "xmlbuilder": "*"
+    "xmlbuilder": "*",
+    "express-http-proxy": "*"
   },
   "devDependencies": {
     "bluebird": "^3.4.6",
@@ -36,6 +35,8 @@
     "gulp-rename": "^1.2.2",
     "gulp-strip-debug": "^1.1.0",
     "gulp-zip": "^3.2.0",
+    "gulp-sass": "^3.1.0",
+    "grunt-contrib-rename": "0.0.3",
     "jasmine": "2.5.2",
     "jasmine-core": "2.5.2",
     "jasmine-expect": "3.7.0",

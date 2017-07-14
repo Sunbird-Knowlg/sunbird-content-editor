@@ -74,12 +74,7 @@ org.ekstep.contenteditor.getWindowConfig = function() {
     var config = org.ekstep.contenteditor.getParameterByName('config') || (window.parent ? window.parent.config : undefined) || window.config;
     org.ekstep.contenteditor.window_config = {};
     if (config) {
-        org.ekstep.contenteditor.window_config = {
-            baseURL: config.baseURL,
-            pluginRepo: config.pluginRepo,
-            plugins: config.plugins,
-            corePluginsPackaged: config.enableCorePlugin
-        }
+        org.ekstep.contenteditor.window_config = config
     }
 
     return org.ekstep.contenteditor.window_config;

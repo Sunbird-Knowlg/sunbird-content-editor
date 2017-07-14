@@ -24,7 +24,7 @@ org.ekstep.contenteditor.config = {
     ],
     corePluginsPackaged: true,
     dispatcher: "local",
-    useProxyForURL: true
+    useProxyForURL: false
 }
 
 org.ekstep.contenteditor.baseConfigManifest = [{
