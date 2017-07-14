@@ -227,7 +227,11 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.contentService
      */
     saveCollectionHierarchy: function(data, callback) {
-        //Versionkey not considered for hierarchy patch        
+        //Versionkey not considered for hierarchy patch
+        if (!data) {
+            callback("nothing to save!");        
+            return;
+        }
         var requestObj = { request: { data: data.body } };
         this.patch(this.learningURL() + "v2/content/hierarchy/update", requestObj, this.requestHeaders, function(err, res) {
             if (res && res.data.responseCode == "OK") {
