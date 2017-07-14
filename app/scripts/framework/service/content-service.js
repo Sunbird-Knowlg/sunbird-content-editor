@@ -211,7 +211,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             if (err) callback(err, undefined);
             if (!err && res.data && res.data.result && res.data.result.content) {
                 instance._setContentMeta(data.contentId, res.data.result.content);
-                callback(err, res.data.result.content);
+                callback(err, res);
             } else {
                 callback(new Error('no content found!'), undefined)
             }
