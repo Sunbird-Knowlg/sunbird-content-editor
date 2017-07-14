@@ -98,8 +98,5 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      */
     getTranslation:  function(data, callback) {
         this.postFromService(this.languageURL() + "v3/tools/translate?language_id="+ data.wordLang + '&lemma=' + data.word + '&languages=' + data.languages, {"request": {}}, this.requestHeaders, callback);
-    },
-    getCollectionHierarchy: function(data, callback) {        
-        this.getFromService(this.learningURL() + "v2/content/hierarchy/" + data.contentId, this.requestHeaders, callback);
     }
 }));
