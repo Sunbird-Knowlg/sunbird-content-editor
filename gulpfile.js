@@ -178,7 +178,6 @@ gulp.task('minifyCSS', function() {
             'app/styles/iconfont.css',
             'app/styles/noto.css',
             'app/styles/header.css',
-            'app/styles/container.css',
             'app/styles/commonStyles.css'
 
         ])
