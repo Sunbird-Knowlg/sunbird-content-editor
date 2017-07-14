@@ -73,8 +73,8 @@
             </div>
             <div ng-include="'templates/deleteStageDialog.html'"></div>
             <div id="mainContainerGrid" class="ui grid bottom attached celled" style="margin: 0;background: #EEEEEE;">
-                <div class="row">
-                    <div class="ui two wide column scrollable-slides">
+                <div class="row" style="background-color:#f5f5f5;">
+                    <div class="ui two wide column scrollable-slides" style="background-color:#f5f5f5;">
                         <div ng-repeat="stage in stages track by $index" class="thumbnail-container" style="margin-bottom: 20px">
                             <div class="ui centered raised card segment thumbnail">
                                 <span class="stage-number">{{$index+1}}</span>
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="ui seven wide column">
+                    <div class="ui seven wide column" style="background-color:#f5f5f5;">
                         <div id="canvas-wrapper">
                             <canvas id="canvas" class="ui card centered raised" width="720px" height="405px" style="margin: 0; border-radius: 0px; background: none"></canvas>
                         </div>
