@@ -167,7 +167,7 @@ gulp.task('dist', function() {
     var cesrc = gulp.src(scriptfiles).pipe(concat('script.min.js')).pipe(gulp.dest('dist/'));
     var celibs = gulp.src(bower_components).pipe(concat('external.min.js')).pipe(gulp.dest('dist/'));
     var pluginframework = gulp.src(pluginFramework).pipe(concat('plugin-framework.min.js')).pipe(gulp.dest('dist/'));
-    return merge(cesrc, celibs);
+    return merge(cesrc, celibs, pluginframework);
 });
 
 gulp.task('minifyCSS', function() {
@@ -240,7 +240,7 @@ gulp.task('minify', ['minifyallJS', 'minifyCE', 'minifyCSS', 'minifyJsBower', 'm
 
 gulp.task('inject', ['minify'], function() {
     var target = gulp.src('content-editor/index.html');
-    var sources = gulp.src(['content-editor/scripts/*.js', 'content-editor/styles/*.css'], {
+    var sources = gulp.src(['content-editor/scripts/external.min.js', 'content-editor/scripts/plugin-framework.min.js', 'content-editor/scripts/contenteditor.min.js', 'content-editor/styles/*.css'], {
         read: false
     });
     return target
