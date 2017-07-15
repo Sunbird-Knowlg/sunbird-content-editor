@@ -46,7 +46,11 @@ org.ekstep.contenteditor._loadDefaultPlugins = function(context, callback) {
         org.ekstep.services.telemetryService.initialize({
             uid: context.uid,
             sid: context.sid,
-            content_id: context.contentId
+            content_id: context.contentId,
+            etags: context.etags,
+            channel:context.channel || "",
+            pdata: context.pdata || {}
+
         }, org.ekstep.contenteditor.config.dispatcher);
         org.ekstep.pluginframework.eventManager.enableEvents = true;
         callback();
@@ -63,7 +67,10 @@ org.ekstep.contenteditor._loadDefaultPlugins = function(context, callback) {
 org.ekstep.contenteditor.getWindowContext = function() {
     var context = org.ekstep.contenteditor.getParameterByName('context') || (window.parent ? window.parent.context : undefined) || window.context;
     org.ekstep.contenteditor.window_context = {
-        uid: context.user.id,
+        user:{
+            id : context.user.id,
+            name: context.user.name
+        },
         sid: context.sid,
         contentId: context.contentId
     }

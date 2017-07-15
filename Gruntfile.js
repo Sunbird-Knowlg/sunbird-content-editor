@@ -102,7 +102,7 @@ module.exports = function(grunt) {
                     gzipRename: 'ext' // when uploading a gz file, keep the original extension
                 },
                 files: [
-                    { dest: 'preview/', cwd: 'app/preview/', action: 'download' }
+                    { dest: 'v3/preview/', cwd: 'app/preview/', action: 'download' }
                 ]
             }
         },
@@ -165,5 +165,6 @@ module.exports = function(grunt) {
     ]);
 
     grunt.registerTask('default', ['jsdoc']);
+    grunt.registerTask('compress');
 
 };

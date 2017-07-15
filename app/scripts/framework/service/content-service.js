@@ -9,6 +9,9 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
     serviceURL: function() {
         return this.getBaseURL() + this.getAPISlug() + '/content/'
     },
+    learningURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + '/learning/'
+    },
     content: {},
     initService: function() {},
     /**
@@ -192,5 +195,50 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
     downloadContent: function(contentId, fileName, callback) {
         var data = { "request": { "content_identifiers": [contentId], "file_name": fileName } };
         this.postFromService(this.serviceURL() + 'v3/bundle', data, this.requestHeaders, callback);
+    },
+    /**
+     *
+     *
+     * retrieves collection in hierarchical order
+     * @param data {object} "contentId" : String. Content ID to get
+     * @param callback {function} callback function
+     *
+     * @memberof org.ekstep.services.contentService
+     */
+    getCollectionHierarchy: function(data, callback) {
+        var instance = this;
+        this.getFromService(this.learningURL() + "v2/content/hierarchy/" + data.contentId + "?mode=edit&fields=versionKey", this.requestHeaders, function(err, res) {
+            if (err) callback(err, undefined);
+            if (!err && res.data && res.data.result && res.data.result.content) {
+                instance._setContentMeta(data.contentId, res.data.result.content);
+                callback(err, res);
+            } else {
+                callback(new Error('no content found!'), undefined)
+            }
+        });
+    },
+    /**
+     *
+     *
+     * saves collection in hierarchical order
+     * @param data {object} "body": Object. content body to save
+     * @param callback {function} callback function
+     *
+     * @memberof org.ekstep.services.contentService
+     */
+    saveCollectionHierarchy: function(data, callback) {
+        //Versionkey not considered for hierarchy patch
+        if (!data) {
+            callback("nothing to save!");        
+            return;
+        }
+        var requestObj = { request: { data: data.body } };
+        this.patch(this.learningURL() + "v2/content/hierarchy/update", requestObj, this.requestHeaders, function(err, res) {
+            if (res && res.data.responseCode == "OK") {
+                callback(undefined, res);
+            } else {
+                callback(true, err);
+            }
+        });
     }
 }));

@@ -119,7 +119,13 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         function toggleGenieControls() {
             if (!$scope.showGenieControls) {
                 //Position the transparent image correctly on top of image
+                var canvasOffset = org.ekstep.contenteditor.api.jQuery('#canvas').offset();
                 setTimeout(function() {
+                    org.ekstep.contenteditor.api.jQuery('#geniecontrols').offset({
+                        "top": canvasOffset.top,
+                        "left": canvasOffset.left,
+                    });
+
                     org.ekstep.contenteditor.api.jQuery('#geniecontrols').css({
                         "display": 'block'
                     });
@@ -178,56 +184,60 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         var context = org.ekstep.contenteditor.getWindowContext();
         context.contentId = context.contentId || $scope.contentId;
         context.uid = context.user ? context.user.id : context.uid;
+        context.contentId = context.contentId ||  $scope.contentId; 
+        context.etags = context.etags || {};
+        context.etags.app = context.app || context.etags.app || [];
+        context.etags.partner = context.partner || context.etags.partner || [];
+        context.etags.dims = context.dims || context.etags.dims || [];
 
         // Get config from url or window or parentwindow
         // Add the absURL as below
         // Config to override
         var config = org.ekstep.contenteditor.getWindowConfig();
-        config.absURL = $location.protocol() + '://' + $location.host() + ':' + $location.port() // Required
-
+            config.absURL = $location.protocol() + '://' + $location.host() + ':' + $location.port() // Required
+        
         /**
          * Load Content - Invoked once the content editor has loaded
          */
         $scope.loadContent = function() {
-            org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContent(org.ekstep.contenteditor.api.getContext('contentId'), function(err, content) {
-                if (err) {
-                    $scope.contentLoadedFlag = true;
-                    $scope.onLoadCustomMessage.show = true;
-                    $scope.onLoadCustomMessage.text = ":( Unable to fetch the content! Please try again later!";
-                    $scope.telemetryService.error({ "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to fetch content from remote", "type": "API", "data": err, "severity": "fatal" });
-                }
-                if (!(content && content.body) && !err) {
-                    org.ekstep.contenteditor.stageManager.onContentLoad((new Date()).getTime());
-                    $scope.closeLoadScreen(true);
-                } else if (content && content.body) {
-                    $scope.oldContentBody = angular.copy(content.body);
-                    var parsedBody = $scope.parseContentBody(content.body);
-                    if (parsedBody) org.ekstep.contenteditor.api.dispatchEvent("content:migration:start", { body: parsedBody, stageIcons: content.stageIcons });
-                }
-                if (content) {
-                    var concepts = "";
-                    if (!_.isUndefined(content.concepts) && _.size(content.concepts) > 0) {
-                        concepts = _.size(content.concepts) = 1 ? content.concepts[0].name : content.concepts[0].name + ' & ' + (_.size(content.concepts) - 1) + ' more';
+                org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContent(org.ekstep.contenteditor.api.getContext('contentId'), function(err, content) {
+                    if (err) {
+                        $scope.contentLoadedFlag = true;
+                        $scope.onLoadCustomMessage.show = true;
+                        $scope.onLoadCustomMessage.text = ":( Unable to fetch the content! Please try again later!";
+                        $scope.telemetryService.error({ "env": "content", "stage": "", "action": "show error and stop the application", "err": "Unable to fetch content from remote", "type": "API", "data": err, "severity": "fatal" });
                     }
-                    $scope.contentDetails = {
-                        contentTitle: content.name,
-                        contentImage: content.appIcon,
-                        contentConcepts: concepts
-                    };
+                    if (!(content && content.body) && !err) {
+                        org.ekstep.contenteditor.stageManager.onContentLoad((new Date()).getTime());
+                        $scope.closeLoadScreen(true);
+                    } else if (content && content.body) {
+                        $scope.oldContentBody = angular.copy(content.body);
+                        var parsedBody = $scope.parseContentBody(content.body);
+                        if (parsedBody) org.ekstep.contenteditor.api.dispatchEvent("content:migration:start", { body: parsedBody, stageIcons: content.stageIcons });
+                    }
+                    if (content) {
+                        var concepts = "";
+                        if (!_.isUndefined(content.concepts)) {
+                            concepts = _.size(content.concepts) <= 1 ? content.concepts[0].name : content.concepts[0].name + ' & ' + (_.size(content.concepts) - 1) + ' more';
+                        }
+                        $scope.contentDetails = {
+                            contentTitle: content.name,
+                            contentImage: content.appIcon,
+                            contentConcepts: concepts
+                        };
 
-                    content.contentType ? ($scope.contentDetails.contentType = '| ' + content.contentType) : ($scope.contentDetails.contentType = "");
-                    $scope.setTitleBarText($scope.contentDetails.contentTitle);
-                }
-            });
-        }
-
-        /**
-         * Initialize the ekstep editor
-         * @param  {object} context The context for the editor to load
-         * @param  {object} config The config for the editor to override/set
-         * @param  {function} $scope Scope of the controller
-         * @param  {function} callback Function to be invoked once the editor is loaded
-         */
+                        content.contentType ? ($scope.contentDetails.contentType = '| ' + content.contentType) : ($scope.contentDetails.contentType = "");
+                        $scope.setTitleBarText($scope.contentDetails.contentTitle);
+                    }
+                });
+            }
+            /**
+             * Initialize the ekstep editor
+             * @param  {object} context The context for the editor to load
+             * @param  {object} config The config for the editor to override/set
+             * @param  {function} $scope Scope of the controller
+             * @param  {function} callback Function to be invoked once the editor is loaded
+             */
         org.ekstep.contenteditor.init(context, config, $scope, $document, function() {
             var obj = _.find($scope.appLoadMessage, { 'id': 1 });
             if (_.isObject(obj)) {

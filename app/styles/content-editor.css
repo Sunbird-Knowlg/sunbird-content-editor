@@ -178,11 +178,10 @@ body {
     outline: none;
     width: 726px;
     height: 411px;
-    //not required as it has been achieved using top property
-    // margin-top: 20px;
     position: fixed;
     display: none;
     pointer-events: none;
+    background:  url(../images/geniecontrols.png);
 }
 
 #geniecontrolsimage {
