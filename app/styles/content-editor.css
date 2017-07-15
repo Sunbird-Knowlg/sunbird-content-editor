@@ -333,3 +333,16 @@ body {
     background: none !important;
     box-shadow: none !important;
 }
+.toolbar .ui.nine.wide.column,
+.toolbar .ui.icon.menu,
+.toolbar .ui.three.wide.column {
+    background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.05)) #FFF !important;
+}
+
+.toolbar .ui.nine.wide.column .ui.icon.menu {
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-left: 30px;
+    border: none;
+    box-shadow: none;
+}

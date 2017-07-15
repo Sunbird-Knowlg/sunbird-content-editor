@@ -177,6 +177,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         // Set the context
         var context = org.ekstep.contenteditor.getWindowContext();
         context.contentId = context.contentId || $scope.contentId;
+        context.uid = context.user ? context.user.id : context.uid;
 
         // Get config from url or window or parentwindow
         // Add the absURL as below

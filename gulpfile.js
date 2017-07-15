@@ -13,6 +13,7 @@ var rename = require("gulp-rename");
 var merge = require('merge-stream');
 var sass = require('gulp-sass');
 var cleanCSS = require('clean-css');
+var replace = require('gulp-string-replace');
 
 var cachebust = new CacheBuster();
 const zip = require('gulp-zip');
@@ -240,7 +241,7 @@ gulp.task('minify', ['minifyallJS', 'minifyCE', 'minifyCSS', 'minifyJsBower', 'm
 
 gulp.task('inject', ['minify'], function() {
     var target = gulp.src('content-editor/index.html');
-    var sources = gulp.src(['content-editor/scripts/*.js', 'content-editor/styles/*.css'], {
+    var sources = gulp.src(['content-editor/scripts/*.js', '!content-editor/scripts/contenteditor.min.js', '!content-editor/scripts/plugin-framework.min.js', '!content-editor/scripts/coreplugins.js', 'content-editor/styles/*.css'], {
         read: false
     });
     return target
@@ -251,7 +252,14 @@ gulp.task('inject', ['minify'], function() {
         .pipe(gulp.dest('./content-editor'));
 });
 
-gulp.task('zip', ['minify', 'inject', 'packageCorePlugins'], function() {
+gulp.task('replace', ['inject'], function() {
+    return mergeStream([
+        gulp.src(["content-editor/styles/external.min.css"]).pipe(replace('../fonts', 'fonts')).pipe(gulp.dest('content-editor/styles')),
+        gulp.src(["content-editor/scripts/script.min.js"]).pipe(replace('/plugins', '/content-plugins')).pipe(replace("'https://dev.ekstep.in'", "''")).pipe(replace('dispatcher: "local"', 'dispatcher: "console"')).pipe(gulp.dest('content-editor/scripts/'))
+    ]);
+});
+
+gulp.task('zip', ['minify', 'inject', 'replace', 'packageCorePlugins'], function() {
     return gulp.src('content-editor/**')
         .pipe(zip('content-editor.zip'))
         .pipe(gulp.dest(''));
@@ -316,7 +324,6 @@ var corePlugins = [
     "org.ekstep.stageconfig-1.0",
     "org.ekstep.telemetry-1.0",
     "org.ekstep.preview-1.0",
-    "org.ekstep.todo-1.0",
     "org.ekstep.activitybrowser-1.0",
     "org.ekstep.collaborator-1.0",
     "org.ekstep.download-1.0",
@@ -325,11 +332,9 @@ var corePlugins = [
     "org.ekstep.viewecml-1.0",
     "org.ekstep.utils-1.0",
     "org.ekstep.help-1.0",
-    "org.ekstep.review-1.0",
     "org.ekstep.video-1.0",
     "org.ekstep.editorstate-1.0",
     "org.ekstep.contenteditorfunctions-1.0",
-    "org.ekstep.ceheader-1.0",
     "org.ekstep.keyboardshortcuts-1.0"
 ]
 

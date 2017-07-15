@@ -16,11 +16,12 @@ org.ekstep.contenteditor.config = {
         "htext": "org.ekstep.text",
         "audio": "org.ekstep.audio"
     },
-    baseConfigManifest: "config/baseConfigManifest.json",
     plugins: [
         { "id": "org.ekstep.developer", "ver": "1.0", "type": "plugin" },
         { "id": "org.ekstep.ceheader", "ver": "1.0", "type": "plugin" },
-        { "id": "org.ekstep.whatsnew", "ver": "1.0", "type": "plugin" }
+        { "id": "org.ekstep.whatsnew", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.todo", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.review", "ver": "1.0", "type": "plugin" }
     ],
     corePluginsPackaged: true,
     dispatcher: "local",
