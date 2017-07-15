@@ -6,7 +6,9 @@ var fs = require('fs');
 var zip = require('gulp-zip');
 var replace = require('gulp-string-replace');
 var packageJson = JSON.parse(fs.readFileSync('./package.json'));
+var promise = require("any-promise");
 
+var cachebust = new CacheBuster();
 gulp.task('renameminifiedfiles', function() {
     var js =  gulp.src('scripts/*.min.js').pipe(cachebust.resources()).pipe(gulp.dest('scripts/'));
     var css = gulp.src('styles/*.min.css').pipe(cachebust.resources()).pipe(gulp.dest('styles/'));

@@ -17,6 +17,7 @@
         "gulp-inject": "^4.2.0",
         "merge-stream": "1.0.1",
         "gulp-string-replace": "^0.4.0",
-        "merge-stream": "1.0.1"
+        "merge-stream": "1.0.1",
+        "any-promise": "^1.3.0"
     }
 }
