@@ -16,7 +16,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.showAppLoadScreen = true;
         $scope.contentLoadedFlag = false;
 
-        $scope.showGenieControls = true;
+        $scope.showGenieControls = false;
 
         $window.context = $window.context || window.parent.context;
 
