@@ -22,7 +22,7 @@ gulp.task('injectrenamedfiles', function() {
 });
 
 gulp.task('bower-package', function() {
-    return gulp.src(['**', '!scripts/contenteditor.min.js', '!scripts/plugin-framework.min.js', '!scripts/contenteditor.min.js', '!gulpfile.js', '!package.json']).pipe(gulp.dest('build/'));
+    return gulp.src(['**', '!node_modules', '!node_modules/**', '!scripts/contenteditor.min.js', '!scripts/plugin-framework.min.js', '!scripts/contenteditor.min.js', '!gulpfile.js', '!package.json']).pipe(gulp.dest('build/'));
 });
 
 gulp.task('package', ['iframe-package', 'embed-package']);
