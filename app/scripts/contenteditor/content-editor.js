@@ -68,26 +68,11 @@ org.ekstep.contenteditor._loadDefaultPlugins = function(context, callback) {
 // getWindowConfig();
 // 
 org.ekstep.contenteditor.getWindowContext = function() {
-    var context = org.ekstep.contenteditor.getParameterByName('context') || (window.parent ? window.parent.context : undefined) || window.context;
-    org.ekstep.contenteditor.window_context = {
-        user:{
-            id : context.user.id,
-            name: context.user.name
-        },
-        sid: context.sid,
-        contentId: context.contentId
-    }
-    return org.ekstep.contenteditor.window_context;
+    return org.ekstep.contenteditor.getParameterByName('context') || (window.parent ? window.parent.context : undefined) || window.context || {};
 }
 
 org.ekstep.contenteditor.getWindowConfig = function() {
-    var config = org.ekstep.contenteditor.getParameterByName('config') || (window.parent ? window.parent.config : undefined) || window.config;
-    org.ekstep.contenteditor.window_config = {};
-    if (config) {
-        org.ekstep.contenteditor.window_config = config
-    }
-
-    return org.ekstep.contenteditor.window_config;
+    return org.ekstep.contenteditor.getParameterByName('config') || (window.parent ? window.parent.config : undefined) || window.config || {};
 }
 
 org.ekstep.contenteditor.getParameterByName = function(name, url) {
@@ -95,7 +80,8 @@ org.ekstep.contenteditor.getParameterByName = function(name, url) {
     name = name.replace(/[\[\]]/g, "\\$&");
     var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
         results = regex.exec(url);
-    if (!results) return null;
-    if (!results[2]) return '';
-    return decodeURIComponent(results[2].replace(/\+/g, " "));
+    if (!results) return undefined;
+    if (!results[2]) return undefined;
+    var value = decodeURIComponent(results[2].replace(/\+/g, " "));
+    return JSON.parse(value);
 }

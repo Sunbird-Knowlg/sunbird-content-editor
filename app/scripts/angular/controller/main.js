@@ -100,7 +100,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.contentDetails = {
             contentTitle: "Untitled Content",
             contentImage: "/images/com_ekcontent/default-images/default-content.png",
-            contentConcepts: "No concepts selected",
             contentType: ""
         };
 
@@ -194,7 +193,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         // Add the absURL as below
         // Config to override
         var config = org.ekstep.contenteditor.getWindowConfig();
-            config.absURL = $location.protocol() + '://' + $location.host() + ':' + $location.port() // Required
+        config.absURL = $location.protocol() + '://' + $location.host() + ':' + $location.port() // Required
         
         /**
          * Load Content - Invoked once the content editor has loaded
@@ -216,14 +215,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                         if (parsedBody) org.ekstep.contenteditor.api.dispatchEvent("content:migration:start", { body: parsedBody, stageIcons: content.stageIcons });
                     }
                     if (content) {
-                        var concepts = "";
-                        if (!_.isUndefined(content.concepts)) {
-                            concepts = _.size(content.concepts) <= 1 ? content.concepts[0].name : content.concepts[0].name + ' & ' + (_.size(content.concepts) - 1) + ' more';
-                        }
                         $scope.contentDetails = {
                             contentTitle: content.name,
-                            contentImage: content.appIcon,
-                            contentConcepts: concepts
+                            contentImage: content.appIcon
                         };
 
                         content.contentType ? ($scope.contentDetails.contentType = '| ' + content.contentType) : ($scope.contentDetails.contentType = "");
