@@ -9,7 +9,7 @@ org.ekstep.services.assetService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.assetService
      */
     contentURL: function() {
-        return this.getBaseURL() + this.getAPISlug() + '/content/'
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('contentEndPoint', '/content');
     },
     asset: {},
     initService: function() {},
@@ -49,11 +49,11 @@ org.ekstep.services.assetService = new(org.ekstep.services.iService.extend({
             }
         };
         if (assetId) {
-            instance.patch(this.contentURL() + 'v3/update/', requestObj, this.requestHeaders, function(err, res) {
+            instance.patch(this.contentURL() + this.getConfig('contentUpdateUrl', '/v3/update/'), requestObj, this.requestHeaders, function(err, res) {
                 callback(err, res)
             });
         } else {
-            instance.post(this.contentURL() + 'v3/create/', requestObj, this.requestHeaders, function(err, res) {
+            instance.post(this.contentURL() + this.getConfig('contentCreateUrl', '/v3/create'), requestObj, this.requestHeaders, function(err, res) {
                 callback(err, res)
             });
         }

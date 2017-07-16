@@ -11,14 +11,14 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     learningURL: function() {
-        return this.getBaseURL() + this.getAPISlug() + '/learning/'
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('learningEndPoint', '/learning');
     },
     /** 
      * @member {string} languageURL
      * @memberof org.ekstep.services.languageService
      */
     languageURL: function() { 
-        return this.getBaseURL() + this.getAPISlug() + '/language/'
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('languageEndPoint', '/language');
     },
     /** 
      * @member {object} wordHeaders
@@ -36,7 +36,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getLanguages: function(callback) {
-        this.getFromService(this.languageURL() + 'v3/list', this.requestHeaders, callback);
+        this.getFromService(this.languageURL() + this.getConfig('languageListUrl', '/v3/list'), this.requestHeaders, callback);
     },
     /**
      * Get all list of vowel available in selected language
@@ -45,7 +45,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getVowel: function(language, callback) {
-        this.getFromService(this.languageURL() + 'v1/language/dictionary/varna/Vowel/list/' + language, this.requestHeaders, callback);
+        this.getFromService(this.languageURL() + this.getConfig('vowelGetUrl', '/v1/language/dictionary/varna/Vowel/list/') + language, this.requestHeaders, callback);
     },
     /**
      * Get all list of consonant available in selected language
@@ -54,7 +54,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getConsonant: function(language, callback) {
-        this.getFromService(this.languageURL() + 'v1/language/dictionary/varna/Consonant/list/' + language, this.requestHeaders, callback);
+        this.getFromService(this.languageURL() + this.getConfig('consonantListUrl', '/v1/language/dictionary/varna/Consonant/list/') + language, this.requestHeaders, callback);
     },
     /**
      * Get all avalible words in given content
@@ -63,7 +63,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getWords: function(data, callback) {
-        this.postFromService(this.languageURL() + 'v3/search', data, this.wordHeaders, callback);
+        this.postFromService(this.languageURL() + this.getConfig('wordsGetUrl', '/v3/search'), data, this.wordHeaders, callback);
     },
     /**
      * Get types of word. eg. Nouns, verbs etc 
@@ -71,7 +71,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getWordDefinition: function(callback) {
-        this.getFromService(this.learningURL() + 'taxonomy/en/definition/Word', this.requestHeaders, callback);
+        this.getFromService(this.learningURL() + this.getConfig('word_definition_url', '/taxonomy/en/definition/Word'), this.requestHeaders, callback);
     },
     /**
      * Get all avalible keywords in given content
@@ -80,7 +80,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getKeyWords: function(data, callback) {
-        this.postFromService(this.languageURL() + 'v3/tools/parser', data, this.requestHeaders, callback);
+        this.postFromService(this.languageURL() + this.getConfig('keywordsGetUrl', '/v3/tools/parser'), data, this.requestHeaders, callback);
     },
     /**
     * Transliterates english text to specified language and invokes a callback
@@ -89,7 +89,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
     * @return {void}
     */
     getTransliteration: function(data, callback) {
-        this.postFromService(this.languageURL() + "v3/tools/transliterate?lemma=" + data.text + "&languages="+ data.languages.toString() , {"request": {}}, this.requestHeaders, callback);
+        this.postFromService(this.languageURL() + this.getConfig('transliterateGetUrl', '/v3/tools/transliterate') + "?lemma=" + data.text + "&languages="+ data.languages.toString() , {"request": {}}, this.requestHeaders, callback);
     },
     /**
      * Translates word in provided languages
@@ -97,6 +97,6 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @param {Function} callback, callback function
      */
     getTranslation:  function(data, callback) {
-        this.postFromService(this.languageURL() + "v3/tools/translate?language_id="+ data.wordLang + '&lemma=' + data.word + '&languages=' + data.languages, {"request": {}}, this.requestHeaders, callback);
+        this.postFromService(this.languageURL() + this.getConfig('translateGetUrl', '/v3/tools/translate') + "?language_id="+ data.wordLang + '&lemma=' + data.word + '&languages=' + data.languages, {"request": {}}, this.requestHeaders, callback);
     }
 }));

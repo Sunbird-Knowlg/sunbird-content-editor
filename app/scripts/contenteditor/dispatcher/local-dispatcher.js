@@ -5,7 +5,7 @@ org.ekstep.contenteditor.localDispatcher = new(org.ekstep.contenteditor.IDispatc
         event = (typeof event === "string") ? event : JSON.stringify(event);
         org.ekstep.contenteditor.jQuery.ajax({
             type: 'POST',
-            url: 'telemetry',
+            url: org.ekstep.contenteditor.config.localDispatcherEndpoint,
             data: {event: event},
             success: function(res) {}
         });

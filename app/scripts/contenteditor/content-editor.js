@@ -34,7 +34,10 @@ org.ekstep.contenteditor._initServices = function() {
 
 org.ekstep.contenteditor._mergeConfig = function(config) {
     config = config || {};
+    // Override default config
     org.ekstep.contenteditor.config = _.assign(org.ekstep.contenteditor.config, config);
+    // Set non overridable config
+    org.ekstep.contenteditor.config = _.assign(org.ekstep.contenteditor.config, org.ekstep.contenteditor.extendedConfig);
 }
 
 org.ekstep.contenteditor._loadDefaultPlugins = function(context, callback) {

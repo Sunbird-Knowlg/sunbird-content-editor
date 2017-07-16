@@ -1,10 +1,22 @@
 org.ekstep.contenteditor.config = {
     baseURL: 'https://dev.ekstep.in',
     apislug: '/api',
-    defaultSettings: 'config/editorSettings.json',
     build_number: 'BUILDNUMBER',
     pluginRepo: '/plugins',
     aws_s3_urls: ["https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/", "https://ekstep-public-dev.s3-ap-south-1.amazonaws.com/"],
+    plugins: [
+        { "id": "org.ekstep.developer", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.ceheader", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.whatsnew", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.todo", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.review", "ver": "1.0", "type": "plugin" }
+    ],
+    corePluginsPackaged: true,
+    dispatcher: "local",
+    localDispatcherEndpoint: "/app/telemetry"
+}
+
+org.ekstep.contenteditor.extendedConfig = {
     corePlugins: ["text", "audio", "div", "hotspot", "image", "shape", "scribble", "htext"],
     corePluginMapping: {
         "text": "org.ekstep.text", 
@@ -16,15 +28,6 @@ org.ekstep.contenteditor.config = {
         "htext": "org.ekstep.text",
         "audio": "org.ekstep.audio"
     },
-    plugins: [
-        { "id": "org.ekstep.developer", "ver": "1.0", "type": "plugin" },
-        { "id": "org.ekstep.ceheader", "ver": "1.0", "type": "plugin" },
-        { "id": "org.ekstep.whatsnew", "ver": "1.0", "type": "plugin" },
-        { "id": "org.ekstep.todo", "ver": "1.0", "type": "plugin" },
-        { "id": "org.ekstep.review", "ver": "1.0", "type": "plugin" }
-    ],
-    corePluginsPackaged: true,
-    dispatcher: "local",
     useProxyForURL: false
 }
 

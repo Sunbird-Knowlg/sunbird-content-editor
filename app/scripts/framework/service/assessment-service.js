@@ -10,7 +10,7 @@ org.ekstep.services.assessmentService = new(org.ekstep.services.iService.extend(
      * @memberof org.ekstep.services.assessmentService
      */
     assessmentURL: function() {
-        return this.getBaseURL() + this.getAPISlug() + '/assessment/'
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('assessmentEndPoint', '/assessment');
     },
     /**
      * Get Questions from search API
@@ -28,7 +28,7 @@ org.ekstep.services.assessmentService = new(org.ekstep.services.iService.extend(
      * @memberof org.ekstep.services.assessmentService
      */
     getItem: function(itemId, callback) {
-        this.getFromService(this.assessmentURL() + '/v3/items/read/' + itemId, this.requestHeaders, callback);
+        this.getFromService(this.assessmentURL() + this.getConfig('itemReadUrl', '/v3/items/read/') + itemId, this.requestHeaders, callback);
     },
     /**
      * Get template data of selected question from content service API

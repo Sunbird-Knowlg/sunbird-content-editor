@@ -10,7 +10,7 @@ org.ekstep.services.searchService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.searchService
      */
     searchURL: function() {
-        return this.getBaseURL() + this.getAPISlug() + '/composite/'
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('compositeEndPoint', '/composite');
     },
     initService: function() {},
     /**
@@ -20,6 +20,6 @@ org.ekstep.services.searchService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.searchService
      */
     search: function(request, callback) {
-        this.postFromService(this.searchURL() + 'v3/search', request, this.requestHeaders, callback);
+        this.postFromService(this.searchURL() + this.getConfig('searchUrl', '/v3/search'), request, this.requestHeaders, callback);
     }
 }));

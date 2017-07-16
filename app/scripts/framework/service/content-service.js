@@ -7,10 +7,10 @@
  */
 org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
     serviceURL: function() {
-        return this.getBaseURL() + this.getAPISlug() + '/content/'
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('contentEndPoint', '/content');
     },
     learningURL: function() {
-        return this.getBaseURL() + this.getAPISlug() + '/learning/'
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('learningEndPoint', '/learning');
     },
     content: {},
     initService: function() {},
@@ -100,7 +100,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             }
             if (update) {
                 var requestObj = { request: { content: content } };
-                instance.patch(this.serviceURL() + 'v3/update/' + contentId, requestObj, this.requestHeaders, function(err, res) {
+                instance.patch(this.serviceURL() + this.getConfig('contentUpdateUrl', '/v3/update/') + contentId, requestObj, this.requestHeaders, function(err, res) {
                     /* istanbul ignore else */
                     if (res && res.data.responseCode == "OK") {
                         instance.content[contentId].versionKey = res.data.result.versionKey;
@@ -129,7 +129,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
         var instance = this;
         if (contentId) {
             var metaDataFields = "?mode=edit&fields=" + instance.contentFields;
-            instance.get(this.serviceURL() + 'v3/read/' + contentId + metaDataFields, this.requestHeaders, function(err, res) {
+            instance.get(this.serviceURL() + this.getConfig('contentReadUrl', '/v3/read/') + contentId + metaDataFields, this.requestHeaders, function(err, res) {
                 /* istanbul ignore else */
                 if (err) callback(err, undefined);
                 if (!err && res.data && res.data.result && res.data.result.content) {
@@ -157,7 +157,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
         var instance = this;
         if (contentId) {
             var metaDataFields = "?mode=edit&fields=" + "versionKey";
-            instance.get(this.serviceURL() + 'v3/read/' + contentId + metaDataFields, this.requestHeaders, function(err, res) {
+            instance.get(this.serviceURL() + this.getConfig('contentReadUrl', '/v3/read/') + contentId + metaDataFields, this.requestHeaders, function(err, res) {
                 if (!err && res.data && res.data.result && res.data.result.content) {
                     instance._setContentMeta(contentId, res.data.result.content);
                     callback(err, res.data.result.content);
@@ -178,7 +178,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
     getTemplateData: function(templateId, callback) {
         var instance = this;
         var templateMetaFields = "?taxonomyId=literacy_v2&fields=body,editorState,templateId,languageCode";
-        instance.get(this.serviceURL() + 'v3/read/' + templateId + templateMetaFields, this.requestHeaders, function(err, res) {
+        instance.get(this.serviceURL() + this.getConfig('contentReadUrl', '/v3/read/') + templateId + templateMetaFields, this.requestHeaders, function(err, res) {
             callback(err, res)
         });
     },
@@ -194,7 +194,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      */
     downloadContent: function(contentId, fileName, callback) {
         var data = { "request": { "content_identifiers": [contentId], "file_name": fileName } };
-        this.postFromService(this.serviceURL() + 'v3/bundle', data, this.requestHeaders, callback);
+        this.postFromService(this.serviceURL() + this.getConfig('contentBundleUrl', '/v3/bundle'), data, this.requestHeaders, callback);
     },
     /**
      *
@@ -207,7 +207,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      */
     getCollectionHierarchy: function(data, callback) {
         var instance = this;
-        this.getFromService(this.learningURL() + "v2/content/hierarchy/" + data.contentId + "?mode=edit&fields=versionKey", this.requestHeaders, function(err, res) {
+        this.getFromService(this.learningURL() + this.getConfig('collectionHierarchyGetUrl', '/v2/content/hierarchy/') + data.contentId + "?mode=edit&fields=versionKey", this.requestHeaders, function(err, res) {
             if (err) callback(err, undefined);
             if (!err && res.data && res.data.result && res.data.result.content) {
                 instance._setContentMeta(data.contentId, res.data.result.content);
@@ -233,7 +233,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             return;
         }
         var requestObj = { request: { data: data.body } };
-        this.patch(this.learningURL() + "v2/content/hierarchy/update", requestObj, this.requestHeaders, function(err, res) {
+        this.patch(this.learningURL() + this.getConfig('collectionHierarchyUpdateUrl', '/v2/content/hierarchy/update'), requestObj, this.requestHeaders, function(err, res) {
             if (res && res.data.responseCode == "OK") {
                 callback(undefined, res);
             } else {
