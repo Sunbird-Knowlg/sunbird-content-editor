@@ -13,7 +13,8 @@ org.ekstep.contenteditor.config = {
     ],
     corePluginsPackaged: true,
     dispatcher: "local",
-    localDispatcherEndpoint: "/app/telemetry"
+    localDispatcherEndpoint: "/app/telemetry",
+    previewURL: "/content/preview/preview.html"
 }
 
 org.ekstep.contenteditor.extendedConfig = {

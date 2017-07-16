@@ -51,24 +51,15 @@ var bower_css = [
     "app/bower_components/ng-dialog/css/ngDialog-theme-default.min.css"
 ];
 
-var scriptfiles = [
-    "app/scripts/framework/class.js",
-    "app/scripts/framework/bootstrap-framework.js",
-    "app/scripts/framework/manager/resource-manager.js",
-    "app/scripts/framework/manager/event-manager.js",
-    "app/scripts/framework/manager/plugin-manager.js",
-    "app/scripts/framework/manager/keyboard-manager.js",
-    "app/scripts/framework/service/iservice.js",
-    "app/scripts/framework/service/content-service.js",
-    "app/scripts/framework/service/assessment-service.js",
-    "app/scripts/framework/service/asset-service.js",
-    "app/scripts/framework/service/meta-service.js",
-    "app/scripts/framework/service/language-service.js",
-    "app/scripts/framework/service/search-service.js",
-    "app/scripts/framework/repo/irepo.js",
-    "app/scripts/framework/repo/published-repo.js",
-    "app/scripts/framework/repo/draft-repo.js",
-    "app/scripts/framework/repo/host-repo.js",
+var contentEditorApp = [
+    "app/scripts/angular/controller/main.js",
+    "app/scripts/angular/controller/popup-controller.js",
+    "app/scripts/angular/directive/draggable-directive.js",
+    "app/scripts/angular/directive/droppable-directive.js",
+    "app/scripts/angular/directive/template-compiler-directive.js"
+];
+
+var editorFramework = [
     "app/scripts/contenteditor/bootstrap-editor.js",
     "app/scripts/contenteditor/ce-config.js",
     "app/scripts/contenteditor/content-editor.js",
@@ -95,14 +86,8 @@ var scriptfiles = [
     "app/scripts/contenteditor/dispatcher/idispatcher.js",
     "app/scripts/contenteditor/dispatcher/console-dispatcher.js",
     "app/scripts/contenteditor/dispatcher/local-dispatcher.js",
-    "app/scripts/contenteditor/dispatcher/piwik-dispatcher.js",
-    "app/scripts/angular/controller/main.js",
-    "app/scripts/angular/controller/popup-controller.js",
-    "app/scripts/angular/directive/draggable-directive.js",
-    "app/scripts/angular/directive/droppable-directive.js",
-    "app/scripts/angular/directive/template-compiler-directive.js"
-];
-
+    "app/scripts/contenteditor/dispatcher/piwik-dispatcher.js"
+]
 
 var pluginFramework = [
     "app/scripts/framework/libs/ES5Polyfill.js",
@@ -144,16 +129,17 @@ gulp.task('setup', function() {
         }))
 });
 
-var allscripts = pluginFramework.concat(scriptfiles);
+var appScripts = pluginFramework.concat(editorFramework).concat(contentEditorApp);
+var editorScripts = pluginFramework.concat(editorFramework);
 
 gulp.task('minifyallJS', function() {
-    return gulp.src(allscripts)
+    return gulp.src(appScripts)
         .pipe(concat('script.min.js'))
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
 gulp.task('minifyCE', function() {
-    return gulp.src(scriptfiles)
+    return gulp.src(editorScripts)
         .pipe(concat('contenteditor.min.js'))
         .pipe(gulp.dest('content-editor/scripts'));
 });
