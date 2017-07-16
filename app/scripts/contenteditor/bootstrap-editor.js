@@ -2,14 +2,15 @@
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
 /* istanbul ignore next. Fabric extension - cannot be tested */
-window.fabric.Object.prototype.toObject = (function(toObject) {
-    return function() {
-        return window.fabric.util.object.extend(toObject.call(this), {
-            meta: this.meta
-        });
-    };
-})(window.fabric.Object.prototype.toObject);
-
+if(window.fabric) {
+    window.fabric.Object.prototype.toObject = (function(toObject) {
+        return function() {
+            return window.fabric.util.object.extend(toObject.call(this), {
+                meta: this.meta
+            });
+        };
+    })(window.fabric.Object.prototype.toObject);
+}
 
 var content_editor = function() {};
 content_editor.prototype.jQuery = window.$;
