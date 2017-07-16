@@ -66,7 +66,8 @@ var contentEditorApp = [
     "app/scripts/contenteditor/migration/readalongmigration-task.js",
     "app/scripts/contenteditor/migration/assessmentmigration-task.js",
     "app/scripts/contenteditor/migration/eventsmigration-task.js",
-    "app/scripts/contenteditor/migration/settagmigration-task.js"
+    "app/scripts/contenteditor/migration/settagmigration-task.js",
+    "app/scripts/contenteditor/manager/stage-manager.js",
 ];
 
 var editorFramework = [
@@ -75,7 +76,6 @@ var editorFramework = [
     "app/scripts/contenteditor/content-editor.js",
     "app/scripts/contenteditor/content-editor-api.js",
     "app/scripts/contenteditor/base-plugin.js",
-    "app/scripts/contenteditor/manager/stage-manager.js",
     "app/scripts/contenteditor/manager/toolbar-manager.js",
     "app/scripts/contenteditor/manager/media-manager.js",
     "app/scripts/contenteditor/manager/sidebar-manager.js",
