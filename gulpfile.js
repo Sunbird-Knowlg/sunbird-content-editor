@@ -56,7 +56,17 @@ var contentEditorApp = [
     "app/scripts/angular/controller/popup-controller.js",
     "app/scripts/angular/directive/draggable-directive.js",
     "app/scripts/angular/directive/droppable-directive.js",
-    "app/scripts/angular/directive/template-compiler-directive.js"
+    "app/scripts/angular/directive/template-compiler-directive.js",
+    "app/scripts/contenteditor/migration/1_migration-task.js",
+    "app/scripts/contenteditor/migration/mediamigration-task.js",
+    "app/scripts/contenteditor/migration/stageordermigration-task.js",
+    "app/scripts/contenteditor/migration/basestagemigration-task.js",
+    "app/scripts/contenteditor/migration/imagemigration-task.js",
+    "app/scripts/contenteditor/migration/scribblemigration-task.js",
+    "app/scripts/contenteditor/migration/readalongmigration-task.js",
+    "app/scripts/contenteditor/migration/assessmentmigration-task.js",
+    "app/scripts/contenteditor/migration/eventsmigration-task.js",
+    "app/scripts/contenteditor/migration/settagmigration-task.js"
 ];
 
 var editorFramework = [
@@ -72,16 +82,6 @@ var editorFramework = [
     "app/scripts/contenteditor/manager/header-manager.js",
     "app/scripts/contenteditor/service/popup-service.js",
     "app/scripts/contenteditor/service/manifest-generator.js",
-    "app/scripts/contenteditor/migration/1_migration-task.js",
-    "app/scripts/contenteditor/migration/mediamigration-task.js",
-    "app/scripts/contenteditor/migration/stageordermigration-task.js",
-    "app/scripts/contenteditor/migration/basestagemigration-task.js",
-    "app/scripts/contenteditor/migration/imagemigration-task.js",
-    "app/scripts/contenteditor/migration/scribblemigration-task.js",
-    "app/scripts/contenteditor/migration/readalongmigration-task.js",
-    "app/scripts/contenteditor/migration/assessmentmigration-task.js",
-    "app/scripts/contenteditor/migration/eventsmigration-task.js",
-    "app/scripts/contenteditor/migration/settagmigration-task.js",
     "app/scripts/contenteditor/service/telemetry-service.js",
     "app/scripts/contenteditor/dispatcher/idispatcher.js",
     "app/scripts/contenteditor/dispatcher/console-dispatcher.js",
