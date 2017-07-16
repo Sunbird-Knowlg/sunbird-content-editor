@@ -17,8 +17,8 @@ org.ekstep.services.iService = Class.extend({
     getAPISlug: function() {
         return org.ekstep.services.config.apislug;
     },
-    getConfig: function(configKey, default) {
-        return org.ekstep.services.config[configKey] || default;
+    getConfig: function(configKey, _default) {
+        return org.ekstep.services.config[configKey] || _default;
     },
     init: function(config) {
         this.initService(config);
