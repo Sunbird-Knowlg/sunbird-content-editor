@@ -24,7 +24,14 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.metaService
      */
     configURL: function() {
-        return this.getBaseURL() + this.getAPISlug() + this.getConfig('configEndPoint', '/config')
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('configEndPoint', '/domain')
+    },
+    /** 
+     * @member {string} domainURL
+     * @memberof org.ekstep.services.metaService
+     */
+    domainURL: function(){
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('domainEndPoint', '/domain')
     },
     /**
      * Returns the schema of the specified object. The schema will contain all the properties details (name, code, datatype, identifier etc,.).
@@ -50,7 +57,7 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.configService
      */
     getLearningConfig: function(callback) {
-        this.getFromService(this.learningURL() + this.getConfig('termsListUrl', '/v2/terms/list'), this.requestHeaders, callback);
+        this.getFromService(this.domainURL() + this.getConfig('termsListUrl', '/v3/terms/list'), this.requestHeaders, callback);
     },
     /**
      * Get config items from config api ordinals
@@ -58,6 +65,6 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.configService
      */
     getConfigOrdinals: function(callback) {
-        this.getFromService(this.configURL() + this.getConfig('ordinalsGetUrl', '/v2/config/ordinals'), this.requestHeaders, callback);
+        this.getFromService(this.metaURL() + this.getConfig('ordinalsGetUrl', '/v3/ordinals/list'), this.requestHeaders, callback);
     }
 }));
