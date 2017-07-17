@@ -207,7 +207,9 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      */
     getCollectionHierarchy: function(data, callback) {
         var instance = this;
-        this.getFromService(this.learningURL() + this.getConfig('collectionHierarchyGetUrl', '/v2/content/hierarchy/') + data.contentId + "?mode=edit&fields=versionKey", this.requestHeaders, function(err, res) {
+        var metaFields = "fields=versionKey"
+        if (data.mode === "edit") metaFields = "mode=edit&" + metaFields;
+        this.getFromService(this.learningURL() + this.getConfig('collectionHierarchyGetUrl', '/v2/content/hierarchy/') + data.contentId + "?" + metaFields, this.requestHeaders, function(err, res) {
             if (err) callback(err, undefined);
             if (!err && res.data && res.data.result && res.data.result.content) {
                 instance._setContentMeta(data.contentId, res.data.result.content);
