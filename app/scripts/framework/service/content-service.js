@@ -209,9 +209,8 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
         var instance = this;
         var metaFields = "fields=versionKey"
         if (data.mode === "edit") metaFields = "mode=edit&" + metaFields;
-        this.getFromService(this.learningURL() + this.getConfig('collectionHierarchyGetUrl', '/v2/content/hierarchy/') + data.contentId + "?" + metaFields, this.requestHeaders, function(err, res) {
-            if (err) callback(err, undefined);
-            if (!err && res.data && res.data.result && res.data.result.content) {
+        this.getFromService(this.learningURL() + this.getConfig('collectionHierarchyGetUrl', '/v2/content/hierarchy/') + data.contentId + "?" + metaFields, this.requestHeaders, function(err, res) {            
+            if (res && res.data && res.data.responseCode === "OK") {
                 instance._setContentMeta(data.contentId, res.data.result.content);
                 callback(err, res);
             } else {
