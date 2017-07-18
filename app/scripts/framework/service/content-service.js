@@ -219,8 +219,6 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
         });
     },
     /**
-     *
-     *
      * saves collection in hierarchical order
      * @param data {object} "body": Object. content body to save
      * @param callback {function} callback function
@@ -241,5 +239,15 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
                 callback(true, err);
             }
         });
+    },
+    /**
+     * Content sent for review call
+     * @param data {object} "contentId" : String. Content ID
+     * @param callback {function} callback function
+     * @memberof org.ekstep.services.contentService
+     */
+    sendForReview: function(data, callback) {
+        var requestObj = {"request":{"content":{}}};
+        this.postFromService(this.serviceURL() + this.getConfig('sendforURL', '/v3/review/') + data.contentId, requestObj, this.requestHeaders, callback);
     }
 }));
