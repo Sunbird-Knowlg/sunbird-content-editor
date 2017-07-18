@@ -130,9 +130,8 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
         if (contentId) {
             var metaDataFields = "?mode=edit&fields=" + instance.contentFields;
             instance.get(this.serviceURL() + this.getConfig('contentReadUrl', '/v3/read/') + contentId + metaDataFields, this.requestHeaders, function(err, res) {
-                /* istanbul ignore else */
-                if (err) callback(err, undefined);
-                if (!err && res.data && res.data.result && res.data.result.content) {
+                /* istanbul ignore else */                
+                if (res && res.data && res.data.responseCode === "OK") {
                     instance._setContentMeta(contentId, res.data.result.content);
                     callback(err, res.data.result.content);
                 } else {
@@ -158,7 +157,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
         if (contentId) {
             var metaDataFields = "?mode=edit&fields=" + "versionKey";
             instance.get(this.serviceURL() + this.getConfig('contentReadUrl', '/v3/read/') + contentId + metaDataFields, this.requestHeaders, function(err, res) {
-                if (!err && res.data && res.data.result && res.data.result.content) {
+                if (res && res.data && res.data.responseCode === "OK") {
                     instance._setContentMeta(contentId, res.data.result.content);
                     callback(err, res.data.result.content);
                 } else {
