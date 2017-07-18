@@ -45,7 +45,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getVowel: function(language, callback) {
-        this.getFromService(this.languageURL() + this.getConfig('vowelGetUrl', '/v1/language/dictionary/varna/Vowel/list/') + language, this.requestHeaders, callback);
+        this.getFromService(this.languageURL() + this.getConfig('vowelGetUrl', '/v3/varnas/vowels/list') + "?language_id=" + language, this.requestHeaders, callback);
     },
     /**
      * Get all list of consonant available in selected language
@@ -54,7 +54,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
     getConsonant: function(language, callback) {
-        this.getFromService(this.languageURL() + this.getConfig('consonantListUrl', '/v1/language/dictionary/varna/Consonant/list/') + language, this.requestHeaders, callback);
+        this.getFromService(this.languageURL() + this.getConfig('consonantListUrl', '/v3/varnas/consonants/list') + "?language_id=" + language, this.requestHeaders, callback);
     },
     /**
      * Get all avalible words in given content
