@@ -247,6 +247,27 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      */
     sendForReview: function(data, callback) {
         var requestObj = {"request":{"content":{}}};
-        this.postFromService(this.serviceURL() + this.getConfig('sendforURL', '/v3/review/') + data.contentId, requestObj, this.requestHeaders, callback);
+        this.postFromService(this.serviceURL() + this.getConfig('sendfortReviewURL', '/v3/review/') + data.contentId, requestObj, this.requestHeaders, callback);
+    },
+    /**
+     * Content sent for review call
+     * @param data {object} "contentId" : String. Content ID
+     * @param callback {function} callback function
+     * @memberof org.ekstep.services.contentService
+     */
+    publishContent: function(data, callback) {
+        var requestObj = {"request":{"content":{}}};
+        this.postFromService(this.serviceURL() + this.getConfig('contentPublishURL', '/v3/publish/') + data.contentId, requestObj, this.requestHeaders, callback);
+    },
+    /**
+     * Content sent for review call
+     * @param data {object} "contentId" : String. Content ID
+     * @param callback {function} callback function
+     * @memberof org.ekstep.services.contentService
+     */
+    rejectContent: function(data, callback) {
+        var requestObj = {"request":{}};
+        this.postFromService(this.serviceURL() + this.getConfig('contentRejectURL', '/v3/reject/') + data.contentId, requestObj, this.requestHeaders, callback);
+
     }
 }));
