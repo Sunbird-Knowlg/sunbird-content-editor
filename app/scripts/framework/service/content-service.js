@@ -256,7 +256,13 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.contentService
      */
     publishContent: function(data, callback) {
-        var requestObj = {"request":{"content":{}}};
+        var requestObj = {
+                            "request": {
+                                "content" : {
+                                    "lastPublishedBy" : ecEditor.getContext('uid')
+                                }
+                            }
+                        };
         this.postFromService(this.serviceURL() + this.getConfig('contentPublishURL', '/v3/publish/') + data.contentId, requestObj, this.requestHeaders, callback);
     },
     /**
