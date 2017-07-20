@@ -172,7 +172,11 @@ body {
     outline: none;
     width: 726px;
     height: 411px;
-    position: fixed;
+    position: relative;
+    top: -405px;
+    left: 3px;
+    margin-left: auto;
+    margin-right: auto;
     display: none;
     pointer-events: none;
     background: url(../images/geniecontrols.png);
