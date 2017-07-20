@@ -118,12 +118,13 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         function toggleGenieControls() {
             if (!$scope.showGenieControls) {
                 //Position the transparent image correctly on top of image
-                var canvasOffset = org.ekstep.contenteditor.api.jQuery('#canvas').offset();
+                
+                // var canvasOffset = org.ekstep.contenteditor.api.jQuery('#canvas').offset();
                 setTimeout(function() {
-                    org.ekstep.contenteditor.api.jQuery('#geniecontrols').offset({
-                        "top": canvasOffset.top,
-                        "left": canvasOffset.left,
-                    });
+                    // org.ekstep.contenteditor.api.jQuery('#geniecontrols').offset({
+                    //     "top": canvasOffset.top,
+                    //     "left": canvasOffset.left,
+                    // });
 
                     org.ekstep.contenteditor.api.jQuery('#geniecontrols').css({
                         "display": 'block'
