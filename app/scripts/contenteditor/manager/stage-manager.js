@@ -96,8 +96,14 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         org.ekstep.contenteditor.api.dispatchEvent('stage:removed', { stageId: data.stageId });
     },
     deleteStageInstances: function(stage) {
-        _.forEach(_.clone(stage.canvas.getObjects()), function(obj) {
-            stage.canvas.remove(obj);
+        // Disable any object group selection if active
+        if (stage.canvas.getActiveGroup()) {
+            stage.canvas.discardActiveGroup();
+        }
+        _.forEach(_.clone(stage.canvas.getObjects()), function (obj) {
+            if (obj) {
+                stage.canvas.remove(obj);
+            }
         });
     },
     getStageIndex: function(stage) {
