@@ -39,4 +39,24 @@ org.ekstep.services.assessmentService = new(org.ekstep.services.iService.extend(
     getTemplate: function(templateId, callback) {
         org.ekstep.services.contentService.getTemplateData(templateId, callback);
     }
+    /**
+     * This method is used to save question
+     * @param  {string}   assessmentId
+     * @param  {object}   requestObj
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.assessmentService
+     */
+    saveQuestion: function(assessmentId, requestObj, callback) {
+        var instance = this;
+        /*If assessment Id exists then update the question else create*/
+        if (assessmentId) {
+            instance.patch(this.assessmentURL() + 'assessmentitems/update/' + assessmentId, requestObj, this.requestHeaders, function(err, res) {
+                callback(err, res)
+            });
+        } else {
+            instance.post(this.assessmentURL() + 'assessmentitems/create', requestObj, this.requestHeaders, function(err, res) {
+                callback(err, res)
+            });
+        }
+    }
 }));
