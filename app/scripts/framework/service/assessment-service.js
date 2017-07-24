@@ -38,7 +38,7 @@ org.ekstep.services.assessmentService = new(org.ekstep.services.iService.extend(
      */
     getTemplate: function(templateId, callback) {
         org.ekstep.services.contentService.getTemplateData(templateId, callback);
-    }
+    },
     /**
      * This method is used to save question
      * @param  {string}   assessmentId
