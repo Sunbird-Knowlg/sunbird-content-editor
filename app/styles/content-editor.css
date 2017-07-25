@@ -166,6 +166,11 @@ body {
     padding-top: 80px !important;
 }
 
+.show-action-form-btn {
+    position: absolute;
+    left: 89px;
+    top: 13px;
+}
 
 #geniecontrols {
     border: none;
