@@ -9,12 +9,39 @@ org.ekstep.contenteditor.config = {
         { "id": "org.ekstep.ceheader", "ver": "1.0", "type": "plugin" },
         { "id": "org.ekstep.whatsnew", "ver": "1.0", "type": "plugin" },
         { "id": "org.ekstep.todo", "ver": "1.0", "type": "plugin" },
-        { "id": "org.ekstep.review", "ver": "1.0", "type": "plugin" }
+        { "id": "org.ekstep.review", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.telemetry", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.config", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.stage", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.text", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.shape", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.image", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.audio", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.hotspot", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.scribblepad", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.quiz", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.preview", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.assetbrowser", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.colorpicker", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.todo", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.stageconfig", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.unsupported", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.viewecml", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.activitybrowser", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.download", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.collaborator", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.readalongbrowser", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.assessmentbrowser", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.wordinfobrowser", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.utils", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.help", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.editorstate", "ver": "1.0", "type": "plugin" },
+        { "id": "org.ekstep.developer", "ver": "1.0", "type": "plugin" }
     ],
-    corePluginsPackaged: true,
+    corePluginsPackaged: false,
     dispatcher: "local",
     localDispatcherEndpoint: "/app/telemetry",
-    previewURL: "/content/preview/preview.html"
+    previewURL: "/preview/preview.html"
 }
 
 org.ekstep.contenteditor.extendedConfig = {
