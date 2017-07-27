@@ -6,7 +6,7 @@ describe('language service test cases', function() {
             apislug: org.ekstep.contenteditor.config.apislug
         };
     });
-    
+
     it("should return languages on getLanguages method call", function() {
         var languages = '{"id":"ekstep.language.list","ver":"2.0","ts":"2017-03-21T13:28:12ZZ","params":{"resmsgid":"b66a5c03-3da6-4190-87c1-e604df5717af","msgid":null,"err":null,"status":"successful","errmsg":null},"responseCode":"OK","result":{"languages":[{"identifier":"lang_bn","code":"bn","isoCode":"bn","name":"Bengali","words":1,"lastUpdatedOn":"2017-01-29T17:56:07.004+0000","liveWords":0,"createdOn":"2016-04-13T10:40:14.753+0000","status":"Live","versionKey":"1485712567004"},{"identifier":"lang_en","code":"en","isoCode":"en","name":"English","words":90691,"lastUpdatedOn":"2017-01-29T17:56:19.669+0000","liveWords":-435899,"status":"Live","versionKey":"1485712579669"},{"identifier":"lang_gu","code":"gu","isoCode":"gu","name":"Gujarati","words":0,"lastUpdatedOn":"2017-01-29T17:56:29.803+0000","liveWords":0,"createdOn":"2016-04-13T10:42:16.856+0000","status":"Live","versionKey":"1485712589803"},{"identifier":"lang_hi","code":"hi","isoCode":"hi","name":"Hindi","words":95602,"lastUpdatedOn":"2017-01-29T17:56:43.158+0000","liveWords":-70312,"status":"Live","versionKey":"1485712603158"},{"identifier":"lang_ka","code":"ka","isoCode":"kn","name":"Kannada","words":34296,"lastUpdatedOn":"2017-01-29T17:56:56.049+0000","liveWords":-12319,"createdOn":"2016-02-05T08:33:58.518+0000","status":"Live","versionKey":"1485712616049"},{"identifier":"lang_mr","code":"mr","isoCode":"mr","name":"Marathi","words":0,"lastUpdatedOn":"2017-01-29T17:57:06.359+0000","liveWords":0,"createdOn":"2016-04-13T10:43:33.485+0000","status":"Live","versionKey":"1485712626359"},{"identifier":"lang_pa","code":"pa","isoCode":"pa","name":"Punjabi","words":0,"lastUpdatedOn":"2017-01-29T17:57:11.502+0000","liveWords":0,"createdOn":"2016-04-13T10:44:19.675+0000","status":"Live","versionKey":"1485712631502"},{"identifier":"lang_ta","code":"ta","isoCode":"ta","name":"Tamil","words":0,"lastUpdatedOn":"2017-01-29T17:57:24.937+0000","liveWords":0,"createdOn":"2016-04-13T10:44:44.849+0000","status":"Live","versionKey":"1485712644937"},{"identifier":"lang_te","code":"te","isoCode":"te","name":"Telugu","words":37541,"lastUpdatedOn":"2017-01-29T17:57:32.551+0000","liveWords":-135909,"createdOn":"2016-04-14T18:59:04.670+0000","status":"Live","versionKey":"1485712652551"}]}}';
         org.ekstep.services.languageService.get = jasmine.createSpy().and.callFake(function(url, headers, cb) {
@@ -199,4 +199,41 @@ describe('language service test cases', function() {
         });
     });
 
+    it("getSyllables method should call postFromService with no word", function() {
+        var error = '{"id":"ekstep.language.varnas.syllables.list","ver":"3.0","ts":"2017-07-27T09:04:51ZZ","params":{"resmsgid":"902632f8-900e-44a2-853f-8301db17e7e2","msgid":null,"err":"ERR_SCRIPT_ERROR","status":"failed","errmsg":"Unable to read response: 0"},"responseCode":"SERVER_ERROR","result":{}}'
+        org.ekstep.services.languageService.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
+            cb(error, undefined);
+        });
+        var data = {
+            "request": {
+                "word": ""
+            }
+        }
+        spyOn(org.ekstep.services.languageService, "getSyllables").and.callThrough();
+        spyOn(org.ekstep.services.languageService, "postFromService").and.callThrough();
+        org.ekstep.services.languageService.getSyllables(data, function(err, res) {
+            expect(err).toBe(error);
+            expect(org.ekstep.services.languageService.postFromService).toHaveBeenCalled();
+        });
+    });
+
+    it("getSyllables method should call postFromService", function() {
+        var words = '{"id": "ekstep.language.varnas.syllables.list","ver": "3.0","ts": "2017-07-27T07:01:13ZZ","params": {"resmsgid": "6a1ebab7-f4ad-42a6-9c54-0ea65576051f","msgid": null,"err": null,"status": "successful","errmsg": null},"responseCode": "OK","result": {"result": ["कु","त्ता"]}}'
+        org.ekstep.services.languageService.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
+            cb(null, words);
+        });
+        var data = {
+            "request": {
+                "word": "कुत्ता"
+            }
+        }
+        spyOn(org.ekstep.services.languageService, "getSyllables").and.callThrough();
+        spyOn(org.ekstep.services.languageService, "postFromService").and.callThrough();
+        org.ekstep.services.languageService.getSyllables(data, function(err, res) {
+            console.log(res);
+            expect(res).toBe(words);
+            expect(org.ekstep.services.languageService.postFromService).toHaveBeenCalled();
+            expect(org.ekstep.services.languageService.postFromService.calls.count()).toBe(1);
+        });
+    });
 });
