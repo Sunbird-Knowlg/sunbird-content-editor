@@ -195,6 +195,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         var config = org.ekstep.contenteditor.getWindowConfig();
         config.absURL = $location.protocol() + '://' + $location.host() + ':' + $location.port() // Required
         
+        $scope.showHelpBtn = config.showHelp || true;
+
         /**
          * Load Content - Invoked once the content editor has loaded
          */
