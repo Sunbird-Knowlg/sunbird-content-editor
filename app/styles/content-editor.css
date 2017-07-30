@@ -166,18 +166,17 @@ body {
     padding-top: 80px !important;
 }
 
-.show-action-form-btn {
-    position: absolute;
-    left: 89px;
-    top: 13px;
-}
 
 #geniecontrols {
     border: none;
     outline: none;
     width: 726px;
     height: 411px;
-    position: fixed;
+    position: relative;
+    top: -405px;
+    left: 3px;
+    margin-left: auto;
+    margin-right: auto;
     display: none;
     pointer-events: none;
     background: url(../images/geniecontrols.png);
@@ -324,14 +323,19 @@ body {
 
 .sidebar-holder {
     width: 100%;
-    overflow-y: scroll;
+    height: 485px!important;
+    overflow-y: hidden;
     margin: 0px !important;
     border: none !important;
+    border-bottom: 0.2px solid #D4D4D5!important;
     border-radius: 0px !important;
     background: none !important;
     box-shadow: none !important;
 }
 
+.sidebar-holder .segment{
+    box-shadow: none!important;
+}
 .toolbar .ui.nine.wide.column,
 .toolbar .ui.icon.menu,
 .toolbar .ui.three.wide.column {
