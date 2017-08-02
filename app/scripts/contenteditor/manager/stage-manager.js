@@ -19,12 +19,11 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         //fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
         this.canvas = new fabric.Canvas('canvas', { backgroundColor: '#FFFFFF', preserveObjectStacking: true, perPixelTargetFind: false });
         console.log("Stage manager initialized");
-        //org.ekstep.contenteditor.stageManager.jQuery("#slidebgcolor").spectrum("set", "#FFFFFF");// default color will be black
         org.ekstep.pluginframework.eventManager.addEventListener("stage:delete", this.deleteConfirmationDialog, this);
         org.ekstep.pluginframework.eventManager.addEventListener("stage:duplicate", this.duplicateStage, this);
     },
     clearCanvas: function(canvas) {
-        canvas.clear();      
+        canvas.clear();
         canvas.setBackgroundColor('#FFFFFF', canvas.renderAll.bind(canvas));
     },
     registerEvents: function() {
@@ -59,7 +58,7 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             org.ekstep.pluginframework.eventManager.dispatchEvent(meta.type + ':' + eventType, meta);
         }
     },
-    selectStage: function(event, data) {        
+    selectStage: function(event, data) {
         if (_.isUndefined(this.currentStage)) {
             this.currentStage = _.find(this.stages, { id: data.stageId });
             this.currentStage.isSelected = true;
@@ -73,7 +72,7 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             this.currentStage.isSelected = true;
             this.canvas.off("object:added");
             this.currentStage.setCanvas(this.canvas);
-            this.currentStage.render(this.canvas);            
+            this.currentStage.render(this.canvas);
             this.canvas.on("object:added", function(options, event) {
                 org.ekstep.contenteditor.stageManager.dispatchObjectEvent('added', options, event);
             });
