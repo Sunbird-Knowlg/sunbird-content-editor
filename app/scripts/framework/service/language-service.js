@@ -1,26 +1,26 @@
 /**
- *
+ * 
  * Language service helps to get languages and wordnet data.
  * @class org.ekstep.services.languageService
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
- *
+ * 
  */
 org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
-    /**
+    /** 
      * @member {string} learningURL
      * @memberof org.ekstep.services.languageService
      */
     learningURL: function() {
         return this.getBaseURL() + this.getAPISlug() + this.getConfig('learningEndPoint', '/learning');
     },
-    /**
+    /** 
      * @member {string} languageURL
      * @memberof org.ekstep.services.languageService
      */
-    languageURL: function() {
+    languageURL: function() { 
         return this.getBaseURL() + this.getAPISlug() + this.getConfig('languageEndPoint', '/language');
     },
-    /**
+    /** 
      * @member {object} wordHeaders
      * @memberof org.ekstep.services.languageService
      */
@@ -66,7 +66,7 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
         this.postFromService(this.languageURL() + this.getConfig('wordsGetUrl', '/v3/search'), data, this.wordHeaders, callback);
     },
     /**
-     * Get types of word. eg. Nouns, verbs etc
+     * Get types of word. eg. Nouns, verbs etc 
      * @param  {Function} callback returns error and response as arguments
      * @memberof org.ekstep.services.languageService
      */
