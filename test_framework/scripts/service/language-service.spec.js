@@ -199,4 +199,41 @@ describe('language service test cases', function() {
         });
     });
 
+    it("getSyllables method should call postFromService with no word", function() {
+        var error = '{"id":"ekstep.language.varnas.syllables.list","ver":"3.0","ts":"2017-07-27T09:04:51ZZ","params":{"resmsgid":"902632f8-900e-44a2-853f-8301db17e7e2","msgid":null,"err":"ERR_SCRIPT_ERROR","status":"failed","errmsg":"Unable to read response: 0"},"responseCode":"SERVER_ERROR","result":{}}'
+        org.ekstep.services.languageService.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
+            cb(error, undefined);
+        });
+        var data = {
+            "request": {
+                "word": ""
+            }
+        }
+        spyOn(org.ekstep.services.languageService, "getSyllables").and.callThrough();
+        spyOn(org.ekstep.services.languageService, "postFromService").and.callThrough();
+        org.ekstep.services.languageService.getSyllables(data, function(err, res) {
+            expect(err).toBe(error);
+            expect(org.ekstep.services.languageService.postFromService).toHaveBeenCalled();
+        });
+    });
+
+    it("getSyllables method should call postFromService", function() {
+        var words = '{"id": "ekstep.language.varnas.syllables.list","ver": "3.0","ts": "2017-07-27T07:01:13ZZ","params": {"resmsgid": "6a1ebab7-f4ad-42a6-9c54-0ea65576051f","msgid": null,"err": null,"status": "successful","errmsg": null},"responseCode": "OK","result": {"result": ["कु","त्ता"]}}'
+        org.ekstep.services.languageService.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
+            cb(null, words);
+        });
+        var data = {
+            "request": {
+                "word": "कुत्ता"
+            }
+        }
+        spyOn(org.ekstep.services.languageService, "getSyllables").and.callThrough();
+        spyOn(org.ekstep.services.languageService, "postFromService").and.callThrough();
+        org.ekstep.services.languageService.getSyllables(data, function(err, res) {
+            console.log(res);
+            expect(res).toBe(words);
+            expect(org.ekstep.services.languageService.postFromService).toHaveBeenCalled();
+            expect(org.ekstep.services.languageService.postFromService.calls.count()).toBe(1);
+        });
+    });
 });
