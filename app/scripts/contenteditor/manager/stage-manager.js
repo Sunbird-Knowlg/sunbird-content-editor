@@ -77,7 +77,6 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
                 org.ekstep.contenteditor.stageManager.dispatchObjectEvent('added', options, event);
             });
         }
-        org.ekstep.contenteditor.api.dispatchEvent('config:showSettingsTab', { id: this.currentStage.id });
     },
     addStage: function(stage) {
         var prevStageId = _.isUndefined(this.currentStage) ? undefined : this.currentStage.id;
@@ -119,7 +118,7 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             instance = this,
             plugins = [];
         var stage = this.stages[this.getStageIndex(currentStage)];
-        org.ekstep.contenteditor.api.dispatchEvent('stage:create', { "position": "afterCurrent", "data": stage });
+        org.ekstep.contenteditor.api.dispatchEvent('stage:create', { "position": "afterCurrent", stageECML: stage.toECML() });
         org.ekstep.pluginframework.eventManager.enableEvents = false;
         _.forEach(stage.children, function(plugin) {
             plugins.push({ 'z-index': plugin.attributes['z-index'], data: plugin });
