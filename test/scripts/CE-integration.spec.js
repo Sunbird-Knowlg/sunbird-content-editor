@@ -187,7 +187,6 @@ describe("content editor integration test: ", function() {
             org.ekstep.contenteditor.api.dispatchEvent("stage:select", { stageId: stageInstance.id });
             expect(org.ekstep.contenteditor.stageManager.currentStage.id).toBe(stageInstance.id);
             expect(org.ekstep.contenteditor.stageManager.currentStage.isSelected).toBe(true);
-            expect(org.ekstep.contenteditor.api.dispatchEvent).toHaveBeenCalledWith('config:showSettingsTab', { id: org.ekstep.contenteditor.stageManager.currentStage.id });
         });
 
         it('should dispatch "stage:add" event on Stage add', function() {
@@ -202,7 +201,6 @@ describe("content editor integration test: ", function() {
             org.ekstep.contenteditor.api.dispatchEvent("stage:duplicate", { stageId: stageInstance.id });
             expect(org.ekstep.contenteditor.api.dispatchEvent).toHaveBeenCalledWith('stage:create', jasmine.objectContaining({ "position": "afterCurrent" }));
             expect(org.ekstep.contenteditor.stageManager.currentStage.isSelected).toBe(true);
-            expect(org.ekstep.contenteditor.api.dispatchEvent).toHaveBeenCalledWith('config:showSettingsTab', { id: org.ekstep.contenteditor.stageManager.currentStage.id });
         });
 
         it('on stage delete, it should dispatch event: "stage:removed"', function() {
