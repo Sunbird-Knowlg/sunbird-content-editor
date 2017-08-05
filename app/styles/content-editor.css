@@ -385,6 +385,42 @@ body {
     left: -10px;
 }
 
+.dropdownarrowparent{
+    position: relative;
+}
+
+.dropdownarrow{
+    width: 0;
+    height: 0;
+    border-top: 4px solid transparent;
+    border-bottom: 4px solid #6f7176;
+    border-left: 4px solid transparent;
+    border-right: 4px solid #6f7176;
+    float: right;
+    margin: 0 auto;
+}
+.dropdownarrowwrapper{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding-right: 3px;
+    padding-bottom: 3px;
+}
+
+.dropdownarrowwrappermenu{
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    padding-right: 3px;
+    padding-bottom: 1px;
+}
+
+.dropdownarrow .menu {
+    left: -46px !important;
+    top: 7px !important;
+}
+
+
 
 
 /* unsupported resolution message style */
