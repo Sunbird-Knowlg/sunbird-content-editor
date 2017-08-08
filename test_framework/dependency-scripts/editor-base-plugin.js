@@ -94,7 +94,7 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
                 });
             }
             if (menu.category === 'main') {
-                org.ekstep.contenteditor.toolbarManager.registerMenu(menu);
+                org.ekstep.contenteditor.toolbarManager.registerMenu(menu, instance.manifest);
             } else if (menu.category === 'context') {
                 org.ekstep.contenteditor.toolbarManager.registerContextMenu(menu);
             }
@@ -105,6 +105,10 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
         });
 
         org.ekstep.contenteditor.sidebarManager.loadCustomTemplate(instance.manifest.id);
+
+        _.forEach(instance.manifest.editor.header, function(header) {
+            org.ekstep.contenteditor.headerManager.register(header, instance.manifest);
+        });
     },
 
     /**
@@ -339,7 +343,7 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
      * @memberof org.ekstep.contenteditor.basePlugin
      */
     render: function(canvas) {
-        canvas.add(this.editorObj);
+        if (this.editorObj) canvas.add(this.editorObj);
     },
 
     /**
@@ -474,7 +478,8 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
      */
     addEvent: function(event) {
         if (_.isUndefined(this.event)) this.event = [];
-        this.event.push(event);
+        if (_.isArray(this.event)) this.event.push(event)
+        else this.event = [event];
     },
 
     /**

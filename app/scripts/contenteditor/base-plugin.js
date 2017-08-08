@@ -476,9 +476,10 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
      * @private
      * @memberof org.ekstep.contenteditor.basePlugin
      */
-    addEvent: function(event) {
-        if (_.isUndefined(this.event)) this.event = new Array();
-        this.event = (_.isArray(this.event)) ? this.event.push(event) : new Array(this.event, event);
+    addEvent: function(event) {        
+        if (_.isUndefined(this.event)) this.event = [];
+        if (_.isArray(this.event)) this.event.push(event)
+        else this.event = [event];
     },
 
     /**

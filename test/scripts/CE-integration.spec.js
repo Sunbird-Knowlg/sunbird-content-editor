@@ -451,9 +451,8 @@ describe("content editor integration test: ", function() {
 
         it('instance can add events', function() {
             var newInstance = org.ekstep.contenteditor.api.instantiatePlugin(test1Plugin, _.cloneDeep(test1ECML), stageInstance);
-            newInstance.addEvent({ action: 'play' });
-
-            expect(newInstance.event[0]).toEqual({ action: 'play' });
+            newInstance.addEvent({ action: 'play' });            
+            expect(newInstance.getEvents()).toEqual([{ action: 'play' }]);
         });
 
         it('instance can set its attribute', function() {
