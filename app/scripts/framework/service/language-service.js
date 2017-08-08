@@ -98,5 +98,13 @@ org.ekstep.services.languageService = new(org.ekstep.services.iService.extend({
      */
     getTranslation:  function(data, callback) {
         this.postFromService(this.languageURL() + this.getConfig('translateGetUrl', '/v3/tools/translate') + "?language_id="+ data.wordLang + '&lemma=' + data.word + '&languages=' + data.languages, {"request": {}}, this.requestHeaders, callback);
+    },
+    /**
+     * GetSyllables split word into letters
+     * @param {Object} req contain requested data
+     * @param {Function} callback, callback function
+     */
+    getSyllables: function(data, callback) {
+        this.postFromService(this.languageURL() + '/v3/varnas/syllables/list', data, this.requestHeaders, callback);
     }
 }));

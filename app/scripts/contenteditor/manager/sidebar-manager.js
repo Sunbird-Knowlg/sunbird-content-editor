@@ -78,7 +78,10 @@ org.ekstep.contenteditor.sidebarManager = new(Class.extend({
     },
     showSidebarMenu: function(sidebarMenuId) {        
         if (sidebarMenuId) {
-            this.scope.configCategory.selected = sidebarMenuId;
+            var menu = _.find(this.sidebarMenu, function(menu) {
+                return menu.id === sidebarMenuId;
+            });
+            if (menu.state !== "HIDE") this.scope.configCategory.selected = sidebarMenuId;
             this.scope.refreshSidebar();
         }
     }
