@@ -212,7 +212,7 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
     remove: function() {
         if (this.parent) {
             this.parent.removeChild(this);
-            this.parent =  undefined; // if this method is called from newInstance(), plugin won't be added to stage children
+            this.parent =  undefined; // if this method is called from newInstance(), plugin won't be added to stage children    
         }
         delete org.ekstep.pluginframework.pluginManager.pluginInstances[this.id];
     },
@@ -350,7 +350,7 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
      * Returns the metadata of the object. This is a no-op implementation. Child plugins should override
      * this method to return custom metadata.
      * @memberof org.ekstep.contenteditor.basePlugin
-     */
+     */    
     /* istanbul ignore next */
     getMeta: function() {},
 
@@ -692,7 +692,7 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
     /**
      * Plugins can override this to reset their configuration.
      * @memberof org.ekstep.contenteditor.basePlugin
-     */
+     */    
     /* istanbul ignore next */
     reConfig: function() {},
 
@@ -748,7 +748,7 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
      * @memberof org.ekstep.contenteditor.basePlugin
      */
     /* istanbul ignore next. test case failing */
-    getHelp: function(cb) {
+    getHelp: function(cb) {        
         var helpText = "Help is not available."
         try {
             this.loadResource(this.manifest.editor.help.src, this.manifest.editor.help.dataType, function(err, help) {
@@ -779,7 +779,7 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
      * Renders the configuration view for this plugin. Default functionality is to launch the config
      * property editor. Plugins can override this method to change the way config is rendered.
      * @memberof org.ekstep.contenteditor.basePlugin
-     */
+     */    
     /* istanbul ignore next */renderConfig: function() {},
 
     /**
