@@ -343,7 +343,7 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
      * @memberof org.ekstep.contenteditor.basePlugin
      */
     render: function(canvas) {
-        canvas.add(this.editorObj);
+        if (this.editorObj) canvas.add(this.editorObj);
     },
 
     /**
