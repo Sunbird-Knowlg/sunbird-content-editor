@@ -57,6 +57,7 @@ body {
     // margin-right: auto;
     // margin-left: auto;
     vertical-align: middle;
+    overflow: hidden; // to hide richtext outside of canvas
 }
 
 .grid-center-container {
