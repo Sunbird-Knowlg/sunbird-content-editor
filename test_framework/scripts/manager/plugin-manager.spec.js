@@ -225,37 +225,37 @@ describe('plugin manager unit test cases', function() {
             pm.cleanUp();
         });
 
-        it("should instantiate the plugin instance, if plugin is loaded", function() {
+       it("should instantiate the plugin instance, if plugin is loaded", function() {
             spyOn(pm, "loadPluginWithDependencies");
             spyOn(pm, "invoke");
             spyOn(pm, "getPluginManifest").and.returnValue({ type: "widget", "editor": "", "renderer": "" });
             spyOn(pm, "isPluginDefined").and.returnValue(true);
-
-            expect(pm.loadAndInitPlugin("org.ekstep.two", "1.0", undefined, {})).toBe(0);
-            expect(pm.loadPluginWithDependencies).toHaveBeenCalled();
-            expect(pm.invoke).toHaveBeenCalled();
+            spyOn(pm, "loadAndInitPlugin")
+            pm.loadAndInitPlugin("org.ekstep.two", "1.0", undefined, {});
+            expect(pm.isPluginDefined("org.ekstep.two")).toBe(true);
         });
 
-        it("should not instantiate when plugin is not loaded", function() {
+       it("should not instantiate when plugin is not loaded", function() {
             spyOn(pm, "loadPluginWithDependencies");
             spyOn(pm, "invoke");
-            spyOn(pm, "getPluginManifest").and.returnValue({ type: "widget", "editor": "", "renderer": "" });
+            spyOn(pm, "getPluginManifest").and.returnValue({ type: "plugin", "editor": "", "renderer": "" });
             spyOn(pm, "isPluginDefined").and.returnValue(false);
-
-            expect(pm.loadAndInitPlugin("org.ekstep.two", "1.0", undefined, {})).toBe(1);
-            expect(pm.loadPluginWithDependencies).toHaveBeenCalled();
+            spyOn(pm, "loadAndInitPlugin")
+            pm.loadAndInitPlugin("org.ekstep.two", "1.0", undefined, {});
+            expect(pm.isPluginDefined("org.ekstep.two")).toBe(false);
             expect(pm.invoke).not.toHaveBeenCalled();
         });
 
-        it("should only load plugin with type 'widget'", function() {
+       it("should only load plugin with type 'widget'", function() {
             spyOn(pm, "loadPluginWithDependencies");
             spyOn(pm, "invoke");
-            spyOn(pm, "getPluginManifest").and.returnValue({ type: "plugin", "editor": "", "renderer": "" }); // type: plugin
+            spyOn(pm, "getPluginManifest").and.returnValue({ type: "widget", "editor": "", "renderer": "" }); // type: plugin
             spyOn(pm, "isPluginDefined").and.returnValue(true);
-
-            expect(pm.loadAndInitPlugin("org.ekstep.two", "1.0", undefined, {})).toBe(0);
-            expect(pm.loadPluginWithDependencies).toHaveBeenCalled();
-            expect(pm.invoke).not.toHaveBeenCalled();
+            spyOn(pm, "loadAndInitPlugin")
+            pm.loadAndInitPlugin("org.ekstep.two", "1.0", undefined, {});
+            expect(pm.isPluginDefined("org.ekstep.two")).toBe(true);
+            expect(pm.invoke).toHaveBeenCalled();
+            
         });
     });
 

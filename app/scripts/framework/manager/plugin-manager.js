@@ -103,15 +103,21 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         }
     },
     loadAndInitPlugin: function(pluginId, version, publishedTime, parent) {
-        this.loadPluginWithDependencies(pluginId, version, undefined, publishedTime, [], function() {});
+        var self = this;
         if (this.isPluginDefined(pluginId)) {
             var pluginManifest = this.getPluginManifest(pluginId);
             if (pluginManifest.type && (pluginManifest.type.toLowerCase() === "widget")) {
                 this.invoke(pluginId, JSON.parse(JSON.stringify(pluginManifest[org.ekstep.pluginframework.env]['init-data'] || {})), parent);
             }
-            return 0;
         } else {
-            return 1;
+            this.loadPluginWithDependencies(pluginId, version, undefined, publishedTime, [], function() {
+                if (self.isPluginDefined(pluginId)) {
+                    var pluginManifest = self.getPluginManifest(pluginId);
+                    if (pluginManifest.type && (pluginManifest.type.toLowerCase() === "widget")) {
+                        self.invoke(pluginId, JSON.parse(JSON.stringify(pluginManifest[org.ekstep.pluginframework.env]['init-data'] || {})), parent);
+                    }
+                }
+            });
         }
     },
     loadPluginWithDependencies: function(pluginId, pluginVer, pluginType, publishedTime, parents, callback) {
