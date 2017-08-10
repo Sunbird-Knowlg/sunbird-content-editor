@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icon';
-  src:  url('fonts/icon.eot?wzpvwa');
-  src:  url('fonts/icon.eot?wzpvwa#iefix') format('embedded-opentype'),
-    url('fonts/icon.ttf?wzpvwa') format('truetype'),
-    url('fonts/icon.woff?wzpvwa') format('woff'),
-    url('fonts/icon.svg?wzpvwa#icon') format('svg');
+  src:  url('fonts/icon.eot?tv2nva');
+  src:  url('fonts/icon.eot?tv2nva#iefix') format('embedded-opentype'),
+    url('fonts/icon.ttf?tv2nva') format('truetype'),
+    url('fonts/icon.woff?tv2nva') format('woff'),
+    url('fonts/icon.svg?tv2nva#icon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -25,7 +25,7 @@
 }
 
 .icon-whatsnew:before {
-  content: "\e939";
+  content: "\e937";
 }
 .icon-activity:before {
   content: "\e900";
@@ -33,40 +33,40 @@
 .icon-adjust:before {
   content: "\e901";
 }
-.icon-audio:before {
+.icon-arrange:before {
   content: "\e902";
 }
-.icon-bold:before {
+.icon-audio:before {
   content: "\e903";
 }
-.icon-bringforward:before {
+.icon-bold:before {
   content: "\e904";
 }
-.icon-bringfront:before {
+.icon-bringforward:before {
   content: "\e905";
 }
-.icon-circle:before {
+.icon-bringfront:before {
   content: "\e906";
 }
-.icon-close:before {
+.icon-circle:before {
   content: "\e907";
 }
-.icon-collaborator:before {
+.icon-close:before {
   content: "\e908";
 }
-.icon-dashline:before {
+.icon-collaborator:before {
   content: "\e909";
 }
-.icon-decagon:before {
+.icon-dashline:before {
   content: "\e90a";
 }
-.icon-dottetline:before {
+.icon-decagon:before {
   content: "\e90b";
 }
-.icon-download:before {
+.icon-dottetline:before {
   content: "\e90c";
 }
-.icon-arrange:before {
+.icon-download:before {
   content: "\e90d";
 }
 .icon-grid:before {
@@ -144,10 +144,10 @@
 .icon-scribble:before {
   content: "\e926";
 }
-.icon-sendbackward:before {
+.icon-sendback:before {
   content: "\e927";
 }
-.icon-sendback:before {
+.icon-sendbackward:before {
   content: "\e928";
 }
 .icon-shape:before {
@@ -193,8 +193,8 @@
   content: "\e936";
 }
 .icon-widget:before {
-  content: "\e937";
+  content: "\e939";
 }
 .icon-wordinfo:before {
-  content: "\e938";
+  content: "\e93a";
 }
