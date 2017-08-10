@@ -350,7 +350,85 @@ body {
     box-shadow: none;
 }
 
+.dropdownarrowparent{
+    position: relative;
+    display: flex;
+    border-right: none;
+    border-top: 0;
+    height: 100%;
+}
 
+.dropdownarrow{
+    width: 100%;
+    height: 40px;
+    float: right;
+    margin: auto;
+}
+.dropdownarrowwrapper{
+    bottom: 0;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    width: 18px;
+    display: inline-block;
+    float: left;
+    position: relative;
+    border-right: 1px solid rgba(34,36,38,.1);
+}
+.dropdownarrow .menu {
+    left: 0 !important;
+    top: 41px !important;
+}
+.dropdownarrow .menu.menu-icon{
+    left: -42px !important;
+    top: 43px !important
+}
+i.icon.custom-icon.dropdown-icon{
+    margin: auto 0;
+    width: 18px;
+}
+.submenu{
+    display: block;
+    height: 100%;
+}
+.ui.icon.menu .item.at-menu-item{
+    padding: 0;
+    width: 37px!important;
+    display: inline-block;
+}
+.ui.icon.menu .item.custom-popup-item{
+    width: 52px!important;
+}
+
+.ui.icon.menu .item>.icon:not(.dropdown).custom-menu-icon{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    margin: auto;
+    margin-right: 6px;
+}
+.ui.icon.menu .item.custom-popup-item>.icon:not(.dropdown).custom-menu-icon{
+    margin: auto;
+}
+.ui.menu .item.at-menu-item:before{
+    width: 0;
+}
+.ui.icon.menu .item.custom-popup-item{
+    border-right: 1px solid rgba(34,36,38,.1);
+}
+
+
+/*Dropdown hover effects to stage icon*/
+.dropdown-menu .item.at-menu-item{
+    border-right:1px solid transparent;
+    border-left:1px solid transparent;
+}
+.dropdown-menu:hover .item.at-menu-item{
+    border-right:1px solid rgba(34,36,38,.1);
+    border-left:1px solid rgba(34,36,38,.1);
+}
+.dropdown-menu:hover .dropdownarrowwrapper{
+    background: rgba(0,0,0,.03)
+}
 
 /* unsupported resolution message style */
 
@@ -384,43 +462,5 @@ body {
     font-size: 40px;
     left: -10px;
 }
-
-.dropdownarrowparent{
-    position: relative;
-}
-
-.dropdownarrow{
-    width: 0;
-    height: 0;
-    border-top: 4px solid transparent;
-    border-bottom: 4px solid #6f7176;
-    border-left: 4px solid transparent;
-    border-right: 4px solid #6f7176;
-    float: right;
-    margin: 0 auto;
-}
-.dropdownarrowwrapper{
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    padding-right: 3px;
-    padding-bottom: 3px;
-}
-
-.dropdownarrowwrappermenu{
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    padding-right: 3px;
-    padding-bottom: 1px;
-}
-
-.dropdownarrow .menu {
-    left: -46px !important;
-    top: 7px !important;
-}
-
-
-
 
 /* unsupported resolution message style */
