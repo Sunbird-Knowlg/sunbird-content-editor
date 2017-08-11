@@ -54,7 +54,7 @@ describe("Ekstep editor test", function() {
         expect(org.ekstep.contenteditor.api.getPluginRepo).toHaveBeenCalled();
     });
 
-    it('should call loadAndInitPlugin', function() {
+    xit('should call loadAndInitPlugin', function() {
         spyOn(org.ekstep.contenteditor.api, "loadAndInitPlugin").and.callThrough();
         spyOn(org.ekstep.pluginframework.pluginManager, "loadAndInitPlugin").and.callThrough();
         org.ekstep.contenteditor.api.loadAndInitPlugin("org.ekstep.test1", "1.0");
