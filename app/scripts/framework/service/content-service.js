@@ -275,5 +275,16 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
         var requestObj = {"request":{}};
         this.postFromService(this.serviceURL() + this.getConfig('contentRejectURL', '/v3/reject/') + data.contentId, requestObj, this.requestHeaders, callback);
 
+    },
+    retireContent: function(data, callback) {
+        this.delete(this.serviceURL() + this.getConfig('contentRejectURL', '/v3/retire/') + data.contentId, this.requestHeaders, callback);
+    },
+    acceptContentFlag: function(data, callback) {
+        var requestObj = {"request":{}};
+        this.postFromService(this.serviceURL() + this.getConfig('acceptContentFlag', '/v3/flag/accept/') + data.contentId, requestObj, this.requestHeaders, callback);
+    },
+    discardContentFlag: function(data, callback) {
+        var requestObj = {"request":{}};
+        this.postFromService(this.serviceURL() + this.getConfig('discardContentFlag', '/v3/flag/reject/') + data.contentId, requestObj, this.requestHeaders, callback);
     }
 }));
