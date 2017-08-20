@@ -85,7 +85,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             var update = false;
             var content = {
                 versionKey: versionKey,
-                lastUpdatedBy: window.context.user.id
+                lastUpdatedBy: ecEditor.getContext('user') && ecEditor.getContext('user').id
             }
             if (metadata) {
                 update = true;
@@ -230,6 +230,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             callback("nothing to save!");        
             return;
         }
+        data.body.lastUpdatedBy = ecEditor.getContext('user') && ecEditor.getContext('user').id;
         var requestObj = { request: { data: data.body } };
         this.patch(this.serviceURL() + this.getConfig('collectionHierarchyUpdateUrl', '/v3/hierarchy/update/'), requestObj, this.requestHeaders, function(err, res) {
             if (res && res.data.responseCode == "OK") {
@@ -275,5 +276,16 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
         var requestObj = {"request":{}};
         this.postFromService(this.serviceURL() + this.getConfig('contentRejectURL', '/v3/reject/') + data.contentId, requestObj, this.requestHeaders, callback);
 
+    },
+    retireContent: function(data, callback) {
+        this.delete(this.serviceURL() + this.getConfig('contentRejectURL', '/v3/retire/') + data.contentId, this.requestHeaders, callback);
+    },
+    acceptContentFlag: function(data, callback) {
+        var requestObj = {"request":{}};
+        this.postFromService(this.serviceURL() + this.getConfig('acceptContentFlag', '/v3/flag/accept/') + data.contentId, requestObj, this.requestHeaders, callback);
+    },
+    discardContentFlag: function(data, callback) {
+        var requestObj = {"request":{}};
+        this.postFromService(this.serviceURL() + this.getConfig('discardContentFlag', '/v3/flag/reject/') + data.contentId, requestObj, this.requestHeaders, callback);
     }
 }));

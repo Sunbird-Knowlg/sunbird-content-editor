@@ -109,6 +109,31 @@ org.ekstep.services.iService = Class.extend({
             }
         });
     },
+    delete: function(url, config, cb) {
+        var requestTimestamp, instance = this;
+        config = config || {};
+        config.headers = config.headers || {};
+        if (typeof cb !== 'function') throw "iservice expects callback to be function";
+        org.ekstep.pluginframework.jQuery.ajax({
+            type: "DELETE",
+            url: url,
+            headers: config.headers,
+            beforeSend: function(xhrObject, settings) {
+                requestTimestamp = (new Date()).getTime();
+            },
+            success: function(res) {
+                res.responseTime = (new Date()).getTime() - requestTimestamp;
+                instance._dispatchTelemetry({url: url, method: "DELETE", request: "", res: res });
+                res = { data: res };
+                cb(null, res);                
+            },
+            error: function(xhr, status, error) {
+                xhr.responseTime = (new Date()).getTime() - requestTimestamp;
+                cb(xhr, null);
+                instance._dispatchTelemetry({url: url, method: "DELETE", request: "", res: xhr });
+            }
+        });
+    },
     /**
      * Utility function which is used to call http post request
      * @param  {string}   url      API url
