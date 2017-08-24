@@ -321,11 +321,10 @@ body {
 
 .sidebar-holder {
     width: 100%;
-    height: 485px!important;
+    height: 100%!important;
     overflow-y: hidden;
     margin: 0px !important;
     border: none !important;
-    border-bottom: 0.2px solid #D4D4D5!important;
     border-radius: 0px !important;
     background: none !important;
     box-shadow: none !important;
