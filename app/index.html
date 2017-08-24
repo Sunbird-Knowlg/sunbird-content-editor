@@ -73,7 +73,7 @@
             <div ng-include="'templates/deleteStageDialog.html'"></div>
             <div id="mainContainerGrid" class="ui grid bottom attached celled" style="margin: 0;">
                 <div class="row">
-                    <div class="ui two wide column scrollable-slides" style="background-color:#f9f9f9; border:none; box-shadow:none;">
+                    <div class="ui two wide column scrollable-slides" style="background-color:#f9f9f9;">
                         <div ng-repeat="stage in stages track by $index" class="thumbnail-container" style="margin-bottom: 20px">
                             <div class="ui centered raised card segment thumbnail">
                                 <span class="stage-number">{{$index+1}}</span>
@@ -86,7 +86,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="superwrapper" class="ui seven wide column" style="background-color:#f3f3f3; border:none; box-shadow:none;">
+                    <div id="superwrapper" class="ui seven wide column" style="background-color:#f3f3f3;">
                         <div id="canvas-wrapper" style="width:720px; margin-left:auto; margin-right:auto; box-shadow: 0 0 0 1px #d4d4d5, 0 2px 4px 0 rgba(34,36,38,.12), 0 2px 10px 0 rgba(34,36,38,.15);">
                             <canvas id="canvas" class="ui card centered raised" width="720px" height="405px" style="margin: 0; border-radius: 0px; background: none"></canvas>
                         </div>
@@ -101,7 +101,7 @@
                         </div>
                         -->
                     </div>
-                    <div class="ui three wide column" style="background-color: #f9f9f9; padding: 0px !important; border:none; box-shadow:none;">
+                    <div class="ui three wide column" style="background-color: #f9f9f9; padding: 0px !important;">
                         <div class="sidebar-holder">
                             <div ng-repeat="sidebar in registeredCategories">
                                 <div ng-show="(configCategory.selected == sidebar.id && sidebar.state == 'SHOW')">
