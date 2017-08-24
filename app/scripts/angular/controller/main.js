@@ -42,7 +42,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         //toolbar(sidebar menu)
         $scope.configCategory = { selected: '' };
         $scope.cancelLink = (($window.context && $window.context.cancelLink) ? $window.context.cancelLink : "");
-        $scope.reportIssueLink = (($window.context && $window.context.reportIssueLink) ? $window.context.reportIssueLink : "");
 
         $scope.context = $window.context;
         $scope.contentId = $location.search().contentId;
