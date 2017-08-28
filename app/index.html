@@ -57,15 +57,15 @@
                 </div>
             </div>
             <div ng-repeat="header in headers" ng-include="header.templateURL"></div>
-            <div class="ui grid toolbar" style="border-top:0.5px solid rgba(128, 128, 128, 0.34);">
+            <div class="ui grid toolbar" id="toolbar" style="border-top:0.5px solid rgba(128, 128, 128, 0.34);">
                 <div class="ui nine wide column" style="padding-top:0!important;">
-                    <div class="ui icon menu">
+                    <div class="ui icon menu" style="height: 38px;  display: flex; align-items: center;">
                         <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'"></span>
                         <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
                     </div>
                 </div>
                 <div class="ui three wide column" style="padding-top:0!important;">
-                    <div class="ui icon menu sidebar-menu">
+                    <div class="ui icon menu sidebar-menu" style="height: 38px; display: flex; align-items: center;">
                         <span ng-repeat="menu in sidebarMenus" ng-if="menu.state == 'SHOW'" ng-include="'templates/toolbar.html'" class="at-config-menu"></span>
                     </div>
                 </div>

@@ -25,9 +25,24 @@ body {
     height: 17px !important;
 }
 
-.at-menu-item {
-    width: 52.52px !important;
-    height: 42px !important;
+#toolbar .at-menu-item {
+    width: 30px !important;
+    height: 30px !important;
+    margin-left: 5px;
+    border: 1px solid transparent;
+    justify-content: center;
+    background: transparent;
+    border-radius: 4px;
+    color: #9b9b9b;
+}
+
+#toolbar .at-menu-item:last-child{
+    margin-right: 5px;
+}
+
+#toolbar .at-menu-item:hover{
+    border: 1px solid #E0E1E2;
+    color: #4a4a4a;
 }
 
 .at-menu-image-item>.ui.image {
@@ -332,7 +347,7 @@ body {
 .toolbar .ui.nine.wide.column,
 .toolbar .ui.icon.menu,
 .toolbar .ui.three.wide.column {
-    background: linear-gradient(rgba(255, 255, 255, 0.05), rgba(0, 0, 0, 0.05)) #FFF !important;
+    background: #f9f9f9!important;
 }
 
 .toolbar .ui.nine.wide.column .ui.icon.menu {
@@ -346,6 +361,7 @@ body {
 .dropdownarrowparent{
     position: relative;
     display: flex;
+    align-items: center;
     border-right: none;
     border-top: 0;
     height: 100%;
@@ -358,14 +374,15 @@ body {
     margin: auto;
 }
 .dropdownarrowwrapper{
+    position: relative;
+    display: inline-block;
+    float: left;
+    width: 18px;
+    height: 30px;
     bottom: 0;
     padding-right: 3px;
     padding-bottom: 3px;
-    width: 18px;
-    display: inline-block;
-    float: left;
-    position: relative;
-    border-right: 1px solid rgba(34,36,38,.1);
+    color: #9b9b9b;
 }
 .dropdownarrow .menu {
     left: 0 !important;
@@ -383,14 +400,6 @@ i.icon.custom-icon.dropdown-icon{
     display: block;
     height: 100%;
 }
-.ui.icon.menu .item.at-menu-item{
-    padding: 0;
-    width: 37px!important;
-    display: inline-block;
-}
-.ui.icon.menu .item.custom-popup-item{
-    width: 52px!important;
-}
 
 .ui.icon.menu .item>.icon:not(.dropdown).custom-menu-icon{
     display: flex;
@@ -405,22 +414,9 @@ i.icon.custom-icon.dropdown-icon{
 .ui.menu .item.at-menu-item:before{
     width: 0;
 }
-.ui.icon.menu .item.custom-popup-item{
-    border-right: 1px solid rgba(34,36,38,.1);
-}
 
-
-/*Dropdown hover effects to stage icon*/
-.dropdown-menu .item.at-menu-item{
-    border-right:1px solid transparent;
-    border-left:1px solid transparent;
-}
-.dropdown-menu:hover .item.at-menu-item{
-    border-right:1px solid rgba(34,36,38,.1);
-    border-left:1px solid rgba(34,36,38,.1);
-}
 .dropdown-menu:hover .dropdownarrowwrapper{
-    background: rgba(0,0,0,.03)
+    color: #4a4a4a;
 }
 
 /* unsupported resolution message style */

@@ -5,8 +5,8 @@
             <img class="ui mini image {{menu.iconClass}}" ng-src="{{menu.iconImage}}" ng-if="menu.iconImage" id="{{menu.id}}" ng-switch-when="image">
         </a>
     </span>
-    <div class="menu dropdown-menu dropdownarrowparent popup-item" ng-if="menu.submenu && menu.onclick" data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="top center">
-        <a class="item at-menu-item popup-item {{configCategory.selected == menu.id ? 'active': ''}}" ng-click="fireToolbarTelemetry(menu, 'mainmenu'); fireEvent(menu.onclick);">
+    <div class="menu dropdown-menu dropdownarrowparent" ng-if="menu.submenu && menu.onclick" data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="top center">
+        <a class="item at-menu-item popup-item custom-popup-item {{configCategory.selected == menu.id ? 'active': ''}}" ng-click="fireToolbarTelemetry(menu, 'mainmenu'); fireEvent(menu.onclick);">
               <i class="{{menu.iconClass}} custom-menu-icon" ng-if="menu.iconClass" style="{{menu.iconStyle}}" id="{{menu.id}}" ng-switch-when="icon"></i>
               <img class="ui mini image {{menu.iconClass}}" ng-src="{{menu.iconImage}}" ng-if="menu.iconImage" id="{{menu.id}}" ng-switch-when="image">
         </a>
