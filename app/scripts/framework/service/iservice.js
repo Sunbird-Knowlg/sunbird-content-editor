@@ -59,8 +59,8 @@ org.ekstep.services.iService = Class.extend({
         config = config || {};
         config.headers = config.headers || {};
         if (typeof cb !== 'function') throw "iservice expects callback to be function";
-        if (typeof data === 'object') data = JSON.stringify(data);
-        org.ekstep.pluginframework.jQuery.ajax({
+        if (typeof data === 'object' && _.isUndefined(config.contentType)) data = JSON.stringify(data);
+        var ajaxSettings = {
             type: "POST",
             url: url,
             data: data,
@@ -79,7 +79,11 @@ org.ekstep.services.iService = Class.extend({
                 cb(err, null);
                 instance._dispatchTelemetry({url: url, method: "POST", request: data, res: err });
             }
-        });
+        };
+        if (!_.isUndefined(config.contentType)) ajaxSettings.contentType = config.contentType;
+        if (!_.isUndefined(config.cache)) ajaxSettings.cache = config.cache;
+        if (!_.isUndefined(config.processData)) ajaxSettings.processData = config.processData;
+        org.ekstep.pluginframework.jQuery.ajax(ajaxSettings);
     },
     patch: function(url, data, config, cb) {
         var requestTimestamp, instance = this;
@@ -143,7 +147,7 @@ org.ekstep.services.iService = Class.extend({
      * @memberof org.ekstep.services.iService
      */
     postFromService: function(url, data, headers, callback) {
-        this.post(url, JSON.stringify(data), headers, function(err, res) {
+        this.post(url, data, headers, function(err, res) {
             callback(err, res)
         });
     },
