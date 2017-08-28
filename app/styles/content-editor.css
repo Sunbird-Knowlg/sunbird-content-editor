@@ -439,6 +439,17 @@ i.icon.custom-icon.dropdown-icon{
     background-color: rgba(192, 192, 192, 0.5);
 }
 
+@keyframes border-pulsate {
+    0%   { border-color: rgba(0, 0, 0, 1); }
+    50% { border-color: rgba(0, 0, 0, 0); }
+    100%   { border-color: rgba(0, 0, 0, 1); }
+}
+
+.hover-effect{
+    border: 1px dashed black;
+    animation: border-pulsate 2s infinite;
+}
+
 @media only screen and (max-width: 1023px) {
     .unsupported-resolution {
         display: block;
