@@ -289,10 +289,10 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
         this.postFromService(this.serviceURL() + this.getConfig('discardContentFlag', '/v3/flag/reject/') + data.contentId, requestObj, this.requestHeaders, callback);
     },
     uploadContnet: function(data, ajaxSettings, callback){
-        var reqHeaders = _.clone(this.requestHeaders);
+        var reqHeaders = _.cloneDeep(this.requestHeaders);
         if(!_.isUndefined(ajaxSettings)){
-            reqHeaders = _.merge(reqHeaders, ajaxSettings);
             delete reqHeaders.headers['content-type'];
+            reqHeaders = _.merge(reqHeaders, ajaxSettings);
         }
         this.postFromService(this.serviceURL() + this.getConfig('uploadContnet', '/v3/upload/') + data.contentId, data.formData, reqHeaders, callback);
     }
