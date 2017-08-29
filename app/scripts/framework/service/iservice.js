@@ -52,6 +52,38 @@ org.ekstep.services.iService = Class.extend({
             }
         });
     },
+    put: function(url, data, config, cb) {
+        var requestTimestamp, instance = this;
+        data = data || {};
+        config = config || {};
+        config.headers = config.headers || {};
+        if (typeof cb !== 'function') throw "iservice expects callback to be function";
+        if (typeof data === 'object' && _.isUndefined(config.contentType)) data = JSON.stringify(data);
+        var ajaxSettings = {
+            type: "PUT",
+            url: url,
+            data: data,
+            headers: config.headers,
+            beforeSend: function(xhrObject, settings) {
+                requestTimestamp = (new Date()).getTime();
+            },
+            success: function(res) {
+                res.responseTime = (new Date()).getTime() - requestTimestamp;
+                instance._dispatchTelemetry({url: url, method: "PUT", request: {}, res: res }); 
+                res = { data: res };
+                cb(null, res);                
+            },
+            error: function(err) {
+                err.responseTime = (new Date()).getTime() - requestTimestamp;
+                cb(err, null);
+                instance._dispatchTelemetry({url: url, method: "PUT", request: {}, res: err });
+            }
+        };
+        if (!_.isUndefined(config.contentType)) ajaxSettings.contentType = config.contentType;
+        if (!_.isUndefined(config.cache)) ajaxSettings.cache = config.cache;
+        if (!_.isUndefined(config.processData)) ajaxSettings.processData = config.processData;
+        org.ekstep.pluginframework.jQuery.ajax(ajaxSettings);
+    },
     post: function(url, data, config, cb) {
         var requestTimestamp, instance = this;
         data = data || {};

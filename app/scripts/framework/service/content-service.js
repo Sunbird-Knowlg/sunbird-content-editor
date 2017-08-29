@@ -258,14 +258,45 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      */
     publishContent: function(data, callback) {
         var requestObj = {
-                            "request": {
-                                "content" : {
-                                    "lastPublishedBy" : ecEditor.getContext('uid')
-                                }
-                            }
-                        };
+            "request": {
+                "content" : {
+                    "lastPublishedBy" : ecEditor.getContext('uid')
+                }
+            }
+        };
         this.postFromService(this.serviceURL() + this.getConfig('contentPublishURL', '/v3/publish/') + data.contentId, requestObj, this.requestHeaders, callback);
     },
+    /**
+     * Get pre-signed url for content upload
+     * @param data {object} "contentId" : String. Content ID, "fileName" : String. File Name
+     * @param callback {function} callback function
+     * @memberof org.ekstep.services.contentService
+     */
+    getPresignedURL: function(data, callback) {
+        var requestObj = {
+            "request": {
+                "content" : {
+                    "fileName" : data.fileName
+                }
+            }
+        };
+        this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + data.contentId, requestObj, this.requestHeaders, callback);
+    }
+
+    /**
+     * Upload file to given url
+     * @param url {string} String.
+     * @param data {file} File Data.
+     * @param callback {function} callback function
+     * @memberof org.ekstep.services.contentService
+     */
+    uploadDataToSignedURL: function(url, data, callback) {
+        var config = { 
+            processData: false
+        }
+        this.put(url, data, config, callback);
+    }
+
     /**
      * Content sent for review call
      * @param data {object} "contentId" : String. Content ID
@@ -288,12 +319,14 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
         var requestObj = {"request":{}};
         this.postFromService(this.serviceURL() + this.getConfig('discardContentFlag', '/v3/flag/reject/') + data.contentId, requestObj, this.requestHeaders, callback);
     },
-    uploadContnet: function(data, ajaxSettings, callback){
-        var reqHeaders = _.cloneDeep(this.requestHeaders);
-        if(!_.isUndefined(ajaxSettings)){
-            delete reqHeaders.headers['content-type'];
-            reqHeaders = _.merge(reqHeaders, ajaxSettings);
+    uploadContent: function(contentId, data, callback){
+        var config = { 
+            "headers": {
+                "content-type": "multipart/form-data",
+                "user-id": "content-editor"
+            },
+            processData: false
         }
-        this.postFromService(this.serviceURL() + this.getConfig('uploadContnet', '/v3/upload/') + data.contentId, data.formData, reqHeaders, callback);
+        this.postFromService(this.serviceURL() + this.getConfig('uploadContent', '/v3/upload/') + contentId, data, config, callback);
     }
 }));
