@@ -281,7 +281,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             }
         };
         this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + data.contentId, requestObj, this.requestHeaders, callback);
-    }
+    },
 
     /**
      * Upload file to given url
@@ -295,7 +295,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             processData: false
         }
         this.put(url, data, config, callback);
-    }
+    },
 
     /**
      * Content sent for review call
