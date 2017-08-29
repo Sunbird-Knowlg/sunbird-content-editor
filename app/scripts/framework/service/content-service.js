@@ -272,15 +272,15 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      * @param callback {function} callback function
      * @memberof org.ekstep.services.contentService
      */
-    getPresignedURL: function(data, callback) {
+    getPresignedURL: function(contentId, fileName, callback) {
         var requestObj = {
             "request": {
                 "content" : {
-                    "fileName" : data.fileName
+                    "fileName" : fileName
                 }
             }
         };
-        this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + data.contentId, requestObj, this.requestHeaders, callback);
+        this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + contentId, requestObj, this.requestHeaders, callback);
     },
 
     /**
@@ -319,14 +319,10 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
         var requestObj = {"request":{}};
         this.postFromService(this.serviceURL() + this.getConfig('discardContentFlag', '/v3/flag/reject/') + data.contentId, requestObj, this.requestHeaders, callback);
     },
-    uploadContent: function(contentId, data, callback){
-        var config = { 
-            "headers": {
-                "content-type": "multipart/form-data",
-                "user-id": "content-editor"
-            },
-            processData: false
-        }
-        this.postFromService(this.serviceURL() + this.getConfig('uploadContent', '/v3/upload/') + contentId, data, config, callback);
+    uploadContent: function(contentId, data, config, callback){
+        this.postFromService(this.serviceURL() + this.getConfig('uploadContentURL', '/v3/upload/') + contentId, data, config, callback);
+    },
+    createContent: function(data, callback) {
+        this.postFromService(this.serviceURL() + this.getConfig('createContentURL', '/v3/create'), data, this.requestHeaders, callback);
     }
 }));

@@ -114,6 +114,7 @@ org.ekstep.services.iService = Class.extend({
         if (!_.isUndefined(config.contentType)) ajaxSettings.contentType = config.contentType;
         if (!_.isUndefined(config.cache)) ajaxSettings.cache = config.cache;
         if (!_.isUndefined(config.processData)) ajaxSettings.processData = config.processData;
+        if (!_.isUndefined(config.enctype)) ajaxSettings.enctype = config.enctype;
         org.ekstep.pluginframework.jQuery.ajax(ajaxSettings);
     },
     patch: function(url, data, config, cb) {
