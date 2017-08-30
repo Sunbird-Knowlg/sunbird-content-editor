@@ -235,6 +235,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
              * @param  {function} callback Function to be invoked once the editor is loaded
              */
         org.ekstep.contenteditor.init(context, config, $scope, $document, function() {
+            var startTime = (new Date()).getTime();
             var obj = _.find($scope.appLoadMessage, { 'id': 1 });
             if (_.isObject(obj)) {
                 obj.message = "Getting things ready for you";
