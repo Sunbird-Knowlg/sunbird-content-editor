@@ -54,11 +54,9 @@ org.ekstep.services.iService = Class.extend({
         if (!_.isUndefined(config.processData)) ajaxSettings.processData = config.processData;
         if (!_.isUndefined(config.enctype)) ajaxSettings.enctype = config.enctype;
 
-        console.log('ajaxSettings', ajaxSettings);
         org.ekstep.pluginframework.jQuery.ajax(ajaxSettings);
     },
     get: function(url, config, cb) {
-
         this._call({type: "GET", url: url}, config, cb);
     },
     put: function(url, data, config, cb) {
