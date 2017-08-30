@@ -247,7 +247,7 @@ body {
 
 .scrollable-slides {
     overflow-y: auto;
-    height: 100%!important;
+    height: 100%;
 }
 
 .migartion-message-container {

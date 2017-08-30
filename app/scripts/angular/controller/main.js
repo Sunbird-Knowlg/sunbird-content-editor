@@ -277,8 +277,3 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         };
     }
 ]);
-
-org.ekstep.contenteditor.jQuery(document).ready(function() {
-    var newheight = $(window).innerHeight() - 114;
-    org.ekstep.contenteditor.jQuery('.scrollable-slides').css("height", newheight + "px");
-});
