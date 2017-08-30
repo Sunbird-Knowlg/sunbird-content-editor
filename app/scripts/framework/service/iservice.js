@@ -53,6 +53,8 @@ org.ekstep.services.iService = Class.extend({
         if (!_.isUndefined(config.cache)) ajaxSettings.cache = config.cache;
         if (!_.isUndefined(config.processData)) ajaxSettings.processData = config.processData;
         if (!_.isUndefined(config.enctype)) ajaxSettings.enctype = config.enctype;
+
+        console.log('ajaxSettings', ajaxSettings);
         org.ekstep.pluginframework.jQuery.ajax(ajaxSettings);
     },
     get: function(url, config, cb) {
@@ -61,17 +63,17 @@ org.ekstep.services.iService = Class.extend({
     },
     put: function(url, data, config, cb) {
         if (typeof cb !== 'function') throw "iservice expects callback to be function";
-        if (typeof data === 'object') data = JSON.stringify(data);
+        if (typeof data === 'object' && _.isUndefined(config.contentType)) data = JSON.stringify(data);
         this._call({type: "PUT", url: url, data: data}, config, cb);
     },
     post: function(url, data, config, cb) {
         if (typeof cb !== 'function') throw "iservice expects callback to be function";
-        if (typeof data === 'object') data = JSON.stringify(data);
+        if (typeof data === 'object' && _.isUndefined(config.contentType)) data = JSON.stringify(data);
         this._call({type: "POST", url: url, data: data}, config, cb);
     },
     patch: function(url, data, config, cb) {
         if (typeof cb !== 'function') throw "iservice expects callback to be function";
-        if (typeof data === 'object') data = JSON.stringify(data);
+        if (typeof data === 'object' && _.isUndefined(config.contentType)) data = JSON.stringify(data);
         this._call({type: "PATCH", url: url, data: data}, config, cb);
     },
     delete: function(url, config, cb) {
