@@ -250,7 +250,17 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.sidebarMenus = org.ekstep.contenteditor.sidebarManager.getSidebarMenu();
             $scope.configCategory.selected = $scope.sidebarMenus[0].id;
 
+            org.ekstep.services.telemetryService.initialize({
+                uid: context.uid,
+                sid: context.sid,
+                content_id: context.contentId,
+                etags: context.etags,
+                channel:context.channel || "",
+                pdata: context.pdata || {}
+            }, org.ekstep.contenteditor.config.dispatcher);
+
             $scope.loadContent();
+
             /* KeyDown event to show ECML */
             $document.on("keydown", function(event) {
                 if ((event.metaKey || event.ctrlKey) && event.shiftKey && event.keyCode == 69) { /*ctrl+shift+e or command+shift+e*/
