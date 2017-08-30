@@ -258,7 +258,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                 channel:context.channel || "",
                 pdata: context.pdata || {}
             }, org.ekstep.contenteditor.config.dispatcher);
-
+            org.ekstep.services.telemetryService.startEvent().append("loadtimes", { plugins: ((new Date()).getTime() - startTime) });        
             $scope.loadContent();
 
             /* KeyDown event to show ECML */

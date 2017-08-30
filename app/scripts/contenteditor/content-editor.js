@@ -46,8 +46,7 @@ org.ekstep.contenteditor._loadDefaultPlugins = function(context, callback) {
     org.ekstep.pluginframework.eventManager.enableEvents = false;
     org.ekstep.pluginframework.pluginManager.loadAllPlugins(org.ekstep.contenteditor.config.plugins, undefined, function() {        
         org.ekstep.pluginframework.eventManager.enableEvents = true;
-        callback();
-        org.ekstep.services.telemetryService.startEvent().append("loadtimes", { plugins: ((new Date()).getTime() - startTime) });        
+        callback();        
     });
 }
 
