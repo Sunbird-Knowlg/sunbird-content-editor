@@ -45,6 +45,15 @@ body {
     color: #4a4a4a;
 }
 
+#toolbar .dropdown-menu.dropdownarrowparent:hover > .popup-item.custom-popup-item{
+    border-right: 1px solid transparent;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#toolbar .dropdown-menu.dropdownarrowparent:hover > .dropdownarrowwrapper{
+    border: 1px solid #e0e1e2;
+}
 .at-menu-image-item>.ui.image {
     width: 20px !important;
     height: 20px !important;
@@ -383,6 +392,10 @@ body {
     padding-right: 3px;
     padding-bottom: 3px;
     color: #9b9b9b;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 .dropdownarrow .menu {
     left: 0 !important;
