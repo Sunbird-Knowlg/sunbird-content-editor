@@ -27,148 +27,56 @@ org.ekstep.services.iService = Class.extend({
         var status = data.res.responseCode || data.res.statusText;
         org.ekstep.services.telemetryService.apiCall({ "path": encodeURIComponent(data.url), "method": data.method, "request": data.request, "response": "", "responseTime": data.res.responseTime, "status": status, "uip": "" });
     },
-    get: function(url, config, cb) {
+    _call: function(ajaxSettings, config, cb) {
+        
         var requestTimestamp, instance = this;
         config = config || {};
-        config.headers = config.headers || {};
-        if (typeof cb !== 'function') throw "iservice expects callback to be function";
-        org.ekstep.pluginframework.jQuery.ajax({
-            type: "GET",
-            url: url,
-            headers: config.headers,
-            beforeSend: function(xhrObject, settings) {
-                requestTimestamp = (new Date()).getTime();
-            },
-            success: function(res) {
-                res.responseTime = (new Date()).getTime() - requestTimestamp;
-                instance._dispatchTelemetry({url: url, method: "GET", request: "", res: res }); 
-                res = { data: res };
-                cb(null, res);                
-            },
-            error: function(err) {
-                err.responseTime = (new Date()).getTime() - requestTimestamp;
-                cb(err, null);
-                instance._dispatchTelemetry({url: url, method: "GET", request: "", res: err });
-            }
-        });
-    },
-    put: function(url, data, config, cb) {
-        var requestTimestamp, instance = this;
-        data = data || {};
-        config = config || {};
-        config.headers = config.headers || {};
-        if (typeof cb !== 'function') throw "iservice expects callback to be function";
-        if (typeof data === 'object' && _.isUndefined(config.contentType)) data = JSON.stringify(data);
-        var ajaxSettings = {
-            type: "PUT",
-            url: url,
-            data: data,
-            headers: config.headers,
-            beforeSend: function(xhrObject, settings) {
-                requestTimestamp = (new Date()).getTime();
-            },
-            success: function(res) {
-                res.responseTime = (new Date()).getTime() - requestTimestamp;
-                instance._dispatchTelemetry({url: url, method: "PUT", request: {}, res: res }); 
-                res = { data: res };
-                cb(null, res);                
-            },
-            error: function(err) {
-                err.responseTime = (new Date()).getTime() - requestTimestamp;
-                cb(err, null);
-                instance._dispatchTelemetry({url: url, method: "PUT", request: {}, res: err });
-            }
-        };
-        if (!_.isUndefined(config.contentType)) ajaxSettings.contentType = config.contentType;
-        if (!_.isUndefined(config.cache)) ajaxSettings.cache = config.cache;
-        if (!_.isUndefined(config.processData)) ajaxSettings.processData = config.processData;
-        org.ekstep.pluginframework.jQuery.ajax(ajaxSettings);
-    },
-    post: function(url, data, config, cb) {
-        var requestTimestamp, instance = this;
-        data = data || {};
-        config = config || {};
-        config.headers = config.headers || {};
-        if (typeof cb !== 'function') throw "iservice expects callback to be function";
-        if (typeof data === 'object' && _.isUndefined(config.contentType)) data = JSON.stringify(data);
-        var ajaxSettings = {
-            type: "POST",
-            url: url,
-            data: data,
-            headers: config.headers,
-            beforeSend: function(xhrObject, settings) {
-                requestTimestamp = (new Date()).getTime();
-            },
-            success: function(res) {
-                res.responseTime = (new Date()).getTime() - requestTimestamp;
-                instance._dispatchTelemetry({url: url, method: "POST", request: data, res: res }); 
-                res = { data: res };
-                cb(null, res);                
-            },
-            error: function(err) {
-                err.responseTime = (new Date()).getTime() - requestTimestamp;
-                cb(err, null);
-                instance._dispatchTelemetry({url: url, method: "POST", request: data, res: err });
-            }
-        };
+        ajaxSettings.headers = config.headers || {};
+        ajaxSettings.beforeSend = function(xhrObject, settings) {
+            requestTimestamp = (new Date()).getTime();
+        }
+        ajaxSettings.success = function(res) {
+            res.responseTime = (new Date()).getTime() - requestTimestamp;
+            var request = ajaxSettings.type === 'POST' ? ajaxSettings.data : {};
+            instance._dispatchTelemetry({url: ajaxSettings.url, method: ajaxSettings.type, request: request, res: res }); 
+            res = { data: res };
+            cb(null, res);                
+        }
+        ajaxSettings.error = function(err) {
+            err.responseTime = (new Date()).getTime() - requestTimestamp;
+            cb(err, null);
+            var request = ajaxSettings.type === 'POST' ? ajaxSettings.data : {};
+            instance._dispatchTelemetry({url: ajaxSettings.url, method: ajaxSettings.type, request: request, res: err });
+        }
+
         if (!_.isUndefined(config.contentType)) ajaxSettings.contentType = config.contentType;
         if (!_.isUndefined(config.cache)) ajaxSettings.cache = config.cache;
         if (!_.isUndefined(config.processData)) ajaxSettings.processData = config.processData;
         if (!_.isUndefined(config.enctype)) ajaxSettings.enctype = config.enctype;
         org.ekstep.pluginframework.jQuery.ajax(ajaxSettings);
     },
-    patch: function(url, data, config, cb) {
-        var requestTimestamp, instance = this;
-        data = data || {};
-        config = config || {};
-        config.headers = config.headers || {};
+    get: function(url, config, cb) {
+
+        this._call({type: "GET", url: url}, config, cb);
+    },
+    put: function(url, data, config, cb) {
         if (typeof cb !== 'function') throw "iservice expects callback to be function";
         if (typeof data === 'object') data = JSON.stringify(data);
-        org.ekstep.pluginframework.jQuery.ajax({
-            type: "PATCH",
-            url: url,
-            data: data,
-            headers: config.headers,
-            beforeSend: function(xhrObject, settings) {
-                requestTimestamp = (new Date()).getTime();
-            },
-            success: function(res) {
-                res.responseTime = (new Date()).getTime() - requestTimestamp;
-                instance._dispatchTelemetry({url: url, method: "PATCH", request: "", res: res });
-                res = { data: res };
-                cb(null, res);                
-            },
-            error: function(xhr, status, error) {
-                xhr.responseTime = (new Date()).getTime() - requestTimestamp;
-                cb(xhr, null);
-                instance._dispatchTelemetry({url: url, method: "PATCH", request: "", res: xhr });
-            }
-        });
+        this._call({type: "PUT", url: url, data: data}, config, cb);
+    },
+    post: function(url, data, config, cb) {
+        if (typeof cb !== 'function') throw "iservice expects callback to be function";
+        if (typeof data === 'object') data = JSON.stringify(data);
+        this._call({type: "POST", url: url, data: data}, config, cb);
+    },
+    patch: function(url, data, config, cb) {
+        if (typeof cb !== 'function') throw "iservice expects callback to be function";
+        if (typeof data === 'object') data = JSON.stringify(data);
+        this._call({type: "PATCH", url: url, data: data}, config, cb);
     },
     delete: function(url, config, cb) {
-        var requestTimestamp, instance = this;
-        config = config || {};
-        config.headers = config.headers || {};
         if (typeof cb !== 'function') throw "iservice expects callback to be function";
-        org.ekstep.pluginframework.jQuery.ajax({
-            type: "DELETE",
-            url: url,
-            headers: config.headers,
-            beforeSend: function(xhrObject, settings) {
-                requestTimestamp = (new Date()).getTime();
-            },
-            success: function(res) {
-                res.responseTime = (new Date()).getTime() - requestTimestamp;
-                instance._dispatchTelemetry({url: url, method: "DELETE", request: "", res: res });
-                res = { data: res };
-                cb(null, res);                
-            },
-            error: function(xhr, status, error) {
-                xhr.responseTime = (new Date()).getTime() - requestTimestamp;
-                cb(xhr, null);
-                instance._dispatchTelemetry({url: url, method: "DELETE", request: "", res: xhr });
-            }
-        });
+        this._call({type: "DELETE", url: url}, config, cb);
     },
     /**
      * Utility function which is used to call http post request

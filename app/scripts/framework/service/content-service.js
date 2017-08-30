@@ -290,10 +290,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      * @param callback {function} callback function
      * @memberof org.ekstep.services.contentService
      */
-    uploadDataToSignedURL: function(url, data, callback) {
-        var config = { 
-            processData: false
-        }
+    uploadDataToSignedURL: function(url, data, config, callback) {
         this.put(url, data, config, callback);
     },
 
