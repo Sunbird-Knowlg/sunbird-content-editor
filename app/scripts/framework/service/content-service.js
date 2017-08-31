@@ -158,7 +158,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             var metaDataFields = "?mode=edit&fields=" + "versionKey";
             instance.get(this.serviceURL() + this.getConfig('contentReadUrl', '/v3/read/') + contentId + metaDataFields, this.requestHeaders, function(err, res) {
                 if (res && res.data && res.data.responseCode === "OK") {
-                    instance._setContentMeta(contentId, res.data.result.content);
+                    instance.getContentMeta(contentId).versionKey = res.data.result.content && res.data.result.content.versionKey;
                     callback(err, res.data.result.content);
                 } else {
                     callback(new Error('no content found!'), undefined)
