@@ -33,7 +33,7 @@ body {
     justify-content: center;
     background: transparent;
     border-radius: 4px;
-    color: #9b9b9b;
+    color: #4a4a4a;
 }
 
 #toolbar .at-menu-item:last-child{
@@ -42,7 +42,6 @@ body {
 
 #toolbar .at-menu-item:hover{
     border: 1px solid #E0E1E2;
-    color: #4a4a4a;
 }
 
 #toolbar .dropdown-menu.dropdownarrowparent:hover > .popup-item.custom-popup-item{
@@ -391,7 +390,7 @@ body {
     bottom: 0;
     padding-right: 3px;
     padding-bottom: 3px;
-    color: #9b9b9b;
+    color: #4a4a4a;
     border: 1px solid transparent;
     border-radius: 4px;
     border-top-left-radius: 0;
@@ -426,10 +425,6 @@ i.icon.custom-icon.dropdown-icon{
 }
 .ui.menu .item.at-menu-item:before{
     width: 0;
-}
-
-.dropdown-menu:hover .dropdownarrowwrapper{
-    color: #4a4a4a;
 }
 
 /* unsupported resolution message style */
