@@ -2,6 +2,7 @@
 
 org.ekstep.contenteditor.migration = new(Class.extend({
     migrationFlag: false,
+    contentBackup: undefined,
     init: function() {
         console.log('migration task initialized');
         org.ekstep.contenteditor.api.addEventListener('content:migration:start', this.execute, this);
@@ -11,6 +12,7 @@ org.ekstep.contenteditor.migration = new(Class.extend({
     migrationErrors: [],
     execute: function(event, data) {
         var contentbody = data.body, stageIcons = data.stageIcons;
+        this.contentBackup = _.cloneDeep(contentbody);
 
         if (!_.has(contentbody, 'theme.stage')) org.ekstep.services.telemetryService.error({ "env": "content", "stage": "", "action": "migration", "objectId": "", objectType: "", "err": "migration has errors", "type": "PORTAL", "data": "", "severity": "error" });  
         if (this.isOldContent(contentbody)) {            
@@ -70,5 +72,8 @@ org.ekstep.contenteditor.migration = new(Class.extend({
     },
     clearMigrationFlag: function() {
         this.migrationFlag = false;
+    },
+    getBackupContent: function() {
+        return this.contentBackup;
     }
 }));

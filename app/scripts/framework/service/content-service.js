@@ -20,7 +20,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      *
      * @memberof org.ekstep.services.contentService
      */
-    contentFields: "body,editorState,stageIcons,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType,owner,domain,code,visibility,createdBy,description,language,mediaType,mimeType,osId,languageCode,createdOn,lastUpdatedOn,audience,ageGroup,attributions,artifactUrl,board,subject,keywords",
+    contentFields: "body,editorState,stageIcons,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType,owner,domain,code,visibility,createdBy,description,language,mediaType,mimeType,osId,languageCode,createdOn,lastUpdatedOn,audience,ageGroup,attributions,artifactUrl,board,subject,keywords,config,resourceType",
     /**
      *
      * sets content meta for the given content id
@@ -158,7 +158,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             var metaDataFields = "?mode=edit&fields=" + "versionKey";
             instance.get(this.serviceURL() + this.getConfig('contentReadUrl', '/v3/read/') + contentId + metaDataFields, this.requestHeaders, function(err, res) {
                 if (res && res.data && res.data.responseCode === "OK") {
-                    instance._setContentMeta(contentId, res.data.result.content);
+                    instance.getContentMeta(contentId).versionKey = res.data.result.content && res.data.result.content.versionKey;
                     callback(err, res.data.result.content);
                 } else {
                     callback(new Error('no content found!'), undefined)
