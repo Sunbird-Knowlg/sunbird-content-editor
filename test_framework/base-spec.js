@@ -37,6 +37,8 @@ window.context = {
     "editMetaLink": "/component/ekcontent/contentform/do_10097535?Itemid=0"
 };
 
+org.ekstep.contenteditor.globalContext = window.context;
+
 window.ServiceConstants = {
     SEARCH_SERVICE: "search",
     POPUP_SERVICE: "popup",

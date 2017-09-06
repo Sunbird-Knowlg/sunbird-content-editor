@@ -14,6 +14,7 @@ describe('Content service test cases', function() {
         org.ekstep.services.contentService.patch = jasmine.createSpy().and.callFake(function(url, requestObj, headers, cb) {
             cb(undefined, contentRes);
         });
+
         spyOn(org.ekstep.services.contentService, "saveContent").and.callThrough();
         spyOn(org.ekstep.services.contentService, "getContentMeta").and.callThrough();
         spyOn(org.ekstep.services.contentService, "getContent").and.callThrough();
@@ -100,8 +101,7 @@ describe('Content service test cases', function() {
             cb(undefined, { data: contentResponse });
         });
         org.ekstep.services.contentService.getContentVersionKey("do_112206722833612800186", spyFn);
-        expect(spyFn).toHaveBeenCalledWith(undefined, contentResponse.result.content);
-        expect(org.ekstep.services.contentService._setContentMeta).toHaveBeenCalledWith("do_112206722833612800186", contentResponse.result.content);
+        expect(spyFn).toHaveBeenCalledWith(undefined, contentResponse.result.content);        
        }); 
 
        it("should call callback when content id is undefined", function() {
