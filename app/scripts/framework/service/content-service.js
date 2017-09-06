@@ -20,7 +20,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      *
      * @memberof org.ekstep.services.contentService
      */
-    contentFields: "body,editorState,stageIcons,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType,owner,domain,code,visibility,createdBy,description,language,mediaType,mimeType,osId,languageCode,createdOn,lastUpdatedOn,audience,ageGroup,attributions",
+    contentFields: "body,editorState,stageIcons,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType,owner,domain,code,visibility,createdBy,description,language,mediaType,mimeType,osId,languageCode,createdOn,lastUpdatedOn,audience,ageGroup,attributions,artifactUrl,board,subject,keywords,config,resourceType",
     /**
      *
      * sets content meta for the given content id
@@ -158,7 +158,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             var metaDataFields = "?mode=edit&fields=" + "versionKey";
             instance.get(this.serviceURL() + this.getConfig('contentReadUrl', '/v3/read/') + contentId + metaDataFields, this.requestHeaders, function(err, res) {
                 if (res && res.data && res.data.responseCode === "OK") {
-                    instance._setContentMeta(contentId, res.data.result.content);
+                    instance.getContentMeta(contentId).versionKey = res.data.result.content && res.data.result.content.versionKey;
                     callback(err, res.data.result.content);
                 } else {
                     callback(new Error('no content found!'), undefined)
@@ -258,14 +258,42 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      */
     publishContent: function(data, callback) {
         var requestObj = {
-                            "request": {
-                                "content" : {
-                                    "lastPublishedBy" : ecEditor.getContext('uid')
-                                }
-                            }
-                        };
+            "request": {
+                "content" : {
+                    "lastPublishedBy" : ecEditor.getContext('uid')
+                }
+            }
+        };
         this.postFromService(this.serviceURL() + this.getConfig('contentPublishURL', '/v3/publish/') + data.contentId, requestObj, this.requestHeaders, callback);
     },
+    /**
+     * Get pre-signed url for content upload
+     * @param data {object} "contentId" : String. Content ID, "fileName" : String. File Name
+     * @param callback {function} callback function
+     * @memberof org.ekstep.services.contentService
+     */
+    getPresignedURL: function(contentId, fileName, callback) {
+        var requestObj = {
+            "request": {
+                "content" : {
+                    "fileName" : fileName
+                }
+            }
+        };
+        this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + contentId, requestObj, this.requestHeaders, callback);
+    },
+
+    /**
+     * Upload file to given url
+     * @param url {string} String.
+     * @param data {file} File Data.
+     * @param callback {function} callback function
+     * @memberof org.ekstep.services.contentService
+     */
+    uploadDataToSignedURL: function(url, data, config, callback) {
+        this.put(url, data, config, callback);
+    },
+
     /**
      * Content sent for review call
      * @param data {object} "contentId" : String. Content ID
@@ -287,5 +315,11 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
     discardContentFlag: function(data, callback) {
         var requestObj = {"request":{}};
         this.postFromService(this.serviceURL() + this.getConfig('discardContentFlag', '/v3/flag/reject/') + data.contentId, requestObj, this.requestHeaders, callback);
+    },
+    uploadContent: function(contentId, data, config, callback){
+        this.postFromService(this.serviceURL() + this.getConfig('uploadContentURL', '/v3/upload/') + contentId, data, config, callback);
+    },
+    createContent: function(data, callback) {
+        this.postFromService(this.serviceURL() + this.getConfig('createContentURL', '/v3/create'), data, this.requestHeaders, callback);
     }
 }));

@@ -117,14 +117,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         function toggleGenieControls() {
             if (!$scope.showGenieControls) {
                 //Position the transparent image correctly on top of image
-                
-                // var canvasOffset = org.ekstep.contenteditor.api.jQuery('#canvas').offset();
                 setTimeout(function() {
-                    // org.ekstep.contenteditor.api.jQuery('#geniecontrols').offset({
-                    //     "top": canvasOffset.top,
-                    //     "left": canvasOffset.left,
-                    // });
-
                     org.ekstep.contenteditor.api.jQuery('#geniecontrols').css({
                         "display": 'block'
                     });
@@ -235,6 +228,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
              * @param  {function} callback Function to be invoked once the editor is loaded
              */
         org.ekstep.contenteditor.init(context, config, $scope, $document, function() {
+            var startTime = (new Date()).getTime();
             var obj = _.find($scope.appLoadMessage, { 'id': 1 });
             if (_.isObject(obj)) {
                 obj.message = "Getting things ready for you";
@@ -250,7 +244,17 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.sidebarMenus = org.ekstep.contenteditor.sidebarManager.getSidebarMenu();
             $scope.configCategory.selected = $scope.sidebarMenus[0].id;
 
+            org.ekstep.services.telemetryService.initialize({
+                uid: context.uid,
+                sid: context.sid,
+                content_id: context.contentId,
+                etags: context.etags,
+                channel:context.channel || "",
+                pdata: context.pdata || {}
+            }, org.ekstep.contenteditor.config.dispatcher);
+            org.ekstep.services.telemetryService.startEvent().append("loadtimes", { plugins: ((new Date()).getTime() - startTime) });        
             $scope.loadContent();
+
             /* KeyDown event to show ECML */
             $document.on("keydown", function(event) {
                 if ((event.metaKey || event.ctrlKey) && event.shiftKey && event.keyCode == 69) { /*ctrl+shift+e or command+shift+e*/
@@ -273,8 +277,3 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         };
     }
 ]);
-
-org.ekstep.contenteditor.jQuery(document).ready(function() {
-    var newheight = $(window).innerHeight() - 114;
-    org.ekstep.contenteditor.jQuery('.scrollable-slides').css("height", newheight + "px");
-});
