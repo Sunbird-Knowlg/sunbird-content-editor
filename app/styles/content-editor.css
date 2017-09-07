@@ -412,6 +412,10 @@ i.icon.custom-icon.dropdown-icon{
     display: block;
     height: 100%;
 }
+#toolbar .submenu .custom-popup-item .ui.mini.image{
+    max-width: 20px;
+    max-height: 20px;
+}
 
 .ui.icon.menu .item>.icon:not(.dropdown).custom-menu-icon{
     display: flex;
