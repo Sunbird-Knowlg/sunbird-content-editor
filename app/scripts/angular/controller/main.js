@@ -273,7 +273,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         };
 
         $scope.fireToolbarTelemetry = function(menu, menuType) {
-            $scope.telemetryService.interact({ "type": "click", "subtype": "menu", "target": menuType, "pluginid": '', 'pluginver': '', "objectid": menu.id, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
+            $scope.telemetryService.interact({ "type": "click", "subtype": "menu", "target": menuType, "pluginid": menu.pluginId, "pluginver": menu.pluginVer, "objectid": menu.id, "stage": org.ekstep.contenteditor.stageManager.currentStage.id });
         };
     }
 ]);
