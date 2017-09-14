@@ -91,12 +91,14 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
             if (menu.submenu) {
                 _.forEach(menu.submenu, function(dd) {
                     dd.iconImage = dd.iconImage ? instance.relativeURL(dd.iconImage) : dd.iconImage;
+                    dd.pluginId  = instance.manifest.id;
+                    dd.pluginVer = instance.manifest.ver;
                 });
             }
             if (menu.category === 'main') {
                 org.ekstep.contenteditor.toolbarManager.registerMenu(menu, instance.manifest);
             } else if (menu.category === 'context') {
-                org.ekstep.contenteditor.toolbarManager.registerContextMenu(menu);
+                org.ekstep.contenteditor.toolbarManager.registerContextMenu(menu, instance.manifest);
             }
         });
 

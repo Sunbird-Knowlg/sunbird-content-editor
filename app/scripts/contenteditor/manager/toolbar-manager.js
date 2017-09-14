@@ -9,15 +9,21 @@ org.ekstep.contenteditor.toolbarManager = new(Class.extend({
     setScope: function(scope) {
         this.scope = scope;
     },
-    registerMenu: function(menu) {
+    registerMenu: function(menu, manifest) {
         if (!_.isObject(_.find(this.menuItems, { id: menu.id }))) {
-            this.menuItems.push(menu);
+            var menuCloneObj = _.cloneDeep(menu);
+            menuCloneObj.pluginId = manifest.id;
+            menuCloneObj.pluginVer = manifest.ver;
+            this.menuItems.push(menuCloneObj);
         }
         if(this.scope) this.scope.refreshToolbar();
     },
-    registerContextMenu: function(menu) {
+    registerContextMenu: function(menu, manifest) {
         if (!_.isObject(_.find(this.contextMenuItems, { id: menu.id }))) {
-            this.contextMenuItems.push(menu);
+            var menuCloneObj = _.cloneDeep(menu);
+            menuCloneObj.pluginId = manifest.id;
+            menuCloneObj.pluginVer = manifest.ver;
+            this.contextMenuItems.push(menuCloneObj);
         }
         if(this.scope) this.scope.refreshToolbar();
     },
