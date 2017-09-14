@@ -23,6 +23,6 @@ describe('popup service', function() {
 
         org.ekstep.services.popupService.loadNgModules("path_to_template", "path_to_controller");
 
-        expect(org.ekstep.services.popupService.loadModules).toHaveBeenCalledWith("path_to_template", "path_to_controller");
+        expect(org.ekstep.services.popupService.loadModules).toHaveBeenCalledWith("path_to_template"+"?"+ecEditor.getContext('build_number'), "path_to_controller"+"?"+ecEditor.getContext('build_number'));
     });
 });
