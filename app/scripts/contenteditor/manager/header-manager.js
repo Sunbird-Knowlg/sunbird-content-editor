@@ -11,10 +11,12 @@ org.ekstep.contenteditor.headerManager = new(Class.extend({
     load: function(header, manifest) {
         var instance = this;        
         if (header.templateURL) {
+            header.templateURL = header.templateURL + '?' + ecEditor.getConfig('build_number');
             header.templateURL = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, header.templateURL);
             instance.loadNgModules(header.templateURL);
 
             if (header.controllerURL) {
+                header.controllerURL = header.controllerURL + '?' + ecEditor.getConfig('build_number');
                 header.controllerURL = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, header.controllerURL);
                 instance.loadNgModules(undefined, header.controllerURL)
                     .then(function() {

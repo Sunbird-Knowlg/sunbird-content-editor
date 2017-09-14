@@ -2,6 +2,7 @@ var express = require('express'),
     http = require('http'),
     path = require('path'),
     fs = require('fs'),
+    urlHelper = require('url'),
     bodyParser = require('body-parser'),
     proxy = require('express-http-proxy');
 
