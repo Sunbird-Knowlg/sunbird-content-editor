@@ -56,22 +56,9 @@ body {
 .stage-number {
     position: absolute;
     left: -23px;
-    bottom: 0;
-    font-size: 12px;
-}
-
-.thumbnail-container {
-    padding-left: 10px;
-}
-
-.thumbnail {
-    width: 160px !important;
-    height: 90px;
-    border-radius: 0px !important;
-}
-
-.thumbnail-ribbon {
-    top: 0.4rem !important;
+    bottom: -4px;
+    font-size: 14px;
+    font-family: Helvetica;
 }
 
 .content-masterhead {
@@ -160,9 +147,12 @@ body {
 
 #mainContainerGrid .scrollable-slides {
     overflow-y: auto;
+    width: 182px;
     height: 100%;
     box-shadow: none;
     background-color:#f9f9f9;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 #mainContainerGrid{
@@ -170,9 +160,48 @@ body {
     height: calc( 100vh - ( 55px + 38px ));
 
 }
+
 #mainContainerGrid>.row{
     box-shadow:none;
     border-top:1px solid #e6e6e7;
+}
+
+#mainContainerGrid .thumbnail-container {
+    padding-left: 10px;
+    width: 100%;
+    height: 90px;
+    display: flex;
+    -ms-align-items: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#mainContainerGrid .thumbnail {
+    max-width: 120px;
+    max-height: calc( 120px / (16/9) );
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+#mainContainerGrid .scrollable-slides .thumbnail > .ui.image{
+    border: 1px solid #e6e6e7;
+    border-radius: 4px !important;
+}
+
+#mainContainerGrid .selected-slide{
+    background: #f3f3f3;
+}
+
+#mainContainerGrid .thumbnail-ribbon {
+    top: 0.4rem !important;
+    padding-right: 0;
+    padding-left: 20px;
+    opacity: 0.6;
+    height: 20px;
+    background: #2e9fd9;
+    display: flex;
+    -ms-align-items: center;
+    align-items: center;
 }
 
 #mainContainerGrid .canvas-column{
@@ -180,6 +209,7 @@ body {
     border-left: 1px solid #e6e6e7;
     border-right: 1px solid #e6e6e7;
     box-shadow: none;
+    width: calc(58.33333333% + (16.66666667% - 182px)) !important;
 }
 
 #mainContainerGrid .sidebar-column{
@@ -187,6 +217,7 @@ body {
     padding: 0px !important;
     box-shadow:none;
 }
+
 /* main container grid related styles */
 
 .migartion-message-container {
