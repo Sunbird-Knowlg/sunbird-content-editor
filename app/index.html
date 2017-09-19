@@ -79,7 +79,8 @@
                                 <span class="stage-number">{{$index+1}}</span>
                                 <div class="ui fluid image">
                                     <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
-                                        <i class="fa fa-trash link" ng-click="fireEvent(stage.ondelete)" style="margin-right:15px;"></i><i class="clone icon link" ng-click="fireEvent(stage.duplicate)"></i>
+                                        <i class="fa fa-trash" ng-click="fireEvent(stage.ondelete)" style="margin-right:15px; cursor: pointer;"></i>
+                                        <i class="clone icon link" ng-click="fireEvent(stage.duplicate)"></i>
                                     </div>
                                     <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)" ng-click="fireEvent(stage.getOnClick())" />
                                 </div>
