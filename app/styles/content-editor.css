@@ -177,10 +177,15 @@ body {
 }
 
 #mainContainerGrid .thumbnail {
-    max-width: 120px;
-    max-height: calc( 120px / (16/9) );
+    width: 120px;
+    height: 67.5px;
     -webkit-box-shadow: none;
     box-shadow: none;
+}
+
+#mainContainerGrid .scrollable-slides .thumbnail > .ui.image.selected-slide-image{
+    border: 1px solid #2e9fd9;
+    border-radius: 4px !important;
 }
 
 #mainContainerGrid .scrollable-slides .thumbnail > .ui.image{
@@ -191,6 +196,7 @@ body {
 #mainContainerGrid .selected-slide{
     background: #f3f3f3;
 }
+
 
 #mainContainerGrid .thumbnail-ribbon {
     top: 0.4rem !important;

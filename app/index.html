@@ -77,7 +77,7 @@
                         <div ng-repeat="stage in stages track by $index" ng-class="stage.isSelected ? 'thumbnail-container selected-slide' : 'thumbnail-container'">
                             <div class="ui centered card segment thumbnail">
                                 <span class="stage-number">{{$index+1}}</span>
-                                <div class="ui fluid image">
+                                <div ng-class="stage.isSelected ? 'ui fluid image selected-slide-image' : 'ui fluid image'">
                                     <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
                                         <i class="fa fa-trash" ng-click="fireEvent(stage.ondelete)" style="margin-right:15px; cursor: pointer;"></i>
                                         <i class="clone icon link" ng-click="fireEvent(stage.duplicate)"></i>
