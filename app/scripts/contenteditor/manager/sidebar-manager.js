@@ -23,10 +23,12 @@ org.ekstep.contenteditor.sidebarManager = new(Class.extend({
         var instance = this;
         menu.state = menu.state || 'SHOW';
         if (menu.templateURL) {
+            menu.templateURL = menu.templateURL + '?' + ecEditor.getConfig('build_number');
             menu.templateURL = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, menu.templateURL);
             instance.loadNgModules(menu.templateURL);
 
             if (menu.controllerURL) {
+                menu.controllerURL = menu.controllerURL + '?' + ecEditor.getConfig('build_number');
                 menu.controllerURL = org.ekstep.contenteditor.api.resolvePluginResource(manifest.id, manifest.ver, menu.controllerURL);
                 instance.loadNgModules(undefined, menu.controllerURL)
                     .then(function() {

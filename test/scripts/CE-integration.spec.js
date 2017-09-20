@@ -101,7 +101,7 @@ describe("content editor integration test: ", function() {
     it("should register menu", function() {
         var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.test1");
         spyOn(org.ekstep.contenteditor.toolbarManager, "registerMenu").and.callThrough();
-        org.ekstep.contenteditor.toolbarManager.registerMenu(manifest.editor.menu);
+        org.ekstep.contenteditor.toolbarManager.registerMenu(manifest.editor.menu, manifest);
         expect(org.ekstep.contenteditor.toolbarManager.registerMenu).toHaveBeenCalled();
         expect(org.ekstep.contenteditor.toolbarManager.menuItems.length).toEqual(3);
     });
@@ -109,7 +109,7 @@ describe("content editor integration test: ", function() {
     it("should register context menu", function() {
         var manifest = org.ekstep.pluginframework.pluginManager.getPluginManifest("org.ekstep.utils");
         spyOn(org.ekstep.contenteditor.toolbarManager, "registerContextMenu").and.callThrough();
-        org.ekstep.contenteditor.toolbarManager.registerContextMenu(manifest.editor.menu);
+        org.ekstep.contenteditor.toolbarManager.registerContextMenu(manifest.editor.menu, manifest);
         expect(org.ekstep.contenteditor.toolbarManager.registerContextMenu).toHaveBeenCalled();
         expect(org.ekstep.contenteditor.toolbarManager.contextMenuItems.length).toEqual(5);                
     });

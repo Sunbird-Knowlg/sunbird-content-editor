@@ -1,18 +1,18 @@
-<span ng-switch on="menu.type" class="submenu">
+<span ng-switch on="menu.type">
     <span ng-if="!menu.submenu">
-        <a class="item at-menu-item popup-item custom-popup-item {{configCategory.selected == menu.id ? 'active': ''}}"  ng-click="fireToolbarTelemetry(menu, 'mainmenu'); fireEvent(menu.onclick);" data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="top center">
+        <a class="item at-menu-item popup-item custom-popup-item {{configCategory.selected == menu.id ? 'active': ''}}"  ng-click="fireToolbarTelemetry(menu, 'mainmenu'); fireEvent(menu.onclick);" data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="{{$first ? 'bottom left' : $last ? 'bottom right' : 'bottom center'}}">
             <i class="{{menu.iconClass}} custom-menu-icon" ng-if="menu.iconClass" style="{{menu.iconStyle}}" id="{{menu.id}}" ng-switch-when="icon"></i>
             <img class="ui mini image {{menu.iconClass}}" ng-src="{{menu.iconImage}}" ng-if="menu.iconImage" id="{{menu.id}}" ng-switch-when="image">
         </a>
     </span>
-    <div class="menu dropdown-menu dropdownarrowparent" ng-if="menu.submenu && menu.onclick" data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="top center">
-        <a class="item at-menu-item popup-item custom-popup-item {{configCategory.selected == menu.id ? 'active': ''}}" ng-click="fireToolbarTelemetry(menu, 'mainmenu'); fireEvent(menu.onclick);" data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="top center">
+    <div class="menu dropdown-menu dropdownarrowparent" ng-if="menu.submenu && menu.onclick" data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="{{$first ? 'bottom left' : $last ? 'bottom right' : 'bottom center'}}">
+        <a class="item at-menu-item popup-item custom-popup-item {{configCategory.selected == menu.id ? 'active': ''}}" ng-click="fireToolbarTelemetry(menu, 'mainmenu'); fireEvent(menu.onclick);" data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="{{$first ? 'bottom left' : $last ? 'bottom right' : 'bottom center'}}">
               <i class="{{menu.iconClass}} custom-menu-icon" ng-if="menu.iconClass" style="{{menu.iconStyle}}" id="{{menu.id}}" ng-switch-when="icon"></i>
               <img class="ui mini image {{menu.iconClass}}" ng-src="{{menu.iconImage}}" ng-if="menu.iconImage" id="{{menu.id}}" ng-switch-when="image">
         </a>
         <div class="dropdownarrowwrapper">
-            <i class="caret down icon custom-icon dropdown-icon"></i>
             <div class="ui dropdown dropdownarrow">
+                <i class="caret down icon custom-icon dropdown-icon"></i>
                 <div class="menu menu-icon">
                     <a class="item" ng-repeat="dd in menu.submenu" ng-click="fireToolbarTelemetry(dd, 'submenu');fireEvent(dd.onclick);" ng-switch on="dd.type">
                         <span ng-switch-when="icon">
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="menu dropdownarrowparent" ng-if="menu.submenu && !menu.onclick">
-        <div class="ui dropdown item at-menu-item popup-item custom-popup-item {{configCategory.selected == menu.id ? 'active': ''}}" data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="top center">
+        <div class="ui dropdown item at-menu-item popup-item custom-popup-item {{configCategory.selected == menu.id ? 'active': ''}}" data-content="{{menu.toolTip}}" data-variation="tiny inverted" data-position="{{$first ? 'bottom left' : $last ? 'bottom right' : 'bottom center'}}">
             <i class="{{menu.iconClass}} custom-menu-icon" ng-if="menu.iconClass" style="{{menu.iconStyle}}" id="{{menu.id}}" ng-switch-when="icon" ng-click="fireEvent(menu.onclick); fireToolbarTelemetry(menu, 'mainmenu');"></i>
             <div class="menu">
                 <a class="item" ng-repeat="dd in menu.submenu" ng-click="fireToolbarTelemetry(dd, 'submenu');fireEvent(dd.onclick);" ng-switch on="dd.type">

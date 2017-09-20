@@ -57,36 +57,37 @@
                 </div>
             </div>
             <div ng-repeat="header in headers" ng-include="header.templateURL"></div>
-            <div class="ui grid toolbar" id="toolbar" style="border-top:0.5px solid rgba(128, 128, 128, 0.34);">
+            <div class="ui grid toolbar" id="toolbar">
                 <div class="ui nine wide column" style="padding-top:0!important;">
                     <div class="ui icon menu" style="height: 38px;  display: flex; align-items: center;">
-                        <span ng-repeat="menu in menus" ng-include="'templates/toolbar.html'"></span>
-                        <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu"></span>
+                        <span class="tool" ng-repeat="menu in menus" ng-include="'templates/toolbar.html'"></span>
+                        <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu tool"></span>
                     </div>
                 </div>
                 <div class="ui three wide column" style="padding-top:0!important;">
                     <div class="ui icon menu sidebar-menu" style="height: 38px; display: flex; align-items: center;">
-                        <span ng-repeat="menu in sidebarMenus" ng-if="menu.state == 'SHOW'" ng-include="'templates/toolbar.html'" class="at-config-menu"></span>
+                        <span ng-repeat="menu in sidebarMenus" ng-if="menu.state == 'SHOW'" ng-include="'templates/toolbar.html'" class="at-config-menu tool"></span>
                     </div>
                 </div>
             </div>
             <div ng-include="'templates/deleteStageDialog.html'"></div>
-            <div id="mainContainerGrid" class="ui grid bottom attached celled" style="margin: 0; height: calc( 100vh - ( 55px + 38px ));">
+            <div id="mainContainerGrid" class="ui grid bottom attached celled">
                 <div class="row">
-                    <div class="ui two wide column scrollable-slides" style="background-color:#f9f9f9;">
-                        <div ng-repeat="stage in stages track by $index" class="thumbnail-container" style="margin-bottom: 20px">
-                            <div class="ui centered raised card segment thumbnail">
+                    <div class="ui column scrollable-slides">
+                        <div ng-repeat="stage in stages track by $index" ng-class="stage.isSelected ? 'thumbnail-container selected-slide' : 'thumbnail-container'">
+                            <div class="ui centered card segment thumbnail">
                                 <span class="stage-number">{{$index+1}}</span>
-                                <div class="ui fluid image">
+                                <div ng-class="stage.isSelected ? 'ui fluid image selected-slide-image' : 'ui fluid image'">
                                     <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
-                                        <i class="trash outline icon link" ng-click="fireEvent(stage.ondelete)"></i> <i class="clone icon link" ng-click="fireEvent(stage.duplicate)"></i>
+                                        <i class="fa fa-trash" ng-click="fireEvent(stage.ondelete)" style="margin-right:15px; cursor: pointer;"></i>
+                                        <i class="clone icon link" ng-click="fireEvent(stage.duplicate)"></i>
                                     </div>
                                     <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)" ng-click="fireEvent(stage.getOnClick())" />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="superwrapper" class="ui seven wide column" style="background-color:#f3f3f3;">
+                    <div id="superwrapper" class="ui seven wide column canvas-column">
                         <div id="canvas-wrapper" style="position:absolute; width:720px; height: 405px; left:0; right:0; margin:auto; box-shadow: 0 0 0 1px #d4d4d5, 0 2px 4px 0 rgba(34,36,38,.12), 0 2px 10px 0 rgba(34,36,38,.15);">
                             <canvas id="canvas" class="ui card centered raised" width="720px" height="405px" style="margin: 0; border-radius: 0px; background: none"></canvas>
                         </div>
@@ -101,7 +102,7 @@
                         </div>
                         -->
                     </div>
-                    <div class="ui three wide column" style="background-color: #f9f9f9; padding: 0px !important;">
+                    <div class="ui three wide right floated column sidebar-column">
                         <div class="sidebar-holder">
                             <div ng-repeat="sidebar in registeredCategories">
                                 <div ng-show="(configCategory.selected == sidebar.id && sidebar.state == 'SHOW')">
