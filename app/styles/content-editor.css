@@ -407,6 +407,10 @@ body {
     left: -42px;
 }
 
+.toolbar .ui.menu .dropdown.item .menu{
+    left: -10px;
+}
+
 #toolbar .ui.dropdown .menu {
     width: auto;
     top: calc(100% + 3px);
