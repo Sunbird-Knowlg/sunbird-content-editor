@@ -160,12 +160,12 @@ gulp.task('dist', function() {
 gulp.task('minifyCSS', function() {
     return gulp.src([
             'app/styles/semantic.min.css',
-            'app/styles/content-editor.css',
             'app/styles/MyFontsWebfontsKit.css',
-            'app/styles/iconfont.css',
+            'app/styles/icomoon/style.css',
             'app/styles/noto.css',
             'app/styles/header.css',
-            'app/styles/commonStyles.css'
+            'app/styles/commonStyles.css',
+            'app/styles/content-editor.css',
 
         ])
         .pipe(concat('style.min.css'))
@@ -197,7 +197,7 @@ gulp.task('minifyCssBower', function() {
 
 
 gulp.task('copyfonts', function() {
-    return gulp.src(['app/styles/themes/**/*', 'app/styles/webfonts/**/*', 'app/styles/fonts/*'], {
+    return gulp.src(['app/styles/themes/**/*', 'app/styles/webfonts/**/*', 'app/styles/icomoon/fonts/*'], {
             base: 'app/styles/'
         })
         .pipe(gulp.dest('content-editor/styles'));
