@@ -198,10 +198,16 @@ gulp.task('minifyCssBower', function() {
 
 
 gulp.task('copyfonts', function() {
-    return gulp.src(['app/styles/themes/**/*', 'app/styles/webfonts/**/*', 'app/styles/fonts/*', 'app/styles/icomoon/fonts/*'], {
+    return gulp.src(['app/styles/themes/**/*', 'app/styles/webfonts/**/*', 'app/styles/fonts/*'], {
             base: 'app/styles/'
         })
         .pipe(gulp.dest('content-editor/styles'));
+});
+gulp.task('copyicomoonfonts', function() {
+    return gulp.src(['app/styles/icomoon/fonts/*'], {
+            base: 'app/styles/icomoon/fonts/'
+        })
+        .pipe(gulp.dest('content-editor/styles/fonts'));
 });
 gulp.task('copyfontawsomefonts', function() {
     return gulp.src(['app/bower_components/font-awesome/fonts/fontawesome-webfont.ttf', 'app/bower_components/font-awesome/fonts/fontawesome-webfont.woff'], {
@@ -223,7 +229,7 @@ gulp.task('copydeploydependencies', function() {
         .pipe(gulp.dest('content-editor'));
 });
 
-gulp.task('minify', ['minifyallJS', 'minifyCE', 'minifyCSS', 'minifyJsBower', 'minifyFramework', 'minifyCssBower', 'copyfonts', 'copyfontawsomefonts', 'copyFiles', 'copydeploydependencies']);
+gulp.task('minify', ['minifyallJS', 'minifyCE', 'minifyCSS', 'minifyJsBower', 'minifyFramework', 'minifyCssBower', 'copyfonts', 'copyicomoonfonts', 'copyfontawsomefonts', 'copyFiles', 'copydeploydependencies']);
 
 gulp.task('inject', ['minify'], function() {
     var target = gulp.src('content-editor/index.html');
