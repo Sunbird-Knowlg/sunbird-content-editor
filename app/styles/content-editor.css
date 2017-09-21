@@ -200,7 +200,6 @@ body {
 
 #mainContainerGrid .thumbnail-ribbon {
     top: 0.4rem !important;
-    padding-right: 0;
     padding-left: 20px;
     opacity: 0.6;
     height: 20px;
@@ -442,8 +441,16 @@ i.icon.custom-icon.dropdown-icon{
     max-height: 20px;
 }
 
-#toolbar .icon-newstage.icon{
+#toolbar .icon-newstage:before{
     color: #2e9fd9;
+}
+
+.scrollable-slides .thumbnail-ribbon .icon-duplicate:before{
+    color: #fff;
+}
+
+#mainContainerGrid .thumbnail-ribbon:after{
+    border-width: 0 1.1em 1.1em 0 !important;
 }
 
 #toolbar .fa,
