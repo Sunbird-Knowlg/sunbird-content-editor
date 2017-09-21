@@ -173,7 +173,6 @@ body {
     display: flex;
     -ms-align-items: center;
     align-items: center;
-    margin-bottom: 20px;
 }
 
 #mainContainerGrid .thumbnail {
@@ -370,7 +369,7 @@ body {
 .toolbar .ui.nine.wide.column .ui.icon.menu {
     margin-bottom: 0;
     margin-top: 0;
-    margin-left: 30px;
+    margin-left: 20px;
     border: none;
     box-shadow: none;
 }
@@ -393,7 +392,7 @@ body {
     position: relative;
     display: inline-block;
     float: left;
-    width: 18px;
+    width: 15px;
     height: 30px;
     color: #4a4a4a;
     border: 1px solid transparent;
@@ -419,7 +418,7 @@ body {
 
 i.icon.custom-icon.dropdown-icon{
     margin: auto 0;
-    width: 18px;
+    width: 100%;
     color: #9b9b9b;
 }
 .submenu{
