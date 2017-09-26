@@ -436,8 +436,8 @@ i.icon.custom-icon.dropdown-icon{
 }
 
 #toolbar .submenu .custom-popup-item .ui.mini.image{
-    max-width: 20px;
-    max-height: 20px;
+    max-width: 20px !important;
+    max-height: 20px !important;
 }
 
 #toolbar .icon-newstage:before{
