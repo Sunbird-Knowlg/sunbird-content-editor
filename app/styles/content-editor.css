@@ -435,7 +435,7 @@ i.icon.custom-icon.dropdown-icon{
     border-top:1px solid #e6e6e7;
 }
 
-#toolbar .submenu .custom-popup-item .ui.mini.image{
+#toolbar .custom-popup-item .ui.mini.image{
     max-width: 20px !important;
     max-height: 20px !important;
 }
