@@ -16,9 +16,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         $scope.showAppLoadScreen = true;
         $scope.contentLoadedFlag = false;
 
-        // Collaborator comments tab
-        $scope.showCollaboratorsTab = false; 
-
         $scope.showGenieControls = true;
 
         $window.context = $window.context || window.parent.context;
@@ -217,8 +214,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
                             contentTitle: content.name,
                             contentImage: content.appIcon
                         };
-
-                        $scope.showCollaboratorsTab = _.isUndefined(content.collaborators) ? false : true;
 
                         content.contentType ? ($scope.contentDetails.contentType = '| ' + content.contentType) : ($scope.contentDetails.contentType = "");
                         $scope.setTitleBarText($scope.contentDetails.contentTitle);
