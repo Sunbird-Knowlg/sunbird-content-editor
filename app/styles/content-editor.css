@@ -532,8 +532,12 @@ i.icon.custom-icon.dropdown-icon{
 }
 /* specify size for tooltips */
 
-/* Richtext LineHeight css */
-#richtext-wrapper div {
-        line-height: 1.6;
+/* Richtext css */
+#richtext-wrapper div * {
+        line-height: 1.6 !important;
 }
-/* Richtext LineHeight css */
+
+#richtext-wrapper p {
+        margin: 0 0 0 !important;
+}
+/* Richtext css */
