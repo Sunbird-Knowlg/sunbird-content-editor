@@ -30,8 +30,8 @@ gulp.task('package', ['iframe-package', 'embed-package', 'coreplugins-package'])
 
 gulp.task('iframe-package', ['bower-package'], function() {
     var package_id = packageJson['name'] + '-' + 'iframe' + '-' + packageJson['version'];
-    return mergeStream(gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/')), 
-    gulp.src('build/**').pipe(zip(packageJson['name'] + '-iframe-latest' + '.zip')).pipe(gulp.dest('dist/')));
+    return mergeStream(gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/editor/')), 
+    gulp.src('build/**').pipe(zip(packageJson['name'] + '-iframe-latest' + '.zip')).pipe(gulp.dest('dist/editor/')));
 });
 
 gulp.task('bower-package-transform', ['iframe-package'], function() {
@@ -41,8 +41,8 @@ gulp.task('bower-package-transform', ['iframe-package'], function() {
 
 gulp.task('embed-package', ['bower-package-transform'], function() {
     var package_id = packageJson['name'] + '-' + 'embed' + '-' + packageJson['version'];
-    return mergeStream(gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/')),
-    gulp.src('build/**').pipe(zip(packageJson['name'] + '-embed-latest' + '.zip')).pipe(gulp.dest('dist/')));
+    return mergeStream(gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/editor/')),
+    gulp.src('build/**').pipe(zip(packageJson['name'] + '-embed-latest' + '.zip')).pipe(gulp.dest('dist/editor/')));
 });
 
 gulp.task('rename-coreplugins', ['embed-package'], function() {
@@ -51,5 +51,5 @@ gulp.task('rename-coreplugins', ['embed-package'], function() {
 
 gulp.task('coreplugins-package', ['rename-coreplugins'], function() {
     var package_id = packageJson['name'] + '-' + 'coreplugins' + '-' + packageJson['config'].corePluginVersion;
-    return gulp.src('build/coreplugins/*').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/'));
+    return gulp.src('build/coreplugins/*').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/coreplugins/'));
 });
