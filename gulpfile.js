@@ -307,7 +307,7 @@ var corePlugins = [
     "org.ekstep.text-1.1",
     "org.ekstep.shape-1.0",
     "org.ekstep.image-1.1",
-    "org.ekstep.audio-1.0",
+    "org.ekstep.audio-1.1",
     "org.ekstep.hotspot-1.0",
     "org.ekstep.scribblepad-1.0",
     "org.ekstep.readalongbrowser-1.0",
