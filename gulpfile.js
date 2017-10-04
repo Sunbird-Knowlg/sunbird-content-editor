@@ -327,7 +327,8 @@ var corePlugins = [
     "org.ekstep.editorstate-1.0",
     "org.ekstep.contenteditorfunctions-1.0",
     "org.ekstep.keyboardshortcuts-1.0",
-    "org.ekstep.editcontentmeta-1.1"
+    "org.ekstep.editcontentmeta-1.1",
+    "org.ekstep.richtext-1.0"
 ];
 
 gulp.task('minifyCorePlugins', function() {
