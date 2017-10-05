@@ -7,6 +7,7 @@ var zip = require('gulp-zip');
 var replace = require('gulp-string-replace');
 var packageJson = JSON.parse(fs.readFileSync('./package.json'));
 var promise = require("any-promise");
+var rename = require("gulp-rename");
 
 var cachebust = new CacheBuster();
 gulp.task('renameminifiedfiles', function() {
@@ -25,19 +26,30 @@ gulp.task('bower-package', function() {
     return gulp.src(['**', '!node_modules', '!node_modules/**', '!scripts/contenteditor.min.js', '!scripts/plugin-framework.min.js', '!scripts/contenteditor.min.js', '!gulpfile.js', '!package.json']).pipe(gulp.dest('build/'));
 });
 
-gulp.task('package', ['iframe-package', 'embed-package']);
+gulp.task('package', ['iframe-package', 'embed-package', 'coreplugins-package']);
 
 gulp.task('iframe-package', ['bower-package'], function() {
     var package_id = packageJson['name'] + '-' + 'iframe' + '-' + packageJson['version'];
-    return gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/'));
+    return mergeStream(gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/editor/')), 
+    gulp.src('build/**').pipe(zip(packageJson['name'] + '-iframe-latest' + '.zip')).pipe(gulp.dest('dist/editor/')));
 });
 
 gulp.task('bower-package-transform', ['iframe-package'], function() {
-    return mergeStream[gulp.src('build/index.html').pipe(replace('href="styles', 'href="content-editor-embed/styles')).pipe(replace('src="scripts', 'src="content-editor-embed/scripts')).pipe(replace("'templates", "'content-editor-embed/templates")).pipe(gulp.dest('build/')),
-    gulp.src('build/scripts/script.min.js').pipe(replace("src='scripts", "src='content-editor-embed/scripts")).pipe(gulp.dest('build/'))];
+    return mergeStream(gulp.src('build/index.html').pipe(replace('href="styles', 'href="content-editor-embed/styles')).pipe(replace('src="scripts', 'src="content-editor-embed/scripts')).pipe(replace("'templates", "'content-editor-embed/templates")).pipe(gulp.dest('build/')),
+    gulp.src('build/scripts/script.min.js').pipe(replace("src='scripts", "src='content-editor-embed/scripts")).pipe(gulp.dest('build/scripts/')));
 });
 
 gulp.task('embed-package', ['bower-package-transform'], function() {
     var package_id = packageJson['name'] + '-' + 'embed' + '-' + packageJson['version'];
-    return gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/'));
+    return mergeStream(gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/editor/')),
+    gulp.src('build/**').pipe(zip(packageJson['name'] + '-embed-latest' + '.zip')).pipe(gulp.dest('dist/editor/')));
+});
+
+gulp.task('rename-coreplugins', ['embed-package'], function() {
+    return gulp.src("build/scripts/coreplugins.js").pipe(rename("index.js")).pipe(gulp.dest("build/coreplugins/"));
+});
+
+gulp.task('coreplugins-package', ['rename-coreplugins'], function() {
+    var package_id = packageJson['name'] + '-' + 'coreplugins' + '-' + packageJson['config'].corePluginVersion;
+    return gulp.src('build/coreplugins/*').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/coreplugins/'));
 });
