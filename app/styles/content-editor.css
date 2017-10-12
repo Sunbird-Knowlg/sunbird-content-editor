@@ -541,3 +541,14 @@ i.icon.custom-icon.dropdown-icon{
         margin: 0 0 0 !important;
 }
 /* Richtext css */
+
+[data-tooltip]:after{
+    background: #4a4a4a;
+    padding: .3em 1em;
+    color: #ffffff;
+    font-family: Helvetica;
+}
+
+[data-tooltip]:not([data-position]):before{
+    background: #4a4a4a;
+}
