@@ -535,7 +535,7 @@ i.icon.custom-icon.dropdown-icon{
 
 /* Richtext css */
 #richtext-wrapper div * {
-        line-height: 1.6 !important;
+        line-height: 1.3 !important;
 }
 
 #richtext-wrapper p {
