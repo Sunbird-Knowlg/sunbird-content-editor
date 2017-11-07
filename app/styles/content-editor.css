@@ -549,6 +549,7 @@ i.icon.custom-icon.dropdown-icon{
     color: #ffffff;
     white-space: pre;
     font-family: Helvetica;
+    box-shadow: none;
 }
 
 [data-tooltip]:not([data-position]):before{
