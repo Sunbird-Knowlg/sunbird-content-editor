@@ -314,7 +314,7 @@ var corePlugins = [
     "org.ekstep.stageconfig-1.0",
     "org.ekstep.telemetry-1.0",
     "org.ekstep.preview-1.1",
-    "org.ekstep.activitybrowser-1.0",
+    "org.ekstep.activitybrowser-1.1",
     "org.ekstep.collaborator-1.0",
     "org.ekstep.download-1.0",
     "org.ekstep.unsupported-1.0",
