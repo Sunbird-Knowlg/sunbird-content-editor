@@ -111,4 +111,23 @@ describe('Assessment service test cases', function() {
             expect(org.ekstep.services.assessmentService.getFromService.calls.count()).toBe(1);
         })
     });
+
+    it("should return error on saveQuestion method call", function() {
+        var id = 'do_1122187471533834241137';
+        var data = {"request":{"assessment_item":{"objectType":"AssessmentItem","identifier":"do_1122187471533834241137","metadata":{"name":"What colour are the trees","title":"What colour are the trees","question":"What colour are the trees ?","description":"","model":"null","code":"org.ekstep.assessmentitem.do_1122187471533834241137","language":["English"],"used_for":"worksheet","domain":["literacy"],"gradeLevel":["Grade 2"],"createdBy":"316","keyword":[],"max_score":1,"qlevel":"EASY","lastUpdatedBy":"316","type":"mcq","options":[{"value":{"type":"mixed","text":"Red","count":"","image":null,"audio":null}},{"value":{"type":"mixed","text":"Green","count":"","image":null,"audio":null},"score":1,"answer":true},{"value":{"type":"mixed","text":"Pink","count":"","image":null,"audio":null}},{"value":{"type":"mixed","text":"Blue","count":"","image":null,"audio":null}}],"template":"mcqtest","template_id":"domain_46659","question_image":"","question_audio":""},"outRelations":[{"endNodeId":"LO17","relationType":"associatedTo"}]}}};
+        var responseData = {"id":"ekstep.learning.item.update","ver":"1.0","ts":"2017-11-22T06:47:47ZZ","params":{"resmsgid":"54ef9efe-29ec-48e6-a7e2-10603e935a32","msgid":"cc08a106-b419-4d3d-8376-b8bd0df5ba32","err":null,"status":"successful","errmsg":null},"responseCode":"OK","result":{"node_id":"do_1122187471533834241137","versionKey":"1511333267825"}};
+    
+        org.ekstep.services.assessmentService.post = jasmine.createSpy().and.callFake(function(url, data, headers, cb) {
+            cb("NOT FOUND", responseData);
+        });
+       
+        spyOn(org.ekstep.services.assessmentService, "saveQuestion").and.callThrough();
+        org.ekstep.services.assessmentService.saveQuestion(id, data, function(err, res) {
+            expect(err.responseText).toBe("NOT FOUND");
+        });
+
+        org.ekstep.services.assessmentService.saveQuestion('', data, function(err, res) {
+            expect(err).toBe("NOT FOUND");
+        });
+    });
 });
