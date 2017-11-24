@@ -16,7 +16,8 @@
     "semantic": "^2.2.6",
     "ng-dialog": "^0.6.4",
     "oclazyload": "^1.0.9",
-    "ngSafeApply": "./libs/Scope.SafeApply.js"
+    "ngSafeApply": "./libs/Scope.SafeApply.js",
+    "angular-camelize-filter": "^1.0.2"
   },
   "appPath": "app",
   "moduleName": "editorApp",

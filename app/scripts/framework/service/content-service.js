@@ -321,5 +321,15 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
     },
     createContent: function(data, callback) {
         this.postFromService(this.serviceURL() + this.getConfig('createContentURL', '/v3/create'), data, this.requestHeaders, callback);
+    },
+    unlistedPublishContent: function(data, callback) {
+        var requestObj = {
+            "request": {
+                "content" : {
+                    "lastPublishedBy" : ecEditor.getContext('uid')
+                }
+            }
+        };
+        this.postFromService(this.serviceURL() + this.getConfig('contentUnlistedPublishURL', '/v3/unlisted/publish/') + data.contentId, requestObj, this.requestHeaders, callback);
     }
 }));

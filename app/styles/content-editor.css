@@ -153,6 +153,7 @@ body {
     background-color:#f9f9f9;
     padding-left: 0;
     padding-right: 0;
+    padding-top: 0;
 }
 
 #mainContainerGrid{
@@ -534,7 +535,7 @@ i.icon.custom-icon.dropdown-icon{
 
 /* Richtext css */
 #richtext-wrapper div * {
-        line-height: 1.6 !important;
+        line-height: 1.3 !important;
 }
 
 #richtext-wrapper p {
@@ -548,8 +549,34 @@ i.icon.custom-icon.dropdown-icon{
     color: #ffffff;
     white-space: pre;
     font-family: Helvetica;
+    box-shadow: none;
 }
 
 [data-tooltip]:not([data-position]):before{
     background: #4a4a4a;
 }
+
+/* for color selection pallete*/
+    
+    .sp-replacer{
+        background: transparent !important;
+        border-color: transparent !important;
+        border-radius: 4px;
+        padding: 0 !important;
+    }
+
+    .sp-replacer .sp-preview{
+        border-radius: 4px;
+        height: 26px;
+        width: 26px;
+        margin-right: 0;
+    }
+
+    .sp-replacer .sp-preview .sp-preview-inner{
+        border-radius: 4px;
+    }
+
+    .sp-replacer .sp-dd{
+        display: none;
+    }
+/* for color selection */
