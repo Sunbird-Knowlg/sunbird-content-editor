@@ -176,7 +176,7 @@ describe('Content service test cases', function() {
         });
     });
 
-    it("Should uploadDataToSignedURL method call", function() {
+    xit("Should uploadDataToSignedURL method call", function() {
         spyOn(org.ekstep.services.contentService,"uploadDataToSignedURL").and.callThrough();
         org.ekstep.services.contentService.uploadDataToSignedURL('',[], [],function(err, res) {
             expect(res).toBe(downloadContentRes);
