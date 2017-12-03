@@ -29,7 +29,8 @@ org.ekstep.contenteditor.migration = new(Class.extend({
     },
     postMigration: function(content, stageIcons) {
         var instance = this;
-        org.ekstep.services.telemetryService.startEvent().append("loadtimes", { migration: ((new Date()).getTime() - instance._startTime) });
+        //org.ekstep.services.telemetryService.startEvent().append("loadtimes", { migration: ((new Date()).getTime() - instance._startTime) });
+        org.ekstep.services.telemetryService.startEvent().duration((new Date()).getTime() - startTime);
         instance.setNewVersion(content);
         instance.showLoadScreenMsg();        
         console.info('Migration task completed!');        

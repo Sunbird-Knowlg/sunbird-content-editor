@@ -20,6 +20,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     initialized: true,
     start_event: undefined,
     startEventData: undefined,
+    contentLoadTime: 0,
     /**
      * 
      * Initialize the service with context and dispatcher.     
@@ -52,7 +53,6 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         window.addEventListener('unload', /* istanbul ignore next */ function() {
             instance.end();
         });
-
         this.startEventData = { defaultPlugins: Object.keys(org.ekstep.pluginframework.pluginManager.plugins), loadtimes: {}, client: {} };
     },
     /**
@@ -70,13 +70,8 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     startEvent: function(autopublish) {
         var instance = this;
         return {
-            getData: function() {
-                return instance.startEventData;
-            },
-            append: function(param, dataObj) {
-                for (var key in dataObj) {
-                    instance.startEventData[param][key] = dataObj[key];
-                }
+            duration: function(time){
+                instance.contentLoadTime += parseInt(time);
                 if (autopublish) instance.start();
             }
         }
@@ -199,11 +194,36 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      *
      */
     interact: function(data) {
-        if (!this.hasRequiredData(data, this.interactRequiredFields)) {
+        if(!(data.hasOwnProperty('type') && (data.hasOwnProperty('objectid') || data.hasOwnProperty('id')))){
             console.error('Invalid interact data');
             return;
         }
-        this._dispatch(this.getEvent('CE_INTERACT', data))
+        var eventData = {
+            "type": data.type,
+            "id": data.id || data.objectid
+        };
+        // for V3 implementation
+        if(data.extra)
+            eventData.extra = data.extra;
+        if(data.subtype)
+            eventData.subtype = data.subtype;
+        if(data.pageid || data.stage)
+            eventData.pageid = data.pageid || data.stage;
+        // converting plugin, tareget for v3 from v2 data 
+        eventData.plugin = data.plugin ? data.plugin : { "id": data.pluginid, "ver": data.pluginver }
+        if(data.target && _.isObject(data.target)){
+            eventData.target = data.target;
+        }else{
+            // converting target for v3 from v2 data
+            eventData.target = {
+                "id": data.target,
+                "ver": "",
+                "type": ""
+            }
+        }
+        var interactEvent = EkTelemetry.interact(eventData);
+        console.log('interactEvent ', interactEvent);
+        //this._dispatch(interactEvent)
     },
     /**
      *
@@ -212,9 +232,13 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      *
      */
     end: function() {
-        var endEvent = this.getEvent('CE_END', {});
-        endEvent.edata.eks.duration = (new Date()).getTime() - this.start_event.ets;
-        this._dispatch(endEvent);
+        var endEvent = EkTelemetry.end({
+            "type": "editor",
+            "mode": ecEditor.getConfig('telemetryMode') || "content",
+            "pageid": ecEditor.getCurrentStage() ? ecEditor.getCurrentStage().id : ""
+        });
+        console.log('endEvent ', endEvent);
+        //this._dispatch(endEvent);
     },
     /**
      *
@@ -224,11 +248,11 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      *
      */
     pluginLifeCycle: function(data) {
-        if (!this.hasRequiredData(data, this.lifecycleRequiredFields)) {
+        if(!(data.hasOwnProperty('type') && (data.hasOwnProperty('objectid') || data.hasOwnProperty('id')))){
             console.error('Invalid plugin lifecycle event data');
             return;
         }
-        this._dispatch(this.getEvent('CE_PLUGIN_LIFECYCLE', data))
+        this.interact(data);
     },
     /**
      *
@@ -238,11 +262,24 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      *
      */
     error: function(data) {
-        if (!this.hasRequiredData(data, this.errorRequiredFields)) {
+        if(!(data.hasOwnProperty('err') && (data.hasOwnProperty('type') || data.hasOwnProperty('errtype')) && (data.hasOwnProperty('data') || data.hasOwnProperty('stacktrace')))){
             console.error('Invalid error data');
             return;
         }
-        this._dispatch(this.getEvent('CE_ERROR', data))
+        var eventData = {
+            "err": data.err,
+            "errtype": data.type || data.errtype,
+            "stacktrace": data.data || data.stacktrace
+        }
+        // for V3 implementation
+        if(data.pageid || data.stage)
+            eventData.pageid = data.stage || data.pageid;
+        if(data.plugin)
+            eventData.plugin = data.plugin;
+        eventData.object = data.object ? data.object : { "id": data.objectid, "type": data.objecttype };
+        var errorEvent = EkTelemetry.error(eventData);
+        console.log('errorEvent ', errorEvent)
+        //this._dispatch(errorEvent)
     },
     /**
      *
@@ -251,9 +288,30 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      *
      */
     start: function() {
-        this.startEventData.client = this.detectClient();
-        this.start_event = this.getEvent('CE_START', this.startEventData);
-        this._dispatch(this.start_event);
+        var config = {
+            uid: ecEditor.getContext('uid'),
+            sid: ecEditor.getContext('sid'),
+            etags: ecEditor.getContext('etags'),
+            channel: ecEditor.getContext('channel') || "",
+            pdata: ecEditor.getContext('pdata') || {id: "", ver: ""},
+            env: "contenteditor",
+            dispatcer: 'piwik',
+            object: {
+                id: ecEditor.getContext('contentId'),
+                type: "Content",
+                ver: ""
+            },
+            dispatcher: this.getDispatcher(org.ekstep.contenteditor.config.dispatcher)
+        }
+        this.start_event = EkTelemetry.start(config, org.ekstep.contenteditor.api.getContext('contentId'), "", { 
+            "uaspec": this.detectClient(),
+            "type": "editor",
+            "mode": ecEditor.getConfig('telemetryMode') || "content",
+            "duration": this.contentLoadTime,
+            "pageid": ecEditor.getCurrentStage() ? ecEditor.getCurrentStage().id : ""
+        });
+        console.log('this.start_event ', this.start_event);
+        //this._dispatch(this.start_event);
     },
     /**
      *
@@ -267,7 +325,42 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             console.error('Invalid api call data');
             return;
         }
-        this._dispatch(this.getEvent('CE_API_CALL', data))
+        var eventData = {
+            "type": "api_call",
+            "level": "INFO",
+            "message": "",
+            "params": [data]
+        }
+        console.log('eventData ', eventData)
+        var logEvent = EkTelemetry.log(eventData);
+        console.log('logEvent ', logEvent)
+        //this._dispatch(logEvent);
+    },
+    /**
+     *
+     * dispatches log event
+     * @param data {object} log event data
+     * @memberof org.ekstep.services.telemetryService
+     *
+     */
+    log: function(data){
+        if (!this.hasRequiredData(data, ["type", "level", "message"])) {
+            console.error('Invalid log data');
+            return;
+        }
+        var eventData = {
+            "type": data.type,
+            "level": data.level,
+            "message": data.message
+        }
+        // for V3 implementation
+        if(data.pageid || data.stage)
+            eventData.pageid = data.stage || data.pageid;
+        if(data.params)
+            eventData.params = data.params;
+        var logEvent = EkTelemetry.log(eventData);
+        console.log('logEvent ', logEvent)
+        //this._dispatch(logEvent);
     },
     /**
      *
@@ -320,7 +413,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         /* istanbul ignore next. Cannot test this as the test cases runs in phatomjs browser */
         if ((ix = fullVersion.indexOf(" ")) != -1)
             fullVersion = fullVersion.substring(0, ix);
-
-        return { browser: browserName, browserver: fullVersion, os: navigator.platform };
+        
+        return { agent: browserName, ver: fullVersion, system: navigator.platform, platform: "", raw:  navigator.userAgent};
     }
 }));
