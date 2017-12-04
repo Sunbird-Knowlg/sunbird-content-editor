@@ -232,8 +232,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     end: function() {
         EkTelemetry.end({
             "type": "editor",
-            "mode": ecEditor.getConfig('telemetryMode') || "content",
-            "pageid": ecEditor.getCurrentStage() ? ecEditor.getCurrentStage().id : ""
+            "mode": ecEditor.getConfig('editorType') || "content"
         });
     },
     /**
@@ -290,20 +289,19 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             channel: ecEditor.getContext('channel') || "in.ekstep",
             pdata: ecEditor.getContext('pdata') || {id: "", pid: "ekstep_portal", ver: ""},
             env: "contenteditor",
-            dispatcer: 'piwik',
+            dispatcer: org.ekstep.contenteditor.config.dispatcher,
             object: {
                 id: ecEditor.getContext('contentId'),
                 type: "Content",
                 ver: ""
             },
             dispatcher: instance.getDispatcher(org.ekstep.contenteditor.config.dispatcher)
-        }
+        };
         EkTelemetry.start(config, org.ekstep.contenteditor.api.getContext('contentId'), "", { 
             "uaspec": instance.detectClient(),
             "type": "editor",
-            "mode": ecEditor.getConfig('telemetryMode') || "content",
-            "duration": instance.contentLoadTime,
-            "pageid": ecEditor.getCurrentStage() ? ecEditor.getCurrentStage().id : ""
+            "mode": ecEditor.getConfig('editorType') || "content",
+            "duration": instance.contentLoadTime
         });
     },
     /**
