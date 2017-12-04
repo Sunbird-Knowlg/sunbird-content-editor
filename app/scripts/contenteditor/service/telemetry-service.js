@@ -221,9 +221,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
                 "type": ""
             }
         }
-        var interactEvent = EkTelemetry.interact(eventData);
-        console.log('interactEvent ', interactEvent);
-        //this._dispatch(interactEvent)
+        EkTelemetry.interact(eventData);
     },
     /**
      *
@@ -232,13 +230,11 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      *
      */
     end: function() {
-        var endEvent = EkTelemetry.end({
+        EkTelemetry.end({
             "type": "editor",
             "mode": ecEditor.getConfig('telemetryMode') || "content",
             "pageid": ecEditor.getCurrentStage() ? ecEditor.getCurrentStage().id : ""
         });
-        console.log('endEvent ', endEvent);
-        //this._dispatch(endEvent);
     },
     /**
      *
@@ -277,9 +273,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         if(data.plugin)
             eventData.plugin = data.plugin;
         eventData.object = data.object ? data.object : { "id": data.objectid, "type": data.objecttype };
-        var errorEvent = EkTelemetry.error(eventData);
-        console.log('errorEvent ', errorEvent)
-        //this._dispatch(errorEvent)
+        EkTelemetry.error(eventData);
     },
     /**
      *
@@ -303,15 +297,13 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             },
             dispatcher: this.getDispatcher(org.ekstep.contenteditor.config.dispatcher)
         }
-        this.start_event = EkTelemetry.start(config, org.ekstep.contenteditor.api.getContext('contentId'), "", { 
+        EkTelemetry.start(config, org.ekstep.contenteditor.api.getContext('contentId'), "", { 
             "uaspec": this.detectClient(),
             "type": "editor",
             "mode": ecEditor.getConfig('telemetryMode') || "content",
             "duration": this.contentLoadTime,
             "pageid": ecEditor.getCurrentStage() ? ecEditor.getCurrentStage().id : ""
         });
-        console.log('this.start_event ', this.start_event);
-        //this._dispatch(this.start_event);
     },
     /**
      *
@@ -332,9 +324,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             "params": [data]
         }
         console.log('eventData ', eventData)
-        var logEvent = EkTelemetry.log(eventData);
-        console.log('logEvent ', logEvent)
-        //this._dispatch(logEvent);
+        EkTelemetry.log(eventData);
     },
     /**
      *
@@ -358,9 +348,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             eventData.pageid = data.stage || data.pageid;
         if(data.params)
             eventData.params = data.params;
-        var logEvent = EkTelemetry.log(eventData);
-        console.log('logEvent ', logEvent)
-        //this._dispatch(logEvent);
+        EkTelemetry.log(eventData);
     },
     /**
      *
