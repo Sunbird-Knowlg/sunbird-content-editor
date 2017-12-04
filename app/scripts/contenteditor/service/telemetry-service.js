@@ -286,8 +286,8 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             uid: ecEditor.getContext('uid'),
             sid: ecEditor.getContext('sid'),
             etags: ecEditor.getContext('etags'),
-            channel: ecEditor.getContext('channel') || "",
-            pdata: ecEditor.getContext('pdata') || {id: "", ver: ""},
+            channel: ecEditor.getContext('channel') || "in.ekstep",
+            pdata: ecEditor.getContext('pdata') || {id: "", pid: "ekstep_portal", ver: ""},
             env: "contenteditor",
             dispatcer: 'piwik',
             object: {
