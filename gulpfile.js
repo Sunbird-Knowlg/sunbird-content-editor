@@ -71,6 +71,7 @@ var contentEditorApp = [
 ];
 
 var editorFramework = [
+    "app/libs/telemetry-lib-v3.min.js",
     "app/scripts/contenteditor/bootstrap-editor.js",
     "app/scripts/contenteditor/ce-config.js",
     "app/scripts/contenteditor/content-editor.js",
@@ -94,7 +95,6 @@ var pluginFramework = [
     "app/scripts/framework/class.js",
     "app/scripts/framework/libs/eventbus.min.js",
     "app/scripts/framework/libs/mousetrap.min.js",
-    "app/scripts/framework/libs/telemetry-lib-v3.min.js",
     "app/scripts/framework/bootstrap-framework.js",
     "app/scripts/framework/manager/resource-manager.js",
     "app/scripts/framework/manager/event-manager.js",
