@@ -282,6 +282,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      *
      */
     start: function() {
+        var instance = this;
         var config = {
             uid: ecEditor.getContext('uid'),
             sid: ecEditor.getContext('sid'),
@@ -295,13 +296,13 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
                 type: "Content",
                 ver: ""
             },
-            dispatcher: this.getDispatcher(org.ekstep.contenteditor.config.dispatcher)
+            dispatcher: instance.getDispatcher(org.ekstep.contenteditor.config.dispatcher)
         }
         EkTelemetry.start(config, org.ekstep.contenteditor.api.getContext('contentId'), "", { 
-            "uaspec": this.detectClient(),
+            "uaspec": instance.detectClient(),
             "type": "editor",
             "mode": ecEditor.getConfig('telemetryMode') || "content",
-            "duration": this.contentLoadTime,
+            "duration": instance.contentLoadTime,
             "pageid": ecEditor.getCurrentStage() ? ecEditor.getCurrentStage().id : ""
         });
     },
