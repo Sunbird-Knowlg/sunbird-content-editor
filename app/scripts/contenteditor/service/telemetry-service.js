@@ -3,12 +3,13 @@
  * Telemetry service helps to log telemetry events. Telemetry service generates below listed events
  * and logs to registered dispatchers.
  * <ol>
- *  <li>CE_START
- *  <li>CE_API_CALL
- *  <li>CE_INTERACT
- *  <li>CE_PLUGIN_LIFECYCLE
- *  <li>CE_ERROR
- *  <li>CE_END
+ *  <li> V2 =>  V3
+ *  <li>CE_START => START
+ *  <li>CE_API_CALL => LOG
+ *  <li>CE_INTERACT => INTERACT
+ *  <li>CE_PLUGIN_LIFECYCLE => INTERACT
+ *  <li>CE_ERROR => ERROR
+ *  <li>CE_END => END
  * </ol>
  *
  * @class org.ekstep.services.telemetryService
@@ -22,7 +23,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     startEventData: undefined,
     contentLoadTime: 0,
     /**
-     * 
+     * Deperecated: V3 telemetry implementation
      * Initialize the service with context and dispatcher.     
      * @param context {object} context object can have uid, sid, context_id. 
      * context should have content id, otherwise telemetry service cannot be initialized.
@@ -35,7 +36,6 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      * </ol>
      * 
      * @memberof org.ekstep.services.telemetryService
-     *
      */
     initialize: function(context, dispatcher) {
         var instance = this;
@@ -135,7 +135,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         }
     },
     /**
-     *
+     * Deperecated: V3 telemetry implementation
      * returns structured telemetry event for the given data
      * @param eventId {string} 
      * <ol>
@@ -295,7 +295,8 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
                 type: "Content",
                 ver: ""
             },
-            dispatcher: instance.getDispatcher(org.ekstep.contenteditor.config.dispatcher)
+            dispatcher: instance.getDispatcher(org.ekstep.contenteditor.config.dispatcher),
+            rollup: ecEditor.getContext('rollup') || {}
         };
         EkTelemetry.start(config, org.ekstep.contenteditor.api.getContext('contentId'), "", { 
             "uaspec": instance.detectClient(),
