@@ -287,7 +287,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             sid: ecEditor.getContext('sid'),
             etags: ecEditor.getContext('etags'),
             channel: ecEditor.getContext('channel') || "in.ekstep",
-            pdata: ecEditor.getContext('pdata') || {id: "", pid: "ekstep_portal", ver: ""},
+            pdata: ecEditor.getContext('pdata') || {id: "in.ekstep", pid: "ekstep_portal", ver: "1.0"},
             env: "contenteditor",
             dispatcer: org.ekstep.contenteditor.config.dispatcher,
             object: {
@@ -303,6 +303,12 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             "type": "editor",
             "mode": ecEditor.getConfig('editorType') || "content",
             "duration": instance.contentLoadTime
+        });
+
+        EkTelemetry.impression({
+            type: "edit",
+            pageid: "contenteditor",
+            uri: location.href
         });
     },
     /**
