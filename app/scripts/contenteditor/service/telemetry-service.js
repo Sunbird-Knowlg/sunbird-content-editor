@@ -298,7 +298,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             rollup: ecEditor.getContext('rollup') || {}
         };
         if(!_.isArray(ecEditor.getContext('etags'))){
-            config.tags = [ecEditor.getContext('etags')];
+            config.tags = [JSON.stringify(ecEditor.getContext('etags'))];
         }else{
             config.tags = ecEditor.getContext('etags') || ecEditor.getContext('tags');
         }
