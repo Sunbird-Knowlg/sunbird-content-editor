@@ -285,10 +285,10 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         var config = {
             uid: ecEditor.getContext('uid'),
             sid: ecEditor.getContext('sid'),
-            etags: ecEditor.getContext('etags'),
+            tags: ecEditor.getContext('etags') || ecEditor.getContext('tags'),
             channel: ecEditor.getContext('channel') || "in.ekstep",
             pdata: ecEditor.getContext('pdata') || {id: "in.ekstep", pid: "ekstep_portal", ver: "1.0"},
-            env: "contenteditor",
+            env: ecEditor.getContext('env') || "contenteditor",
             dispatcer: org.ekstep.contenteditor.config.dispatcher,
             object: {
                 id: ecEditor.getContext('contentId'),
@@ -308,7 +308,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         EkTelemetry.impression({
             type: "edit",
             pageid: "contenteditor",
-            uri: location.href
+            uri: encodeURIComponent(location.href)
         });
     },
     /**
