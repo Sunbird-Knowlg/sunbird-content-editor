@@ -280,7 +280,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.telemetryService
      *
      */
-    start: function() {
+    start: function(durartion) {
         var instance = this;
         var config = {
             uid: ecEditor.getContext('uid'),
@@ -306,7 +306,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             "uaspec": instance.detectClient(),
             "type": "editor",
             "mode": ecEditor.getConfig('editorType') || "content",
-            "duration": instance.contentLoadTime
+            "duration": durartion
         });
 
         EkTelemetry.impression({

@@ -829,7 +829,7 @@ describe("content editor integration test: ", function() {
             expect(org.ekstep.contenteditor.api.instantiatePlugin.calls.count()).toEqual(getPluginCount('total'));
         });
 
-        it('should dispatch telemetry "CE_START" event', function() {
+        xit('should dispatch telemetry "CE_START" event', function() {
             expect(org.ekstep.services.telemetryService.start).toHaveBeenCalled();
             expect(org.ekstep.services.telemetryService.start.calls.count()).toBe(1);
         });

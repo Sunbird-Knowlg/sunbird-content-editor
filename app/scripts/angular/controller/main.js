@@ -243,7 +243,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.currentStage = org.ekstep.contenteditor.api.getCurrentStage();
             $scope.sidebarMenus = org.ekstep.contenteditor.sidebarManager.getSidebarMenu();
             $scope.configCategory.selected = $scope.sidebarMenus[0].id;
-            org.ekstep.services.telemetryService.startEvent(true).duration((new Date()).getTime() - startTime);
+            org.ekstep.services.telemetryService.start((new Date()).getTime() - startTime);
             $scope.loadContent();
 
             /* KeyDown event to show ECML */
