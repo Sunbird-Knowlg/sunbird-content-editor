@@ -35,7 +35,7 @@ module.exports = function(config) {
             "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.templatesLoader.js",
             "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
             "app/bower_components/oclazyload/dist/ocLazyLoad.js",
-            "app/bower_components/fingerprint/fingerprint.js",
+            "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
             "test/baseSpec.js",
             "test/data/ECMLcontent.fixture.js",
             "app/scripts/dev/localhost-ce.js",
