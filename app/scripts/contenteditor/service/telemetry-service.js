@@ -285,7 +285,6 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         var config = {
             uid: ecEditor.getContext('uid'),
             sid: ecEditor.getContext('sid'),
-            did: ecEditor.getContext('did') || new Fingerprint().get().toString(),
             channel: ecEditor.getContext('channel') || "in.ekstep",
             pdata: ecEditor.getContext('pdata') || {id: "in.ekstep", pid: "ekstep_portal", ver: "1.0"},
             env: ecEditor.getContext('env') || "contenteditor",
@@ -298,6 +297,14 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             dispatcher: instance.getDispatcher(org.ekstep.contenteditor.config.dispatcher),
             rollup: ecEditor.getContext('rollup') || {}
         };
+        if(ecEditor.getContext('did')){
+            config.did = ecEditor.getContext('did');
+        }else{
+            var fp = new Fingerprint2();
+            fp.get(function(result) {
+                config.did = result.toString();
+            });
+        }
         if(!_.isArray(ecEditor.getContext('etags'))){
             config.tags = [JSON.stringify(ecEditor.getContext('etags'))];
         }else{
