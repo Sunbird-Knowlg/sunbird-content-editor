@@ -282,6 +282,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      */
     start: function(durartion) {
         var instance = this;
+        var fp = new Fingerprint2();
         var config = {
             uid: ecEditor.getContext('uid'),
             sid: ecEditor.getContext('sid'),
@@ -297,19 +298,23 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             dispatcher: instance.getDispatcher(org.ekstep.contenteditor.config.dispatcher),
             rollup: ecEditor.getContext('rollup') || {}
         };
-        if(ecEditor.getContext('did')){
-            config.did = ecEditor.getContext('did');
-        }else{
-            var fp = new Fingerprint2();
-            fp.get(function(result) {
-                config.did = result.toString();
-            });
-        }
         if(!_.isArray(ecEditor.getContext('etags'))){
             config.tags = [JSON.stringify(ecEditor.getContext('etags'))];
         }else{
             config.tags = ecEditor.getContext('etags') || ecEditor.getContext('tags');
         }
+        if(ecEditor.getContext('did')){
+            config.did = ecEditor.getContext('did');
+            instance.logStartAndImpression(config, durartion);
+        }else{
+            fp.get(function(result) {
+                config.did = result.toString();
+                instance.logStartAndImpression(config, durartion);
+            });
+        }
+    },
+    logStartAndImpression: function(config, durartion){
+        var instance = this;
         EkTelemetry.start(config, org.ekstep.contenteditor.api.getContext('contentId'), "", { 
             "uaspec": instance.detectClient(),
             "type": "editor",
