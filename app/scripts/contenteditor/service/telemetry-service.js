@@ -285,6 +285,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         var config = {
             uid: ecEditor.getContext('uid'),
             sid: ecEditor.getContext('sid'),
+            did: ecEditor.getContext('did') || new Fingerprint().get().toString(),
             channel: ecEditor.getContext('channel') || "in.ekstep",
             pdata: ecEditor.getContext('pdata') || {id: "in.ekstep", pid: "ekstep_portal", ver: "1.0"},
             env: ecEditor.getContext('env') || "contenteditor",

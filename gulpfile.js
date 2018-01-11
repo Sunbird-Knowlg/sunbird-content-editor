@@ -41,7 +41,8 @@ var bower_components = [
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.templatesLoader.js",
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
     "app/bower_components/oclazyload/dist/ocLazyLoad.js",
-    "app/scripts/contenteditor/md5.js"
+    "app/scripts/contenteditor/md5.js",
+    "app/bower_components/fingerprint/fingerprint.js"
 ];
 
 var bower_css = [

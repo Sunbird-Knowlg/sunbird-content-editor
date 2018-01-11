@@ -17,7 +17,8 @@
     "ng-dialog": "^0.6.4",
     "oclazyload": "^1.0.9",
     "ngSafeApply": "./libs/Scope.SafeApply.js",
-    "angular-camelize-filter": "^1.0.2"
+    "angular-camelize-filter": "^1.0.2",
+    "fingerprint": "^0.5.0"
   },
   "appPath": "app",
   "moduleName": "editorApp",
