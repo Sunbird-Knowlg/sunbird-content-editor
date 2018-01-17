@@ -5,7 +5,7 @@
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
 org.ekstep.services.assessmentService = new(org.ekstep.services.iService.extend({
-    /**
+    /** 
      * @member {string} learningURL
      * @memberof org.ekstep.services.assessmentService
      */
@@ -20,15 +20,6 @@ org.ekstep.services.assessmentService = new(org.ekstep.services.iService.extend(
      */
     getQuestions: function(data, callback) {
         org.ekstep.services.searchService.search(data, callback);
-    },
-    /**
-     * Get Questions from search assesmentItems
-     * @param  {object}   data     search filter data
-     * @param  {Function} callback returns error and response as arguments
-     * @memberof org.ekstep.services.assessmentService
-     */
-    getQuestionItems: function(data, callback) {
-        this.postFromService(this.assessmentURL() + '/v3/items/search', data, this.requestHeaders, callback);
     },
     /**
      * Get selected Question(assessmentitem)
@@ -67,6 +58,15 @@ org.ekstep.services.assessmentService = new(org.ekstep.services.iService.extend(
                 callback(err, res)
             });
         }
+    },
+    /**
+     * Get Questions from search assesmentItems
+     * @param  {object}   data     search filter data
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.assessmentService
+     */
+    getQuestionItems: function(data, callback) {
+        this.postFromService(this.assessmentURL() + '/v3/items/search', data, this.requestHeaders, callback);
     },
     /**
      * This method is used to save v3 question
