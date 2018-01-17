@@ -5,7 +5,7 @@
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
 org.ekstep.services.assessmentService = new(org.ekstep.services.iService.extend({
-    /** 
+    /**
      * @member {string} learningURL
      * @memberof org.ekstep.services.assessmentService
      */
@@ -20,6 +20,15 @@ org.ekstep.services.assessmentService = new(org.ekstep.services.iService.extend(
      */
     getQuestions: function(data, callback) {
         org.ekstep.services.searchService.search(data, callback);
+    },
+    /**
+     * Get Questions from search assesmentItems
+     * @param  {object}   data     search filter data
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.assessmentService
+     */
+    getQuestionItems: function(data, callback) {
+        this.postFromService(this.assessmentURL() + '/v3/items/search', data, this.requestHeaders, callback);
     },
     /**
      * Get selected Question(assessmentitem)
@@ -55,6 +64,26 @@ org.ekstep.services.assessmentService = new(org.ekstep.services.iService.extend(
             });
         } else {
             instance.post(this.assessmentURL() + 'assessmentitems/create', requestObj, this.requestHeaders, function(err, res) {
+                callback(err, res)
+            });
+        }
+    },
+    /**
+     * This method is used to save v3 question
+     * @param  {string}   assessmentId
+     * @param  {object}   requestObj
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.assessmentService
+     */
+    saveQuestionV3: function(assessmentId, requestObj, callback) {
+        var instance = this;
+        /*If assessment Id exists then update the question else create*/
+        if (assessmentId) {
+            instance.patch(this.assessmentURL() + '/v3/items/update/' + assessmentId, requestObj, this.requestHeaders, function(err, res) {
+                callback(err, res)
+            });
+        } else {
+            instance.post(this.assessmentURL() + '/v3/items/create', requestObj, this.requestHeaders, function(err, res) {
                 callback(err, res)
             });
         }
