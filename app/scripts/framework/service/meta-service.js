@@ -82,7 +82,7 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @param  {Function} callback returns error and response as arguments
      * @memberof org.ekstep.services.metaService
      */
-    suggestVocabulary: function(callback){
+    suggestVocabulary: function(data, callback){
         this.postFromService(this.vocabularyURL() + this.getConfig('suggestVocabularyUrl','/v3/term/suggest'),data, this.requestHeaders, callback); 
     },
 
@@ -91,9 +91,8 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @param  {Function} callback returns error and response as arguments
      * @memberof org.ekstep.services.metaService
      */
-    createVocabulary: function(){
-        this.postFromService(this.vocabularyURL() + this.getConfig('createVocabularUrl','/v3/term/create'), data, this.requestHeaders, callback);
+    createVocabulary: function(data, callback){
+        this.postFromService(this.vocabularyURL() + this.getConfig('createVocabularUrl','/v3/term/create'),data, this.requestHeaders, callback);
     }
-
 
 }));
