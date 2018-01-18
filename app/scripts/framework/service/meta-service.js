@@ -33,6 +33,15 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
     domainURL: function(){
         return this.getBaseURL() + this.getAPISlug() + this.getConfig('domainEndPoint', '/domain')
     },
+
+    /** 
+     * @member {string} vocabularyURL
+     * @memberof org.ekstep.services.metaService
+     */
+    vocabularyURL: function(){
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('vocabularyEndPoint','/vocabulary')
+    },
+
     /**
      * Returns the schema of the specified object. The schema will contain all the properties details (name, code, datatype, identifier etc,.).
      * @param  {string}   objectType  eg.AssessmentItem, Language etc.
@@ -66,5 +75,25 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      */
     getConfigOrdinals: function(callback) {
         this.getFromService(this.metaURL() + this.getConfig('ordinalsGetUrl', '/v3/ordinals/list'), this.requestHeaders, callback);
+    },
+
+    /**
+     * Get config items from vocabulary api 
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.metaService
+     */
+    suggestVocabulary: function(callback){
+        this.postFromService(this.vocabularyURL() + this.getConfig('suggestVocabularyUrl','/v3/term/suggest'),data, this.requestHeaders, callback); 
+    },
+
+    /**
+     * Get config items from vocabulary api 
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.metaService
+     */
+    createVocabulary: function(){
+        this.postFromService(this.vocabularyURL() + this.getConfig('createVocabularUrl','/v3/term/create'), data, this.requestHeaders, callback);
     }
+
+
 }));
