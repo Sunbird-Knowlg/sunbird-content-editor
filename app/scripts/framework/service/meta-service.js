@@ -33,7 +33,13 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
     domainURL: function(){
         return this.getBaseURL() + this.getAPISlug() + this.getConfig('domainEndPoint', '/domain')
     },
-
+    /** 
+     * @member {string} frameworkURL
+     * @memberof org.ekstep.services.metaService
+     */
+    frameworkURL: function(){
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('frameworkEndPoint', '/framework')
+    },
     /** 
      * @member {string} vocabularyURL
      * @memberof org.ekstep.services.metaService
@@ -93,6 +99,13 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      */
     createVocabulary: function(data, callback){
         this.postFromService(this.vocabularyURL() + this.getConfig('createVocabularUrl','/v3/term/create'),data, this.requestHeaders, callback);
+    },
+    /**
+     * Get Categorys based on framework
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.metaService
+     */
+    getCategorys: function(framework, callback){
+        this.getFromService(this.frameworkURL() + this.getConfig('getCategorysUrl','/v3/read/') + framework, this.requestHeaders, callback);
     }
-
 }));
