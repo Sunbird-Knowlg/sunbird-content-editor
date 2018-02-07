@@ -283,11 +283,15 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     start: function(durartion) {
         var instance = this;
         var fp = new Fingerprint2();
+        var pdata = ecEditor.getContext('pdata') ? ecEditor.getContext('pdata') : {id: "in.ekstep", pid: ecEditor.getContext('env') || "contenteditor", ver: "1.0"};
+        if(ecEditor.getContext('pdata')){
+            pdata.pid = ecEditor.getContext('env') || "contenteditor";
+        }
         var config = {
             uid: ecEditor.getContext('uid'),
             sid: ecEditor.getContext('sid'),
             channel: ecEditor.getContext('channel') || "in.ekstep",
-            pdata: ecEditor.getContext('pdata') || {id: "in.ekstep", pid: "ekstep_portal", ver: "1.0"},
+            pdata: ecEditor.getContext('pdata') || {id: "in.ekstep", pid: ecEditor.getContext('env') || "contenteditor", ver: "1.0"},
             env: ecEditor.getContext('env') || "contenteditor",
             dispatcer: org.ekstep.contenteditor.config.dispatcher,
             object: {
