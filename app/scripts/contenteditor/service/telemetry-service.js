@@ -316,6 +316,9 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
                 instance.logStartAndImpression(config, durartion);
             });
         }
+        window.addEventListener('unload', /* istanbul ignore next */ function() {
+            instance.end();
+        });
     },
     logStartAndImpression: function(config, durartion){
         var instance = this;
