@@ -49,7 +49,7 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
     },
 
     /** 
-     * @member {string} vocabularyURL
+     * @member {string} pageAssembleUrl
      * @memberof org.ekstep.services.metaService
      */
     pageAssembleUrl: function(){
