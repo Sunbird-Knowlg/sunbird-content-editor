@@ -48,6 +48,15 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
         return this.getBaseURL() + this.getAPISlug() + this.getConfig('vocabularyEndPoint','/vocabulary')
     },
 
+    /** 
+     * @member {string} pageAssembleUrl
+     * @memberof org.ekstep.services.metaService
+     */
+    pageAssembleUrl: function(){
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('pageAssembleEndPoint','/data')
+    },
+
+
     /**
      * Returns the schema of the specified object. The schema will contain all the properties details (name, code, datatype, identifier etc,.).
      * @param  {string}   objectType  eg.AssessmentItem, Language etc.
@@ -107,5 +116,15 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      */
     getCategorys: function(framework, callback){
         this.getFromService(this.frameworkURL() + this.getConfig('getCategorysUrl','/v3/read/') + framework, this.requestHeaders, callback);
+    },
+
+    /**
+     * Get config items from pageAssemble api 
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.metaService
+     */
+    getPageAssemble: function(data, callback){
+        this.postFromService(this.pageAssembleUrl() + this.getConfig('pageAssembleUrl','/v1/page/assemble'), data, this.requestHeaders, callback);
     }
+
 }));
