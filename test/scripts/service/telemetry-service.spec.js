@@ -111,6 +111,23 @@ describe('telemetry service', function() {
         expect(EkTelemetry.interact).toHaveBeenCalled();
     });
 
+    it('should dispatch IMPRESSION event', function() {
+        spyOn(EkTelemetry, 'impression');
+        // V2 data
+        var data = { "eks": {"stageid": "stage1", "stageto": "stage2", "type": "", "itype": ""}};
+        service.impression(data);
+        //V3 data
+        var data = {
+            "type": "view", 
+            "subtype": "scroll", 
+            "pageid": "55740973-d2c0-453a-9b35-abd732a71db2", 
+            "uri": "https://qa.ekstep.in/",
+            "visits": [{'objid':'obj', 'objtype':'type'}]
+        }
+        service.impression(data);
+        expect(EkTelemetry.impression).toHaveBeenCalled();
+    });
+
     it('should dispatch ERROR event', function() {
         spyOn(EkTelemetry, 'error');
 

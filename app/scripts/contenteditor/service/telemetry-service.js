@@ -225,6 +225,29 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     },
     /**
      *
+     * dispatches impression event (CE_IMPRESSION)
+     * @param data {object} impression event data
+     * @memberof org.ekstep.services.telemetryService
+     *
+     */
+    impression: function(data) {
+        if(!(data.hasOwnProperty('type') && data.hasOwnProperty('pageid') && data.hasOwnProperty('uri'))) {
+            console.error('Invalid impression data');
+            return;
+        }
+        var eventData = {
+            "type": data.type,
+            "pageid": data.pageid,
+            "uri": data.uri
+        };
+        if(data.subtype)
+            eventData.subtype = data.subtype;
+        if(data.visits)
+            eventData.visits = data.visits;
+        EkTelemetry.impression(eventData);
+    },
+    /**
+     *
      * dispatches end event (CE_END)
      * @memberof org.ekstep.services.telemetryService
      *
