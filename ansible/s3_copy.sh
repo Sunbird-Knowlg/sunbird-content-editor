@@ -27,5 +27,7 @@ aws s3 --region ap-south-1 rm $1/org.ekstep.todo-1.0/ --recursive
 aws s3 --region ap-south-1 rm $1/org.ekstep.unsupported-1.0/ --recursive
 aws s3 --region ap-south-1 rm $1/org.ekstep.viewecml-1.0/ --recursive
 aws s3 --region ap-south-1 rm $1/org.ekstep.wordbrowser-1.0/ --recursive
+aws s3 --region ap-south-1 rm $1/org.ekstep.iterator-1.0/ --recursive
+aws s3 --region ap-south-1 rm $1/org.ekstep.navigation-1.0/ --recursive
 
 aws s3 --region ap-south-1 cp content-plugins $1/ --recursive --acl public-read
