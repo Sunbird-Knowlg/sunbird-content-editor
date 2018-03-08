@@ -35,11 +35,13 @@ module.exports = function(config) {
             "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.templatesLoader.js",
             "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
             "app/bower_components/oclazyload/dist/ocLazyLoad.js",
+            "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
             "test/baseSpec.js",
             "test/data/ECMLcontent.fixture.js",
             "app/scripts/dev/localhost-ce.js",
             "app/libs/semantic.min.js",
             "app/libs/mousetrap.min.js",
+            "app/libs/telemetry-lib-v3.min.js",
             "app/scripts/framework/class.js",
             "app/scripts/framework/libs/ES5Polyfill.js",
             "app/scripts/framework/bootstrap-framework.js",
@@ -167,7 +169,7 @@ module.exports = function(config) {
             "PhantomJS"
         ],
 
-        browserNoActivityTimeout: 100000,
+        browserNoActivityTimeout: 300000,
 
         // Continuous Integration mode
         // if true, Karma captures browsers, runs the tests and exits

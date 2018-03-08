@@ -11,7 +11,6 @@ var CacheBuster = require('gulp-cachebust');
 var mergeStream = require('merge-stream');
 var rename = require("gulp-rename");
 var merge = require('merge-stream');
-var sass = require('gulp-sass');
 var cleanCSS = require('clean-css');
 var replace = require('gulp-string-replace');
 
@@ -23,6 +22,7 @@ var bower_components = [
     "app/bower_components/async/dist/async.min.js",
     "app/libs/semantic.min.js",
     "app/libs/mousetrap.min.js",
+    "app/libs/telemetry-lib-v3.min.js",
     "app/bower_components/angular/angular.js",
     "app/bower_components/fabric/dist/fabric.min.js",
     "app/bower_components/lodash/lodash.js",
@@ -41,7 +41,8 @@ var bower_components = [
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.templatesLoader.js",
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
     "app/bower_components/oclazyload/dist/ocLazyLoad.js",
-    "app/scripts/contenteditor/md5.js"
+    "app/scripts/contenteditor/md5.js",
+    "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js"
 ];
 
 var bower_css = [
@@ -67,10 +68,12 @@ var contentEditorApp = [
     "app/scripts/contenteditor/migration/assessmentmigration-task.js",
     "app/scripts/contenteditor/migration/eventsmigration-task.js",
     "app/scripts/contenteditor/migration/settagmigration-task.js",
-    "app/scripts/contenteditor/manager/stage-manager.js",
+    "app/scripts/contenteditor/manager/stage-manager.js"
 ];
 
 var editorFramework = [
+    "app/libs/telemetry-lib-v3.min.js",
+    "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
     "app/scripts/contenteditor/bootstrap-editor.js",
     "app/scripts/contenteditor/ce-config.js",
     "app/scripts/contenteditor/content-editor.js",
@@ -166,8 +169,7 @@ gulp.task('minifyCSS', function() {
             'app/styles/noto.css',
             'app/styles/header.css',
             'app/styles/commonStyles.css',
-            'app/styles/content-editor.css',
-
+            'app/styles/content-editor.css'
         ])
         .pipe(concat('style.min.css'))
         .pipe(minify({
@@ -300,23 +302,23 @@ gulp.task('buildDev', ['minifyDev', 'injectDev', 'zipDev', "cachebust"]);
 
 var corePlugins = [
     "org.ekstep.assessmentbrowser-1.0",
-    "org.ekstep.assetbrowser-1.0",
+    "org.ekstep.assetbrowser-1.1",
     "org.ekstep.colorpicker-1.0",
     "org.ekstep.conceptselector-1.0",
     "org.ekstep.config-1.0",
     "org.ekstep.stage-1.0",
-    "org.ekstep.text-1.0",
+    "org.ekstep.text-1.1",
     "org.ekstep.shape-1.0",
-    "org.ekstep.image-1.0",
-    "org.ekstep.audio-1.0",
+    "org.ekstep.image-1.1",
+    "org.ekstep.audio-1.1",
     "org.ekstep.hotspot-1.0",
     "org.ekstep.scribblepad-1.0",
     "org.ekstep.readalongbrowser-1.0",
     "org.ekstep.quiz-1.0",
     "org.ekstep.stageconfig-1.0",
     "org.ekstep.telemetry-1.0",
-    "org.ekstep.preview-1.0",
-    "org.ekstep.activitybrowser-1.0",
+    "org.ekstep.preview-1.1",
+    "org.ekstep.activitybrowser-1.1",
     "org.ekstep.collaborator-1.0",
     "org.ekstep.download-1.0",
     "org.ekstep.unsupported-1.0",
@@ -328,8 +330,11 @@ var corePlugins = [
     "org.ekstep.editorstate-1.0",
     "org.ekstep.contenteditorfunctions-1.0",
     "org.ekstep.keyboardshortcuts-1.0",
-    "org.ekstep.editcontentmeta-1.0"
-]
+    "org.ekstep.editcontentmeta-1.1",
+    "org.ekstep.richtext-1.0",
+    "org.ekstep.iterator-1.0",
+    "org.ekstep.navigation-1.0"
+];
 
 gulp.task('minifyCorePlugins', function() {
     var tasks = [];
@@ -408,16 +413,3 @@ gulp.task('packageCorePlugins', ["minify", "minifyCorePlugins"], function() {
 });
 //Minification for dev End
 
-//edited by Anshu <anshu.mishra@goodworklabs.com>
-gulp.task('sassToCSS', function() {
-    return gulp.src('app/styles/sass/**/*.sass')
-        .pipe(sass().on('error', sass.logError))
-        // .pipe(cleanCSS())
-        .pipe(gulp.dest('app/styles/'))
-
-});
-
-gulp.task('watch', function() {
-    gulp.watch('app/styles/sass/**/*.sass', ['sassToCSS']);
-
-});

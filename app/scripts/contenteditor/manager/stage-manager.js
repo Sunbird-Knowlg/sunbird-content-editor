@@ -429,7 +429,14 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         org.ekstep.contenteditor.stageManager.registerEvents();
         this.showLoadScreenMessage();
         org.ekstep.contenteditor.stageManager.contentLoading = false;
-        org.ekstep.services.telemetryService.startEvent(true).append("loadtimes", { "contentLoad": ((new Date()).getTime() - startTime) });        
+        org.ekstep.services.telemetryService.log({
+            type: "process",
+            level: "TRACE",
+            message: "duration for content load",
+            params: [{
+                duration: (new Date()).getTime() - startTime
+            }]
+        });
         if (org.ekstep.contenteditor.api._.isEmpty(this.stages)) {
             org.ekstep.pluginframework.eventManager.dispatchEvent('stage:create', { "position": "beginning" });
         }       

@@ -1078,4 +1078,18 @@ describe('plugin manager unit test cases', function() {
             expect(pm.isPluginDefined("org.ekstep.seven")).toBe(false);
         });
     });
+
+    describe("loadAndInitPlugin method", function() {
+        afterEach(function() {
+            pm.cleanUp();
+        });
+
+        it("should load the plugin", function() {
+            pm.loadAndInitPlugin("org.ekstep.seven", "1.0", '', '');
+            expect(pm.isPluginDefined("org.ekstep.seven")).toBe(false);
+            pm._registerPlugin("org.ekstep.seven", "1.0", Class.extend({ init: function() {} }), { id: "org.ekstep.seven" }, publishedRepo);
+            pm.loadAndInitPlugin("org.ekstep.seven", "1.0", '', '');
+            expect(pm.isPluginDefined("org.ekstep.seven")).toBe(true);
+        });
+    });
 });

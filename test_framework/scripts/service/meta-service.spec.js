@@ -37,4 +37,31 @@ describe('Meta service test cases', function() {
 
     });
 
+    it("Should call configURL method", function() {
+        spyOn(org.ekstep.services.metaService,"configURL").and.callThrough();
+        org.ekstep.services.metaService.configURL();
+        
+        expect(org.ekstep.services.metaService.configURL).toHaveBeenCalled();
+    });
+
+    it("Should call domainURL method", function() {
+        spyOn(org.ekstep.services.metaService,"domainURL").and.callThrough();
+        org.ekstep.services.metaService.domainURL();
+        
+        expect(org.ekstep.services.metaService.domainURL).toHaveBeenCalled();
+    });
+
+    it("Should call getLearningConfig method", function() {
+        spyOn(org.ekstep.services.metaService,"getLearningConfig").and.callThrough();
+        org.ekstep.services.metaService.getLearningConfig(function(err, res){
+            expect(org.ekstep.services.metaService.getLearningConfig).toHaveBeenCalled();
+        });
+    });
+
+    it("Should call getConfigOrdinals method", function() {
+        spyOn(org.ekstep.services.metaService,"getConfigOrdinals").and.callThrough();
+        org.ekstep.services.metaService.getConfigOrdinals(function(err, res){
+            expect(org.ekstep.services.metaService.getConfigOrdinals).toHaveBeenCalled();
+        });
+    });
 })
