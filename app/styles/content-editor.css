@@ -148,7 +148,7 @@ body {
 #mainContainerGrid .scrollable-slides {
     overflow-y: auto;
     width: 182px;
-    height: 88vh;
+    height: calc(100vh - 100px);
     box-shadow: none;
     background-color:#f9f9f9;
     padding-left: 0;
