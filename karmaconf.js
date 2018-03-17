@@ -41,6 +41,7 @@ module.exports = function(config) {
             "app/scripts/dev/localhost-ce.js",
             "app/libs/semantic.min.js",
             "app/libs/mousetrap.min.js",
+            "app/libs/fontfaceobserver.min.js",
             "app/libs/telemetry-lib-v3.min.js",
             "app/scripts/framework/class.js",
             "app/scripts/framework/libs/ES5Polyfill.js",
