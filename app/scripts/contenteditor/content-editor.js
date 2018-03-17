@@ -8,6 +8,7 @@ org.ekstep.contenteditor.init = function(context, config, $scope, $document, cal
     org.ekstep.contenteditor.globalContext = context;
     org.ekstep.contenteditor.toolbarManager.setScope($scope);
     org.ekstep.contenteditor._loadDefaultPlugins(context, callback);
+    org.ekstep.contenteditor.loadAllNotoSansFonts();
     //org.ekstep.contenteditor._backwardCompatibility();
 }
 
@@ -61,6 +62,35 @@ org.ekstep.contenteditor.getWindowContext = function() {
 
 org.ekstep.contenteditor.getWindowConfig = function() {
     return org.ekstep.contenteditor.getParameterByName('config') || (window.parent ? window.parent.config : undefined) || window.config || {};
+}
+
+org.ekstep.contenteditor.loadAllNotoSansFonts = function() {
+    var notoSans = new FontFaceObserver("NotoSans");
+    var notoSansDevanagari = new FontFaceObserver("NotoSansDevanagari");
+    var notoSansTelugu = new FontFaceObserver("NotoSansTelugu");
+    var notoSansKannada = new FontFaceObserver("NotoSansKannada");
+    var notoSansOriya = new FontFaceObserver("NotoSansOriya");
+    var notoSansGujarati = new FontFaceObserver("NotoSansGujarati");
+    var notoSansBengali = new FontFaceObserver("NotoSansBengali");
+    var notoSansMalayalam = new FontFaceObserver("NotoSansMalayalam");
+    var notoNastaliqUrdu = new FontFaceObserver("NotoNastaliqUrdu");
+    var notoSansGurmukhi = new FontFaceObserver("NotoSansGurmukhi");
+    var notoSansTamil = new FontFaceObserver("NotoSansTamil");
+    Promise.all([
+        notoSans.load(),
+        notoSansDevanagari.load(),
+        notoSansTelugu.load(),
+        notoSansKannada.load(),
+        notoSansOriya.load(),
+        notoSansGujarati.load(),
+        notoSansBengali.load(),
+        notoSansMalayalam.load(),
+        notoNastaliqUrdu.load(),
+        notoSansGurmukhi.load(),
+        notoSansTamil.load(),
+    ]).then(function() {
+        ecEditor.render();
+    });
 }
 
 org.ekstep.contenteditor.getParameterByName = function(name, url) {

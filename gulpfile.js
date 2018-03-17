@@ -72,6 +72,7 @@ var contentEditorApp = [
 ];
 
 var editorFramework = [
+    "app/libs/fontfaceobserver.min.js",
     "app/libs/telemetry-lib-v3.min.js",
     "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
     "app/scripts/contenteditor/bootstrap-editor.js",
