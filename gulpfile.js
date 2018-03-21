@@ -42,14 +42,16 @@ var bower_components = [
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
     "app/bower_components/oclazyload/dist/ocLazyLoad.js",
     "app/scripts/contenteditor/md5.js",
-    "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js"
+    "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
+    "app/libs/ng-tags-input.js"
 ];
 
 var bower_css = [
     "app/bower_components/font-awesome/css/font-awesome.css",
     "app/bower_components/ng-dialog/css/ngDialog.min.css",
     "app/bower_components/ng-dialog/css/ngDialog-theme-plain.min.css",
-    "app/bower_components/ng-dialog/css/ngDialog-theme-default.min.css"
+    "app/bower_components/ng-dialog/css/ngDialog-theme-default.min.css",
+    "app/libs/ng-tags-input.css",
 ];
 
 var contentEditorApp = [
