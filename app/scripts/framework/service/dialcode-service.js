@@ -6,11 +6,18 @@
  */
 org.ekstep.services.dialcodeService = new(org.ekstep.services.iService.extend({
     /** 
-     * @member {string} learningURL
+     * @member {string} dialcodeURL
      * @memberof org.ekstep.services.dialcodeService
      */
     dialcodeURL: function() {
         return this.getBaseURL() + this.getAPISlug() + this.getConfig('dialcodeEndPoint', '/dialcode');
+    },
+    /** 
+     * @member {string} contentURL
+     * @memberof org.ekstep.services.dialcodeService
+     */
+    dialcodelinkURL: function() {
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('dialcodeEndPoint', '/content/v3/dialcode');
     },
     /**
      * Get all DIAL codes
@@ -39,6 +46,6 @@ org.ekstep.services.dialcodeService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.dialcodeService
      */
     dialcodeLink: function(request, callback){
-        this.postFromService(this.dialcodeURL() + this.getConfig('dialcodeLink','/link'), request, this.requestHeaders, callback);
+        this.postFromService(this.dialcodelinkURL() + this.getConfig('dialcodeLink','/link'), request, this.requestHeaders, callback);
     }
 }));
