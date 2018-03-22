@@ -19,7 +19,7 @@ org.ekstep.services.dialcodeService = new(org.ekstep.services.iService.extend({
      */
     getAllDialCodes: function(channel, request, callback){
         this.requestHeaders.headers['X-Channel-Id'] = channel;
-        this.postFromService(this.dialcodeURL() + this.getConfig('getAllDialcodes','/v3/search'), req, this.requestHeaders, callback);
+        this.postFromService(this.dialcodeURL() + this.getConfig('getAllDialcodes','/v3/search'), request, this.requestHeaders, callback);
     },
     /**
      * retrieves the DIAL code
