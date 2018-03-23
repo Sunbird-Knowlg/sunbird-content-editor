@@ -1,6 +1,6 @@
 angular.module('editorApp').controller('popupController', ['ngDialog', '$ocLazyLoad', function(ngDialog, $ocLazyLoad) {
     function loadNgModules(templatePath, controllerPath) {
-        $ocLazyLoad.load([
+        return $ocLazyLoad.load([
             { type: 'html', path: templatePath },
             { type: 'js', path: controllerPath }
         ]);

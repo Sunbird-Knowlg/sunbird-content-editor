@@ -22,7 +22,7 @@ org.ekstep.services.popupService = new(org.ekstep.services.iService.extend({
     loadNgModules: function(templatePath, controllerPath) {
         templatePath = templatePath + '?' + ecEditor.getConfig('build_number');
         controllerPath = controllerPath + '?' + ecEditor.getConfig('build_number');
-        this.loadModules && this.loadModules(templatePath, controllerPath);
+        if(this.loadModules) return this.loadModules(templatePath, controllerPath);
     },
     /**
      *
