@@ -306,15 +306,25 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     start: function(durartion) {
         var instance = this;
         var fp = new Fingerprint2();
-        var pdata = ecEditor.getContext('pdata') ? ecEditor.getContext('pdata') : {id: "in.ekstep", pid: ecEditor.getContext('env') || "contenteditor", ver: "1.0"};
-        if(ecEditor.getContext('pdata')){
-            pdata.pid = ecEditor.getContext('env') || "contenteditor";
+        var pdata = ecEditor.getContext('pdata') ? ecEditor.getContext('pdata') : {id: "in.ekstep", ver: "1.0"};
+        var env = ecEditor.getContext('env') || 'contenteditor';
+        if (env) {
+            switch (env) {
+                case 'genericeditor':
+                case 'contenteditor':
+                    env = env;
+                    break;
+                default:
+                    env = 'collectioneditor';
+                    break;
+            }
         }
+        pdata.pid = pdata.pid ? pdata.pid + '.' + env : env;
         var config = {
             uid: ecEditor.getContext('uid'),
             sid: ecEditor.getContext('sid'),
             channel: ecEditor.getContext('channel') || "in.ekstep",
-            pdata: ecEditor.getContext('pdata') || {id: "in.ekstep", pid: ecEditor.getContext('env') || "contenteditor", ver: "1.0"},
+            pdata: pdata,
             env: ecEditor.getContext('env') || "contenteditor",
             dispatcer: org.ekstep.contenteditor.config.dispatcher,
             object: {

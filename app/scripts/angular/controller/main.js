@@ -176,7 +176,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         var context = org.ekstep.contenteditor.getWindowContext();
         context.contentId = context.contentId || $scope.contentId;
         context.uid = context.user ? context.user.id : context.uid;
-        context.contentId = context.contentId ||  $scope.contentId; 
         context.etags = context.etags || {};
         context.etags.app = context.app || context.etags.app || [];
         context.etags.partner = context.partner || context.etags.partner || [];
