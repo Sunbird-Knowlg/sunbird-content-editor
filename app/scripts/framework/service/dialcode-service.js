@@ -25,18 +25,16 @@ org.ekstep.services.dialcodeService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.dialcodeService
      */
     getAllDialCodes: function(channel, request, callback){
-        var headersObj = _.cloneDeep(this.requestHeaders);
-        headersObj.headers['X-Channel-Id'] = channel;
-        this.postFromService(this.dialcodeURL() + this.getConfig('getAllDialcodes','/v3/search'), request, headersObj, callback);
+        this.postFromService(this.dialcodeURL() + this.getConfig('getAllDialcodes','/v3/search'), request, this.setChannelInHeader(channel), callback);
     },
     /**
      * retrieves the DIAL code
      * @param  {Function} callback returns error and response as arguments
      * @memberof org.ekstep.services.dialcodeService
      */
-    getlDialCode: function(dialCode, callback) {
+    getlDialCode: function(channel, dialCode, callback) {
         if (dialCode) {
-            this.get(this.dialcodeURL() + this.getConfig('dialCodeReadUrl', '/v3/read/') + dialCode , this.requestHeaders, callback);
+            this.get(this.dialcodeURL() + this.getConfig('dialCodeReadUrl', '/v3/read/') + dialCode , this.setChannelInHeader(channel), callback);
         } else {
             callback('dialCode id is required to get dialCode details', undefined);
         }
@@ -46,7 +44,16 @@ org.ekstep.services.dialcodeService = new(org.ekstep.services.iService.extend({
      * @param  {Function} callback returns error and response as arguments
      * @memberof org.ekstep.services.dialcodeService
      */
-    dialcodeLink: function(request, callback){
-        this.postFromService(this.dialcodelinkURL() + this.getConfig('dialcodeLink','/link'), request, this.requestHeaders, callback);
+    dialcodeLink: function(channel, request, callback){
+        this.postFromService(this.dialcodelinkURL() + this.getConfig('dialcodeLink','/link'), request, this.setChannelInHeader(channel), callback);
+    },
+    /**
+     * set channel in requestHeaders
+     * @memberof org.ekstep.services.dialcodeService
+     */
+    setChannelInHeader: function(channel){
+        var headersObj = _.cloneDeep(this.requestHeaders);
+        headersObj.headers['X-Channel-Id'] = channel;
+        return headersObj;
     }
 }));
