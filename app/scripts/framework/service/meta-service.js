@@ -41,6 +41,13 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
         return this.getBaseURL() + this.getAPISlug() + this.getConfig('frameworkEndPoint', '/framework')
     },
     /** 
+     * @member {string} channelURL
+     * @memberof org.ekstep.services.metaService
+     */
+    channelURL: function(){
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('channelEndPoint', '/channel')
+    },
+    /** 
      * @member {string} vocabularyURL
      * @memberof org.ekstep.services.metaService
      */
@@ -117,7 +124,14 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
     getCategorys: function(framework, callback){
         this.getFromService(this.frameworkURL() + this.getConfig('getCategorysUrl','/v3/read/') + framework, this.requestHeaders, callback);
     },
-
+    /**
+     * Get framework based on channel
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.metaService
+     */
+    getFrameworks: function(channel, callback){
+        this.getFromService(this.channelURL() + this.getConfig('getFrameworksUrl','/v3/read/') + channel, this.requestHeaders, callback);
+    },
     /**
      * Get config items from pageAssemble api 
      * @param  {Function} callback returns error and response as arguments
