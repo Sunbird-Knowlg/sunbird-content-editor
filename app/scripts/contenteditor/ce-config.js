@@ -10,7 +10,8 @@ org.ekstep.contenteditor.config = {
         { "id": "org.ekstep.whatsnew", "ver": "1.0", "type": "plugin" },
         { "id": "org.ekstep.todo", "ver": "1.0", "type": "plugin" },        
         { "id": "org.ekstep.review", "ver": "1.0", "type": "plugin" },
-        { "id": "org.ekstep.preview", "ver": "1.1", "type": "plugin" }
+        { "id": "org.ekstep.preview", "ver": "1.1", "type": "plugin" },
+        { "id": "org.ekstep.editcontentmeta", "ver": "1.1", "type": "plugin" }
     ],
     corePluginsPackaged: true,
     dispatcher: "local",
