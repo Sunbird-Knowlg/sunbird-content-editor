@@ -320,6 +320,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             }
         }
         pdata.pid = pdata.pid ? pdata.pid + '.' + env : env;
+        ecEditor.setContext('pdata', pdata);
         var config = {
             uid: ecEditor.getContext('uid'),
             sid: ecEditor.getContext('sid'),
