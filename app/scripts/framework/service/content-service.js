@@ -20,7 +20,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      *
      * @memberof org.ekstep.services.contentService
      */
-    contentFields: "body,collaborators,editorState,stageIcons,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType,owner,domain,code,visibility,createdBy,description,language,mediaType,mimeType,osId,languageCode,createdOn,lastUpdatedOn,audience,ageGroup,attributions,artifactUrl,board,subject,keywords,config,resourceType",
+    contentFields: "body,collaborators,editorState,stageIcons,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType,owner,domain,code,visibility,createdBy,description,language,mediaType,mimeType,osId,languageCode,createdOn,lastUpdatedOn,audience,ageGroup,attributions,artifactUrl,board,subject,keywords,config,resourceType,medium,publisher,year",
     /**
      *
      * sets content meta for the given content id
@@ -50,7 +50,7 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.contentService
      */
     getContentMeta: function(id) {
-        return this.content[id] || {};
+        return Object.assign({}, this.content[id] || {});
     },
     /**
      *
@@ -100,13 +100,16 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
             }
             if (update) {
                 var requestObj = { request: { content: content } };
-                instance.patch(this.serviceURL() + this.getConfig('contentUpdateUrl', '/v3/update/') + contentId, requestObj, this.requestHeaders, function(err, res) {
+                instance.patch(this.serviceURL() + this.getConfig('contentUpdateUrl', '/v3/update/') + contentId, requestObj, this.requestHeaders, function(saveContentError, saveContentResponse) {
                     /* istanbul ignore else */
-                    if (res && res.data.responseCode == "OK") {
-                        instance.content[contentId].versionKey = res.data.result.versionKey;
-                        callback(undefined, res);
+                    if (saveContentResponse && saveContentResponse.data.responseCode == "OK") {
+                        instance.content[contentId].versionKey = saveContentResponse.data.result.versionKey;
+                        instance.getContent(contentId, function(metaError, metaResponse){
+                            metaError &&  console.error("Unable to update the Metadata context after save");
+                            callback(undefined, saveContentResponse);
+                        })
                     } else {
-                        callback(true, err);
+                        callback(true, saveContentError);
                     }
                 });
             } else {
@@ -226,17 +229,21 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      */
     saveCollectionHierarchy: function(data, callback) {
         //Versionkey not considered for hierarchy patch
+        var instance = this;
         if (!data) {
             callback("nothing to save!");        
             return;
         }
         data.body.lastUpdatedBy = ecEditor.getContext('user') && ecEditor.getContext('user').id;
         var requestObj = { request: { data: data.body } };
-        this.patch(this.serviceURL() + this.getConfig('collectionHierarchyUpdateUrl', '/v3/hierarchy/update/'), requestObj, this.requestHeaders, function(err, res) {
-            if (res && res.data.responseCode == "OK") {
-                callback(undefined, res);
+        this.patch(this.serviceURL() + this.getConfig('collectionHierarchyUpdateUrl', '/v3/hierarchy/update/'), requestObj, this.requestHeaders, function(hierarchyServiceError, hierarchyServiceResponse) {
+            if (hierarchyServiceResponse && hierarchyServiceResponse.data.responseCode == "OK") {
+                instance.getContent(ecEditor.getContext('contentId'), function(metaError, metaResponse){
+                    metaError && console.error("Unable to update the Metadata context after save");
+                    callback(undefined, hierarchyServiceResponse);
+                })
             } else {
-                callback(true, err);
+                callback(true, hierarchyServiceError);
             }
         });
     },
