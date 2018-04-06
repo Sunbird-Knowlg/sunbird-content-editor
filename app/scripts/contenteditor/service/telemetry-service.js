@@ -357,16 +357,16 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     },
     logStartAndImpression: function(config, durartion){
         var instance = this;
+        var editorConfig = ecEditor.getConfig('editorConfig');
         EkTelemetry.start(config, org.ekstep.contenteditor.api.getContext('contentId'), "", { 
             "uaspec": instance.detectClient(),
             "type": ecEditor.getConfig('editorType') || "content",
-            "mode": ecEditor.getConfig('mode') || 'edit',
+            "mode": editorConfig && editorConfig.mode || 'edit',
             "duration": durartion
         });
-
         EkTelemetry.impression({
-            type: "edit",
-            pageid: "contenteditor",
+            type: editorConfig && editorConfig.mode || 'edit',
+            pageid: ecEditor.getContext('env') || "contenteditor",
             uri: encodeURIComponent(location.href)
         });
     },
