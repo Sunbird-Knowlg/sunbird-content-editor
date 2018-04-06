@@ -12,6 +12,7 @@ angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).conf
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document', '$ocLazyLoad', '$rootScope',
     function($scope, $timeout, $http, $location, $q, $window, $document, $ocLazyLoad, $rootScope) {
 
+        const EDITOR_START_TIME = Date.now();
         // Declare global variables
         $scope.showAppLoadScreen = true;
         $scope.contentLoadedFlag = false;
@@ -192,9 +193,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         /**
          * Load Content - Invoked once the content editor has loaded
          */
-        $scope.loadContent = function(startTime) {
+        $scope.loadContent = function() {
                 org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContent(org.ekstep.contenteditor.api.getContext('contentId'), function(err, content) {
-                    org.ekstep.services.telemetryService.start((new Date()).getTime() - startTime);
+                    org.ekstep.services.telemetryService.start(Date.now() - EDITOR_START_TIME);
                     if (err) {
                         $scope.contentLoadedFlag = true;
                         $scope.onLoadCustomMessage.show = true;
@@ -228,7 +229,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
              * @param  {function} callback Function to be invoked once the editor is loaded
              */
         org.ekstep.contenteditor.init(context, config, $scope, $document, function() {
-            var startTime = (new Date()).getTime();
             var obj = _.find($scope.appLoadMessage, { 'id': 1 });
             if (_.isObject(obj)) {
                 obj.message = "Getting things ready for you";
@@ -243,7 +243,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.currentStage = org.ekstep.contenteditor.api.getCurrentStage();
             $scope.sidebarMenus = org.ekstep.contenteditor.sidebarManager.getSidebarMenu();
             $scope.configCategory.selected = $scope.sidebarMenus[0].id;
-            $scope.loadContent(startTime);
+            $scope.loadContent();
 
             /* KeyDown event to show ECML */
             $document.on("keydown", function(event) {
