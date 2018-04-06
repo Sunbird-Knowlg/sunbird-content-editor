@@ -321,6 +321,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         }
         pdata.pid = pdata.pid ? pdata.pid + '.' + env : env;
         ecEditor.setContext('pdata', pdata);
+        var pkgVersion = ecEditor.getService('content').getContentMeta(org.ekstep.contenteditor.api.getContext('contentId')).pkgVersion
         var config = {
             uid: ecEditor.getContext('uid'),
             sid: ecEditor.getContext('sid'),
@@ -331,7 +332,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             object: {
                 id: ecEditor.getContext('contentId'),
                 type: "Content",
-                ver: ""
+                ver:  !_.isUndefined(pkgVersion) ? pkgVersion.toString() : "1.0"
             },
             dispatcher: instance.getDispatcher(org.ekstep.contenteditor.config.dispatcher),
             rollup: ecEditor.getContext('rollup') || {}

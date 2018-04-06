@@ -192,8 +192,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
         /**
          * Load Content - Invoked once the content editor has loaded
          */
-        $scope.loadContent = function() {
+        $scope.loadContent = function(startTime) {
                 org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContent(org.ekstep.contenteditor.api.getContext('contentId'), function(err, content) {
+                    org.ekstep.services.telemetryService.start((new Date()).getTime() - startTime);
                     if (err) {
                         $scope.contentLoadedFlag = true;
                         $scope.onLoadCustomMessage.show = true;
@@ -242,8 +243,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
             $scope.currentStage = org.ekstep.contenteditor.api.getCurrentStage();
             $scope.sidebarMenus = org.ekstep.contenteditor.sidebarManager.getSidebarMenu();
             $scope.configCategory.selected = $scope.sidebarMenus[0].id;
-            org.ekstep.services.telemetryService.start((new Date()).getTime() - startTime);
-            $scope.loadContent();
+            $scope.loadContent(startTime);
 
             /* KeyDown event to show ECML */
             $document.on("keydown", function(event) {
