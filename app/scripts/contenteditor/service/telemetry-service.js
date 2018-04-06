@@ -332,7 +332,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             object: {
                 id: ecEditor.getContext('contentId'),
                 type: "Content",
-                ver:  !_.isUndefined(pkgVersion) ? pkgVersion.toString() : "1.0"
+                ver:  !_.isUndefined(pkgVersion) ? pkgVersion.toString() : "0"
             },
             dispatcher: instance.getDispatcher(org.ekstep.contenteditor.config.dispatcher),
             rollup: ecEditor.getContext('rollup') || {}
