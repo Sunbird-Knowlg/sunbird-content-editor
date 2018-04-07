@@ -341,7 +341,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         if (ecEditor.getContext('tags')) {
             config.tags = ecEditor.getContext('tags');
         } else {
-            config.tags = !_.isArray(ecEditor.getContext('etags')) ? [JSON.stringify(ecEditor.getContext('etags'))] : ecEditor.getContext('etags'); 
+            config.tags =  _.flattenDeep(_.values(ecEditor.getContext('etags')));
         }
         if(ecEditor.getContext('did')){
             config.did = ecEditor.getContext('did');
@@ -362,11 +362,11 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         EkTelemetry.start(config, org.ekstep.contenteditor.api.getContext('contentId'), "", { 
             "uaspec": instance.detectClient(),
             "type": ecEditor.getConfig('editorType') || "content",
-            "mode": editorConfig && editorConfig.mode || 'edit',
+            "mode": editorConfig && (editorConfig.mode == 'read' ? 'view' : editorConfig.mode) || 'edit',
             "duration": durartion
         });
         EkTelemetry.impression({
-            type: editorConfig && editorConfig.mode || 'edit',
+            type: editorConfig && (editorConfig.mode == 'read' ? 'view' : editorConfig.mode) || 'edit',
             pageid: ecEditor.getContext('env') || "contenteditor",
             uri: encodeURIComponent(location.href)
         });
