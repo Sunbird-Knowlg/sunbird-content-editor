@@ -386,13 +386,22 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             console.error('Invalid api call data');
             return;
         }
+        if(!data.level){    
+            if(data.status ==='error'){
+                data.level = 'ERROR';
+                data.message = 'Unable to fetch!';
+            }else{
+                data.level = 'INFO'
+                data.message = ''
+            }
+        }
         var eventData = {
             "type": "api_call",
-            "level": "INFO",
-            "message": "",
-            "params": [data]
+            "level": data.level,
+            "message": data.message,
+            "params": [data],
+            "pageid": data.stage || data.pageid || ecEditor.getCurrentStage() &&  ecEditor.getCurrentStage().id
         }
-        console.log('eventData ', eventData)
         EkTelemetry.log(eventData);
     },
     /**
