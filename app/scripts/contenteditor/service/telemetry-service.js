@@ -253,9 +253,11 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      *
      */
     end: function() {
+        var editorConfig = ecEditor.getConfig('editorConfig');
         EkTelemetry.end({
-            "type": "editor",
-            "mode": ecEditor.getConfig('editorType') || "content"
+            "type": ecEditor.getConfig('editorType') || "content",
+            "mode": editorConfig && (editorConfig.mode == 'read' ? 'view' : editorConfig.mode) || 'edit',
+            "pageid": "main-page"
         });
     },
     /**
