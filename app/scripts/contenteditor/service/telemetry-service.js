@@ -358,18 +358,18 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             instance.end();
         });
     },
-    logStartAndImpression: function(config, durartion){
+    logStartAndImpression: function(config, duration){
         var instance = this;
-        var editorConfig = ecEditor.getConfig('editorConfig');
+        var editorConfig_mode = _.get(ecEditor.getConfig('editorConfig'), 'mode');
+        var mode =  editorConfig_mode && (editorConfig_mode.toLowerCase() == 'read' ? 'view' : editorConfig_mode) || 'edit';
         EkTelemetry.start(config, org.ekstep.contenteditor.api.getContext('contentId'), "", { 
             "uaspec": instance.detectClient(),
             "type": ecEditor.getConfig('editorType') || "content",
-            "mode": editorConfig && (editorConfig.mode == 'read' ? 'view' : editorConfig.mode) || 'edit',
-            "duration": durartion,
-            "pageid": "main-page"
+            "mode": mode,
+            "duration": duration
         });
         EkTelemetry.impression({
-            type: editorConfig && (editorConfig.mode == 'read' ? 'view' : editorConfig.mode) || 'edit',
+            type: mode,
             pageid: ecEditor.getContext('env') || "contenteditor",
             uri: encodeURIComponent(location.href)
         });
