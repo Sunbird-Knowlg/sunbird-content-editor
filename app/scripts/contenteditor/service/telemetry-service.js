@@ -363,7 +363,8 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             "uaspec": instance.detectClient(),
             "type": ecEditor.getConfig('editorType') || "content",
             "mode": editorConfig && (editorConfig.mode == 'read' ? 'view' : editorConfig.mode) || 'edit',
-            "duration": durartion
+            "duration": durartion,
+            "pageid": "main-page"
         });
         EkTelemetry.impression({
             type: editorConfig && (editorConfig.mode == 'read' ? 'view' : editorConfig.mode) || 'edit',
