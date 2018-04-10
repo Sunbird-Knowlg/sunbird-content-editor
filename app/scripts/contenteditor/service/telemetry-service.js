@@ -288,7 +288,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             return;
         }
         var eventData = {
-            "err": data.err,
+            "err": data.err && data.err.toString(),
             "errtype": data.type || data.errtype,
             "stacktrace": data.data || data.stacktrace
         }
