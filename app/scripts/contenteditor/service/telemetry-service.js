@@ -401,7 +401,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             "level": data.level,
             "message": data.message,
             "params": [data],
-            "pageid": data.stage || data.pageid || ecEditor.getContext('env') || "contenteditor",
+            "pageid": data.stage || data.pageid || ecEditor.getContext('env') || ""
         }
         EkTelemetry.log(eventData);
     },
