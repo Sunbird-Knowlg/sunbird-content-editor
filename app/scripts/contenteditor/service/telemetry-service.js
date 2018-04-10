@@ -365,7 +365,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         EkTelemetry.start(config, org.ekstep.contenteditor.api.getContext('contentId'), "", { 
             "uaspec": instance.detectClient(),
             "type": ecEditor.getConfig('editorType') || "content",
-            "mode": mode,
+            "mode": mode.toLowerCase(),
             "duration": duration,
             "pageid": "main-page"
         });
