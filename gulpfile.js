@@ -306,7 +306,7 @@ gulp.task('buildDev', ['minifyDev', 'injectDev', 'zipDev', "cachebust"]);
 
 var corePlugins = [
     "org.ekstep.assessmentbrowser-1.0",
-    "org.ekstep.assetbrowser-1.1",
+    "org.ekstep.assetbrowser-1.2",
     "org.ekstep.colorpicker-1.0",
     "org.ekstep.conceptselector-1.1",
     "org.ekstep.config-1.0",
@@ -321,7 +321,7 @@ var corePlugins = [
     "org.ekstep.stageconfig-1.0",
     "org.ekstep.telemetry-1.0",
     "org.ekstep.preview-1.1",
-    "org.ekstep.activitybrowser-1.1",
+    "org.ekstep.activitybrowser-1.2",
     "org.ekstep.collaborator-1.0",
     "org.ekstep.download-1.0",
     "org.ekstep.unsupported-1.0",
