@@ -42,14 +42,16 @@ var bower_components = [
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
     "app/bower_components/oclazyload/dist/ocLazyLoad.js",
     "app/scripts/contenteditor/md5.js",
-    "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js"
+    "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
+    "app/libs/ng-tags-input.js"
 ];
 
 var bower_css = [
     "app/bower_components/font-awesome/css/font-awesome.css",
     "app/bower_components/ng-dialog/css/ngDialog.min.css",
     "app/bower_components/ng-dialog/css/ngDialog-theme-plain.min.css",
-    "app/bower_components/ng-dialog/css/ngDialog-theme-default.min.css"
+    "app/bower_components/ng-dialog/css/ngDialog-theme-default.min.css",
+    "app/libs/ng-tags-input.css",
 ];
 
 var contentEditorApp = [
@@ -72,6 +74,7 @@ var contentEditorApp = [
 ];
 
 var editorFramework = [
+    "app/libs/fontfaceobserver.min.js",
     "app/libs/telemetry-lib-v3.min.js",
     "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
     "app/scripts/contenteditor/bootstrap-editor.js",
@@ -110,6 +113,7 @@ var pluginFramework = [
     "app/scripts/framework/service/meta-service.js",
     "app/scripts/framework/service/language-service.js",
     "app/scripts/framework/service/search-service.js",
+    "app/scripts/framework/service/dialcode-service.js",
     "app/scripts/framework/repo/irepo.js",
     "app/scripts/framework/repo/published-repo.js",
     "app/scripts/framework/repo/draft-repo.js",
@@ -302,7 +306,7 @@ gulp.task('buildDev', ['minifyDev', 'injectDev', 'zipDev', "cachebust"]);
 
 var corePlugins = [
     "org.ekstep.assessmentbrowser-1.0",
-    "org.ekstep.assetbrowser-1.1",
+    "org.ekstep.assetbrowser-1.2",
     "org.ekstep.colorpicker-1.0",
     "org.ekstep.conceptselector-1.1",
     "org.ekstep.config-1.0",
@@ -314,11 +318,10 @@ var corePlugins = [
     "org.ekstep.hotspot-1.0",
     "org.ekstep.scribblepad-1.0",
     "org.ekstep.readalongbrowser-1.0",
-    "org.ekstep.quiz-1.0",
     "org.ekstep.stageconfig-1.0",
     "org.ekstep.telemetry-1.0",
     "org.ekstep.preview-1.1",
-    "org.ekstep.activitybrowser-1.1",
+    "org.ekstep.activitybrowser-1.2",
     "org.ekstep.collaborator-1.0",
     "org.ekstep.download-1.0",
     "org.ekstep.unsupported-1.0",
@@ -330,7 +333,6 @@ var corePlugins = [
     "org.ekstep.editorstate-1.0",
     "org.ekstep.contenteditorfunctions-1.0",
     "org.ekstep.keyboardshortcuts-1.0",
-    "org.ekstep.editcontentmeta-1.1",
     "org.ekstep.richtext-1.0",
     "org.ekstep.iterator-1.0",
     "org.ekstep.navigation-1.0",

@@ -26,7 +26,8 @@ window.ServiceConstants = {
     LANGUAGE_SERVICE: "language",
     META_SERVICE: "meta",
     ASSET_SERVICE: "asset",
-    TELEMETRY_SERVICE: "telemetry"
+    TELEMETRY_SERVICE: "telemetry",
+    DIALCODE_SERVICE: "dialcode"
 }
 
 window.ManagerConstants = {

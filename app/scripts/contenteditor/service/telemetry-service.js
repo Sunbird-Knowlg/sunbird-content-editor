@@ -253,9 +253,12 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      *
      */
     end: function() {
+        var editorConfig_mode = _.get(ecEditor.getConfig('editorConfig'), 'mode');
+        var mode =  editorConfig_mode && (editorConfig_mode.toLowerCase() == 'read' ? 'view' : editorConfig_mode) || 'edit';
         EkTelemetry.end({
-            "type": "editor",
-            "mode": ecEditor.getConfig('editorType') || "content"
+            "type": ecEditor.getConfig('editorType') || "content",
+            "mode": mode.toLowerCase(), 
+            "pageid": "main-page"
         });
     },
     /**
@@ -285,7 +288,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             return;
         }
         var eventData = {
-            "err": data.err,
+            "err": data.err && data.err.toString(),
             "errtype": data.type || data.errtype,
             "stacktrace": data.data || data.stacktrace
         }
@@ -306,29 +309,42 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
     start: function(durartion) {
         var instance = this;
         var fp = new Fingerprint2();
-        var pdata = ecEditor.getContext('pdata') ? ecEditor.getContext('pdata') : {id: "in.ekstep", pid: ecEditor.getContext('env') || "contenteditor", ver: "1.0"};
-        if(ecEditor.getContext('pdata')){
-            pdata.pid = ecEditor.getContext('env') || "contenteditor";
+        var pdata = ecEditor.getContext('pdata') ? ecEditor.getContext('pdata') : {id: "in.ekstep", ver: "1.0"};
+        var env = ecEditor.getContext('env') || 'contenteditor';
+        if (env) {
+            switch (env) {
+                case 'genericeditor':
+                case 'contenteditor':
+                    env = env;
+                    break;
+                default:
+                    env = 'collectioneditor';
+                    break;
+            }
         }
+        pdata.pid = pdata.pid ? pdata.pid + '.' + env : env;
+        ecEditor.setContext('pdata', pdata);
+        var pkgVersion = ecEditor.getService('content').getContentMeta(org.ekstep.contenteditor.api.getContext('contentId')).pkgVersion
         var config = {
             uid: ecEditor.getContext('uid'),
             sid: ecEditor.getContext('sid'),
             channel: ecEditor.getContext('channel') || "in.ekstep",
-            pdata: ecEditor.getContext('pdata') || {id: "in.ekstep", pid: ecEditor.getContext('env') || "contenteditor", ver: "1.0"},
+            pdata: pdata,
             env: ecEditor.getContext('env') || "contenteditor",
             dispatcer: org.ekstep.contenteditor.config.dispatcher,
             object: {
                 id: ecEditor.getContext('contentId'),
                 type: "Content",
-                ver: ""
+                ver:  !_.isUndefined(pkgVersion) ? pkgVersion.toString() : "0"
             },
             dispatcher: instance.getDispatcher(org.ekstep.contenteditor.config.dispatcher),
             rollup: ecEditor.getContext('rollup') || {}
         };
-        if(!_.isArray(ecEditor.getContext('etags'))){
-            config.tags = [JSON.stringify(ecEditor.getContext('etags'))];
-        }else{
-            config.tags = ecEditor.getContext('etags') || ecEditor.getContext('tags');
+
+        if (ecEditor.getContext('tags')) {
+            config.tags = ecEditor.getContext('tags');
+        } else {
+            config.tags =  _.flattenDeep(_.values(ecEditor.getContext('etags')));
         }
         if(ecEditor.getContext('did')){
             config.did = ecEditor.getContext('did');
@@ -343,18 +359,20 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             instance.end();
         });
     },
-    logStartAndImpression: function(config, durartion){
+    logStartAndImpression: function(config, duration){
         var instance = this;
+        var editorConfig_mode = _.get(ecEditor.getConfig('editorConfig'), 'mode');
+        var mode =  editorConfig_mode && (editorConfig_mode.toLowerCase() == 'read' ? 'view' : editorConfig_mode) || 'edit';
         EkTelemetry.start(config, org.ekstep.contenteditor.api.getContext('contentId'), "", { 
             "uaspec": instance.detectClient(),
-            "type": "editor",
-            "mode": ecEditor.getConfig('editorType') || "content",
-            "duration": durartion
+            "type": ecEditor.getConfig('editorType') || "content",
+            "mode": mode.toLowerCase(),
+            "duration": duration,
+            "pageid": "main-page"
         });
-
         EkTelemetry.impression({
-            type: "edit",
-            pageid: "contenteditor",
+            type: mode,
+            pageid: ecEditor.getContext('env') || "contenteditor",
             uri: encodeURIComponent(location.href)
         });
     },
@@ -370,13 +388,22 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             console.error('Invalid api call data');
             return;
         }
+        if(!data.level){    
+            if(data.status ==='error'){
+                data.level = 'ERROR';
+                data.message = 'Unable to fetch!';
+            }else{
+                data.level = 'INFO'
+                data.message = ''
+            }
+        }
         var eventData = {
             "type": "api_call",
-            "level": "INFO",
-            "message": "",
-            "params": [data]
+            "level": data.level,
+            "message": data.message,
+            "params": [data],
+            "pageid": data.stage || data.pageid || ecEditor.getContext('env') || ""
         }
-        console.log('eventData ', eventData)
         EkTelemetry.log(eventData);
     },
     /**

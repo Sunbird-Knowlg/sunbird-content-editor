@@ -20,6 +20,9 @@ org.ekstep.services.searchService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.searchService
      */
     search: function(request, callback) {
+        if(!_.isEmpty(this.getConfig('searchCriteria'))){
+            request.request = _.merge(this.getConfig('searchCriteria'), request.request);
+        };
         this.postFromService(this.searchURL() + this.getConfig('searchUrl', '/v3/search'), request, this.requestHeaders, callback);
     }
 }));

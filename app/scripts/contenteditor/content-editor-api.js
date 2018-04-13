@@ -171,6 +171,9 @@ window.org.ekstep.contenteditor.api = {
             case ServiceConstants.TELEMETRY_SERVICE:
                 service = org.ekstep.services.telemetryService;
                 break;
+            case ServiceConstants.DIALCODE_SERVICE:
+                service = org.ekstep.services.dialcodeService;
+                break;
         }
         return service;
     },

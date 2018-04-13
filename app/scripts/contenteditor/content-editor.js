@@ -22,7 +22,8 @@ org.ekstep.contenteditor._backwardCompatibility = function() {
 org.ekstep.contenteditor._initServices = function() {
     org.ekstep.services.config = {
         baseURL: org.ekstep.contenteditor.config.baseURL,
-        apislug: org.ekstep.contenteditor.config.apislug
+        apislug: org.ekstep.contenteditor.config.apislug,
+        searchCriteria: org.ekstep.contenteditor.config.searchCriteria || {} 
     }
     org.ekstep.pluginframework.initialize({
         env: 'editor',

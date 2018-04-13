@@ -88,7 +88,7 @@ describe("content editor integration test: ", function() {
             expect(org.ekstep.pluginframework.resourceManager.loadExternalResource).toHaveBeenCalled();
             expect(org.ekstep.pluginframework.resourceManager.loadExternalResource.calls.count()).toEqual(2);  
             expect(org.ekstep.pluginframework.pluginManager.plugins).not.toBe({});            
-            expect(Object.keys(org.ekstep.pluginframework.pluginManager.plugins).length).toEqual(6);
+            expect(Object.keys(org.ekstep.pluginframework.pluginManager.plugins).length).toEqual(7);
             _.forEach(org.ekstep.contenteditor.config.plugins, function(plugin) {
                 expect(org.ekstep.pluginframework.pluginManager.isPluginDefined(plugin.id)).toBe(true);
                 expect(org.ekstep.pluginframework.pluginManager.getPluginManifest(plugin.id)).toBeDefined();

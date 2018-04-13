@@ -22,7 +22,7 @@ org.ekstep.services.popupService = new(org.ekstep.services.iService.extend({
     loadNgModules: function(templatePath, controllerPath) {
         templatePath = templatePath + '?' + ecEditor.getConfig('build_number');
         controllerPath = controllerPath + '?' + ecEditor.getConfig('build_number');
-        this.loadModules && this.loadModules(templatePath, controllerPath);
+        if(this.loadModules) return this.loadModules(templatePath, controllerPath);
     },
     /**
      *
@@ -35,7 +35,7 @@ org.ekstep.services.popupService = new(org.ekstep.services.iService.extend({
         /* istanbul ignore else */
         if (this.openModal) {
             this.openModal(config, callback);
-            org.ekstep.services.telemetryService.interact({ "type": "click", "subtype": "open", "target": "popup", "pluginid": "", "pluginver": '', "objectid": "", "stage": ecEditor.getCurrentStage().id });
+            org.ekstep.services.telemetryService.interact({ "type": "show", "subtype": "open", "target": "popup", "pluginid": "", "pluginver": '', "objectid": "", "stage": ecEditor.getCurrentStage().id });
         }
     }
 }));
