@@ -12,7 +12,7 @@ angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).conf
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document', '$ocLazyLoad', '$rootScope',
     function($scope, $timeout, $http, $location, $q, $window, $document, $ocLazyLoad, $rootScope) {
 
-        const EDITOR_START_TIME = Date.now();
+        var EDITOR_START_TIME = Date.now();
         // Declare global variables
         $scope.showAppLoadScreen = true;
         $scope.contentLoadedFlag = false;
