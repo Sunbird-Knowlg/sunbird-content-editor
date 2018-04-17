@@ -216,7 +216,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         }else{
             // converting target for v3 from v2 data
             eventData.target = {
-                "id": data.target,
+                "id": data.target || data.stage || "",
                 "ver": "",
                 "type": ""
             }
