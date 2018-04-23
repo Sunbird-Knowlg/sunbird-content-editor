@@ -118,6 +118,16 @@ window.org.ekstep.contenteditor.api = {
     },
 
     /**
+     * Verifies the event is already registered or not
+     * @param event {string} name of the event registered with (e.g. org.ekstep.quickstart:configure)
+     * @return {boolean}
+     * @memberof org.ekstep.contenteditor.api
+     */
+    hasEventListener: function(event) {
+        return org.ekstep.pluginframework.eventManager.hasEventListener(event);
+    },
+
+    /**
      * Framework support to load plugin resources. When the resources are loaded, the callback is fired.
      * @param pluginId {string} id of the plugin requesting resource to be loaded
      * @param pluginVer {string} version of the plugin that is requesting the resource to be loaded
