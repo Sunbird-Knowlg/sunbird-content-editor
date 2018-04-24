@@ -7,6 +7,7 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
     currentStage: undefined,
     canvas: undefined,
     contentLoading: false,
+    summary: [],
     init: function() {
         var instance = this;
         fabric.Object.prototype.transparentCorners = false;
@@ -221,6 +222,7 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         var content = { theme: { id: "theme", version: "1.0", startStage: this.stages[0].id, stage: [], manifest: { media: [] }, "plugin-manifest": { plugin: [] } } };
         this.setNavigationalParams();
         var mediaMap = {};
+        instance.summary = [];
         _.forEach(this.stages, function(stage, index) {
             instance.thumbnails[stage.id] = stage.thumbnail;
             var stageBody = stage.toECML();
@@ -229,7 +231,8 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             _.forEach(stage.children, function(plugin) {
                 var id = plugin.getManifestId();
                 if (_.isUndefined(stageBody[id])) stageBody[id] = [];
-                stageBody[id].push(plugin.toECML());                                                               
+                stageBody[id].push(plugin.toECML());
+                instance.summary.push(plugin.getSummary());
                 var pluginMedia = plugin.getMedia();
                 instance.addMediaToMediaMap(mediaMap, pluginMedia, plugin.manifest);
                 stageAssets = _.concat(stageAssets, _.keys(pluginMedia));
@@ -485,5 +488,16 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             notoSansGurmukhi.load(),
             notoSansTamil.load(),
         ]);
+    },
+    getSummary: function(){
+        var instance = this;
+        var summaryData = {"totalQuestions": 0, "totalScore": 0};
+        _.forEach((instance.summary), function (obj) {
+            if (!_.isUndefined(obj)) {
+                summaryData.totalQuestions = summaryData.totalQuestions + obj.totalQuestions;
+                summaryData.totalScore = summaryData.totalScore + obj.totalScore;
+            }
+        });
+        return summaryData;
     }
 }));
