@@ -271,6 +271,10 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
                 }
             }
         };
+        if (data.data) {
+            requestObj.request.content['publishChecklist'] = data.data.publishChecklist;
+            requestObj.request.content['publishComment'] = data.data.publishComment;
+        }
         this.postFromService(this.serviceURL() + this.getConfig('contentPublishURL', '/v3/publish/') + data.contentId, requestObj, this.requestHeaders, callback);
     },
     /**
@@ -308,7 +312,12 @@ org.ekstep.services.contentService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.contentService
      */
     rejectContent: function(data, callback) {
-        var requestObj = {"request":{}};
+        var requestObj = {"request":{content:{}}};
+        if (data.data) {
+            requestObj.request.content['rejectReasons'] = data.data.rejectReasons;
+            requestObj.request.content['rejectComment'] = data.data.rejectComment;
+        }
+
         this.postFromService(this.serviceURL() + this.getConfig('contentRejectURL', '/v3/reject/') + data.contentId, requestObj, this.requestHeaders, callback);
 
     },
