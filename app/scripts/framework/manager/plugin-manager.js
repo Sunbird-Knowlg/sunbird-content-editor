@@ -28,6 +28,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         org.ekstep.pluginframework.resourceManager.loadResource(dependency.src, 'text', function(err, data) {
             if (err) {
                 org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:error', { plugin: dependency.id, version: dependency.ver, action: "load", err: err });                
+                instance.addError({ error:'Fails to load Customplugin', plugin: dependency.id, version: dependency.ver, action: "load", stackTrace: err })
                 console.error('Unable to load editor plugin', 'plugin:' + dependency.id + '-' + dependency.ver, 'resource:', 'Error:', err);
             } else {
                 try {
@@ -39,6 +40,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                     }
                 } catch (e) {
                     org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:error', { plugin: dependency.id, version: dependency.ver, action: "load", err: e });
+                    instance.addError({ error:'Fails to load Customplugin', plugin: dependency.id, version: dependency.ver, action: "load", stackTrace: e })
                     console.error("Error while loading plugin", 'plugin:' + dependency.id + '-' + dependency.ver, 'Error:', e);
                 }
             }
@@ -51,6 +53,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         if(manifest[scope] && manifest[scope].main) org.ekstep.pluginframework.resourceManager.getResource(manifest.id, manifest.ver, manifest[scope].main, 'text', repo, function(err, data) {
             if (err) {
                 org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:error', { plugin: manifest.id, version: manifest.ver, action: "load", err: err });
+                instance.addError({error:'Fails to load plugin!', plugin: manifest.id, version: manifest.ver, action: "load", stackTrace: err })
                 console.error('Unable to load editor plugin', 'plugin:' + manifest.id + '-' + manifest.ver, 'resource:' + manifest[scope].main, 'Error:', err);
             } else {
                 try {
@@ -65,6 +68,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                     }
                 } catch (e) {
                     org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:error', { plugin: manifest.id, version: manifest.ver, action: "load", err: e });
+                    instance.addError({error:'Fails to load plugin!',  plugin: manifest.id, version: manifest.ver, action: "load", stackTrace: e })
                     console.error("Error while loading plugin", 'plugin:' + manifest.id + '-' + manifest.ver, 'Error:', e);
                 }
             }
@@ -138,6 +142,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         org.ekstep.pluginframework.resourceManager.discoverManifest(pluginId, pluginVer, function(err, data) {
             if (err || (data == undefined)) {
                 org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:error', { plugin: pluginId, version: pluginVer, action: "load", err: err });
+                instance.addError({ error: "Manifest not found!", plugin: pluginId, version: pluginVer, action: "discoverManifest", stackTrace: err })
                 console.error('Unable to load plugin manifest', 'plugin:' + pluginId + '-' + pluginVer, 'Error:', err);
                 callback && callback(); // TODO: probably pass the error
             } else {
@@ -307,7 +312,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         var p = undefined;
         var plugin = this.plugins[id];
         if (!plugin) {
-            this.addError('No plugin found for - ' + id);
+            this.addError({error:"Plugin not found!", plugin:id, version:" ", stackTrace:" "});
         } else {
             var pluginClass = override ? plugin.p.extend(override) : plugin.p;
             var pluginManifest = plugin.m;
@@ -329,6 +334,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 }
             } catch (e) {
                 org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:error', { plugin: pluginManifest.id, version: pluginManifest.ver, action: "invoke", err: e });
+                instance.addError({error:"Fails to invoke!", plugin: pluginManifest.id, version: pluginManifest.ver, action: "invoke", stackTrace: e })
                 if(p) delete instance.pluginInstances[p.id];
                 throw "Error: when instantiating plugin: "+ id;
             }
@@ -340,7 +346,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
         var p = undefined;
         var plugin = this.plugins[id];
         if (!plugin) {
-            this.addError('No plugin found for - ' + id);
+            this.addError({error: "Plugin not found!", plugin:id, version:" ", stackTrace:" "});
         } else {
             try {
                 var pluginClass = plugin.p;
@@ -360,6 +366,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 }
             } catch (e) {
                 org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:error', { plugin: pluginManifest.id, version: pluginManifest.ver, action: "invoke", err: e });
+                instance.addError({ error:'Fails to invoke!', plugin: pluginManifest.id, version: pluginManifest.ver, action: "invoke", stackTrace: e })
                 if(p) delete instance.pluginInstances[p.id];
                 throw "Error: when instantiating plugin: "+ id;
             }

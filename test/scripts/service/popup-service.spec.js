@@ -15,7 +15,7 @@ describe('popup service', function() {
         org.ekstep.services.popupService.open({}, function() {})
 
         expect(org.ekstep.services.popupService.openModal).toHaveBeenCalledWith({}, jasmine.any(Function));
-        expect(org.ekstep.services.telemetryService.interact).toHaveBeenCalledWith({ "type": "click", "subtype": "open", "target": "popup", "pluginid": "", "pluginver": '', "objectid": "", "stage": 1234 })
+        expect(org.ekstep.services.telemetryService.interact).toHaveBeenCalledWith({ "type": "show", "subtype": "open", "target": "popup", "pluginid": "", "pluginver": '', "objectid": "", "stage": 1234 })
     });
 
     it('should load angular module and template', function() {

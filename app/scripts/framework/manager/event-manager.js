@@ -11,5 +11,8 @@ org.ekstep.pluginframework.eventManager = new (Class.extend({
 	},
 	removeEventListener: function(type, callback, scope) {
 		EventBus.removeEventListener(type, callback, scope);
+	},
+	hasEventListener:function(event){
+		return EventBus.hasEventListener(event);
 	}
 }));
