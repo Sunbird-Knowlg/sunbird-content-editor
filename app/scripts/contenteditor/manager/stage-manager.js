@@ -232,7 +232,8 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
                 var id = plugin.getManifestId();
                 if (_.isUndefined(stageBody[id])) stageBody[id] = [];
                 stageBody[id].push(plugin.toECML());
-                instance.summary.push(plugin.getSummary());
+                var summaryObj = plugin.getSummary();
+                if (summaryObj) instance.summary.push(summaryObj);
                 var pluginMedia = plugin.getMedia();
                 instance.addMediaToMediaMap(mediaMap, pluginMedia, plugin.manifest);
                 stageAssets = _.concat(stageAssets, _.keys(pluginMedia));
@@ -492,11 +493,9 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
     getSummary: function(){
         var instance = this;
         var summaryData = {"totalQuestions": 0, "totalScore": 0};
-        _.forEach((instance.summary), function (obj) {
-            if (!_.isUndefined(obj)) {
+        _.forEach(instance.summary, function (obj) {
                 summaryData.totalQuestions = summaryData.totalQuestions + obj.totalQuestions;
                 summaryData.totalScore = summaryData.totalScore + obj.totalScore;
-            }
         });
         return summaryData;
     }
