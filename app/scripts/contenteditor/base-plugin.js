@@ -799,5 +799,12 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
      */
     getDisplayName: function () {
          return (this.manifest.displayName || this.manifest.id);
-    }
+    },
+
+    /**
+     * Returns the summary of the content. This is a no-op implementation. Child plugins should override
+     * this method to return custom summary object.
+     * @memberof org.ekstep.contenteditor.basePlugin
+     */    
+    getSummary: function() {}
 });
