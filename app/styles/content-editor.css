@@ -580,3 +580,8 @@ i.icon.custom-icon.dropdown-icon{
         display: none;
     }
 /* for color selection */
+
+/* for add activity-browser */
+.ui.selection.dropdown .menu>.item {
+    text-transform: capitalize;
+}
