@@ -322,7 +322,7 @@ var corePlugins = [
     "org.ekstep.telemetry-1.0",
     "org.ekstep.preview-1.1",
     "org.ekstep.activitybrowser-1.1",
-    "org.ekstep.collaborator-1.0",
+    "org.ekstep.collaborator-1.1",
     "org.ekstep.download-1.0",
     "org.ekstep.unsupported-1.0",
     "org.ekstep.wordinfobrowser-1.0",
