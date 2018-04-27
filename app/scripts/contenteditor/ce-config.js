@@ -12,14 +12,12 @@ org.ekstep.contenteditor.config = {
         { "id": "org.ekstep.review", "ver": "1.0", "type": "plugin" },
         { "id": "org.ekstep.preview", "ver": "1.1", "type": "plugin" },
         { "id": "org.ekstep.editcontentmeta", "ver": "1.1", "type": "plugin" },
-        { "id": "org.ekstep.quiz", "ver": "1.0", "type": "plugin" },
-        { "id": "org.ekstep.questionset", "ver": "1.0", "type": "plugin" },
-        { "id": "org.ekstep.contenteditorfunctions", "ver": "1.1", "type": "plugin" }        
+        { "id": "org.ekstep.quiz", "ver": "1.0", "type": "plugin" }       
     ],
     corePluginsPackaged: true,
     dispatcher: "local",
     localDispatcherEndpoint: "/app/telemetry",
-    previewURL: "/preview/preview.html"
+    previewURL: "/content/preview/preview.html"
 }
 
 org.ekstep.contenteditor.extendedConfig = {
