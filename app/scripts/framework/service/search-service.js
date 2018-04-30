@@ -21,7 +21,7 @@ org.ekstep.services.searchService = new(org.ekstep.services.iService.extend({
      */
     search: function(request, callback) {
         if(!_.isEmpty(this.getConfig('searchCriteria'))){
-            request.request = _.merge(this.getConfig('searchCriteria'), request.request);
+            request.request = _.merge(request.request, this.getConfig('searchCriteria'));
         };
         this.postFromService(this.searchURL() + this.getConfig('searchUrl', '/v3/search'), request, this.requestHeaders, callback);
     }
