@@ -488,6 +488,7 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             notoSansMalayalam.load(),
             notoNastaliqUrdu.load(),
             notoSansGurmukhi.load(),
+            notoSansTamil.load(),
             NotoSansRegular.load(),
         ]);
     },
