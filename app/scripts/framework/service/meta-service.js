@@ -127,12 +127,12 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      */
     getCategorys: function(framework, callback){
         var instance = this;
-		if (instance.categories) return callback(undefined, instance.categories);
+	    if (instance.categories) return callback(undefined, instance.categories);
         instance.getFromService(instance.frameworkURL() + instance.getConfig('getCategorysUrl','/v3/read/') + framework, instance.requestHeaders, function (error, response) {
-			if (!error) {
-			  instance.categories = response;
-			}
-			callback(error, response);
+            if (!error) {
+                instance.categories = response;
+            }
+            callback(error, response);
 		});
     },
     /**
