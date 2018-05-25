@@ -6,6 +6,10 @@
  */
 org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
     /** 
+     * @memberof org.ekstep.services.metaService
+     */
+	categories: undefined,
+    /** 
      * @member {string} learningURL
      * @memberof org.ekstep.services.metaService
      */
@@ -122,7 +126,14 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.metaService
      */
     getCategorys: function(framework, callback){
-        this.getFromService(this.frameworkURL() + this.getConfig('getCategorysUrl','/v3/read/') + framework, this.requestHeaders, callback);
+        var instance = this;
+		if (instance.categories) return callback(undefined, instance.categories);
+        instance.getFromService(instance.frameworkURL() + instance.getConfig('getCategorysUrl','/v3/read/') + framework, instance.requestHeaders, function (error, response) {
+			if (!error) {
+			  instance.categories = response;
+			}
+			callback(error, response);
+		});
     },
     /**
      * Get framework based on channel
