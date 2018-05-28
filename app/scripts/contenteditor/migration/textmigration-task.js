@@ -2,7 +2,7 @@
 
 org.ekstep.contenteditor.migration.textmigration_task = new(Class.extend({
     pluginName: 'org.ekstep.text',
-    currentVersion: org.ekstep.contenteditor.api.getPlugin(this.pluginName).m.ver,
+    currentVersion: 1.2,
     init: function() {
         console.log('text migration-task initialized');
         org.ekstep.contenteditor.api.addEventListener(this.pluginName + ':migrate', this.migrateText, this);
