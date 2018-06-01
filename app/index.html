@@ -20,18 +20,14 @@
     <link rel="stylesheet" type="text/css" href="libs/ng-tags-input.css">
     <!-- Webfont loader script -->
     <!-- <script>
-        // load fonts before loading the game
         WebFontConfig = {
           custom: {
-            // families: ['All the families which is there in css file(eg: NotoNastaliqUrdu, NotoSansTamil)'],
-            // urls: ['css file path']
-          },
-          active: function() {
-            myMain(); // function to call before canvas render to load all fonts
+            families: ['All the families which is there in css file(eg: NotoNastaliqUrdu, NotoSansTamil)'],
+              urls: ['css file path']
           }
         };
-      </script> -->
-      <!-- <script src="path of webfont.js file"></script> -->
+      </script>
+      <script src="path of webfont.js file"></script> -->
       <!-- Webfont loader script -->
     <!-- endinject -->
 </head>
@@ -103,8 +99,6 @@
                         </div>
                     </div>
                     <div id="superwrapper" class="ui seven wide column canvas-column">
-                        <!-- Replace canvas div as below -->
-                        <!-- <div onload="myMain()" id="canvas-wrapper" style="position:absolute; width:720px; height: 405px; left:0; right:0; margin:auto; box-shadow: 0 0 0 1px #d4d4d5, 0 2px 4px 0 rgba(34,36,38,.12), 0 2px 10px 0 rgba(34,36,38,.15);"> -->
                         <div id="canvas-wrapper" style="position:absolute; width:720px; height: 405px; left:0; right:0; margin:auto; box-shadow: 0 0 0 1px #d4d4d5, 0 2px 4px 0 rgba(34,36,38,.12), 0 2px 10px 0 rgba(34,36,38,.15);">
                             <canvas id="canvas" class="ui card centered raised" width="720px" height="405px" style="margin: 0; border-radius: 0px; background: none"></canvas>
                         </div>
