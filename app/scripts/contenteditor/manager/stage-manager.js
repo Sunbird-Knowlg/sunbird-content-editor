@@ -17,14 +17,12 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         fabric.Object.prototype.padding = 2;
         fabric.Object.prototype.borderColor = "#1A98FA";
         fabric.Object.prototype.cornerColor = "#1A98FA";
-        instance.loadAllNotoSansFonts().then(function() {
-            instance.canvas.renderAll();
-        });
         //fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
         this.canvas = new fabric.Canvas('canvas', { backgroundColor: '#FFFFFF', preserveObjectStacking: true, perPixelTargetFind: false });
         console.log("Stage manager initialized");
         org.ekstep.pluginframework.eventManager.addEventListener("stage:delete", this.deleteConfirmationDialog, this);
         org.ekstep.pluginframework.eventManager.addEventListener("stage:duplicate", this.duplicateStage, this);
+        instance.canvas.renderAll();
     },
     clearCanvas: function(canvas) {
         canvas.clear();
@@ -463,32 +461,6 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         this.thumbnails = {};
         this.canvas = undefined;
         this.currentStage = undefined;
-    },
-    loadAllNotoSansFonts: function() {
-        var notoSans = new FontFaceObserver("NotoSans");
-        var notoSansDevanagari = new FontFaceObserver("NotoSansDevanagari");
-        var notoSansTelugu = new FontFaceObserver("NotoSansTelugu");
-        var notoSansKannada = new FontFaceObserver("NotoSansKannada");
-        var notoSansOriya = new FontFaceObserver("NotoSansOriya");
-        var notoSansGujarati = new FontFaceObserver("NotoSansGujarati");
-        var notoSansBengali = new FontFaceObserver("NotoSansBengali");
-        var notoSansMalayalam = new FontFaceObserver("NotoSansMalayalam");
-        var notoNastaliqUrdu = new FontFaceObserver("NotoNastaliqUrdu");
-        var notoSansGurmukhi = new FontFaceObserver("NotoSansGurmukhi");
-        var notoSansTamil = new FontFaceObserver("NotoSansTamil");
-        return Promise.all([
-            notoSans.load(),
-            notoSansDevanagari.load(),
-            notoSansTelugu.load(),
-            notoSansKannada.load(),
-            notoSansOriya.load(),
-            notoSansGujarati.load(),
-            notoSansBengali.load(),
-            notoSansMalayalam.load(),
-            notoNastaliqUrdu.load(),
-            notoSansGurmukhi.load(),
-            notoSansTamil.load(),
-        ]);
     },
     getSummary: function(){
         var instance = this;

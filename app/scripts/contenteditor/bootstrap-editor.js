@@ -38,3 +38,11 @@ window.ManagerConstants = {
     STAGE_MANAGER: "stage",
     TOOLBAR_MANAGER: "toolbar"
 }
+
+// webfonts loader configuration
+WebFontConfig = {
+  custom: {
+    families: ['NotoSansDevanagari','NotoSansTelugu','NotoSansKannada','NotoSansOriya','NotoSansBengali','NotoSansMalayalam','NotoNastaliqUrdu','NotoSansGurmukhi','NotoSansTamil','NotoSans','NotoSansRegular','NotoSansGujarati'],
+      urls: ['styles/noto.css']
+  }
+}
