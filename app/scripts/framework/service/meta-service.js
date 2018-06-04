@@ -8,7 +8,7 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
     /** 
      * @memberof org.ekstep.services.metaService
      */
-	categories: [],
+	categories: {},
     /** 
      * @member {string} learningURL
      * @memberof org.ekstep.services.metaService
@@ -126,25 +126,15 @@ org.ekstep.services.metaService = new(org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.metaService
      */
     getCategorys: function(framework, callback){
-		var instance = this;
-		if (instance.categories.length) {
-			var data;
-			instance.categories.forEach(function(key) {
-				if (key.framework == framework)
-					data = key.response;
-			});
-			return callback(undefined, data);
-		}
-		
+        var instance = this;
+        if (instance.categories[framework]) 
+            return callback(undefined, instance.categories[framework]);
         instance.getFromService(instance.frameworkURL() + instance.getConfig('getCategorysUrl','/v3/read/') + framework, instance.requestHeaders, function (error, response) {
-			if (!error) {
-				var category = {};
-				category.framework = response.data.result.framework.identifier;
-				category.response = response;
-				instance.categories.push(category);
-			}
-			callback(error, response);
-		});
+            if (!error) {
+                instance.categories[framework] = response;
+            }
+            callback(error, response);
+        });
     },
     /**
      * Get framework based on channel
