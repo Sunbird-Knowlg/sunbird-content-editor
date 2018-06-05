@@ -17,6 +17,13 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         fabric.Object.prototype.padding = 2;
         fabric.Object.prototype.borderColor = "#1A98FA";
         fabric.Object.prototype.cornerColor = "#1A98FA";
+        WebFontConfig.active =  function() {
+            if(instance.currentStage){
+                instance.clearCanvas(instance.canvas);
+                org.ekstep.contenteditor.api.dispatchEvent("stage:select", { stageId: instance.currentStage.id });
+            }
+        }
+        WebFont.load(WebFontConfig);
         //fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
         this.canvas = new fabric.Canvas('canvas', { backgroundColor: '#FFFFFF', preserveObjectStacking: true, perPixelTargetFind: false });
         console.log("Stage manager initialized");
