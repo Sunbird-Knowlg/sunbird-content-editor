@@ -34,6 +34,13 @@
 }
 
 @font-face {
+    font-family: 'NotoSansGujarati';
+    src: url('fonts/NotoSansGujarati-Regular.ttf') format('truetype');
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face {
     font-family: 'NotoSansBengali';
     src: url('fonts/NotoSansBengali-Regular.ttf') format('truetype');
     font-style: normal;
@@ -64,13 +71,6 @@
 @font-face {
     font-family: 'NotoSansTamil';
     src: url('fonts/NotoSansTamil-Regular.ttf') format('truetype');
-    font-style: normal;
-    font-weight: normal;
-}
-
-@font-face {
-    font-family: 'NotoSansGujarati';
-    src: url('fonts/NotoSansGujarati-Regular.ttf') format('truetype');
     font-style: normal;
     font-weight: normal;
 }
