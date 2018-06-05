@@ -476,7 +476,6 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
         var notoNastaliqUrdu = new FontFaceObserver("NotoNastaliqUrdu");
         var notoSansGurmukhi = new FontFaceObserver("NotoSansGurmukhi");
         var notoSansTamil = new FontFaceObserver("NotoSansTamil");
-        var NotoSansRegular = new FontFaceObserver("NotoSansRegular");
         return Promise.all([
             notoSans.load(),
             notoSansDevanagari.load(),
@@ -489,7 +488,6 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             notoNastaliqUrdu.load(),
             notoSansGurmukhi.load(),
             notoSansTamil.load(),
-            NotoSansRegular.load(),
         ]);
     },
     getSummary: function(){
