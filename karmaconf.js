@@ -43,6 +43,7 @@ module.exports = function(config) {
             "app/libs/mousetrap.min.js",
             "app/libs/fontfaceobserver.min.js",
             "app/libs/telemetry-lib-v3.min.js",
+            "app/libs/webfont.js",
             "app/scripts/framework/class.js",
             "app/scripts/framework/libs/ES5Polyfill.js",
             "app/scripts/framework/bootstrap-framework.js",
