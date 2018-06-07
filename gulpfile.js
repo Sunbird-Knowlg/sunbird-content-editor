@@ -23,6 +23,7 @@ var bower_components = [
     "app/libs/semantic.min.js",
     "app/libs/mousetrap.min.js",
     "app/libs/telemetry-lib-v3.min.js",
+    "app/libs/webfont.js",
     "app/bower_components/angular/angular.js",
     "app/bower_components/fabric/dist/fabric.min.js",
     "app/bower_components/lodash/lodash.js",
@@ -171,7 +172,6 @@ gulp.task('minifyCSS', function() {
             'app/styles/MyFontsWebfontsKit.css',
             'app/styles/iconfont.css',
             'app/styles/icomoon/style.css',
-            'app/styles/noto.css',
             'app/styles/header.css',
             'app/styles/commonStyles.css',
             'app/styles/content-editor.css'
@@ -205,7 +205,7 @@ gulp.task('minifyCssBower', function() {
 
 
 gulp.task('copyfonts', function() {
-    return gulp.src(['app/styles/themes/**/*', 'app/styles/webfonts/**/*', 'app/styles/fonts/*'], {
+    return gulp.src(['app/styles/themes/**/*', 'app/styles/webfonts/**/*', 'app/styles/fonts/*', 'app/styles/noto.css'], {
             base: 'app/styles/'
         })
         .pipe(gulp.dest('content-editor/styles'));
