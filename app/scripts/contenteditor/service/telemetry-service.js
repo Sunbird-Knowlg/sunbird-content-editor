@@ -283,7 +283,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
      *
      */
     error: function(data) {
-        if(!(data.hasOwnProperty('err') && (data.hasOwnProperty('type') || data.hasOwnProperty('errtype')) && (data.hasOwnProperty('data') || data.hasOwnProperty('stacktrace')))){
+        if (!(data.hasOwnProperty('err') && (data.hasOwnProperty('type') || data.hasOwnProperty('errtype')) && (data.hasOwnProperty('data') || data.hasOwnProperty('stacktrace')))) {
             console.error('Invalid error data');
             return;
         }
@@ -293,16 +293,16 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
             "stacktrace": data.data || data.stacktrace
         }
         // for V3 implementation
-        if(data.pageid || data.stage)
+        if (data.pageid || data.stage)
             eventData.pageid = data.stage || data.pageid;
-        if(data.plugin)
+        if (data.plugin)
             eventData.plugin = data.plugin;
-        if(data.object){
-        	eventData.object = data.object;
-        }else{
-	        if(data.objectid && data.objecttype){
-	           eventData.object =  { "id": data.objectid, "type": data.objecttype }
-	        }	
+        if (data.object) {
+            eventData.object = data.object;
+        } else {
+            if (data.objectid && data.objecttype) {
+                eventData.object = { "id": data.objectid, "type": data.objecttype }
+            }
         }
         EkTelemetry.error(eventData);
     },
