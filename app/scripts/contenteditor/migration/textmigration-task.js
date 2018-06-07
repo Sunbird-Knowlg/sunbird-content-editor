@@ -34,6 +34,7 @@ org.ekstep.contenteditor.migration.textmigration_task = new (Class.extend({
                 if (!plugin.attributes.version || plugin.attributes.version < instance.currentVersion) {
                     plugin.attributes.version = instance.currentVersion;
                     TextWYSIWYG.setProperties(plugin);
+                    TextWYSIWYG.resetFont(plugin);
                 }
             })
         });
@@ -64,6 +65,7 @@ org.ekstep.contenteditor.migration.textmigration_task = new (Class.extend({
         if (!plugin.attributes.version || plugin.attributes.version < this.currentVersion) {
             plugin.attributes.version = this.currentVersion;
             TextWYSIWYG.setProperties(plugin);
+            TextWYSIWYG.resetFont(plugin);
         }
     }
 
