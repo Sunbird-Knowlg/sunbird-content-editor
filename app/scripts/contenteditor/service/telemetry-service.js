@@ -300,9 +300,9 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         if(data.object){
         	eventData.object = data.object;
         }else{
-        	if(data.objectid && data.objecttype){
-        		eventData.object =  { "id": data.objectid, "type": data.objecttype }
-        	}	
+	        if(data.objectid && data.objecttype){
+	           eventData.object =  { "id": data.objectid, "type": data.objecttype }
+	        }	
         }
         EkTelemetry.error(eventData);
     },
