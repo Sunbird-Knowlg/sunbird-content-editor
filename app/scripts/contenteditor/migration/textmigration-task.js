@@ -33,8 +33,8 @@ org.ekstep.contenteditor.migration.textmigration_task = new (Class.extend({
                 if (plugin.manifest.id != instance.pluginName) return;
                 if (!plugin.attributes.version || plugin.attributes.version < instance.currentVersion) {
                     plugin.attributes.version = instance.currentVersion;
-                    TextWYSIWYG.setProperties(plugin);
                     TextWYSIWYG.resetFont(plugin);
+                    TextWYSIWYG.setProperties(plugin);
                 }
             })
         });
@@ -64,8 +64,8 @@ org.ekstep.contenteditor.migration.textmigration_task = new (Class.extend({
         if (plugin.manifest.id != this.pluginName) return;
         if (!plugin.attributes.version || plugin.attributes.version < this.currentVersion) {
             plugin.attributes.version = this.currentVersion;
-            TextWYSIWYG.setProperties(plugin);
             TextWYSIWYG.resetFont(plugin);
+            TextWYSIWYG.setProperties(plugin);
         }
     }
 
