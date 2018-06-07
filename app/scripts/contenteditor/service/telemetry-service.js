@@ -290,7 +290,7 @@ org.ekstep.services.telemetryService = new(org.ekstep.services.iService.extend({
         var eventData = {
             "err": data.err && data.err.toString(),
             "errtype": data.type || data.errtype,
-            "stacktrace": (data.data && data.data.toString()) || (data.stacktrace && data.stacktrace.toString())
+            "stacktrace": data.data || data.stacktrace
         }
         // for V3 implementation
         if(data.pageid || data.stage)
