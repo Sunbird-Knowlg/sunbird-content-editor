@@ -312,7 +312,7 @@ var corePlugins = [
     "org.ekstep.conceptselector-1.1",
     "org.ekstep.config-1.0",
     "org.ekstep.stage-1.0",
-    "org.ekstep.text-1.1",
+    "org.ekstep.text-1.2",
     "org.ekstep.shape-1.0",
     "org.ekstep.image-1.1",
     "org.ekstep.audio-1.1",
