@@ -12,7 +12,7 @@ org.ekstep.contenteditor.migration.textmigration_task = new (Class.extend({
          * Assigned at the time of migrating text plugin
          * @member {String} currentTextVersion
          */
-        currentTextVersion: 1.2,
+        currentTextVersion: 'V2',
         /**
          * Default font of text plugin
          * @member {String} defaultFont
@@ -36,18 +36,16 @@ org.ekstep.contenteditor.migration.textmigration_task = new (Class.extend({
         _.forEach(stages, function (stage, index) {
             _.forEach(stage.children, function (plugin) {
                 if (plugin.manifest.id != instance._constants.pluginName) return;
-                if (!plugin.attributes.version || plugin.attributes.version < instance._constants.currentTextVersion) {
-                    plugin.attributes.version = instance._constants.currentTextVersion;
-                    instance.setDefaultFont(plugin);
-                    TextWYSIWYG.setProperties(plugin);
-                }
+                plugin.attributes.version = instance._constants.currentTextVersion;
+                instance.setDefaultFont(plugin);
+                TextWYSIWYG.setInstance(plugin);
             })
         });
     },
     /**
     * Method to check if old text plugin available in content or not
     */
-    isOldPluginAvailable: function() {
+    isV1PluginAvailable: function() {
         var instance = this;
         var oldPluginAvailable = false;
         var stages = org.ekstep.contenteditor.stageManager.stages;
@@ -67,11 +65,9 @@ org.ekstep.contenteditor.migration.textmigration_task = new (Class.extend({
     */
     migrateText: function(event, textInstance) {
         if (textInstance.manifest.id != this._constants.pluginName) return;
-        if (!textInstance.attributes.version || textInstance.attributes.version < this._constants.currentTextVersion) {
-            textInstance.attributes.version = this._constants.currentTextVersion;
-            this.setDefaultFont(textInstance);
-            TextWYSIWYG.setProperties(textInstance);
-        }
+        textInstance.attributes.version = this._constants.currentTextVersion;
+        this.setDefaultFont(textInstance);
+        TextWYSIWYG.setInstance(textInstance);
     },
     /**
      * This will change the font family to default font if font family is not supported
