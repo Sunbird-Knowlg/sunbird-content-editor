@@ -71,7 +71,6 @@ var contentEditorApp = [
     "app/scripts/contenteditor/migration/assessmentmigration-task.js",
     "app/scripts/contenteditor/migration/eventsmigration-task.js",
     "app/scripts/contenteditor/migration/settagmigration-task.js",
-    "app/scripts/contenteditor/migration/textmigration-task.js",
     "app/scripts/contenteditor/manager/stage-manager.js"
 ];
 
@@ -312,7 +311,7 @@ var corePlugins = [
     "org.ekstep.conceptselector-1.1",
     "org.ekstep.config-1.0",
     "org.ekstep.stage-1.0",
-    "org.ekstep.text-1.2",
+    "org.ekstep.text-1.1",
     "org.ekstep.shape-1.0",
     "org.ekstep.image-1.1",
     "org.ekstep.audio-1.1",
