@@ -50,9 +50,13 @@
         "karma-mocha-reporter": "^2.2.3",
         "karma-phantomjs-launcher": "1.0.2",
         "merge-stream": "1.0.1",
-        "phantomjs": "2.1.7"
+        "phantomjs": "2.1.7",
+        "webpack": "*",
+        "webpack-cli": "^2.1.4",
+        "uglifyjs-webpack-plugin": "*"
     },
     "scripts": {
+        "build": "webpack",
         "apptest": "karma start karmaconf.js",
         "testpluginframework": "karma start karmaconf.pluginframework.js",
         "test": "karma start karmaconf.js && karma start karmaconf.pluginframework.js"
