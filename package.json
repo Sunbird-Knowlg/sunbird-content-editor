@@ -34,6 +34,7 @@
         "gulp-minifier": "^0.1.4",
         "gulp-rename": "^1.2.2",
         "gulp-strip-debug": "^1.1.0",
+        "gulp-uglify": "^3.0.0",
         "gulp-zip": "^3.2.0",
         "grunt-contrib-rename": "0.0.3",
         "gulp-string-replace": "^0.4.0",

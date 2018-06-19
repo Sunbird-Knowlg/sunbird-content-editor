@@ -13,25 +13,26 @@ var rename = require("gulp-rename");
 var merge = require('merge-stream');
 var cleanCSS = require('clean-css');
 var replace = require('gulp-string-replace');
+var uglify = require('gulp-uglify');
 
 var cachebust = new CacheBuster();
 const zip = require('gulp-zip');
 
 var bower_components = [
-    "app/bower_components/jquery/dist/jquery.js",
+    "app/bower_components/jquery/dist/jquery.min.js",
     "app/bower_components/async/dist/async.min.js",
     "app/libs/semantic.min.js",
     "app/libs/mousetrap.min.js",
     "app/libs/telemetry-lib-v3.min.js",
     "app/libs/webfont.js",
-    "app/bower_components/angular/angular.js",
+    "app/bower_components/angular/angular.min.js",
     "app/bower_components/fabric/dist/fabric.min.js",
-    "app/bower_components/lodash/lodash.js",
+    "app/bower_components/lodash/dist/lodash.min.js",
     "app/bower_components/x2js/index.js",
     "app/bower_components/eventbus/index.js",
     "app/bower_components/uuid/index.js",
     "app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
-    "app/bower_components/ng-dialog/js/ngDialog.js",
+    "app/bower_components/ng-dialog/js/ngDialog.min.js",
     "app/bower_components/ngSafeApply/index.js",
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.core.js",
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.directive.js",
@@ -41,14 +42,14 @@ var bower_components = [
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.jsLoader.js",
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.templatesLoader.js",
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
-    "app/bower_components/oclazyload/dist/ocLazyLoad.js",
+    "app/bower_components/oclazyload/dist/ocLazyLoad.min.js",
     "app/scripts/contenteditor/md5.js",
     "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
     "app/libs/ng-tags-input.js"
 ];
 
 var bower_css = [
-    "app/bower_components/font-awesome/css/font-awesome.css",
+    "app/bower_components/font-awesome/css/font-awesome.min.css",
     "app/bower_components/ng-dialog/css/ngDialog.min.css",
     "app/bower_components/ng-dialog/css/ngDialog-theme-plain.min.css",
     "app/bower_components/ng-dialog/css/ngDialog-theme-default.min.css",
@@ -108,7 +109,6 @@ var pluginFramework = [
     "app/scripts/framework/manager/keyboard-manager.js",
     "app/scripts/framework/service/iservice.js",
     "app/scripts/framework/service/content-service.js",
-    "app/scripts/framework/service/telemetry-service.js",
     "app/scripts/framework/service/assessment-service.js",
     "app/scripts/framework/service/asset-service.js",
     "app/scripts/framework/service/meta-service.js",
@@ -143,6 +143,13 @@ var editorScripts = pluginFramework.concat(editorFramework);
 gulp.task('minifyallJS', function() {
     return gulp.src(appScripts)
         .pipe(concat('script.min.js'))
+        .pipe(minify({
+            minify: true,
+            collapseWhitespace: true,
+            conservativeCollapse: true,
+            minifyJS: true
+        }))
+        .pipe(uglify())
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
@@ -193,6 +200,13 @@ gulp.task('minifyCSS', function() {
 gulp.task('minifyJsBower', function() {
     return gulp.src(bower_components)
         .pipe(concat('external.min.js'))
+        .pipe(minify({
+            minify: true,
+            collapseWhitespace: true,
+            conservativeCollapse: true,
+            minifyJS: true
+        }))
+        .pipe(uglify())
         .pipe(gulp.dest('content-editor/scripts/'));
 });
 
