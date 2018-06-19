@@ -8,8 +8,8 @@ const BowerResolvePlugin = require("bower-resolve-webpack-plugin");
 
 
 const vendor = [
-    "./app/bower_components/jquery/dist/jquery.js",
-    './app/bower_components/semantic/dist/semantic.js',
+    //"./app/bower_components/jquery/dist/jquery.js",
+    //'./app/bower_components/semantic/dist/semantic.js',
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
@@ -105,22 +105,12 @@ module.exports = {
     },
     mode: "development",
     resolve: {
-        extensions: ['.js', '.es6'],
         alias: {
             'angular': path.resolve('./app/bower_components/angular/angular.js'),
         }
     },
     module: {
         rules: [{
-            test: require.resolve('jquery'),
-            use: [{
-                loader: 'expose-loader',
-                options: 'jQuery'
-            }, {
-                loader: 'expose-loader',
-                options: '$'
-            }]
-        }, {
             test: require.resolve('async'),
             use: [{
                 loader: 'expose-loader',
@@ -142,32 +132,40 @@ module.exports = {
             }]
 
         }, {
-            test: require.resolve('./app/bower_components/semantic/dist/semantic.js'),
+            test: require.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
             use: [{
                 loader: 'expose-loader',
-                options: 'semantic'
+                options: 'Fingerprint2'
+            }]
+
+        }, {
+            test: require.resolve('./app/bower_components/uuid/index.js'),
+            use: [{
+                loader: 'expose-loader',
+                options: 'UUID'
             }]
 
         }]
     },
     plugins: [
         new UglifyJsPlugin({
-            cache: true,
+            cache: false,
             parallel: true,
             uglifyOptions: {
-                compress: true,
+                compress: false,
                 ecma: 6,
                 mangle: true
             },
-            sourceMap: true
+            sourceMap: false
         }),
         new webpack.ProvidePlugin({
-            $: 'jquery',
-            jQuery: 'jquery',
+            // $: 'jquery',
+            // jQuery: 'jquery',
             _: 'lodash',
             async: 'async',
-            "window.jQuery": "jquery"
-        })
+            // "window.jQuery": "jquery"
+        }), new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.HotModuleReplacementPlugin()
 
     ],
 

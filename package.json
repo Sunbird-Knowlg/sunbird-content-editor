@@ -53,7 +53,14 @@
         "phantomjs": "2.1.7",
         "webpack": "*",
         "webpack-cli": "^2.1.4",
-        "uglifyjs-webpack-plugin": "*"
+        "uglifyjs-webpack-plugin": "*",
+        "webpack-merge-and-include-globally": "*",
+        "html-loader": "*",
+        "html-minifier-loader": "*",
+        "webpack-runtime-public-path-plugin": "*",
+        "ajv": "*",
+        "expose-loader": "*",
+        "bower-resolve-webpack-plugin": "*"
     },
     "scripts": {
         "build": "webpack",
