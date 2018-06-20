@@ -69,7 +69,8 @@
         "glob-all": "*",
         "purify-css": "*",
         "svg-inline-loader": "*",
-        "imports-loader": "*"
+        "imports-loader": "*",
+        "optimize-css-assets-webpack-plugin": "*"
     },
     "scripts": {
         "build": "webpack",

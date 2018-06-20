@@ -8,18 +8,20 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PurifyCSSPlugin = require('purifycss-webpack');
 const runningMode = process.env.NODE_ENV || 'production';
 const glob = require('glob-all');
+var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+
 
 
 
 
 const vendor = [
-    "./app/bower_components/jquery/dist/jquery.js",
-    './app/bower_components/semantic/dist/semantic.js',
+    // "./app/bower_components/jquery/dist/jquery.js",
+    // './app/bower_components/semantic/dist/semantic.js',
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
     "./app/libs/telemetry-lib-v3.min.js",
-    "./app/libs/webfont.js",
+    // "./app/libs/webfont.js",
     "./app/bower_components/angular/angular.js",
     "./app/bower_components/fabric/dist/fabric.min.js",
     "./app/bower_components/lodash/lodash.js",
@@ -125,6 +127,7 @@ module.exports = {
         }
     },
     entry: {
+        'coreplugin': './app/scripts/coreplugins.js',
         'vendor': vendor,
         'app': app,
         'styles': app_css
@@ -137,8 +140,7 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'angular': path.resolve('./app/bower_components/angular/angular.js'),
-            'WebFont': path.resolve('./app/libs/webfont.js'),
+            'angular': path.resolve('./app/bower_components/angular/angular.js')
         }
     },
     module: {
@@ -184,11 +186,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.svg$/,
-                loader: 'svg-inline-loader?classPrefix'
-            },
-            {
-                test: require.resolve("./app/libs/webfont.js"),
+                test: require.resolve("./node_modules/ajv/lib/ajv.js"),
                 use: "imports-loader?this=>window"
             },
             { test: /\.woff(\?.*)?$/, loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff" },
@@ -225,17 +223,13 @@ module.exports = {
             filename: "[name].css",
             chunkFilename: "[id].css"
         }),
-        // new PurifyCSSPlugin({
-        //     paths: glob.sync([
-        //         path.join(__dirname, 'app/*.html'),
-        //         path.join(__dirname, 'app/*.js')
-        //     ]),
-        //     minimize: true,
-        //     purifyOptions: {
-        //         whitelist: []
-        //     }
-        // }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
+        new OptimizeCssAssetsPlugin({
+            assetNameRegExp: /\.optimize\.css$/g,
+            cssProcessor: require('cssnano'),
+            cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
+            canPrint: true
+        })
     ],
 };
