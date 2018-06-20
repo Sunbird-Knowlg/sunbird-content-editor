@@ -2,7 +2,6 @@
 
 org.ekstep.contenteditor.migration.eventsmigration_task = new(Class.extend({
     init: function() {
-        console.log('events migration task initialized');
     },
     migrate: function(contentbody) {
         console.log('migrating events');

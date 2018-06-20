@@ -2,7 +2,6 @@
 
 org.ekstep.contenteditor.migration.readalongmigration_task = new(Class.extend({
     init: function() {
-        console.log('read along migration task initialized');
     },
     // check 'isReadAlongAutoPlay' attribute in htext and convert to 'autoplay'
     migrate: function(contentbody) {

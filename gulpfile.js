@@ -14,9 +14,21 @@ var merge = require('merge-stream');
 var cleanCSS = require('clean-css');
 var replace = require('gulp-string-replace');
 var uglify = require('gulp-uglify');
+var versionNumber = process.env.version_number;
+var buildNumber = process.env.build_number;
 
-var cachebust = new CacheBuster();
+if(!versionNumber && !versionNumber) {
+    console.error('Error!!! Cannot find verion_number and build_number env variables');
+    return process.exit(1);
+}
+var versionPrefix = '.' + versionNumber + '.' + buildNumber;
+var cachebust = function(path) {
+    path.basename += versionPrefix
+}
+
+//var cachebust = new CacheBuster();
 const zip = require('gulp-zip');
+
 
 var bower_components = [
     "app/bower_components/jquery/dist/jquery.min.js",
@@ -150,18 +162,23 @@ gulp.task('minifyallJS', function() {
             minifyJS: true
         }))
         .pipe(uglify())
+        .pipe(rename(cachebust))
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
 gulp.task('minifyCE', function() {
     return gulp.src(editorScripts)
         .pipe(concat('contenteditor.min.js'))
+        .pipe(uglify())
+        .pipe(rename(cachebust))
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
 gulp.task('minifyFramework', function() {
     return gulp.src(pluginFramework)
         .pipe(concat('plugin-framework.min.js'))
+        .pipe(uglify())
+        .pipe(rename(cachebust))
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
@@ -194,6 +211,7 @@ gulp.task('minifyCSS', function() {
                 return m && m.join('\n') + '\n' || '';
             }
         }))
+        .pipe(rename(cachebust))
         .pipe(gulp.dest('content-editor/styles'));
 });
 
@@ -207,12 +225,14 @@ gulp.task('minifyJsBower', function() {
             minifyJS: true
         }))
         .pipe(uglify())
+        .pipe(rename(cachebust))
         .pipe(gulp.dest('content-editor/scripts/'));
 });
 
 gulp.task('minifyCssBower', function() {
     return gulp.src(bower_css)
         .pipe(concat('external.min.css'))
+        .pipe(rename(cachebust))
         .pipe(gulp.dest('content-editor/styles'));
 });
 
@@ -223,13 +243,13 @@ gulp.task('copyfonts', function() {
         })
         .pipe(gulp.dest('content-editor/styles'));
 });
-gulp.task('copyicomoonfonts', function() {
+gulp.task('copycommonfonts', function() {
     return gulp.src(['app/styles/icomoon/fonts/*'], {
             base: 'app/styles/icomoon/fonts/'
         })
         .pipe(gulp.dest('content-editor/styles/fonts'));
 });
-gulp.task('copyfontawsomefonts', function() {
+gulp.task('copyfontawesomefonts', function() {
     return gulp.src(['app/bower_components/font-awesome/fonts/fontawesome-webfont.ttf', 'app/bower_components/font-awesome/fonts/fontawesome-webfont.woff'], {
             base: 'app/bower_components/font-awesome/fonts/'
         })
@@ -249,11 +269,11 @@ gulp.task('copydeploydependencies', function() {
         .pipe(gulp.dest('content-editor'));
 });
 
-gulp.task('minify', ['minifyallJS', 'minifyCE', 'minifyCSS', 'minifyJsBower', 'minifyFramework', 'minifyCssBower', 'copyfonts', 'copyicomoonfonts', 'copyfontawsomefonts', 'copyFiles', 'copydeploydependencies']);
+gulp.task('minify', ['minifyallJS', 'minifyCE', 'minifyCSS', 'minifyJsBower', 'minifyFramework', 'minifyCssBower', 'copyfonts', 'copycommonfonts', 'copyfontawesomefonts', 'copyFiles', 'copydeploydependencies']);
 
 gulp.task('inject', ['minify'], function() {
     var target = gulp.src('content-editor/index.html');
-    var sources = gulp.src(['content-editor/scripts/*.js', '!content-editor/scripts/contenteditor.min.js', '!content-editor/scripts/plugin-framework.min.js', '!content-editor/scripts/coreplugins.js', 'content-editor/styles/*.css'], {
+    var sources = gulp.src(['content-editor/scripts/*.js', '!content-editor/scripts/contenteditor.*.js', '!content-editor/scripts/plugin-framework.*.js', '!content-editor/scripts/coreplugins.js', 'content-editor/styles/*.css'], {
         read: false
     });
     return target
@@ -386,9 +406,9 @@ gulp.task('packageCorePluginsDev', ["minifyCorePlugins"], function() {
             manifest.editor.dependencies.forEach(function(dependency) {
                 var resource = '/plugins/' + plugin + '/' + dependency.src;
                 if (dependency.type == 'js') {
-                    fs.appendFile('app/scripts/coreplugins.js', 'org.ekstep.contenteditor.jQuery("body").append($("<script type=\'text/javascript\' src=\'' + resource + '\'>"))' + '\n');
+                    fs.appendFile('app/scripts/coreplugins.js', "org.ekstep.pluginframework.resourceManager.loadExternalResource('" + resource + "', 'js')" + "\n");
                 } else if (dependency.type == 'css') {
-                    fs.appendFile('app/scripts/coreplugins.js', 'org.ekstep.contenteditor.jQuery("head").append("<link rel=\'stylesheet\' type=\'text/css\' href=\'' + resource + '\'>")' + '\n');
+                    fs.appendFile('app/scripts/coreplugins.js', "org.ekstep.pluginframework.resourceManager.loadExternalResource('" + resource + "', 'css')" + "\n");
                 }
             });
         }
@@ -414,9 +434,9 @@ gulp.task('packageCorePlugins', ["minify", "minifyCorePlugins"], function() {
             manifest.editor.dependencies.forEach(function(dependency) {
                 var resource = '/content-plugins/' + plugin + '/' + dependency.src;
                 if (dependency.type == 'js') {
-                    fs.appendFile('content-editor/scripts/coreplugins.js', 'org.ekstep.contenteditor.jQuery("body").append($("<script type=\'text/javascript\' src=\'' + resource + '\'>"))' + '\n');
+                    fs.appendFile('content-editor/scripts/coreplugins.js', "org.ekstep.pluginframework.resourceManager.loadExternalResource('" + resource + "', 'js')" + "\n");
                 } else if (dependency.type == 'css') {
-                    fs.appendFile('content-editor/scripts/coreplugins.js', 'org.ekstep.contenteditor.jQuery("head").append("<link rel=\'stylesheet\' type=\'text/css\' href=\'' + resource + '\'>")' + '\n');
+                    fs.appendFile('content-editor/scripts/coreplugins.js', "org.ekstep.pluginframework.resourceManager.loadExternalResource('" + resource + "', 'css')" + "\n");
                 }
             });
         }
