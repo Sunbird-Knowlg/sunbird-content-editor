@@ -115,6 +115,7 @@ const app_css = [
 ];
 module.exports = {
     optimization: {
+        minimize: false,
         splitChunks: {
             cacheGroups: {
                 styles: {
@@ -198,23 +199,23 @@ module.exports = {
         ]
     },
     plugins: [
-        new UglifyJsPlugin({
-            cache: false,
-            parallel: true,
-            uglifyOptions: {
-                compress: {
-                    dead_code: true,
-                    drop_console: true,
-                    global_defs: {
-                        DEBUG: true
-                    },
-                    passes: 3,
-                },
-                ecma: 6,
-                mangle: true
-            },
-            sourceMap: false
-        }),
+        // new UglifyJsPlugin({
+        //     cache: false,
+        //     parallel: true,
+        //     uglifyOptions: {
+        //         compress: {
+        //             dead_code: true,
+        //             drop_console: true,
+        //             global_defs: {
+        //                 DEBUG: true
+        //             },
+        //             passes: 3,
+        //         },
+        //         ecma: 6,
+        //         mangle: true
+        //     },
+        //     sourceMap: false
+        // }),
         new webpack.ProvidePlugin({
             _: 'lodash',
             async: 'async'
