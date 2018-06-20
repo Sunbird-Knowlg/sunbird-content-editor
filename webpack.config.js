@@ -3,13 +3,18 @@ const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const expose = require('expose-loader');
 const BowerResolvePlugin = require("bower-resolve-webpack-plugin");
+var UglifyJS = require("uglify-es");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const PurifyCSSPlugin = require('purifycss-webpack');
+const runningMode = process.env.NODE_ENV || 'production';
+const glob = require('glob-all');
 
 
 
 
 const vendor = [
-    //"./app/bower_components/jquery/dist/jquery.js",
-    //'./app/bower_components/semantic/dist/semantic.js',
+    "./app/bower_components/jquery/dist/jquery.js",
+    './app/bower_components/semantic/dist/semantic.js',
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
@@ -93,80 +98,144 @@ const app = [
     "./app/scripts/contenteditor/manager/stage-manager.js"
 
 ]
+const app_css = [
+    "./app/bower_components/font-awesome/css/font-awesome.css",
+    "./app/bower_components/ng-dialog/css/ngDialog.min.css",
+    "./app/bower_components/ng-dialog/css/ngDialog-theme-plain.min.css",
+    "./app/bower_components/ng-dialog/css/ngDialog-theme-default.min.css",
+    "./app/libs/ng-tags-input.css",
+    './app/styles/semantic.min.css',
+    './app/styles/MyFontsWebfontsKit.css',
+    './app/styles/iconfont.css',
+    './app/styles/icomoon/style.css',
+    './app/styles/commonStyles.css',
+    './app/styles/content-editor.css',
+];
 module.exports = {
+    optimization: {
+        splitChunks: {
+            cacheGroups: {
+                styles: {
+                    name: 'styles',
+                    test: /\.css$/,
+                    chunks: 'all',
+                    enforce: true
+                }
+            },
+        }
+    },
     entry: {
         'vendor': vendor,
-        'app': app
+        'app': app,
+        'styles': app_css
     },
     output: {
         filename: '[name].js',
+        chunkFilename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
 
     },
-    mode: "development",
     resolve: {
         alias: {
             'angular': path.resolve('./app/bower_components/angular/angular.js'),
+            'WebFont': path.resolve('./app/libs/webfont.js'),
         }
     },
     module: {
         rules: [{
-            test: require.resolve('async'),
-            use: [{
-                loader: 'expose-loader',
-                options: 'async'
-            }]
+                test: require.resolve('async'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'async'
+                }]
 
-        }, {
-            test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
-            use: [{
-                loader: 'expose-loader',
-                options: 'EkTelemetry'
-            }]
+            }, {
+                test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'EkTelemetry'
+                }]
+            }, {
+                test: require.resolve('./app/bower_components/eventbus/index.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'EventBus'
+                }]
 
-        }, {
-            test: require.resolve('./app/bower_components/eventbus/index.js'),
-            use: [{
-                loader: 'expose-loader',
-                options: 'EventBus'
-            }]
+            }, {
+                test: require.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'Fingerprint2'
+                }]
 
-        }, {
-            test: require.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
-            use: [{
-                loader: 'expose-loader',
-                options: 'Fingerprint2'
-            }]
+            }, {
+                test: require.resolve('./app/bower_components/uuid/index.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'UUID'
+                }]
 
-        }, {
-            test: require.resolve('./app/bower_components/uuid/index.js'),
-            use: [{
-                loader: 'expose-loader',
-                options: 'UUID'
-            }]
-
-        }]
+            }, {
+                test: /\.css$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    "css-loader"
+                ]
+            },
+            {
+                test: /\.svg$/,
+                loader: 'svg-inline-loader?classPrefix'
+            },
+            {
+                test: require.resolve("./app/libs/webfont.js"),
+                use: "imports-loader?this=>window"
+            },
+            { test: /\.woff(\?.*)?$/, loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff" },
+            { test: /\.woff2(\?.*)?$/, loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff2" },
+            { test: /\.ttf(\?.*)?$/, loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream" },
+            { test: /\.eot(\?.*)?$/, loader: "file-loader?prefix=fonts/&name=[path][name].[ext]" },
+            { test: /\.svg(\?.*)?$/, loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml" },
+            { test: /\.png(\?.*)?$/, loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/png+xml" },
+        ]
     },
     plugins: [
         new UglifyJsPlugin({
             cache: false,
             parallel: true,
             uglifyOptions: {
-                compress: false,
+                compress: {
+                    dead_code: true,
+                    drop_console: true,
+                    global_defs: {
+                        DEBUG: true
+                    },
+                    passes: 3,
+                },
                 ecma: 6,
                 mangle: true
             },
             sourceMap: false
         }),
         new webpack.ProvidePlugin({
-            // $: 'jquery',
-            // jQuery: 'jquery',
             _: 'lodash',
-            async: 'async',
-            // "window.jQuery": "jquery"
-        }), new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin()
-
+            async: 'async'
+        }),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
+        }),
+        // new PurifyCSSPlugin({
+        //     paths: glob.sync([
+        //         path.join(__dirname, 'app/*.html'),
+        //         path.join(__dirname, 'app/*.js')
+        //     ]),
+        //     minimize: true,
+        //     purifyOptions: {
+        //         whitelist: []
+        //     }
+        // }),
+        new webpack.optimize.OccurrenceOrderPlugin(),
+        new webpack.HotModuleReplacementPlugin(),
     ],
-
 };

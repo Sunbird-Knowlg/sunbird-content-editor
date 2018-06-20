@@ -60,7 +60,16 @@
         "webpack-runtime-public-path-plugin": "*",
         "ajv": "*",
         "expose-loader": "*",
-        "bower-resolve-webpack-plugin": "*"
+        "bower-resolve-webpack-plugin": "*",
+        "uglify-es": "*",
+        "webpack-clear-console": "*",
+        "mini-css-extract-plugin": "*",
+        "css-loader": "*",
+        "purifycss-webpack": "*",
+        "glob-all": "*",
+        "purify-css": "*",
+        "svg-inline-loader": "*",
+        "imports-loader": "*"
     },
     "scripts": {
         "build": "webpack",
