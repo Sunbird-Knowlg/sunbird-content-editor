@@ -3,51 +3,35 @@ const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const expose = require('expose-loader');
 const BowerResolvePlugin = require("bower-resolve-webpack-plugin");
-var UglifyJS = require("uglify-es");
+const UglifyJS = require("uglify-es");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PurifyCSSPlugin = require('purifycss-webpack');
 const runningMode = process.env.NODE_ENV || 'production';
 const glob = require('glob-all');
-var OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-
-
-
-
-
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const vendor = [
-    // "./app/bower_components/jquery/dist/jquery.js",
+    // "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
     // './app/bower_components/semantic/dist/semantic.js',
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
     "./app/libs/telemetry-lib-v3.min.js",
-    // "./app/libs/webfont.js",
+    "./app/libs/webfont.js",
     "./app/bower_components/angular/angular.js",
     "./app/bower_components/fabric/dist/fabric.min.js",
     "./app/bower_components/lodash/lodash.js",
     "./app/bower_components/x2js/index.js",
-    "./app/bower_components/eventbus/index.js",
     "./app/bower_components/uuid/index.js",
-    "./app/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js",
     "./app/bower_components/ng-dialog/js/ngDialog.js",
     "./app/bower_components/ngSafeApply/index.js",
-    "./app/bower_components/oclazyload/dist/modules/ocLazyLoad.core.js",
-    "./app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.core.js",
-    "./app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.cssLoader.js",
-    "./app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.jsLoader.js",
-    "./app/bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.templatesLoader.js",
-    "./app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
-    "./app/bower_components/oclazyload/dist/ocLazyLoad.js",
+    "./app/bower_components/oclazyload/dist/ocLazyLoad.min.js",
     "./app/scripts/contenteditor/md5.js",
-    "./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
     "./app/libs/ng-tags-input.js"
 ];
-
 
 const app = [
     "./app/scripts/framework/libs/ES5Polyfill.js",
     "./app/scripts/framework/class.js",
-    "./app/scripts/framework/libs/mousetrap.min.js",
     "./app/scripts/framework/bootstrap-framework.js",
     "./app/scripts/framework/manager/resource-manager.js",
     "./app/scripts/framework/manager/event-manager.js",
@@ -64,8 +48,6 @@ const app = [
     "./app/scripts/framework/repo/irepo.js",
     "./app/scripts/framework/repo/published-repo.js",
     "./app/libs/fontfaceobserver.min.js",
-    "./app/libs/telemetry-lib-v3.min.js",
-    "./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
     "./app/scripts/contenteditor/bootstrap-editor.js",
     "./app/scripts/contenteditor/ce-config.js",
     "./app/scripts/contenteditor/content-editor.js",
@@ -98,13 +80,11 @@ const app = [
     "./app/scripts/contenteditor/migration/eventsmigration-task.js",
     "./app/scripts/contenteditor/migration/settagmigration-task.js",
     "./app/scripts/contenteditor/manager/stage-manager.js"
-
 ]
+var editor_app = vendor.concat(app);
 const app_css = [
     "./app/bower_components/font-awesome/css/font-awesome.css",
     "./app/bower_components/ng-dialog/css/ngDialog.min.css",
-    "./app/bower_components/ng-dialog/css/ngDialog-theme-plain.min.css",
-    "./app/bower_components/ng-dialog/css/ngDialog-theme-default.min.css",
     "./app/libs/ng-tags-input.css",
     './app/styles/semantic.min.css',
     './app/styles/MyFontsWebfontsKit.css',
@@ -112,25 +92,25 @@ const app_css = [
     './app/styles/icomoon/style.css',
     './app/styles/commonStyles.css',
     './app/styles/content-editor.css',
+    './app/styles/noto.css'
 ];
+const template = './app/index.html'
 module.exports = {
     optimization: {
-        minimize: false,
         splitChunks: {
             cacheGroups: {
                 styles: {
                     name: 'styles',
                     test: /\.css$/,
                     chunks: 'all',
-                    enforce: true
+                    enforce: false
                 }
             },
         }
     },
     entry: {
         'coreplugin': './app/scripts/coreplugins.js',
-        'vendor': vendor,
-        'app': app,
+        'editor_app': editor_app,
         'styles': app_css
     },
     output: {
@@ -141,88 +121,87 @@ module.exports = {
     },
     resolve: {
         alias: {
-            'angular': path.resolve('./app/bower_components/angular/angular.js')
+            'angular': path.resolve('./app/bower_components/angular/angular.js'),
+            'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
+            'ajv': path.resolve('./node_modules/ajv/dist/ajv.min.js'),
         }
     },
     module: {
         rules: [{
-                test: require.resolve('async'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'async'
-                }]
-
-            }, {
                 test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
                 use: [{
                     loader: 'expose-loader',
                     options: 'EkTelemetry'
                 }]
-            }, {
-                test: require.resolve('./app/bower_components/eventbus/index.js'),
+            },
+            {
+                test: require.resolve('./app/bower_components/async/dist/async.min.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'async'
+                }]
+            },
+            {
+                test: require.resolve('./app/scripts/framework/libs/eventbus.min.js'),
                 use: [{
                     loader: 'expose-loader',
                     options: 'EventBus'
                 }]
-
-            }, {
-                test: require.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'Fingerprint2'
-                }]
-
-            }, {
+            },
+            {
                 test: require.resolve('./app/bower_components/uuid/index.js'),
                 use: [{
                     loader: 'expose-loader',
                     options: 'UUID'
                 }]
-
-            }, {
+            },
+            {
                 test: /\.css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    "css-loader"
+                    { loader: 'css-loader', options: { sourceMap: false, minimize: true, "preset": "advanced", discardComments: { removeAll: true } } },
+                    { loader: 'sass-loader', options: { sourceMap: false, minimize: true, "preset": "advanced", discardComments: { removeAll: true } } }
                 ]
             },
             {
-                test: require.resolve("./node_modules/ajv/lib/ajv.js"),
-                use: "imports-loader?this=>window"
+                test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
+                use: [{
+                    loader: 'file-loader',
+                    options: {
+                        name: '[name].[ext]',
+                        outputPath: 'assets/fonts/',
+                        limit: 10000,
+                        fallback: 'responsive-loader'
+                    }
+                }]
             },
-            { test: /\.woff(\?.*)?$/, loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff" },
-            { test: /\.woff2(\?.*)?$/, loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/font-woff2" },
-            { test: /\.ttf(\?.*)?$/, loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=application/octet-stream" },
-            { test: /\.eot(\?.*)?$/, loader: "file-loader?prefix=fonts/&name=[path][name].[ext]" },
-            { test: /\.svg(\?.*)?$/, loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/svg+xml" },
-            { test: /\.png(\?.*)?$/, loader: "url-loader?prefix=fonts/&name=[path][name].[ext]&limit=10000&mimetype=image/png+xml" },
         ]
     },
     plugins: [
-        // new UglifyJsPlugin({
-        //     cache: false,
-        //     parallel: true,
-        //     uglifyOptions: {
-        //         compress: {
-        //             dead_code: true,
-        //             drop_console: true,
-        //             global_defs: {
-        //                 DEBUG: true
-        //             },
-        //             passes: 3,
-        //         },
-        //         ecma: 6,
-        //         mangle: true
-        //     },
-        //     sourceMap: false
-        // }),
-        new webpack.ProvidePlugin({
-            _: 'lodash',
-            async: 'async'
+        new UglifyJsPlugin({
+            cache: false,
+            parallel: true,
+            uglifyOptions: {
+                compress: {
+                    dead_code: true,
+                    drop_console: true,
+                    global_defs: {
+                        DEBUG: true
+                    },
+                    passes: 1,
+                },
+                ecma: 6,
+                mangle: true
+            },
+            sourceMap: false
         }),
         new MiniCssExtractPlugin({
             filename: "[name].css",
             chunkFilename: "[id].css"
+        }),
+        new webpack.ProvidePlugin({
+            Fingerprint2: 'Fingerprint2',
+            Ajv: 'ajv'
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
