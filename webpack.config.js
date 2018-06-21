@@ -28,8 +28,8 @@ const CORE_PLUGINS = './app/scripts/coreplugins.js';
  * External files 
  */
 const VENDOR = [
-    //"./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
-    //'./app/bower_components/semantic/dist/semantic.js',
+    "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
+    './app/bower_components/semantic/dist/semantic.js',
     // "./node_modules/ajv/dist/ajv.bundle.js",
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
@@ -146,6 +146,7 @@ module.exports = {
             },
         }
     },
+    
     entry: {
         'coreplugins': CORE_PLUGINS,
         'plugin-framework': PLUGIN_FRAMEWORK,
@@ -317,7 +318,13 @@ module.exports = {
         new webpack.ProvidePlugin({
             Fingerprint2: 'Fingerprint2',
             WebFont: 'webfontloader',
-            Ajv: 'ajv'
+            Ajv: 'ajv',
+        }),
+        new webpack.ProvidePlugin({
+            'window.jQuery'    : 'jquery',
+            'window.$'         : 'jquery',
+            'jQuery'           : 'jquery',
+            '$'                : 'jquery',
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
