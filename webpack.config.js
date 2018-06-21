@@ -1,3 +1,5 @@
+//TODO: Remove the unused constants
+const ENVIRONMENT = process.env.NODE_ENV || 'dev';
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -6,12 +8,25 @@ const BowerResolvePlugin = require("bower-resolve-webpack-plugin");
 const UglifyJS = require("uglify-es");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const PurifyCSSPlugin = require('purifycss-webpack');
-const runningMode = process.env.NODE_ENV || 'production';
 const glob = require('glob-all');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const vendor = [
-    // "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
-    // './app/bower_components/semantic/dist/semantic.js',
+const FontminPlugin = require('fontmin-webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ZipPlugin = require('zip-webpack-plugin');
+const CompressionPlugin = require("compression-webpack-plugin")
+
+/** 
+ *  Core plugins file path, Refer minified file which is already created form the gulp.
+ */
+const CORE_PLUGINS = './app/scripts/coreplugins.js';
+
+/**
+ * External files 
+ */
+const VENDOR = [
+    //"./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
+    //'./app/bower_components/semantic/dist/semantic.js',
+    // "./node_modules/ajv/dist/ajv.bundle.js",
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
@@ -28,10 +43,13 @@ const vendor = [
     "./app/scripts/contenteditor/md5.js",
     "./app/libs/ng-tags-input.js"
 ];
+// Should have Plugin framework files
 
-const app = [
+var PLUGIN_FRAMEWORK = [
     "./app/scripts/framework/libs/ES5Polyfill.js",
     "./app/scripts/framework/class.js",
+    "./app/scripts/framework/libs/eventbus.min.js",
+    "./app/scripts/framework/libs/mousetrap.min.js",
     "./app/scripts/framework/bootstrap-framework.js",
     "./app/scripts/framework/manager/resource-manager.js",
     "./app/scripts/framework/manager/event-manager.js",
@@ -47,7 +65,10 @@ const app = [
     "./app/scripts/framework/service/dialcode-service.js",
     "./app/scripts/framework/repo/irepo.js",
     "./app/scripts/framework/repo/published-repo.js",
+];
+var EDITOR_FRAMEWORK = [
     "./app/libs/fontfaceobserver.min.js",
+    "./app/libs/telemetry-lib-v3.min.js",
     "./app/scripts/contenteditor/bootstrap-editor.js",
     "./app/scripts/contenteditor/ce-config.js",
     "./app/scripts/contenteditor/content-editor.js",
@@ -63,7 +84,9 @@ const app = [
     "./app/scripts/contenteditor/dispatcher/idispatcher.js",
     "./app/scripts/contenteditor/dispatcher/console-dispatcher.js",
     "./app/scripts/contenteditor/dispatcher/local-dispatcher.js",
-    "./app/scripts/contenteditor/dispatcher/piwik-dispatcher.js",
+    "./app/scripts/contenteditor/dispatcher/piwik-dispatcher.js"
+]
+var EDITOR_APP = [
     "./app/scripts/angular/controller/main.js",
     "./app/scripts/angular/controller/popup-controller.js",
     "./app/scripts/angular/directive/draggable-directive.js",
@@ -80,11 +103,12 @@ const app = [
     "./app/scripts/contenteditor/migration/eventsmigration-task.js",
     "./app/scripts/contenteditor/migration/settagmigration-task.js",
     "./app/scripts/contenteditor/manager/stage-manager.js"
-]
-var editor_app = vendor.concat(app);
-const app_css = [
+];
+const APP_STYLE = [
     "./app/bower_components/font-awesome/css/font-awesome.css",
     "./app/bower_components/ng-dialog/css/ngDialog.min.css",
+    "./app/bower_components/ng-dialog/css/ngDialog-theme-plain.min.css",
+    "./app/bower_components/ng-dialog/css/ngDialog-theme-default.min.css",
     "./app/libs/ng-tags-input.css",
     './app/styles/semantic.min.css',
     './app/styles/MyFontsWebfontsKit.css',
@@ -94,13 +118,23 @@ const app_css = [
     './app/styles/content-editor.css',
     './app/styles/noto.css'
 ];
-const template = './app/index.html'
+
+// removing the duplicate files
+const APP_SCRIPT = [...new Set([...VENDOR, ...PLUGIN_FRAMEWORK, ...EDITOR_FRAMEWORK, ...EDITOR_APP])];
+
 module.exports = {
     optimization: {
         splitChunks: {
+            chunks: 'async',
+            minSize: 30000,
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            automaticNameDelimiter: '~',
+            name: true,
             cacheGroups: {
                 styles: {
-                    name: 'styles',
+                    name: 'style',
                     test: /\.css$/,
                     chunks: 'all',
                     enforce: false
@@ -109,13 +143,13 @@ module.exports = {
         }
     },
     entry: {
-        'coreplugin': './app/scripts/coreplugins.js',
-        'editor_app': editor_app,
-        'styles': app_css
+        'coreplugins': CORE_PLUGINS,
+        'plugin-framework': PLUGIN_FRAMEWORK,
+        'script': APP_SCRIPT,
+        'style': APP_STYLE
     },
     output: {
-        filename: '[name].js',
-        chunkFilename: '[name].bundle.js',
+        filename: '[name].min.js',
         path: path.resolve(__dirname, 'dist')
 
     },
@@ -123,7 +157,6 @@ module.exports = {
         alias: {
             'angular': path.resolve('./app/bower_components/angular/angular.js'),
             'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
-            'ajv': path.resolve('./node_modules/ajv/dist/ajv.min.js'),
         }
     },
     module: {
@@ -149,6 +182,13 @@ module.exports = {
                 }]
             },
             {
+                test: require.resolve('./node_modules/webfontloader/webfontloader.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'WebFont'
+                }]
+            },
+            {
                 test: require.resolve('./app/bower_components/uuid/index.js'),
                 use: [{
                     loader: 'expose-loader',
@@ -169,12 +209,13 @@ module.exports = {
                     loader: 'file-loader',
                     options: {
                         name: '[name].[ext]',
-                        outputPath: 'assets/fonts/',
+                        outputPath: 'styles/fonts/',
                         limit: 10000,
                         fallback: 'responsive-loader'
                     }
                 }]
             },
+
         ]
     },
     plugins: [
@@ -195,12 +236,17 @@ module.exports = {
             },
             sourceMap: false
         }),
+        // copy the index.html and templated to eidtor filder
+        new CopyWebpackPlugin([
+            { from: './app/templates', to: './templates' },
+            { from: './app/index.html', to: './[name].[ext]', toType: 'template' }
+        ]),
         new MiniCssExtractPlugin({
-            filename: "[name].css",
-            chunkFilename: "[id].css"
+            filename: "[name].min.css",
         }),
         new webpack.ProvidePlugin({
             Fingerprint2: 'Fingerprint2',
+            WebFont: 'webfontloader',
             Ajv: 'ajv'
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
@@ -210,6 +256,19 @@ module.exports = {
             cssProcessor: require('cssnano'),
             cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
             canPrint: true
+        }),
+        new ZipPlugin({
+            filename: 'content_editor.zip',
+            fileOptions: {
+                mtime: new Date(),
+                mode: 0o100664,
+                compress: true,
+                forceZip64Format: false,
+            },
+            exclude: ['style.min.js', 'plugin-framework.min.js'],
+            zipOptions: {
+                forceZip64Format: false,
+            },
         })
     ],
 };
