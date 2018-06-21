@@ -78,7 +78,9 @@
         "copy-webpack-plugin": "*",
         "zip-webpack-plugin": "3.0.0",
         "compression-webpack-plugin": "*",
-        "webfontloader": "1.6"
+        "webfontloader": "1.6",
+        "express-static-gzip": "*",
+        "brotli-gzip-webpack-plugin": "*"
     },
     "scripts": {
         "build": "webpack",
