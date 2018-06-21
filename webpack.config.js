@@ -13,13 +13,8 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const FontminPlugin = require('fontmin-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
-const CompressionPlugin = require("compression-webpack-plugin");
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const ImageminPlugin = require('imagemin-webpack-plugin').default;
-
-
+const CompressionPlugin = require("compression-webpack-plugin")
+const BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
 
 /** 
  *  Core plugins file path, Refer minified file which is already created form the gulp.
@@ -30,6 +25,9 @@ const CORE_PLUGINS = './app/scripts/coreplugins.js';
  * External files 
  */
 const VENDOR = [
+    //"./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
+    //'./app/bower_components/semantic/dist/semantic.js',
+    // "./node_modules/ajv/dist/ajv.bundle.js",
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
@@ -127,8 +125,6 @@ const APP_SCRIPT = [...new Set([...VENDOR, ...PLUGIN_FRAMEWORK, ...EDITOR_FRAMEW
 
 module.exports = {
     optimization: {
-        concatenateModules: true,
-        runtimeChunk: 'single',
         splitChunks: {
             chunks: 'async',
             minSize: 30000,
@@ -145,40 +141,7 @@ module.exports = {
                     enforce: false
                 }
             },
-        },
-        minimizer: [
-            new UglifyJsPlugin({
-                cache: false,
-                // comments: false,
-                parallel: true,
-                // beautify: true,
-                uglifyOptions: {
-                    compress: {
-
-                        dead_code: true,
-                        drop_console: true,
-                        global_defs: {
-                            DEBUG: true
-                        },
-                        passes: 1,
-                    },
-                    ecma: 6,
-                    mangle: true
-                },
-                sourceMap: false
-            }),
-            new OptimizeCssAssetsPlugin({
-                assetNameRegExp: /\.optimize\.css$/g,
-                cssProcessor: require('cssnano'),
-                cssProcessorOptions: {
-                    safe: true,
-                    discardComments: {
-                        removeAll: true
-                    }
-                },
-                canPrint: true
-            }),
-        ]
+        }
     },
     entry: {
         'coreplugins': CORE_PLUGINS,
@@ -191,7 +154,6 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
 
     },
-
     resolve: {
         alias: {
             'angular': path.resolve('./app/bower_components/angular/angular.js'),
@@ -235,49 +197,12 @@ module.exports = {
                 }]
             },
             {
-                test: /\.(sass|scss|css)$/,
+                test: /\.css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: false,
-                            // modules: true,
-                            minimize: true,
-                            "preset": "advanced",
-                            discardComments: {
-                                removeAll: true
-                            },
-                            query: {
-                                importLoaders: 1
-                            }
-                        }
-                    },
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            outputStyle: 'compressed'
-                        }
-                    }
+                    { loader: 'css-loader', options: { sourceMap: false, minimize: true, "preset": "advanced", discardComments: { removeAll: true } } },
+                    { loader: 'sass-loader', options: { sourceMap: false, minimize: true, "preset": "advanced", discardComments: { removeAll: true } } }
                 ]
-            },
-            // {
-            //     test: /\.css$/,
-            //     use: ExtractTextPlugin.extract({
-            //         loader: 'css-loader',
-            //         options: {
-            //             minimize: true,
-            //         },
-            //     }),
-            // },
-            {
-                test: /\.html$/,
-                use: [{
-                    loader: 'html-loader',
-                    options: {
-                        minimize: true,
-                    },
-                }, ],
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
@@ -286,80 +211,37 @@ module.exports = {
                     options: {
                         name: '[name].[ext]',
                         outputPath: 'styles/fonts/',
-                        limit: 50000,
+                        limit: 10000,
                         fallback: 'responsive-loader'
                     }
                 }]
             },
-            {
-                test: /\.(gif|png|jpe?g|svg)$/i,
-                use: [
-                    'file-loader',
-                    {
-                        loader: 'image-webpack-loader',
-                        options: {
-                            mozjpeg: {
-                                progressive: true,
-                                quality: 65
-                            },
-                            // optipng.enabled: false will disable optipng
-                            optipng: {
-                                enabled: false,
-                            },
-                            pngquant: {
-                                quality: '65-90',
-                                speed: 4
-                            },
-                            gifsicle: {
-                                interlaced: true,
-                            },
-                            // the webp option will enable WEBP
-                            webp: {
-                                quality: 75
-                            }
-                        }
-                    },
-                ],
-            }
+
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(['dist']),
-        new HtmlWebpackPlugin({
-            // template: './src/index.html',
-            // filename: 'index.html',
-            // inject: 'body',
-            // hash: true,
-            minify: {
-                removeAttributeQuotes: true,
-                collapseWhitespace: true,
-                html5: true,
-                removeComments: true,
-                removeEmptyAttributes: true,
-                minifyCSS: true,
+        new UglifyJsPlugin({
+            cache: false,
+            parallel: true,
+            uglifyOptions: {
+                compress: {
+                    dead_code: true,
+                    drop_console: true,
+                    global_defs: {
+                        DEBUG: true
+                    },
+                    passes: 1,
+                },
+                ecma: 6,
+                mangle: true
             },
+            sourceMap: false
         }),
         // copy the index.html and templated to eidtor filder
-        new CopyWebpackPlugin([{
-                from: './app/templates',
-                to: './templates'
-            },
-            {
-                from: './app/index.html',
-                to: './[name].[ext]',
-                toType: 'template'
-            },
-            {
-                from: './app/images',
-                to: './images'
-            }
+        new CopyWebpackPlugin([
+            { from: './app/templates', to: './templates' },
+            { from: './app/index.html', to: './[name].[ext]', toType: 'template' }
         ]),
-        new ImageminPlugin({
-            test: /\.(jpe?g|png|gif|svg)$/i,
-            pngquant: {
-              quality: '65-70'
-            }
-          }),
         new MiniCssExtractPlugin({
             filename: "[name].min.css",
         }),
@@ -370,6 +252,26 @@ module.exports = {
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
+        new OptimizeCssAssetsPlugin({
+            assetNameRegExp: /\.optimize\.css$/g,
+            cssProcessor: require('cssnano'),
+            cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
+            canPrint: true
+        }),
+        new BrotliGzipPlugin({
+            asset: '[path].br[query]',
+            algorithm: 'brotli',
+            test: /\.(js|css|html|svg)$/,
+            threshold: 10240,
+            minRatio: 0.8
+        }),
+        new BrotliGzipPlugin({
+            asset: '[path].gz[query]',
+            algorithm: 'gzip',
+            test: /\.(js|css|html|svg)$/,
+            threshold: 10240,
+            minRatio: 0.8
+        }),
         new ZipPlugin({
             filename: 'content_editor.zip',
             fileOptions: {
