@@ -15,6 +15,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin")
 const BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
 /** 
  *  Core plugins file path, Refer minified file which is already created form the gulp.
@@ -200,8 +203,28 @@ module.exports = {
                 test: /\.css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    { loader: 'css-loader', options: { sourceMap: false, minimize: true, "preset": "advanced", discardComments: { removeAll: true } } },
-                    { loader: 'sass-loader', options: { sourceMap: false, minimize: true, "preset": "advanced", discardComments: { removeAll: true } } }
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            sourceMap: false,
+                            minimize: true,
+                            "preset": "advanced",
+                            discardComments: {
+                                removeAll: true
+                            }
+                        }
+                    },
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            sourceMap: false,
+                            minimize: true,
+                            "preset": "advanced",
+                            discardComments: {
+                                removeAll: true
+                            }
+                        }
+                    }
                 ]
             },
             {
@@ -215,6 +238,36 @@ module.exports = {
                         fallback: 'responsive-loader'
                     }
                 }]
+            },
+            {
+                test: /\.(gif|png|jpe?g|svg)$/i,
+                use: [
+                    'file-loader',
+                    {
+                        loader: 'image-webpack-loader',
+                        options: {
+                            mozjpeg: {
+                                progressive: true,
+                                quality: 65
+                            },
+                            // optipng.enabled: false will disable optipng
+                            optipng: {
+                                enabled: false,
+                            },
+                            pngquant: {
+                                quality: '65-90',
+                                speed: 4
+                            },
+                            gifsicle: {
+                                interlaced: true,
+                            },
+                            // the webp option will enable WEBP
+                            webp: {
+                                quality: 75
+                            }
+                        }
+                    },
+                ],
             },
 
         ]
@@ -238,10 +291,26 @@ module.exports = {
             sourceMap: false
         }),
         // copy the index.html and templated to eidtor filder
-        new CopyWebpackPlugin([
-            { from: './app/templates', to: './templates' },
-            { from: './app/index.html', to: './[name].[ext]', toType: 'template' }
+        new CopyWebpackPlugin([{
+                from: './app/templates',
+                to: './templates'
+            },
+            {
+                from: './app/index.html',
+                to: './[name].[ext]',
+                toType: 'template'
+            },
+            {
+                from: './app/images',
+                to: './images'
+            }
         ]),
+        new ImageminPlugin({
+            test: /\.(jpe?g|png|gif|svg)$/i,
+            pngquant: {
+                quality: '65-70'
+            }
+        }),
         new MiniCssExtractPlugin({
             filename: "[name].min.css",
         }),
@@ -255,7 +324,12 @@ module.exports = {
         new OptimizeCssAssetsPlugin({
             assetNameRegExp: /\.optimize\.css$/g,
             cssProcessor: require('cssnano'),
-            cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
+            cssProcessorOptions: {
+                safe: true,
+                discardComments: {
+                    removeAll: true
+                }
+            },
             canPrint: true
         }),
         new BrotliGzipPlugin({
