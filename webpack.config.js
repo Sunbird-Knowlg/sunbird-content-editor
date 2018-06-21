@@ -14,6 +14,7 @@ const FontminPlugin = require('fontmin-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin")
+const BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
 
 /** 
  *  Core plugins file path, Refer minified file which is already created form the gulp.
@@ -256,6 +257,20 @@ module.exports = {
             cssProcessor: require('cssnano'),
             cssProcessorOptions: { safe: true, discardComments: { removeAll: true } },
             canPrint: true
+        }),
+        new BrotliGzipPlugin({
+            asset: '[path].br[query]',
+            algorithm: 'brotli',
+            test: /\.(js|css|html|svg)$/,
+            threshold: 10240,
+            minRatio: 0.8
+        }),
+        new BrotliGzipPlugin({
+            asset: '[path].gz[query]',
+            algorithm: 'gzip',
+            test: /\.(js|css|html|svg)$/,
+            threshold: 10240,
+            minRatio: 0.8
         }),
         new ZipPlugin({
             filename: 'content_editor.zip',
