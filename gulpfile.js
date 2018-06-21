@@ -14,16 +14,20 @@ var merge = require('merge-stream');
 var cleanCSS = require('clean-css');
 var replace = require('gulp-string-replace');
 var uglify = require('gulp-uglify');
-var versionNumber = process.env.version_number;
+var frameworkVersionNumber = process.env.framework_version_number;
+var editorVersionNumber = process.env.editor_version_number;
 var buildNumber = process.env.build_number;
 
-if(!versionNumber && !versionNumber) {
-    console.error('Error!!! Cannot find verion_number and build_number env variables');
+if(!editorVersionNumber && !buildNumber && !frameworkVersionNumber) {
+    console.error('Error!!! Cannot find framework_version_number, editor_version_number and build_number env variables');
     return process.exit(1);
 }
-var versionPrefix = '.' + versionNumber + '.' + buildNumber;
+var versionPrefix = '.' + editorVersionNumber + '.' + buildNumber;
 var cachebust = function(path) {
     path.basename += versionPrefix
+}
+var baseEditorCachebust = function(path) {
+    path.basename += '.' + frameworkVersionNumber;
 }
 
 //var cachebust = new CacheBuster();
@@ -166,11 +170,11 @@ gulp.task('minifyallJS', function() {
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
-gulp.task('minifyCE', function() {
+gulp.task('minifyBaseEditor', function() {
     return gulp.src(editorScripts)
-        .pipe(concat('contenteditor.min.js'))
+        .pipe(concat('base-editor.min.js'))
         .pipe(uglify())
-        .pipe(rename(cachebust))
+        .pipe(rename(baseEditorCachebust))
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
@@ -178,7 +182,7 @@ gulp.task('minifyFramework', function() {
     return gulp.src(pluginFramework)
         .pipe(concat('plugin-framework.min.js'))
         .pipe(uglify())
-        .pipe(rename(cachebust))
+        .pipe(rename(baseEditorCachebust))
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
@@ -269,11 +273,11 @@ gulp.task('copydeploydependencies', function() {
         .pipe(gulp.dest('content-editor'));
 });
 
-gulp.task('minify', ['minifyallJS', 'minifyCE', 'minifyCSS', 'minifyJsBower', 'minifyFramework', 'minifyCssBower', 'copyfonts', 'copycommonfonts', 'copyfontawesomefonts', 'copyFiles', 'copydeploydependencies']);
+gulp.task('minify', ['minifyallJS', 'minifyBaseEditor', 'minifyCSS', 'minifyJsBower', 'minifyFramework', 'minifyCssBower', 'copyfonts', 'copycommonfonts', 'copyfontawesomefonts', 'copyFiles', 'copydeploydependencies']);
 
 gulp.task('inject', ['minify'], function() {
     var target = gulp.src('content-editor/index.html');
-    var sources = gulp.src(['content-editor/scripts/*.js', '!content-editor/scripts/contenteditor.*.js', '!content-editor/scripts/plugin-framework.*.js', '!content-editor/scripts/coreplugins.js', 'content-editor/styles/*.css'], {
+    var sources = gulp.src(['content-editor/scripts/*.js', '!content-editor/scripts/base-editor*.js', '!content-editor/scripts/plugin-framework.*.js', '!content-editor/scripts/coreplugins.js', 'content-editor/styles/*.css'], {
         read: false
     });
     return target
@@ -286,8 +290,8 @@ gulp.task('inject', ['minify'], function() {
 
 gulp.task('replace', ['inject'], function() {
     return mergeStream([
-        gulp.src(["content-editor/styles/external.min.css"]).pipe(replace('../fonts', 'fonts')).pipe(gulp.dest('content-editor/styles')),
-        gulp.src(["content-editor/scripts/script.min.js"]).pipe(replace('/plugins', '/content-plugins')).pipe(replace("'https://dev.ekstep.in'", "''")).pipe(replace('dispatcher: "local"', 'dispatcher: "console"')).pipe(gulp.dest('content-editor/scripts/'))
+        gulp.src(["content-editor/styles/external.*.css"]).pipe(replace('../fonts', 'fonts')).pipe(gulp.dest('content-editor/styles')),
+        gulp.src(["content-editor/scripts/script.*.js"]).pipe(replace('/plugins', '/content-plugins')).pipe(replace("https://dev.ekstep.in", "")).pipe(replace('dispatcher: "local"', 'dispatcher: "console"')).pipe(gulp.dest('content-editor/scripts/'))
     ]);
 });
 
