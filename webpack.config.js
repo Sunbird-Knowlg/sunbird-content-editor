@@ -17,7 +17,7 @@ const ZipPlugin = require('zip-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin")
 const BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
 //const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 
 /** 
