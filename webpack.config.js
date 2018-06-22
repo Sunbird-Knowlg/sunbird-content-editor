@@ -1,5 +1,6 @@
 //TODO: Remove the unused constants
 const ENVIRONMENT = process.env.NODE_ENV || 'dev';
+const BUILD_NUMBER = process.env.BUILD_NUMBER;
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -188,13 +189,6 @@ module.exports = {
                 }]
             },
             {
-                test: require.resolve('./app/bower_components/jquery/dist/jquery.js'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'jQuery'
-                }]
-            },
-            {
                 test: /\.css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
@@ -298,6 +292,14 @@ module.exports = {
             {
                 from: './app/images',
                 to: './images'
+            },
+            {
+                from: './app/bower_components/jquery/dist/jquery.js',
+                to: './'
+            },
+            {
+                from: './app/libs/semantic.min.js',
+                to: './'
             }
         ]),
         new ImageminPlugin({
@@ -327,22 +329,23 @@ module.exports = {
             },
             canPrint: true
         }),
-        new BrotliGzipPlugin({
-            asset: '[path].br[query]',
-            algorithm: 'brotli',
-            test: /\.(js|css|html|svg|woff|woff2|eot|ttf|otf|svg|png)$/,
-            threshold: 10240,
-            minRatio: 0.8
-        }),
-        new BrotliGzipPlugin({
-            asset: '[path].gz[query]',
-            algorithm: 'gzip',
-            test: /\.(js|css|html|svg|woff|woff2|eot|ttf|otf|svg|png)$/,
-            threshold: 10240,
-            minRatio: 0.8
-        }),
+        // new BrotliGzipPlugin({
+        //     asset: '[path].br[query]',
+        //     algorithm: 'brotli',
+        //     test: /\.(js|css|html|svg|woff|woff2|eot|ttf|otf|svg|png)$/,
+        //     threshold: 10240,
+        //     minRatio: 0.8
+        // }),
+        // new BrotliGzipPlugin({
+        //     asset: '[path].gz[query]',
+        //     algorithm: 'gzip',
+        //     test: /\.(js|css|html|svg|woff|woff2|eot|ttf|otf|svg|png)$/,
+        //     threshold: 10240,
+        //     minRatio: 0.8
+        // }),
         new ZipPlugin({
-            filename: 'content_editor.zip',
+            path: path.join(__dirname, '.'),
+            filename: 'content-editor.zip',
             fileOptions: {
                 mtime: new Date(),
                 mode: 0o100664,
