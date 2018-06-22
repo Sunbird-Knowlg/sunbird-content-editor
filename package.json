@@ -82,11 +82,12 @@
         "webfontloader": "1.6",
         "express-static-gzip": "*",
         "brotli-gzip-webpack-plugin": "*",
-        "imagemin-webpack-plugin": "^2.1.5",	
+        "imagemin-webpack-plugin": "^2.1.5",
         "image-webpack-loader": "^4.3.1",
         "node-sass": "*",
-        "sass-loader": "*"
-        
+        "sass-loader": "*",
+        "file-loader": "*"
+
     },
     "scripts": {
         "build": "webpack",
