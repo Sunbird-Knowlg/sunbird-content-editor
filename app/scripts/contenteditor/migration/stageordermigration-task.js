@@ -2,7 +2,6 @@
 
 org.ekstep.contenteditor.migration.orderstage_task = new(Class.extend({
     init: function() {
-        console.log('orderstage-task initialized');
     },
     migrate: function(contentbody) {
         var nextStage = {},

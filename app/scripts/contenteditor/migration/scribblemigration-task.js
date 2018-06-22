@@ -2,7 +2,6 @@
 
 org.ekstep.contenteditor.migration.scribblemigration_task = new(Class.extend({
     init: function() {
-        console.log('scribble migration task initialized');
     },
     id: 'org.ekstep.scribblepad',    
     migrate: function(contentbody) {

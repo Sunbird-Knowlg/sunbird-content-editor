@@ -4,7 +4,6 @@ org.ekstep.contenteditor.migration = new(Class.extend({
     migrationFlag: false,
     contentBackup: undefined,
     init: function() {
-        console.log('migration task initialized');
         org.ekstep.contenteditor.api.addEventListener('content:migration:start', this.execute, this);
     },
     _startTime: undefined,

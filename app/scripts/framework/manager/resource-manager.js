@@ -63,11 +63,16 @@ org.ekstep.pluginframework.resourceManager = new(Class.extend({
             case 'js':
                 if (callback)
                     this.loadResource(resource, 'script', callback, publishedTime);
-                else
-                    org.ekstep.pluginframework.jQuery("body").append($("<script type='text/javascript' src=" + resource + "?" + org.ekstep.pluginframework.config.build_number + "&" + (publishedTime || "") + ">"));
+                else {
+                    resource = resource + "?" + (org.ekstep.pluginframework.config ? org.ekstep.pluginframework.config.build_number : '');
+                    if (publishedTime) resource = resource + "&" + publishedTime;
+                    org.ekstep.pluginframework.jQuery("body").append($("<script type='text/javascript' src='" + resource + "'>"));
+                }
                 break;
             case 'css':
-                org.ekstep.pluginframework.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + resource + "?" + org.ekstep.pluginframework.config.build_number + "&" + (publishedTime || "") + "'>");
+                resource = resource + "?" + (org.ekstep.pluginframework.config ? org.ekstep.pluginframework.config.build_number : '');
+                if (publishedTime) resource = resource + "&" + publishedTime;
+                org.ekstep.pluginframework.jQuery("head").append("<link rel='stylesheet' type='text/css' href='" + resource + "'>");
                 if (callback) callback();
                 break;
             default:
@@ -82,7 +87,8 @@ org.ekstep.pluginframework.resourceManager = new(Class.extend({
         org.ekstep.pluginframework.jQuery.ajax({
             async: false,
             url: url,
-            dataType: dataType
+            dataType: dataType,
+            cache: true
         }).done(function(data) {
             callback(null, data);
         }).fail(function(jqXHR, textStatus, errorThrown) {
