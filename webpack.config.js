@@ -24,17 +24,21 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default;
  */
 const CORE_PLUGINS = './app/scripts/coreplugins.js';
 
+const TELEMETRY_LIBS = {
+    prod: './app/libs/telemetry.prod.min.js',
+    dev: './app/libs/telemetry.dev.min.js'
+};
+
 /**
  * External files 
  */
 const VENDOR = [
-    "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
-    './app/bower_components/semantic/dist/semantic.js',
-    // "./node_modules/ajv/dist/ajv.bundle.js",
+    // "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
+    // './app/bower_components/semantic/dist/semantic.js', // "./node_modules/ajv/dist/ajv.bundle.js",
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
-    "./app/libs/telemetry-lib-v3.min.js",
+    // "./app/libs/telemetry-lib-v3.min.js",
     "./app/libs/webfont.js",
     "./app/bower_components/angular/angular.js",
     "./app/bower_components/fabric/dist/fabric.min.js",
@@ -47,7 +51,6 @@ const VENDOR = [
     "./app/scripts/contenteditor/md5.js",
     "./app/libs/ng-tags-input.js"
 ];
-// Should have Plugin framework files
 
 var PLUGIN_FRAMEWORK = [
     "./app/scripts/framework/libs/ES5Polyfill.js",
@@ -72,7 +75,6 @@ var PLUGIN_FRAMEWORK = [
 ];
 var EDITOR_FRAMEWORK = [
     "./app/libs/fontfaceobserver.min.js",
-    "./app/libs/telemetry-lib-v3.min.js",
     "./app/scripts/contenteditor/bootstrap-editor.js",
     "./app/scripts/contenteditor/ce-config.js",
     "./app/scripts/contenteditor/content-editor.js",
@@ -124,29 +126,14 @@ const APP_STYLE = [
 ];
 
 // removing the duplicate files
-const APP_SCRIPT = [...new Set([...VENDOR, ...PLUGIN_FRAMEWORK, ...EDITOR_FRAMEWORK, ...EDITOR_APP])];
+const APP_SCRIPT = [...new Set([...VENDOR, ...PLUGIN_FRAMEWORK, ...EDITOR_FRAMEWORK, ...EDITOR_APP])]
+APP_SCRIPT.push(getTelemetryLib(ENVIRONMENT));
 
+function getTelemetryLib(env) {
+    console.log("Env", env);
+    return (env === 'production') ? TELEMETRY_LIBS.prod : TELEMETRY_LIBS.dev
+};
 module.exports = {
-    optimization: {
-        splitChunks: {
-            chunks: 'async',
-            minSize: 30000,
-            minChunks: 1,
-            maxAsyncRequests: 5,
-            maxInitialRequests: 3,
-            automaticNameDelimiter: '~',
-            name: true,
-            cacheGroups: {
-                styles: {
-                    name: 'style',
-                    test: /\.css$/,
-                    chunks: 'all',
-                    enforce: false
-                }
-            },
-        }
-    },
-    
     entry: {
         'coreplugins': CORE_PLUGINS,
         'plugin-framework': PLUGIN_FRAMEWORK,
@@ -166,7 +153,7 @@ module.exports = {
     },
     module: {
         rules: [{
-                test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
+                test: require.resolve(getTelemetryLib(ENVIRONMENT)),
                 use: [{
                     loader: 'expose-loader',
                     options: 'EkTelemetry'
@@ -198,6 +185,13 @@ module.exports = {
                 use: [{
                     loader: 'expose-loader',
                     options: 'UUID'
+                }]
+            },
+            {
+                test: require.resolve('./app/bower_components/jquery/dist/jquery.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'jQuery'
                 }]
             },
             {
@@ -318,13 +312,7 @@ module.exports = {
         new webpack.ProvidePlugin({
             Fingerprint2: 'Fingerprint2',
             WebFont: 'webfontloader',
-            Ajv: 'ajv',
-        }),
-        new webpack.ProvidePlugin({
-            'window.jQuery'    : 'jquery',
-            'window.$'         : 'jquery',
-            'jQuery'           : 'jquery',
-            '$'                : 'jquery',
+            Ajv: 'ajv'
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
@@ -342,14 +330,14 @@ module.exports = {
         new BrotliGzipPlugin({
             asset: '[path].br[query]',
             algorithm: 'brotli',
-            test: /\.(js|css|html|svg)$/,
+            test: /\.(js|css|html|svg|woff|woff2|eot|ttf|otf|svg|png)$/,
             threshold: 10240,
             minRatio: 0.8
         }),
         new BrotliGzipPlugin({
             asset: '[path].gz[query]',
             algorithm: 'gzip',
-            test: /\.(js|css|html|svg)$/,
+            test: /\.(js|css|html|svg|woff|woff2|eot|ttf|otf|svg|png)$/,
             threshold: 10240,
             minRatio: 0.8
         }),
@@ -367,4 +355,24 @@ module.exports = {
             },
         })
     ],
+    optimization: {
+        splitChunks: {
+            chunks: 'async',
+            minSize: 30000,
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            automaticNameDelimiter: '~',
+            name: true,
+            cacheGroups: {
+                styles: {
+                    name: 'style',
+                    test: /\.css$/,
+                    chunks: 'all',
+                    enforce: false
+                }
+            },
+        }
+    }
+
 };
