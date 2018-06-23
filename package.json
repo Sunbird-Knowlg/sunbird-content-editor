@@ -86,10 +86,12 @@
         "image-webpack-loader": "^4.3.1",
         "node-sass": "*",
         "sass-loader": "*",
-        "file-loader": "*"
+        "file-loader": "*",
+        "filemanager-webpack-plugin": "*"
 
     },
     "scripts": {
+
         "build": "webpack",
         "apptest": "karma start karmaconf.js",
         "testpluginframework": "karma start karmaconf.pluginframework.js",
