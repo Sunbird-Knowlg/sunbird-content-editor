@@ -87,7 +87,8 @@
         "node-sass": "*",
         "sass-loader": "*",
         "file-loader": "*",
-        "filemanager-webpack-plugin": "*"
+        "filemanager-webpack-plugin": "*",
+        "string-replace-loader": "2.1"
 
     },
     "scripts": {
