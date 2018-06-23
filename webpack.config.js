@@ -39,7 +39,7 @@ const VENDOR = [
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
-    // "./app/libs/telemetry-lib-v3.min.js",
+    "./app/libs/telemetry-lib-v3.min.js",
     "./app/libs/webfont.js",
     "./app/bower_components/angular/angular.js",
     "./app/bower_components/fabric/dist/fabric.min.js",
@@ -128,23 +128,21 @@ const APP_STYLE = [
 
 // removing the duplicate files
 const APP_SCRIPT = [...new Set([...VENDOR, ...PLUGIN_FRAMEWORK, ...EDITOR_FRAMEWORK, ...EDITOR_APP])]
-APP_SCRIPT.push(getTelemetryLib(ENVIRONMENT));
+    //APP_SCRIPT.push(getTelemetryLib(ENVIRONMENT));
 
 function getTelemetryLib(env) {
-    console.log("Env", env);
     return (env === 'production') ? TELEMETRY_LIBS.prod : TELEMETRY_LIBS.dev
 };
 module.exports = {
     entry: {
         'coreplugins': CORE_PLUGINS,
-        'plugin-framework': PLUGIN_FRAMEWORK,
+        'plugin-framework ': PLUGIN_FRAMEWORK,
         'script': APP_SCRIPT,
         'style': APP_STYLE
     },
     output: {
         filename: '[name].min.js',
         path: path.resolve(__dirname, 'dist')
-
     },
     resolve: {
         alias: {
@@ -159,12 +157,14 @@ module.exports = {
                 options: {
                     multiple: [
                         { search: '/plugins', replace: '/content-plugins' },
+                        { search: "/api", replace: '/action' },
                         { search: 'https://dev.ekstep.in', replace: '' }
-                    ]
+                    ],
+                    strict: true
                 }
             },
             {
-                test: require.resolve(getTelemetryLib(ENVIRONMENT)),
+                test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
                 use: [{
                     loader: 'expose-loader',
                     options: 'EkTelemetry'
