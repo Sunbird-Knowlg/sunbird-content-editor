@@ -11,14 +11,14 @@ var rename = require("gulp-rename");
 
 var cachebust = new CacheBuster();
 gulp.task('renameminifiedfiles', function() {
-    var js =  gulp.src(['scripts/external.min.js', 'scripts/script.min.js']).pipe(cachebust.resources()).pipe(gulp.dest('scripts/'));
+    var js = gulp.src(['scripts/external.min.js', 'scripts/script.min.js', 'scripts/jquery.js', 'scripts/semantic.min.js']).pipe(cachebust.resources()).pipe(gulp.dest('scripts/'));
     var css = gulp.src('styles/*.min.css').pipe(cachebust.resources()).pipe(gulp.dest('styles/'));
     return mergeStream(js, css);
 });
 
 gulp.task('injectrenamedfiles', function() {
     var target = gulp.src('index.html');
-    var sources = gulp.src(['scripts/external.min.*.js', 'scripts/script.min.*.js', 'styles/*.min.*.css'], { read: false });
+    var sources = gulp.src(['scripts/external.min.*.js', 'scripts/jquery.*.js', 'scripts/semantic.min.*.js', 'scripts/script.min.*.js', 'styles/*.min.*.css'], { read: false });
     return target.pipe(inject(sources, { ignorePath: '/', addRootSlash: false })).pipe(gulp.dest('./'));
 });
 
@@ -30,23 +30,23 @@ gulp.task('package', ['iframe-package', 'embed-package', 'coreplugins-package'])
 
 gulp.task('iframe-package', ['bower-package'], function() {
     var package_id = packageJson['name'] + '-' + 'iframe' + '-' + packageJson['version'];
-    return mergeStream(gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/editor/')), 
-    gulp.src('build/**').pipe(zip(packageJson['name'] + '-iframe-latest' + '.zip')).pipe(gulp.dest('dist/editor/')));
+    return mergeStream(gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/editor/')),
+        gulp.src('build/**').pipe(zip(packageJson['name'] + '-iframe-latest' + '.zip')).pipe(gulp.dest('dist/editor/')));
 });
 
 gulp.task('bower-package-transform', ['iframe-package'], function() {
     return mergeStream(gulp.src('build/index.html').pipe(replace('href="styles', 'href="content-editor-embed/styles')).pipe(replace('src="scripts', 'src="content-editor-embed/scripts')).pipe(replace("'templates", "'content-editor-embed/templates")).pipe(gulp.dest('build/')),
-    gulp.src('build/scripts/script.min.*.js').pipe(replace("src='scripts", "src='content-editor-embed/scripts")).pipe(gulp.dest('build/scripts/')));
+        gulp.src('build/scripts/script.min.*.js').pipe(replace("src='scripts", "src='content-editor-embed/scripts")).pipe(gulp.dest('build/scripts/')));
 });
 
 gulp.task('embed-package', ['bower-package-transform'], function() {
     var package_id = packageJson['name'] + '-' + 'embed' + '-' + packageJson['version'];
     return mergeStream(gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/editor/')),
-    gulp.src('build/**').pipe(zip(packageJson['name'] + '-embed-latest' + '.zip')).pipe(gulp.dest('dist/editor/')));
+        gulp.src('build/**').pipe(zip(packageJson['name'] + '-embed-latest' + '.zip')).pipe(gulp.dest('dist/editor/')));
 });
 
 gulp.task('rename-coreplugins', ['embed-package'], function() {
-    return gulp.src("build/scripts/coreplugins.js").pipe(rename("index.js")).pipe(gulp.dest("build/coreplugins/"));
+    return gulp.src("build/scripts/coreplugins.min.js").pipe(rename("index.js")).pipe(gulp.dest("build/coreplugins/"));
 });
 
 gulp.task('coreplugins-package', ['rename-coreplugins'], function() {
