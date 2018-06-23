@@ -262,23 +262,23 @@ module.exports = {
         ]
     },
     plugins: [
-        // new UglifyJsPlugin({
-        //     cache: false,
-        //     parallel: true,
-        //     uglifyOptions: {
-        //         compress: {
-        //             dead_code: true,
-        //             drop_console: true,
-        //             global_defs: {
-        //                 DEBUG: true
-        //             },
-        //             passes: 1,
-        //         },
-        //         ecma: 6,
-        //         mangle: true
-        //     },
-        //     sourceMap: false
-        // }),
+        new UglifyJsPlugin({
+            cache: false,
+            parallel: true,
+            uglifyOptions: {
+                compress: {
+                    dead_code: true,
+                    drop_console: true,
+                    global_defs: {
+                        DEBUG: true
+                    },
+                    passes: 1,
+                },
+                ecma: 6,
+                mangle: true
+            },
+            sourceMap: false
+        }),
         // copy the index.html and templated to eidtor filder
         new CopyWebpackPlugin([{
                 from: './app/templates',
@@ -363,13 +363,16 @@ module.exports = {
             },
             pathMapper: function(assetPath) {
                 console.log("AssesPath", assetPath)
+                if (assetPath.startsWith('gulpfile')) {
+                    return path.join('.', path.basename(assetPath));
+                }
                 if (assetPath.endsWith('.js'))
                     return path.join(path.dirname(assetPath), 'scripts', path.basename(assetPath));
                 if (assetPath.endsWith('.css'))
                     return path.join(path.dirname(assetPath), 'styles', path.basename(assetPath));
                 if (assetPath.startsWith('fonts')) {
                     return path.join('styles', 'fonts', path.basename(assetPath));
-                }
+                };
                 return assetPath;
             },
             exclude: ['style.min.js', 'plugin-framework.min.js'],
@@ -379,23 +382,23 @@ module.exports = {
         })
     ],
     optimization: {
-        // splitChunks: {
-        //     chunks: 'async',
-        //     minSize: 30000,
-        //     minChunks: 1,
-        //     maxAsyncRequests: 5,
-        //     maxInitialRequests: 3,
-        //     automaticNameDelimiter: '~',
-        //     name: true,
-        //     cacheGroups: {
-        //         styles: {
-        //             name: 'style',
-        //             test: /\.css$/,
-        //             chunks: 'all',
-        //             enforce: false
-        //         }
-        //     },
-        // }
+        splitChunks: {
+            chunks: 'async',
+            minSize: 30000,
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            automaticNameDelimiter: '~',
+            name: true,
+            cacheGroups: {
+                styles: {
+                    name: 'style',
+                    test: /\.css$/,
+                    chunks: 'all',
+                    enforce: false
+                }
+            },
+        }
     }
 
 };
