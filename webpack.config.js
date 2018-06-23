@@ -154,6 +154,16 @@ module.exports = {
     },
     module: {
         rules: [{
+                test: /\.js$/,
+                loader: 'string-replace-loader',
+                options: {
+                    multiple: [
+                        { search: '/plugins', replace: '/content-plugins' },
+                        { search: 'https://dev.ekstep.in', replace: '' }
+                    ]
+                }
+            },
+            {
                 test: require.resolve(getTelemetryLib(ENVIRONMENT)),
                 use: [{
                     loader: 'expose-loader',
