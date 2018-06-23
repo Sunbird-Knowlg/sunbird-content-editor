@@ -451,5 +451,35 @@ gulp.task('packageCorePlugins', ["minify", "minifyCorePlugins"], function() {
         read: false
     }).pipe(clean());
 });
+
+// TODO: Need to remove this task
+// Only for webpack build test purpose 
+gulp.task('package-plugins', ["minifyCorePlugins"], function() {
+    var fs = require('fs');
+    var _ = require('lodash');
+    var jsDependencies = [];
+    var cssDependencies = [];
+    if (fs.existsSync('app/scripts/coreplugins.js')) {
+        fs.unlinkSync('app/scripts/coreplugins.js');
+    }
+    corePlugins.forEach(function(plugin) {
+        var manifest = JSON.parse(fs.readFileSync('plugins/' + plugin + '/manifest.json'));
+        if (manifest.editor.dependencies) {
+            manifest.editor.dependencies.forEach(function(dependency) {
+                var resource = '/content-plugins/' + plugin + '/' + dependency.src;
+                if (dependency.type == 'js') {
+                    fs.appendFile('app/scripts/coreplugins.js', "org.ekstep.pluginframework.resourceManager.loadExternalResource('" + resource + "', 'js')" + "\n");
+                } else if (dependency.type == 'css') {
+                    fs.appendFile('app/scripts/coreplugins.js', "org.ekstep.pluginframework.resourceManager.loadExternalResource('" + resource + "', 'css')" + "\n");
+                }
+            });
+        }
+        var plugin = fs.readFileSync('plugins/' + plugin + '/editor/plugin.min.js', 'utf8');
+        fs.appendFile('app/scripts/coreplugins.js', 'org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',eval(\'' + plugin.replace(/'/g, "\\'") + '\'))' + '\n');
+    });
+    return gulp.src('plugins/**/plugin.min.js', {
+        read: false
+    }).pipe(clean());
+});
 //Minification for dev End
 
