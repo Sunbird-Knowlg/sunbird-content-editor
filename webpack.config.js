@@ -304,7 +304,7 @@ module.exports = {
                 to: './images'
             },
             {
-                from: './app/bower_components/jquery/dist/jquery.js',
+                from: './app/bower_components/jquery/dist/jquery.min.js',
                 to: './'
             },
             {
