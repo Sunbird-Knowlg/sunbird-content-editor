@@ -272,6 +272,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin(pathsToClean),
         new UglifyJsPlugin({
             cache: false,
             parallel: true,
@@ -300,7 +301,7 @@ module.exports = {
                 toType: 'template'
             },
             {
-                from: './app/images',
+                from: './app/images/geniecontrols.png',
                 to: './images'
             },
             {
