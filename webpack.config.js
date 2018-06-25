@@ -2,9 +2,9 @@
 
 
 const ENVIRONMENT = process.env.NODE_ENV;
-const BUILD_NUMBER = process.env.build_number || 2.2;
-const EDITOR_VER = process.env.editor_version_number || 3.3;
-const PLUGIN_FRAMEWORK_VER = process.env.framework_version_number || 4;
+const BUILD_NUMBER = process.env.build_number;
+const EDITOR_VER = process.env.editor_version_number;
+const PLUGIN_FRAMEWORK_VER = process.env.framework_version_number;
 
 
 
