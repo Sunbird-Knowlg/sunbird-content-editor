@@ -7,6 +7,7 @@
         "body-parser": "*",
         "clean-css": "^4.1.4",
         "express": "^4.14.0",
+        "clean-webpack-plugin": "^0.1.19",
         "lodash": "^4.16.6",
         "request": "*",
         "xmlbuilder": "*",
@@ -89,8 +90,10 @@
         "file-loader": "*",
         "filemanager-webpack-plugin": "*",
         "string-replace-loader": "2.1"
+
     },
     "scripts": {
+
         "build": "webpack",
         "apptest": "karma start karmaconf.js",
         "testpluginframework": "karma start karmaconf.pluginframework.js",
