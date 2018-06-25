@@ -1,6 +1,13 @@
 //TODO: Remove the unused constants
-const ENVIRONMENT = process.env.NODE_ENV || 'dev';
-const BUILD_NUMBER = process.env.BUILD_NUMBER;
+
+
+const ENVIRONMENT = process.env.NODE_ENV;
+const BUILD_NUMBER = process.env.build_number || 2.2;
+const EDITOR_VER = process.env.editor_version_number || 3.3;
+const PLUGIN_FRAMEWORK_VER = process.env.framework_version_number || 4;
+
+
+
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -130,19 +137,24 @@ const APP_STYLE = [
 // removing the duplicate files
 const APP_SCRIPT = [...new Set([...VENDOR, ...PLUGIN_FRAMEWORK, ...EDITOR_FRAMEWORK, ...EDITOR_APP])]
     //APP_SCRIPT.push(getTelemetryLib(ENVIRONMENT));
+if (!BUILD_NUMBER && !EDITOR_VER && !PLUGIN_FRAMEWORK_VER) {
+    console.error('Error!!! Cannot find framework_version_number, editor_version_number and build_number env variables');
+    return process.exit(1)
+}
+const VERSION = EDITOR_VER + '.' + BUILD_NUMBER;
 
 function getTelemetryLib(env) {
     return (env === 'production') ? TELEMETRY_LIBS.prod : TELEMETRY_LIBS.dev
 };
 module.exports = {
     entry: {
-        'coreplugins': CORE_PLUGINS,
+        //'coreplugins': CORE_PLUGINS,
         'plugin-framework ': PLUGIN_FRAMEWORK,
         'script': APP_SCRIPT,
         'style': APP_STYLE
     },
     output: {
-        filename: '[name].min.js',
+        filename: `[name].min.${VERSION}.js`,
         path: path.resolve(__dirname, 'dist')
     },
     resolve: {
@@ -314,6 +326,10 @@ module.exports = {
                 to: './'
             },
             {
+                from: './app/scripts/coreplugins.js',
+                to: './'
+            },
+            {
                 from: './deploy/gulpfile.js',
                 to: './'
             },
@@ -387,7 +403,7 @@ module.exports = {
                 };
                 return assetPath;
             },
-            exclude: ['style.min.js', 'plugin-framework.min.js'],
+            exclude: [`style.min.${VERSION}.js`],
             zipOptions: {
                 forceZip64Format: false,
             },
