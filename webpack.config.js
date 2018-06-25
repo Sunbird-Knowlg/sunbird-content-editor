@@ -1,5 +1,6 @@
 //TODO: Remove the unused constants
 const ENVIRONMENT = process.env.NODE_ENV || 'dev';
+const BUILD_NUMBER = process.env.BUILD_NUMBER;
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -15,22 +16,26 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin")
 const BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const ExtractTextPlugin = require('extract-text-webpack-plugin');
+//const HtmlWebpackPlugin = require('html-webpack-plugin');
+//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 /** 
  *  Core plugins file path, Refer minified file which is already created form the gulp.
  */
 const CORE_PLUGINS = './app/scripts/coreplugins.js';
 
+const TELEMETRY_LIBS = {
+    prod: './app/libs/telemetry.prod.min.js',
+    dev: './app/libs/telemetry.dev.min.js'
+};
+
 /**
  * External files 
  */
 const VENDOR = [
-    "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
-    './app/bower_components/semantic/dist/semantic.js',
+    // "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
+    // './app/bower_components/semantic/dist/semantic.js', // "./node_modules/ajv/dist/ajv.bundle.js",
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
@@ -47,7 +52,6 @@ const VENDOR = [
     "./app/scripts/contenteditor/md5.js",
     "./app/libs/ng-tags-input.js"
 ];
-// Should have Plugin framework files
 
 var PLUGIN_FRAMEWORK = [
     "./app/scripts/framework/libs/ES5Polyfill.js",
@@ -72,7 +76,6 @@ var PLUGIN_FRAMEWORK = [
 ];
 var EDITOR_FRAMEWORK = [
     "./app/libs/fontfaceobserver.min.js",
-    "./app/libs/telemetry-lib-v3.min.js",
     "./app/scripts/contenteditor/bootstrap-editor.js",
     "./app/scripts/contenteditor/ce-config.js",
     "./app/scripts/contenteditor/content-editor.js",
@@ -124,43 +127,22 @@ const APP_STYLE = [
 ];
 
 // removing the duplicate files
-const APP_SCRIPT = [...new Set([...VENDOR, ...PLUGIN_FRAMEWORK, ...EDITOR_FRAMEWORK, ...EDITOR_APP])];
+const APP_SCRIPT = [...new Set([...VENDOR, ...PLUGIN_FRAMEWORK, ...EDITOR_FRAMEWORK, ...EDITOR_APP])]
+    //APP_SCRIPT.push(getTelemetryLib(ENVIRONMENT));
 
-let pathsToClean = [
-'dist'
-]
-
+function getTelemetryLib(env) {
+    return (env === 'production') ? TELEMETRY_LIBS.prod : TELEMETRY_LIBS.dev
+};
 module.exports = {
-    optimization: {
-        splitChunks: {
-            chunks: 'async',
-            minSize: 30000,
-            minChunks: 1,
-            maxAsyncRequests: 5,
-            maxInitialRequests: 3,
-            automaticNameDelimiter: '~',
-            name: true,
-            cacheGroups: {
-                styles: {
-                    name: 'style',
-                    test: /\.css$/,
-                    chunks: 'all',
-                    enforce: false
-                }
-            },
-        }
-    },
-
     entry: {
         'coreplugins': CORE_PLUGINS,
-        'plugin-framework': PLUGIN_FRAMEWORK,
+        'plugin-framework ': PLUGIN_FRAMEWORK,
         'script': APP_SCRIPT,
         'style': APP_STYLE
     },
     output: {
         filename: '[name].min.js',
         path: path.resolve(__dirname, 'dist')
-
     },
     resolve: {
         alias: {
@@ -170,6 +152,18 @@ module.exports = {
     },
     module: {
         rules: [{
+                test: /\.js$/,
+                loader: 'string-replace-loader',
+                options: {
+                    multiple: [
+                        { search: '/plugins', replace: '/content-plugins' },
+                        { search: "/api", replace: '/action' },
+                        { search: 'https://dev.ekstep.in', replace: '' }
+                    ],
+                    strict: true
+                }
+            },
+            {
                 test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
                 use: [{
                     loader: 'expose-loader',
@@ -238,7 +232,7 @@ module.exports = {
                     loader: 'file-loader',
                     options: {
                         name: '[name].[ext]',
-                        outputPath: 'styles/fonts/',
+                        outputPath: './fonts/',
                         limit: 10000,
                         fallback: 'responsive-loader'
                     }
@@ -278,7 +272,6 @@ module.exports = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(pathsToClean),
         new UglifyJsPlugin({
             cache: false,
             parallel: true,
@@ -307,9 +300,26 @@ module.exports = {
                 toType: 'template'
             },
             {
-                from: './app/images/geniecontrols.png',
+                from: './app/images',
                 to: './images'
-            }
+            },
+            {
+                from: './app/bower_components/jquery/dist/jquery.min.js',
+                to: './'
+            },
+            {
+                from: './app/libs/semantic.min.js',
+                to: './'
+            },
+            {
+                from: './deploy/gulpfile.js',
+                to: './'
+            },
+            {
+                from: './deploy/package.json',
+                to: './'
+            },
+
         ]),
         new ImageminPlugin({
             test: /\.(jpe?g|png|gif|svg)$/i,
@@ -317,24 +327,13 @@ module.exports = {
                 quality: '65-70'
             }
         }),
-        // new HtmlWebpackPlugin({
-        //     title: 'Generated Index',
-        //     inject: false,
-        //     template: './app/build.html',
-        //     filename: './index.html'
-        // }),
         new MiniCssExtractPlugin({
             filename: "[name].min.css",
         }),
         new webpack.ProvidePlugin({
-            'window.jQuery': 'jquery',
-            'window.$': 'jquery',
-            'jQuery': 'jquery',
-            '$': 'jquery',
-            'jquery': 'jquery',
-            'Ajv': 'ajv',
             Fingerprint2: 'Fingerprint2',
             WebFont: 'webfontloader',
+            Ajv: 'ajv'
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
@@ -349,27 +348,42 @@ module.exports = {
             },
             canPrint: true
         }),
-        new BrotliGzipPlugin({
-            asset: '[path].br[query]',
-            algorithm: 'brotli',
-            test: /\.(js|css|html|svg)$/,
-            threshold: 10240,
-            minRatio: 0.8
-        }),
-        new BrotliGzipPlugin({
-            asset: '[path].gz[query]',
-            algorithm: 'gzip',
-            test: /\.(js|css|html|svg)$/,
-            threshold: 10240,
-            minRatio: 0.8
-        }),
+        // new BrotliGzipPlugin({
+        //     asset: '[path].br[query]',
+        //     algorithm: 'brotli',
+        //     test: /\.(js|css|html|svg|woff|woff2|eot|ttf|otf|svg|png)$/,
+        //     threshold: 10240,
+        //     minRatio: 0.8
+        // }),
+        // new BrotliGzipPlugin({
+        //     asset: '[path].gz[query]',
+        //     algorithm: 'gzip',
+        //     test: /\.(js|css|html|svg|woff|woff2|eot|ttf|otf|svg|png)$/,
+        //     threshold: 10240,
+        //     minRatio: 0.8
+        // }),
         new ZipPlugin({
-            filename: 'content_editor.zip',
+            path: path.join(__dirname, '.'),
+            filename: 'content-editor.zip',
             fileOptions: {
                 mtime: new Date(),
                 mode: 0o100664,
                 compress: true,
                 forceZip64Format: false,
+            },
+            pathMapper: function(assetPath) {
+                console.log("AssesPath", assetPath)
+                if (assetPath.startsWith('gulpfile')) {
+                    return path.join('.', path.basename(assetPath));
+                }
+                if (assetPath.endsWith('.js'))
+                    return path.join(path.dirname(assetPath), 'scripts', path.basename(assetPath));
+                if (assetPath.endsWith('.css'))
+                    return path.join(path.dirname(assetPath), 'styles', path.basename(assetPath));
+                if (assetPath.startsWith('fonts')) {
+                    return path.join('styles', 'fonts', path.basename(assetPath));
+                };
+                return assetPath;
             },
             exclude: ['style.min.js', 'plugin-framework.min.js'],
             zipOptions: {
@@ -377,27 +391,24 @@ module.exports = {
             },
         })
     ],
+    optimization: {
+        splitChunks: {
+            chunks: 'async',
+            minSize: 30000,
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            automaticNameDelimiter: '~',
+            name: true,
+            cacheGroups: {
+                styles: {
+                    name: 'style',
+                    test: /\.css$/,
+                    chunks: 'all',
+                    enforce: false
+                }
+            },
+        }
+    }
+
 };
-
-
-// function CORE_PLUGINS(){
-//     if (fs.existsSync('content-editor/scripts/coreplugins.js')) {
-//         fs.unlinkSync('content-editor/scripts/coreplugins.js');
-//     }
-//     corePluginsArray.forEach(function(plugin){
-//         var manifest = JSON.parse(fs.readFileSync(__dirname+'/plugins/'+plugin+'/manifest.json'));
-//         if(manifest.editor.dependencies){
-//             manifest.editor.dependencies.forEach(function(dependency){
-//                 var resource = './plugins/' + plugin + '/' + dependency.src;
-//                 if (dependency.type == 'js') {
-//                     fs.appendFile('content-editor/scripts/coreplugins.js', 'org.ekstep.contenteditor.jQuery("body").append($("<script type=\'text/javascript\' src=\'' + resource + '\'>"))' + '\n');
-//                 } else if (dependency.type == 'css') {
-//                     fs.appendFile('content-editor/scripts/coreplugins.js', 'org.ekstep.contenteditor.jQuery("head").append("<link rel=\'stylesheet\' type=\'text/css\' href=\'' + resource + '\'>")' + '\n');
-//                 }
-//             });
-//         }
-//         var plugin = fs.readFileSync(__dirname+'/plugins/' + plugin + '/editor/plugin.js', 'utf8');
-//         fs.appendFile('content-editor/scripts/coreplugins.js', 'org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',eval(\'' + plugin.replace(/'/g, "\\'") + '\'))' + '\n');
-//     });
-//     return corePluginsArray;
-// }

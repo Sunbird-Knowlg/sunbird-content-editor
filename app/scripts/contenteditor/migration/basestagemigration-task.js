@@ -2,7 +2,6 @@
 
 org.ekstep.contenteditor.migration.basestage_task = new(Class.extend({
     init: function() {
-        console.log('basestage_task initialized');
     },
     baseStage: undefined,
     contentbody: undefined,    

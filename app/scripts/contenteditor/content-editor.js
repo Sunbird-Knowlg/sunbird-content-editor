@@ -42,7 +42,7 @@ org.ekstep.contenteditor._mergeConfig = function(config) {
 }
 
 org.ekstep.contenteditor._loadDefaultPlugins = function(context, callback) {
-    if (org.ekstep.contenteditor.config.corePluginsPackaged === true) org.ekstep.contenteditor.jQuery("body").append($("<script type='text/javascript' src='../dist/coreplugins.min.js?" + org.ekstep.contenteditor.config.build_number + "'>"));
+    if (org.ekstep.contenteditor.config.corePluginsPackaged === true) org.ekstep.contenteditor.jQuery("body").append($("<script type='text/javascript' src='scripts/coreplugins.min.js?" + org.ekstep.contenteditor.config.build_number + "'>"));
     org.ekstep.pluginframework.eventManager.enableEvents = false;
     org.ekstep.pluginframework.pluginManager.loadAllPlugins(org.ekstep.contenteditor.config.plugins, undefined, function() {
         org.ekstep.pluginframework.eventManager.enableEvents = true;
