@@ -46,7 +46,7 @@ gulp.task('embed-package', ['bower-package-transform'], function() {
 });
 
 gulp.task('rename-coreplugins', ['embed-package'], function() {
-    return gulp.src("build/scripts/coreplugins.min.js").pipe(rename("index.js")).pipe(gulp.dest("build/coreplugins/"));
+    return gulp.src("build/scripts/coreplugins.js").pipe(rename("index.js")).pipe(gulp.dest("build/coreplugins/"));
 });
 
 gulp.task('coreplugins-package', ['rename-coreplugins'], function() {
