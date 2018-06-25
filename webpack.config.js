@@ -19,6 +19,7 @@ const BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
 //const HtmlWebpackPlugin = require('html-webpack-plugin');
 //const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 /** 
  *  Core plugins file path, Refer minified file which is already created form the gulp.
@@ -151,18 +152,19 @@ module.exports = {
         }
     },
     module: {
-        rules: [{
-                test: /\.js$/,
-                loader: 'string-replace-loader',
-                options: {
-                    multiple: [
-                        { search: '/plugins', replace: '/content-plugins' },
-                        { search: "/api", replace: '/action' },
-                        { search: 'https://dev.ekstep.in', replace: '' }
-                    ],
-                    strict: true
-                }
-            },
+        rules: [
+            // {
+            //     test: /\.js$/,
+            //     loader: 'string-replace-loader',
+            //     options: {
+            //         multiple: [
+            //             // { search: '/plugins', replace: '/content-plugins' },
+            //             // { search: "/api", replace: '/action' },
+            //             // { search: 'https://dev.ekstep.in', replace: '' }
+            //         ],
+            //         strict: true
+            //     }
+            // },
             {
                 test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
                 use: [{
@@ -199,7 +201,7 @@ module.exports = {
                 }]
             },
             {
-                test: /\.css$/,
+                test:/\.(s*)css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     {
@@ -227,6 +229,20 @@ module.exports = {
                 ]
             },
             {
+                test: /\.(gif|png|jpe?g|svg)$/i,
+                use: [
+                    'file-loader',
+                    {
+                        loader:'url-loader',
+                        options:{
+                            limit: 50,  //it's important
+                            outputPath:'./images',
+                            name: '[name].[ext]',
+                        }
+                    },
+                ],
+            },
+            {
                 test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
                 use: [{
                     loader: 'file-loader',
@@ -238,41 +254,10 @@ module.exports = {
                     }
                 }]
             },
-            {
-                test: /\.(gif|png|jpe?g|svg)$/i,
-                use: [
-                    'file-loader',
-                    {
-                        loader: 'image-webpack-loader',
-                        options: {
-                            mozjpeg: {
-                                progressive: true,
-                                quality: 65
-                            },
-                            // optipng.enabled: false will disable optipng
-                            optipng: {
-                                enabled: false,
-                            },
-                            pngquant: {
-                                quality: '65-90',
-                                speed: 4
-                            },
-                            gifsicle: {
-                                interlaced: true,
-                            },
-                            // the webp option will enable WEBP
-                            webp: {
-                                quality: 75
-                            }
-                        }
-                    },
-                ],
-            },
-
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(pathsToClean),
+        new CleanWebpackPlugin(['dist']),
         new UglifyJsPlugin({
             cache: false,
             parallel: true,
@@ -324,6 +309,8 @@ module.exports = {
         ]),
         new ImageminPlugin({
             test: /\.(jpe?g|png|gif|svg)$/i,
+            name: '[name].[ext]',
+            outputPath: './images',
             pngquant: {
                 quality: '65-70'
             }
