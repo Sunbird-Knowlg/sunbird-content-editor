@@ -2,7 +2,6 @@
 
 org.ekstep.contenteditor.migration.imagemigration_task = new(Class.extend({
     init: function() {
-        console.log('image migration initialized');
     },
     migrate: function(contentbody) {},
     removeImage: function(stage, id) {

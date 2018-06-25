@@ -2,7 +2,6 @@
 
 org.ekstep.contenteditor.migration.assessmentmigration_task = new(Class.extend({
     init: function() {
-        console.log('assessment migration task initialized');
     },
     contentbody: undefined,
     template: [],

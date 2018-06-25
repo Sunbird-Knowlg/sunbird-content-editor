@@ -37,7 +37,6 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
             this.registerMenu();
             this.initialize();
             org.ekstep.contenteditor.api.addEventListener(this.manifest.id + ":create", this.create, this);
-            console.log(manifest.id + " plugin initialized");
         } else {
             this.editorObj = undefined, this.event = undefined, this.attributes = { x: 0, y: 0, w: 0, h: 0, visible: true }, this.params = undefined, this.data = undefined, this.media = undefined;
             this.editorData = data || {};
