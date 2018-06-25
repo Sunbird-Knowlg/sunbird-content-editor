@@ -346,7 +346,7 @@ module.exports = {
             }
         }),
         new MiniCssExtractPlugin({
-            filename: "[name].min.css",
+            filename: `[name].min.${VERSION}.css`,
         }),
         new webpack.ProvidePlugin({
             Fingerprint2: 'Fingerprint2',
