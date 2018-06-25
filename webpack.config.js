@@ -19,6 +19,7 @@ const BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
 //const HtmlWebpackPlugin = require('html-webpack-plugin');
 //const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 /** 
  *  Core plugins file path, Refer minified file which is already created form the gulp.
@@ -272,7 +273,7 @@ module.exports = {
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(pathsToClean),
+        new CleanWebpackPlugin(['dist']),
         new UglifyJsPlugin({
             cache: false,
             parallel: true,
