@@ -18,6 +18,7 @@ const BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 /** 
  *  Core plugins file path, Refer minified file which is already created form the gulp.
@@ -30,7 +31,6 @@ const CORE_PLUGINS = './app/scripts/coreplugins.js';
 const VENDOR = [
     "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
     './app/bower_components/semantic/dist/semantic.js',
-    // "./node_modules/ajv/dist/ajv.bundle.js",
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
@@ -126,6 +126,10 @@ const APP_STYLE = [
 // removing the duplicate files
 const APP_SCRIPT = [...new Set([...VENDOR, ...PLUGIN_FRAMEWORK, ...EDITOR_FRAMEWORK, ...EDITOR_APP])];
 
+let pathsToClean = [
+'dist'
+]
+
 module.exports = {
     optimization: {
         splitChunks: {
@@ -146,7 +150,7 @@ module.exports = {
             },
         }
     },
-    
+
     entry: {
         'coreplugins': CORE_PLUGINS,
         'plugin-framework': PLUGIN_FRAMEWORK,
@@ -274,6 +278,7 @@ module.exports = {
         ]
     },
     plugins: [
+        new CleanWebpackPlugin(pathsToClean),
         new UglifyJsPlugin({
             cache: false,
             parallel: true,
@@ -302,7 +307,7 @@ module.exports = {
                 toType: 'template'
             },
             {
-                from: './app/images',
+                from: './app/images/geniecontrols.png',
                 to: './images'
             }
         ]),
@@ -312,19 +317,24 @@ module.exports = {
                 quality: '65-70'
             }
         }),
+        // new HtmlWebpackPlugin({
+        //     title: 'Generated Index',
+        //     inject: false,
+        //     template: './app/build.html',
+        //     filename: './index.html'
+        // }),
         new MiniCssExtractPlugin({
             filename: "[name].min.css",
         }),
         new webpack.ProvidePlugin({
+            'window.jQuery': 'jquery',
+            'window.$': 'jquery',
+            'jQuery': 'jquery',
+            '$': 'jquery',
+            'jquery': 'jquery',
+            'Ajv': 'ajv',
             Fingerprint2: 'Fingerprint2',
             WebFont: 'webfontloader',
-            Ajv: 'ajv',
-        }),
-        new webpack.ProvidePlugin({
-            'window.jQuery'    : 'jquery',
-            'window.$'         : 'jquery',
-            'jQuery'           : 'jquery',
-            '$'                : 'jquery',
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
@@ -368,3 +378,26 @@ module.exports = {
         })
     ],
 };
+
+
+// function CORE_PLUGINS(){
+//     if (fs.existsSync('content-editor/scripts/coreplugins.js')) {
+//         fs.unlinkSync('content-editor/scripts/coreplugins.js');
+//     }
+//     corePluginsArray.forEach(function(plugin){
+//         var manifest = JSON.parse(fs.readFileSync(__dirname+'/plugins/'+plugin+'/manifest.json'));
+//         if(manifest.editor.dependencies){
+//             manifest.editor.dependencies.forEach(function(dependency){
+//                 var resource = './plugins/' + plugin + '/' + dependency.src;
+//                 if (dependency.type == 'js') {
+//                     fs.appendFile('content-editor/scripts/coreplugins.js', 'org.ekstep.contenteditor.jQuery("body").append($("<script type=\'text/javascript\' src=\'' + resource + '\'>"))' + '\n');
+//                 } else if (dependency.type == 'css') {
+//                     fs.appendFile('content-editor/scripts/coreplugins.js', 'org.ekstep.contenteditor.jQuery("head").append("<link rel=\'stylesheet\' type=\'text/css\' href=\'' + resource + '\'>")' + '\n');
+//                 }
+//             });
+//         }
+//         var plugin = fs.readFileSync(__dirname+'/plugins/' + plugin + '/editor/plugin.js', 'utf8');
+//         fs.appendFile('content-editor/scripts/coreplugins.js', 'org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',eval(\'' + plugin.replace(/'/g, "\\'") + '\'))' + '\n');
+//     });
+//     return corePluginsArray;
+// }
