@@ -148,8 +148,6 @@ function getTelemetryLib(env) {
 };
 module.exports = {
     entry: {
-        //'coreplugins': CORE_PLUGINS,
-        'plugin-framework ': PLUGIN_FRAMEWORK,
         'script': APP_SCRIPT,
         'style': APP_STYLE
     },
@@ -164,19 +162,18 @@ module.exports = {
         }
     },
     module: {
-        rules: [
-            // {
-            //     test: /\.js$/,
-            //     loader: 'string-replace-loader',
-            //     options: {
-            //         multiple: [
-            //             // { search: '/plugins', replace: '/content-plugins' },
-            //             // { search: "/api", replace: '/action' },
-            //             // { search: 'https://dev.ekstep.in', replace: '' }
-            //         ],
-            //         strict: true
-            //     }
-            // },
+        rules: [{
+                test: /\.js$/,
+                loader: 'string-replace-loader',
+                options: {
+                    multiple: [
+                        { search: '/plugins', replace: '/content-plugins' },
+                        { search: "/api", replace: '/action' },
+                        { search: 'https://dev.ekstep.in', replace: '' }
+                    ],
+                    strict: true
+                }
+            },
             {
                 test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
                 use: [{
@@ -213,7 +210,7 @@ module.exports = {
                 }]
             },
             {
-                test:/\.(s*)css$/,
+                test: /\.(s*)css$/,
                 use: [
                     MiniCssExtractPlugin.loader,
                     {
@@ -245,10 +242,10 @@ module.exports = {
                 use: [
                     'file-loader',
                     {
-                        loader:'url-loader',
-                        options:{
-                            limit: 50,  //it's important
-                            outputPath:'./images',
+                        loader: 'url-loader',
+                        options: {
+                            limit: 50, //it's important
+                            outputPath: './images',
                             name: '[name].[ext]',
                         }
                     },
