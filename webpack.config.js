@@ -132,7 +132,8 @@ const APP_STYLE = [
     './app/styles/iconfont.css',
     './app/styles/icomoon/style.css',
     './app/styles/commonStyles.css',
-    './app/styles/content-editor.css'
+    './app/styles/content-editor.css',
+    './app/styles/noto.css'
 ];
 
 // removing the duplicate files
