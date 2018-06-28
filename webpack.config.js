@@ -169,7 +169,8 @@ module.exports = {
                     multiple: [
                         { search: '/plugins', replace: '/content-plugins' },
                         { search: "/api", replace: '/action' },
-                        { search: 'https://dev.ekstep.in', replace: '' }
+                        { search: 'https://dev.ekstep.in', replace: '' },
+                        { search: 'dispatcher:\"local\"', replace: 'dispatcher:\"piwik\"' }
                     ],
                     strict: true
                 }
@@ -307,8 +308,9 @@ module.exports = {
                 to: './'
             },
             {
-                from: './app/scripts/coreplugins.js',
-                to: './'
+                from: './content-editor/scripts/*',
+                to: './',
+                flatten: true
             },
             {
                 from: './deploy/gulpfile.js',
