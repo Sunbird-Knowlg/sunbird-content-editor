@@ -132,8 +132,7 @@ const APP_STYLE = [
     './app/styles/iconfont.css',
     './app/styles/icomoon/style.css',
     './app/styles/commonStyles.css',
-    './app/styles/content-editor.css',
-    './app/styles/noto.css'
+    './app/styles/content-editor.css'
 ];
 
 // removing the duplicate files
@@ -172,7 +171,7 @@ module.exports = {
                         { search: '/plugins', replace: '/content-plugins' },
                         { search: "/api", replace: '/action' },
                         { search: 'https://dev.ekstep.in', replace: '' },
-                        { search: 'dispatcher:\"local\"', replace: 'dispatcher:\"piwik\"' }
+                        { search: 'dispatcher: "local"', replace: 'dispatcher: "console"' }
                     ],
                     strict: true
                 }
@@ -313,6 +312,10 @@ module.exports = {
                 from: './content-editor/scripts/*',
                 to: './',
                 flatten: true
+            },
+            {
+                from: './app/styles/noto.css',
+                to: './'
             },
             {
                 from: './deploy/gulpfile.js',
