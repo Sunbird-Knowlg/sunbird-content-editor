@@ -115,6 +115,7 @@ var EDITOR_APP = [
     "./app/scripts/contenteditor/migration/scribblemigration-task.js",
     "./app/scripts/contenteditor/migration/readalongmigration-task.js",
     "./app/scripts/contenteditor/migration/assessmentmigration-task.js",
+    "./app/scripts/contenteditor/migration/textmigration-task.js",
     "./app/scripts/contenteditor/migration/eventsmigration-task.js",
     "./app/scripts/contenteditor/migration/settagmigration-task.js",
     "./app/scripts/contenteditor/manager/stage-manager.js"
