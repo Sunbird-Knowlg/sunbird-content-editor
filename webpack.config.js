@@ -160,7 +160,7 @@ module.exports = {
     resolve: {
         alias: {
             'angular': path.resolve('./app/bower_components/angular/angular.js'),
-            'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
+            'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js')
         }
     },
     module: {
