@@ -104,7 +104,7 @@ function recursiveTask() {
 
 function packagePlugins() {
     var pluginPackageArr = [];
-    corePlugins.forEach(function(plugin) {
+    corePlugins.forEach(function (plugin) {
         var dependenciesArr = [];
         var packagedDepArr = [];
         var manifest = JSON.parse(fs.readFileSync('plugins/' + plugin + '/manifest.json'));
@@ -113,24 +113,34 @@ function packagePlugins() {
         if (fs.existsSync('plugins/' + plugin + '/editor/plugin.dist.js')) {
             fs.unlinkSync('plugins/' + plugin + '/editor/plugin.dist.js');
         }
-        if (manifest.editor.views && pluginContent) {
+        if(manifest.editor.views && pluginContent){
             var controllerPathArr = [];
             var templatePathArr = [];
-            manifest.editor.views.forEach(function(obj, i) {
-                controllerPathArr.push('require("' + obj.controller + '")');
-                templatePathArr.push('require("' + obj.template + '")');
+            manifest.editor.views.forEach(function(obj, i){
+                // controllerPathArr.push('require("' + obj.controller + '")');
+                // templatePathArr.push('require("' + obj.template + '")');
+
+                controllerPathArr[i] = (obj.controller) ? 'require("' + obj.controller + '")' : undefined;
+                templatePathArr[i] =  (obj.template) ? 'require("' + obj.template + '")' : undefined;
             });
-            pluginContent = uglifyjs.minify(pluginContent.replace('.loadNgModules(templatePath, controllerPath)', '.loadNgModules(' + (templatePathArr[0] || undefined) + ' , ' + (controllerPathArr[0] || undefined) + ', true)'))
-        } else {
-            pluginContent = uglifyjs.minify(pluginContent);
+           
+            pluginContent = uglifyjs.minify(pluginContent.replace(/\b(loadNgModules)\b.*\)/, 'loadNgModules(' + templatePathArr[0] + ' , ' + controllerPathArr[0] + ', true)'))
+            pluginContent.code.replace(/\b(loadNgModules)\b.*\)/, function(match, contents){
+                
+            })
         }
-        if (manifest.editor.dependencies) {
-            manifest.editor.dependencies.forEach(function(obj, i) {
-                if (obj.type == "js") {
+        else{
+            pluginContent = uglifyjs.minify(pluginContent);
+        }        
+
+        if(manifest.editor.dependencies){
+            manifest.editor.dependencies.forEach(function(obj, i){
+                if(obj.type == "js"){
                     dependenciesArr[i] = fs.readFileSync('./plugins/' + plugin + '/' + obj.src, 'utf8');
                 }
-            });
+            }); 
         }
+        
 
         dependenciesArr.push('org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',' + pluginContent.code.replace(/;\s*$/, "") + ')')
         fs.appendFile('plugins/' + plugin + '/editor/plugin.dist.js', [...dependenciesArr].join("\n"))
@@ -198,7 +208,8 @@ module.exports = {
             'jquery': path.resolve('./node_modules/jquery/dist/jquery.js'),
             'angular': path.resolve('./app/bower_components/angular/angular.js'),
             'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
-            'E2EConverter': path.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js')
+            'E2EConverter': path.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js'),
+            'xmlbuilder': path.resolve('./node_modules/xmlbuilder/lib/index.js'),
         }
     },
     module: {
