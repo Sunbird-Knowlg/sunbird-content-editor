@@ -2,9 +2,9 @@
 
 
 const ENVIRONMENT = process.env.NODE_ENV;
-const BUILD_NUMBER = process.env.build_number;
-const EDITOR_VER = process.env.editor_version_number;
-const PLUGIN_FRAMEWORK_VER = process.env.framework_version_number;
+const BUILD_NUMBER = process.env.build_number || 1;
+const EDITOR_VER = process.env.editor_version_number || 1;
+const PLUGIN_FRAMEWORK_VER = process.env.framework_version_number || 1;
 
 
 
@@ -31,12 +31,43 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 /** 
  *  Core plugins file path, Refer minified file which is already created form the gulp.
  */
-const CORE_PLUGINS = './app/scripts/coreplugins.js';
 
 const TELEMETRY_LIBS = {
     prod: './app/libs/telemetry.prod.min.js',
     dev: './app/libs/telemetry.dev.min.js'
 };
+
+const CORE_PLUGINS = [
+    './plugins/org.ekstep.assessmentbrowser-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.assetbrowser-1.2/editor/plugin.dist.js',
+    //'./plugins/org.ekstep.colorpicker-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.conceptselector-1.1/editor/plugin.dist.js',
+    './plugins/org.ekstep.stage-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.shape-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.image-1.1/editor/plugin.dist.js',
+    './plugins/org.ekstep.audio-1.1/editor/plugin.dist.js',
+    './plugins/org.ekstep.hotspot-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.scribblepad-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.readalongbrowser-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.stageconfig-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.telemetry-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.preview-1.1/editor/plugin.dist.js',
+    './plugins/org.ekstep.activitybrowser-1.2/editor/plugin.dist.js',
+    './plugins/org.ekstep.collaborator-1.1/editor/plugin.dist.js',
+    './plugins/org.ekstep.download-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.unsupported-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.wordinfobrowser-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.viewecml-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.utils-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.help-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.video-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.editorstate-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.contenteditorfunctions-1.2/editor/plugin.dist.js',
+    './plugins/org.ekstep.keyboardshortcuts-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.richtext-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.iterator-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.navigation-1.0/editor/plugin.dist.js'
+];
 
 /**
  * External files 
@@ -150,33 +181,38 @@ function getTelemetryLib(env) {
 };
 module.exports = {
     entry: {
-        'script': APP_SCRIPT,
-        'style': APP_STYLE
+        // 'script': APP_SCRIPT,
+        // 'style': APP_STYLE,
+        'package-plugin': CORE_PLUGINS,
     },
     output: {
-        filename: `[name].min.${VERSION}.js`,
+        filename: `[name].js`,
         path: path.resolve(__dirname, 'dist')
     },
     resolve: {
         alias: {
+            'jquery': path.resolve('./node_modules/jquery/dist/jquery.js'),
             'angular': path.resolve('./app/bower_components/angular/angular.js'),
-            'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js')
+            'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
+            'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
+            'E2EConverter': path.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js')
         }
     },
     module: {
-        rules: [{
-                test: /\.js$/,
-                loader: 'string-replace-loader',
-                options: {
-                    multiple: [
-                        { search: '/plugins', replace: '/content-plugins' },
-                        { search: "/api", replace: '/action' },
-                        { search: 'https://dev.ekstep.in', replace: '' },
-                        { search: 'dispatcher: "local"', replace: 'dispatcher: "console"' }
-                    ],
-                    strict: true
-                }
-            },
+        rules: [
+            // {
+            //     test: /\.js$/,
+            //     loader: 'string-replace-loader',
+            //     options: {
+            //         multiple: [
+            //             { search: '/plugins', replace: '/content-plugins' },
+            //             { search: "/api", replace: '/action' },
+            //             { search: 'https://dev.ekstep.in', replace: '' },
+            //             { search: 'dispatcher: "local"', replace: 'dispatcher: "console"' }
+            //         ],
+            //         strict: true
+            //     }
+            // },
             {
                 test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
                 use: [{
@@ -189,6 +225,13 @@ module.exports = {
                 use: [{
                     loader: 'expose-loader',
                     options: 'async'
+                }]
+            },
+            {
+                test: require.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'E2EConverter'
                 }]
             },
             {
@@ -266,27 +309,20 @@ module.exports = {
                     }
                 }]
             },
+            {
+                test: /\.(html)$/,
+                use: {
+                    loader: 'html-loader',
+                    options: {
+                        attrs: [':data-src']
+                    }
+                }
+            },
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(['dist']),
-        new UglifyJsPlugin({
-            cache: false,
-            parallel: true,
-            uglifyOptions: {
-                compress: {
-                    dead_code: true,
-                    drop_console: true,
-                    global_defs: {
-                        DEBUG: true
-                    },
-                    passes: 1,
-                },
-                ecma: 6,
-                mangle: true
-            },
-            sourceMap: false
-        }),
+        //new CleanWebpackPlugin(['dist']),
+        new UglifyJsPlugin({}),
         // copy the index.html and templated to eidtor filder
         new CopyWebpackPlugin([{
                 from: './app/templates',
@@ -311,6 +347,11 @@ module.exports = {
             },
             {
                 from: './content-editor/scripts/*',
+                to: './',
+                flatten: true
+            },
+            {
+                from: './app/scripts/coreplugins.js',
                 to: './',
                 flatten: true
             },
@@ -340,9 +381,11 @@ module.exports = {
             filename: `[name].min.${VERSION}.css`,
         }),
         new webpack.ProvidePlugin({
+            E2EConverter: 'E2EConverter',
             Fingerprint2: 'Fingerprint2',
             WebFont: 'webfontloader',
-            Ajv: 'ajv'
+            Ajv: 'ajv',
+
         }),
         new webpack.optimize.OccurrenceOrderPlugin(),
         new webpack.HotModuleReplacementPlugin(),
