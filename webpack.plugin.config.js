@@ -19,7 +19,37 @@ const entryPlus = require('webpack-entry-plus');
 // const StringReplacePlugin = require("string-replace-webpack-plugin");
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 
-
+const CORE_PLUGINS = [
+    //'./plugins/org.ekstep.assessmentbrowser-1.0/editor/plugin.dist.js',
+    './plugins/org.ekstep.assetbrowser-1.2/editor/plugin.dist.js',
+    // './plugins/org.ekstep.colorpicker-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.conceptselector-1.1/editor/plugin.dist.js',
+    // './plugins/org.ekstep.stage-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.shape-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.image-1.1/editor/plugin.dist.js',
+    // './plugins/org.ekstep.audio-1.1/editor/plugin.dist.js',
+    // './plugins/org.ekstep.hotspot-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.scribblepad-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.readalongbrowser-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.stageconfig-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.telemetry-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.preview-1.1/editor/plugin.dist.js',
+    // './plugins/org.ekstep.activitybrowser-1.2/editor/plugin.dist.js',
+    // './plugins/org.ekstep.collaborator-1.1/editor/plugin.dist.js',
+    // './plugins/org.ekstep.download-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.unsupported-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.wordinfobrowser-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.viewecml-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.utils-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.help-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.video-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.editorstate-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.contenteditorfunctions-1.2/editor/plugin.dist.js',
+    // './plugins/org.ekstep.keyboardshortcuts-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.richtext-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.iterator-1.0/editor/plugin.dist.js',
+    // './plugins/org.ekstep.navigation-1.0/editor/plugin.dist.js'
+];
 
 
 var corePlugins = [
@@ -64,10 +94,6 @@ function recursiveTask() {
             outputName: 'package-coreplugins.js',
         },
         // {
-        //     entryFiles: getVendorJS(),
-        //     outputName: 'vendor.js',
-        // },
-        // {
         //     entryFiles: getVendorCSS(),
         //     outputName: 'vendor.css',
         // },
@@ -79,7 +105,6 @@ function recursiveTask() {
 function packagePlugins() {
     var pluginPackageArr = [];
     corePlugins.forEach(function(plugin) {
-
         var dependenciesArr = [];
         var packagedDepArr = [];
         var manifest = JSON.parse(fs.readFileSync('plugins/' + plugin + '/manifest.json'));
@@ -88,38 +113,31 @@ function packagePlugins() {
         if (fs.existsSync('plugins/' + plugin + '/editor/plugin.dist.js')) {
             fs.unlinkSync('plugins/' + plugin + '/editor/plugin.dist.js');
         }
-        if (manifest.editor.dependencies) {
-            var controllerPath, templatePath;
-            manifest.editor.dependencies.forEach(function(obj, index) {
-                if (obj.type == "js" && !obj.bundle) {
-                    dependenciesArr[index] = fs.readFileSync('./plugins/' + plugin + '/' + obj.src, 'utf8');
-                    packagedDepArr[index] = dependenciesArr[index];
-                }
-                if (obj.type == "ctrl" && obj.bundle) controllerPath = 'require("' + obj.src + '")' || undefined;
-                if (obj.type == "template" && obj.bundle) templatePath = 'require("' + obj.src + '")' || undefined;
-            })
-            if (pluginContent) {
-                pluginContent = uglifyjs.minify(pluginContent.replace('.loadNgModules(templatePath, controllerPath)', '.loadNgModules(' + templatePath + ', ' + controllerPath + ', true)'))
-            } else {
-                pluginContent = uglifyjs.minify(pluginContent);
-            }
-
-            packagedDepArr.push('org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',' + pluginContent.code.replace(/;\s*$/, "") + ')')
-
-            fs.appendFile('plugins/' + plugin + '/editor/plugin.dist.js', [...packagedDepArr].join("\n"))
-            pluginPackageArr.push('./plugins/' + plugin + '/editor/plugin.dist.js')
-        } else if (!manifest.editor.hasOwnProperty('dependencies')) {
+        if (manifest.editor.views && pluginContent) {
+            var controllerPathArr = [];
+            var templatePathArr = [];
+            manifest.editor.views.forEach(function(obj, i) {
+                controllerPathArr.push('require("' + obj.controller + '")');
+                templatePathArr.push('require("' + obj.template + '")');
+            });
+            pluginContent = uglifyjs.minify(pluginContent.replace('.loadNgModules(templatePath, controllerPath)', '.loadNgModules(' + (templatePathArr[0] || undefined) + ' , ' + (controllerPathArr[0] || undefined) + ', true)'))
+        } else {
             pluginContent = uglifyjs.minify(pluginContent);
-            packagedDepArr.push('org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',' + pluginContent.code.replace(/;\s*$/, "") + ')')
-            fs.appendFile('plugins/' + plugin + '/editor/plugin.dist.js', [...packagedDepArr].join("\n"))
-            pluginPackageArr.push('./plugins/' + plugin + '/editor/plugin.dist.js')
-
         }
+        if (manifest.editor.dependencies) {
+            manifest.editor.dependencies.forEach(function(obj, i) {
+                if (obj.type == "js") {
+                    dependenciesArr[i] = fs.readFileSync('./plugins/' + plugin + '/' + obj.src, 'utf8');
+                }
+            });
+        }
+
+        dependenciesArr.push('org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',' + pluginContent.code.replace(/;\s*$/, "") + ')')
+        fs.appendFile('plugins/' + plugin + '/editor/plugin.dist.js', [...dependenciesArr].join("\n"))
+        pluginPackageArr.push('./plugins/' + plugin + '/editor/plugin.dist.js')
     })
 
-    console.log(pluginPackageArr)
-        // return CORE_PLUGINS
-    return './dummy.js';
+    return pluginPackageArr;
 }
 
 function getManifest() {
@@ -173,53 +191,24 @@ module.exports = {
 
     output: {
         filename: '[name]',
-        //path: path.resolve(__dirname, './app/scripts'),
+        path: path.resolve(__dirname, './app/scripts'),
     },
     resolve: {
         alias: {
             'jquery': path.resolve('./node_modules/jquery/dist/jquery.js'),
             'angular': path.resolve('./app/bower_components/angular/angular.js'),
             'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
+            'E2EConverter': path.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js')
         }
     },
     module: {
         rules: [{
-                test: require.resolve(PLUGIN_PATH + '/org.ekstep.viewecml-1.0/editor/libs/dist/E2EConverter.js'),
+                test: require.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js'),
                 use: [{
                     loader: 'expose-loader',
                     options: 'E2EConverter'
                 }]
             },
-            // {
-            //     test: /\.json$/,
-            //     loader: 'string-replace-loader',
-            //     options: {
-            //         multiple: [{
-            //                 search: /^{/,
-            //                 replace: 'org.ekstep.pluginframework.pluginManager.registerPlugin(',
-            //                 flags: 'i'
-            //             },
-            //             {
-            //                 search: '}$',
-            //                 replace: ')',
-            //                 flags: 'i'
-            //             },
-            //         ],
-            //         strict: true
-            //     }
-            // },
-            // { 
-            //     test: /\.json$/,
-            //     loader: StringReplacePlugin.replace({
-            //         replacements: [
-            //             {
-            //                 pattern: /<!-- @secret (\w*?) -->/ig,
-            //                 replacement: function (match, p1, offset, string) {
-            //                     return secrets.web[p1];
-            //                 }
-            //             }
-            //         ]})
-            //     },
             {
                 test: /\.(html)$/,
                 use: {
@@ -269,41 +258,21 @@ module.exports = {
                         }
                     },
                 ],
-            },
-            // {
-            //     test: /\.json$/,
-            //     // loader: 'json-loader'
-            //     loader: 'raw-loader'
-
-            // }
+            }
         ]
     },
     plugins: [
-        new CleanWebpackPlugin(['plugin-dist']),
+        //new CleanWebpackPlugin(['plugin-dist']),
         new MiniCssExtractPlugin({
             filename: "[name].min.css",
         }),
-        // new MergeIntoSingleFilePlugin({
-        //     "coreplugin.js": getManifest()
-        // }),
-        // new StringReplacePlugin()
-        // new UglifyJsPlugin({
-        //     cache: false,
-        //     parallel: true,
-        //     uglifyOptions: {
-        //         compress: {
-        //             dead_code: true,
-        //             drop_console: true,
-        //             global_defs: {
-        //                 DEBUG: true
-        //             },
-        //             passes: 1,
-        //         },
-        //         ecma: 6,
-        //         mangle: true
-        //     },
-        //     sourceMap: false
-        // }),
+        new webpack.ProvidePlugin({
+            E2EConverter: 'E2EConverter',
+            Fingerprint2: 'Fingerprint2',
+            WebFont: 'webfontloader',
+            Ajv: 'ajv',
+
+        }),
     ],
     optimization: {
         minimize: true,

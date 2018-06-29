@@ -31,47 +31,10 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 /** 
  *  Core plugins file path, Refer minified file which is already created form the gulp.
  */
-
-const TELEMETRY_LIBS = {
-    prod: './app/libs/telemetry.prod.min.js',
-    dev: './app/libs/telemetry.dev.min.js'
-};
-
-const CORE_PLUGINS = [
-    './plugins/org.ekstep.assessmentbrowser-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.assetbrowser-1.2/editor/plugin.dist.js',
-    //'./plugins/org.ekstep.colorpicker-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.conceptselector-1.1/editor/plugin.dist.js',
-    './plugins/org.ekstep.stage-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.shape-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.image-1.1/editor/plugin.dist.js',
-    './plugins/org.ekstep.audio-1.1/editor/plugin.dist.js',
-    './plugins/org.ekstep.hotspot-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.scribblepad-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.readalongbrowser-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.stageconfig-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.telemetry-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.preview-1.1/editor/plugin.dist.js',
-    './plugins/org.ekstep.activitybrowser-1.2/editor/plugin.dist.js',
-    './plugins/org.ekstep.collaborator-1.1/editor/plugin.dist.js',
-    './plugins/org.ekstep.download-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.unsupported-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.wordinfobrowser-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.viewecml-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.utils-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.help-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.video-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.editorstate-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.contenteditorfunctions-1.2/editor/plugin.dist.js',
-    './plugins/org.ekstep.keyboardshortcuts-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.richtext-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.iterator-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.navigation-1.0/editor/plugin.dist.js'
-];
-
 /**
  * External files 
  */
+const CORE_PLUGINS = './app/scripts/package-coreplugins.js';
 const VENDOR = [
     // "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
     // './app/bower_components/semantic/dist/semantic.js', // "./node_modules/ajv/dist/ajv.bundle.js",
@@ -181,8 +144,8 @@ function getTelemetryLib(env) {
 };
 module.exports = {
     entry: {
-        // 'script': APP_SCRIPT,
-        // 'style': APP_STYLE,
+        'script': APP_SCRIPT,
+        'style': APP_STYLE,
         'package-plugin': CORE_PLUGINS,
     },
     output: {
@@ -195,7 +158,7 @@ module.exports = {
             'angular': path.resolve('./app/bower_components/angular/angular.js'),
             'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
             'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
-            'E2EConverter': path.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js')
+            //'E2EConverter': path.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js')
         }
     },
     module: {
@@ -227,13 +190,13 @@ module.exports = {
                     options: 'async'
                 }]
             },
-            {
-                test: require.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'E2EConverter'
-                }]
-            },
+            // {
+            //     test: require.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js'),
+            //     use: [{
+            //         loader: 'expose-loader',
+            //         options: 'E2EConverter'
+            //     }]
+            // },
             {
                 test: require.resolve('./app/scripts/framework/libs/eventbus.min.js'),
                 use: [{
@@ -381,7 +344,7 @@ module.exports = {
             filename: `[name].min.${VERSION}.css`,
         }),
         new webpack.ProvidePlugin({
-            E2EConverter: 'E2EConverter',
+            //E2EConverter: 'E2EConverter',
             Fingerprint2: 'Fingerprint2',
             WebFont: 'webfontloader',
             Ajv: 'ajv',
