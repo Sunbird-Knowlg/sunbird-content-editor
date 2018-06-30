@@ -12,8 +12,8 @@ var clean = require('gulp-clean');
 
 var cachebust = new CacheBuster();
 gulp.task('renameminifiedfiles', function() {
-    var js = gulp.src(['scripts/external.min.js', 'scripts/script.min.js', 'scripts/jquery.js', 'scripts/semantic.min.js']).pipe(cachebust.resources()).pipe(gulp.dest('scripts/'));
-    var css = gulp.src('styles/*.min.css', 'styles/plugin.vendor.min.css').pipe(cachebust.resources()).pipe(gulp.dest('styles/'));
+    var js = gulp.src(['scripts/script.min.js', 'scripts/jquery.js', 'scripts/semantic.min.js']).pipe(cachebust.resources()).pipe(gulp.dest('scripts/'));
+    var css = gulp.src('styles/*.min.css').pipe(cachebust.resources()).pipe(gulp.dest('styles/'));
     return mergeStream(js, css);
 });
 
@@ -31,7 +31,7 @@ gulp.task('clean', function() {
 
 gulp.task('injectrenamedfiles', function() {
     var target = gulp.src('index.html');
-    var sources = gulp.src(['scripts/external.min.*.js', 'scripts/jquery.*.js', 'scripts/semantic.*.js', 'scripts/script.min.*.js', 'styles/*.min.*.css'], { read: false });
+    var sources = gulp.src(['scripts/external.min.*.js', 'scripts/jquery.*.js', 'scripts/semantic.*.js', 'scripts/script.min.*.js', 'styles/*.css'], { read: false });
     return target.pipe(inject(sources, { ignorePath: '/', addRootSlash: false })).pipe(gulp.dest('./'));
 });
 

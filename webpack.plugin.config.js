@@ -62,7 +62,7 @@ function recursiveTask() {
         },
         {
             entryFiles: getVendorCSS(),
-            outputName: 'plugin.vendor',
+            outputName: 'plugin-vendor',
         },
     ];
     return entryPlus(entryFiles);
