@@ -291,7 +291,7 @@ module.exports = {
                 to: './'
             },
             {
-                from: './app/scripts/vendor.css.min.css',
+                from: './app/scripts/plugin.vendor.min.css',
                 to: './'
             },
             {
