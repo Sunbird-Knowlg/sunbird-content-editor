@@ -300,11 +300,6 @@ module.exports = {
                 flatten: true
             },
             {
-                from: './app/scripts/coreplugins.js',
-                to: './',
-                flatten: true
-            },
-            {
                 from: './app/styles/noto.css',
                 to: './'
             },
