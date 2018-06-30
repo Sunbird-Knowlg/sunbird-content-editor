@@ -124,7 +124,8 @@ const APP_STYLE = [
     './app/styles/icomoon/style.css',
     './app/styles/commonStyles.css',
     './app/styles/content-editor.css',
-    './app/styles/noto.css'
+    './app/styles/noto.css',
+    './content-editor/scripts/plugin-vendor.min.css' // Plugin css files // TODO: Need to remove the styles files from this package
 ];
 
 // removing the duplicate files
@@ -291,7 +292,7 @@ module.exports = {
                 to: './'
             },
             {
-                from: './content-editor/scripts/*',
+                from: './content-editor/scripts/*.js',
                 to: './',
                 flatten: true
             },
