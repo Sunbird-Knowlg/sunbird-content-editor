@@ -13,7 +13,7 @@ var clean = require('gulp-clean');
 var cachebust = new CacheBuster();
 gulp.task('renameminifiedfiles', function() {
     var js = gulp.src(['scripts/external.min.js', 'scripts/script.min.js', 'scripts/jquery.js', 'scripts/semantic.min.js']).pipe(cachebust.resources()).pipe(gulp.dest('scripts/'));
-    var css = gulp.src('styles/*.min.css').pipe(cachebust.resources()).pipe(gulp.dest('styles/'));
+    var css = gulp.src('styles/*.min.css', 'styles/plugin.vendor.min.css').pipe(cachebust.resources()).pipe(gulp.dest('styles/'));
     return mergeStream(js, css);
 });
 
