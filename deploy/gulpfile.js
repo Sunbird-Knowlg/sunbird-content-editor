@@ -8,12 +8,25 @@ var replace = require('gulp-string-replace');
 var packageJson = JSON.parse(fs.readFileSync('./package.json'));
 var promise = require("any-promise");
 var rename = require("gulp-rename");
+var clean = require('gulp-clean');
 
 var cachebust = new CacheBuster();
 gulp.task('renameminifiedfiles', function() {
     var js = gulp.src(['scripts/external.min.js', 'scripts/script.min.js', 'scripts/jquery.js', 'scripts/semantic.min.js']).pipe(cachebust.resources()).pipe(gulp.dest('scripts/'));
     var css = gulp.src('styles/*.min.css').pipe(cachebust.resources()).pipe(gulp.dest('styles/'));
     return mergeStream(js, css);
+});
+
+gulp.task('copystyleImages', function() {
+    return gulp.src(['*.svg', '*.png'], {
+            base: './'
+        })
+        .pipe(gulp.dest('styles'));
+});
+
+gulp.task('clean', function() {
+    return gulp.src(['*.svg', '*.png'], { read: false })
+        .pipe(clean());
 });
 
 gulp.task('injectrenamedfiles', function() {
