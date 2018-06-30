@@ -19,39 +19,6 @@ const entryPlus = require('webpack-entry-plus');
 // const StringReplacePlugin = require("string-replace-webpack-plugin");
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 
-const CORE_PLUGINS = [
-    //'./plugins/org.ekstep.assessmentbrowser-1.0/editor/plugin.dist.js',
-    './plugins/org.ekstep.assetbrowser-1.2/editor/plugin.dist.js',
-    // './plugins/org.ekstep.colorpicker-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.conceptselector-1.1/editor/plugin.dist.js',
-    // './plugins/org.ekstep.stage-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.shape-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.image-1.1/editor/plugin.dist.js',
-    // './plugins/org.ekstep.audio-1.1/editor/plugin.dist.js',
-    // './plugins/org.ekstep.hotspot-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.scribblepad-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.readalongbrowser-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.stageconfig-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.telemetry-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.preview-1.1/editor/plugin.dist.js',
-    // './plugins/org.ekstep.activitybrowser-1.2/editor/plugin.dist.js',
-    // './plugins/org.ekstep.collaborator-1.1/editor/plugin.dist.js',
-    // './plugins/org.ekstep.download-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.unsupported-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.wordinfobrowser-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.viewecml-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.utils-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.help-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.video-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.editorstate-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.contenteditorfunctions-1.2/editor/plugin.dist.js',
-    // './plugins/org.ekstep.keyboardshortcuts-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.richtext-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.iterator-1.0/editor/plugin.dist.js',
-    // './plugins/org.ekstep.navigation-1.0/editor/plugin.dist.js'
-];
-
-
 var corePlugins = [
     "org.ekstep.assessmentbrowser-1.0",
     "org.ekstep.assetbrowser-1.2",
@@ -59,7 +26,7 @@ var corePlugins = [
     "org.ekstep.conceptselector-1.1",
     // "org.ekstep.config-1.0",
     "org.ekstep.stage-1.0",
-    // "org.ekstep.text-1.1",
+    "org.ekstep.text-1.2",
     "org.ekstep.shape-1.0",
     "org.ekstep.image-1.1",
     "org.ekstep.audio-1.1",
@@ -91,20 +58,21 @@ let entryFiles = []
 function recursiveTask() {
     entryFiles = [{
             entryFiles: packagePlugins(),
-            outputName: 'package-coreplugins.js',
+            outputName: 'coreplugins.js',
         },
-        // {
-        //     entryFiles: getVendorCSS(),
-        //     outputName: 'vendor.css',
-        // },
+        {
+            entryFiles: getVendorCSS(),
+            outputName: 'plugin.vendor',
+        },
     ];
     return entryPlus(entryFiles);
 }
 
 
 function packagePlugins() {
-    var pluginPackageArr = [];
-    corePlugins.forEach(function (plugin) {
+    var pluginPackageArr = []; // Default coreplugin
+    pluginPackageArr.push('./app/scripts/coreplugins.js')
+    corePlugins.forEach(function(plugin) {
         var dependenciesArr = [];
         var packagedDepArr = [];
         var manifest = JSON.parse(fs.readFileSync('plugins/' + plugin + '/manifest.json'));
@@ -113,34 +81,33 @@ function packagePlugins() {
         if (fs.existsSync('plugins/' + plugin + '/editor/plugin.dist.js')) {
             fs.unlinkSync('plugins/' + plugin + '/editor/plugin.dist.js');
         }
-        if(manifest.editor.views && pluginContent){
+        if (manifest.editor.views && pluginContent) {
             var controllerPathArr = [];
             var templatePathArr = [];
-            manifest.editor.views.forEach(function(obj, i){
+            manifest.editor.views.forEach(function(obj, i) {
                 // controllerPathArr.push('require("' + obj.controller + '")');
                 // templatePathArr.push('require("' + obj.template + '")');
 
                 controllerPathArr[i] = (obj.controller) ? 'require("' + obj.controller + '")' : undefined;
-                templatePathArr[i] =  (obj.template) ? 'require("' + obj.template + '")' : undefined;
+                templatePathArr[i] = (obj.template) ? 'require("' + obj.template + '")' : undefined;
             });
-           
-            pluginContent = uglifyjs.minify(pluginContent.replace(/\b(loadNgModules)\b.*\)/, 'loadNgModules(' + templatePathArr[0] + ' , ' + controllerPathArr[0] + ', true)'))
-            pluginContent.code.replace(/\b(loadNgModules)\b.*\)/, function(match, contents){
-                
-            })
-        }
-        else{
-            pluginContent = uglifyjs.minify(pluginContent);
-        }        
 
-        if(manifest.editor.dependencies){
-            manifest.editor.dependencies.forEach(function(obj, i){
-                if(obj.type == "js"){
+            pluginContent = uglifyjs.minify(pluginContent.replace(/\b(loadNgModules)\b.*\)/, 'loadNgModules(' + templatePathArr[0] + ' , ' + controllerPathArr[0] + ', true)'))
+            pluginContent.code.replace(/\b(loadNgModules)\b.*\)/, function(match, contents) {
+
+            })
+        } else {
+            pluginContent = uglifyjs.minify(pluginContent);
+        }
+
+        if (manifest.editor.dependencies) {
+            manifest.editor.dependencies.forEach(function(obj, i) {
+                if (obj.type == "js") {
                     dependenciesArr[i] = fs.readFileSync('./plugins/' + plugin + '/' + obj.src, 'utf8');
                 }
-            }); 
+            });
         }
-        
+
 
         dependenciesArr.push('org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',' + pluginContent.code.replace(/;\s*$/, "") + ')')
         fs.appendFile('plugins/' + plugin + '/editor/plugin.dist.js', [...dependenciesArr].join("\n"))

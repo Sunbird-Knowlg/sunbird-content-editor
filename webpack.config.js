@@ -31,10 +31,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 /** 
  *  Core plugins file path, Refer minified file which is already created form the gulp.
  */
-/**
- * External files 
- */
-const CORE_PLUGINS = './app/scripts/package-coreplugins.js';
+
 const VENDOR = [
     // "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
     // './app/bower_components/semantic/dist/semantic.js', // "./node_modules/ajv/dist/ajv.bundle.js",
@@ -132,24 +129,18 @@ const APP_STYLE = [
 
 // removing the duplicate files
 const APP_SCRIPT = [...new Set([...VENDOR, ...PLUGIN_FRAMEWORK, ...EDITOR_FRAMEWORK, ...EDITOR_APP])]
-    //APP_SCRIPT.push(getTelemetryLib(ENVIRONMENT));
 if (!BUILD_NUMBER && !EDITOR_VER && !PLUGIN_FRAMEWORK_VER) {
     console.error('Error!!! Cannot find framework_version_number, editor_version_number and build_number env variables');
     return process.exit(1)
 }
 const VERSION = EDITOR_VER + '.' + BUILD_NUMBER;
-
-function getTelemetryLib(env) {
-    return (env === 'production') ? TELEMETRY_LIBS.prod : TELEMETRY_LIBS.dev
-};
 module.exports = {
     entry: {
         'script': APP_SCRIPT,
-        'style': APP_STYLE,
-        'package-plugin': CORE_PLUGINS,
+        'style': APP_STYLE
     },
     output: {
-        filename: `[name].js`,
+        filename: `[name].min.${VERSION}.js`,
         path: path.resolve(__dirname, 'dist')
     },
     resolve: {
@@ -158,24 +149,22 @@ module.exports = {
             'angular': path.resolve('./app/bower_components/angular/angular.js'),
             'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
             'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
-            //'E2EConverter': path.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js')
         }
     },
     module: {
-        rules: [
-            // {
-            //     test: /\.js$/,
-            //     loader: 'string-replace-loader',
-            //     options: {
-            //         multiple: [
-            //             { search: '/plugins', replace: '/content-plugins' },
-            //             { search: "/api", replace: '/action' },
-            //             { search: 'https://dev.ekstep.in', replace: '' },
-            //             { search: 'dispatcher: "local"', replace: 'dispatcher: "console"' }
-            //         ],
-            //         strict: true
-            //     }
-            // },
+        rules: [{
+                test: /\.js$/,
+                loader: 'string-replace-loader',
+                options: {
+                    multiple: [
+                        { search: '/plugins', replace: '/content-plugins' },
+                        { search: "/api", replace: '/action' },
+                        { search: 'https://dev.ekstep.in', replace: '' },
+                        { search: 'dispatcher: "local"', replace: 'dispatcher: "console"' }
+                    ],
+                    strict: true
+                }
+            },
             {
                 test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
                 use: [{
@@ -190,13 +179,6 @@ module.exports = {
                     options: 'async'
                 }]
             },
-            // {
-            //     test: require.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js'),
-            //     use: [{
-            //         loader: 'expose-loader',
-            //         options: 'E2EConverter'
-            //     }]
-            // },
             {
                 test: require.resolve('./app/scripts/framework/libs/eventbus.min.js'),
                 use: [{
@@ -306,6 +288,10 @@ module.exports = {
             },
             {
                 from: './app/libs/semantic.min.js',
+                to: './'
+            },
+            {
+                from: './app/scripts/vendor.css.min.css',
                 to: './'
             },
             {
