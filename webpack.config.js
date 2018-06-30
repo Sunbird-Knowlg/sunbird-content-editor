@@ -291,10 +291,6 @@ module.exports = {
                 to: './'
             },
             {
-                from: './app/scripts/plugin.vendor.min.css',
-                to: './'
-            },
-            {
                 from: './content-editor/scripts/*',
                 to: './',
                 flatten: true

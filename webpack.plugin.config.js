@@ -71,7 +71,7 @@ function recursiveTask() {
 
 function packagePlugins() {
     var pluginPackageArr = []; // Default coreplugin
-    pluginPackageArr.push('./app/scripts/coreplugins.js')
+    pluginPackageArr.push('./content-editor/scripts/coreplugins.js')
     corePlugins.forEach(function(plugin) {
         var dependenciesArr = [];
         var packagedDepArr = [];
@@ -168,7 +168,7 @@ module.exports = {
 
     output: {
         filename: '[name]',
-        path: path.resolve(__dirname, './app/scripts'),
+        path: path.resolve(__dirname, './content-editor/scripts'),
     },
     resolve: {
         alias: {
