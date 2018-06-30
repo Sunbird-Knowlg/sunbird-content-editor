@@ -430,8 +430,8 @@ gulp.task('packageCorePlugins', ["minifyFramework", "minifyBaseEditor", "minifyC
     var _ = require('lodash');
     var jsDependencies = [];
     var cssDependencies = [];
-    if (fs.existsSync('framework-dist/scripts/coreplugins.js')) {
-        fs.unlinkSync('framework-dist/scripts/coreplugins.js');
+    if (fs.existsSync('content-editor/scripts/coreplugins.js')) {
+        fs.unlinkSync('content-editor/scripts/coreplugins.js');
     }
     corePlugins.forEach(function(plugin) {
         var manifest = JSON.parse(fs.readFileSync('plugins/' + plugin + '/manifest.json'));
@@ -439,14 +439,14 @@ gulp.task('packageCorePlugins', ["minifyFramework", "minifyBaseEditor", "minifyC
             manifest.editor.dependencies.forEach(function(dependency) {
                 var resource = '/content-plugins/' + plugin + '/' + dependency.src;
                 if (dependency.type == 'js') {
-                    fs.appendFile('framework-dist/scripts/coreplugins.js', "org.ekstep.pluginframework.resourceManager.loadExternalResource('" + resource + "', 'js')" + "\n");
+                    fs.appendFile('content-editor/scripts/coreplugins.js', "org.ekstep.pluginframework.resourceManager.loadExternalResource('" + resource + "', 'js')" + "\n");
                 } else if (dependency.type == 'css') {
-                    fs.appendFile('framework-dist/scripts/coreplugins.js', "org.ekstep.pluginframework.resourceManager.loadExternalResource('" + resource + "', 'css')" + "\n");
+                    fs.appendFile('content-editor/scripts/coreplugins.js', "org.ekstep.pluginframework.resourceManager.loadExternalResource('" + resource + "', 'css')" + "\n");
                 }
             });
         }
         var plugin = fs.readFileSync('plugins/' + plugin + '/editor/plugin.min.js', 'utf8');
-        fs.appendFile('framework-dist/scripts/coreplugins.js', 'org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',eval(\'' + plugin.replace(/'/g, "\\'") + '\'))' + '\n');
+        fs.appendFile('content-editor/scripts/coreplugins.js', 'org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',eval(\'' + plugin.replace(/'/g, "\\'") + '\'))' + '\n');
     });
     return gulp.src('plugins/**/plugin.min.js', {
         read: false
