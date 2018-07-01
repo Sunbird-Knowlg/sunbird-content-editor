@@ -177,6 +177,7 @@ module.exports = {
             'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
             'E2EConverter': path.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js'),
             'xmlbuilder': path.resolve('./node_modules/xmlbuilder/lib/index.js'),
+            'X2JS': path.resolve('./plugins/org.ekstep.assessmentbrowser-1.0/editor/libs/xml2json.js')
         }
     },
     module: {
@@ -185,6 +186,12 @@ module.exports = {
                 use: [{
                     loader: 'expose-loader',
                     options: 'E2EConverter'
+                }]
+            }, {
+                test: require.resolve('./plugins/org.ekstep.assessmentbrowser-1.0/editor/libs/xml2json.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'X2JS'
                 }]
             },
             {
