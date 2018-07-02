@@ -263,13 +263,13 @@ module.exports = {
             uglifyOptions: {
                 compress: {
                     dead_code: true,
-                    drop_console: true,
+                    drop_console: false,
                     global_defs: {
                         DEBUG: true
                     },
                     passes: 1,
                 },
-                ecma: 6,
+                ecma: 5,
                 mangle: true
             },
             sourceMap: true
@@ -350,7 +350,6 @@ module.exports = {
             filename: ZIP_FILE_NAME,
             fileOptions: {
                 mtime: new Date(),
-                mode: 0o100664,
                 compress: true,
                 forceZip64Format: false,
             },

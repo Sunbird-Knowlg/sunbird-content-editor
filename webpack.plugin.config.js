@@ -84,10 +84,17 @@ function packagePlugins() {
                 templatePathArr[i] = (obj.template) ? 'require("' + obj.template + '")' : undefined;
             });
 
-            pluginContent = uglifyjs.minify(pluginContent.replace(/\b(loadNgModules)\b.*\)/, 'loadNgModules(' + templatePathArr[0] + ' , ' + controllerPathArr[0] + ', true)'))
-            pluginContent.code.replace(/\b(loadNgModules)\b.*\)/, function(match, contents) {
+            //pluginContent = uglifyjs.minify(pluginContent.replace(/\b(loadNgModules)\b.*\)/, 'loadNgModules(' + templatePathArr[0] + ' , ' + controllerPathArr[0] + ', true)'))
+            var count = 0;
+            var len = (pluginContent.replace(/\b(loadNgModules)\b.*\)/g) || []).length;
 
-            })
+            pluginContent = uglifyjs.minify(pluginContent.replace(/\b(loadNgModules)\b.*\)/g, function($0) {
+                if (count === len) count = 0;
+                var dash;
+                dash = 'loadNgModules(' + templatePathArr[count] + ' , ' + controllerPathArr[count] + ', true)'
+                count++;
+                return dash;
+            }))
         } else {
             pluginContent = uglifyjs.minify(pluginContent);
         }
@@ -239,13 +246,13 @@ module.exports = {
             uglifyOptions: {
                 compress: {
                     dead_code: true,
-                    drop_console: true,
+                    drop_console: false,
                     global_defs: {
                         DEBUG: true
                     },
                     passes: 1,
                 },
-                ecma: 6,
+                ecma: 5,
                 mangle: true
             },
             sourceMap: true
