@@ -4,19 +4,12 @@ const PLUGIN_PATH = process.env.CE_COREPLUGINS || './plugins';
 const webpack = require('webpack');
 const glob = require('glob');
 const uglifyjs = require('uglify-js');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const expose = require('expose-loader');
-const BowerResolvePlugin = require("bower-resolve-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const PurifyCSSPlugin = require('purifycss-webpack');
-const FontminPlugin = require('fontmin-webpack');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const CompressionPlugin = require("compression-webpack-plugin")
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const fs = require('fs');
-const _ = require('lodash');
 const entryPlus = require('webpack-entry-plus');
-const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+
 
 var corePlugins = [
     "org.ekstep.assessmentbrowser-1.0",
@@ -239,6 +232,23 @@ module.exports = {
         }),
         new webpack.ProvidePlugin({
             E2EConverter: 'E2EConverter',
+        }),
+        new UglifyJsPlugin({
+            cache: false,
+            parallel: true,
+            uglifyOptions: {
+                compress: {
+                    dead_code: true,
+                    drop_console: true,
+                    global_defs: {
+                        DEBUG: true
+                    },
+                    passes: 1,
+                },
+                ecma: 6,
+                mangle: true
+            },
+            sourceMap: true
         }),
     ],
     optimization: {
