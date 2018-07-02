@@ -1,5 +1,4 @@
 <!doctype html>
-
 <html>
 
 <head>
@@ -9,7 +8,16 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- inject:css -->
-    <link rel="stylesheet" href="../dist/style.min.1.1.css">
+    <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+    <link rel="stylesheet" href="styles/semantic.min.css" />
+    <link rel="stylesheet" type="text/css" href="styles/MyFontsWebfontsKit.css">
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog.min.css">
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-plain.min.css">
+    <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-default.min.css">
+    <link rel="stylesheet" type="text/css" href="styles/icomoon/style.css"/>
+    <link rel="stylesheet" href="styles/content-editor.css" />
+    <link rel="stylesheet" type="text/css" href="libs/ng-tags-input.css">
+    <script src="libs/webfont.js"></script>
     <!-- endinject -->
 </head>
 
@@ -129,9 +137,87 @@
     </div>
     <!-- message for unsupported screen end -->
     <!-- inject:js -->
-    <script src="../dist/jquery.min.js"></script>
-    <script src="../dist/semantic.min.js"></script>
-    <script src="../dist/script.js"></script>
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/async/dist/async.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/fabric/dist/fabric.min.js"></script>
+    <script src="bower_components/lodash/dist/lodash.min.js"></script>
+    <script src="bower_components/x2js/index.js"></script>
+    <script src="bower_components/eventbus/index.js"></script>
+    <script src="bower_components/uuid/index.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/ng-dialog/js/ngDialog.min.js"></script>
+    <script src="bower_components/ngSafeApply/index.js"></script>
+    <!-- <script src="bower_components/oclazyload/dist/modules/ocLazyLoad.core.js"></script>
+    <script src="bower_components/oclazyload/dist/modules/ocLazyLoad.directive.js"></script>
+    <script src="bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.common.js"></script>
+    <script src="bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.core.js"></script>
+    <script src="bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.cssLoader.js"></script>
+    <script src="bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.jsLoader.js"></script>
+    <script src="bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.templatesLoader.js"></script>
+    <script src="bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js"></script> -->
+    <script src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
+    <script src="bower_components/fingerprintjs2/dist/fingerprint2.min.js"></script>
+    <script type="text/javascript" src="libs/fontfaceobserver.min.js"></script>
+    <script src="scripts/dev/localhost-ce.js"></script>
+    <script src="libs/semantic.min.js"></script>
+    <script src="libs/mousetrap.min.js"></script>
+    <script src="libs/ng-tags-input.js"></script>
+    <script src="libs/telemetry-lib-v3.min.js"></script>
+    <!-- Load Framework -->
+    <script src="scripts/framework/libs/ES5Polyfill.js"></script>
+    <script src="scripts/framework/class.js"></script>
+    <script src="scripts/framework/bootstrap-framework.js"></script>
+    <script src="scripts/framework/manager/resource-manager.js"></script>
+    <script src="scripts/framework/manager/event-manager.js"></script>
+    <script src="scripts/framework/manager/plugin-manager.js"></script>
+    <script src="scripts/framework/manager/keyboard-manager.js"></script>
+    <!-- Load Services -->
+    <script src="scripts/framework/service/iservice.js"></script>
+    <script src="scripts/framework/service/content-service.js"></script>
+    <script src="scripts/framework/service/assessment-service.js"></script>
+    <script src="scripts/framework/service/asset-service.js"></script>
+    <script src="scripts/framework/service/meta-service.js"></script>
+    <script src="scripts/framework/service/language-service.js"></script>
+    <script src="scripts/framework/service/search-service.js"></script>
+    <script src="scripts/framework/repo/irepo.js"></script>
+    <script src="scripts/framework/repo/published-repo.js"></script>
+    <!-- Load Content Editor -->
+    <script src="scripts/contenteditor/bootstrap-editor.js"></script>
+    <script src="scripts/contenteditor/ce-config.js"></script>
+    <script src="scripts/contenteditor/content-editor.js"></script>
+    <script src="scripts/contenteditor/content-editor-api.js"></script>
+    <script src="scripts/contenteditor/base-plugin.js"></script>
+    <script src="scripts/contenteditor/manager/stage-manager.js"></script>
+    <script src="scripts/contenteditor/manager/toolbar-manager.js"></script>
+    <script src="scripts/contenteditor/manager/media-manager.js"></script>
+    <script src="scripts/contenteditor/manager/sidebar-manager.js"></script>
+    <script src="scripts/contenteditor/manager/header-manager.js"></script>
+    <script src="scripts/contenteditor/service/popup-service.js"></script>
+    <script src="scripts/contenteditor/migration/1_migration-task.js"></script>
+    <script src="scripts/contenteditor/migration/mediamigration-task.js"></script>
+    <script src="scripts/contenteditor/migration/stageordermigration-task.js"></script>
+    <script src="scripts/contenteditor/migration/basestagemigration-task.js"></script>
+    <script src="scripts/contenteditor/migration/imagemigration-task.js"></script>
+    <script src="scripts/contenteditor/migration/scribblemigration-task.js"></script>
+    <script src="scripts/contenteditor/migration/readalongmigration-task.js"></script>
+    <script src="scripts/contenteditor/migration/assessmentmigration-task.js"></script>
+    <script src="scripts/contenteditor/migration/eventsmigration-task.js"></script>
+    <script src="scripts/contenteditor/migration/settagmigration-task.js"></script>
+    <script src="scripts/contenteditor/migration/textmigration-task.js"></script>
+    <script src="scripts/contenteditor/service/telemetry-service.js"></script>
+    <script src="scripts/contenteditor/service/manifest-generator.js"></script>
+    <script src="scripts/contenteditor/dispatcher/idispatcher.js"></script>
+    <script src="scripts/contenteditor/dispatcher/console-dispatcher.js"></script>
+    <script src="scripts/contenteditor/dispatcher/local-dispatcher.js"></script>
+    <script src="scripts/contenteditor/dispatcher/piwik-dispatcher.js"></script>
+    <script src="scripts/contenteditor/md5.js"></script>
+    <!-- Load Angular Controllers -->
+    <script src="scripts/angular/controller/main.js"></script>
+    <script src="scripts/angular/controller/popup-controller.js"></script>
+    <script src="scripts/angular/directive/draggable-directive.js"></script>
+    <script src="scripts/angular/directive/droppable-directive.js"></script>
+    <script src="scripts/angular/directive/template-compiler-directive.js"></script>
     <!-- endinject -->
 </body>
 

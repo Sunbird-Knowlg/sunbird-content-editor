@@ -8,13 +8,37 @@ var replace = require('gulp-string-replace');
 var packageJson = JSON.parse(fs.readFileSync('./package.json'));
 var promise = require("any-promise");
 var rename = require("gulp-rename");
+var concat = require('gulp-concat');
+var minify = require('gulp-minifier');
+var uglify = require('gulp-uglify');
 var clean = require('gulp-clean');
+var editorVersionNumber = process.env.editor_version_number || 1;
+var buildNumber = process.env.build_number || 1;
 
-var cachebust = new CacheBuster();
+var versionPrefix = '.' + editorVersionNumber + '.' + buildNumber;
+var cachebust = function(path) {
+    path.basename += versionPrefix
+}
+
+//var cachebust = new CacheBuster();
 gulp.task('renameminifiedfiles', function() {
-    var js = gulp.src(['scripts/script.min.js', 'scripts/jquery.js', 'scripts/semantic.min.js']).pipe(cachebust.resources()).pipe(gulp.dest('scripts/'));
+    var js = gulp.src(['scripts/script.min.js', 'scripts/external.min.js']).pipe(cachebust.resources()).pipe(gulp.dest('scripts/'));
     var css = gulp.src('styles/*.min.css').pipe(cachebust.resources()).pipe(gulp.dest('styles/'));
     return mergeStream(js, css);
+});
+
+gulp.task('minifyJs', function() {
+    return gulp.src(['scripts/jquery.min.js', 'scripts/semantic.min.js'])
+        .pipe(concat('external.min.js'))
+        .pipe(minify({
+            minify: true,
+            collapseWhitespace: true,
+            conservativeCollapse: true,
+            minifyJS: true
+        }))
+        .pipe(uglify())
+        .pipe(rename(cachebust))
+        .pipe(gulp.dest('scripts'));
 });
 
 gulp.task('copystyleImages', function() {
@@ -25,7 +49,7 @@ gulp.task('copystyleImages', function() {
 });
 
 gulp.task('clean', function() {
-    return gulp.src(['*.svg', '*.png'], { read: false })
+    return gulp.src(['scripts/jquery.min.js', 'scripts/semantic.min.js', '*.svg', '*.png'], { read: false })
         .pipe(clean());
 });
 
