@@ -7,8 +7,8 @@ angular.module('editorApp').controller('popupController', ['$scope', 'ngDialog',
             ]);
         } else {
             if (angular.isString(templatePath) && templatePath.length > 0) {
-                angular.forEach(angular.element(templatePath), node => {
-                    if (node.nodeName === 'SCRIPT' && node.type === 'text/ng-template') {
+                angular.forEach(angular.element(templatePath), function(node) {
+                    if (node.nodeName === "SCRIPT" && node.type === "text/ng-template") {
                         $templateCache.put(node.id, node.innerHTML);
                     }
                 });
