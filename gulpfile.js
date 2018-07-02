@@ -14,9 +14,9 @@ var merge = require('merge-stream');
 var cleanCSS = require('clean-css');
 var replace = require('gulp-string-replace');
 var uglify = require('gulp-uglify');
-var frameworkVersionNumber = process.env.framework_version_number || 1;
-var editorVersionNumber = process.env.editor_version_number || 1;
-var buildNumber = process.env.build_number || 1;
+var frameworkVersionNumber = process.env.framework_version_number;
+var editorVersionNumber = process.env.editor_version_number;
+var buildNumber = process.env.build_number;
 
 if (!editorVersionNumber && !buildNumber && !frameworkVersionNumber) {
     console.error('Error!!! Cannot find framework_version_number, editor_version_number and build_number env variables');

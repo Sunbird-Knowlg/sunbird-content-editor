@@ -3,7 +3,7 @@ const path = require('path');
 const PLUGIN_PATH = process.env.CE_COREPLUGINS || './plugins';
 const webpack = require('webpack');
 const glob = require('glob');
-var uglifyjs = require('uglify-js');
+const uglifyjs = require('uglify-js');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const expose = require('expose-loader');
 const BowerResolvePlugin = require("bower-resolve-webpack-plugin");
@@ -16,7 +16,6 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const fs = require('fs');
 const _ = require('lodash');
 const entryPlus = require('webpack-entry-plus');
-// const StringReplacePlugin = require("string-replace-webpack-plugin");
 const MergeIntoSingleFilePlugin = require('webpack-merge-and-include-globally');
 
 var corePlugins = [
@@ -253,10 +252,6 @@ module.exports = {
         }),
         new webpack.ProvidePlugin({
             E2EConverter: 'E2EConverter',
-            Fingerprint2: 'Fingerprint2',
-            WebFont: 'webfontloader',
-            Ajv: 'ajv',
-
         }),
     ],
     optimization: {

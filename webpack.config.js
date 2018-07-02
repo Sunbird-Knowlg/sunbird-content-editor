@@ -2,10 +2,11 @@
 
 
 const ENVIRONMENT = process.env.NODE_ENV;
-const BUILD_NUMBER = process.env.build_number || 1;
-const EDITOR_VER = process.env.editor_version_number || 1;
-const PLUGIN_FRAMEWORK_VER = process.env.framework_version_number || 1;
+const BUILD_NUMBER = process.env.build_number;
+const EDITOR_VER = process.env.editor_version_number;
+const PLUGIN_FRAMEWORK_VER = process.env.framework_version_number;
 
+const ZIP_FILE_NAME = 'content-editor.zip';
 
 
 const path = require('path');
@@ -23,8 +24,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 const CompressionPlugin = require("compression-webpack-plugin")
 const BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
-//const HtmlWebpackPlugin = require('html-webpack-plugin');
-//const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
@@ -267,7 +266,7 @@ module.exports = {
         ]
     },
     plugins: [
-        //new CleanWebpackPlugin(['dist']),
+        new CleanWebpackPlugin(['dist']),
         new UglifyJsPlugin({}),
         // copy the index.html and templated to eidtor filder
         new CopyWebpackPlugin([{
@@ -322,7 +321,6 @@ module.exports = {
             filename: `[name].min.${VERSION}.css`,
         }),
         new webpack.ProvidePlugin({
-            //E2EConverter: 'E2EConverter',
             Fingerprint2: 'Fingerprint2',
             WebFont: 'webfontloader',
             Ajv: 'ajv',
@@ -341,23 +339,9 @@ module.exports = {
             },
             canPrint: true
         }),
-        // new BrotliGzipPlugin({
-        //     asset: '[path].br[query]',
-        //     algorithm: 'brotli',
-        //     test: /\.(js|css|html|svg|woff|woff2|eot|ttf|otf|svg|png)$/,
-        //     threshold: 10240,
-        //     minRatio: 0.8
-        // }),
-        // new BrotliGzipPlugin({
-        //     asset: '[path].gz[query]',
-        //     algorithm: 'gzip',
-        //     test: /\.(js|css|html|svg|woff|woff2|eot|ttf|otf|svg|png)$/,
-        //     threshold: 10240,
-        //     minRatio: 0.8
-        // }),
         new ZipPlugin({
             path: path.join(__dirname, '.'),
-            filename: 'content-editor.zip',
+            filename: ZIP_FILE_NAME,
             fileOptions: {
                 mtime: new Date(),
                 mode: 0o100664,
