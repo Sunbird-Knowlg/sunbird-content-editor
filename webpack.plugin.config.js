@@ -116,19 +116,6 @@ function packagePlugins() {
     return pluginPackageArr;
 }
 
-function getManifest() {
-    var manifestURLs = [];
-    if (fs.existsSync('./app/scripts/coreplugins-dummy.js')) {
-        fs.unlinkSync('./app/scripts/coreplugins-dummy.js');
-    }
-    corePlugins.forEach(function(plugin) {
-        var manifest = JSON.parse(fs.readFileSync('plugins/' + plugin + '/manifest.json'));
-        var plugin = uglifyjs.minify(fs.readFileSync('plugins/' + plugin + '/editor/plugin.js', 'utf8'));
-        fs.appendFile('app/scripts/coreplugins-dummy.js', 'org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',eval(\'' + plugin.code + '\'))' + '\n');
-    })
-    return './app/scripts/coreplugins-dummy.js';
-}
-
 function getVendorJS() {
     var jsDependencies = [];
     corePlugins.forEach(function(plugin) {

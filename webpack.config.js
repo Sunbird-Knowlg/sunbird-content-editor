@@ -1,6 +1,3 @@
-//TODO: Remove the unused constants
-
-
 const ENVIRONMENT = process.env.NODE_ENV;
 const BUILD_NUMBER = process.env.build_number;
 const EDITOR_VER = process.env.editor_version_number;
@@ -8,28 +5,18 @@ const PLUGIN_FRAMEWORK_VER = process.env.framework_version_number;
 
 const ZIP_FILE_NAME = 'content-editor.zip';
 
-
+// Dependency files 
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const expose = require('expose-loader');
-const BowerResolvePlugin = require("bower-resolve-webpack-plugin");
-const UglifyJS = require("uglify-es");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const PurifyCSSPlugin = require('purifycss-webpack');
 const glob = require('glob-all');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const FontminPlugin = require('fontmin-webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
-const CompressionPlugin = require("compression-webpack-plugin")
-const BrotliGzipPlugin = require('brotli-gzip-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-
-/** 
- *  Core plugins file path, Refer minified file which is already created form the gulp.
- */
 
 const VENDOR = [
     // "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
@@ -129,11 +116,14 @@ const APP_STYLE = [
 
 // removing the duplicate files
 const APP_SCRIPT = [...new Set([...VENDOR, ...PLUGIN_FRAMEWORK, ...EDITOR_FRAMEWORK, ...EDITOR_APP])]
+
 if (!BUILD_NUMBER && !EDITOR_VER && !PLUGIN_FRAMEWORK_VER) {
     console.error('Error!!! Cannot find framework_version_number, editor_version_number and build_number env variables');
     return process.exit(1)
 }
+
 const VERSION = EDITOR_VER + '.' + BUILD_NUMBER;
+
 module.exports = {
     entry: {
         'script': APP_SCRIPT,
