@@ -1,4 +1,3 @@
-//TODO: Remove the unused constants
 const path = require('path');
 const PLUGIN_PATH = process.env.CE_COREPLUGINS || './plugins';
 const webpack = require('webpack');
@@ -47,7 +46,7 @@ var corePlugins = [
 
 let entryFiles = []
 
-function recursiveTask() {
+function getEntryFiles() {
     entryFiles = [{
             entryFiles: packagePlugins(),
             outputName: 'coreplugins.js',
@@ -77,14 +76,9 @@ function packagePlugins() {
             var controllerPathArr = [];
             var templatePathArr = [];
             manifest.editor.views.forEach(function(obj, i) {
-                // controllerPathArr.push('require("' + obj.controller + '")');
-                // templatePathArr.push('require("' + obj.template + '")');
-
                 controllerPathArr[i] = (obj.controller) ? 'require("' + obj.controller + '")' : undefined;
                 templatePathArr[i] = (obj.template) ? 'require("' + obj.template + '")' : undefined;
             });
-
-            //pluginContent = uglifyjs.minify(pluginContent.replace(/\b(loadNgModules)\b.*\)/, 'loadNgModules(' + templatePathArr[0] + ' , ' + controllerPathArr[0] + ', true)'))
             var count = 0;
             var len = (pluginContent.replace(/\b(loadNgModules)\b.*\)/g) || []).length;
 
@@ -106,29 +100,12 @@ function packagePlugins() {
                 }
             });
         }
-
-
         dependenciesArr.push('org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',' + pluginContent.code.replace(/;\s*$/, "") + ')')
         fs.appendFile('plugins/' + plugin + '/editor/plugin.dist.js', [...dependenciesArr].join("\n"))
         pluginPackageArr.push('./plugins/' + plugin + '/editor/plugin.dist.js')
     })
 
     return pluginPackageArr;
-}
-
-function getVendorJS() {
-    var jsDependencies = [];
-    corePlugins.forEach(function(plugin) {
-        var manifest = JSON.parse(fs.readFileSync('plugins/' + plugin + '/manifest.json'));
-        if (manifest.editor.dependencies) {
-            manifest.editor.dependencies.forEach(function(dep) {
-                if (dep.type == "js") {
-                    jsDependencies.push('./plugins/' + plugin + '/' + dep.src)
-                }
-            })
-        };
-    })
-    return jsDependencies;
 }
 
 function getVendorCSS() {
@@ -150,7 +127,7 @@ function getVendorCSS() {
 
 module.exports = {
 
-    entry: recursiveTask(),
+    entry: getEntryFiles(),
 
     output: {
         filename: '[name]',
@@ -233,7 +210,6 @@ module.exports = {
         ]
     },
     plugins: [
-        //new CleanWebpackPlugin(['plugin-dist']),
         new MiniCssExtractPlugin({
             filename: "[name].min.css",
         }),
