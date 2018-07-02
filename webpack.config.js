@@ -257,7 +257,23 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
-        new UglifyJsPlugin({}),
+        new UglifyJsPlugin({
+            cache: false,
+            parallel: true,
+            uglifyOptions: {
+                compress: {
+                    dead_code: true,
+                    drop_console: true,
+                    global_defs: {
+                        DEBUG: true
+                    },
+                    passes: 1,
+                },
+                ecma: 6,
+                mangle: true
+            },
+            sourceMap: true
+        }),
         // copy the index.html and templated to eidtor filder
         new CopyWebpackPlugin([{
                 from: './app/templates',
