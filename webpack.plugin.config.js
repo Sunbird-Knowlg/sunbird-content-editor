@@ -11,11 +11,10 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 
 var corePlugins = [
-    "org.ekstep.assessmentbrowser-1.0",
+    "org.ekstep.assessmentbrowser-1.1",
     "org.ekstep.assetbrowser-1.2",
     "org.ekstep.colorpicker-1.0",
     "org.ekstep.conceptselector-1.1",
-    // "org.ekstep.config-1.0",
     "org.ekstep.stage-1.0",
     "org.ekstep.text-1.2",
     "org.ekstep.shape-1.0",
@@ -140,7 +139,7 @@ module.exports = {
             'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
             'E2EConverter': path.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js'),
             'xmlbuilder': path.resolve('./node_modules/xmlbuilder/lib/index.js'),
-            'X2JS': path.resolve('./plugins/org.ekstep.assessmentbrowser-1.0/editor/libs/xml2json.js')
+            'X2JS': path.resolve('./plugins/org.ekstep.assessmentbrowser-1.1/editor/libs/xml2json.js')
         }
     },
     module: {
@@ -151,7 +150,7 @@ module.exports = {
                     options: 'E2EConverter'
                 }]
             }, {
-                test: require.resolve('./plugins/org.ekstep.assessmentbrowser-1.0/editor/libs/xml2json.js'),
+                test: require.resolve('./plugins/org.ekstep.assessmentbrowser-1.1/editor/libs/xml2json.js'),
                 use: [{
                     loader: 'expose-loader',
                     options: 'X2JS'
