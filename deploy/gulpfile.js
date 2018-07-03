@@ -8,12 +8,49 @@ var replace = require('gulp-string-replace');
 var packageJson = JSON.parse(fs.readFileSync('./package.json'));
 var promise = require("any-promise");
 var rename = require("gulp-rename");
+var concat = require('gulp-concat');
+var minify = require('gulp-minifier');
+var uglify = require('gulp-uglify');
+var clean = require('gulp-clean');
+var editorVersionNumber = process.env.editor_version_number || 1;
+var buildNumber = process.env.build_number || 1;
 
-var cachebust = new CacheBuster();
+var versionPrefix = '.' + editorVersionNumber + '.' + buildNumber;
+var cachebust = function(path) {
+    path.basename += versionPrefix
+}
+
+//var cachebust = new CacheBuster();
 gulp.task('renameminifiedfiles', function() {
-    var js =  gulp.src(['scripts/external.min.js', 'scripts/script.min.js']).pipe(cachebust.resources()).pipe(gulp.dest('scripts/'));
+    var js = gulp.src(['scripts/script.min.js', 'scripts/external.min.js']).pipe(cachebust.resources()).pipe(gulp.dest('scripts/'));
     var css = gulp.src('styles/*.min.css').pipe(cachebust.resources()).pipe(gulp.dest('styles/'));
     return mergeStream(js, css);
+});
+
+gulp.task('minifyJs', function() {
+    return gulp.src(['scripts/jquery.min.js', 'scripts/semantic.min.js'])
+        .pipe(concat('external.min.js'))
+        .pipe(minify({
+            minify: true,
+            collapseWhitespace: true,
+            conservativeCollapse: true,
+            minifyJS: true
+        }))
+        .pipe(uglify())
+        .pipe(rename(cachebust))
+        .pipe(gulp.dest('scripts'));
+});
+
+gulp.task('copystyleImages', function() {
+    return gulp.src(['*.svg', '*.png'], {
+            base: './'
+        })
+        .pipe(gulp.dest('styles'));
+});
+
+gulp.task('clean', function() {
+    return gulp.src(['scripts/jquery.min.js', 'scripts/semantic.min.js', '*.svg', '*.png'], { read: false })
+        .pipe(clean());
 });
 
 gulp.task('injectrenamedfiles', function() {
@@ -30,19 +67,19 @@ gulp.task('package', ['iframe-package', 'embed-package', 'coreplugins-package'])
 
 gulp.task('iframe-package', ['bower-package'], function() {
     var package_id = packageJson['name'] + '-' + 'iframe' + '-' + packageJson['version'];
-    return mergeStream(gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/editor/')), 
-    gulp.src('build/**').pipe(zip(packageJson['name'] + '-iframe-latest' + '.zip')).pipe(gulp.dest('dist/editor/')));
+    return mergeStream(gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/editor/')),
+        gulp.src('build/**').pipe(zip(packageJson['name'] + '-iframe-latest' + '.zip')).pipe(gulp.dest('dist/editor/')));
 });
 
 gulp.task('bower-package-transform', ['iframe-package'], function() {
     return mergeStream(gulp.src('build/index.html').pipe(replace('href="styles', 'href="content-editor-embed/styles')).pipe(replace('src="scripts', 'src="content-editor-embed/scripts')).pipe(replace("'templates", "'content-editor-embed/templates")).pipe(gulp.dest('build/')),
-    gulp.src('build/scripts/script.min.*.js').pipe(replace("src='scripts", "src='content-editor-embed/scripts")).pipe(gulp.dest('build/scripts/')));
+        gulp.src('build/scripts/script.min.*.js').pipe(replace("src='scripts", "src='content-editor-embed/scripts")).pipe(gulp.dest('build/scripts/')));
 });
 
 gulp.task('embed-package', ['bower-package-transform'], function() {
     var package_id = packageJson['name'] + '-' + 'embed' + '-' + packageJson['version'];
     return mergeStream(gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/editor/')),
-    gulp.src('build/**').pipe(zip(packageJson['name'] + '-embed-latest' + '.zip')).pipe(gulp.dest('dist/editor/')));
+        gulp.src('build/**').pipe(zip(packageJson['name'] + '-embed-latest' + '.zip')).pipe(gulp.dest('dist/editor/')));
 });
 
 gulp.task('rename-coreplugins', ['embed-package'], function() {

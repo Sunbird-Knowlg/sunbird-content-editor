@@ -22,13 +22,13 @@ org.ekstep.services.iService = Class.extend({
     init: function(config) {
         this.initService(config);
     },
-    initService: function(config) {},                
+    initService: function(config) {},
     _dispatchTelemetry: function(data) {
         var status = data.res.responseCode || data.res.statusText;
         org.ekstep.services.telemetryService.apiCall({ "path": encodeURIComponent(data.url), "method": data.method, "request": data.request, "response": "", "responseTime": data.res.responseTime, "status": status, "uip": "" });
     },
     _call: function(ajaxSettings, config, cb) {
-        
+
         var requestTimestamp, instance = this;
         config = config || {};
         ajaxSettings.headers = config.headers || {};
@@ -38,15 +38,15 @@ org.ekstep.services.iService = Class.extend({
         ajaxSettings.success = function(res) {
             res.responseTime = (new Date()).getTime() - requestTimestamp;
             var request = ajaxSettings.type === 'POST' ? ajaxSettings.data : {};
-            instance._dispatchTelemetry({url: ajaxSettings.url, method: ajaxSettings.type, request: request, res: res }); 
+            instance._dispatchTelemetry({ url: ajaxSettings.url, method: ajaxSettings.type, request: request, res: res });
             res = { data: res };
-            cb(null, res);                
+            cb(null, res);
         }
         ajaxSettings.error = function(err) {
             err.responseTime = (new Date()).getTime() - requestTimestamp;
             cb(err, null);
             var request = ajaxSettings.type === 'POST' ? ajaxSettings.data : {};
-            instance._dispatchTelemetry({url: ajaxSettings.url, method: ajaxSettings.type, request: request, res: err });
+            instance._dispatchTelemetry({ url: ajaxSettings.url, method: ajaxSettings.type, request: request, res: err });
         }
 
         if (!_.isUndefined(config.contentType)) ajaxSettings.contentType = config.contentType;
@@ -57,26 +57,26 @@ org.ekstep.services.iService = Class.extend({
         org.ekstep.pluginframework.jQuery.ajax(ajaxSettings);
     },
     get: function(url, config, cb) {
-        this._call({type: "GET", url: url}, config, cb);
+        this._call({ type: "GET", url: url }, config, cb);
     },
     put: function(url, data, config, cb) {
         if (typeof cb !== 'function') throw "iservice expects callback to be function";
         if (typeof data === 'object' && _.isUndefined(config.contentType)) data = JSON.stringify(data);
-        this._call({type: "PUT", url: url, data: data}, config, cb);
+        this._call({ type: "PUT", url: url, data: data }, config, cb);
     },
     post: function(url, data, config, cb) {
         if (typeof cb !== 'function') throw "iservice expects callback to be function";
         if (typeof data === 'object' && _.isUndefined(config.contentType)) data = JSON.stringify(data);
-        this._call({type: "POST", url: url, data: data}, config, cb);
+        this._call({ type: "POST", url: url, data: data }, config, cb);
     },
     patch: function(url, data, config, cb) {
         if (typeof cb !== 'function') throw "iservice expects callback to be function";
         if (typeof data === 'object' && _.isUndefined(config.contentType)) data = JSON.stringify(data);
-        this._call({type: "PATCH", url: url, data: data}, config, cb);
+        this._call({ type: "PATCH", url: url, data: data }, config, cb);
     },
     delete: function(url, config, cb) {
         if (typeof cb !== 'function') throw "iservice expects callback to be function";
-        this._call({type: "DELETE", url: url}, config, cb);
+        this._call({ type: "DELETE", url: url }, config, cb);
     },
     /**
      * Utility function which is used to call http post request

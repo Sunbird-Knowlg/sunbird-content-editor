@@ -19,8 +19,8 @@ org.ekstep.services.popupService = new(org.ekstep.services.iService.extend({
      * @param controllerPath {string} path to angular module
      * @memberof org.ekstep.services.popupService
      */
-    loadNgModules: function(templatePath, controllerPath) {
-        if(this.loadModules) return this.loadModules(templatePath, controllerPath);
+    loadNgModules: function(templatePath, controllerPath, allowTemplateCache) {
+        if (this.loadModules) return this.loadModules(templatePath, controllerPath, allowTemplateCache);
     },
     /**
      *

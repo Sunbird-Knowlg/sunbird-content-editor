@@ -18,7 +18,7 @@ var frameworkVersionNumber = process.env.framework_version_number;
 var editorVersionNumber = process.env.editor_version_number;
 var buildNumber = process.env.build_number;
 
-if(!editorVersionNumber && !buildNumber && !frameworkVersionNumber) {
+if (!editorVersionNumber && !buildNumber && !frameworkVersionNumber) {
     console.error('Error!!! Cannot find framework_version_number, editor_version_number and build_number env variables');
     return process.exit(1);
 }
@@ -344,37 +344,8 @@ gulp.task('zipDev', ['minifyDev', 'injectDev'], function() {
 gulp.task('buildDev', ['minifyDev', 'injectDev', 'zipDev', "cachebust"]);
 
 var corePlugins = [
-    "org.ekstep.assessmentbrowser-1.0",
-    "org.ekstep.assetbrowser-1.2",
     "org.ekstep.colorpicker-1.0",
-    "org.ekstep.conceptselector-1.1",
-    "org.ekstep.config-1.0",
-    "org.ekstep.stage-1.0",
-    "org.ekstep.text-1.2",
-    "org.ekstep.shape-1.0",
-    "org.ekstep.image-1.1",
-    "org.ekstep.audio-1.1",
-    "org.ekstep.hotspot-1.0",
-    "org.ekstep.scribblepad-1.0",
-    "org.ekstep.readalongbrowser-1.0",
-    "org.ekstep.stageconfig-1.0",
-    "org.ekstep.telemetry-1.0",
-    "org.ekstep.preview-1.1",
-    "org.ekstep.activitybrowser-1.2",
-    "org.ekstep.collaborator-1.1",
-    "org.ekstep.download-1.0",
-    "org.ekstep.unsupported-1.0",
-    "org.ekstep.wordinfobrowser-1.0",
-    "org.ekstep.viewecml-1.0",
-    "org.ekstep.utils-1.0",
-    "org.ekstep.help-1.0",
-    "org.ekstep.video-1.0",
-    "org.ekstep.editorstate-1.0",
-    "org.ekstep.contenteditorfunctions-1.2",
-    "org.ekstep.keyboardshortcuts-1.0",
-    "org.ekstep.richtext-1.0",
-    "org.ekstep.iterator-1.0",
-    "org.ekstep.navigation-1.0"
+    "org.ekstep.config-1.0"
 ];
 
 gulp.task('minifyCorePlugins', function() {
@@ -425,7 +396,7 @@ gulp.task('packageCorePluginsDev', ["minifyCorePlugins"], function() {
     }).pipe(clean());
 });
 
-gulp.task('packageCorePlugins', ["minify", "minifyCorePlugins"], function() {
+gulp.task('packageCorePlugins', ["minifyFramework", "minifyBaseEditor", "minifyCorePlugins"], function() {
     var fs = require('fs');
     var _ = require('lodash');
     var jsDependencies = [];
@@ -452,5 +423,3 @@ gulp.task('packageCorePlugins', ["minify", "minifyCorePlugins"], function() {
         read: false
     }).pipe(clean());
 });
-//Minification for dev End
-

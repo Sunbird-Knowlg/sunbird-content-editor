@@ -15,7 +15,7 @@
 */
 
 var _PM_ = org.ekstep.pluginframework.pluginManager;
-var ManifestGenerator = new(Class.extend({
+window.ManifestGenerator = new(Class.extend({
     visitedPlugins: {},
     pluginManifest: [],
     mediaManifest: [],

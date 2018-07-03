@@ -20,9 +20,10 @@ describe('popup service', function() {
 
     it('should load angular module and template', function() {
         spyOn(org.ekstep.services.popupService, 'loadModules');
-
-        org.ekstep.services.popupService.loadNgModules("path_to_template", "path_to_controller");
-
-        expect(org.ekstep.services.popupService.loadModules).toHaveBeenCalledWith("path_to_template", "path_to_controller");
+        templatePath = 'https://dev.ekstep.in/content-plugins/org.ekstep.ceheader-1.0/editor/headerApp.js?982';
+        controllerPath = 'https://dev.ekstep.in/content-plugins/org.ekstep.whatsnew-1.0/editor/whatsnew.controller.js?'
+        allowTemplateCache = false;
+        org.ekstep.services.popupService.loadNgModules(templatePath, controllerPath, allowTemplateCache);
+        expect(org.ekstep.services.popupService.loadModules).toHaveBeenCalledWith(templatePath, controllerPath, allowTemplateCache);
     });
 });
