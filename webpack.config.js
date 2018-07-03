@@ -19,8 +19,8 @@ const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const VENDOR = [
-    // "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
-    // './app/bower_components/semantic/dist/semantic.js', // "./node_modules/ajv/dist/ajv.bundle.js",
+    "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
+    './app/bower_components/semantic/dist/semantic.js', // "./node_modules/ajv/dist/ajv.bundle.js",
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
@@ -142,24 +142,40 @@ module.exports = {
         }
     },
     module: {
-        rules: [{
-                test: /\.js$/,
-                loader: 'string-replace-loader',
-                options: {
-                    multiple: [
-                        { search: '/plugins', replace: '/content-plugins' },
-                        { search: "/api", replace: '/action' },
-                        { search: 'https://dev.ekstep.in', replace: '' },
-                        { search: 'dispatcher: "local"', replace: 'dispatcher: "console"' }
-                    ],
-                    strict: true
-                }
-            },
+        rules: [
+            // {
+            //     test: /\.js$/,
+            //     loader: 'string-replace-loader',
+            //     options: {
+            //         multiple: [
+            //             { search: '/plugins', replace: '/content-plugins' },
+            //             { search: "/api", replace: '/action' },
+            //             { search: 'https://dev.ekstep.in', replace: '' },
+            //             { search: 'dispatcher: "local"', replace: 'dispatcher: "console"' }
+            //         ],
+            //         strict: true
+            //     }
+            // },
+            
             {
                 test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
                 use: [{
                     loader: 'expose-loader',
                     options: 'EkTelemetry'
+                }]
+            },
+            {
+                test: require.resolve('jquery'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: '$'
+                }]
+            },
+            {
+                test: require.resolve('jquery'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'jQuery'
                 }]
             },
             {
@@ -275,14 +291,6 @@ module.exports = {
                 to: './images'
             },
             {
-                from: './app/bower_components/jquery/dist/jquery.min.js',
-                to: './'
-            },
-            {
-                from: './app/libs/semantic.min.js',
-                to: './'
-            },
-            {
                 from: './content-editor/scripts/*.js',
                 to: './',
                 flatten: true
@@ -313,6 +321,10 @@ module.exports = {
             filename: `[name].min.${VERSION}.css`,
         }),
         new webpack.ProvidePlugin({
+            $: "jquery",
+            jQuery: "jquery",
+            "window.jQuery": 'jquery',
+            "window.$": 'jquery',
             Fingerprint2: 'Fingerprint2',
             WebFont: 'webfontloader',
             Ajv: 'ajv',
