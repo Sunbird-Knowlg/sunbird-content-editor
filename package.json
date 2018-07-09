@@ -90,7 +90,10 @@
         "webpack-cli": "^2.1.4",
         "webpack-merge-and-include-globally": "*",
         "webpack-runtime-public-path-plugin": "*",
-        "zip-webpack-plugin": "3.0.0"
+        "zip-webpack-plugin": "3.0.0",
+        "webpack-entry-plus": "1.0.12",
+        "clipboard": "^2.0.1",
+        "uglify-js": "^3.4.2"
     },
     "scripts": {
         "build": "webpack",

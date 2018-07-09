@@ -219,20 +219,6 @@ module.exports = {
                 ]
             },
             {
-                test: /\.(gif|png|jpe?g|svg)$/i,
-                use: [
-                    'file-loader',
-                    {
-                        loader: 'url-loader',
-                        options: {
-                            limit: 50, //it's important
-                            outputPath: './images',
-                            name: '[name].[ext]',
-                        }
-                    },
-                ],
-            },
-            {
                 test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
                 use: [{
                     loader: 'file-loader',
