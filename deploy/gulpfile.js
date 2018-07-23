@@ -55,7 +55,7 @@ gulp.task('clean', function() {
 
 gulp.task('injectrenamedfiles', function() {
     var target = gulp.src('index.html');
-    var sources = gulp.src(['scripts/external.min.*.js', 'scripts/script.min.*.js', 'styles/*.min.*.css'], { read: false });
+    var sources = gulp.src(['scripts/script.min.*.js', 'styles/*.min.*.css'], { read: false });
     return target.pipe(inject(sources, { ignorePath: '/', addRootSlash: false })).pipe(gulp.dest('./'));
 });
 

@@ -409,6 +409,7 @@ gulp.task('packageCorePlugins', ["minifyFramework", "minifyBaseEditor", "minifyC
         if (manifest.editor.dependencies) {
             manifest.editor.dependencies.forEach(function(dependency) {
                 var resource = '/content-plugins/' + plugin + '/' + dependency.src;
+                //var resource = '/plugins/' + plugin + '/' + dependency.src;
                 if (dependency.type == 'js') {
                     fs.appendFile('content-editor/scripts/coreplugins.js', "org.ekstep.pluginframework.resourceManager.loadExternalResource('" + resource + "', 'js')" + "\n");
                 } else if (dependency.type == 'css') {
