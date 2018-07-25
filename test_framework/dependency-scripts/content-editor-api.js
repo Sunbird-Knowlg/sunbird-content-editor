@@ -402,7 +402,6 @@ window.org.ekstep.contenteditor.api = {
      * @memberof org.ekstep.contenteditor.api
      */
     getStagePluginInstances: function(stage, includeTypes, excludeTypes, excludeIds) {
-        // TODO: Add logic to check if stage exists
         /*var instances = _.clone(org.ekstep.contenteditor.api.getStage(stage).children);
         if (includeTypes) {
             instances = _.filter(instances, function(obj) {

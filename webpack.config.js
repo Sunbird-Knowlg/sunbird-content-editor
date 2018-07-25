@@ -111,7 +111,7 @@ const APP_STYLE = [
     './app/styles/commonStyles.css',
     './app/styles/content-editor.css',
     './app/styles/noto.css',
-    './content-editor/scripts/plugin-vendor.min.css' // Plugin css files // TODO: Need to remove the styles files from this package
+    './content-editor/scripts/plugin-vendor.min.css' // Plugin css files
 ];
 
 // removing the duplicate files

@@ -416,7 +416,7 @@ org.ekstep.contenteditor.stageManager = new(Class.extend({
             try {
                 pluginInstance = org.ekstep.contenteditor.api.instantiatePlugin(pluginId, plugin.data, stageInstance);
                 if (_.isUndefined(pluginInstance)) {
-                    console.log('Unable to instantiate', plugin.id); // TODO: Add telemetry that plugin is not found
+                    console.log('Unable to instantiate', plugin.id);
                     org.ekstep.contenteditor.api.instantiatePlugin("org.ekstep.unsupported", { data: plugin }, stageInstance);
                 }
                 pluginCount++;
