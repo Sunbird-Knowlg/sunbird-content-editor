@@ -142,8 +142,7 @@ module.exports = {
         }
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.js$/,
                 loader: 'string-replace-loader',
                 options: {
@@ -156,7 +155,7 @@ module.exports = {
                     strict: true
                 }
             },
-            
+
             {
                 test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
                 use: [{
@@ -204,6 +203,13 @@ module.exports = {
                 use: [{
                     loader: 'expose-loader',
                     options: 'UUID'
+                }]
+            },
+            {
+                test: require.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'Fingerprint2'
                 }]
             },
             {
