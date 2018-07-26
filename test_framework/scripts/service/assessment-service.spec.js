@@ -130,4 +130,29 @@ describe('Assessment service test cases', function() {
             expect(err).toBe("NOT FOUND");
         });
     });
+
+    it("should delete questions using delete service", function() {
+        var deleteResponse = {"id":"ekstep.learning.itemset.delete","ver":"1.0","ts":"2018-07-26T05:47:56ZZ","params":{"resmsgid":"ac07608c-abf5-417f-8db8-78c072b0b739","msgid":null,"err":null,"status":"successful","errmsg":null},"responseCode":"OK","result":{},"responseTime":300};
+        org.ekstep.services.assessmentService.delete = jasmine.createSpy().and.callFake(function(url, headers, cb) {
+            cb(undefined, deleteResponse);
+        });
+        spyOn(org.ekstep.services.assessmentService, "deleteQuestion").and.callThrough();
+        org.ekstep.services.assessmentService.deleteQuestion('do_212465374744944640119', function(err, res) {
+            expect(res).toBe(deleteResponse);
+            expect(org.ekstep.services.assessmentService.delete).toHaveBeenCalled();
+            expect(org.ekstep.services.assessmentService.delete.calls.count()).toBe(1);
+        });
+    });
+
+    it("should return error when deleting questions using delete service", function() {
+        org.ekstep.services.assessmentService.delete = jasmine.createSpy().and.callFake(function(url, headers, cb) {
+            cb("NOT_FOUND", undefined);
+        });
+        spyOn(org.ekstep.services.assessmentService, "deleteQuestion").and.callThrough();
+        org.ekstep.services.assessmentService.deleteQuestion('', function(err, res) {
+            expect(err).toBe("NOT_FOUND");
+            expect(org.ekstep.services.assessmentService.delete).toHaveBeenCalled();
+            expect(org.ekstep.services.assessmentService.delete.calls.count()).toBe(1);
+        });
+    });
 });
