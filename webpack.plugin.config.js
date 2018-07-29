@@ -22,7 +22,6 @@ var corePlugins = [
     "org.ekstep.audio-1.1",
     "org.ekstep.hotspot-1.0",
     "org.ekstep.scribblepad-1.0",
-    "org.ekstep.readalongbrowser-1.0",
     "org.ekstep.stageconfig-1.0",
     "org.ekstep.telemetry-1.0",
     "org.ekstep.preview-1.1",
