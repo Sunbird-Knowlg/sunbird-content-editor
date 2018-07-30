@@ -20,7 +20,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const VENDOR = [
     "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
-    './app/libs/semantic.min.js', // "./node_modules/ajv/dist/ajv.bundle.js",
+    './app/bower_components/semantic/dist/semantic.min.js', // "./node_modules/ajv/dist/ajv.bundle.js",
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
