@@ -35,7 +35,8 @@ const VENDOR = [
     "./app/bower_components/ngSafeApply/index.js",
     "./app/bower_components/oclazyload/dist/ocLazyLoad.min.js",
     "./app/scripts/contenteditor/md5.js",
-    "./app/libs/ng-tags-input.js"
+    "./app/libs/ng-tags-input.js",
+    "./app/libs/alignment-guidelines.js"
 ];
 
 var PLUGIN_FRAMEWORK = [
@@ -142,19 +143,20 @@ module.exports = {
         }
     },
     module: {
-        rules: [{
-                test: /\.js$/,
-                loader: 'string-replace-loader',
-                options: {
-                    multiple: [
-                        { search: '/plugins', replace: '/content-plugins' },
-                        { search: "/api", replace: '/action' },
-                        { search: 'https://dev.ekstep.in', replace: '' },
-                        { search: 'dispatcher: "local"', replace: 'dispatcher: "console"' }
-                    ],
-                    strict: true
-                }
-            },
+        rules: [
+            // {
+            //     test: /\.js$/,
+            //     loader: 'string-replace-loader',
+            //     options: {
+            //         multiple: [
+            //             { search: '/plugins', replace: '/content-plugins' },
+            //             { search: "/api", replace: '/action' },
+            //             { search: 'https://dev.ekstep.in', replace: '' },
+            //             { search: 'dispatcher: "local"', replace: 'dispatcher: "console"' }
+            //         ],
+            //         strict: true
+            //     }
+            // },
 
             {
                 test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
