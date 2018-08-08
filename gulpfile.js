@@ -18,6 +18,7 @@ var git = require('gulp-git');
 var frameworkVersionNumber = process.env.framework_version_number;
 var editorVersionNumber = process.env.editor_version_number;
 var buildNumber = process.env.build_number;
+var branchName = process.env.branch || 'master';
 
 if (!editorVersionNumber && !buildNumber && !frameworkVersionNumber) {
     console.error('Error!!! Cannot find framework_version_number, editor_version_number and build_number env variables');
@@ -428,7 +429,7 @@ gulp.task('packageCorePlugins', ["minifyFramework", "minifyBaseEditor", "minifyC
 });
 
 gulp.task("clone-plugins", function(done) {
-    git.clone('https://github.com/project-sunbird/sunbird-content-plugins.git', {args: './plugins'}, function (err) {
+    git.clone('https://github.com/project-sunbird/sunbird-content-plugins.git', {args: '-b '+ branchName +' ./plugins'}, function (err) {
         if (err) {
             done(err);
         }
