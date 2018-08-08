@@ -9,6 +9,9 @@ before_script:
     - bower cache clean
     - bower install --force
     - cd ./..    
+    - gulp clone-plugins
+    - gulp packageCorePlugins
+    - npm run plugin-build
     - npm run build
     
 script:
