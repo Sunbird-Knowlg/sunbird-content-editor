@@ -1,4 +1,5 @@
 describe("content editor integration test: ", function() {
+     var originalTimeout;
     jasmine.getEnv().defaultTimeoutInterval = 15000;
     var corePlugins,
         canvas,
@@ -12,11 +13,13 @@ describe("content editor integration test: ", function() {
 
     afterAll(function() {
         cleanUp();
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout;
     });
 
     beforeAll(function(done) {
+        originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL;
+        jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
         cleanUp();
-
         //org.ekstep.contenteditor.init();
         org.ekstep.contenteditor.globalContext = {};
         corePlugins = [
