@@ -144,19 +144,19 @@ module.exports = {
     },
     module: {
         rules: [
-            // {
-            //     test: /\.js$/,
-            //     loader: 'string-replace-loader',
-            //     options: {
-            //         multiple: [
-            //             { search: '/plugins', replace: '/content-plugins' },
-            //             { search: "/api", replace: '/action' },
-            //             { search: 'https://dev.ekstep.in', replace: '' },
-            //             { search: 'dispatcher: "local"', replace: 'dispatcher: "console"' }
-            //         ],
-            //         strict: true
-            //     }
-            // },
+            {
+                test: /\.js$/,
+                loader: 'string-replace-loader',
+                options: {
+                    multiple: [
+                        { search: '/plugins', replace: '/content-plugins' },
+                        { search: "/api", replace: '/action' },
+                        { search: 'https://dev.ekstep.in', replace: '' },
+                        { search: 'dispatcher: "local"', replace: 'dispatcher: "console"' }
+                    ],
+                    strict: true
+                }
+            },
 
             {
                 test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
