@@ -20,7 +20,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const VENDOR = [
     "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
-    './app/bower_components/semantic/dist/semantic.js', // "./node_modules/ajv/dist/ajv.bundle.js",
+    './app/bower_components/semantic/dist/semantic.min.js', // "./node_modules/ajv/dist/ajv.bundle.js",
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
@@ -111,7 +111,7 @@ const APP_STYLE = [
     './app/styles/commonStyles.css',
     './app/styles/content-editor.css',
     './app/styles/noto.css',
-    './content-editor/scripts/plugin-vendor.min.css' // Plugin css files // TODO: Need to remove the styles files from this package
+    './content-editor/scripts/plugin-vendor.min.css' // Plugin css files
 ];
 
 // removing the duplicate files
@@ -142,8 +142,7 @@ module.exports = {
         }
     },
     module: {
-        rules: [
-            {
+        rules: [{
                 test: /\.js$/,
                 loader: 'string-replace-loader',
                 options: {
@@ -156,7 +155,7 @@ module.exports = {
                     strict: true
                 }
             },
-            
+
             {
                 test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
                 use: [{
@@ -204,6 +203,13 @@ module.exports = {
                 use: [{
                     loader: 'expose-loader',
                     options: 'UUID'
+                }]
+            },
+            {
+                test: require.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
+                use: [{
+                    loader: 'expose-loader',
+                    options: 'Fingerprint2'
                 }]
             },
             {

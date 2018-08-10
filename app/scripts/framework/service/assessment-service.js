@@ -87,5 +87,22 @@ org.ekstep.services.assessmentService = new(org.ekstep.services.iService.extend(
                 callback(err, res)
             });
         }
+    },
+    /**
+     * This method is used to delete question
+     * @param  {string}   assessmentId
+     * @param  {object}   requestObj
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.assessmentService
+     */
+    deleteQuestion: function(assessmentId, callback) {
+        var instance = this;
+        /*If assessment Id exists then delete the question*/
+        if(assessmentId){
+            instance.delete(this.assessmentURL() + '/v3/itemsets/retire/' + assessmentId, this.requestHeaders, function(err, res) {
+                callback(err, res)
+            });
+        }
     }
+
 }));

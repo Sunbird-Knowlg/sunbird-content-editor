@@ -143,7 +143,7 @@ org.ekstep.pluginframework.pluginManager = new(Class.extend({
                 org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:error', { plugin: pluginId, version: pluginVer, action: "load", err: err });
                 instance.addError({ error: "Manifest not found!", plugin: pluginId, version: pluginVer, action: "discoverManifest", stackTrace: err })
                 console.error('Unable to load plugin manifest', 'plugin:' + pluginId + '-' + pluginVer, 'Error:', err);
-                callback && callback(); // TODO: probably pass the error
+                callback && callback(); 
             } else {
                 instance.loadManifestDependencies(data.manifest.dependencies, publishedTime, parents, function() {
                     if (!data.manifest.editor || Object.keys(data.manifest.editor).length === 0) {

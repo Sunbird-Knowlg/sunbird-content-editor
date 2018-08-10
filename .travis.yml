@@ -1,0 +1,15 @@
+language: node_js
+node_js:
+    - "6.1"
+
+before_script:
+    - npm install
+    - cd app
+    - npm install -g bower
+    - bower cache clean
+    - bower install --force
+    - cd ./..    
+    - npm run build
+    
+script:
+    - npm run test

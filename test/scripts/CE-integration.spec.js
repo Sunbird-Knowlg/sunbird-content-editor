@@ -899,7 +899,6 @@ describe("content editor integration test: ", function() {
             expect(stage3.manifest.media.length).toBe(0);
             //expect(stage3.manifest.media[0].assetId).toBe('do_1121989168199106561309');
 
-            // TODO: Enhance the stage manifest test cases to add more test cases for 
             // 1. Duplicate assets within a stage
             // 2. Plugin, js and css should also be in the manifest
             // 3. Enhance the test data to also contain quiz plugin

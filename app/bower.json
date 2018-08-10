@@ -13,7 +13,7 @@
     "uuid": "./libs/uuid-v4.min.js",
     "async": "^2.1.4",
     "angular-bootstrap": "^2.2.0",
-    "semantic": "^2.2.6",
+    "semantic": "2.2.6",
     "ng-dialog": "^0.6.4",
     "oclazyload": "^1.0.9",
     "ngSafeApply": "./libs/Scope.SafeApply.js",
