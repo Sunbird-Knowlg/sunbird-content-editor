@@ -11,14 +11,20 @@ describe('content editor integration test: ', function () {
 		org.ekstep.contenteditor.toolbarManager.cleanUp()
 	}
 
-	afterAll(function () {
-		cleanUp()
+	beforeEach(function () {
+		originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL
+		jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
+	})
+
+	afterEach(function () {
 		jasmine.DEFAULT_TIMEOUT_INTERVAL = originalTimeout
 	})
 
+	afterAll(function () {
+		cleanUp()
+	})
+
 	beforeAll(function (done) {
-		originalTimeout = jasmine.DEFAULT_TIMEOUT_INTERVAL
-		jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000
 		cleanUp()
 		// org.ekstep.contenteditor.init();
 		org.ekstep.contenteditor.globalContext = {}
