@@ -1,12 +1,9 @@
-//Invalid plugin
+// Invalid plugin
 p.extend({
-    _type: 'two',
-    initPlugin: function(data) {
+	_type: 'two',
+	initPlugin: function (data) {
+		this._self = new createjs.Container()
+		console.log('two plugin')
+	}
 
-        var instance = this;
-        this._self = new createjs.Container();
-
-        console.log('two plugin');
-    }
-
-});
+})
