@@ -119,7 +119,7 @@
     "apptest": "karma start karmaconf.js",
     "testpluginframework": "karma start karmaconf.pluginframework.js",
     "test": "karma start karmaconf.js && karma start karmaconf.pluginframework.js",
-    "test-with-coverage": "npm run testpluginframework && cat ./coverage/lcov.info | codacy-coverage"
+    "test-with-coverage": "npm run testpluginframework && cat ./coverage_framework/lcov.info | codacy-coverage"
   },
   "repository": {
     "type": "git",
