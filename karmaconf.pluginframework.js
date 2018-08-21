@@ -73,7 +73,7 @@ module.exports = function (config) {
 		// reporters: ['dots', 'coverage'],
 
 		// reporters configuration
-		reporters: ['mocha', 'coverage-istanbul', 'coverage'],
+		reporters: ['mocha', 'coverage'],
 
 		// reporter options
 		mochaReporter: {
@@ -109,18 +109,6 @@ module.exports = function (config) {
 		browsers: [
 			'ChromeHeadless'
 		],
-		customLaunchers: {
-			ChromeHeadless: {
-			  base: 'Chrome',
-			  flags: [
-				'--no-sandbox',
-				'--headless',
-				'--disable-gpu',
-				// Without a remote debugging port, Google Chrome exits immediately.
-				'--remote-debugging-port=9222'
-			  ]
-			}
-		},
 		browserNoActivityTimeout: 300000,
 
 		// Continuous Integration mode
@@ -130,10 +118,6 @@ module.exports = function (config) {
 		// Concurrency level
 		// how many browser should be started simultaneous
 		concurrency: Infinity,
-		coverageIstanbulReporter: {
-			dir: require('path').join(__dirname, 'coverage_framework'), reports: [ 'html', 'lcovonly', 'text-summary' ],
-			fixWebpackSourcePaths: true
-		},
 		coverageReporter: {
 			reporters: [
 				{ type: 'html', dir: 'coverage_framework/' },

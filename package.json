@@ -118,8 +118,7 @@
     "plugin-build": "webpack --config webpack.plugin.config.js",
     "apptest": "karma start karmaconf.js",
     "testpluginframework": "karma start karmaconf.pluginframework.js",
-    "test": "karma start karmaconf.js && karma start karmaconf.pluginframework.js",
-    "test-with-coverage": "npm run testpluginframework && cat ./coverage_framework/lcov.info | codacy-coverage"
+    "test": "karma start karmaconf.js && karma start karmaconf.pluginframework.js"
   },
   "repository": {
     "type": "git",
