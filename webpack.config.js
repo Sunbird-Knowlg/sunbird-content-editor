@@ -35,7 +35,8 @@ const VENDOR = [
     "./app/bower_components/ngSafeApply/index.js",
     "./app/bower_components/oclazyload/dist/ocLazyLoad.min.js",
     "./app/scripts/contenteditor/md5.js",
-    "./app/libs/ng-tags-input.js"
+    "./app/libs/ng-tags-input.js",
+    "./app/libs/alignment-guidelines.js"
 ];
 
 var PLUGIN_FRAMEWORK = [

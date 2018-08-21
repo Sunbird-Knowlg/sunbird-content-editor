@@ -27,6 +27,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		// fabric.Object.prototype.rotatingPointOffset = 18; //TODO need to add rotation in bas class
 		this.canvas = new fabric.Canvas('canvas', { backgroundColor: '#FFFFFF', preserveObjectStacking: true, perPixelTargetFind: false })
 		console.log('Stage manager initialized')
+		fabric.initAligningGuidelines(this.canvas)
 		org.ekstep.pluginframework.eventManager.addEventListener('stage:delete', this.deleteConfirmationDialog, this)
 		org.ekstep.pluginframework.eventManager.addEventListener('stage:duplicate', this.duplicateStage, this)
 		instance.canvas.renderAll()
