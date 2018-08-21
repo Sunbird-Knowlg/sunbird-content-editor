@@ -30,6 +30,7 @@
     "copy-webpack-plugin": "*",
     "css-loader": "*",
     "cssnano": "*",
+    "eslint": "^5.4.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-node": "^7.0.1",

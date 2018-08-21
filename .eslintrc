@@ -37,7 +37,8 @@
     "basePlugin": true,
     "Mousetrap": true,
     "afterEach": true,
-    "location": true
+    "location": true,
+    "X2JS": true
   },
   "rules": {
     "indent": [2, "tab"],
