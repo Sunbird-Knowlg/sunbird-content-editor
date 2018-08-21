@@ -16,5 +16,4 @@ before_script:
     - npm run plugin-build
     - npm run build
 script:
-    - npm run apptest
     - npm run testpluginframework
