@@ -1,11 +1,9 @@
 Plugin.extend({
-    _type: 'one',
-    initPlugin: function(data) {
+	_type: 'one',
+	initPlugin: function (data) {
+		this._self = new createjs.Container()
 
-        var instance = this;
-        this._self = new createjs.Container();
+		console.log('one plugin')
+	}
 
-        console.log('one plugin');
-    }
-
-});
+})
