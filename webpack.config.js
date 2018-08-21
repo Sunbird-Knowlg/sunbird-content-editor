@@ -143,7 +143,8 @@ module.exports = {
         }
     },
     module: {
-        rules: [{
+        rules: [
+            {
                 test: /\.js$/,
                 loader: 'string-replace-loader',
                 options: {
