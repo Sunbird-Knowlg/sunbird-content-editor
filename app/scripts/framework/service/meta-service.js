@@ -158,7 +158,7 @@ org.ekstep.services.metaService = new (org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.metaService
      */
 	getFormConfigurations: function (data, callback) {
-		this.postFromService(this.getBaseURL() + '/api' + this.getConfig('configEndPoint', '/data') + this.getConfig('configurationUrl', '/v1/form/read'), data, this.requestHeaders, callback)
+		this.postFromService(this.getBaseURL() + this.getAPISlug() + this.getConfig('configEndPoint', '/data') + this.getConfig('configurationUrl', '/v1/form/read'), data, this.requestHeaders, callback)
 	}
 
 }))()
