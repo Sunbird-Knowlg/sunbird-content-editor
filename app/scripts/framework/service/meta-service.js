@@ -149,6 +149,16 @@ org.ekstep.services.metaService = new (org.ekstep.services.iService.extend({
      */
 	getPageAssemble: function (data, callback) {
 		this.postFromService(this.pageAssembleUrl() + this.getConfig('pageAssembleUrl', '/v1/page/assemble'), data, this.requestHeaders, callback)
+	},
+
+	/**
+     * Get form api
+     * @param  {data} data to pass in post api
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.metaService
+     */
+	getFormConfigurations: function (data, callback) {
+		this.postFromService(this.getBaseURL() + '/api' + this.getConfig('configEndPoint', '/data') + this.getConfig('configurationUrl', '/v1/form/read'), data, this.requestHeaders, callback)
 	}
 
 }))()
