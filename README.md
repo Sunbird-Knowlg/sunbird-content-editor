@@ -1,8 +1,8 @@
 # Content-Editor
 
-## Quick links
-
 [![Build Status](https://travis-ci.org/project-sunbird/sunbird-content-editor.svg?branch=master)](https://travis-ci.org/project-sunbird/sunbird-content-editor)
+
+## Quick links
 
 **Bugs**
 
