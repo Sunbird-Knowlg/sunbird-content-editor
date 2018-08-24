@@ -2,6 +2,8 @@
 
 ## Quick links
 
+[![Build Status](https://travis-ci.org/project-sunbird/sunbird-content-editor.svg?branch=master)](https://travis-ci.org/project-sunbird/sunbird-content-editor)
+
 **Bugs**
 
 - **[User Issues](https://github.com/ekstep/Content-Editor/issues?q=is%3Aopen+is%3Aissue+label%3A%22user+issues%22)**
