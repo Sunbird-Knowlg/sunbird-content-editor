@@ -220,6 +220,9 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	getStageIcons: function () {
 		return this.thumbnails
 	},
+	getPragmaValue: function () {
+		return this.pragma
+	},
 	toECML: function () {
 		var instance = this
 		var content = { theme: { id: 'theme', version: '1.0', startStage: this.stages[0].id, stage: [], manifest: { media: [] }, 'plugin-manifest': { plugin: [] } } }
@@ -228,6 +231,13 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		instance.summary = []
 		_.forEach(this.stages, function (stage, index) {
 			instance.thumbnails[stage.id] = stage.thumbnail
+			if (stage.getParam('pragma')) {
+				if (instance.pragma === null) {
+					instance.pragma = [stage.getParam('pragma')]
+				} else {
+					instance.pragma.push(stage.getParam('pragma'))
+				}
+			}
 			var stageBody = stage.toECML()
 			stageBody.manifest = { media: [] }
 			var stageAssets = []
