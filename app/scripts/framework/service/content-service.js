@@ -260,7 +260,7 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
      */
 	sendForReview: function (data, callback) {
 		var requestObj = {'request': {'content': {}}}
-		this.postFromService(this.serviceURL() + this.getConfig('sendfortReviewURL', '/v3/review/') + data.contentId, requestObj, this.requestHeaders, callback)
+		this.postFromService(this.serviceURL() + this.getConfig('sendfortReviewURL', '/v3/review/') + data.contentId, requestObj, this.setChannelInHeader(data.channel), callback)
 	},
 	/**
      * Content sent for review call
@@ -280,7 +280,7 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 			requestObj.request.content['publishChecklist'] = data.data.publishChecklist
 			requestObj.request.content['publishComment'] = data.data.publishComment
 		}
-		this.postFromService(this.serviceURL() + this.getConfig('contentPublishURL', '/v3/publish/') + data.contentId, requestObj, this.requestHeaders, callback)
+		this.postFromService(this.serviceURL() + this.getConfig('contentPublishURL', '/v3/publish/') + data.contentId, requestObj, this.setChannelInHeader(data.channel), callback)
 	},
 	/**
      * Get pre-signed url for content upload
@@ -323,7 +323,7 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 			requestObj.request.content['rejectComment'] = data.data.rejectComment
 		}
 
-		this.postFromService(this.serviceURL() + this.getConfig('contentRejectURL', '/v3/reject/') + data.contentId, requestObj, this.requestHeaders, callback)
+		this.postFromService(this.serviceURL() + this.getConfig('contentRejectURL', '/v3/reject/') + data.contentId, requestObj, this.setChannelInHeader(data.channel), callback)
 	},
 	retireContent: function (data, callback) {
 		this.delete(this.serviceURL() + this.getConfig('contentRejectURL', '/v3/retire/') + data.contentId, this.requestHeaders, callback)
@@ -351,5 +351,15 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 			}
 		}
 		this.postFromService(this.serviceURL() + this.getConfig('contentUnlistedPublishURL', '/v3/unlisted/publish/') + data.contentId, requestObj, this.requestHeaders, callback)
-	}
+	},
+  /**
+     * set channel in requestHeaders
+     * @memberof org.ekstep.services.contentService
+     */
+  setChannelInHeader: function (channel) {
+    var headersObj = _.cloneDeep(this.requestHeaders)
+    if(channel)
+      headersObj.headers['X-Channel-Id'] = channel
+    return headersObj
+  }
 }))()
