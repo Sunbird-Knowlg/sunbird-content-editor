@@ -368,7 +368,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			'uaspec': instance.detectClient(),
 			'type': ecEditor.getConfig('editorType') || 'content',
 			'mode': mode.toLowerCase(),
-			'duration': duration,
+			'duration': (duration * 0.001),
 			'pageid': 'main-page'
 		})
 		EkTelemetry.impression({
