@@ -232,14 +232,6 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		instance.pragma = null
 		_.forEach(this.stages, function (stage, index) {
 			instance.thumbnails[stage.id] = stage.thumbnail
-			if (stage.getParam('pragma')) {
-				if (instance.pragma === null) {
-					instance.pragma = [stage.getParam('pragma')]
-				} else {
-					instance.pragma.push(stage.getParam('pragma'))
-				}
-				stage.deleteParam('pragma')
-			}
 			var stageBody = stage.toECML()
 			stageBody.manifest = { media: [] }
 			var stageAssets = []
