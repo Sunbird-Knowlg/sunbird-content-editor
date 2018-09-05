@@ -229,6 +229,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		this.setNavigationalParams()
 		var mediaMap = {}
 		instance.summary = []
+		instance.pragma = null
 		_.forEach(this.stages, function (stage, index) {
 			instance.thumbnails[stage.id] = stage.thumbnail
 			if (stage.getParam('pragma')) {
