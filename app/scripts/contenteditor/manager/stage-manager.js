@@ -220,7 +220,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	getStageIcons: function () {
 		return this.thumbnails
 	},
-	getPragmaValue: function () {
+	getPragma: function () {
 		return this.pragma
 	},
 	toECML: function () {
