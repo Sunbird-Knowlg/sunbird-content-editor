@@ -238,6 +238,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 				} else {
 					instance.pragma.push(stage.getParam('pragma'))
 				}
+				stage.deleteParam('pragma')
 			}
 			var stageBody = stage.toECML()
 			stageBody.manifest = { media: [] }
