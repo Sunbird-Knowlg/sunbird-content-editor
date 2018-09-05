@@ -221,7 +221,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		return this.thumbnails
 	},
 	getPragma: function () {
-		return this.pragma
+		return ecEditor._.uniq(this.pragma)
 	},
 	toECML: function () {
 		var instance = this
