@@ -249,6 +249,9 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 				stageBody[id].push(plugin.toECML())
 				var summaryObj = plugin.getSummary()
 				if (summaryObj) instance.summary.push(summaryObj)
+				var pragma = plugin.getPragmaValue()
+				// if any plugin return pragma value we pushing to array
+				pragma && ((instance.pragma === null) ? instance.pragma = [pragma] : ecEditor._uniq(instance.pragma.push(pragma)))
 				var pluginMedia = plugin.getMedia()
 				instance.addMediaToMediaMap(mediaMap, pluginMedia, plugin.manifest)
 				stageAssets = _.concat(stageAssets, _.keys(pluginMedia))
