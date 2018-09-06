@@ -220,12 +220,16 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	getStageIcons: function () {
 		return this.thumbnails
 	},
+	getPragma: function () {
+		return ecEditor._.uniq(this.pragma)
+	},
 	toECML: function () {
 		var instance = this
 		var content = { theme: { id: 'theme', version: '1.0', startStage: this.stages[0].id, stage: [], manifest: { media: [] }, 'plugin-manifest': { plugin: [] } } }
 		this.setNavigationalParams()
 		var mediaMap = {}
 		instance.summary = []
+		instance.pragma = null
 		_.forEach(this.stages, function (stage, index) {
 			instance.thumbnails[stage.id] = stage.thumbnail
 			var stageBody = stage.toECML()
@@ -237,6 +241,9 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 				stageBody[id].push(plugin.toECML())
 				var summaryObj = plugin.getSummary()
 				if (summaryObj) instance.summary.push(summaryObj)
+				var pragma = plugin.getPragmaValue()
+				// if any plugin return pragma value we pushing to array
+				pragma && ((instance.pragma === null) ? instance.pragma = [pragma] : ecEditor._.uniq(instance.pragma.push(pragma)))
 				var pluginMedia = plugin.getMedia()
 				instance.addMediaToMediaMap(mediaMap, pluginMedia, plugin.manifest)
 				stageAssets = _.concat(stageAssets, _.keys(pluginMedia))

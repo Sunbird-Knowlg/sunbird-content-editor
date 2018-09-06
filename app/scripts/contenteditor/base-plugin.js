@@ -810,5 +810,10 @@ org.ekstep.contenteditor.basePlugin = Class.extend({
      * this method to return custom summary object.
      * @memberof org.ekstep.contenteditor.basePlugin
      */
-	getSummary: function () {}
+	getSummary: function () {},
+	/**
+     * Returns the content pragma value. This is a no-op implementation. Child plugins should implement
+     * @memberof org.ekstep.contenteditor.basePlugin
+     */
+	getPragmaValue: function () {}
 })
