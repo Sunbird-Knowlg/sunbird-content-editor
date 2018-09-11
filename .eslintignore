@@ -1,0 +1,12 @@
+app/bower_components/lodash/vendor/benchmark.js
+app/bower_components/**/*
+app/libs/**
+app/scripts/contenteditor/md5.js
+app/scripts/framework/class.js
+app/scripts/coreplugins.js
+app/scripts/framework/libs/*.js
+node_modules/**
+test/data/published/org.ekstep.test_config-1.0/editor/libs/jquery-ui.min.js
+test_framework/data/content-plugins/org.ekstep.seven-1.0/editor/libs/spectrum.js
+test_framework/data/content-plugins/org.ekstep.seven-1.0/renderer/libs/spectrum.js
+test_framework/dependency-scripts/renderer-base-plugin.js

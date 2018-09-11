@@ -33,7 +33,6 @@ var corePlugins = [
     "org.ekstep.viewecml-1.0",
     "org.ekstep.utils-1.0",
     "org.ekstep.help-1.0",
-    "org.ekstep.video-1.0",
     "org.ekstep.editorstate-1.0",
     "org.ekstep.contenteditorfunctions-1.2",
     "org.ekstep.keyboardshortcuts-1.0",

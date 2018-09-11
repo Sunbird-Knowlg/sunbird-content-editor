@@ -1,11 +1,8 @@
 Plugin.extend({
-    _type: 'three',
-    initPlugin: function(data) {
+	_type: 'three',
+	initPlugin: function (data) {
+		this._self = new createjs.Container()
+		console.log('three plugin')
+	}
 
-        var instance = this;
-        this._self = new createjs.Container();
-
-        console.log('three plugin');
-    }
-
-});
+})
