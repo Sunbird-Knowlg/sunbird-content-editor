@@ -533,16 +533,6 @@ i.icon.custom-icon.dropdown-icon{
 }
 /* specify size for tooltips */
 
-/* Richtext css */
-#richtext-wrapper div * {
-        line-height: 1.3 !important;
-}
-
-#richtext-wrapper p {
-        margin: 0 0 0 !important;
-}
-/* Richtext css */
-
 [data-tooltip]:after{
     background: #4a4a4a;
     padding: .3em 1em;
