@@ -82,7 +82,7 @@
                                         <i class="fa fa-trash" ng-click="fireEvent(stage.ondelete)" style="margin-right:15px; cursor: pointer;"></i>
                                         <i class="icon-duplicate link" ng-click="fireEvent(stage.duplicate)" style="cursor: pointer;"></i>
                                     </div>
-                                    <img data-id="{{stage.id}}" src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)" ng-click="fireEvent(stage.getOnClick())" />
+                                    <img data-id="{{stage.id}}" ng-src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)" ng-click="fireEvent(stage.getOnClick())" />
                                 </div>
                             </div>
                         </div>
