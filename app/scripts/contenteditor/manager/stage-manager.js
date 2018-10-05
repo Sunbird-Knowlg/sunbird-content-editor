@@ -475,10 +475,13 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	},
 	getSummary: function () {
 		var instance = this
-		var summaryData = {'totalQuestions': 0, 'totalScore': 0}
+		var summaryData = {'totalQuestions': 0, 'totalScore': 0, 'questions': []}
 		_.forEach(instance.summary, function (obj) {
 			summaryData.totalQuestions = summaryData.totalQuestions + obj.totalQuestions
 			summaryData.totalScore = summaryData.totalScore + obj.totalScore
+			if (obj.questions && obj.questions.length > 0) {
+				summaryData.questions = ecEditor._.uniqBy(ecEditor._.concat(summaryData.questions, obj.questions), 'identifier')
+			}
 		})
 		return summaryData
 	}
