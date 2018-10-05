@@ -884,6 +884,7 @@ describe('content editor integration test: ', function () {
 		})
 
 		it('should give back the ECML', function () {
+			org.ekstep.contenteditor.stageManager.thumbnails = {};
 			var getEcmlPluginCount; var ecml = org.ekstep.contenteditor.stageManager.toECML()
 
 			getEcmlPluginCount = function (plugin) {

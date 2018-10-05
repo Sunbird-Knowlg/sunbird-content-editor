@@ -17,6 +17,7 @@ module.exports = function (config) {
 			'app/bower_components/async/dist/async.min.js',
 			'app/bower_components/angular/angular.js',
 			'app/bower_components/fabric/dist/fabric.min.js',
+			'app/libs/alignment-guidelines.js',
 			'app/bower_components/lodash/lodash.js',
 			'app/bower_components/x2js/index.js',
 			'app/bower_components/eventbus/index.js',
