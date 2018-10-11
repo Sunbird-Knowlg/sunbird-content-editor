@@ -129,6 +129,8 @@ window.config = {
 3. `cd app` and run `bower install` to install bower components
 5. Create a symlink to 'sunbird-content-plugins' (`ln -s ../sunbird-content-plugins plugins`)(Linx, mac)
 for windows: use `mklink`
+6. Run `node app`
+7. Open Chrome and visit this link: http://localhost:3000/app/
 
 
 ## ChangeLogs
