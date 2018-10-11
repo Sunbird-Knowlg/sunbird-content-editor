@@ -80,7 +80,7 @@ window.config = {
 | `channel ` | It is a `string`,  Channel which has produced the event| NA  |
 | `framework ` | It is a `string`, example:NCF, NCERT| NA  |
 | `baseURL ` | It is a `string`, host url| NA  |
-| `corePluginsPackaged ` | It is a `boolean`, Which enables the collection-editor to load the plugins from packaged script rather than individual  | true  |
+| `corePluginsPackaged ` | It is a `boolean`, Which enables the content-editor to load the plugins from packaged script rather than individual  | true  |
 | `pluginRepo ` | It is a `string`, From which location plugins should load  | /plugins  |
 | `dispatcher ` | It is a `string`,Where the telemetry should log ex(console, piwik, library) | console |
 | `keywordsLimit ` | It is a `number`, Max response keyword size| 500 |
@@ -98,7 +98,7 @@ window.config = {
 
 ```js
 
-  openCollectionEditor() {
+  openContentEditor() {
     jQuery.fn.iziModal = iziModal;
     jQuery('#content-editor').iziModal({
       title: '',
@@ -124,7 +124,7 @@ window.config = {
 ## How to setup sunbird-content-editor in local
 1. Clone the sunbird-content-editor repo from [here](https://github.com/project-sunbird/sunbird-content-editor)
 2. Clone the sunbird-content-plugins repo from [here](https://github.com/project-sunbird/sunbird-content-plugins) 
-3. Go to the root directory sunbird-collection-editor.
+3. Go to the root directory sunbird-content-editor.
 4. Run `npm install` to install node moduels.
 3. `cd app` and run `bower install` to install bower components
 5. Create a symlink to 'sunbird-content-plugins' (`ln -s ../sunbird-content-plugins plugins`)(Linx, mac)
