@@ -4,6 +4,7 @@ const EDITOR_VER = process.env.editor_version_number;
 const PLUGIN_FRAMEWORK_VER = process.env.framework_version_number;
 
 const ZIP_FILE_NAME = 'content-editor.zip';
+const NPM_BUILD_FOLDER_NAME = 'content-editor'
 
 // Dependency files 
 const path = require('path');
@@ -17,6 +18,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const OnBuildSuccess = require('on-build-webpack');
+const extract = require('extract-zip');
+const cpy = require('cpy');
 
 const VENDOR = [
     "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
@@ -125,278 +129,299 @@ if (!BUILD_NUMBER && !EDITOR_VER && !PLUGIN_FRAMEWORK_VER) {
 
 const VERSION = EDITOR_VER + '.' + BUILD_NUMBER;
 
-module.exports = {
-    entry: {
-        'script': APP_SCRIPT,
-        'style': APP_STYLE
-    },
-    output: {
-        filename: `[name].min.${VERSION}.js`,
-        path: path.resolve(__dirname, 'dist')
-    },
-    resolve: {
-        alias: {
-            'jquery': path.resolve('./node_modules/jquery/dist/jquery.js'),
-            'angular': path.resolve('./app/bower_components/angular/angular.js'),
-            'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
-            'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
-        }
-    },
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                loader: 'string-replace-loader',
-                options: {
-                    multiple: [
-                        { search: '/plugins', replace: '/content-plugins' },
-                        { search: "/api", replace: '/action' },
-                        { search: 'https://dev.ekstep.in', replace: '' },
-                        { search: 'dispatcher: "local"', replace: 'dispatcher: "console"' }
-                    ],
-                    strict: true
-                }
-            },
 
-            {
-                test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'EkTelemetry'
-                }]
-            },
-            {
-                test: require.resolve('jquery'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: '$'
-                }]
-            },
-            {
-                test: require.resolve('jquery'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'jQuery'
-                }]
-            },
-            {
-                test: require.resolve('./app/bower_components/async/dist/async.min.js'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'async'
-                }]
-            },
-            {
-                test: require.resolve('./app/scripts/framework/libs/eventbus.min.js'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'EventBus'
-                }]
-            },
-            {
-                test: require.resolve('./node_modules/webfontloader/webfontloader.js'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'WebFont'
-                }]
-            },
-            {
-                test: require.resolve('./app/bower_components/uuid/index.js'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'UUID'
-                }]
-            },
-            {
-                test: require.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
-                use: [{
-                    loader: 'expose-loader',
-                    options: 'Fingerprint2'
-                }]
-            },
-            {
-                test: /\.(s*)css$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            sourceMap: false,
-                            minimize: true,
-                            "preset": "advanced",
-                            discardComments: {
-                                removeAll: true
-                            }
-                        }
-                    },
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            sourceMap: false,
-                            minimize: true,
-                            "preset": "advanced",
-                            discardComments: {
-                                removeAll: true
-                            }
-                        }
-                    }
-                ]
-            },
-            {
-                test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
-                use: [{
-                    loader: 'file-loader',
-                    options: {
-                        name: '[name].[ext]',
-                        outputPath: './fonts/',
-                        limit: 10000,
-                        fallback: 'responsive-loader'
-                    }
-                }]
-            },
-            {
-                test: /\.(html)$/,
-                use: {
-                    loader: 'html-loader',
-                    options: {
-                        attrs: [':data-src']
-                    }
-                }
-            },
-        ]
-    },
-    plugins: [
-        new CleanWebpackPlugin(['dist']),
-        new UglifyJsPlugin({
-            cache: false,
-            parallel: true,
-            uglifyOptions: {
-                compress: {
-                    dead_code: true,
-                    drop_console: false,
-                    global_defs: {
-                        DEBUG: true
-                    },
-                    passes: 1,
-                },
-                ecma: 5,
-                mangle: true
-            },
-            sourceMap: true
-        }),
-        // copy the index.html and templated to eidtor filder
-        new CopyWebpackPlugin([{
-                from: './app/templates',
-                to: './templates'
-            },
-            {
-                from: './app/index.html',
-                to: './[name].[ext]',
-                toType: 'template'
-            },
-            {
-                from: './app/images/geniecontrols.png',
-                to: './images'
-            },
-            {
-                from: './content-editor/scripts/*.js',
-                to: './',
-                flatten: true
-            },
-            {
-                from: './app/styles/noto.css',
-                to: './'
-            },
-            {
-                from: './deploy/gulpfile.js',
-                to: './'
-            },
-            {
-                from: './deploy/package.json',
-                to: './'
-            },
-
-        ]),
-        new ImageminPlugin({
-            test: /\.(jpe?g|png|gif|svg)$/i,
-            name: '[name].[ext]',
-            outputPath: './images',
-            pngquant: {
-                quality: '65-70'
+module.exports = (env, argv) => {
+    return {
+        entry: {
+            'script': APP_SCRIPT,
+            'style': APP_STYLE
+        },
+        output: {
+            filename: `[name].min.${VERSION}.js`,
+            path: path.resolve(__dirname, 'dist')
+        },
+        resolve: {
+            alias: {
+                'jquery': path.resolve('./node_modules/jquery/dist/jquery.js'),
+                'angular': path.resolve('./app/bower_components/angular/angular.js'),
+                'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
+                'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
             }
-        }),
-        new MiniCssExtractPlugin({
-            filename: `[name].min.${VERSION}.css`,
-        }),
-        new webpack.ProvidePlugin({
-            $: "jquery",
-            jQuery: "jquery",
-            "window.jQuery": 'jquery',
-            "window.$": 'jquery',
-            Fingerprint2: 'Fingerprint2',
-            WebFont: 'webfontloader',
-            Ajv: 'ajv',
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.js$/,
+                    loader: 'string-replace-loader',
+                    options: {
+                        multiple: [
+                            { search: '/plugins', replace: '/content-plugins' },
+                            { search: "/api", replace: '/action' },
+                            { search: 'https://dev.ekstep.in', replace: '' },
+                            { search: 'dispatcher: "local"', replace: 'dispatcher: "console"' }
+                        ],
+                        strict: true
+                    }
+                },
 
-        }),
-        new webpack.optimize.OccurrenceOrderPlugin(),
-        new webpack.HotModuleReplacementPlugin(),
-        new OptimizeCssAssetsPlugin({
-            assetNameRegExp: /\.optimize\.css$/g,
-            cssProcessor: require('cssnano'),
-            cssProcessorOptions: {
-                safe: true,
-                discardComments: {
-                    removeAll: true
+                {
+                    test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'EkTelemetry'
+                    }]
+                },
+                {
+                    test: require.resolve('jquery'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: '$'
+                    }]
+                },
+                {
+                    test: require.resolve('jquery'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'jQuery'
+                    }]
+                },
+                {
+                    test: require.resolve('./app/bower_components/async/dist/async.min.js'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'async'
+                    }]
+                },
+                {
+                    test: require.resolve('./app/scripts/framework/libs/eventbus.min.js'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'EventBus'
+                    }]
+                },
+                {
+                    test: require.resolve('./node_modules/webfontloader/webfontloader.js'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'WebFont'
+                    }]
+                },
+                {
+                    test: require.resolve('./app/bower_components/uuid/index.js'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'UUID'
+                    }]
+                },
+                {
+                    test: require.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'Fingerprint2'
+                    }]
+                },
+                {
+                    test: /\.(s*)css$/,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                sourceMap: false,
+                                minimize: true,
+                                "preset": "advanced",
+                                discardComments: {
+                                    removeAll: true
+                                }
+                            }
+                        },
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                sourceMap: false,
+                                minimize: true,
+                                "preset": "advanced",
+                                discardComments: {
+                                    removeAll: true
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
+                    use: [{
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: './fonts/',
+                            limit: 10000,
+                            fallback: 'responsive-loader'
+                        }
+                    }]
+                },
+                {
+                    test: /\.(html)$/,
+                    use: {
+                        loader: 'html-loader',
+                        options: {
+                            attrs: [':data-src']
+                        }
+                    }
+                },
+            ]
+        },
+        plugins: [
+            new CleanWebpackPlugin(['dist']),
+            new UglifyJsPlugin({
+                cache: false,
+                parallel: true,
+                uglifyOptions: {
+                    compress: {
+                        dead_code: true,
+                        drop_console: false,
+                        global_defs: {
+                            DEBUG: true
+                        },
+                        passes: 1,
+                    },
+                    ecma: 5,
+                    mangle: true
+                },
+                sourceMap: true
+            }),
+            // copy the index.html and templated to eidtor filder
+            new CopyWebpackPlugin([{
+                    from: './app/templates',
+                    to: './templates'
+                },
+                {
+                    from: './app/index.html',
+                    to: './[name].[ext]',
+                    toType: 'template'
+                },
+                {
+                    from: './app/images/geniecontrols.png',
+                    to: './images'
+                },
+                {
+                    from: './content-editor/scripts/*.js',
+                    to: './',
+                    flatten: true
+                },
+                {
+                    from: './app/styles/noto.css',
+                    to: './'
+                },
+                {
+                    from: './deploy/gulpfile.js',
+                    to: './'
+                },
+                {
+                    from: './deploy/package.json',
+                    to: './'
+                },
+
+            ]),
+            new ImageminPlugin({
+                test: /\.(jpe?g|png|gif|svg)$/i,
+                name: '[name].[ext]',
+                outputPath: './images',
+                pngquant: {
+                    quality: '65-70'
                 }
-            },
-            canPrint: true
-        }),
-        new ZipPlugin({
-            path: path.join(__dirname, '.'),
-            filename: ZIP_FILE_NAME,
-            fileOptions: {
-                mtime: new Date(),
-                compress: true,
-                forceZip64Format: false,
-            },
-            pathMapper: function(assetPath) {
-                console.log("AssesPath", assetPath)
-                if (assetPath.startsWith('gulpfile')) {
-                    return path.join('.', path.basename(assetPath));
+            }),
+            new MiniCssExtractPlugin({
+                filename: `[name].min.${VERSION}.css`,
+            }),
+            new webpack.ProvidePlugin({
+                $: "jquery",
+                jQuery: "jquery",
+                "window.jQuery": 'jquery',
+                "window.$": 'jquery',
+                Fingerprint2: 'Fingerprint2',
+                WebFont: 'webfontloader',
+                Ajv: 'ajv',
+
+            }),
+            new webpack.optimize.OccurrenceOrderPlugin(),
+            new webpack.HotModuleReplacementPlugin(),
+            new OptimizeCssAssetsPlugin({
+                assetNameRegExp: /\.optimize\.css$/g,
+                cssProcessor: require('cssnano'),
+                cssProcessorOptions: {
+                    safe: true,
+                    discardComments: {
+                        removeAll: true
+                    }
+                },
+                canPrint: true
+            }),
+            new ZipPlugin({
+                path: path.join(__dirname, '.'),
+                filename: ZIP_FILE_NAME,
+                fileOptions: {
+                    mtime: new Date(),
+                    compress: true,
+                    forceZip64Format: false,
+                },
+                pathMapper: function(assetPath) {
+                    console.log("AssesPath", assetPath)
+                    if (assetPath.startsWith('gulpfile')) {
+                        return path.join('.', path.basename(assetPath));
+                    }
+                    if (assetPath.endsWith('.js'))
+                        return path.join(path.dirname(assetPath), 'scripts', path.basename(assetPath));
+                    if (assetPath.endsWith('.css'))
+                        return path.join(path.dirname(assetPath), 'styles', path.basename(assetPath));
+                    if (assetPath.startsWith('fonts')) {
+                        return path.join('styles', 'fonts', path.basename(assetPath));
+                    };
+                    return assetPath;
+                },
+                exclude: [`style.min.${VERSION}.js`],
+                zipOptions: {
+                    forceZip64Format: false,
+                },
+            }),
+            new OnBuildSuccess(function(stats) {
+                if (env && env.channel.toUpperCase() === 'NPM_PACKAGE') {
+                    build_npm_package();
                 }
-                if (assetPath.endsWith('.js'))
-                    return path.join(path.dirname(assetPath), 'scripts', path.basename(assetPath));
-                if (assetPath.endsWith('.css'))
-                    return path.join(path.dirname(assetPath), 'styles', path.basename(assetPath));
-                if (assetPath.startsWith('fonts')) {
-                    return path.join('styles', 'fonts', path.basename(assetPath));
-                };
-                return assetPath;
-            },
-            exclude: [`style.min.${VERSION}.js`],
-            zipOptions: {
-                forceZip64Format: false,
-            },
-        })
-    ],
-    optimization: {
-        splitChunks: {
-            chunks: 'async',
-            minSize: 30000,
-            minChunks: 1,
-            maxAsyncRequests: 5,
-            maxInitialRequests: 3,
-            automaticNameDelimiter: '~',
-            name: true,
-            cacheGroups: {
-                styles: {
-                    name: 'style',
-                    test: /\.css$/,
-                    chunks: 'all',
-                    enforce: false
-                }
-            },
+            }),
+        ],
+        optimization: {
+            splitChunks: {
+                chunks: 'async',
+                minSize: 30000,
+                minChunks: 1,
+                maxAsyncRequests: 5,
+                maxInitialRequests: 3,
+                automaticNameDelimiter: '~',
+                name: true,
+                cacheGroups: {
+                    styles: {
+                        name: 'style',
+                        test: /\.css$/,
+                        chunks: 'all',
+                        enforce: false
+                    }
+                },
+            }
         }
     }
-
 };
+
+
+function build_npm_package() {
+    extract(ZIP_FILE_NAME, { dir: path.resolve(__dirname, NPM_BUILD_FOLDER_NAME) }, function(err, res) {
+        if (err) {
+            console.error("Fails to extract", err)
+            return
+        } else {
+            console.log("success", res);
+            cpy(['./package.json', './README.md'], path.resolve(__dirname, NPM_BUILD_FOLDER_NAME));
+            console.log(`NPM ${NPM_BUILD_FOLDER_NAME} package is Ready!!!, Please wait we are updating index.html file`);
+        }
+    })
+}

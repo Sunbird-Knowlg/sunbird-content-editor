@@ -1,8 +1,8 @@
 {
-  "name": "content-editor",
+  "name": "@project-sunbird/content-editor",
   "version": "1.0.0",
-  "description": "Tools where Stories, Worksheets can be created as content to the Genie Canvas platform",
-  "main": "Gruntfile.js",
+  "description": "Content Editor is tool. Which allows you to create ECML(Ekstep content markup language) type content",
+  "main": "gulpfile.js",
   "eslintConfig": {
     "extends": [
       "standard"
@@ -10,13 +10,12 @@
   },
   "dependencies": {
     "body-parser": "*",
-    "clean-css": "^4.1.4",
     "express": "^4.14.0",
-    "clean-webpack-plugin": "^0.1.19",
+    "express-http-proxy": "*",
     "lodash": "^4.16.6",
+    "promise": "^8.0.2",
     "request": "*",
-    "xmlbuilder": "*",
-    "express-http-proxy": "*"
+    "xmlbuilder": "*"
   },
   "devDependencies": {
     "ajv": "*",
@@ -30,6 +29,9 @@
     "copy-webpack-plugin": "*",
     "css-loader": "*",
     "cssnano": "*",
+    "clean-css": "^4.1.4",
+    "clean-webpack-plugin": "^0.1.19",
+    "cpy": "^7.0.1",
     "eslint": "^5.4.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.14.0",
@@ -93,6 +95,7 @@
     "mocha": "^5.2.0",
     "mocha-lcov-reporter": "^1.3.0",
     "node-sass": "*",
+    "on-build-webpack": "^0.1.0",
     "optimize-css-assets-webpack-plugin": "*",
     "phantomjs": "2.1.7",
     "postcss-cli": "*",
@@ -116,9 +119,11 @@
   },
   "scripts": {
     "build": "webpack",
-    "plugin-build": "webpack --config webpack.plugin.config.js",
+    "build-plugins": "webpack --config webpack.plugin.config.js",
+    "build-editor": "webpack --env.channel=NPM_PACKAGE",
     "apptest": "karma start karmaconf.js",
     "testpluginframework": "karma start karmaconf.pluginframework.js",
+    "build-npm-pkg": "gulp packageCorePlugins && npm run build-plugins && npm run build-editor && cd content-editor && gulp minifyJs && gulp copystyleImages && gulp clean && gulp injectrenamedfiles",
     "test": "karma start karmaconf.js && karma start karmaconf.pluginframework.js"
   },
   "repository": {
