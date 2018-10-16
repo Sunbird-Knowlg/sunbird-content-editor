@@ -125,9 +125,9 @@ window.config = {
 1. Clone the sunbird-content-editor repo from [here](https://github.com/project-sunbird/sunbird-content-editor)
 2. Clone the sunbird-content-plugins repo from [here](https://github.com/project-sunbird/sunbird-content-plugins) 
 3. Go to the root directory sunbird-content-editor.
-4. Run `npm install` to install node moduels.
+4. Run `npm install` to install node modules.
 3. `cd app` and run `bower install` to install bower components
-5. Create a symlink to 'sunbird-content-plugins' (`ln -s ../sunbird-content-plugins plugins`)(Linx, mac)
+5. Create a symlink to 'sunbird-content-plugins' (`ln -s ../sunbird-content-plugins plugins`)(Linux, mac)
 for windows: use `mklink`
 6. Run `node app`
 7. Open Chrome and visit this link: http://localhost:3000/app/
@@ -140,3 +140,11 @@ for windows: use `mklink`
  >For sunbird-content-editor demo please visit [here](https://staging.open-sunbird.org/workspace/content/create)   
 
 
+## License
+This project is licensed under the MIT License - see the [LICENSE](https://github.com/project-sunbird/sunbird-content-editor/blob/master/LICENSE) file for details
+
+## Versioning
+We use [SemVer](https://semver.org/) for versioning. For the versions available, see the [tags](https://github.com/project-sunbird/sunbird-content-editor/tags) on this repository.
+
+## Any Issues?
+We have an open and active [issue tracker](https://project-sunbird.atlassian.net/issues/). Please report any issues.
