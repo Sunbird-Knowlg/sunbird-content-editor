@@ -21,16 +21,6 @@ org.ekstep.services.languageService = new (org.ekstep.services.iService.extend({
 		return this.getBaseURL() + this.getAPISlug() + this.getConfig('languageEndPoint', '/language')
 	},
 	/**
-     * @member {object} wordHeaders
-     * @memberof org.ekstep.services.languageService
-     */
-	wordHeaders: {
-		'headers': {
-			'Content-Type': 'application/json',
-			'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiI5OGNlN2RmNmNkOTk0YWQ5YjZlYTRjNDJlNmVjYjY5MCJ9.rtr4188EwDYZywtP7S9uuv1LsivoucFxOvJFDCWvq0Y'
-		}
-	},
-	/**
      * Get all list of languages
      * @param  {Function} callback returns error and response as arguments
      * @memberof org.ekstep.services.languageService
@@ -63,7 +53,7 @@ org.ekstep.services.languageService = new (org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
 	getWords: function (data, callback) {
-		this.postFromService(this.languageURL() + this.getConfig('wordsGetUrl', '/v3/search'), data, this.wordHeaders, callback)
+		this.postFromService(this.languageURL() + this.getConfig('wordsGetUrl', '/v3/search'), data, this.requestHeaders, callback)
 	},
 	/**
      * Get types of word. eg. Nouns, verbs etc
@@ -71,7 +61,15 @@ org.ekstep.services.languageService = new (org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.languageService
      */
 	getWordDefinition: function (callback) {
-		this.getFromService(this.learningURL() + this.getConfig('word_definition_url', '/taxonomy/en/definition/Word'), this.requestHeaders, callback)
+		this.getFromService(this.languageURL() + this.getConfig('word_definition_url', '/definition/v3/read/Word') + '?language_id=en', this.requestHeaders, callback)
+	},
+	/**
+     * Get types of word. eg. Nouns, verbs etc
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.languageService
+     */
+	getWordDefinitionByLanguage: function (data, callback) {
+		this.getFromService(this.languageURL() + this.getConfig('word_definition_url', '/definition/v3/read/Word') + '?language_id=' + data.languageId, this.requestHeaders, callback)
 	},
 	/**
      * Get all avalible keywords in given content
