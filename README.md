@@ -137,7 +137,6 @@ for windows: use `mklink`
    For changes logs please refer [here](https://github.com/project-sunbird/sunbird-content-editor/releases) 
 
   
- >For sunbird-content-editor demo please visit [here](https://staging.open-sunbird.org/workspace/content/create)   
 
 
 ## License
@@ -148,3 +147,7 @@ We use [SemVer](https://semver.org/) for versioning. For the versions available,
 
 ## Any Issues?
 We have an open and active [issue tracker](https://project-sunbird.atlassian.net/issues/). Please report any issues.
+
+
+>For sunbird-content-editor demo please visit [here](https://staging.open-sunbird.org/workspace/content/create)   
+
