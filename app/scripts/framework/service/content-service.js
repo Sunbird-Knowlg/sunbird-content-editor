@@ -364,8 +364,5 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 	},
 	getComments: function (data, callback) {
 		this.postFromService(this.getBaseURL() + this.getConfig('getCommentURL', '/plugin/review/comment/v1/read/comment'), data, this.requestHeaders, callback)
-	},
-	deleteComments: function (data, callback) {
-		this.delete(this.getBaseURL() + this.getConfig('deleteStageComment', '/plugin/review/comment/v1/delete/comment') + data, this.requestHeaders, callback)
 	}
 }))()
