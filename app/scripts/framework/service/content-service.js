@@ -363,7 +363,6 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 		return headersObj
 	},
 	getComments: function (data, callback) {
-	// API call for getting the comments for the request
 		this.postFromService(this.getBaseURL() + this.getConfig('getCommentURL', '/plugin/review/comment/v1/read/comment'), data, this.requestHeaders, callback)
 	},
 	deleteComments: function (data, callback) {
