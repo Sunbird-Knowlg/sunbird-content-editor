@@ -352,14 +352,21 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 		}
 		this.postFromService(this.serviceURL() + this.getConfig('contentUnlistedPublishURL', '/v3/unlisted/publish/') + data.contentId, requestObj, this.requestHeaders, callback)
 	},
-  /**
+	/**
      * set channel in requestHeaders
      * @memberof org.ekstep.services.contentService
      */
-  setChannelInHeader: function (channel) {
-    var headersObj = _.cloneDeep(this.requestHeaders)
-    if(channel)
-      headersObj.headers['X-Channel-Id'] = channel
-    return headersObj
-  }
+	setChannelInHeader: function (channel) {
+		var headersObj = _.cloneDeep(this.requestHeaders)
+		if(channel)
+		  headersObj.headers['X-Channel-Id'] = channel
+		return headersObj
+	},
+	getComments: function (data, callback) {
+	// API call for getting the comments for the request
+		this.postFromService(this.getBaseURL() + this.getConfig('getCommentURL', '/plugin/review/comment/v1/read/comment'), data, this.requestHeaders, callback)
+	},
+	deleteComments: function (data, callback) {
+		this.delete(this.getBaseURL() + this.getConfig('deleteStageComment', '/plugin/review/comment/v1/delete/comment') + data, this.requestHeaders, callback)
+	}
 }))()
