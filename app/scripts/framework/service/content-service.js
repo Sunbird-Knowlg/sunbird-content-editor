@@ -202,6 +202,18 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 		this.postFromService(this.serviceURL() + this.getConfig('contentBundleUrl', '/v3/bundle'), data, this.requestHeaders, callback)
 	},
 	/**
+     * retrieves downloadable URL link to Table of content
+     * @param contentId {string} content id
+     * @param fileName {string} "name" parameter of meta data object
+     * @param callback {function} callback function
+     *
+     * @memberof org.ekstep.services.contentService
+     */
+	downloadTableContent: function (contentId, fileName, callback) {
+		var data = { 'request': { 'content_identifiers': [contentId], 'file_name': fileName } }
+		this.postFromService(this.serviceURL() + this.getConfig('contentBundleUrl', '/v3/bundle'), data, this.requestHeaders, callback)
+	},
+	/**
      *
      *
      * retrieves collection in hierarchical order
