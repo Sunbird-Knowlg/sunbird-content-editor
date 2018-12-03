@@ -16,4 +16,4 @@ org.ekstep.services.textbookService = new(org.ekstep.services.iService.extend({
         headersObj.headers['content-type'] = "application/x-download"
         this.getFromService(this.serviceURL() + this.getConfig('donwnloadTextbookUrl', '/v1/toc/download/') + contentId, headersObj, callback)
     }
-});
+}))()
