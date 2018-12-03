@@ -288,7 +288,7 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
      * @param callback {function} callback function
      * @memberof org.ekstep.services.contentService
      */
-	getPresignedURL: function (contentId, fileName, callback) {
+	getPresignedURL: function (contentId, fileName, callback, type) {
 		var requestObj = {
 			'request': {
 				'content': {
@@ -296,7 +296,11 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 				}
 			}
 		}
-		this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + contentId, requestObj, this.requestHeaders, callback)
+    if(type){
+      this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + contentId + '?type=toc', requestObj, this.requestHeaders, callback)
+    }else{
+      this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + contentId, requestObj, this.requestHeaders, callback)
+    }	
 	},
 
 	/**
