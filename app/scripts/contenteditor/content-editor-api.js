@@ -184,6 +184,9 @@ window.org.ekstep.contenteditor.api = {
 		case ServiceConstants.DIALCODE_SERVICE:
 			service = org.ekstep.services.dialcodeService
 			break
+    case ServiceConstants.TEXTBOOK_SERVICE:
+      service = org.ekstep.services.textbookService
+      break
 		}
 		return service
 	},
