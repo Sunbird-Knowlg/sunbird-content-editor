@@ -209,9 +209,9 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
      *
      * @memberof org.ekstep.services.contentService
      */
-	downloadTableContent: function (contentId, fileName, callback) {
-		var data = { 'request': { 'content_identifiers': [contentId], 'file_name': fileName } }
-		this.getFromService(this.serviceURL() + this.getConfig('donwnloadTocUrl', '/v1/textbook/toc/download/') + contentId, this.requestHeaders, callback)
+	downloadTableContent: function (contentId, callback) {
+		var requestHeaders = {"headers":{"content-type":"application/x-download","user-id":"content-editor"}};
+		this.getFromService(this.serviceURL() + this.getConfig('donwnloadTocUrl', '/textbook/v1/toc/download/') + contentId, requestHeaders, callback)
 	},
 	/**
      *
