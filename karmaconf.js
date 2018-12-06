@@ -59,6 +59,7 @@ module.exports = function (config) {
 			'app/scripts/framework/service/meta-service.js',
 			'app/scripts/framework/service/language-service.js',
 			'app/scripts/framework/service/search-service.js',
+			'app/scripts/framework/service/textbook-service.js',
 			'app/scripts/contenteditor/bootstrap-editor.js',
 			'app/scripts/contenteditor/ce-config.js',
 			'app/scripts/contenteditor/content-editor.js',

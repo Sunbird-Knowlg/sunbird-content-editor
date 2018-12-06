@@ -134,6 +134,7 @@ var pluginFramework = [
     "app/scripts/framework/service/language-service.js",
     "app/scripts/framework/service/search-service.js",
     "app/scripts/framework/service/dialcode-service.js",
+    "app/scripts/framework/service/textbook-service.js",
     "app/scripts/framework/repo/irepo.js",
     "app/scripts/framework/repo/published-repo.js",
     "app/scripts/framework/repo/draft-repo.js",

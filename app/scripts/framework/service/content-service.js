@@ -20,7 +20,7 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
      *
      * @memberof org.ekstep.services.contentService
      */
-	contentFields: 'body,collaborators,editorState,stageIcons,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType,owner,domain,code,visibility,createdBy,description,language,mediaType,mimeType,osId,languageCode,createdOn,lastUpdatedOn,audience,ageGroup,attributions,artifactUrl,board,subject,keywords,config,resourceType,medium,publisher,year,pkgVersion,framework,rejectReasons,rejectComment,topic,ownedBy,ownershipType,creators,contributors',
+	contentFields: 'body,collaborators,editorState,stageIcons,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType,owner,domain,code,visibility,createdBy,description,language,mediaType,mimeType,osId,languageCode,createdOn,lastUpdatedOn,audience,ageGroup,attributions,artifactUrl,board,subject,keywords,config,resourceType,medium,publisher,year,pkgVersion,framework,rejectReasons,rejectComment,topic,ownedBy,ownershipType,creators,contributors,reservedDialcodes,qrCodeProcessId',
 	/**
      *
      * sets content meta for the given content id
@@ -288,7 +288,7 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
      * @param callback {function} callback function
      * @memberof org.ekstep.services.contentService
      */
-	getPresignedURL: function (contentId, fileName, callback) {
+	getPresignedURL: function (contentId, fileName, callback, type) {
 		var requestObj = {
 			'request': {
 				'content': {
@@ -296,7 +296,11 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 				}
 			}
 		}
-		this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + contentId, requestObj, this.requestHeaders, callback)
+		if (type) {
+			this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + contentId + '?type=' + type, requestObj, this.requestHeaders, callback)
+		} else {
+			this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + contentId, requestObj, this.requestHeaders, callback)
+		}
 	},
 
 	/**
@@ -358,8 +362,7 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
      */
 	setChannelInHeader: function (channel) {
 		var headersObj = _.cloneDeep(this.requestHeaders)
-		if(channel)
-		  headersObj.headers['X-Channel-Id'] = channel
+		if (channel) { headersObj.headers['X-Channel-Id'] = channel }
 		return headersObj
 	},
 	getComments: function (data, callback) {
