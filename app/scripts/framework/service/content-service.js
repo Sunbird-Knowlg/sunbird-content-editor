@@ -296,11 +296,11 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 				}
 			}
 		}
-    if(type){
-      this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + contentId + '?type=' + type, requestObj, this.requestHeaders, callback)
-    }else{
-      this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + contentId, requestObj, this.requestHeaders, callback)
-    }	
+		if (type) {
+			this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + contentId + '?type=' + type, requestObj, this.requestHeaders, callback)
+		} else {
+			this.postFromService(this.serviceURL() + this.getConfig('contentPresignURL', '/v3/upload/url/') + contentId, requestObj, this.requestHeaders, callback)
+		}
 	},
 
 	/**
@@ -362,8 +362,7 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
      */
 	setChannelInHeader: function (channel) {
 		var headersObj = _.cloneDeep(this.requestHeaders)
-		if(channel)
-		  headersObj.headers['X-Channel-Id'] = channel
+		if (channel) { headersObj.headers['X-Channel-Id'] = channel }
 		return headersObj
 	},
 	getComments: function (data, callback) {
