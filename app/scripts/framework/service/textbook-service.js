@@ -8,12 +8,12 @@ org.ekstep.services.textbookService = new(org.ekstep.services.iService.extend({
     serviceURL: function() {
         return this.getBaseURL() + this.getAPISlug() + this.getConfig('textbookEndPoint', '/textbook')
     },
-    uploadFile: function(contentId, data, config, callback) {
-        this.postFromService(this.serviceURL() + this.getConfig('uploadContentURL', '/v1/toc/upload/') + contentId, data, config, callback)
+    uploadFile: function(contentId, fileUrl, callback) {
+        this.postFromService(this.serviceURL() + this.getConfig('uploadContentURL', '/v1/toc/upload/') + contentId + '?fileUrl=' + fileUrl, {}, config, callback)
     },
     downloadFile: function(contentId, callback) {
         var headersObj = _.cloneDeep(this.requestHeaders)
-        headersObj.headers['content-type'] = "application/x-download"
+        headersObj.headers['content-type'] = "application/x-download";
         this.getFromService(this.serviceURL() + this.getConfig('donwnloadTextbookUrl', '/v1/toc/download/') + contentId, headersObj, callback)
     }
 }))()
