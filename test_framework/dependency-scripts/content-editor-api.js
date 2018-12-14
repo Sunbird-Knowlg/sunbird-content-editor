@@ -165,6 +165,9 @@ window.org.ekstep.contenteditor.api = {
 			break
 		case ServiceConstants.TELEMETRY_SERVICE:
 			service = org.ekstep.services.telemetryService
+               break
+          case ServiceConstants.USER_SERVICE:
+			service = org.ekstep.services.userService
 			break
 		}
 		return service
