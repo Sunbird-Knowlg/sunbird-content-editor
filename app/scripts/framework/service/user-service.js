@@ -20,7 +20,7 @@ org.ekstep.services.userService = new (org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.userService
      */
     search: function (request, callback) {
-        this.postFromService(this.userSearchURL(), request, this.requestHeaders, callback)
+        this.postFromService(this.searchURL(), request, this.requestHeaders, callback)
     },
 	/**
      * updateCollaborators method helps to update the collaborators
