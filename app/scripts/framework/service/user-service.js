@@ -11,7 +11,7 @@ org.ekstep.services.userService = new (org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.userService
      */
     searchURL: function () {
-        return this.getBaseURL() + this.getAPISlug() + this.getConfig('userSearchEndPoint', '/user/v1/search')
+        return this.getBaseURL() + this.getAPISlug() + this.getConfig('userSearchEndPoint', '/user/v1/search?fields=orgName')
     },
 	/**
      * Search method helps to get the users
