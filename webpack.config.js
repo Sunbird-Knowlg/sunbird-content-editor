@@ -6,7 +6,7 @@ const PLUGIN_FRAMEWORK_VER = process.env.framework_version_number;
 const ZIP_FILE_NAME = 'content-editor.zip';
 const NPM_BUILD_FOLDER_NAME = 'content-editor'
 
-// Dependency files 
+// Dependency files
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -61,6 +61,8 @@ var PLUGIN_FRAMEWORK = [
     "./app/scripts/framework/service/language-service.js",
     "./app/scripts/framework/service/search-service.js",
     "./app/scripts/framework/service/dialcode-service.js",
+    "./app/scripts/framework/service/lock-service.js",
+    "./app/scripts/framework/service/user-service.js",
     "./app/scripts/framework/service/textbook-service.js",
     "./app/scripts/framework/repo/irepo.js",
     "./app/scripts/framework/repo/published-repo.js",
