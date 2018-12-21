@@ -19,11 +19,12 @@ org.ekstep.services.lockService = new (org.ekstep.services.iService.extend({
     * @memberof org.ekstep.services.lockService
     */
     createLock: function (request, callback) {
+        var instance = this;
         var fp = new Fingerprint2()
         fp.get(function (result) {
-            var headersObj = _.cloneDeep(this.requestHeaders)
+            var headersObj = _.cloneDeep(instance.requestHeaders)
             headersObj.headers['X-device-Id'] = result.toString()
-            this.postFromService(this.lockURL() + this.getConfig('createLockUrl', '/v1/create'), request, this.setDeviceIdInHeader(), callback)
+            instance.postFromService(instance.lockURL() + instance.getConfig('createLockUrl', '/v1/create'), request, instance.setDeviceIdInHeader(), callback)
         })
     },
     /**
@@ -33,11 +34,12 @@ org.ekstep.services.lockService = new (org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.lockService
      */
     refreshLock: function (request, callback) {
+        var instance = this;
         var fp = new Fingerprint2()
         fp.get(function (result) {
-            var headersObj = _.cloneDeep(this.requestHeaders)
+            var headersObj = _.cloneDeep(instance.requestHeaders)
             headersObj.headers['X-device-Id'] = result.toString()
-            this.patch(this.lockURL() + this.getConfig('refreshLockUrl', '/v1/refresh'), request, headersObj, callback)
+            instance.patch(instance.lockURL() + instance.getConfig('refreshLockUrl', '/v1/refresh'), request, headersObj, callback)
         })
     },
     /**
@@ -47,11 +49,12 @@ org.ekstep.services.lockService = new (org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.lockService
      */
     deleteLock: function (request, callback) {
+        var instance = this;
         var fp = new Fingerprint2()
         fp.get(function (result) {
-            var headersObj = _.cloneDeep(this.requestHeaders)
+            var headersObj = _.cloneDeep(instance.requestHeaders)
             headersObj.headers['X-device-Id'] = result.toString()
-            this.delete(this.lockURL() + this.getConfig('deleteLockUrl', '/v1/retire'), request, this.setDeviceIdInHeader(), callback)
+            instance.delete(instance.lockURL() + instance.getConfig('deleteLockUrl', '/v1/retire'), request, headersObj, callback)
         })
     }
 }))()
