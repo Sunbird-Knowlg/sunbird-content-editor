@@ -186,7 +186,10 @@ window.org.ekstep.contenteditor.api = {
 			break
           case ServiceConstants.TEXTBOOK_SERVICE:
                service = org.ekstep.services.textbookService
-          break
+		break
+		case ServiceConstants.USER_SERVICE:
+			service = org.ekstep.services.userService
+		break
 		}
 		return service
 	},
