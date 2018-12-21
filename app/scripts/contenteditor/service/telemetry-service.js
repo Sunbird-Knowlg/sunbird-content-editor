@@ -218,6 +218,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 				'type': ''
 			}
 		}
+		ecEditor.dispatchEvent('instance:editor:keepalive', {})
 		EkTelemetry.interact(eventData)
 	},
 	/**
@@ -239,6 +240,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 		}
 		if (data.subtype) { eventData.subtype = data.subtype }
 		if (data.visits) { eventData.visits = data.visits }
+		ecEditor.dispatchEvent('instance:editor:keepalive', {})
 		EkTelemetry.impression(eventData)
 	},
 	/**
@@ -297,6 +299,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 				eventData.object = { 'id': data.objectid, 'type': data.objecttype }
 			}
 		}
+		ecEditor.dispatchEvent('instance:editor:keepalive', {})
 		EkTelemetry.error(eventData)
 	},
 	/**
@@ -427,6 +430,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 		// for V3 implementation
 		if (data.pageid || data.stage) { eventData.pageid = data.stage || data.pageid }
 		if (data.params) { eventData.params = data.params }
+		ecEditor.dispatchEvent('instance:editor:keepalive', {})
 		EkTelemetry.log(eventData)
 	},
 	/**
