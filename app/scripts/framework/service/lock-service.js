@@ -24,7 +24,7 @@ org.ekstep.services.lockService = new (org.ekstep.services.iService.extend({
         fp.get(function (result) {
             var headersObj = _.cloneDeep(instance.requestHeaders)
             headersObj.headers['X-device-Id'] = result.toString()
-            instance.postFromService(instance.lockURL() + instance.getConfig('createLockUrl', '/v1/create'), request, instance.setDeviceIdInHeader(), callback)
+            instance.postFromService(instance.lockURL() + instance.getConfig('createLockUrl', '/v1/create'), request, headersObj, callback)
         })
     },
     /**
