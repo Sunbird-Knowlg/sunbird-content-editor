@@ -31,7 +31,8 @@ window.ServiceConstants = {
 	TELEMETRY_SERVICE: 'telemetry',
 	DIALCODE_SERVICE: 'dialcode',
 	TEXTBOOK_SERVICE: 'textbook',
-	CONTENT_LOCK_SERVICE: 'lock'
+	CONTENT_LOCK_SERVICE: 'lock',
+	USER_SERVICE: 'user'
 }
 
 window.ManagerConstants = {
