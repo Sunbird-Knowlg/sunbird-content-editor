@@ -48,5 +48,6 @@ window.ServiceConstants = {
 	META_SERVICE: 'meta',
 	ASSET_SERVICE: 'asset',
 	TELEMETRY_SERVICE: 'telemetry',
-	USER_SERVICE: 'user'
+	USER_SERVICE: 'user',
+	CONTENT_LOCK_SERVICE: 'lock'
 }
