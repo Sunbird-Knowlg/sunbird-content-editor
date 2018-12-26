@@ -19,7 +19,13 @@ org.ekstep.services.lockService = new (org.ekstep.services.iService.extend({
     * @memberof org.ekstep.services.lockService
     */
     createLock: function (request, callback) {
-        this.postFromService(this.lockURL() + this.getConfig('createLockUrl', '/v1/create'), request, this.setDeviceIdInHeader(), callback)
+        var instance = this;
+        var fp = new Fingerprint2()
+        fp.get(function (result) {
+            var headersObj = _.cloneDeep(instance.requestHeaders)
+            headersObj.headers['X-device-Id'] = result.toString()
+            instance.postFromService(instance.lockURL() + instance.getConfig('createLockUrl', '/v1/create'), request, headersObj, callback)
+        })
     },
     /**
      * This method is used to refresh lock
@@ -28,8 +34,13 @@ org.ekstep.services.lockService = new (org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.lockService
      */
     refreshLock: function (request, callback) {
-        this.requestHeaders.headers['X-device-Id'] = '123456';
-        this.patch(this.lockURL() + this.getConfig('refreshLockUrl', '/v1/refresh'), request, this.requestHeaders , callback)
+        var instance = this;
+        var fp = new Fingerprint2()
+        fp.get(function (result) {
+            var headersObj = _.cloneDeep(instance.requestHeaders)
+            headersObj.headers['X-device-Id'] = result.toString()
+            instance.patch(instance.lockURL() + instance.getConfig('refreshLockUrl', '/v1/refresh'), request, headersObj, callback)
+        })
     },
     /**
      * This method is used to delete lock
@@ -38,18 +49,12 @@ org.ekstep.services.lockService = new (org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.lockService
      */
     deleteLock: function (request, callback) {
-        this.delete(this.lockURL() + this.getConfig('deleteLockUrl', '/v1/retire'), request, this.setDeviceIdInHeader(), callback)
-    },
-    /**
-     * set device id in requestHeaders
-     * @memberof org.ekstep.services.lockService
-     */
-    setDeviceIdInHeader: function () {
+        var instance = this;
         var fp = new Fingerprint2()
         fp.get(function (result) {
-            var headersObj = _.cloneDeep(this.requestHeaders)
-            headersObj['X-device-Id'] = result.toString()
-            return headersObj
+            var headersObj = _.cloneDeep(instance.requestHeaders)
+            headersObj.headers['X-device-Id'] = result.toString()
+            instance.delete(instance.lockURL() + instance.getConfig('deleteLockUrl', '/v1/retire'), request, headersObj, callback)
         })
     }
 }))()
