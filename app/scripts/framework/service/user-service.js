@@ -29,6 +29,6 @@ org.ekstep.services.userService = new (org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.userService
      */
     updateCollaborators: function (contentID, request, callback) {
-        this.patch(this.getBaseURL() + this.getAPISlug() + this.getConfig('collaboratorEndPoint', '/content/v1/collaborator/update/') + contentID, request, this.requestHeaders, callback)
+        this.patch(this.getBaseURL() + this.getAPISlug() + this.getConfig('collaborationUrl', '/content/v1/collaborator/update/') + contentID, request, this.requestHeaders, callback)
     }
 }))()
