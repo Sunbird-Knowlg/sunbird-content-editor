@@ -29,7 +29,8 @@ window.ServiceConstants = {
 	META_SERVICE: 'meta',
 	ASSET_SERVICE: 'asset',
 	TELEMETRY_SERVICE: 'telemetry',
-	DIALCODE_SERVICE: 'dialcode'
+	DIALCODE_SERVICE: 'dialcode',
+	TEXTBOOK_SERVICE: 'textbook'
 }
 
 window.ManagerConstants = {

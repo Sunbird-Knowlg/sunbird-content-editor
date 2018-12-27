@@ -48,6 +48,22 @@ org.ekstep.services.dialcodeService = new (org.ekstep.services.iService.extend({
 	dialcodeLink: function (channel, request, callback) {
 		this.postFromService(this.dialcodelinkURL() + this.getConfig('dialcodeLink', '/link'), request, this.setChannelInHeader(channel), callback)
 	},
+	reserveDialCode: function (channel, request, contentId, callback) {
+		if (contentId) {
+			this.postFromService(this.dialcodeURL() + this.getConfig('reserveDialCodeUrl', '/v1/reserve/') + contentId, request, this.setChannelInHeader(channel), callback)
+		} else {
+			// eslint-disable-next-line
+      callback('contentId id is required to reserve dialCodes', undefined)
+		}
+	},
+	downloadQRCode: function (channel, processId, callback) {
+		if (processId) {
+			this.get(this.dialcodeURL() + this.getConfig('downloadQRCodeURL', '/v1/process/status/') + processId, this.setChannelInHeader(channel), callback)
+		} else {
+			// eslint-disable-next-line
+			callback('Process id is required to get QR codes', undefined)
+		}
+	},
 	/**
      * set channel in requestHeaders
      * @memberof org.ekstep.services.dialcodeService
