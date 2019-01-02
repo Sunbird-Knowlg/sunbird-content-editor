@@ -299,7 +299,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 				eventData.object = { 'id': data.objectid, 'type': data.objecttype }
 			}
 		}
-    ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
+		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
 		EkTelemetry.error(eventData)
 	},
 	/**
