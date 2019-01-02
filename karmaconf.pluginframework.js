@@ -39,6 +39,7 @@ module.exports = function (config) {
 			'test_framework/dependency-scripts/**/*.js',
 			'test_framework/data/repos/*.js',
 			'test_framework/**/*.spec.js',
+			'app/scripts/framework/service/user-service.js',
 			// fixtures
 			{ pattern: 'test_framework/data/**/*.json', watched: true, served: true, included: false },
 			{ pattern: 'test_framework/data/**/*.js', watched: true, served: true, included: false },
