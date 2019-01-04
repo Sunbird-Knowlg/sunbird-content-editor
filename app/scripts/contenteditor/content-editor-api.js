@@ -184,9 +184,15 @@ window.org.ekstep.contenteditor.api = {
 		case ServiceConstants.DIALCODE_SERVICE:
 			service = org.ekstep.services.dialcodeService
 			break
-          case ServiceConstants.TEXTBOOK_SERVICE:
-               service = org.ekstep.services.textbookService
-          break
+		case ServiceConstants.TEXTBOOK_SERVICE:
+			service = org.ekstep.services.textbookService
+			break
+		case ServiceConstants.USER_SERVICE:
+			service = org.ekstep.services.userService
+			break
+		case ServiceConstants.CONTENT_LOCK_SERVICE:
+			service = org.ekstep.services.lockService
+			break
 		}
 		return service
 	},
