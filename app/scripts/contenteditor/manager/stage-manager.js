@@ -77,9 +77,9 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			this.currentStage.isSelected = false
 			org.ekstep.pluginframework.eventManager.dispatchEvent('stage:unselect', { stageId: this.currentStage.id })
 			this.clearCanvas(this.canvas)
-			var selectStage = _.find(this.stages, { id: data.stageId });
+			var selectStage = _.find(this.stages, { id: data.stageId })
 			if (!_.isUndefined(selectStage)) {
-				this.currentStage = selectStage;
+				this.currentStage = selectStage
 			}
 			this.currentStage.isSelected = true
 			this.canvas.off('object:added')
