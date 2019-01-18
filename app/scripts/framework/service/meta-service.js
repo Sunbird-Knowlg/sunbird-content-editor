@@ -161,10 +161,7 @@ org.ekstep.services.metaService = new (org.ekstep.services.iService.extend({
 		this.postFromService(this.getBaseURL() + this.getAPISlug() + this.getConfig('configEndPoint', '/data') + this.getConfig('configurationUrl', '/v1/form/read'), data, this.requestHeaders, callback)
 	},
 
-	getVideoLicense: function (data, field,callback) {
-		this.postFromService(this.getBaseURL() + this.getAPISlug() + this.getConfig('videoLicenseURL', '/asset/v3/validate?field=' + field), data, this.requestHeaders, callback)
-	},
-	getDriveVideoFileSize: function (data, field, callback) {
+	getVideoLicense: function (data, field, callback) {
 		this.postFromService(this.getBaseURL() + this.getAPISlug() + this.getConfig('videoLicenseURL', '/asset/v3/validate?field=' + field), data, this.requestHeaders, callback)
 	}
 }))()
