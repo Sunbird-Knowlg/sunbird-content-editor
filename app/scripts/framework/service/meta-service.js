@@ -165,7 +165,6 @@ org.ekstep.services.metaService = new (org.ekstep.services.iService.extend({
      * Get form api
      * @param  {data} data to pass in post api
 	* @param  {field} field type of field to pass in post api
-     * @param  {Function} callback returns error and response as arguments
      * @memberof org.ekstep.services.metaService
      */
 	getVideoLicense: function (data, field, callback) {
