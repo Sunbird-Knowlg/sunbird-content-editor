@@ -3,8 +3,8 @@ window.context = {
 	'sid': 'rctrs9r0748iidtuhh79ust993',
 	'user': {
 		'id': '390',
-		'name': 'Chetan Sachdev',
-		'email': 'chetan.sachdev@tarento.com',
+		'name': 'Vinu Kumar',
+		'email': 'vinu.kumar@tarento.com',
 		'avtar': 'https://release.ekstep.in/media/com_easysocial/defaults/avatars/user/medium.png',
 		'logout': 'https://release.ekstep.in/index.php?option=com_easysocial&view=login&layout=logout'
 	},
