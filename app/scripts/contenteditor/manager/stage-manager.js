@@ -223,6 +223,13 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	getStageIcons: function () {
 		return this.thumbnails
 	},
+	updateStageIcons: function () {
+		var instance = this
+		var allStageIcons = org.ekstep.contenteditor.stageManager.getStageIcons()
+		var allStages = _.map(org.ekstep.contenteditor.stageManager.stages, 'id')
+		instance.thumbnails = _.pick(allStageIcons, allStages)
+		return instance.thumbnails
+	},
 	getPragma: function () {
 		return ecEditor._.uniq(this.pragma)
 	},
@@ -363,6 +370,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		var instance = this
 		stageIcons = stageIcons || '{}'
 		var thumbnails = JSON.parse(stageIcons)
+		instance.thumbnails = JSON.parse(stageIcons)
 		var tasks = []
 		_.forEach(stages, function (stage, index) {
 			tasks.push(function (callback) {
