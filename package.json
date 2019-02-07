@@ -9,6 +9,7 @@
     ]
   },
   "dependencies": {
+    "@project-sunbird/telemetry-sdk": "^0.0.12",
     "body-parser": "*",
     "express": "^4.14.0",
     "express-http-proxy": "*",

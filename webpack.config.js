@@ -28,7 +28,7 @@ const VENDOR = [
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
-    "./app/libs/telemetry-lib-v3.min.js",
+    "./node_modules/@project-sunbird/telemetry-sdk/index.js",
     "./app/libs/webfont.js",
     "./app/bower_components/angular/angular.js",
     "./app/bower_components/fabric/dist/fabric.min.js",
