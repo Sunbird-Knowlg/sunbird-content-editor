@@ -16,4 +16,4 @@ before_script:
     - npm run build-plugins
     - npm run build
 script:
-    - npm run testpluginframework
+    - npm run test-with-coverage
