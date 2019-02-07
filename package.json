@@ -126,7 +126,7 @@
     "testpluginframework": "karma start karmaconf.pluginframework.js",
     "build-npm-pkg": "gulp packageCorePlugins && npm run build-plugins && npm run build-editor && cd content-editor && gulp minifyJs && gulp copystyleImages && gulp clean && gulp injectrenamedfiles",
     "test": "karma start karmaconf.js && karma start karmaconf.pluginframework.js",
-    "test-with-coverage": "karma start karmaconf.pluginframework.js && cat ./coverage/lcov.info | codacy-coverage"
+    "test-with-coverage": "istanbul cover karma start karmaconf.pluginframework.js && cat ./coverage/lcov.info | codacy-coverage"
   },
   "repository": {
     "type": "git",
