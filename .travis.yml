@@ -13,7 +13,7 @@ before_script:
     - cd ./..
     - gulp clone-plugins
     - gulp packageCorePlugins
-    - npm run plugin-build
+    - npm run build-plugins
     - npm run build
 script:
     - npm run testpluginframework
