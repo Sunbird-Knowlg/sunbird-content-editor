@@ -47,7 +47,7 @@ node() {
                         bower install --force -V
                         cd ..
                         #grunt compress
-                        zip -r ce-docs.zip docs
+                        #zip -r ce-docs.zip docs
                         gulp packageCorePlugins
                         #npm install 
                         npm run build-plugins
@@ -62,8 +62,8 @@ node() {
             }
                 
                 stage('ArchiveArtifacts') {
-                    archiveArtifacts "ce-docs.zip:${artifact_version}"
-                    sh """echo {\\"artifact_name\\" : \\"ce-docs.zip\\", \\"artifact_version\\" : \\"${artifact_version}\\", \\"node_name\\" : \\"${env.NODE_NAME}\\"} > metadata.json"""
+                    archiveArtifacts "content-editor.zip:${artifact_version}"
+                    sh """echo {\\"artifact_name\\" : \\"content-editor.zip\\", \\"artifact_version\\" : \\"${artifact_version}\\", \\"node_name\\" : \\"${env.NODE_NAME}\\"} > metadata.json"""
                     archiveArtifacts artifacts: 'metadata.json', onlyIfSuccessful: true
                     currentBuild.description = "${artifact_version}"
                 }
