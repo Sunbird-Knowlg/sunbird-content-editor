@@ -62,8 +62,13 @@ node() {
             //}
                 
                 stage('ArchiveArtifacts') {
-                    archiveArtifacts "content-editor.zip:${artifact_version}"
-                    sh """echo {\\"artifact_name\\" : \\"content-editor.zip\\", \\"artifact_version\\" : \\"${artifact_version}\\", \\"node_name\\" : \\"${env.NODE_NAME}\\"} > metadata.json"""
+                    sh """
+                        mkdir content-editor-artifacts
+                        cp content-editor.zip content-editor-artifacts
+                        zip -j  content-editor-artifacts.zip:${artifact_version}  content-editor-artifacts/*                      
+                    """
+                    archiveArtifacts "content-editor-artifacts.zip:${artifact_version}"
+                    sh """echo {\\"artifact_name\\" : \\"content-editor-artifacts.zip\\", \\"artifact_version\\" : \\"${artifact_version}\\", \\"node_name\\" : \\"${env.NODE_NAME}\\"} > metadata.json"""
                     archiveArtifacts artifacts: 'metadata.json', onlyIfSuccessful: true
                     currentBuild.description = "${artifact_version}"
                 }
