@@ -131,14 +131,21 @@ window.config = {
 5. Create a symlink to 'sunbird-content-plugins' (`ln -s ../sunbird-content-plugins plugins`)(Linux, mac)
 for windows: use `mklink`
 6. Run `node app`
-7. Open Chrome and visit this link: http://localhost:3000/app/
+7. Open Chrome and visit this link: http://localhost:3000/app?contentId={{content_id}}  
+*content_id*: Live/Draft content id created on Sunbird portal
 
+sample link: http://localhost:3000/app?contentId=do_1124674880571
+
+## Reference links
+
+*How to setup Sunbird backend*: http://docs.sunbird.org/latest/developer-docs/installation/install_sbbackend/
+
+*How to setup Editors in Sunbird portal*: http://docs.sunbird.org/latest/developer-docs/installation/install_sbportal/
+
+*Sunbird API Reference*: http://docs.sunbird.org/latest/apis/
 
 ## ChangeLogs
    For changes logs please refer [here](https://github.com/project-sunbird/sunbird-content-editor/releases) 
-
-  
-
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/project-sunbird/sunbird-content-editor/blob/master/LICENSE) file for details
