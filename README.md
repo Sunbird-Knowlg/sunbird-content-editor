@@ -4,9 +4,11 @@
 
 # Content Editor
 	
-Content Editor is tool. Which allows you to create ECML(Ekstep content markup language) type content.
-## How to configure
- Download content editor 
+Sunbird's in-built content editor tool allows you to create Ekstep Content Markup Language(ECML) type of content.
+
+## How to Configure the Sunbird Content Editor
+ 
+ Download the content editor using the following command: 
 
 >Run npm i @project-sunbird/content-editor
 
@@ -71,26 +73,26 @@ window.config = {
   "enableTelemetryValidation": false
 }
 ```
-| Property Name | Description | Default Value   |
-| --- | --- | --- |
-| `user` | It is a `object`, Which should contain the user details(userId, name)  | NA  |
-| `sid` | It is a `string`, Session identifier  | NA  |
-| `contentId ` | It is a `string`,  content identifier | NA  |
-| `pdata ` | It is a `object`,  producer information.It can have producer version, producer Id | NA  |
-| `tags ` | It is a `array`,  Encrypted dimension tags passed by respective channels| NA  |
-| `channel ` | It is a `string`,  Channel which has produced the event| NA  |
-| `framework ` | It is a `string`, example:NCF, NCERT| NA  |
-| `baseURL ` | It is a `string`, host url| NA  |
-| `corePluginsPackaged ` | It is a `boolean`, Which enables the content-editor to load the plugins from packaged script rather than individual  | true  |
-| `pluginRepo ` | It is a `string`, From which location plugins should load  | /plugins  |
-| `dispatcher ` | It is a `string`,Where the telemetry should log ex(console, piwik, library) | console |
-| `keywordsLimit ` | It is a `number`, Max response keyword size| 500 |
-| `plugins ` | It is a `array`, Array of plugins ex:`[{id:"org.sunbird.header",ver:"1.0",type:"plugin"}]`| NA |
-| `previewURL ` | It is a `string`, path of the content player preview | NA |
-| `showHelp ` | It is a `boolean`, to show the help icon in the editor | false |
-| `previewConfig ` | It is a `object`, configurations related to content player preview for more details refer [here](https://github.com/project-sunbird/sunbird-content-player) | false |
-| `enableTelemetryValidation ` | It is a `boolean`, To validate the telemetry events which is being generated in editors | false |
-| `aws_s3_urls ` | It is a `array`, if the content assets are referring any of aws s3 urls which is denfined in the `aws_s3_urls` then editor will replace those path with `baseURL + assetReverseProxyUrl` | NA |
+| Property Name | Description | Property Type | Default Value | Sample Value |
+| --- | --- | --- |---|---|
+| `user` | The user name and ID |object  | NA  |
+| `sid` | The string value that identifies the session |string | NA  |
+| `contentId ` |The string value that identifies the content being created or modified |string | NA  |
+| `pdata ` | The producer information.It can have producer version, producer Id| object | NA  |
+| `tags ` | Encrypted dimension tags passed by respective channels| array | NA  |
+| `channel ` | Channel that produces the event| string| NA  |
+| `framework ` | The content framework used to create the content|NA  | NCF, NCERT|
+| `baseURL ` | The name of the host URL |string | NA  |
+| `corePluginsPackaged ` | Which enables the content-editor to load the plugins from packaged script rather than individual| boolean|true  |
+| `pluginRepo ` | The location from which plugins are loaded |string  | /plugins  |
+| `dispatcher ` | The location where telemetry is logged | string| console | console, piwik, library |
+| `keywordsLimit ` | The maximum size for the response keywords| number | 500 | 100|
+| `plugins ` | Array of plugins | array | NA | ex:`[{id:"org.sunbird.header",ver:"1.0",type:"plugin"}]`|
+| `previewURL ` | The path of the content player previewer | string | NA |
+| `showHelp ` | Used to show the help icon in the editor | boolean|false |
+| `previewConfig ` | The configurations related to the content player preview. For details, refer [here](https://github.com/project-sunbird/sunbird-content-player) | string | false |
+| `enableTelemetryValidation ` | Used to validate the telemetry events that are generated in the editors | boolean| false |
+| `aws_s3_urls ` | If any content assets refer to any of the aws s3 urls defined in the `aws_s3_urls`, then the editor replaces those paths with `baseURL + assetReverseProxyUrl` |array| NA |
 
 
 
