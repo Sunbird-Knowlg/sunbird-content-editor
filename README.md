@@ -73,6 +73,7 @@ window.config = {
   "enableTelemetryValidation": false
 }
 ```
+
 | Property Name | Description | Property Type | Default Value | Example |
 | --- | --- | --- |---|---|
 | `user` | The user field contains four objects - user name, user ID, organization IDs and organization names. |object  | NA  |{
