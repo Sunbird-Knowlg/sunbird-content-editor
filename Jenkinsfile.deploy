@@ -21,7 +21,8 @@ node() {
                        unzip -o content-editor.zip -d content-editor
                        export editor_version_number=1.14.0
                        sed -i -e 's/dispatcher:\"console\"/dispatcher:\"piwik\"/g' content-editor/scripts/*
-                       sed -i 's:/api:/action:g' content-editor/scripts/base-editor\.min\.*\.js
+                       #sed -i 's:/api:/action:g' content-editor/scripts/base-editor\.min\.*\.js
+                       
                        sed -i 's/useProxyForURL:true/useProxyForURL:false/g' content-editor/scripts/base-editor\.min\.*\.js
                        sed -i -e 's/dispatcher:\"local\"/dispatcher:\"piwik\"/g' content-editor/scripts/*
                        az storage blob upload-batch --destination ${params.container_name}/content-editor/ --source content-editor --account-name $azure_account_name --account-key $azure_account_key
