@@ -1,4 +1,3 @@
-
 package Deploy
 node() {
     try {
@@ -17,29 +16,29 @@ node() {
                     artifact = artifact_name + ":" + artifact_version
                     withCredentials([usernamePassword(credentialsId: 'c355944d-b149-42d5-b913-10627dfc9765', passwordVariable: 'azure_account_key', usernameVariable: 'azure_account_name')]) {
                     sh '''
-                       unzip ${artifact}
-                       unzip -o content-editor.zip -d content-editor
-                       export editor_version_number=1.14.0
-                       sed -i -e 's/dispatcher:\"console\"/dispatcher:\"piwik\"/g' content-editor/scripts/*
-                       sed -i 's:/api:/action:g' content-editor/scripts/base-editor.min.*.js
-                       sed -i 's/useProxyForURL:true/useProxyForURL:false/g' content-editor/scripts/base-editor.min.*.js
-                       sed -i -e 's/dispatcher:\"local\"/dispatcher:\"piwik\"/g' content-editor/scripts/*
-                       az storage blob upload-batch --destination ${params.container_name}/content-editor/ --source content-editor --account-name $azure_account_name --account-key $azure_account_key
-                       zip -r content-editor-artifact.zip content-editor
-                       cd content-editor
-                       npm install
-                       npm install promise
-                       gulp minifyJs
-                       gulp copystyleImages
-                       gulp clean
-                       gulp injectrenamedfiles
-                       gulp package
-                       az storage blob upload-batch --destination ${params.container_name}/artefacts/editor/ --source dist/editor --account-name $azure_account_name --account-key $azure_account_key
-                       az storage blob upload-batch --destination ${params.container_name}/artefacts/coreplugins/ --source dist/coreplugins --account-name $azure_account_name --account-key $azure_account_key
-                       rm -rf node_modules
-                       cd ..
-                       zip -r content-editor.zip content-editor
-                    '''
+                      unzip ${artifact}
+                      unzip -o content-editor.zip -d content-editor
+                      export editor_version_number=1.14.0
+                      sed -i -e 's/dispatcher:\"console\"/dispatcher:\"piwik\"/g' content-editor/scripts/*
+                      sed -i 's:/api:/action:g' content-editor/scripts/base-editor.min.*.js
+                      sed -i 's/useProxyForURL:true/useProxyForURL:false/g' content-editor/scripts/base-editor.min.*.js
+                      sed -i -e 's/dispatcher:\"local\"/dispatcher:\"piwik\"/g' content-editor/scripts/*
+                      az storage blob upload-batch --destination ${params.container_name}/content-editor/ --source content-editor --account-name $azure_account_name --account-key $azure_account_key
+                      zip -r content-editor-artifact.zip content-editor
+                      cd content-editor
+                      npm install
+                      npm install promise
+                      gulp minifyJs
+                      gulp copystyleImages
+                      gulp clean
+                      gulp injectrenamedfiles
+                      gulp package
+                      az storage blob upload-batch --destination ${params.container_name}/artefacts/editor/ --source dist/editor --account-name $azure_account_name --account-key $azure_account_key
+                      az storage blob upload-batch --destination ${params.container_name}/artefacts/coreplugins/ --source dist/coreplugins --account-name $azure_account_name --account-key $azure_account_key
+                      rm -rf node_modules
+                      cd ..
+                      zip -r content-editor.zip content-editor
+                   '''
                    }
                     
                     currentBuild.description = "${artifact_version}"
