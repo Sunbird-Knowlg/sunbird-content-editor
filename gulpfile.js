@@ -41,7 +41,7 @@ var bower_components = [
     "app/bower_components/async/dist/async.min.js",
     "app/libs/semantic.min.js",
     "app/libs/mousetrap.min.js",
-    "app/libs/telemetry-lib-v3.min.js",
+    "node_modules/@project-sunbird/telemetry-sdk/index.js",
     "app/libs/webfont.js",
     "app/bower_components/angular/angular.min.js",
     "app/bower_components/fabric/dist/fabric.min.js",
@@ -96,7 +96,7 @@ var contentEditorApp = [
 
 var editorFramework = [
     "app/libs/fontfaceobserver.min.js",
-    "app/libs/telemetry-lib-v3.min.js",
+    "node_modules/@project-sunbird/telemetry-sdk/index.js",
     "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
     "app/scripts/contenteditor/bootstrap-editor.js",
     "app/scripts/contenteditor/ce-config.js",
