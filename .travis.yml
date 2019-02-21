@@ -10,10 +10,10 @@ before_script:
     - npm install -g bower
     - bower cache clean
     - bower install --force
-    - cd ./..    
+    - cd ./..
     - gulp clone-plugins
     - gulp packageCorePlugins
-    - npm run plugin-build
+    - npm run build-plugins
     - npm run build
 script:
-    - npm run testpluginframework
+    - npm run test-with-coverage
