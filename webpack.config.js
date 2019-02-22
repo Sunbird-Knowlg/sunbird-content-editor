@@ -147,8 +147,9 @@ module.exports = (env, argv) => {
             alias: {
                 'jquery': path.resolve('./node_modules/jquery/dist/jquery.js'),
                 'angular': path.resolve('./app/bower_components/angular/angular.js'),
-                'Fingerprint2': path.resolve('./node_modules/@project-sunbird/telemetry-sdk/index.js'),
+                'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
                 'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
+                'UAParser': path.resolve('./app/libs/uaparser.min.js')
             }
         },
         module: {
@@ -168,10 +169,10 @@ module.exports = (env, argv) => {
                 },
 
                 {
-                    test: require.resolve('./node_modules/@project-sunbird/telemetry-sdk/index.js'),
+                    test: require.resolve('./app/libs/uaparser.min.js'),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'EkTelemetry'
+                        options: 'UAParser'
                     }]
                 },
                 {
@@ -217,7 +218,7 @@ module.exports = (env, argv) => {
                     }]
                 },
                 {
-                    test: require.resolve('./node_modules/@project-sunbird/telemetry-sdk/index.js'),
+                    test: require.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
                     use: [{
                         loader: 'expose-loader',
                         options: 'Fingerprint2'
@@ -345,7 +346,7 @@ module.exports = (env, argv) => {
                 Fingerprint2: 'Fingerprint2',
                 WebFont: 'webfontloader',
                 Ajv: 'ajv',
-
+                UAParser: 'UAParser'
             }),
             new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.HotModuleReplacementPlugin(),
