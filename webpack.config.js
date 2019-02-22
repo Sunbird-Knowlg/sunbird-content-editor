@@ -147,6 +147,7 @@ module.exports = (env, argv) => {
             alias: {
                 'jquery': path.resolve('./node_modules/jquery/dist/jquery.js'),
                 'angular': path.resolve('./app/bower_components/angular/angular.js'),
+                'Fingerprint2': path.resolve('./node_modules/@project-sunbird/telemetry-sdk/index.js'),
                 'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
             }
         },
@@ -167,7 +168,7 @@ module.exports = (env, argv) => {
                 },
 
                 {
-                    test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
+                    test: require.resolve('./node_modules/@project-sunbird/telemetry-sdk/index.js'),
                     use: [{
                         loader: 'expose-loader',
                         options: 'EkTelemetry'
@@ -213,6 +214,13 @@ module.exports = (env, argv) => {
                     use: [{
                         loader: 'expose-loader',
                         options: 'UUID'
+                    }]
+                },
+                {
+                    test: require.resolve('./node_modules/@project-sunbird/telemetry-sdk/index.js'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'Fingerprint2'
                     }]
                 },
                 {
