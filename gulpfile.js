@@ -97,7 +97,6 @@ var contentEditorApp = [
 var editorFramework = [
     "app/libs/fontfaceobserver.min.js",
     "node_modules/@project-sunbird/telemetry-sdk/index.js",
-    "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
     "app/scripts/contenteditor/bootstrap-editor.js",
     "app/scripts/contenteditor/ce-config.js",
     "app/scripts/contenteditor/content-editor.js",
