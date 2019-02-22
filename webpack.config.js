@@ -149,7 +149,7 @@ module.exports = (env, argv) => {
                 'angular': path.resolve('./app/bower_components/angular/angular.js'),
                 'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
                 'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
-                'UAParser': path.resolve('./app/libs/uaparser.min.js')
+                'UAParser': path.resolve('./app/libs/ua-parser.min.js')
             }
         },
         module: {
@@ -169,7 +169,7 @@ module.exports = (env, argv) => {
                 },
 
                 {
-                    test: require.resolve('./app/libs/uaparser.min.js'),
+                    test: require.resolve('./app/libs/ua-parser.min.js'),
                     use: [{
                         loader: 'expose-loader',
                         options: 'UAParser'
