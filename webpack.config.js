@@ -167,7 +167,13 @@ module.exports = (env, argv) => {
                         strict: true
                     }
                 },
-
+                {
+                    test: require.resolve('./node_modules/@project-sunbird/telemetry-sdk/index.js'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'EkTelemetry'
+                    }]
+                },
                 {
                     test: require.resolve('./app/libs/ua-parser.min.js'),
                     use: [{
