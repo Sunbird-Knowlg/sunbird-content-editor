@@ -147,7 +147,6 @@ module.exports = (env, argv) => {
             alias: {
                 'jquery': path.resolve('./node_modules/jquery/dist/jquery.js'),
                 'angular': path.resolve('./app/bower_components/angular/angular.js'),
-                'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
                 'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
             }
         },
@@ -214,13 +213,6 @@ module.exports = (env, argv) => {
                     use: [{
                         loader: 'expose-loader',
                         options: 'UUID'
-                    }]
-                },
-                {
-                    test: require.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
-                    use: [{
-                        loader: 'expose-loader',
-                        options: 'Fingerprint2'
                     }]
                 },
                 {

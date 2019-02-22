@@ -62,7 +62,6 @@ var bower_components = [
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
     "app/bower_components/oclazyload/dist/ocLazyLoad.min.js",
     "app/scripts/contenteditor/md5.js",
-    "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
     "app/libs/ng-tags-input.js"
 ];
 
