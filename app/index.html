@@ -79,8 +79,12 @@
                                 <span class="stage-number">{{$index+1}}</span>
                                 <div ng-class="stage.isSelected ? 'ui fluid image selected-slide-image' : 'ui fluid image'">
                                     <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
-                                        <i class="fa fa-trash" ng-click="fireEvent(stage.ondelete)" style="margin-right:15px; cursor: pointer;"></i>
-                                        <i class="icon-duplicate link" ng-click="fireEvent(stage.duplicate)" style="cursor: pointer;"></i>
+                                        <div class="popup-item" data-content="Delete" data-variation="tiny inverted" data-position="bottom center">
+                                            <i class="fa fa-trash" ng-click="fireEvent(stage.ondelete)" style="margin-right:15px; cursor: pointer;"></i>
+                                        </div>
+                                        <div class="popup-item" data-content="Copy" data-variation="tiny inverted" data-position="bottom center">
+                                            <i class="icon-duplicate link" ng-click="fireEvent(stage.duplicate)" style="cursor: pointer;"></i>
+                                        </div>
                                     </div>
                                     <img data-id="{{stage.id}}" ng-src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)" ng-click="fireEvent(stage.getOnClick())" />
                                 </div>
