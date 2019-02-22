@@ -76,29 +76,11 @@ window.config = {
 
 | Property Name | Description | Property Type | Default Value | Example |
 | --- | --- | --- |---|---|
-| `user` | The user field contains four objects - user name, user ID, organization IDs and organization names. |object  | NA  |{
-    "id": "95e4052d-abe8-477d-aebd-ad8e6de4bfc8",
-    "name": "Reviewer User",
-    "orgIds": [
-      "012363943890170242",
-      "ORG_001"
-    ],
-    "organisations": {
-      "ORG_001": "Sunbird",
-      "012363943890170242": "QA ORG"
-    }
-  }|
-| `sid` | The string value that identifies the session |string | NA  |IYNPDoYY5aoWbv1Yre4Nfl_J8tResl_S|
+| `user` | The user field contains four objects - user name, user ID, organization IDs and organization names. |object  | NA  |{"id":"95e4052d-abe8-477d-aebd-ad8e6de4bfc8","name":"Reviewer User","orgIds":["012363943890170242","ORG_001"],"organisations":{"ORG_001":"Sunbird","012363943890170242":"QA ORG"}} |
+| `sid` | The string value that identifies the session |string | NA  | IYNPDoYY5aoWbv1Yre4Nfl_J8tResl_S |
 | `contentId ` |The string value that identifies the content being created or modified |string | NA  |do_112699569941724161115|
-| `pdata ` | The producer information. It contains three objects - producer ID, build version and the component ID| object | NA  | {
-    "id": "dev.sunbird.portal",
-    "ver": "1.14.0",
-    "pid": "sunbird-portal.contenteditor"
-  }|
-| `tags ` | Encrypted dimension tags passed by respective channels| array | NA  | [
-      "012363943890170242",
-      "ORG_001"
-    ] |
+| `pdata ` | The producer information. It contains three objects - producer ID, build version and the component ID| object | NA  | {"id":"dev.sunbird.portal","ver":"1.14.0","pid":"sunbird-portal.contenteditor"} |
+| `tags ` | Encrypted dimension tags passed by respective channels| array | NA  | ["012363943890170242", "ORG_001"] |
 | `channel ` | Channel that produces the event| string| NA  |b00bc992eg65f1a8s8fg3291e20efc8d|
 | `framework ` | The content framework used to create the content|NA  | NCF, NCERT|
 | `baseURL ` | The name of the host URL |string | NA  |
@@ -111,15 +93,10 @@ window.config = {
 | `showHelp ` | Used to show the help icon in the editor | boolean|false |
 | `previewConfig ` | The configurations related to the content player preview. For details, refer [here](https://github.com/project-sunbird/sunbird-content-player) | string | false |
 | `enableTelemetryValidation ` | Used to validate the telemetry events that are generated in the editors | boolean| false |
-| `aws_s3_urls ` | If any content asset refers to any aws s3 url, configure the URLs here. The editor replaces those paths with `baseURL + assetReverseProxyUrl` |array| NA |"https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/"|
-
-
-
-
+| `aws_s3_urls ` | If any content asset refers to any aws s3 url, configure the URLs here. The editor replaces those paths with `baseURL + assetReverseProxyUrl` |array| NA |"https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/" |  
 
 
 ```js
-
   openContentEditor() {
     jQuery.fn.iziModal = iziModal;
     jQuery('#content-editor').iziModal({
@@ -140,8 +117,7 @@ window.config = {
         });
       }
     });
-```
-	
+```  
 
 ## How to Setup Sunbird Content Editor in your Local Machine
 1. Clone the sunbird-content-editor repo from [here](https://github.com/project-sunbird/sunbird-content-editor)
