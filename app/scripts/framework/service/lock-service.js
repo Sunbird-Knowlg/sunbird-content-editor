@@ -55,7 +55,10 @@ org.ekstep.services.lockService = new (org.ekstep.services.iService.extend({
 		})
 	},
 	getFingerPrintId: function (cb) {
-		if (Telemetry.fingerPrintId) { cb() }
+		if (Telemetry.fingerPrintId) {
+			cb()
+			return
+		}
 		Telemetry.getFingerPrint(function (result, components) {
 			Telemetry.fingerPrintId = result
 			cb()
