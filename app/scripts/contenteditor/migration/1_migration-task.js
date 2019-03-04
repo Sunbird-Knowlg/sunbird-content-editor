@@ -34,7 +34,7 @@ org.ekstep.contenteditor.migration = new (Class.extend({
 			message: 'duration for migration',
 			params: [{
 				// eslint-disable-next-line
-				duration: (new Date()).getTime() - startTime
+				duration: (new Date()).getTime() - instance._startTime
 			}]
 		})
 		instance.setNewVersion(content)
