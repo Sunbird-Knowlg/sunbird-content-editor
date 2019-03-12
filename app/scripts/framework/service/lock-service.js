@@ -20,10 +20,9 @@ org.ekstep.services.lockService = new (org.ekstep.services.iService.extend({
     */
 	createLock: function (request, callback) {
 		var instance = this
-		var fp = new Fingerprint2()
-		fp.get(function (result) {
+		instance.getFingerPrintId(function () {
 			var headersObj = _.cloneDeep(instance.requestHeaders)
-			headersObj.headers['X-device-Id'] = result.toString()
+			headersObj.headers['X-device-Id'] = EkTelemetry.fingerPrintId
 			instance.postFromService(instance.lockURL() + instance.getConfig('createLockUrl', '/v1/create'), request, headersObj, callback)
 		})
 	},
@@ -35,10 +34,9 @@ org.ekstep.services.lockService = new (org.ekstep.services.iService.extend({
      */
 	refreshLock: function (request, callback) {
 		var instance = this
-		var fp = new Fingerprint2()
-		fp.get(function (result) {
+		instance.getFingerPrintId(function () {
 			var headersObj = _.cloneDeep(instance.requestHeaders)
-			headersObj.headers['X-device-Id'] = result.toString()
+			headersObj.headers['X-device-Id'] = EkTelemetry.fingerPrintId
 			instance.patch(instance.lockURL() + instance.getConfig('refreshLockUrl', '/v1/refresh'), request, headersObj, callback)
 		})
 	},
@@ -50,11 +48,20 @@ org.ekstep.services.lockService = new (org.ekstep.services.iService.extend({
      */
 	deleteLock: function (request, callback) {
 		var instance = this
-		var fp = new Fingerprint2()
-		fp.get(function (result) {
+		instance.getFingerPrintId(function () {
 			var headersObj = _.cloneDeep(instance.requestHeaders)
-			headersObj.headers['X-device-Id'] = result.toString()
+			headersObj.headers['X-device-Id'] = EkTelemetry.fingerPrintId
 			instance.delete(instance.lockURL() + instance.getConfig('deleteLockUrl', '/v1/retire'), request, headersObj, callback)
+		})
+	},
+	getFingerPrintId: function (cb) {
+		if (EkTelemetry.fingerPrintId) {
+			cb()
+			return
+		}
+		EkTelemetry.getFingerPrint(function (result, components) {
+			EkTelemetry.fingerPrintId = result
+			cb()
 		})
 	}
 }))()
