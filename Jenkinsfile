@@ -33,9 +33,9 @@ node() {
 
                 stage('Build') {
                     sh """
-                        export framework_version_number=${artifact_version}
+                        export framework_version_number=${branch_name}
                         export editorType="contentEditor"
-                        export editor_version_number=${artifact_version}
+                        export editor_version_number=${branch_name}
                         export CHROME_BIN=google-chrome
                         rm -rf ansible/content-editor.zip
                         rm -rf content-editor
