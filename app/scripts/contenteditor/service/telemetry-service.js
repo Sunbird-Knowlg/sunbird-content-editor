@@ -236,7 +236,8 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 		var eventData = {
 			'type': data.type,
 			'pageid': data.pageid,
-			'uri': data.uri
+			'uri': data.uri,
+			'duration': data.duration
 		}
 		if (data.subtype) { eventData.subtype = data.subtype }
 		if (data.visits) { eventData.visits = data.visits }
