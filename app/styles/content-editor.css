@@ -58,7 +58,6 @@ body {
     left: -23px;
     bottom: -4px;
     font-size: 14px;
-    font-family: Helvetica;
 }
 
 .content-masterhead {
@@ -538,7 +537,6 @@ i.icon.custom-icon.dropdown-icon{
     padding: .3em 1em;
     color: #ffffff;
     white-space: pre;
-    font-family: Helvetica;
     box-shadow: none;
 }
 
