@@ -12,7 +12,9 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-      
+          
+      - run: apk add git
+      - run: mkdir plugins && cd plugins && git clone https://github.com/project-sunbird/sunbird-content-plugins.git -b $CIRCLE_BRANCH 
       - run: npm install
       - run: cd app && bower cache clean --allow-root
       - run: cd app && bower prune -f --allow-root
