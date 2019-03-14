@@ -15,9 +15,9 @@ jobs:
       
       - run: npm install
       - run: cd app
-      - run: bower cache clean
-      - run: bower prune -f 
-      - run: bower install --force -V
+      - run: bower cache clean --allow-root
+      - run: bower prune -f --allow-root
+      - run: bower install --force -V --allow-root
       - run: cd ..
       - run: gulp packageCorePlugins
       - run: npm run build-plugins
