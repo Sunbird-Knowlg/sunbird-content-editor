@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: g33tha/plugin:latest
+      - image: g33tha/plugin:test
         environment:
            framework_version_number: $CIRCLE_BRANCH
            editorType: contentEditor
@@ -12,13 +12,12 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-      
+          
+      - run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $CIRCLE_BRANCH 
       - run: npm install
-      - run: cd app
-      - run: bower cache clean
-      - run: bower prune -f 
-      - run: bower install --force -V
-      - run: cd ..
+      - run: cd app && bower cache clean --allow-root
+      - run: cd app && bower prune -f --allow-root
+      - run: cd app && bower install --force -V --allow-root
       - run: gulp packageCorePlugins
       - run: npm run build-plugins
       - run: npm run build
