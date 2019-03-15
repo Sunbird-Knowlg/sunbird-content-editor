@@ -3,7 +3,6 @@
 org.ekstep.contenteditor.migration.questionsetassetfix_task = new (Class.extend({
 	init: function () {
 	},
-	id: 'question-assetfix',
 	contentbody: undefined,
 	assetHostPaths: [
 		'https://ntpproductionall.blob.core.windows.net/ntp-content-production/',

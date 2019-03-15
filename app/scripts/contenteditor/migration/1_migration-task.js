@@ -34,7 +34,7 @@ org.ekstep.contenteditor.migration = new (Class.extend({
 	},
 	postQuestionMediaMigration: function (content, stageIcons) {
 		var instance = this
-		instance.patch.push(org.ekstep.contenteditor.migration.questionsetassetfix_task.id)
+		instance.patch.push('question-assetfix')
 		console.info('Question media migration completed!')
 		org.ekstep.contenteditor.stageManager.fromECML(content, stageIcons)
 		org.ekstep.services.telemetryService.log({
@@ -106,6 +106,9 @@ org.ekstep.contenteditor.migration = new (Class.extend({
 	},
 	isAssessmentContent: function (contentbody) {
 		var assessmentContent = false
+		if(contentbody.theme.patch && contentbody.theme.patch['question-assetfix']){
+			return assessmentContent
+		}
 		_.forEach(contentbody.theme.stage, function (stage) {
 			_.forEach(stage['org.ekstep.questionset'], function (qSet, index) {
 				if (_.isArray(qSet['org.ekstep.question'])) {
