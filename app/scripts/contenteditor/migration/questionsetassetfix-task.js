@@ -131,7 +131,7 @@ org.ekstep.contenteditor.migration.questionsetassetfix_task = new (Class.extend(
 	getMediaObj: function (src, type) {
 		var mediaId = Math.floor(Math.random() * 1000000000)
 		return {
-			'id': mediaId + '_1',
+			'id': mediaId + '-1',
 			'src': src,
 			'assetId': mediaId,
 			'type': type,
