@@ -106,8 +106,8 @@ org.ekstep.contenteditor.migration = new (Class.extend({
 	},
 	isAssessmentContent: function (contentbody) {
 		var assessmentContent = false
-		if(contentbody.theme.patch && contentbody.theme.patch['question-assetfix']){
-			return assessmentContent
+		if(contentbody.theme.patch){
+			return false
 		}
 		_.forEach(contentbody.theme.stage, function (stage) {
 			_.forEach(stage['org.ekstep.questionset'], function (qSet, index) {
