@@ -15,6 +15,9 @@ org.ekstep.contenteditor.migration = new (Class.extend({
 		this.contentBackup = _.cloneDeep(contentbody)
 
 		if (!_.has(contentbody, 'theme.stage')) org.ekstep.services.telemetryService.error({ 'env': 'content', 'stage': '', 'action': 'migration', 'objectId': '', objectType: '', 'err': 'migration has errors', 'type': 'PORTAL', 'data': '', 'severity': 'error' })
+		if(contentbody.theme && contentbody.theme.patch){
+			this.patch = contentbody.theme.patch.split(',');
+		}
 		if (this.isOldContent(contentbody)) {
 			this.initLoadScreenMsg()
 			this._startTime = (new Date()).getTime()
