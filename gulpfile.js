@@ -90,6 +90,7 @@ var contentEditorApp = [
     "app/scripts/contenteditor/migration/eventsmigration-task.js",
     "app/scripts/contenteditor/migration/settagmigration-task.js",
     "app/scripts/contenteditor/migration/textmigration-task.js",
+    "app/scripts/contenteditor/migration/questionsetassetfix-task.js",
     "app/scripts/contenteditor/manager/stage-manager.js"
 ];
 
