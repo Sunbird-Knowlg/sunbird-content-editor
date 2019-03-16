@@ -37,7 +37,7 @@ org.ekstep.contenteditor.migration = new (Class.extend({
 	},
 	postQuestionMediaMigration: function (content, stageIcons) {
 		var instance = this
-		instance.patch.push('question-assetfix')
+		instance.patch.push('question-assetfix-1')
 		console.info('Question media migration completed!')
 		org.ekstep.contenteditor.stageManager.fromECML(content, stageIcons)
 		org.ekstep.services.telemetryService.log({
