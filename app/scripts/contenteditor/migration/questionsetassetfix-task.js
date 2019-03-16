@@ -32,7 +32,6 @@ org.ekstep.contenteditor.migration.questionsetassetfix_task = new (Class.extend(
 							var fixedQuestion = instance.updateQuestionMedia(question)
 							qSet['org.ekstep.question'][qindex] = fixedQuestion
 							instance.contentbody.theme.manifest.media = instance.updateContentManifestMedia(instance.contentbody.theme.manifest.media, fixedQuestion)
-							console.log(instance.contentbody.theme.manifest.media)
 						})
 					})
 				} else if (_.isObject(stage['org.ekstep.questionset'])) {
@@ -43,7 +42,6 @@ org.ekstep.contenteditor.migration.questionsetassetfix_task = new (Class.extend(
 					var fixedQuestion = instance.updateQuestionMedia(question)
 					stage['org.ekstep.questionset']['org.ekstep.question'] = fixedQuestion
 					instance.contentbody.theme.manifest.media = instance.updateContentManifestMedia(instance.contentbody.theme.manifest.media, fixedQuestion)
-					console.log(instance.contentbody.theme.manifest.media)
 				}
 			}
 		})
@@ -93,13 +91,11 @@ org.ekstep.contenteditor.migration.questionsetassetfix_task = new (Class.extend(
 		_.each(questionData.media, function (media) {
 			media.src = instance.getRelativeURL(media.src)
 		})
-		console.log('quesAssets ', quesAssets)
 		_.each(quesAssets, function (quesAsset) {
 			// quesAsset.url = getRelativeURL(quesAsset.url);
 			var mediaExist = _.find(questionData.media, function (m) {
 				return m.src === quesAsset.src
 			})
-			console.log('mediaExist: ', mediaExist)
 			if (!mediaExist) {
 				questionData.media.push(instance.getMediaObj(quesAsset.src, quesAsset.type))
 			}
