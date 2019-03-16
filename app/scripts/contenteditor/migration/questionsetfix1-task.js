@@ -1,8 +1,10 @@
 'use strict'
 
-org.ekstep.contenteditor.migration.questionsetassetfix_task = new (Class.extend({
+org.ekstep.contenteditor.migration.questionsetfix1 = new (Class.extend({
 	init: function () {
 	},
+	id: 'questionsetfix1',
+	_startTime: undefined,
 	contentbody: undefined,
 	assetHostPaths: [
 		'https://ntpproductionall.blob.core.windows.net/ntp-content-production/',
@@ -20,6 +22,7 @@ org.ekstep.contenteditor.migration.questionsetassetfix_task = new (Class.extend(
 	],
 	migrate: function (contentbody) {
 		var instance = this
+		this._startTime = (new Date()).getTime()
 		this.contentbody = contentbody
 		_.forEach(contentbody.theme.stage, function (stage) {
 			if (stage['org.ekstep.questionset']) {
@@ -44,6 +47,16 @@ org.ekstep.contenteditor.migration.questionsetassetfix_task = new (Class.extend(
 					instance.contentbody.theme.manifest.media = instance.updateContentManifestMedia(instance.contentbody.theme.manifest.media, fixedQuestion)
 				}
 			}
+		})
+		org.ekstep.contenteditor.migration.patch.push(instance.id)
+		org.ekstep.services.telemetryService.log({
+			type: 'process',
+			level: 'TRACE',
+			message: 'questionsetfix_1 migration complted',
+			params: [{
+				// eslint-disable-next-line
+				duration: (new Date()).getTime() - instance._startTime
+			}]
 		})
 	},
 	updateContentManifestMedia: function (contentMedia, question) {

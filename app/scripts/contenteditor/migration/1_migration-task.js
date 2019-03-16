@@ -9,8 +9,10 @@ org.ekstep.contenteditor.migration = new (Class.extend({
 	},
 	_startTime: undefined,
 	tasks: ['mediamigration_task', 'basestage_task', 'orderstage_task', 'scribblemigration_task', 'imagemigration_task', 'readalongmigration_task', 'assessmentmigration_task', 'eventsmigration_task', 'settagmigration_task'],
+	questionPatchs: ['questionsetfix1'],
 	migrationErrors: [],
 	execute: function (event, data) {
+		var instance = this
 		var contentbody = data.body; var stageIcons = data.stageIcons
 		this.contentBackup = _.cloneDeep(contentbody)
 
@@ -28,7 +30,11 @@ org.ekstep.contenteditor.migration = new (Class.extend({
 		} else if (this.isAssessmentContent(contentbody)) {
 			this._startTime = (new Date()).getTime()
 			console.info('Question media migration started!')
-			org.ekstep.contenteditor.migration['questionsetassetfix_task'].migrate(contentbody)
+			_.forEach(this.questionPatchs, function (task) {
+				if (_.indexOf(instance.patch, task) === -1) {
+					org.ekstep.contenteditor.migration[task].migrate(contentbody)
+				}
+			})
 			this.postQuestionMediaMigration(contentbody, stageIcons)
 		} else {
 			console.info('no need for migration')
@@ -37,7 +43,6 @@ org.ekstep.contenteditor.migration = new (Class.extend({
 	},
 	postQuestionMediaMigration: function (content, stageIcons) {
 		var instance = this
-		instance.patch.push('question-assetfix-1')
 		console.info('Question media migration completed!')
 		org.ekstep.contenteditor.stageManager.fromECML(content, stageIcons)
 		org.ekstep.services.telemetryService.log({
@@ -108,9 +113,12 @@ org.ekstep.contenteditor.migration = new (Class.extend({
 		return this.contentBackup
 	},
 	isAssessmentContent: function (contentbody) {
+		var instance = this
 		var assessmentContent = false
-		if (contentbody.theme.patch) {
-			return false
+		if (!_.isEmpty(instance.patch)) {
+			if (_.isEqual(_.sortBy(instance.patch), _.sortBy(instance.questionPatchs))) {
+				return false
+			}
 		}
 		_.forEach(contentbody.theme.stage, function (stage) {
 			_.forEach(stage['org.ekstep.questionset'], function (qSet, index) {
