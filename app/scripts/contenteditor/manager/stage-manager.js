@@ -272,8 +272,8 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			content.theme['migration-media'].media = _.values(org.ekstep.contenteditor.mediaManager.migratedMediaMap)
 		}
 		content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mediaMap)), 'id')
-		if(!_.isEmpty(org.ekstep.contenteditor.migration.patch)){
-			content.theme['patch'] = org.ekstep.contenteditor.migration.patch.toString();
+		if (!_.isEmpty(org.ekstep.contenteditor.migration.patch)) {
+			content.theme['patch'] = org.ekstep.contenteditor.migration.patch.toString()
 		}
 		return _.cloneDeep(content)
 	},
