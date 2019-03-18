@@ -9,7 +9,7 @@ org.ekstep.contenteditor.migration = new (Class.extend({
 	},
 	_startTime: undefined,
 	tasks: ['mediamigration_task', 'basestage_task', 'orderstage_task', 'scribblemigration_task', 'imagemigration_task', 'readalongmigration_task', 'assessmentmigration_task', 'eventsmigration_task', 'settagmigration_task'],
-	questionPatchs: ['questionsetfix1'],
+	questionPatchs: ['patch_1'],
 	migrationErrors: [],
 	execute: function (event, data) {
 		var instance = this
@@ -115,10 +115,8 @@ org.ekstep.contenteditor.migration = new (Class.extend({
 	isAssessmentContent: function (contentbody) {
 		var instance = this
 		var assessmentContent = false
-		if (!_.isEmpty(instance.patch)) {
-			if (_.isEqual(_.sortBy(instance.patch), _.sortBy(instance.questionPatchs))) {
-				return false
-			}
+		if (_.isEqual(_.sortBy(instance.patch), _.sortBy(instance.questionPatchs))) {
+			return false
 		}
 		_.forEach(contentbody.theme.stage, function (stage) {
 			_.forEach(stage['org.ekstep.questionset'], function (qSet, index) {

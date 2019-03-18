@@ -1,9 +1,9 @@
 'use strict'
 
-org.ekstep.contenteditor.migration.questionsetfix1 = new (Class.extend({
+org.ekstep.contenteditor.migration.patch_1 = new (Class.extend({
 	init: function () {
 	},
-	id: 'questionsetfix1',
+	id: 'patch_1',
 	_startTime: undefined,
 	contentbody: undefined,
 	assetHostPaths: [
