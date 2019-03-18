@@ -209,7 +209,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 					$scope.contentLoadedFlag = true
 					$scope.onLoadCustomMessage.show = true
 					$scope.onLoadCustomMessage.text = ':( Unable to fetch the content! Please try again later!'
-					$scope.telemetryService.error({ 'env': 'content', 'stage': '', 'action': 'show error and stop the application', 'err': 'Unable to fetch content from remote', 'type': 'API', 'data': err, 'severity': 'fatal' })
+					$scope.telemetryService.error({ 'env': 'content', 'stage': '', 'action': 'show error and stop the application', 'err': 'Unable to fetch content from remote', 'type': 'API', 'data': err.message, 'severity': 'fatal' })
 				}
 				if (!(content && content.body) && !err) {
 					org.ekstep.contenteditor.stageManager.onContentLoad((new Date()).getTime())
