@@ -236,9 +236,9 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 		var eventData = {
 			'type': data.type,
 			'pageid': data.pageid,
-			'uri': data.uri,
-			'duration': data.duration
+			'uri': data.uri
 		}
+		if (data.duration) { eventData.duration = data.duration }
 		if (data.subtype) { eventData.subtype = data.subtype }
 		if (data.visits) { eventData.visits = data.visits }
 		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
@@ -358,9 +358,9 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			// fp.get(function (result) {
 			// 	config.did = result.toString()
 			// })
-			if(!EkTelemetry.fingerPrintId){
-				EkTelemetry.getFingerPrint(function(result, components) {
-					EkTelemetry.fingerPrintId = result;
+			if (!EkTelemetry.fingerPrintId) {
+				EkTelemetry.getFingerPrint(function (result, components) {
+					EkTelemetry.fingerPrintId = result
 					instance.logStartAndImpression(config, durartion)
 				})
 			}
