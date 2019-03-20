@@ -12,7 +12,6 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "package.json" }}
-          
       - run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $CIRCLE_BRANCH 
       - run: npm install
       - run: cd app && bower cache clean --allow-root
@@ -23,12 +22,18 @@ jobs:
       - run: npm run build
       - store_artifacts:
           path: content-editor.zip
-          destination: content-editor.zip
-          
+          destination: content-editor.zip  
       - save_cache:
           key: dependency-cache-{{ checksum "package.json" }}
           paths: ./node_modules
-
+      - run: npm run test
+      - run: npm run test-with-coverage
+      - run:
+          name: Publishing report to Codacy
+          command: 'npm install -g codacy-coverage && cat ./coverage/lcov.info | codacy-coverage '
+          when: always
+    
+    
 workflows:
   version: 2.1
   build_and_test:
