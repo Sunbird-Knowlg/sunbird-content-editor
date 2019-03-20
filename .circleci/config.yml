@@ -5,6 +5,7 @@ jobs:
       - image: g33tha/plugin:test
         environment:
            framework_version_number: $CIRCLE_BRANCH
+           #
            editorType: contentEditor
            editor_version_number: $CIRCLE_BRANCH
            CHROME_BIN: google-chrome
