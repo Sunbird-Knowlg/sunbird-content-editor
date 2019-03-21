@@ -238,6 +238,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			'pageid': data.pageid,
 			'uri': data.uri
 		}
+		if (data.duration) { eventData.duration = data.duration }
 		if (data.subtype) { eventData.subtype = data.subtype }
 		if (data.visits) { eventData.visits = data.visits }
 		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
@@ -357,7 +358,12 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			// fp.get(function (result) {
 			// 	config.did = result.toString()
 			// })
-			instance.logStartAndImpression(config, durartion)
+			if (!EkTelemetry.fingerPrintId) {
+				EkTelemetry.getFingerPrint(function (result, components) {
+					EkTelemetry.fingerPrintId = result
+					instance.logStartAndImpression(config, durartion)
+				})
+			}
 		}
 		window.addEventListener('unload', /* istanbul ignore next */ function () {
 			instance.end()
