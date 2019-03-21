@@ -27,7 +27,7 @@ jobs:
           paths: ./node_modules
       - run: 
           name: test-with-coverage
-          command: 'npm run test-with-coverage | tee /tmp/logs/test_cases.log'
+          command: 'mkdir -p /tmp/logs && npm run test-with-coverage | tee /tmp/logs/test_cases.log'
       - run:
           name: Publishing report to Codacy
           command: 'npm install -g codacy-coverage && cat ./coverage/lcov.info | codacy-coverage '
