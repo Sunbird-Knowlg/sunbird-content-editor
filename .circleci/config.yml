@@ -26,13 +26,8 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths: ./node_modules
       - run: 
-          name: run test
-          command: npm run test
-          when: always
-      - run: 
           name: test-with-coverage
           command: 'npm run test-with-coverage | tee /tmp/logs/test_cases.log'
-          when: always
       - run:
           name: Publishing report to Codacy
           command: 'npm install -g codacy-coverage && cat ./coverage/lcov.info | codacy-coverage '
