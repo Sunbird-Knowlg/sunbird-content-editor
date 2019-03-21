@@ -207,6 +207,17 @@ gulp.task('minifyCSS', function() {
             'app/styles/header.css',
             'app/styles/commonStyles.css',
             'app/styles/content-editor.css',
+            'app/styles/fonts/notosans/notosans.css',
+            'app/styles/fonts/notosans-bengali/notosansbengali.css',
+            'app/styles/fonts/notosans-malayalam/notosansmalayalam.css',
+            'app/styles/fonts/notosans-gurmukhi/notosansgurmukhi.css',
+            'app/styles/fonts/notosans-devanagari/notosansdevanagari.css',
+            'app/styles/fonts/notosans-gujarati/notosansgujarati.css',
+            'app/styles/fonts/notosans-telugu/notosanstelugu.css',
+            'app/styles/fonts/notosans-tamil/notosanstamil.css',
+            'app/styles/fonts/notosans-kannada/notosanskannada.css',
+            'app/styles/fonts/notosans-oriya/notosansoriya.css',
+            'app/styles/fonts/noto-nastaliqurdu/notonastaliqurdu.css',
             'app/styles/fonts-override.css'
         ])
         .pipe(concat('style.min.css'))
