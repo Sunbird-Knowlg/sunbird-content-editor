@@ -206,7 +206,8 @@ gulp.task('minifyCSS', function() {
             'app/styles/icomoon/style.css',
             'app/styles/header.css',
             'app/styles/commonStyles.css',
-            'app/styles/content-editor.css'
+            'app/styles/content-editor.css',
+            'app/styles/fonts-override.css'
         ])
         .pipe(concat('style.min.css'))
         .pipe(minify({
@@ -247,7 +248,7 @@ gulp.task('minifyCssBower', function() {
 
 
 gulp.task('copyfonts', function() {
-    return gulp.src(['app/styles/themes/**/*', 'app/styles/webfonts/**/*', 'app/styles/fonts/*', 'app/styles/noto.css'], {
+    return gulp.src(['app/styles/themes/**/*', 'app/styles/webfonts/**/*', 'app/styles/fonts/**/*', 'app/styles/noto.css'], {
             base: 'app/styles/'
         })
         .pipe(gulp.dest('content-editor/styles'));

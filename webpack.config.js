@@ -120,7 +120,8 @@ const APP_STYLE = [
     './app/styles/commonStyles.css',
     './app/styles/content-editor.css',
     './app/styles/noto.css',
-    './content-editor/scripts/plugin-vendor.min.css' // Plugin css files
+    './content-editor/scripts/plugin-vendor.min.css', // Plugin css files
+    './app/styles/fonts-override.css'
 ];
 
 // removing the duplicate files
