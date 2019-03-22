@@ -10,8 +10,8 @@ jobs:
            #CHROME_BIN: google-chrome
     steps:
       - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+      #- restore_cache:
+          #key: dependency-cache-{{ checksum "package.json" }}
       - run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $CIRCLE_BRANCH 
       - run: npm install
       - run: cd app && bower cache clean --allow-root
