@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: g33tha/plugin:test
+      - image: circleci/node:6.10-browsers
         environment:
            framework_version_number: $CIRCLE_BRANCH
            editorType: contentEditor
