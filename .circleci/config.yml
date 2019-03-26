@@ -12,7 +12,7 @@ jobs:
       - checkout
       #- restore_cache:
           #key: dependency-cache-{{ checksum "package.json" }}
-      - run: sudo npm install -g bower@1.8.0 grunt-cli@1.2.0 gulp@3.9.1
+      - run: sudo npm install -g bower@1.8.0 grunt-cli@1.2.0 gulp@3.9.1 codacy-coverage
       - run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $CIRCLE_BRANCH 
       - run: npm install
       - run: cd app && bower cache clean --allow-root
@@ -30,7 +30,7 @@ jobs:
           command: 'mkdir -p /tmp/logs && npm run test-with-coverage | tee /tmp/logs/test_cases.log'
       - run:
           name: Publishing report to Codacy
-          command: 'npm install -g codacy-coverage && cat ./coverage/lcov.info | codacy-coverage '
+          command: 'cat ./coverage/lcov.info | codacy-coverage '
           when: always
        
       - store_artifacts:
