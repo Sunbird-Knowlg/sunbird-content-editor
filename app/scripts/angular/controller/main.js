@@ -197,16 +197,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 		// Config to override
 		var config = org.ekstep.contenteditor.getWindowConfig()
 		config.absURL = $location.protocol() + '://' + $location.host() + ':' + $location.port() // Required
-
 		$scope.showHelpBtn = config.showHelp || true
-		/**
-		 * @description   - fires interact event when the content is loaded to stage
-		 * @listens       - content:load:complete 
-		 */
-		$scope.contentLoadingCompleted = function () {
-			//subtype should be "content_load_time"
-			$scope.telemetryService.interact({ type: 'click', subtype: "content_load_time", duration: (Date.now() - EDITOR_LOADED).toString() })
-		}
 		/**
          * Load Content - Invoked once the content editor has loaded
          */
@@ -230,7 +221,10 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 				}
 				if (content) {
 					// Adding eventListener only after getting a successful response
-					ecEditor.addEventListener('content:load:complete', $scope.contentLoadingCompleted, $scope)
+					ecEditor.addEventListener('content:load:complete', function(){
+						//subtype should be "content_load_time"
+						$scope.telemetryService.interact({ type: 'click', subtype: "content_load_time", duration: (Date.now() - EDITOR_LOADED).toString() })
+					})
 					$scope.contentDetails = {
 						contentTitle: content.name,
 						contentImage: content.appIcon
