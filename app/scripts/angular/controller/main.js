@@ -223,7 +223,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 					// Adding eventListener only after getting a successful response
 					ecEditor.addEventListener('content:load:complete', function(){
 						//subtype should be "content_load_time"
-						$scope.telemetryService.interact({ type: 'click', subtype: "content_load_time", duration: (Date.now() - EDITOR_LOADED).toString() })
+						$scope.telemetryService.interact({ id:'screen',type: 'click', subtype: "content_load_time", duration: (Date.now() - EDITOR_LOADED).toString() })
 					})
 					$scope.contentDetails = {
 						contentTitle: content.name,
