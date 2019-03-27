@@ -23,6 +23,7 @@ angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).fact
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document', '$ocLazyLoad', '$rootScope',
 	function ($scope, $timeout, $http, $location, $q, $window, $document, $ocLazyLoad, $rootScope) {
 		var EDITOR_START_TIME = Date.now()
+		var EDITOR_LOADED = undefined;
 		// Declare global variables
 		$scope.showAppLoadScreen = true
 		$scope.contentLoadedFlag = false
@@ -65,7 +66,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 		$scope.loadNgModules = function (templatePath, controllerPath) {
 			var files = []
 			if (templatePath) files.push({ type: 'html', path: templatePath })
-			if (controllerPath) files.push({type: 'js', path: controllerPath + '?' + ecEditor.getConfig('build_number')})
+			if (controllerPath) files.push({ type: 'js', path: controllerPath + '?' + ecEditor.getConfig('build_number') })
 			if (files.length) return $ocLazyLoad.load(files)
 		}
 
@@ -126,7 +127,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 			$scope.$safeApply()
 		}
 
-		function toggleGenieControls () {
+		function toggleGenieControls() {
 			if (!$scope.showGenieControls) {
 				// Position the transparent image correctly on top of image
 				setTimeout(function () {
@@ -198,13 +199,21 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 		config.absURL = $location.protocol() + '://' + $location.host() + ':' + $location.port() // Required
 
 		$scope.showHelpBtn = config.showHelp || true
-
+		/**
+		 * @description   - fires interact event when the content is loaded to state
+		 * @listens       - content:load:complete 
+		 */
+		$scope.contentLoadingCompleted = function () {
+			//subtype should be "content_load_time"
+			$scope.telemetryService.interact({ type: 'click', subtype: "content_load_time", duration: (Date.now() - EDITOR_LOADED).toString() })
+		}
 		/**
          * Load Content - Invoked once the content editor has loaded
          */
 		$scope.loadContent = function () {
+			EDITOR_LOADED = new Date();
+			org.ekstep.services.telemetryService.start(Date.now() - EDITOR_START_TIME);
 			org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContent(org.ekstep.contenteditor.api.getContext('contentId'), function (err, content) {
-				org.ekstep.services.telemetryService.start(Date.now() - EDITOR_START_TIME)
 				if (err) {
 					$scope.contentLoadedFlag = true
 					$scope.onLoadCustomMessage.show = true
@@ -220,11 +229,12 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 					if (parsedBody) org.ekstep.contenteditor.api.dispatchEvent('content:migration:start', { body: parsedBody, stageIcons: content.stageIcons })
 				}
 				if (content) {
+					// Adding eventListener only after getting a successful response
+					ecEditor.addEventListener('content:load:complete', $scope.contentLoadingCompleted, $scope)
 					$scope.contentDetails = {
 						contentTitle: content.name,
 						contentImage: content.appIcon
 					}
-
 					content.contentType ? ($scope.contentDetails.contentType = '| ' + content.contentType) : ($scope.contentDetails.contentType = '')
 					$scope.setTitleBarText($scope.contentDetails.contentTitle)
 				}
@@ -238,6 +248,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
              * @param  {function} callback Function to be invoked once the editor is loaded
              */
 		org.ekstep.contenteditor.init(context, config, $scope, $document, function () {
+
 			var obj = _.find($scope.appLoadMessage, { 'id': 1 })
 			if (_.isObject(obj)) {
 				obj.message = 'Getting things ready for you'
@@ -274,5 +285,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 		$scope.fireToolbarTelemetry = function (menu, menuType) {
 			$scope.telemetryService.interact({ 'type': 'click', 'subtype': 'menu', 'target': menuType, 'pluginid': menu.pluginId, 'pluginver': menu.pluginVer, 'objectid': menu.id, 'stage': org.ekstep.contenteditor.stageManager.currentStage.id })
 		}
+
 	}
 ])
