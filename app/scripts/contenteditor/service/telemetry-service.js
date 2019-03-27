@@ -343,7 +343,8 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			},
 			dispatcher: instance.getDispatcher(org.ekstep.contenteditor.config.dispatcher),
 			rollup: ecEditor.getContext('rollup') || {},
-			enableValidation: ecEditor.getConfig('enableTelemetryValidation')
+			enableValidation: ecEditor.getConfig('enableTelemetryValidation'),
+			tsData: ecEditor.getContext('ts')
 		}
 
 		if (ecEditor.getContext('tags')) {

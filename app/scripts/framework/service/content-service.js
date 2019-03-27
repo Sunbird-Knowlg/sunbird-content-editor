@@ -137,6 +137,8 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 			instance.get(this.serviceURL() + this.getConfig('contentReadUrl', '/v3/read/') + contentId + metaDataFields, this.requestHeaders, function (err, res) {
 				/* istanbul ignore else */
 				if (res && res.data && res.data.responseCode === 'OK') {
+					// for telemetry 'ets' calculation - local time error correction
+					ecEditor.setContext('ts', {serverEts: _.cloneDeep(res.data.ts), localTime: new Date()})
 					instance._setContentMeta(contentId, res.data.result.content)
 					callback(err, res.data.result.content)
 				} else {
