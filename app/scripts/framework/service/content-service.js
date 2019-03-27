@@ -138,7 +138,7 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 				/* istanbul ignore else */
 				if (res && res.data && res.data.responseCode === 'OK') {
 					// for telemetry 'ets' calculation - local time error correction
-					ecEditor.setContext('ts', {serverEts: _.cloneDeep(res.data.ts), localTime: new Date()})
+					ecEditor.setContext('timeStamp', {serverTime: new Date(res.data.ts.slice(0, -1)), localTime: new Date()})
 					instance._setContentMeta(contentId, res.data.result.content)
 					callback(err, res.data.result.content)
 				} else {
