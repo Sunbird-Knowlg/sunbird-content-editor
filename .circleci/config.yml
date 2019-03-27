@@ -10,8 +10,8 @@ jobs:
            #CHROME_BIN: google-chrome
     steps:
       - checkout
-      #- restore_cache:
-          #key: dependency-cache-{{ checksum "package.json" }}
+      - restore_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
       - run: sudo npm install -g bower@1.8.0 grunt-cli@1.2.0 gulp@3.9.1 codacy-coverage
       - run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $CIRCLE_BRANCH 
       - run: npm install
