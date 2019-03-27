@@ -200,7 +200,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 
 		$scope.showHelpBtn = config.showHelp || true
 		/**
-		 * @description   - fires interact event when the content is loaded to state
+		 * @description   - fires interact event when the content is loaded to stage
 		 * @listens       - content:load:complete 
 		 */
 		$scope.contentLoadingCompleted = function () {
