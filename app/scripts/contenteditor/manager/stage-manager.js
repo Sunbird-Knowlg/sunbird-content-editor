@@ -387,6 +387,14 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 				instance.onContentLoad(startTime)
 			})
 		}
+		var editorConfig = _.get(ecEditor.getConfig('editorConfig'), 'mode')
+		var mode = (editorConfig && (editorConfig.toLowerCase() === 'read' ? 'view' : editorConfig)) || 'edit'
+		org.ekstep.services.telemetryService.impression({
+			type: mode,
+			pageid: ecEditor.getContext('env') || 'contenteditor',
+			uri: encodeURIComponent(location.href),
+			duration: (new Date()).getTime() - startTime
+		})
 	},
 	_loadStage: function (stage, index, size, thumbnail, callback) {
 		delete stage.manifest
