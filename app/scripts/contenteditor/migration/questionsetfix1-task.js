@@ -102,7 +102,9 @@ org.ekstep.contenteditor.migration.patch_1 = new (Class.extend({
 		}
 
 		_.each(questionData.media, function (media) {
-			media.src = instance.getRelativeURL(media.src)
+			if(media.src){
+				media.src = instance.getRelativeURL(media.src)
+			}
 		})
 		_.each(quesAssets, function (quesAsset) {
 			// quesAsset.url = getRelativeURL(quesAsset.url);
