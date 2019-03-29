@@ -22,8 +22,7 @@ angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).fact
 }])
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document', '$ocLazyLoad', '$rootScope',
 	function ($scope, $timeout, $http, $location, $q, $window, $document, $ocLazyLoad, $rootScope) {
-		var EDITOR_START_TIME = Date.now()
-		var EDITOR_LOADED = undefined
+		var EDITOR_LOADED, EDITOR_START_TIME = Date.now()
 		// Declare global variables
 		$scope.showAppLoadScreen = true
 		$scope.contentLoadedFlag = false
@@ -127,7 +126,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 			$scope.$safeApply()
 		}
 
-		function toggleGenieControls() {
+		function toggleGenieControls () {
 			if (!$scope.showGenieControls) {
 				// Position the transparent image correctly on top of image
 				setTimeout(function () {
