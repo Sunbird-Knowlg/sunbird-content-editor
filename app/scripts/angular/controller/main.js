@@ -23,7 +23,7 @@ angular.module('editorApp', ['ngDialog', 'oc.lazyLoad', 'Scope.safeApply']).fact
 angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http', '$location', '$q', '$window', '$document', '$ocLazyLoad', '$rootScope',
 	function ($scope, $timeout, $http, $location, $q, $window, $document, $ocLazyLoad, $rootScope) {
 		var EDITOR_START_TIME = Date.now()
-		var EDITOR_LOADED = undefined;
+		var EDITOR_LOADED = undefined
 		// Declare global variables
 		$scope.showAppLoadScreen = true
 		$scope.contentLoadedFlag = false
@@ -202,8 +202,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
          * Load Content - Invoked once the content editor has loaded
          */
 		$scope.loadContent = function () {
-			EDITOR_LOADED = new Date();
-			org.ekstep.services.telemetryService.start(Date.now() - EDITOR_START_TIME);
+			EDITOR_LOADED = Date.now()
+			org.ekstep.services.telemetryService.start(Date.now() - EDITOR_START_TIME)
 			org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE).getContent(org.ekstep.contenteditor.api.getContext('contentId'), function (err, content) {
 				if (err) {
 					$scope.contentLoadedFlag = true
@@ -221,9 +221,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 				}
 				if (content) {
 					// Adding eventListener only after getting a successful response
-					ecEditor.addEventListener('content:load:complete', function(){
-						//subtype should be "content_load_time"
-						$scope.telemetryService.interact({ id:'screen',type: 'click', subtype: "content_load_time", duration: (Date.now() - EDITOR_LOADED).toString() })
+					ecEditor.addEventListener('content:load:complete', function () {
+						// subtype should be "content_load_time"
+						$scope.telemetryService.interact({ id: 'screen', type: 'click', subtype: 'content_load_time', duration: (Date.now() - EDITOR_LOADED).toString() })
 					})
 					$scope.contentDetails = {
 						contentTitle: content.name,
