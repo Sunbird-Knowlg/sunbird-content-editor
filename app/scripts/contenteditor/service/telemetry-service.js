@@ -207,16 +207,23 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 		if (data.subtype) { eventData.subtype = data.subtype }
 		if (data.pageid || data.stage) { eventData.pageid = data.pageid || data.stage }
 		// converting plugin, tareget for v3 from v2 data
-		eventData.plugin = data.plugin ? data.plugin : { 'id': data.pluginid, 'ver': data.pluginver }
+		if (data.plugin) {
+			eventData.plugin = data.plugin
+		} else if (data.pluginid && data.pluginver) {
+			eventData.plugin = { 'id': data.pluginid, 'ver': data.pluginver }
+		}
 		if (data.target && _.isObject(data.target)) {
 			eventData.target = data.target
-		} else {
+		} else if (data.target || data.stage) {
 			// converting target for v3 from v2 data
 			eventData.target = {
 				'id': data.target || data.stage || '',
 				'ver': '',
 				'type': ''
 			}
+		}
+		if (data.duration) {
+			eventData.duration = data.duration
 		}
 		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
 		EkTelemetry.interact(eventData)
