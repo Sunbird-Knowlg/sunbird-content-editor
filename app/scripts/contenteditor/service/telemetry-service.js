@@ -223,7 +223,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			}
 		}
 		if (data.duration) {
-			eventData.duration = data.duration
+			eventData.duration = (data.duration * 0.001)
 		}
 		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
 		EkTelemetry.interact(eventData)
@@ -245,7 +245,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			'pageid': data.pageid,
 			'uri': data.uri
 		}
-		if (data.duration) { eventData.duration = data.duration }
+		if (data.duration) { eventData.duration = (data.duration * 0.001) }
 		if (data.subtype) { eventData.subtype = data.subtype }
 		if (data.visits) { eventData.visits = data.visits }
 		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
