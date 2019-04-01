@@ -28,7 +28,7 @@ const VENDOR = [
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
-    "./app/libs/telemetry-lib-v3.min.js",
+    "./node_modules/@project-sunbird/telemetry-sdk/index.js",
     "./app/libs/webfont.js",
     "./app/bower_components/angular/angular.js",
     "./app/bower_components/fabric/dist/fabric.min.js",
@@ -104,6 +104,7 @@ var EDITOR_APP = [
     "./app/scripts/contenteditor/migration/eventsmigration-task.js",
     "./app/scripts/contenteditor/migration/settagmigration-task.js",
     "./app/scripts/contenteditor/migration/textmigration-task.js",
+    "./app/scripts/contenteditor/migration/questionsetfix1-task.js",
     "./app/scripts/contenteditor/manager/stage-manager.js"
 ];
 const APP_STYLE = [
@@ -147,8 +148,9 @@ module.exports = (env, argv) => {
             alias: {
                 'jquery': path.resolve('./node_modules/jquery/dist/jquery.js'),
                 'angular': path.resolve('./app/bower_components/angular/angular.js'),
-                'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
+                'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/fingerprint2.js'),
                 'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
+                'UAParser': path.resolve('./app/libs/ua-parser.min.js')
             }
         },
         module: {
@@ -166,12 +168,18 @@ module.exports = (env, argv) => {
                         strict: true
                     }
                 },
-
                 {
-                    test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
+                    test: require.resolve('./node_modules/@project-sunbird/telemetry-sdk/index.js'),
                     use: [{
                         loader: 'expose-loader',
                         options: 'EkTelemetry'
+                    }]
+                },
+                {
+                    test: require.resolve('./app/libs/ua-parser.min.js'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'UAParser'
                     }]
                 },
                 {
@@ -217,7 +225,7 @@ module.exports = (env, argv) => {
                     }]
                 },
                 {
-                    test: require.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
+                    test: require.resolve('./app/bower_components/fingerprintjs2/fingerprint2.js'),
                     use: [{
                         loader: 'expose-loader',
                         options: 'Fingerprint2'
@@ -345,7 +353,7 @@ module.exports = (env, argv) => {
                 Fingerprint2: 'Fingerprint2',
                 WebFont: 'webfontloader',
                 Ajv: 'ajv',
-
+                UAParser: 'UAParser'
             }),
             new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.HotModuleReplacementPlugin(),

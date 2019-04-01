@@ -310,7 +310,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
      */
 	start: function (durartion) {
 		var instance = this
-		var fp = new Fingerprint2()
+		// var fp = new Fingerprint2()
 		var pdata = ecEditor.getContext('pdata') ? ecEditor.getContext('pdata') : {id: 'in.ekstep', ver: '1.0'}
 		var env = ecEditor.getContext('env') || 'contenteditor'
 		if (env) {
@@ -354,10 +354,15 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			config.did = ecEditor.getContext('did')
 			instance.logStartAndImpression(config, durartion)
 		} else {
-			fp.get(function (result) {
-				config.did = result.toString()
-				instance.logStartAndImpression(config, durartion)
-			})
+			// fp.get(function (result) {
+			// 	config.did = result.toString()
+			// })
+			if(!EkTelemetry.fingerPrintId){
+				EkTelemetry.getFingerPrint(function(result, components) {
+					EkTelemetry.fingerPrintId = result;
+					instance.logStartAndImpression(config, durartion)
+				})
+			}
 		}
 		window.addEventListener('unload', /* istanbul ignore next */ function () {
 			instance.end()

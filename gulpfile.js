@@ -41,7 +41,7 @@ var bower_components = [
     "app/bower_components/async/dist/async.min.js",
     "app/libs/semantic.min.js",
     "app/libs/mousetrap.min.js",
-    "app/libs/telemetry-lib-v3.min.js",
+    "node_modules/@project-sunbird/telemetry-sdk/index.js",
     "app/libs/webfont.js",
     "app/bower_components/angular/angular.min.js",
     "app/bower_components/fabric/dist/fabric.min.js",
@@ -62,7 +62,6 @@ var bower_components = [
     "app/bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js",
     "app/bower_components/oclazyload/dist/ocLazyLoad.min.js",
     "app/scripts/contenteditor/md5.js",
-    "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
     "app/libs/ng-tags-input.js"
 ];
 
@@ -91,13 +90,13 @@ var contentEditorApp = [
     "app/scripts/contenteditor/migration/eventsmigration-task.js",
     "app/scripts/contenteditor/migration/settagmigration-task.js",
     "app/scripts/contenteditor/migration/textmigration-task.js",
+    "app/scripts/contenteditor/migration/questionsetfix1-task.js",
     "app/scripts/contenteditor/manager/stage-manager.js"
 ];
 
 var editorFramework = [
     "app/libs/fontfaceobserver.min.js",
-    "app/libs/telemetry-lib-v3.min.js",
-    "app/bower_components/fingerprintjs2/dist/fingerprint2.min.js",
+    "node_modules/@project-sunbird/telemetry-sdk/index.js",
     "app/scripts/contenteditor/bootstrap-editor.js",
     "app/scripts/contenteditor/ce-config.js",
     "app/scripts/contenteditor/content-editor.js",
