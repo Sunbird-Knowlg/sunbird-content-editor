@@ -207,16 +207,23 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 		if (data.subtype) { eventData.subtype = data.subtype }
 		if (data.pageid || data.stage) { eventData.pageid = data.pageid || data.stage }
 		// converting plugin, tareget for v3 from v2 data
-		eventData.plugin = data.plugin ? data.plugin : { 'id': data.pluginid, 'ver': data.pluginver }
+		if (data.plugin) {
+			eventData.plugin = data.plugin
+		} else if (data.pluginid && data.pluginver) {
+			eventData.plugin = { 'id': data.pluginid, 'ver': data.pluginver }
+		}
 		if (data.target && _.isObject(data.target)) {
 			eventData.target = data.target
-		} else {
+		} else if (data.target || data.stage) {
 			// converting target for v3 from v2 data
 			eventData.target = {
 				'id': data.target || data.stage || '',
 				'ver': '',
 				'type': ''
 			}
+		}
+		if (data.duration) {
+			eventData.duration = (data.duration * 0.001).toFixed(2)
 		}
 		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
 		EkTelemetry.interact(eventData)
@@ -238,7 +245,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			'pageid': data.pageid,
 			'uri': data.uri
 		}
-		if (data.duration) { eventData.duration = data.duration }
+		if (data.duration) { eventData.duration = (data.duration * 0.001).toFixed(2) }
 		if (data.subtype) { eventData.subtype = data.subtype }
 		if (data.visits) { eventData.visits = data.visits }
 		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
@@ -377,7 +384,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			'uaspec': instance.detectClient(),
 			'type': ecEditor.getConfig('editorType') || 'content',
 			'mode': mode.toLowerCase(),
-			'duration': (duration * 0.001), // Converting miliseconds to seconds.
+			'duration': (duration * 0.001).toFixed(2), // Converting miliseconds to seconds.
 			'pageid': 'main-page'
 		})
 		EkTelemetry.impression({
