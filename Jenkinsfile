@@ -36,6 +36,7 @@ node() {
                         export framework_version_number=${branch_name}
                         export editorType="contentEditor"
                         export editor_version_number=${branch_name}
+                        export build_number=${commit_hash}
                         export CHROME_BIN=google-chrome
                         rm -rf ansible/content-editor.zip
                         rm -rf content-editor
