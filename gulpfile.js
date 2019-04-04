@@ -15,22 +15,19 @@ var cleanCSS = require('clean-css');
 var replace = require('gulp-string-replace');
 var uglify = require('gulp-uglify');
 var git = require('gulp-git'); 
-var frameworkVersionNumber = process.env.framework_version_number;
 var editorVersionNumber = process.env.editor_version_number;
 var buildNumber = process.env.build_number;
 var branchName = process.env.branch || 'master';
 
-if (!editorVersionNumber && !buildNumber && !frameworkVersionNumber) {
-    console.error('Error!!! Cannot find framework_version_number, editor_version_number and build_number env variables');
+if (!editorVersionNumber && !buildNumber) {
+    console.error('Error!!! Cannot find editor_version_number and build_number env variables');
     return process.exit(1);
 }
 var versionPrefix = '.' + editorVersionNumber + '.' + buildNumber;
 var cachebust = function(path) {
     path.basename += versionPrefix
 }
-var baseEditorCachebust = function(path) {
-    path.basename += '.' + frameworkVersionNumber;
-}
+
 
 //var cachebust = new CacheBuster();
 const zip = require('gulp-zip');
@@ -179,7 +176,6 @@ gulp.task('minifyBaseEditor', function() {
     return gulp.src(editorScripts)
         .pipe(concat('base-editor.min.js'))
         .pipe(uglify())
-        .pipe(rename(baseEditorCachebust))
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
@@ -187,7 +183,6 @@ gulp.task('minifyFramework', function() {
     return gulp.src(pluginFramework)
         .pipe(concat('plugin-framework.min.js'))
         .pipe(uglify())
-        .pipe(rename(baseEditorCachebust))
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
