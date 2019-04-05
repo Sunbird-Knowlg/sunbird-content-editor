@@ -28,7 +28,7 @@
     "clean-webpack-plugin": "^0.1.19",
     "clipboard": "^2.0.1",
     "codacy-coverage": "^3.4.0",
-    "compression-webpack-plugin": "*",
+    "compression-webpack-plugin": "^2.0.0",
     "copy-webpack-plugin": "*",
     "cpy": "^7.0.1",
     "css-loader": "1.0.0",
