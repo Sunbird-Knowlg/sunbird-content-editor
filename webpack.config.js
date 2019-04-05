@@ -21,6 +21,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 const OnBuildSuccess = require('on-build-webpack');
 const extract = require('extract-zip');
 const cpy = require('cpy');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const VENDOR = [
     "./app/bower_components/jquery/dist/jquery.js", // Need to check both semantic and jquery
@@ -302,35 +303,35 @@ module.exports = (env, argv) => {
             }),
             // copy the index.html and templated to eidtor filder
             new CopyWebpackPlugin([{
-                    from: './app/templates',
-                    to: './templates'
-                },
-                {
-                    from: './app/index.html',
-                    to: './[name].[ext]',
-                    toType: 'template'
-                },
-                {
-                    from: './app/images/geniecontrols.png',
-                    to: './images'
-                },
-                {
-                    from: './content-editor/scripts/*.js',
-                    to: './',
-                    flatten: true
-                },
-                {
-                    from: './app/styles/noto.css',
-                    to: './'
-                },
-                {
-                    from: './deploy/gulpfile.js',
-                    to: './'
-                },
-                {
-                    from: './deploy/package.json',
-                    to: './'
-                },
+                from: './app/templates',
+                to: './templates'
+            },
+            {
+                from: './app/index.html',
+                to: './[name].[ext]',
+                toType: 'template'
+            },
+            {
+                from: './app/images/geniecontrols.png',
+                to: './images'
+            },
+            {
+                from: './content-editor/scripts/*.js',
+                to: './',
+                flatten: true
+            },
+            {
+                from: './app/styles/noto.css',
+                to: './'
+            },
+            {
+                from: './deploy/gulpfile.js',
+                to: './'
+            },
+            {
+                from: './deploy/package.json',
+                to: './'
+            },
 
             ]),
             new ImageminPlugin({
@@ -375,7 +376,7 @@ module.exports = (env, argv) => {
                     compress: true,
                     forceZip64Format: false,
                 },
-                pathMapper: function(assetPath) {
+                pathMapper: function (assetPath) {
                     console.log("AssesPath", assetPath)
                     if (assetPath.startsWith('gulpfile')) {
                         return path.join('.', path.basename(assetPath));
@@ -394,7 +395,14 @@ module.exports = (env, argv) => {
                     forceZip64Format: false,
                 },
             }),
-            new OnBuildSuccess(function(stats) {
+            new CompressionPlugin({
+                algorithm: 'gzip',
+                minRatio: 1,
+                filename(fileIterator) {
+                    return `${fileIterator.path}.gz`
+                }
+            }),
+            new OnBuildSuccess(function (stats) {
                 if (env && env.channel.toUpperCase() === 'NPM_PACKAGE') {
                     build_npm_package();
                 }
@@ -424,7 +432,7 @@ module.exports = (env, argv) => {
 
 
 function build_npm_package() {
-    extract(ZIP_FILE_NAME, { dir: path.resolve(__dirname, NPM_BUILD_FOLDER_NAME) }, function(err, res) {
+    extract(ZIP_FILE_NAME, { dir: path.resolve(__dirname, NPM_BUILD_FOLDER_NAME) }, function (err, res) {
         if (err) {
             console.error("Fails to extract", err)
             return
