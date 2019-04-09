@@ -387,11 +387,6 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			'duration': (duration * 0.001).toFixed(2), // Converting miliseconds to seconds.
 			'pageid': 'main-page'
 		})
-		EkTelemetry.impression({
-			type: mode,
-			pageid: ecEditor.getContext('env') || 'contenteditor',
-			uri: encodeURIComponent(location.href)
-		})
 	},
 	/**
      *
