@@ -151,10 +151,12 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
      *
      */
 	getEvent: function (eventId, data) {
+		var currentTime = Date.now()
+		var ets = ecEditor.getContext('timeDiff')
 		return {
 			'eid': eventId,
 			'mid': '',
-			'ets': (new Date()).getTime(),
+			'ets': _.isUndefined(ets) ? currentTime + 0 : (currentTime) + (ets),
 			'channel': this.context.channel,
 			'ver': '2.1',
 			'pdata': this.context.pdata,
@@ -320,8 +322,6 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 		var instance = this
 		// var fp = new Fingerprint2()
 		var pdata = ecEditor.getContext('pdata') ? ecEditor.getContext('pdata') : {id: 'in.ekstep', ver: '1.0'}
-		var currentTime = Date.now()
-		var ets = ecEditor.getContext('timeDiff')
 		var env = ecEditor.getContext('env') || 'contenteditor'
 		if (env) {
 			switch (env) {
@@ -353,7 +353,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			dispatcher: instance.getDispatcher(org.ekstep.contenteditor.config.dispatcher),
 			rollup: ecEditor.getContext('rollup') || {},
 			enableValidation: ecEditor.getConfig('enableTelemetryValidation'),
-			timeStampData: _.isUndefined(ets) ? currentTime + 0 : (currentTime) + (ets)
+			timeStampData: timeStampData: ecEditor.getContext('timeStamp')
 		}
 
 		if (ecEditor.getContext('tags')) {
