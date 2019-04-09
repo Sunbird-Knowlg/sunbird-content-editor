@@ -320,6 +320,8 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 		var instance = this
 		// var fp = new Fingerprint2()
 		var pdata = ecEditor.getContext('pdata') ? ecEditor.getContext('pdata') : {id: 'in.ekstep', ver: '1.0'}
+		var currentTime = new Date().getTime() / 1000;
+		var ets = ecEditor.getContext('timeDiff');
 		var env = ecEditor.getContext('env') || 'contenteditor'
 		if (env) {
 			switch (env) {
@@ -350,7 +352,8 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			},
 			dispatcher: instance.getDispatcher(org.ekstep.contenteditor.config.dispatcher),
 			rollup: ecEditor.getContext('rollup') || {},
-			enableValidation: ecEditor.getConfig('enableTelemetryValidation')
+			enableValidation: ecEditor.getConfig('enableTelemetryValidation'),
+			timeStampData: _.isUndefined(ets) ? currentTime + 0 : (currentTime) + (ets)
 		}
 
 		if (ecEditor.getContext('tags')) {
