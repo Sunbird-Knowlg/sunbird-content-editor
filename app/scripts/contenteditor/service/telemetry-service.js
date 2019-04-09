@@ -349,7 +349,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 				ver: !_.isUndefined(pkgVersion) ? pkgVersion.toString() : '0'
 			},
 			dispatcher: instance.getDispatcher(org.ekstep.contenteditor.config.dispatcher),
-			rollup: ecEditor.getContext('rollup') || {},
+			rollup: ecEditor.getContext('contextRollUp') || {},
 			enableValidation: ecEditor.getConfig('enableTelemetryValidation')
 		}
 
