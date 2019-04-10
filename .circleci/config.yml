@@ -1,6 +1,7 @@
 version: 2.1
 jobs:
   build:
+    working_directory: ~/content-editor
     docker:
       - image: circleci/node:6.10-browsers
         environment:
@@ -9,9 +10,11 @@ jobs:
            editor_version_number: $CIRCLE_BRANCH
            #CHROME_BIN: google-chrome
     steps:
-      - checkout
-      #- restore_cache:
-          #key: dependency-cache-{{ checksum "package.json" }}
+      - checkout:
+          path: ~/content-editor
+      
+      - restore_cache:
+          key: ce-dependency-cache-{{ checksum "package.json" }}
       
       - run:
           name: clone plugins
@@ -31,8 +34,9 @@ jobs:
       - run: npm run build
       
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: ce-dependency-cache-{{ checksum "package.json" }}
           paths: ./node_modules
+      
       - run: 
           name: test-with-coverage
           command: 'npm run test-with-coverage'
