@@ -27,15 +27,18 @@ jobs:
           paths: ./node_modules
       - run: 
           name: test-with-coverage
-          command: 'mkdir -p /tmp/logs && npm run test-with-coverage | tee /tmp/logs/test_cases.log'
+          command: 'npm run test-with-coverage'
+          
+      - run: mkdir -p /tmp/coverage && cp ./coverage/lcov.info /tmp/coverage
+      
       - run:
           name: Publishing report to Codacy
           command: 'cat ./coverage/lcov.info | codacy-coverage '
           when: always
        
       - store_artifacts:
-          path: /tmp/logs
-          destination: logs 
+          path: /tmp/coverage
+          destination: coverage
     
     
 workflows:
