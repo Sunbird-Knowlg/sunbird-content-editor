@@ -8,7 +8,7 @@ jobs:
            framework_version_number: $CIRCLE_BRANCH
            editorType: contentEditor
            editor_version_number: $CIRCLE_BRANCH
-           #CHROME_BIN: google-chrome
+           
     steps:
       - checkout:
           path: ~/content-editor
