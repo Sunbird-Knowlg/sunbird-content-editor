@@ -349,8 +349,9 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 				ver: !_.isUndefined(pkgVersion) ? pkgVersion.toString() : '0'
 			},
 			dispatcher: instance.getDispatcher(org.ekstep.contenteditor.config.dispatcher),
-			rollup: ecEditor.getContext('rollup') || {},
-			enableValidation: ecEditor.getConfig('enableTelemetryValidation')
+			rollup: ecEditor.getContext('contextRollUp') || {},
+			enableValidation: ecEditor.getConfig('enableTelemetryValidation'),
+			timeDiff: ecEditor.getContext('timeDiff') || 0
 		}
 
 		if (ecEditor.getContext('tags')) {
@@ -386,11 +387,6 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			'mode': mode.toLowerCase(),
 			'duration': (duration * 0.001).toFixed(2), // Converting miliseconds to seconds.
 			'pageid': 'main-page'
-		})
-		EkTelemetry.impression({
-			type: mode,
-			pageid: ecEditor.getContext('env') || 'contenteditor',
-			uri: encodeURIComponent(location.href)
 		})
 	},
 	/**

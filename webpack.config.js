@@ -1,7 +1,6 @@
 const ENVIRONMENT = process.env.NODE_ENV;
 const BUILD_NUMBER = process.env.build_number;
 const EDITOR_VER = process.env.editor_version_number;
-const PLUGIN_FRAMEWORK_VER = process.env.framework_version_number;
 
 const ZIP_FILE_NAME = 'content-editor.zip';
 const NPM_BUILD_FOLDER_NAME = 'content-editor'
@@ -137,8 +136,8 @@ const APP_STYLE = [
 // removing the duplicate files
 const APP_SCRIPT = [...new Set([...VENDOR, ...PLUGIN_FRAMEWORK, ...EDITOR_FRAMEWORK, ...EDITOR_APP])]
 
-if (!BUILD_NUMBER && !EDITOR_VER && !PLUGIN_FRAMEWORK_VER) {
-    console.error('Error!!! Cannot find framework_version_number, editor_version_number and build_number env variables');
+if (!BUILD_NUMBER && !EDITOR_VER) {
+    console.error('Error!!! Cannot find editor_version_number and build_number env variables');
     return process.exit(1)
 }
 
