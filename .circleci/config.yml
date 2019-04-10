@@ -17,7 +17,8 @@ jobs:
       - run:
           name: get target branch
           command: |
-            prdata=$(curl -X GET -u $GITHUB_USER_TOKEN:x-oauth-basic https://api.github.com/repos/project-sunbird/sunbird-content-editor/pulls/$CIRCLE_PR_NUMBER)
+            prnumber=$(echo $CI_PULL_REQUEST | awk -F'/' '{print $NF}')
+            prdata=$(curl -X GET -u $GITHUB_USER_TOKEN:x-oauth-basic https://api.github.com/repos/project-sunbird/sunbird-content-editor/pulls/$prnumber)
             target_branch=$(echo "${prdata}" | jq -r '.base.ref')
       
       - run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b '$target_branch'
