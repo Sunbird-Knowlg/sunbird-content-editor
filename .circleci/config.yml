@@ -20,8 +20,9 @@ jobs:
             prnumber=$(echo $CI_PULL_REQUEST | awk -F'/' '{print $NF}')
             prdata=$(curl -X GET -u $GITHUB_USER_TOKEN:x-oauth-basic https://api.github.com/repos/project-sunbird/sunbird-content-editor/pulls/$prnumber)
             target_branch=$(echo "${prdata}" | jq -r '.base.ref')
+            git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
       
-      - run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
+      #- run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
       - run: npm install
       - run: cd app && bower cache clean --allow-root
       - run: cd app && bower prune -f --allow-root
