@@ -254,7 +254,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 				var summaryObj = plugin.getSummary()
 				if (summaryObj) instance.summary.push(summaryObj)
 				var streamingObj = instance.isStreamingAsset(plugin)
-				if (streamingObj !== -1) instance.assets.push(plugin.attributes.asset)
+				if (streamingObj !== -1 && !ecEditor._.isUndefined(plugin.attributes.asset)) instance.assets.push(plugin.attributes.asset)
 				var pragma = plugin.getPragmaValue()
 				// if any plugin return pragma value we pushing to array
 				pragma && ((instance.pragma === null) ? instance.pragma = [pragma] : ecEditor._.uniq(instance.pragma.push(pragma)))
