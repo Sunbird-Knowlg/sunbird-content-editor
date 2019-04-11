@@ -12,6 +12,7 @@ var concat = require('gulp-concat');
 var minify = require('gulp-minifier');
 var uglify = require('gulp-uglify');
 var clean = require('gulp-clean');
+var gzip = require('gulp-gzip');
 var editorVersionNumber = process.env.editor_version_number || 1;
 var buildNumber = process.env.build_number || 1;
 
@@ -65,7 +66,13 @@ gulp.task('bower-package', function() {
 
 gulp.task('package', ['iframe-package', 'embed-package', 'coreplugins-package']);
 
-gulp.task('iframe-package', ['bower-package'], function() {
+gulp.task('iframe-compress', ['bower-package'], function() {
+    return gulp.src(['build/**/*.js', 'build/**/*.css', 'build/**/*.html', 'build/**/*.png', 'build/**/*.ttf', 'build/**/*.woff', 'build/**/*.woff2'])
+    .pipe(gzip())
+    .pipe(gulp.dest('build'));
+});
+
+gulp.task('iframe-package', ['bower-package', 'iframe-compress'], function() {
     var package_id = packageJson['name'] + '-' + 'iframe' + '-' + packageJson['version'];
     return mergeStream(gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/editor/')),
         gulp.src('build/**').pipe(zip(packageJson['name'] + '-iframe-latest' + '.zip')).pipe(gulp.dest('dist/editor/')));
@@ -76,7 +83,13 @@ gulp.task('bower-package-transform', ['iframe-package'], function() {
         gulp.src('build/scripts/script.min.*.js').pipe(replace("src='scripts", "src='content-editor-embed/scripts")).pipe(gulp.dest('build/scripts/')));
 });
 
-gulp.task('embed-package', ['bower-package-transform'], function() {
+gulp.task('embed-compress', ['bower-package-transform'], function() {
+    return gulp.src(['build/index.html'])
+    .pipe(gzip())
+    .pipe(gulp.dest('build'));
+});
+
+gulp.task('embed-package', ['embed-compress'], function() {
     var package_id = packageJson['name'] + '-' + 'embed' + '-' + packageJson['version'];
     return mergeStream(gulp.src('build/**').pipe(zip(package_id + '.zip')).pipe(gulp.dest('dist/editor/')),
         gulp.src('build/**').pipe(zip(packageJson['name'] + '-embed-latest' + '.zip')).pipe(gulp.dest('dist/editor/')));
