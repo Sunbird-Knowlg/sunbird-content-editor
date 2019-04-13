@@ -14,7 +14,6 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 var corePlugins = [
 	'org.ekstep.assessmentbrowser-1.1',
-	'org.ekstep.assetbrowser-1.2',
 	'org.ekstep.colorpicker-1.0',
 	'org.ekstep.conceptselector-1.1',
 	'org.ekstep.stage-1.0',

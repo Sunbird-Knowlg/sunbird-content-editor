@@ -8,6 +8,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	canvas: undefined,
 	contentLoading: false,
 	summary: [],
+	assets: [],
 	init: function () {
 		var instance = this
 		fabric.Object.prototype.transparentCorners = false
@@ -239,6 +240,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		this.setNavigationalParams()
 		var mediaMap = {}
 		instance.summary = []
+		instance.assets = []
 		instance.pragma = null
 		_.forEach(this.stages, function (stage, index) {
 			instance.thumbnails[stage.id] = stage.thumbnail
@@ -251,6 +253,8 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 				stageBody[id].push(plugin.toECML())
 				var summaryObj = plugin.getSummary()
 				if (summaryObj) instance.summary.push(summaryObj)
+				var streamingObj = instance.isStreamingAsset(plugin)
+				if (streamingObj !== -1 && !ecEditor._.isUndefined(plugin.attributes.asset)) instance.assets.push(plugin.attributes.asset)
 				var pragma = plugin.getPragmaValue()
 				// if any plugin return pragma value we pushing to array
 				pragma && ((instance.pragma === null) ? instance.pragma = [pragma] : ecEditor._.uniq(instance.pragma.push(pragma)))
@@ -491,6 +495,10 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		this.thumbnails = {}
 		this.canvas = undefined
 		this.currentStage = undefined
+	},
+	isStreamingAsset: function (plugin) {
+		var streamingPlugins = ['org.ekstep.video', 'org.ekstep.audio', 'org.ekstep.image']
+		return _.indexOf(streamingPlugins, plugin.manifest.id)
 	},
 	getSummary: function () {
 		var instance = this
