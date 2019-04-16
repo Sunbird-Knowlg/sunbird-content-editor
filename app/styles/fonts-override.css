@@ -384,6 +384,6 @@ body {
   .ui.modal > .header,
   .label-icon-box-text,
   .cke_reset_all, .cke_reset_all *, .cke_reset_all a, .cke_reset_all textarea,
-  .ui.category.search> .results .category> .name {
+  .ui.category.search> .results .category> .name,  body.cke_editable  {
     font-family: inherit !important;
   }
