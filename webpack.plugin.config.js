@@ -19,6 +19,7 @@ var corePlugins = [
 	'org.ekstep.stage-1.0',
 	'org.ekstep.text-1.2',
 	'org.ekstep.shape-1.0',
+	'org.ekstep.video-1.5',
 	'org.ekstep.image-1.1',
 	'org.ekstep.audio-1.1',
 	'org.ekstep.hotspot-1.0',
@@ -100,7 +101,7 @@ function packagePlugins () {
 		fs.appendFile('plugins/' + plugin + '/editor/plugin.dist.js', [...dependenciesArr].join('\n'))
 		pluginPackageArr.push('./plugins/' + plugin + '/editor/plugin.dist.js')
 	})
-
+	
 	return pluginPackageArr
 }
 
@@ -134,7 +135,8 @@ module.exports = {
 			'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
 			'E2EConverter': path.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js'),
 			'xmlbuilder': path.resolve('./node_modules/xmlbuilder/lib/index.js'),
-			'X2JS': path.resolve('./plugins/org.ekstep.assessmentbrowser-1.1/editor/libs/xml2json.js')
+			'X2JS': path.resolve('./plugins/org.ekstep.assessmentbrowser-1.1/editor/libs/xml2json.js'),
+			'video.js': path.resolve('./plugins/org.ekstep.video-1.5/editor/libs/video.js')
 		}
 	},
 	module: {
