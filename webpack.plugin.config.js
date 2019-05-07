@@ -39,7 +39,8 @@ var corePlugins = [
 	'org.ekstep.keyboardshortcuts-1.0',
 	'org.ekstep.richtext-1.0',
 	'org.ekstep.iterator-1.0',
-	'org.ekstep.navigation-1.0'
+	'org.ekstep.navigation-1.0',
+	'org.ekstep.reviewercomments-1.0',
 ]
 
 let entryFiles = []
@@ -76,7 +77,7 @@ function packagePlugins () {
 			})
 			var count = 0
 			var len = (pluginContent.replace(/\b(loadNgModules)\b.*\)/g) || []).length
-
+			
 			pluginContent = uglifyjs.minify(pluginContent.replace(/\b(loadNgModules)\b.*\)/g, function ($0) {
 				if (count === len) count = 0
 				var dash
@@ -222,7 +223,7 @@ module.exports = {
 					passes: 1
 				},
 				ecma: 5,
-				mangle: true
+				mangle: true				
 			},
 			sourceMap: true
 		})
