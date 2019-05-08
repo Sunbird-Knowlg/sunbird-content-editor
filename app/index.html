@@ -15,8 +15,9 @@
     <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-plain.min.css">
     <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-default.min.css">
     <link rel="stylesheet" type="text/css" href="styles/icomoon/style.css"/>
-    <link rel="stylesheet" href="styles/content-editor.css" />
+    <link rel="stylesheet" href="styles/content-editor.css" />    
     <link rel="stylesheet" type="text/css" href="libs/ng-tags-input.css">
+    <link rel="stylesheet" href="styles/fonts-override.css" />  
     <script src="libs/webfont.js"></script>
     <!-- endinject -->
 </head>
@@ -79,8 +80,12 @@
                                 <span class="stage-number">{{$index+1}}</span>
                                 <div ng-class="stage.isSelected ? 'ui fluid image selected-slide-image' : 'ui fluid image'">
                                     <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
-                                        <i class="fa fa-trash" ng-click="fireEvent(stage.ondelete)" style="margin-right:15px; cursor: pointer;"></i>
-                                        <i class="icon-duplicate link" ng-click="fireEvent(stage.duplicate)" style="cursor: pointer;"></i>
+                                        <div class="popup-item" data-content="Delete" data-variation="tiny inverted" data-position="bottom center">
+                                            <i class="fa fa-trash" ng-click="fireEvent(stage.ondelete)" style="margin-right:15px; cursor: pointer;"></i>
+                                        </div>
+                                        <div class="popup-item" data-content="Copy" data-variation="tiny inverted" data-position="bottom center">
+                                            <i class="icon-duplicate link" ng-click="fireEvent(stage.duplicate)" style="cursor: pointer;"></i>
+                                        </div>
                                     </div>
                                     <img data-id="{{stage.id}}" ng-src="{{stage.thumbnail}}" x-lvl-draggable="true" x-lvl-drop-target="true" x-on-drop="onStageDragDrop(dragEl, dropEl)" ng-click="fireEvent(stage.getOnClick())" />
                                 </div>
@@ -158,13 +163,13 @@
     <script src="bower_components/oclazyload/dist/modules/ocLazyLoad.loaders.templatesLoader.js"></script>
     <script src="bower_components/oclazyload/dist/modules/ocLazyLoad.polyfill.ie8.js"></script> -->
     <script src="bower_components/oclazyload/dist/ocLazyLoad.min.js"></script>
-    <script src="bower_components/fingerprintjs2/dist/fingerprint2.min.js"></script>
     <script type="text/javascript" src="libs/fontfaceobserver.min.js"></script>
     <script src="scripts/dev/localhost-ce.js"></script>
     <script src="libs/semantic.min.js"></script>
     <script src="libs/mousetrap.min.js"></script>
     <script src="libs/ng-tags-input.js"></script>
-    <script src="libs/telemetry-lib-v3.min.js"></script>
+    <script src="../node_modules/@project-sunbird/telemetry-sdk/index.js"></script>
+
     <!-- Load Framework -->
     <script src="scripts/framework/libs/ES5Polyfill.js"></script>
     <script src="scripts/framework/class.js"></script>
@@ -206,6 +211,7 @@
     <script src="scripts/contenteditor/migration/scribblemigration-task.js"></script>
     <script src="scripts/contenteditor/migration/readalongmigration-task.js"></script>
     <script src="scripts/contenteditor/migration/assessmentmigration-task.js"></script>
+    <script src="scripts/contenteditor/migration/questionsetfix1-task.js"></script>
     <script src="scripts/contenteditor/migration/eventsmigration-task.js"></script>
     <script src="scripts/contenteditor/migration/settagmigration-task.js"></script>
     <script src="scripts/contenteditor/migration/textmigration-task.js"></script>

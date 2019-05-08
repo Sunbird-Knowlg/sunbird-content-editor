@@ -18,7 +18,7 @@
     "oclazyload": "^1.0.9",
     "ngSafeApply": "./libs/Scope.SafeApply.js",
     "angular-camelize-filter": "^1.0.2",
-    "fingerprintjs2": "1.8.0"
+    "fingerprintjs2": "2.0.6"
   },
   "appPath": "app",
   "moduleName": "editorApp",

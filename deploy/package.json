@@ -1,6 +1,6 @@
 {
     "name": "content-editor",
-    "version": "1.14.0",
+    "version": "1.15.0",
     "description": "It is used to update files in deployment job",
     "main": "gulpfile.js",
     "scripts": {
@@ -14,6 +14,7 @@
         "gulp": "^3.9.1",
         "gulp-cachebust": "0.0.6",
         "gulp-clean": "^0.3.2",
+        "gulp-gzip": "^1.4.2",
         "gulp-inject": "^4.2.0",
         "gulp-rename": "^1.2.2",
         "gulp-string-replace": "^0.4.0",

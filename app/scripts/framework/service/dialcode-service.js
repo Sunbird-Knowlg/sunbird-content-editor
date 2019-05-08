@@ -17,7 +17,7 @@ org.ekstep.services.dialcodeService = new (org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.dialcodeService
      */
 	dialcodelinkURL: function () {
-		return this.getBaseURL() + this.getAPISlug() + this.getConfig('dialcodeEndPoint', '/content/v3/dialcode')
+		return this.getBaseURL() + this.getAPISlug() + this.getConfig('dialcodeEndPoint', '/collection/v3/dialcode')
 	},
 	/**
      * Get all DIAL codes
@@ -45,8 +45,8 @@ org.ekstep.services.dialcodeService = new (org.ekstep.services.iService.extend({
      * @param  {Function} callback returns error and response as arguments
      * @memberof org.ekstep.services.dialcodeService
      */
-	dialcodeLink: function (channel, request, callback) {
-		this.postFromService(this.dialcodelinkURL() + this.getConfig('dialcodeLink', '/link'), request, this.setChannelInHeader(channel), callback)
+	dialcodeLink: function (contentId, channel, request, callback) {
+		this.postFromService(this.dialcodelinkURL() + this.getConfig('dialcodeLink', '/link/') + contentId, request, this.setChannelInHeader(channel), callback)
 	},
 	reserveDialCode: function (channel, request, contentId, callback) {
 		if (contentId) {

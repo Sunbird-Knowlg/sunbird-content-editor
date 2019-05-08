@@ -8,6 +8,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	canvas: undefined,
 	contentLoading: false,
 	summary: [],
+	assets: [],
 	init: function () {
 		var instance = this
 		fabric.Object.prototype.transparentCorners = false
@@ -223,6 +224,13 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	getStageIcons: function () {
 		return this.thumbnails
 	},
+	updateStageIcons: function () {
+		var instance = this
+		var allStageIcons = org.ekstep.contenteditor.stageManager.getStageIcons()
+		var allStages = _.map(org.ekstep.contenteditor.stageManager.stages, 'id')
+		instance.thumbnails = _.pick(allStageIcons, allStages)
+		return instance.thumbnails
+	},
 	getPragma: function () {
 		return ecEditor._.uniq(this.pragma)
 	},
@@ -232,6 +240,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		this.setNavigationalParams()
 		var mediaMap = {}
 		instance.summary = []
+		instance.assets = []
 		instance.pragma = null
 		_.forEach(this.stages, function (stage, index) {
 			instance.thumbnails[stage.id] = stage.thumbnail
@@ -244,6 +253,8 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 				stageBody[id].push(plugin.toECML())
 				var summaryObj = plugin.getSummary()
 				if (summaryObj) instance.summary.push(summaryObj)
+				var streamingObj = instance.isStreamingAsset(plugin)
+				if (streamingObj !== -1 && !ecEditor._.isUndefined(plugin.attributes.asset)) instance.assets.push(plugin.attributes.asset)
 				var pragma = plugin.getPragmaValue()
 				// if any plugin return pragma value we pushing to array
 				pragma && ((instance.pragma === null) ? instance.pragma = [pragma] : ecEditor._.uniq(instance.pragma.push(pragma)))
@@ -265,7 +276,9 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			content.theme['migration-media'].media = _.values(org.ekstep.contenteditor.mediaManager.migratedMediaMap)
 		}
 		content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mediaMap)), 'id')
-
+		if (!_.isEmpty(org.ekstep.contenteditor.migration.patch)) {
+			content.theme['patch'] = org.ekstep.contenteditor.migration.patch.toString()
+		}
 		return _.cloneDeep(content)
 	},
 	manifestGenerator: function (content) {
@@ -363,6 +376,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		var instance = this
 		stageIcons = stageIcons || '{}'
 		var thumbnails = JSON.parse(stageIcons)
+		instance.thumbnails = JSON.parse(stageIcons)
 		var tasks = []
 		_.forEach(stages, function (stage, index) {
 			tasks.push(function (callback) {
@@ -377,6 +391,12 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 				instance.onContentLoad(startTime)
 			})
 		}
+		org.ekstep.services.telemetryService.impression({
+			type: 'edit',
+			pageid: ecEditor.getContext('env') || 'contenteditor',
+			uri: encodeURIComponent(location.href),
+			duration: (new Date()).getTime() - startTime
+		})
 	},
 	_loadStage: function (stage, index, size, thumbnail, callback) {
 		delete stage.manifest
@@ -475,6 +495,10 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		this.thumbnails = {}
 		this.canvas = undefined
 		this.currentStage = undefined
+	},
+	isStreamingAsset: function (plugin) {
+		var streamingPlugins = ['org.ekstep.video', 'org.ekstep.audio', 'org.ekstep.image']
+		return _.indexOf(streamingPlugins, plugin.manifest.id)
 	},
 	getSummary: function () {
 		var instance = this

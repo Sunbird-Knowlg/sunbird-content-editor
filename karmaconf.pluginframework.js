@@ -16,7 +16,7 @@ module.exports = function (config) {
 			'app/bower_components/jquery/dist/jquery.js',
 			'app/bower_components/async/dist/async.min.js',
 			'app/bower_components/lodash/dist/lodash.min.js',
-			'app/bower_components/fingerprintjs2/dist/fingerprint2.min.js',
+			'node_modules/@project-sunbird/telemetry-sdk/index.js',
 			'app/scripts/framework/libs/ES5Polyfill.js',
 			'app/scripts/framework/libs/eventbus.min.js',
 			'app/scripts/framework/libs/mousetrap.min.js',

@@ -1,7 +1,6 @@
 const ENVIRONMENT = process.env.NODE_ENV;
 const BUILD_NUMBER = process.env.build_number;
 const EDITOR_VER = process.env.editor_version_number;
-const PLUGIN_FRAMEWORK_VER = process.env.framework_version_number;
 
 const ZIP_FILE_NAME = 'content-editor.zip';
 const NPM_BUILD_FOLDER_NAME = 'content-editor'
@@ -28,7 +27,7 @@ const VENDOR = [
     "./app/bower_components/async/dist/async.min.js",
     "./app/scripts/framework/libs/eventbus.min.js",
     "./app/libs/mousetrap.min.js",
-    "./app/libs/telemetry-lib-v3.min.js",
+    "./node_modules/@project-sunbird/telemetry-sdk/index.js",
     "./app/libs/webfont.js",
     "./app/bower_components/angular/angular.js",
     "./app/bower_components/fabric/dist/fabric.min.js",
@@ -104,6 +103,7 @@ var EDITOR_APP = [
     "./app/scripts/contenteditor/migration/eventsmigration-task.js",
     "./app/scripts/contenteditor/migration/settagmigration-task.js",
     "./app/scripts/contenteditor/migration/textmigration-task.js",
+    "./app/scripts/contenteditor/migration/questionsetfix1-task.js",
     "./app/scripts/contenteditor/manager/stage-manager.js"
 ];
 const APP_STYLE = [
@@ -119,14 +119,25 @@ const APP_STYLE = [
     './app/styles/commonStyles.css',
     './app/styles/content-editor.css',
     './app/styles/noto.css',
-    './content-editor/scripts/plugin-vendor.min.css' // Plugin css files
+    './content-editor/scripts/plugin-vendor.min.css', // Plugin css files
+    './app/styles/fonts/notosans-bengali/notosansbengali.css',
+    './app/styles/fonts/notosans-malayalam/notosansmalayalam.css',
+    './app/styles/fonts/notosans-gurmukhi/notosansgurmukhi.css',
+    './app/styles/fonts/notosans-devanagari/notosansdevanagari.css',
+    './app/styles/fonts/notosans-gujarati/notosansgujarati.css',
+    './app/styles/fonts/notosans-telugu/notosanstelugu.css',
+    './app/styles/fonts/notosans-tamil/notosanstamil.css',
+    './app/styles/fonts/notosans-kannada/notosanskannada.css',
+    './app/styles/fonts/notosans-oriya/notosansoriya.css',
+    './app/styles/fonts/noto-nastaliqurdu/notonastaliqurdu.css',
+    './app/styles/fonts-override.css'
 ];
 
 // removing the duplicate files
 const APP_SCRIPT = [...new Set([...VENDOR, ...PLUGIN_FRAMEWORK, ...EDITOR_FRAMEWORK, ...EDITOR_APP])]
 
-if (!BUILD_NUMBER && !EDITOR_VER && !PLUGIN_FRAMEWORK_VER) {
-    console.error('Error!!! Cannot find framework_version_number, editor_version_number and build_number env variables');
+if (!BUILD_NUMBER && !EDITOR_VER) {
+    console.error('Error!!! Cannot find editor_version_number and build_number env variables');
     return process.exit(1)
 }
 
@@ -147,8 +158,9 @@ module.exports = (env, argv) => {
             alias: {
                 'jquery': path.resolve('./node_modules/jquery/dist/jquery.js'),
                 'angular': path.resolve('./app/bower_components/angular/angular.js'),
-                'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
+                'Fingerprint2': path.resolve('./app/bower_components/fingerprintjs2/fingerprint2.js'),
                 'clipboard': path.resolve('./node_modules/clipboard/dist/clipboard.min.js'),
+                'UAParser': path.resolve('./app/libs/ua-parser.min.js')
             }
         },
         module: {
@@ -166,12 +178,18 @@ module.exports = (env, argv) => {
                         strict: true
                     }
                 },
-
                 {
-                    test: require.resolve('./app/libs/telemetry-lib-v3.min.js'),
+                    test: require.resolve('./node_modules/@project-sunbird/telemetry-sdk/index.js'),
                     use: [{
                         loader: 'expose-loader',
                         options: 'EkTelemetry'
+                    }]
+                },
+                {
+                    test: require.resolve('./app/libs/ua-parser.min.js'),
+                    use: [{
+                        loader: 'expose-loader',
+                        options: 'UAParser'
                     }]
                 },
                 {
@@ -217,7 +235,7 @@ module.exports = (env, argv) => {
                     }]
                 },
                 {
-                    test: require.resolve('./app/bower_components/fingerprintjs2/dist/fingerprint2.min.js'),
+                    test: require.resolve('./app/bower_components/fingerprintjs2/fingerprint2.js'),
                     use: [{
                         loader: 'expose-loader',
                         options: 'Fingerprint2'
@@ -345,7 +363,7 @@ module.exports = (env, argv) => {
                 Fingerprint2: 'Fingerprint2',
                 WebFont: 'webfontloader',
                 Ajv: 'ajv',
-
+                UAParser: 'UAParser'
             }),
             new webpack.optimize.OccurrenceOrderPlugin(),
             new webpack.HotModuleReplacementPlugin(),

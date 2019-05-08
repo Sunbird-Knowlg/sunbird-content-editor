@@ -7,6 +7,7 @@
     "$": true,
     "angular": true,
     "ecEditor": true,
+    "Telemetry": true,
     "EkTelemetry": true,
     "EkstepEditor": true,
     "EkstepEditorAPI": true,
