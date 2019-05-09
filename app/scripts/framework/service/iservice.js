@@ -7,7 +7,11 @@ org.ekstep.services.iService = Class.extend({
 	requestHeaders: {
 		'headers': {
 			'content-type': 'application/json',
-			'user-id': 'content-editor'
+			'user-id': 'content-editor',
+			'X-Channel-ID': 'b00bc992ef25f1a9a8d63291e20efc8d',
+			'x-authenticated-userid': '874ed8a5-782e-4f6c-8f36-e0288455901e',
+			'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJkMTc1MDIwNDdlODc0ODZjOTM0ZDQ1ODdlYTQ4MmM3MyJ9.7LWocwCn5rrCScFQYOne8_Op2EOo-xTCK5JCFarHKSs',
+			'x-authenticated-user-token': 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ1WXhXdE4tZzRfMld5MG5PS1ZoaE5hU0gtM2lSSjdXU25ibFlwVVU0TFRrIn0.eyJqdGkiOiIxOWVkZmEzNy05ZjI4LTQzNmEtOTA0Ni1mNzkyNGM0MGRjMTYiLCJleHAiOjE1NTY4MDkxMTgsIm5iZiI6MCwiaWF0IjoxNTU2NzkxMTE4LCJpc3MiOiJodHRwczovL2Rldi5zdW5iaXJkZWQub3JnL2F1dGgvcmVhbG1zL3N1bmJpcmQiLCJhdWQiOiJhZG1pbi1jbGkiLCJzdWIiOiJmOjVhOGEzZjJiLTM0MDktNDJlMC05MDAxLWY5MTNiYzBmZGUzMTo4NzRlZDhhNS03ODJlLTRmNmMtOGYzNi1lMDI4ODQ1NTkwMWUiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJhZG1pbi1jbGkiLCJhdXRoX3RpbWUiOjAsInNlc3Npb25fc3RhdGUiOiIzODUyYjFiOC0xMjk3LTQ0YWItOGZiMi0xNDlmY2ZiNjZiYjkiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9LCJuYW1lIjoiQ3JlYXRpb24iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJudHB0ZXN0MTAyIiwiZ2l2ZW5fbmFtZSI6IkNyZWF0aW9uIiwiZmFtaWx5X25hbWUiOiIiLCJlbWFpbCI6InZpbmF5YWIrMTAwQGlsaW1pLmluIn0.eTaR9w5Bh5Z7oMb10X9jgg79XxFsEfnpOMzJGXoeVPYVTQEE4DLZqvePbkvPI0NzQsHstm8HBqNHMUhdW8U3Mjn5u4mvVAGzuzCvjLgT8oGINpRAolb6qSjmC1y4eXvlIe5AaFL88Bv-dIMZzDqtpz8S4ocYEB2zgEefgIytNZLez4VKGB62bL6dKX5ngNaNPZqQFD5Jn12MI3CTDQQGs9UAN60VeTx8wipjyCm0SBplBxmnLTEWii_U2lPD71xHguFIK6mxM9_csI0L2JQjfZ73hm0OuYphOw2BG_zAS1X7lgvI1dOMD1ObTMESo9BO7GHu3vOyN6AKo4FVuZ2tog'
 		}
 	},
 	getBaseURL: function () {
@@ -42,6 +46,10 @@ org.ekstep.services.iService = Class.extend({
 			cb(null, res)
 		}
 		ajaxSettings.error = function (err) {
+			if(err && err.status === 401 && err.statusText === "Unauthorized") {
+				alert("Your session has timed out due to inactivity. Please login to resume!");
+				window.parent.$('#' + ecEditor.getConfig('modalId')).iziModal('close');
+			}
 			err.responseTime = (new Date()).getTime() - requestTimestamp
 			cb(err, null)
 			var request = ajaxSettings.type === 'POST' ? ajaxSettings.data : {}
