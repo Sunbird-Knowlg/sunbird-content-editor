@@ -7,7 +7,7 @@ org.ekstep.services.iService = Class.extend({
 	requestHeaders: {
 		'headers': {
 			'content-type': 'application/json',
-			'user-id': 'content-editor',
+			'user-id': 'content-editor'
 		}
 	},
 	getBaseURL: function () {
