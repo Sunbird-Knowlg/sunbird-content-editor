@@ -42,12 +42,13 @@ org.ekstep.services.iService = Class.extend({
 			cb(null, res)
 		}
 		ajaxSettings.error = function (err) {
-			if(err && err.status === 401 && err.statusText === "Unauthorized") {
-				alert("Your session has timed out due to inactivity. Please login to resume!");
-				window.parent.$('#' + ecEditor.getConfig('modalId')).iziModal('close');
-			}
 			err.responseTime = (new Date()).getTime() - requestTimestamp
-			cb(err, null)
+			if(err && err.status === 401 && err.statusText === "Unauthorized") {
+				ecEditor.dispatchEvent("org.ekstep.contenteditor:Unauthorized");
+				ecEditor.dispatchEvent("org.ekstep:sunbirdcommonheader:close:editor");
+			} else {
+				cb(err, null);
+			}
 			var request = ajaxSettings.type === 'POST' ? ajaxSettings.data : {}
 			instance._dispatchTelemetry({ url: ajaxSettings.url, method: ajaxSettings.type, request: request, res: err })
 		}
