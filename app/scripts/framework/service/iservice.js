@@ -45,7 +45,6 @@ org.ekstep.services.iService = Class.extend({
 			err.responseTime = (new Date()).getTime() - requestTimestamp
 			if(err && err.status === 401 && err.statusText === "Unauthorized") {
 				ecEditor.dispatchEvent("org.ekstep.contenteditor:Unauthorized");
-				ecEditor.dispatchEvent("org.ekstep:sunbirdcommonheader:close:editor");
 			} else {
 				cb(err, null);
 			}
