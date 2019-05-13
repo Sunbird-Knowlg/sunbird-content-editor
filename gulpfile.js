@@ -358,6 +358,7 @@ var corePlugins = [
     "org.ekstep.colorpicker-1.0",
     "org.ekstep.config-1.0",
     "org.ekstep.readalongbrowser-1.0",
+    "org.ekstep.assetbrowser-1.3"
 ];
 
 gulp.task('minifyCorePlugins', function() {
