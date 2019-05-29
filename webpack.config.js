@@ -1,7 +1,6 @@
 const ENVIRONMENT = process.env.NODE_ENV;
 const BUILD_NUMBER = process.env.build_number;
 const EDITOR_VER = process.env.editor_version_number;
-const PLUGIN_FRAMEWORK_VER = process.env.framework_version_number;
 
 const ZIP_FILE_NAME = 'content-editor.zip';
 const NPM_BUILD_FOLDER_NAME = 'content-editor'
@@ -120,14 +119,25 @@ const APP_STYLE = [
     './app/styles/commonStyles.css',
     './app/styles/content-editor.css',
     './app/styles/noto.css',
-    './content-editor/scripts/plugin-vendor.min.css' // Plugin css files
+    './content-editor/scripts/plugin-vendor.min.css', // Plugin css files
+    './app/styles/fonts/notosans-bengali/notosansbengali.css',
+    './app/styles/fonts/notosans-malayalam/notosansmalayalam.css',
+    './app/styles/fonts/notosans-gurmukhi/notosansgurmukhi.css',
+    './app/styles/fonts/notosans-devanagari/notosansdevanagari.css',
+    './app/styles/fonts/notosans-gujarati/notosansgujarati.css',
+    './app/styles/fonts/notosans-telugu/notosanstelugu.css',
+    './app/styles/fonts/notosans-tamil/notosanstamil.css',
+    './app/styles/fonts/notosans-kannada/notosanskannada.css',
+    './app/styles/fonts/notosans-oriya/notosansoriya.css',
+    './app/styles/fonts/noto-nastaliqurdu/notonastaliqurdu.css',
+    './app/styles/fonts-override.css'
 ];
 
 // removing the duplicate files
 const APP_SCRIPT = [...new Set([...VENDOR, ...PLUGIN_FRAMEWORK, ...EDITOR_FRAMEWORK, ...EDITOR_APP])]
 
-if (!BUILD_NUMBER && !EDITOR_VER && !PLUGIN_FRAMEWORK_VER) {
-    console.error('Error!!! Cannot find framework_version_number, editor_version_number and build_number env variables');
+if (!BUILD_NUMBER && !EDITOR_VER) {
+    console.error('Error!!! Cannot find editor_version_number and build_number env variables');
     return process.exit(1)
 }
 

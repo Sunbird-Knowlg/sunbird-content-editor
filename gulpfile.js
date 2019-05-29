@@ -15,22 +15,19 @@ var cleanCSS = require('clean-css');
 var replace = require('gulp-string-replace');
 var uglify = require('gulp-uglify');
 var git = require('gulp-git'); 
-var frameworkVersionNumber = process.env.framework_version_number;
 var editorVersionNumber = process.env.editor_version_number;
 var buildNumber = process.env.build_number;
 var branchName = process.env.branch || 'master';
 
-if (!editorVersionNumber && !buildNumber && !frameworkVersionNumber) {
-    console.error('Error!!! Cannot find framework_version_number, editor_version_number and build_number env variables');
+if (!editorVersionNumber && !buildNumber) {
+    console.error('Error!!! Cannot find editor_version_number and build_number env variables');
     return process.exit(1);
 }
 var versionPrefix = '.' + editorVersionNumber + '.' + buildNumber;
 var cachebust = function(path) {
     path.basename += versionPrefix
 }
-var baseEditorCachebust = function(path) {
-    path.basename += '.' + frameworkVersionNumber;
-}
+
 
 //var cachebust = new CacheBuster();
 const zip = require('gulp-zip');
@@ -179,7 +176,6 @@ gulp.task('minifyBaseEditor', function() {
     return gulp.src(editorScripts)
         .pipe(concat('base-editor.min.js'))
         .pipe(uglify())
-        .pipe(rename(baseEditorCachebust))
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
@@ -187,7 +183,6 @@ gulp.task('minifyFramework', function() {
     return gulp.src(pluginFramework)
         .pipe(concat('plugin-framework.min.js'))
         .pipe(uglify())
-        .pipe(rename(baseEditorCachebust))
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
@@ -206,7 +201,19 @@ gulp.task('minifyCSS', function() {
             'app/styles/icomoon/style.css',
             'app/styles/header.css',
             'app/styles/commonStyles.css',
-            'app/styles/content-editor.css'
+            'app/styles/content-editor.css',
+            'app/styles/fonts/notosans/notosans.css',
+            'app/styles/fonts/notosans-bengali/notosansbengali.css',
+            'app/styles/fonts/notosans-malayalam/notosansmalayalam.css',
+            'app/styles/fonts/notosans-gurmukhi/notosansgurmukhi.css',
+            'app/styles/fonts/notosans-devanagari/notosansdevanagari.css',
+            'app/styles/fonts/notosans-gujarati/notosansgujarati.css',
+            'app/styles/fonts/notosans-telugu/notosanstelugu.css',
+            'app/styles/fonts/notosans-tamil/notosanstamil.css',
+            'app/styles/fonts/notosans-kannada/notosanskannada.css',
+            'app/styles/fonts/notosans-oriya/notosansoriya.css',
+            'app/styles/fonts/noto-nastaliqurdu/notonastaliqurdu.css',
+            'app/styles/fonts-override.css'
         ])
         .pipe(concat('style.min.css'))
         .pipe(minify({
@@ -247,7 +254,7 @@ gulp.task('minifyCssBower', function() {
 
 
 gulp.task('copyfonts', function() {
-    return gulp.src(['app/styles/themes/**/*', 'app/styles/webfonts/**/*', 'app/styles/fonts/*', 'app/styles/noto.css'], {
+    return gulp.src(['app/styles/themes/**/*', 'app/styles/webfonts/**/*', 'app/styles/fonts/**/*', 'app/styles/noto.css'], {
             base: 'app/styles/'
         })
         .pipe(gulp.dest('content-editor/styles'));
