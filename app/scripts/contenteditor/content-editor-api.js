@@ -515,9 +515,18 @@ window.org.ekstep.contenteditor.api = {
 	updatePluginDimensions: function (inst) {
 		inst.attributes.x = inst.editorObj.getLeft()
 		inst.attributes.y = inst.editorObj.getTop()
-		inst.attributes.w = (inst.editorObj.getWidth() - inst.editorObj.getStrokeWidth()) > 0  ? inst.editorObj.getWidth() - inst.editorObj.getStrokeWidth(): 0;
-		inst.attributes.h = (inst.editorObj.getHeight() - inst.editorObj.getStrokeWidth()) > 0 ? inst.editorObj.getHeight() - inst.editorObj.getStrokeWidth(): 0;
-		inst.attributes.rotate = inst.editorObj.getAngle()
+		if(inst.editorObj.getWidth() < 0 || inst.editorObj.getWidth() < inst.editorObj.getStrokeWidth()) {
+			inst.attributes.w = 0;
+		} else {
+			inst.attributes.w = inst.editorObj.getWidth() - inst.editorObj.getStrokeWidth();
+		}
+
+		if(inst.editorObj.getHeight() < 0 || inst.editorObj.getHeight() < inst.editorObj.getStrokeWidth()) {
+			inst.attributes.h = 0;
+		} else {
+			inst.attributes.h = inst.editorObj.getHeight() - inst.editorObj.getStrokeWidth();
+		}
+     	inst.attributes.rotate = inst.editorObj.getAngle()
 		if (_.isFunction(inst.editorObj.getRx)) { inst.attributes.r = inst.editorObj.getRx() }
 	},
 	ngSafeApply: function (scope, fn) {
