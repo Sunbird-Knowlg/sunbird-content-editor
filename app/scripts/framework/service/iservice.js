@@ -43,7 +43,11 @@ org.ekstep.services.iService = Class.extend({
 		}
 		ajaxSettings.error = function (err) {
 			err.responseTime = (new Date()).getTime() - requestTimestamp
-			cb(err, null)
+			if(err && err.status === 401 && err.statusText === "Unauthorized") {
+				ecEditor.dispatchEvent("org.ekstep.contenteditor:Unauthorized");
+			} else {
+				cb(err, null);
+			}
 			var request = ajaxSettings.type === 'POST' ? ajaxSettings.data : {}
 			instance._dispatchTelemetry({ url: ajaxSettings.url, method: ajaxSettings.type, request: request, res: err })
 		}
