@@ -193,7 +193,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
      * @memberof org.ekstep.services.telemetryService
      *
      */
-	interact: function (data) {
+	interact: function (data, options) {
 		if (!(data.hasOwnProperty('type') && (data.hasOwnProperty('objectid') || data.hasOwnProperty('id')))) {
 			console.error('Invalid interact data')
 			return
@@ -226,7 +226,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			eventData.duration = (data.duration * 0.001).toFixed(2)
 		}
 		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
-		EkTelemetry.interact(eventData)
+		EkTelemetry.interact(eventData, options)
 	},
 	/**
      *
