@@ -255,18 +255,17 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 	* generates options data envelope
 	* @param options {object} Telemetry Options data
 	* @memberof org.ekstep.services.telemetryService
-	* 
 	*/
-	generateOptionsData : function(options){
+	generateOptionsData: function (options) {
 		var optionsData = {
-            context: {
-                cdata: ecEditor.getContext('cdata') ? ecEditor.getContext('cdata') : []
-            }
-        }
-        if(!_.isUndefined(options) && options.context){
-            Object.assign(optionsData, options)
+			context: {
+				cdata: ecEditor.getContext('cdata') ? ecEditor.getContext('cdata') : []
+			}
 		}
-		return optionsData;
+		if (!_.isUndefined(options) && options.context) {
+			Object.assign(optionsData, options)
+		}
+		return optionsData
 	},
 	/**
      *
