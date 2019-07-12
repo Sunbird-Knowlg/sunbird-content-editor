@@ -257,15 +257,20 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 	* @memberof org.ekstep.services.telemetryService
 	*/
 	generateOptionsData: function (options) {
-		var optionsData = {
-			context: {
-				cdata: ecEditor.getContext('cdata') ? ecEditor.getContext('cdata') : []
-			}
-		}
-		if (!_.isUndefined(options) && options.context) {
+		var optionsData;
+		if (options) {
+			optionsData = {}
 			Object.assign(optionsData, options)
 		}
-		return optionsData
+		if (options && options.context && options.context.cdata) {
+			optionsData = {
+				context: {
+					cdata: ecEditor.getContext('cdata') ? ecEditor.getContext('cdata') : []
+				}
+			}
+			optionsData.context.cdata = optionsData.context.cdata.concat(options.context.cdata)
+		}
+		return optionsData;
 	},
 	/**
      *
