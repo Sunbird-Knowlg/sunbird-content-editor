@@ -259,6 +259,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 	generateOptionsData: function (options) {
 		var optionsData;
 		if (options) {
+			optionsData = {}
 			Object.assign(optionsData, options)
 		}
 		if (options && options.context && options.context.cdata) {
