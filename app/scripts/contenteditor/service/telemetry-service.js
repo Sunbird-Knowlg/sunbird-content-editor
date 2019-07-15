@@ -447,7 +447,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
      * @memberof org.ekstep.services.telemetryService
      *
      */
-	log: function (data) {
+	log: function (data, options) {
 		if (!this.hasRequiredData(data, ['type', 'level', 'message'])) {
 			console.error('Invalid log data')
 			return
@@ -461,7 +461,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 		if (data.pageid || data.stage) { eventData.pageid = data.stage || data.pageid }
 		if (data.params) { eventData.params = data.params }
 		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
-		EkTelemetry.log(eventData)
+		EkTelemetry.log(eventData, this.generateOptionsData(options))
 	},
 	/**
      *
