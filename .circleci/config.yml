@@ -20,6 +20,7 @@ jobs:
           name: clone plugins
           command: |
             prnumber=$(echo $CI_PULL_REQUEST | awk -F'/' '{print $NF}')
+            echo $GITHUB_USER_TOKEN
             prdata=$(curl -X GET -u $GITHUB_USER_TOKEN:x-oauth-basic https://api.github.com/repos/harshavardhanc/sunbird-content-editor/pulls/$prnumber)
             target_branch=$(echo "${prdata}" | jq -r '.base.ref')
             git clone https://github.com/harshavardhanc/sunbird-content-plugins.git plugins -b $target_branch
