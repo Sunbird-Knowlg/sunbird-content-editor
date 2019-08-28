@@ -271,7 +271,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			})
 			content.theme.stage.push(stageBody)
 		})
-		instance.pluginsUsed = ecEditor._.uniqBy(plugin_arr, 'identifier');
+		instance.plugins_used = ecEditor._.uniqBy(plugin_arr, 'identifier');
 		instance.manifestGenerator(content)
 
 		if (!_.isEmpty(org.ekstep.contenteditor.mediaManager.migratedMediaMap)) {
