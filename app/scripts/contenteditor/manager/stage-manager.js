@@ -9,6 +9,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	contentLoading: false,
 	summary: [],
 	assets: [],
+	plugins_used: [],
 	init: function () {
 		var instance = this
 		fabric.Object.prototype.transparentCorners = false
@@ -239,6 +240,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		var content = { theme: { id: 'theme', version: '1.0', startStage: this.stages[0].id, stage: [], manifest: { media: [] }, 'plugin-manifest': { plugin: [] } } }
 		this.setNavigationalParams()
 		var mediaMap = {}
+		var plugin_arr = []
 		instance.summary = []
 		instance.assets = []
 		instance.pragma = null
@@ -247,8 +249,10 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			var stageBody = stage.toECML()
 			stageBody.manifest = { media: [] }
 			var stageAssets = []
+			plugin_arr.push({ identifier: stage.manifest.id, semanticVersion: stage.manifest.ver})
 			_.forEach(stage.children, function (plugin) {
 				var id = plugin.getManifestId()
+				plugin_arr.push({ identifier: plugin.manifest.id, semanticVersion: plugin.manifest.ver});
 				if (_.isUndefined(stageBody[id])) stageBody[id] = []
 				stageBody[id].push(plugin.toECML())
 				var summaryObj = plugin.getSummary()
@@ -267,7 +271,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			})
 			content.theme.stage.push(stageBody)
 		})
-
+		instance.pluginsUsed = ecEditor._.uniqBy(plugin_arr, 'identifier');
 		instance.manifestGenerator(content)
 
 		if (!_.isEmpty(org.ekstep.contenteditor.mediaManager.migratedMediaMap)) {
