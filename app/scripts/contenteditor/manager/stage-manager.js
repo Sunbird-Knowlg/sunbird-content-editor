@@ -241,6 +241,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		this.setNavigationalParams()
 		var mediaMap = {}
 		var plugin_arr = []
+		var plugins_manifest = []
 		instance.summary = []
 		instance.assets = []
 		instance.pragma = null
@@ -271,8 +272,17 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			})
 			content.theme.stage.push(stageBody)
 		})
-		instance.plugins_used = ecEditor._.uniqBy(plugin_arr, 'identifier');
+		
 		instance.manifestGenerator(content)
+		plugins_manifest = ecEditor._.map(content.theme['plugin-manifest'].plugin, (p)=>{
+			var final = {}
+			final.identifier = p.id;
+			final.semanticVersion = p.ver;
+			return final;
+        })
+        plugin_arr = [...plugin_arr, ...plugins_manifest];
+        instance.plugins_used = ecEditor._.uniqBy(plugin_arr, 'identifier');
+		
 
 		if (!_.isEmpty(org.ekstep.contenteditor.mediaManager.migratedMediaMap)) {
 			instance.mergeMediaMap(mediaMap)
