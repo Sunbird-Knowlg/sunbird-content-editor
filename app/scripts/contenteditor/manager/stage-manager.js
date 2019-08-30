@@ -241,7 +241,6 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		this.setNavigationalParams()
 		var mediaMap = {}
 		var plugin_arr = []
-		var plugins_manifest = []
 		instance.summary = []
 		instance.assets = []
 		instance.pragma = null
@@ -274,13 +273,9 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		})
 		
 		instance.manifestGenerator(content)
-		plugins_manifest = ecEditor._.map(content.theme['plugin-manifest'].plugin, (p)=>{
-			var final = {}
-			final.identifier = p.id;
-			final.semanticVersion = p.ver;
-			return final;
+		ecEditor._.each(content.theme['plugin-manifest'].plugin, function (p){
+			plugin_arr.push({ identifier: p.id, semanticVersion: p.ver})
         })
-        plugin_arr = [...plugin_arr, ...plugins_manifest];
         instance.plugins_used = ecEditor._.uniqBy(plugin_arr, 'identifier');
 		
 
