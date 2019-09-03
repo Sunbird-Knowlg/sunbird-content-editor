@@ -41,7 +41,7 @@ var corePlugins = [
 	'org.ekstep.richtext-1.0',
 	'org.ekstep.iterator-1.0',
 	'org.ekstep.navigation-1.0',
-	'org.ekstep.reviewercomments-1.0',
+	'org.ekstep.reviewercomments-1.0'
 ]
 
 let entryFiles = []
@@ -78,7 +78,7 @@ function packagePlugins () {
 			})
 			var count = 0
 			var len = (pluginContent.replace(/\b(loadNgModules)\b.*\)/g) || []).length
-			
+
 			pluginContent = uglifyjs.minify(pluginContent.replace(/\b(loadNgModules)\b.*\)/g, function ($0) {
 				if (count === len) count = 0
 				var dash
@@ -101,7 +101,7 @@ function packagePlugins () {
 		fs.appendFile('plugins/' + plugin + '/editor/plugin.dist.js', [...dependenciesArr].join('\n'))
 		pluginPackageArr.push('./plugins/' + plugin + '/editor/plugin.dist.js')
 	})
-	
+
 	return pluginPackageArr
 }
 
@@ -136,7 +136,9 @@ module.exports = {
 			'E2EConverter': path.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js'),
 			'xmlbuilder': path.resolve('./node_modules/xmlbuilder/lib/index.js'),
 			'X2JS': path.resolve('./plugins/org.ekstep.assessmentbrowser-1.1/editor/libs/xml2json.js'),
-			'video.js': path.resolve('./plugins/org.ekstep.video-1.5/editor/libs/video.js')
+			'video.js': path.resolve('./plugins/org.ekstep.video-1.5/editor/libs/video.js'),
+			'global/document': path.resolve('./node_modules/global/window.js'),
+			'global/window': path.resolve('./node_modules/global/window.js')
 		}
 	},
 	module: {
@@ -225,7 +227,7 @@ module.exports = {
 					passes: 1
 				},
 				ecma: 5,
-				mangle: true				
+				mangle: true
 			},
 			sourceMap: true
 		})
