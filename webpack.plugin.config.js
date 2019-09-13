@@ -137,7 +137,7 @@ module.exports = {
 			'xmlbuilder': path.resolve('./node_modules/xmlbuilder/lib/index.js'),
 			'X2JS': path.resolve('./plugins/org.ekstep.assessmentbrowser-1.1/editor/libs/xml2json.js'),
 			'video.js': path.resolve('./plugins/org.ekstep.video-1.5/editor/libs/video.js'),
-			'global/document': path.resolve('./node_modules/global/window.js'),
+			'global/document': path.resolve('./node_modules/global/document.js'),
 			'global/window': path.resolve('./node_modules/global/window.js')
 		}
 	},
