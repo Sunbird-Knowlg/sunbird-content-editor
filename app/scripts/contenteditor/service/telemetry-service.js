@@ -193,7 +193,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
      * @memberof org.ekstep.services.telemetryService
      *
      */
-	interact: function (data) {
+	interact: function (data, options) {
 		if (!(data.hasOwnProperty('type') && (data.hasOwnProperty('objectid') || data.hasOwnProperty('id')))) {
 			console.error('Invalid interact data')
 			return
@@ -226,7 +226,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			eventData.duration = (data.duration * 0.001).toFixed(2)
 		}
 		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
-		EkTelemetry.interact(eventData)
+		EkTelemetry.interact(eventData, this.generateOptionsData(options))
 	},
 	/**
      *
@@ -235,7 +235,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
      * @memberof org.ekstep.services.telemetryService
      *
      */
-	impression: function (data) {
+	impression: function (data, options) {
 		if (!(data.hasOwnProperty('type') && data.hasOwnProperty('pageid') && data.hasOwnProperty('uri'))) {
 			console.error('Invalid impression data')
 			return
@@ -249,7 +249,25 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 		if (data.subtype) { eventData.subtype = data.subtype }
 		if (data.visits) { eventData.visits = data.visits }
 		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
-		EkTelemetry.impression(eventData)
+		EkTelemetry.impression(eventData, this.generateOptionsData(options))
+	},
+	/**
+	* generates options data envelope
+	* @param options {object} Telemetry Options data
+	* @memberof org.ekstep.services.telemetryService
+	*/
+	generateOptionsData: function (options) {
+		var optionsData = {
+			context:{}
+		}
+		var globalCdata = ecEditor.getContext('cdata') ? ecEditor.getContext('cdata') : [];
+		Object.assign(optionsData, options)
+		if (options && options.context && options.context.cdata) {
+			optionsData.context.cdata = optionsData.context.cdata.concat(globalCdata)
+		}else{
+			optionsData.context.cdata = globalCdata;
+		}
+		return optionsData;
 	},
 	/**
      *
@@ -426,7 +444,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
      * @memberof org.ekstep.services.telemetryService
      *
      */
-	log: function (data) {
+	log: function (data, options) {
 		if (!this.hasRequiredData(data, ['type', 'level', 'message'])) {
 			console.error('Invalid log data')
 			return
@@ -440,7 +458,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 		if (data.pageid || data.stage) { eventData.pageid = data.stage || data.pageid }
 		if (data.params) { eventData.params = data.params }
 		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
-		EkTelemetry.log(eventData)
+		EkTelemetry.log(eventData, this.generateOptionsData(options))
 	},
 	/**
      *
