@@ -45,7 +45,6 @@ jobs:
           
       - run: mkdir -p /tmp/coverage && cp ./coverage/lcov.info /tmp/coverage
       
-#test
 workflows:
   version: 2.1
   build_and_test:
