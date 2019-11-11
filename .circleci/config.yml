@@ -51,8 +51,7 @@ jobs:
                srcBranch=$(curl -s https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/2 | jq .head.ref -r)
                tarBranch=$(curl -s https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/2 | jq .base.ref -r)
                sonar-scanner -Dsonar.projectKey=project-sunbird_sunbird-content-editor -Dsonar.organization=project-sunbird -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.language=js -Dsonar.pullrequest.branch=$srcBranch -Dsonar.pullrequest.key=$prnumber -Dsonar.pullrequest.base=$tarBranch
-
-      
+ 
 workflows:
   version: 2.1
   build_and_test:
