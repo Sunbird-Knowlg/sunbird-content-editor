@@ -16,13 +16,13 @@ jobs:
       - restore_cache:
           key: ce-dependency-cache-{{ checksum "package.json" }}
       
-      - run:
-          name: clone plugins
-          command: |
-            prnumber=$(echo $CI_PULL_REQUEST | awk -F'/' '{print $NF}')
-            prdata=$(curl -X GET -u $GITHUB_USER_TOKEN:x-oauth-basic https://api.github.com/repos/project-sunbird/sunbird-content-editor/pulls/$prnumber)
-            target_branch=$(echo "${prdata}" | jq -r '.base.ref')
-            git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
+     # - run:
+      #@    name: clone plugins
+        #  command: |
+         #   prnumber=$(echo $CI_PULL_REQUEST | awk -F'/' '{print $NF}')
+          #  prdata=$(curl -X GET -u $GITHUB_USER_TOKEN:x-oauth-basic https://api.github.com/repos/project-sunbird/sunbird-content-editor/pulls/$prnumber)
+           # target_branch=$(echo "${prdata}" | jq -r '.base.ref')
+            #git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
       
       - run: sudo npm install -g bower@1.8.0 grunt-cli@1.2.0 gulp@3.9.1 codacy-coverage
       - run: npm install
@@ -37,21 +37,21 @@ jobs:
           key: ce-dependency-cache-{{ checksum "package.json" }}
           paths: ./node_modules
       
-      - run: 
-          name: test-with-coverage
-          command: 'npm run test-with-coverage'
-          
-      - run: mkdir -p /tmp/coverage && cp ./coverage/lcov.info /tmp/coverage
-      
       - run:
-          name: Publishing report to Codacy
-          command: 'cat ./coverage/lcov.info | codacy-coverage '
-          when: always
-       
-      - store_artifacts:
-          path: /tmp/coverage
-          destination: coverage
-      
+         name: Generate coverage files
+         command: 'npm run test-with-coverage'
+     
+      - run: 
+          name: Install sonar scanner
+          command: 'sudo npm install -g sonarqube-scanner'
+          
+      - run: 
+          name: Sonar scanner
+          command: |
+               #srcBranch=$(curl -s https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/2 | jq .head.ref -r)
+               #tarBranch=$(curl -s https://api.github.com/repos/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/pulls/2 | jq .base.ref -r)
+               sonar-scanner -Dsonar.projectKey=project-sunbird_sunbird-content-editor -Dsonar.organization=project-sunbird -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.language=js -Dsonar.pullrequest.branch=$srcBranch -Dsonar.pullrequest.key=$prnumber -Dsonar.pullrequest.base=$tarBranch
+ 
 workflows:
   version: 2.1
   build_and_test:
