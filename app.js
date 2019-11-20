@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json({limit: '50mb'}))
 app.use(express.static(path.join(__dirname, '.')))
 
-app.use('/assets/public', proxy('dev.ekstep.in', {
+app.use('/assets/public', proxy('https://dev.sunbirded.org', {
 	https: true,
 	proxyReqPathResolver: function (req) {
 		return '/assets/public' + urlHelper.parse(req.url).path

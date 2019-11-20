@@ -5,11 +5,12 @@ org.ekstep.services.iService = Class.extend({
      * @memberof org.ekstep.services.iService
      */
 	requestHeaders: {
-		'headers': {
-			'content-type': 'application/json',
-			'user-id': 'content-editor'
-		}
-	},
+        'headers': {
+            'content-type': 'application/json',
+            'user-id': 'content-editor',
+            'x-authenticated-user-token': 'eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICJ1WXhXdE4tZzRfMld5MG5PS1ZoaE5hU0gtM2lSSjdXU25ibFlwVVU0TFRrIn0.eyJqdGkiOiJjODZhNWFmNC1hZDI2LTQxNjMtOTY5ZC02Yjc3N2M3YzAyZmQiLCJleHAiOjE1NzE2NjIwNzIsIm5iZiI6MCwiaWF0IjoxNTcxNjQ3NjcyLCJpc3MiOiJodHRwczovL2Rldi5zdW5iaXJkZWQub3JnL2F1dGgvcmVhbG1zL3N1bmJpcmQiLCJhdWQiOiJhZG1pbi1jbGkiLCJzdWIiOiJmOjVhOGEzZjJiLTM0MDktNDJlMC05MDAxLWY5MTNiYzBmZGUzMTo4NzRlZDhhNS03ODJlLTRmNmMtOGYzNi1lMDI4ODQ1NTkwMWUiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJhZG1pbi1jbGkiLCJhdXRoX3RpbWUiOjAsInNlc3Npb25fc3RhdGUiOiJhOTI1MzMzZS0yOThlLTRkOGEtYjU3NS1kMTZmMmMwODBjZWMiLCJhY3IiOiIxIiwiYWxsb3dlZC1vcmlnaW5zIjpbXSwicmVhbG1fYWNjZXNzIjp7InJvbGVzIjpbInVtYV9hdXRob3JpemF0aW9uIl19LCJyZXNvdXJjZV9hY2Nlc3MiOnt9LCJuYW1lIjoiQ3JlYXRpb24iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJudHB0ZXN0MTAyIiwiZ2l2ZW5fbmFtZSI6IkNyZWF0aW9uIiwiZmFtaWx5X25hbWUiOiIiLCJlbWFpbCI6InRlc3RydW5uZXIxQHlvcG1haWwuY29tIn0.KcnULwHzixlPSG8Nvq3_wp1oNZS3HgwbPMPkiB6hffAU0aYLrTBMdnJ24xUhviJ7RXQ9mz9QGx4vxr9T9btwyQQ8EzrEx1VO8tVTrGsTf37M_DEK4W1kqk1LNPTpYcwZeSB4u0Im6T-WtjCVCTljW4OgE7I90-sI44Qu0QMxWnUR1E1aqxiUogyk4GaSCReH0z0qIJiyfq8Z0o0UF4jSqb_gciOmY3Er_UenIF9LUftnpXJOh4kYXv521HivlqtXG5NU9UjlTQUTBtVdODoAnrjbOQhfr9fwPCC0w8Lt7GMvYFPmmEwPvem4RwiJgfxQZy7FDhaTSt4IVQfsllQm_g'
+        }
+    },
 	getBaseURL: function () {
 		return org.ekstep.services.config.baseURL
 	},

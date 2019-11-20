@@ -53,11 +53,11 @@ node() {
                         #grunt compress
                         #zip -r ce-docs.zip docs
                         gulp packageCorePlugins
-                        #npm install 
+                        npm install 
                         npm run build-plugins
-                        #cd ..
+                        cd ..
                         npm run build
-                        #npm run test
+                        npm run test
                     """
                 }
                 
