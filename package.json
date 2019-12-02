@@ -44,7 +44,7 @@
     "express-static-gzip": "*",
     "file-loader": "*",
     "filemanager-webpack-plugin": "*",
-    "fontmin-webpack": "*",
+    "fontmin-webpack": "2.0.4",
     "glob-all": "*",
     "grunt": ">=0.4.0 <1.0.0",
     "grunt-aws-s3": "^0.14.5",
