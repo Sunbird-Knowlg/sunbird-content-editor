@@ -43,7 +43,7 @@ jobs:
       
       - run: 
           name: test-with-coverage
-          command: 'npm run test-with-coverage'
+          command: 'npm run test'
           
       - run: mkdir -p /tmp/coverage && cp ./coverage/lcov.info /tmp/coverage
       
