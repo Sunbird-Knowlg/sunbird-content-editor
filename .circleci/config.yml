@@ -43,9 +43,9 @@ jobs:
       
       - run: 
           name: test-with-coverage
-          command: 'npm run test-with-coverage'
+          command: 'npm run test'
           
-      - run: mkdir -p /tmp/coverage && cp ./coverage/lcov.info /tmp/coverage
+      - run: mkdir -p /tmp/coverage && cp /home/circleci/content-editor/coverage_framework/lcov/HeadlessChrome\ 59.0.3071\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage
       
       - run: 
           name: Install sonar scanner
