@@ -223,7 +223,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			}
 		}
 		if (data.duration) {
-			eventData.duration = (data.duration * 0.001).toFixed(2)
+			eventData.duration = Number((data.duration * 0.001).toFixed(2))
 		}
 		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
 		EkTelemetry.interact(eventData, this.generateOptionsData(options))
@@ -245,7 +245,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			'pageid': data.pageid,
 			'uri': data.uri
 		}
-		if (data.duration) { eventData.duration = (data.duration * 0.001).toFixed(2) }
+		if (data.duration) { eventData.duration = Number((data.duration * 0.001).toFixed(2)) }
 		if (data.subtype) { eventData.subtype = data.subtype }
 		if (data.visits) { eventData.visits = data.visits }
 		ecEditor.dispatchEvent('org.ekstep.editor:keepalive')
@@ -403,7 +403,7 @@ org.ekstep.services.telemetryService = new (org.ekstep.services.iService.extend(
 			'uaspec': instance.detectClient(),
 			'type': ecEditor.getConfig('editorType') || 'content',
 			'mode': mode.toLowerCase(),
-			'duration': (duration * 0.001).toFixed(2), // Converting miliseconds to seconds.
+			'duration': Number((duration * 0.001).toFixed(2)), // Converting miliseconds to seconds.
 			'pageid': 'main-page'
 		})
 	},
