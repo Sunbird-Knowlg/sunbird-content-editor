@@ -412,7 +412,7 @@ org.ekstep.pluginframework.pluginManager = new (Class.extend({
 		}
 	},
 	addError: function (error) {
-		org.ekstep.services.telemetryService.error({ 'err': error.error, 'errtype': 'SYSTEM', 'stacktrace': error.stackTrace, 'plugin': { 'id': error.plugin,'ver': error.version }});		
+		org.ekstep.services.telemetryService.error({ 'err': error.error, 'errtype': 'CONTENT', 'stacktrace': error.stackTrace, 'plugin': { 'id': error.plugin,'ver': error.version }});		
 		this.errors.push(error)
 	},
 	getErrors: function () {
