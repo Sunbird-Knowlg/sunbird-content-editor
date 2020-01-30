@@ -10,6 +10,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	summary: [],
 	assets: [],
 	plugins_used: [],
+	summaryTemplate: {"manifest":{"media":[{"id":"org.ekstep.summary_template_js","plugin":"org.ekstep.summary","src":"/content-plugins/org.ekstep.summary-1.0/renderer/summary-template.js","type":"js","ver":"1.0"},{"id":"org.ekstep.summary_template_css","plugin":"org.ekstep.summary","src":"/content-plugins/org.ekstep.summary-1.0/renderer/style.css","type":"css","ver":"1.0"},{"id":"org.ekstep.summary","plugin":"org.ekstep.summary","src":"/content-plugins/org.ekstep.summary-1.0/renderer/plugin.js","type":"plugin","ver":"1.0"},{"id":"org.ekstep.summary_manifest","plugin":"org.ekstep.summary","src":"/content-plugins/org.ekstep.summary-1.0/manifest.json","type":"json","ver":"1.0"},{"assetId":"summaryImage","id":"org.ekstep.summary_summaryImage","preload":true,"src":"/content-plugins/org.ekstep.summary-1.0/assets/summary-icon.jpg","type":"image"}]},"pluginManifest":{"depends":"","id":"org.ekstep.summary","type":"plugin","ver":"1.0"},"stage":{"config":{"__cdata":"{\"opacity\":100,\"strokeWidth\":1,\"stroke\":\"rgba(255, 255, 255, 0)\",\"autoplay\":false,\"visible\":true,\"color\":\"#FFFFFF\",\"genieControls\":false,\"instructions\":\"\"}"},"h":100,"id":"summary_stage_id","manifest":{"media":[{"assetId":"summaryImage"}]},"org.ekstep.summary":[{"config":{"__cdata":"{\"opacity\":100,\"strokeWidth\":1,\"stroke\":\"rgba(255, 255, 255, 0)\",\"autoplay\":false,\"visible\":true}"},"h":125.53,"id":"9aa63c0a-095a-4d67-991d-97c92b7e815a","rotate":0,"w":77.45,"x":6.69,"y":-27.9,"z-index":0}],"rotate":null,"w":100,"x":0,"y":0}},
 	init: function () {
 		var instance = this
 		fabric.Object.prototype.transparentCorners = false
@@ -235,6 +236,9 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	getPragma: function () {
 		return ecEditor._.uniq(this.pragma)
 	},
+
+	
+
 	toECML: function () {
 		var instance = this
 		var content = { theme: { id: 'theme', version: '1.0', startStage: this.stages[0].id, stage: [], manifest: { media: [] }, 'plugin-manifest': { plugin: [] } } }
@@ -273,6 +277,11 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		})
 		
 		instance.manifestGenerator(content)
+
+		/* istanbul ignore else  */
+		if (_.includes(org.ekstep.contenteditor.config.assessContentType, this._getContentType())) {
+			content = this._appendPluginStage(content, this.summaryTemplate);
+		} 
 		ecEditor._.each(content.theme['plugin-manifest'].plugin, function (p){
 			plugin_arr.push({ identifier: p.id, semanticVersion: p.ver})
         })
@@ -351,6 +360,10 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		org.ekstep.contenteditor.api.ngSafeApply(org.ekstep.contenteditor.api.getAngularScope())
 		org.ekstep.contenteditor.stageManager.contentLoading = true
 		org.ekstep.pluginframework.eventManager.enableEvents = false
+		/* istanbul ignore else  */
+		if (_.includes(org.ekstep.contenteditor.config.assessContentType, this._getContentType())) {
+			contentBody = this._removePluginStage(contentBody, 'org.ekstep.summary')
+		} 
 		this._loadMedia(contentBody)
 		this._loadPlugins(contentBody, function (err, res) {
 			if (!err) {
@@ -359,6 +372,8 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			}
 		})
 	},
+
+	
 	_loadMedia: function (contentBody) {
 		_.forEach(contentBody.theme.manifest.media, function (media) {
 			if (media.type === 'plugin' && org.ekstep.pluginframework.pluginManager.isPluginDefined(media.id)) {} else {
@@ -520,5 +535,36 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			}
 		})
 		return summaryData
+	},
+	_getContentType: function () {
+		return ecEditor.getService('content').getContentMeta(org.ekstep.contenteditor.api.getContext('contentId')).contentType
+	},
+
+	// Append a plugin in stage
+	_appendPluginStage: function (content, pluginTemplate) {
+		content.theme.stage.push(pluginTemplate.stage)
+		content.theme['plugin-manifest'].plugin.push(pluginTemplate.pluginManifest)
+		_.forEach(pluginTemplate.manifest.media, function(media) {
+			content.theme.manifest.media.push(media)
+		});
+		return content
+	},
+
+	// Remove a plugin from stage
+	_removePluginStage: function (content, pluginName) {
+		/* istanbul ignore else  */
+		if (_.find(content.theme['plugin-manifest'].plugin, { id: pluginName})) 
+		{
+			content.theme.stage = _.filter(content.theme.stage, function(obj) {
+				return !_.has(obj, pluginName);
+			});
+			content.theme.manifest.media = _.filter(content.theme.manifest.media, function(obj) {
+				return obj.plugin !== pluginName
+			})
+			content.theme['plugin-manifest'].plugin = _.filter(content.theme['plugin-manifest'].plugin, function(obj) {
+				return obj.id !== pluginName
+			})
+		}
+		return content
 	}
 }))()
