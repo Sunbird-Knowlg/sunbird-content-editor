@@ -279,7 +279,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		instance.manifestGenerator(content)
 
 		/* istanbul ignore else  */
-		if (_.includes(org.ekstep.contenteditor.config.assessContentType, this._getContentType())) {
+		if (this._isAssessment()) {
 			content = this._appendPluginStage(content, this.summaryTemplate);
 		} 
 		ecEditor._.each(content.theme['plugin-manifest'].plugin, function (p){
@@ -360,8 +360,9 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		org.ekstep.contenteditor.api.ngSafeApply(org.ekstep.contenteditor.api.getAngularScope())
 		org.ekstep.contenteditor.stageManager.contentLoading = true
 		org.ekstep.pluginframework.eventManager.enableEvents = false
+		
 		/* istanbul ignore else  */
-		if (_.includes(org.ekstep.contenteditor.config.assessContentType, this._getContentType())) {
+		if (this._isAssessment()) {
 			contentBody = this._removePluginStage(contentBody, 'org.ekstep.summary')
 		} 
 		this._loadMedia(contentBody)
@@ -536,6 +537,15 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		})
 		return summaryData
 	},
+
+	_isAssessment : function() {
+		return _.includes(_.mapValues(this._assessContentType(), _.method('toLowerCase')), _.toLower(this._getContentType()))
+	},
+
+	_assessContentType : function() {
+		return _.has(org.ekstep.contenteditor.config, 'assessContentType') ? org.ekstep.contenteditor.config.assessContentType : ['SelfAssess']; 
+	},
+
 	_getContentType: function () {
 		return ecEditor.getService('content').getContentMeta(org.ekstep.contenteditor.api.getContext('contentId')).contentType
 	},
