@@ -350,7 +350,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			}
 			if (size === index + 1 && instance._isAssessment()) {
 				stage.addParam('next', 'summary_stage_id')
-			} else {
+			}  else if (size === index + 1) {
 				stage.deleteParam('next') // last stage should not have next param.
 			}
 		})
