@@ -348,11 +348,14 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			if (index < (size - 1)) {
 				stage.addParam('next', instance.stages[index + 1].id)
 			}
-			if (size === index + 1) {
+			if (size === index + 1 && instance._isAssessment()) {
+				stage.addParam('next', 'summary_stage_id')
+			} else {
 				stage.deleteParam('next') // last stage should not have next param.
 			}
 		})
 	},
+
 	fromECML: function (contentBody, stageIcons) {
 		var instance = this
 		var startTime = (new Date()).getTime()
