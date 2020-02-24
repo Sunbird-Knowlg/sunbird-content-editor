@@ -6,6 +6,7 @@ org.ekstep.contenteditor.init = function (context, config, $scope, $document, ca
 	org.ekstep.contenteditor._mergeConfig(config)
 	org.ekstep.contenteditor._initServices()
 	org.ekstep.contenteditor.globalContext = context
+    org.ekstep.contenteditor.globalContext.tags = _.uniq(context.tags);
 	org.ekstep.contenteditor.toolbarManager.setScope($scope)
 	org.ekstep.contenteditor._loadDefaultPlugins(context, callback)
 	// org.ekstep.contenteditor._backwardCompatibility();
