@@ -71,7 +71,7 @@
     "gulp-strip-debug": "^1.1.0",
     "gulp-uglify": "^3.0.0",
     "gulp-zip": "^3.2.0",
-    "html-loader": "*",
+    "html-loader": "0.5.5",
     "html-minifier": "*",
     "html-minifier-loader": "*",
     "image-webpack-loader": "^4.3.1",
