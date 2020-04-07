@@ -22,7 +22,7 @@ node() {
                     checkout scm: [$class: 'GitSCM', branches: [[name: "refs/tags/${params.github_release_tag}"]], userRemoteConfigs: [[url: scmVars.GIT_URL]]]
                     artifact_version = params.github_release_tag
                     commit_hash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-                    branch_name = params.github_release_tag.split('_')[0]
+                    branch_name = params.github_release_tag.split('_')[0].split('\\.')[0] + "." + params.github_release_tag.split('_')[0].split('\\.')[1]
                     println(ANSI_BOLD + ANSI_YELLOW + "github_release_tag specified, building from github_release_tag: " + params.github_release_tag + ANSI_NORMAL)
                     sh "git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins"
                     sh """
