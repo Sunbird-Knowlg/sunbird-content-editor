@@ -1,3 +1,4 @@
+@Library('deploy-conf') _ 
 node() {
     try {
         String ANSI_GREEN = "\u001B[32m"
@@ -28,7 +29,7 @@ node() {
             } 
                 echo "artifact_version: " + artifact_version
 
-                stage('Build') {
+         //       stage Build
                     sh """
                         export framework_version_number=${branch_name}
                         export editorType="contentEditor"
@@ -53,13 +54,13 @@ node() {
                         npm run build
                         #npm run test
                     """
-                }
+                
                 
                 //stage('Publish_test_results') {
                //cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage/PhantomJS*/cobertura-coverage.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false 
             //}
                 
-                stage('ArchiveArtifacts') {
+                stage ArchiveArtifacts
                     sh """
                         mkdir content-editor-artifacts
                         cp content-editor.zip content-editor-artifacts
@@ -69,7 +70,7 @@ node() {
                     sh """echo {\\"artifact_name\\" : \\"content-editor-artifacts.zip\\", \\"artifact_version\\" : \\"${artifact_version}\\", \\"node_name\\" : \\"${env.NODE_NAME}\\"} > metadata.json"""
                     archiveArtifacts artifacts: 'metadata.json', onlyIfSuccessful: true
                     currentBuild.description = "${artifact_version}"
-                }
+                
         }
         currentBuild.result = "SUCCESS"    
         slack_notify(currentBuild.result, tag_name)
