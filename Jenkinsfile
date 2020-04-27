@@ -5,7 +5,6 @@ node() {
         String ANSI_BOLD = "\u001B[1m"
         String ANSI_RED = "\u001B[31m"
         String ANSI_YELLOW = "\u001B[33m"
-
         ansiColor('xterm') {
             stage('Checkout') {
                 cleanWs()
@@ -15,7 +14,7 @@ node() {
                     branch_name = sh(script: 'git name-rev --name-only HEAD | rev | cut -d "/" -f1| rev', returnStdout: true).trim()
                     artifact_version = branch_name + "_" + commit_hash
                     println(ANSI_BOLD + ANSI_YELLOW + "github_release_tag not specified, using the latest commit hash: " + commit_hash + ANSI_NORMAL)
-                    sh "git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins"
+                    sh "git clone https://github.com/Dhirenaade/sunbird-content-plugins.git plugins"
                     sh "cd plugins && git checkout origin/${branch_name} -b ${branch_name}"
                 } else {
                     def scmVars = checkout scm
@@ -24,16 +23,14 @@ node() {
                     commit_hash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
                     branch_name = params.github_release_tag.split('_')[0].split('\\.')[0] + "." + params.github_release_tag.split('_')[0].split('\\.')[1]
                     println(ANSI_BOLD + ANSI_YELLOW + "github_release_tag specified, building from github_release_tag: " + params.github_release_tag + ANSI_NORMAL)
-                    sh "git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins"
+                    sh "git clone clone https://github.com/Dhirenaade/sunbird-content-plugins.git plugins"
                     sh """
                         cd plugins
                         checkout_tag=\$(git ls-remote --tags origin $branch_name* | grep -o "$branch_name.*" | sort -V | tail -n1)
                         git checkout tags/\${checkout_tag} -b \${checkout_tag}
-                        
                     """
                 }
                 echo "artifact_version: " + artifact_version
-
                 stage('Build') {
                     sh """
                         export framework_version_number=${branch_name}
@@ -60,11 +57,9 @@ node() {
                         #npm run test
                     """
                 }
-                
                 //stage('Publish_test_results') {
                //cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage/PhantomJS*/cobertura-coverage.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false 
             //}
-                
                 stage('ArchiveArtifacts') {
                     sh """
                         mkdir content-editor-artifacts
@@ -83,5 +78,4 @@ node() {
         currentBuild.result = "FAILURE"
         throw err
     }
-
 }
