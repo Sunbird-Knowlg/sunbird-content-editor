@@ -590,48 +590,53 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 
     //Filter math method used in Question(For Filtering out Katex Library)
     _validateQuestionForKatex: function(content,questionData){
-        var questionValidate = questionData.some(function(item){
-            return ((JSON.parse(item.body).data.data.question.text).includes('data-math' && 'math-text'))
-        });
-        var optionValidate = questionData.some(function(item){
+		if(typeof (questionData) != "undefined"){
+        	var questionValidate = questionData.some(function(item){
+           	 return ((JSON.parse(item.body).data.data.question.text).includes('data-math' && 'math-text'))
+       		});
+        	var optionValidate = questionData.some(function(item){
             var questionBody = JSON.parse(item.body).data.data.option;
 
-            if(item.type.toLowerCase() == 'mtf'){
-                if(questionBody.hasOwnProperty('optionsLHS')){
-                    return questionBody.optionsLHS.some(function(options){
-                        return options.text.includes('data-math' && 'math-text');
-                    });
-                }
+            	if(item.type.toLowerCase() == 'mtf'){
+                	if(questionBody.hasOwnProperty('optionsLHS')){
+                    	return questionBody.optionsLHS.some(function(options){
+                        	return options.text.includes('data-math' && 'math-text');
+                    	});
+                	}
                 if(questionBody.hasOwnProperty('optionsRHS')){
                     return questionBody.optionsRHS.some(function(options){
                         return options.text.includes('data-math' && 'math-text');
                     });
-                }   
-            }
+                	}   
+            	}
 
-            if(item.type.toLowerCase() == 'mcq') {
-                var questionBody = JSON.parse(item.body).data.data;
-                if(questionBody.hasOwnProperty('options')) {
-                    return questionBody.options.some(function(options){
-                        return options.text.includes('data-math' && 'math-text');
-                    });
-                }
+           		if(item.type.toLowerCase() == 'mcq') {
+                	var questionBody = JSON.parse(item.body).data.data;
+                	if(questionBody.hasOwnProperty('options')) {
+                   	 return questionBody.options.some(function(options){
+                   	     return options.text.includes('data-math' && 'math-text');
+                   	 });
+               	}
                 if(questionBody.hasOwnProperty('sentence')) {
                     return questionBody.sentence.text.includes('data-math' && 'math-text');
-                }
-            }
-            if(item.type.toLowerCase() == 'ftb') {
-                return JSON.parse(item.body).data.data.answer.some(function(options){
-                    return options.includes('data-math' && 'math-text');
-                })
-            }
-        })
-        /*if question and options are using math then return true else false */
-        if(questionValidate || optionValidate){
-            return true;
-        }
-        else {
-            return false
-        }
-    }
+                	}
+            	}
+            	if(item.type.toLowerCase() == 'ftb') {
+               	 return JSON.parse(item.body).data.data.answer.some(function(options){
+               	     return options.includes('data-math' && 'math-text');
+               		 })
+            	}
+        	})
+        	/*if question and options are using math then return true else false */
+        	if(questionValidate || optionValidate){
+           		 return true;
+        	}
+        	else {
+           		 return false
+        	}
+		}
+		else {
+			return false
+		}
+}
 }))()
