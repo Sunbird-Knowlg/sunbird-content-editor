@@ -285,8 +285,9 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			content = this._appendPluginStage(content, this.summaryTemplate);
 		} 
 		 /* return true if math Method is used else return false */
-		if(this._validateQuestionForKatex(content,questionData)) { 
-            content.theme['plugin-manifest'].plugin.push({"id":"org.ekstep.mathfunction","ver":"1.0","type":"plugin"});
+		if(!this._validateQuestionForKatex(questionData)) {
+            content.theme['plugin-manifest'].plugin = _.reject(content.theme['plugin-manifest'].plugin, function(el) { return el.id === "org.ekstep.mathfunction"; });
+			content.theme.manifest.media = _.reject(content.theme.manifest.media, function(el) { return el.plugin === "org.ekstep.mathfunction"; });
         }
 		ecEditor._.each(content.theme['plugin-manifest'].plugin, function (p){
 			plugin_arr.push({ identifier: p.id, semanticVersion: p.ver})
@@ -588,7 +589,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	},
 
     //Filter math method used in Question(For Filtering out Katex Library)
-    _validateQuestionForKatex: function(content,questionData){
+    _validateQuestionForKatex: function(questionData){
 		if(typeof (questionData) != "undefined"){
         	var questionValidate = questionData.some(function(item){
            	 return ((JSON.parse(item.body).data.data.question.text).includes('data-math' && 'math-text'))
