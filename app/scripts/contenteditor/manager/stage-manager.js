@@ -285,10 +285,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			content = this._appendPluginStage(content, this.summaryTemplate);
 		} 
 		/* return true if math Method is used else return false */
-		if(!this._validateQuestionForKatex(questionData)) {
-        	content.theme['plugin-manifest'].plugin = _.reject(content.theme['plugin-manifest'].plugin, function(el) { return el.id === "org.ekstep.mathfunction"; });
-			content.theme.manifest.media = _.reject(content.theme.manifest.media, function(el) { return el.plugin === "org.ekstep.mathfunction"; });
-        }
+		content = this._checkForMathText(questionData,content)
 		ecEditor._.each(content.theme['plugin-manifest'].plugin, function (p){
 			plugin_arr.push({ identifier: p.id, semanticVersion: p.ver})
         })
@@ -588,52 +585,11 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		return content
 	},
     //Filter math method used in Question(For Filtering out Katex Library)
-    _validateQuestionForKatex: function(questionData){
-		if(typeof (questionData) != "undefined"){
-        	var questionValidate = questionData.some(function(item){
-           	 return ((JSON.parse(item.body).data.data.question.text).includes('data-math' && 'math-text'))
-       		});
-        	var optionValidate = questionData.some(function(item){
-            var questionBody = JSON.parse(item.body).data.data.option;
-            	if(item.type.toLowerCase() == 'mtf'){
-                	if(questionBody.hasOwnProperty('optionsLHS')){
-                    	return questionBody.optionsLHS.some(function(options){
-                        	return options.text.includes('data-math' && 'math-text');
-                    	});
-                	}
-                if(questionBody.hasOwnProperty('optionsRHS')){
-                    return questionBody.optionsRHS.some(function(options){
-                        return options.text.includes('data-math' && 'math-text');
-                    	});
-                	}   
-            	}
-           		if(item.type.toLowerCase() == 'mcq') {
-                	var questionBody = JSON.parse(item.body).data.data;
-                	if(questionBody.hasOwnProperty('options')) {
-                   	 return questionBody.options.some(function(options){
-                   	     return options.text.includes('data-math' && 'math-text');
-                   	 });
-               	}
-                if(questionBody.hasOwnProperty('sentence')) {
-                    return questionBody.sentence.text.includes('data-math' && 'math-text');
-                	}
-            	}
-            	if(item.type.toLowerCase() == 'ftb') {
-               	 return JSON.parse(item.body).data.data.answer.some(function(options){
-               	     return options.includes('data-math' && 'math-text');
-               		 })
-            	}
-        	})
-        	/*if question and options are using math then return true else false */
-        	if(questionValidate || optionValidate){
-           		 return true;
-        	}
-        	else {
-           		 return false
-        	}
-		}
-		else {
-			return false
-		}
-}
+	_checkForMathText : function(questionData, content) {
+		var qsData = JSON.stringify(questionData);
+		if((ecEditor._.isEmpty(qsData.match(/data-math/g))) && (ecEditor._.isEmpty(qsData.match(/math-text/g)))) {
+            content  = this._removePluginStage(content, 'org.ekstep.mathfunction')
+        }
+        return content;  
+	}
 }))()
