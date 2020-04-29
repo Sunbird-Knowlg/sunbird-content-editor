@@ -237,7 +237,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		return ecEditor._.uniq(this.pragma)
 	},
 
-	
+
 
 	toECML: function () {
 		var instance = this
@@ -277,23 +277,20 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			})
 			content.theme.stage.push(stageBody)
 		})
-		
+
 		instance.manifestGenerator(content)
 
 		/* istanbul ignore else  */
 		if (this._isAssessment()) {
 			content = this._appendPluginStage(content, this.summaryTemplate);
-		} 
+		}
 		 /* return true if math Method is used else return false */
-		if(!this._validateQuestionForKatex(questionData)) {
-            content.theme['plugin-manifest'].plugin = _.reject(content.theme['plugin-manifest'].plugin, function(el) { return el.id === "org.ekstep.mathfunction"; });
-			content.theme.manifest.media = _.reject(content.theme.manifest.media, function(el) { return el.plugin === "org.ekstep.mathfunction"; });
-        }
+		content = this._checkForMathText(questionData,content)
 		ecEditor._.each(content.theme['plugin-manifest'].plugin, function (p){
 			plugin_arr.push({ identifier: p.id, semanticVersion: p.ver})
         })
         instance.plugins_used = ecEditor._.uniqBy(plugin_arr, 'identifier');
-		
+
 
 		if (!_.isEmpty(org.ekstep.contenteditor.mediaManager.migratedMediaMap)) {
 			instance.mergeMediaMap(mediaMap)
@@ -370,11 +367,11 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		org.ekstep.contenteditor.api.ngSafeApply(org.ekstep.contenteditor.api.getAngularScope())
 		org.ekstep.contenteditor.stageManager.contentLoading = true
 		org.ekstep.pluginframework.eventManager.enableEvents = false
-		
+
 		/* istanbul ignore else  */
 		if (this._isAssessment()) {
 			contentBody = this._removePluginStage(contentBody, 'org.ekstep.summary')
-		} 
+		}
 		this._loadMedia(contentBody)
 		this._loadPlugins(contentBody, function (err, res) {
 			if (!err) {
@@ -384,7 +381,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		})
 	},
 
-	
+
 	_loadMedia: function (contentBody) {
 		_.forEach(contentBody.theme.manifest.media, function (media) {
 			if (media.type === 'plugin' && org.ekstep.pluginframework.pluginManager.isPluginDefined(media.id)) {} else {
@@ -553,7 +550,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	},
 
 	_assessContentType : function() {
-		return _.has(org.ekstep.contenteditor.config, 'assessContentType') ? org.ekstep.contenteditor.config.assessContentType : ['SelfAssess']; 
+		return _.has(org.ekstep.contenteditor.config, 'assessContentType') ? org.ekstep.contenteditor.config.assessContentType : ['SelfAssess'];
 	},
 
 	_getContentType: function () {
@@ -573,7 +570,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	// Remove a plugin from stage
 	_removePluginStage: function (content, pluginName) {
 		/* istanbul ignore else  */
-		if (_.find(content.theme['plugin-manifest'].plugin, { id: pluginName})) 
+		if (_.find(content.theme['plugin-manifest'].plugin, { id: pluginName}))
 		{
 			content.theme.stage = _.filter(content.theme.stage, function(obj) {
 				return !_.has(obj, pluginName);
@@ -587,13 +584,11 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		}
 		return content
 	},
-    //Filter math method used in Question(For Filtering out Katex Library)
-    _validateQuestionForKatex: function(questionData){
-		if(typeof (questionData) != "undefined"){
-			return JSON.stringify(questionData).includes("math-text" || "math-data");
+	_checkForMathText : function(questionData, content) {
+		var qsData = JSON.stringify(questionData);
+			if((ecEditor._.isEmpty(qsData.match(/data-math/g))) && (ecEditor._.isEmpty(qsData.match(/math-text/g)))) {
+				content  = this._removePluginStage(content, 'org.ekstep.mathfunction')
 		}
-		else {
-			return false
-		}
+		return content;
 }
 }))()
