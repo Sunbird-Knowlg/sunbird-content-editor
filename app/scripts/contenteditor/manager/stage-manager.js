@@ -587,6 +587,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	_checkForMathText : function(questionData, content) {
 		var qsData = JSON.stringify(questionData);
 			if((ecEditor._.isEmpty(qsData.match(/data-math/g))) && (ecEditor._.isEmpty(qsData.match(/math-text/g)))) {
+				content.theme["plugin-manifest"].plugin.find(x=>x.id=="org.ekstep.questionset").depends = content.theme["plugin-manifest"].plugin.find(x=>x.id=="org.ekstep.questionset").depends.replace(",org.ekstep.mathfunction","")
 				content  = this._removePluginStage(content, 'org.ekstep.mathfunction')
 		}
 		return content;
