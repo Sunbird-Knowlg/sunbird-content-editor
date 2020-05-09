@@ -590,9 +590,9 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
         var qsData = JSON.stringify(questionData);
         if(!((ecEditor._.isEmpty(qsData.match(/data-math/g))) && (ecEditor._.isEmpty(qsData.match(/math-text/g))))) {
             content.theme['plugin-manifest'].plugin.push(this.katexTemplate.pluginManifest);
-            _.forEach(this.katexTemplate.manifest.media, function(media) {
-                content.theme.manifest.media.push(media)
-            });
+            // _.forEach(this.katexTemplate.manifest.media, function(media) {
+            //     content.theme.manifest.media.push(media)
+            // });
         }
     return content;
 }
