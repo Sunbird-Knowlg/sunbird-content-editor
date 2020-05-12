@@ -588,8 +588,13 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
     // Based on math uses add stage with another plugin
     _checkForMathText : function(questionData, content) {
         var qsData = JSON.stringify(questionData);
+        if(typeof (questionData) != "undefined"){
         if(!((ecEditor._.isEmpty(qsData.match(/data-math/g))) && (ecEditor._.isEmpty(qsData.match(/math-text/g))))) {
             content.theme['plugin-manifest'].plugin.push(this.katexTemplate.pluginManifest);
+            _.forEach(this.katexTemplate.manifest.media, function(media) {
+                content.theme.manifest.media.push(media)
+            });
+        }
         }
     return content;
 }
