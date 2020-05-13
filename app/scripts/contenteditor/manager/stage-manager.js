@@ -257,7 +257,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			var stageAssets = []
 			plugin_arr.push({ identifier: stage.manifest.id, semanticVersion: stage.manifest.ver})
 			_.forEach(stage.children, function (plugin) {
-                questionData = plugin._questions
+                questionData.push(plugin._questions)
 				var id = plugin.getManifestId()
 				plugin_arr.push({ identifier: plugin.manifest.id, semanticVersion: plugin.manifest.ver});
 				if (_.isUndefined(stageBody[id])) stageBody[id] = []
