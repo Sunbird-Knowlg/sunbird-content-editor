@@ -296,7 +296,15 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mediaMap)), 'id')
 		if (!_.isEmpty(org.ekstep.contenteditor.migration.patch)) {
 			content.theme['patch'] = org.ekstep.contenteditor.migration.patch.toString()
-		}
+        }
+        // check for math use
+        _.forEach(this.stages, function(stage,index){
+            _.forEach(stage.children, function(plugin){
+                if(!_.isUndefined(plugin._questions)){
+                    content = plugin._checkForMathText(content,plugin._questions)
+                }
+            });
+         });
 		return _.cloneDeep(content)
 	},
 	manifestGenerator: function (content) {
