@@ -10,7 +10,6 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	summary: [],
 	assets: [],
 	plugins_used: [],
-    katexTemplate: {"manifest":{"media":[{"id":"org.ekstep.mathfunction.renderer.katex_min_js","plugin":"org.ekstep.mathfunction","src":"/content-plugins/org.ekstep.mathfunction-1.0/renderer/libs/katex/katex.min.js","type":"js"},{"id":"org.ekstep.mathfunction.renderer.katex_min_css","plugin":"org.ekstep.mathfunction","src":"/content-plugins/org.ekstep.mathfunction-1.0/renderer/libs/katex/katex.min.css","type":"css"},{"id":"org.ekstep.mathfunction.renderer.katex_main_bold","plugin":"org.ekstep.mathfunction","src":"/content-plugins/org.ekstep.mathfunction-1.0/renderer/libs/katex/fonts/katex_main-bold.ttf","type":"js"},{"id":"org.ekstep.mathfunction.renderer.katex_main_bolditalic","plugin":"org.ekstep.mathfunction","src":"/content-plugins/org.ekstep.mathfunction-1.0/renderer/libs/katex/fonts/katex_main-bolditalic.ttf","type":"js"},{"id":"org.ekstep.mathfunction.renderer.katex_main_italic","plugin":"org.ekstep.mathfunction","src":"/content-plugins/org.ekstep.mathfunction-1.0/renderer/libs/katex/fonts/katex_main-italic.ttf","type":"js"},{"id":"org.ekstep.mathfunction.renderer.katex_main_regular","plugin":"org.ekstep.mathfunction","src":"/content-plugins/org.ekstep.mathfunction-1.0/renderer/libs/katex/fonts/katex_main-regular.ttf","type":"js"},{"id":"org.ekstep.mathfunction.renderer.katex_math_bolditalic","plugin":"org.ekstep.mathfunction","src":"/content-plugins/org.ekstep.mathfunction-1.0/renderer/libs/katex/fonts/katex_math-bolditalic.ttf","type":"js"},{"id":"org.ekstep.mathfunction.renderer.katex_math_italic","plugin":"org.ekstep.mathfunction","src":"/content-plugins/org.ekstep.mathfunction-1.0/renderer/libs/katex/fonts/katex_math-italic.ttf","type":"js"},{"id":"org.ekstep.mathfunction.renderer.katex_math_regular","plugin":"org.ekstep.mathfunction","src":"/content-plugins/org.ekstep.mathfunction-1.0/renderer/libs/katex/fonts/katex_math-regular.ttf","type":"js"},{"id":"org.ekstep.mathfunction.renderer.katex_size1_regular","plugin":"org.ekstep.mathfunction","src":"/content-plugins/org.ekstep.mathfunction-1.0/renderer/libs/katex/fonts/katex_size1-regular.ttf","type":"js"},{"id":"org.ekstep.mathfunction.renderer.katex_size2_regular","plugin":"org.ekstep.mathfunction","src":"/content-plugins/org.ekstep.mathfunction-1.0/renderer/libs/katex/fonts/katex_size2-regular.ttf","type":"js"},{"id":"org.ekstep.mathfunction.renderer.katex_size3_regular","plugin":"org.ekstep.mathfunction","src":"/content-plugins/org.ekstep.mathfunction-1.0/renderer/libs/katex/fonts/katex_size3-regular.ttf","type":"js"},{"id":"org.ekstep.mathfunction.renderer.katex_size4_regular","plugin":"org.ekstep.mathfunction","src":"/content-plugins/org.ekstep.mathfunction-1.0/renderer/libs/katex/fonts/katex_size4-regular.ttf","type":"js"}]},"pluginManifest":{"depends":"","id":"org.ekstep.mathfunction","type":"plugin","ver":"1.0"}},
 	summaryTemplate: {"manifest":{"media":[{"id":"org.ekstep.summary_template_js","plugin":"org.ekstep.summary","src":"/content-plugins/org.ekstep.summary-1.0/renderer/summary-template.js","type":"js","ver":"1.0"},{"id":"org.ekstep.summary_template_css","plugin":"org.ekstep.summary","src":"/content-plugins/org.ekstep.summary-1.0/renderer/style.css","type":"css","ver":"1.0"},{"id":"org.ekstep.summary","plugin":"org.ekstep.summary","src":"/content-plugins/org.ekstep.summary-1.0/renderer/plugin.js","type":"plugin","ver":"1.0"},{"id":"org.ekstep.summary_manifest","plugin":"org.ekstep.summary","src":"/content-plugins/org.ekstep.summary-1.0/manifest.json","type":"json","ver":"1.0"},{"assetId":"summaryImage","id":"org.ekstep.summary_summaryImage","preload":true,"src":"/content-plugins/org.ekstep.summary-1.0/assets/summary-icon.jpg","type":"image"}]},"pluginManifest":{"depends":"","id":"org.ekstep.summary","type":"plugin","ver":"1.0"},"stage":{"x":0,"y":0,"w":100,"h":100,"rotate":null,"config":{"__cdata":"{\"opacity\":100,\"strokeWidth\":1,\"stroke\":\"rgba(255, 255, 255, 0)\",\"autoplay\":false,\"visible\":true,\"color\":\"#FFFFFF\",\"genieControls\":false,\"instructions\":\"\"}"},"id":"summary_stage_id","manifest":{"media":[{"assetId":"summaryImage"}]},"org.ekstep.summary":[{"config":{"__cdata":"{\"opacity\":100,\"strokeWidth\":1,\"stroke\":\"rgba(255, 255, 255, 0)\",\"autoplay\":false,\"visible\":true}"},"id":"summary_plugin_id","rotate":0,"x":6.69,"y":-27.9,"w":77.45,"h":125.53,"z-index":0}]}},
 	init: function () {
 		var instance = this
@@ -246,18 +245,23 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		this.setNavigationalParams()
 		var mediaMap = {}
 		var plugin_arr = []
-        var questionData = []
+        // var questionData = []
 		instance.summary = []
 		instance.assets = []
 		instance.pragma = null
 		_.forEach(this.stages, function (stage, index) {
+            _.forEach(stage.children, function(plugin){
+                content = plugin._checkForMathText(content,plugin._questions)
+            }); 
+         });
+        _.forEach(this.stages, function (stage, index) {
 			instance.thumbnails[stage.id] = stage.thumbnail
 			var stageBody = stage.toECML()
 			stageBody.manifest = { media: [] }
 			var stageAssets = []
 			plugin_arr.push({ identifier: stage.manifest.id, semanticVersion: stage.manifest.ver})
 			_.forEach(stage.children, function (plugin) {
-                questionData.push(plugin._questions)
+                // questionData.push(plugin._questions)
 				var id = plugin.getManifestId()
 				plugin_arr.push({ identifier: plugin.manifest.id, semanticVersion: plugin.manifest.ver});
 				if (_.isUndefined(stageBody[id])) stageBody[id] = []
@@ -286,7 +290,8 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			content = this._appendPluginStage(content, this.summaryTemplate);
 		} 
         /* return true if math Method is used else return false */
-        content = this._checkForMathText(questionData,content)
+        // content = this._checkForMathText(questionData,content)
+        // content = plugin._checkForMathText(questionData,content)
 		ecEditor._.each(content.theme['plugin-manifest'].plugin, function (p){
 			plugin_arr.push({ identifier: p.id, semanticVersion: p.ver})
         })
@@ -302,6 +307,15 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		if (!_.isEmpty(org.ekstep.contenteditor.migration.patch)) {
 			content.theme['patch'] = org.ekstep.contenteditor.migration.patch.toString()
 		}
+        // check for math use
+        _.forEach(this.stages, function(stage,index){
+            _.forEach(stage.children, function(plugin){
+                if(!_.isUndefined(plugin._questions)){
+                    content = plugin._checkForMathText(content,plugin._questions)
+                }
+            });
+         });
+
 		return _.cloneDeep(content)
 	},
 	manifestGenerator: function (content) {
@@ -584,19 +598,6 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			})
 		}
 		return content
-    },
-    // Based on math uses add stage with another plugin
-    _checkForMathText : function(questionData, content) {
-        var qsData = JSON.stringify(questionData);
-        if(typeof (questionData) != "undefined"){
-        if(!((ecEditor._.isEmpty(qsData.match(/data-math/g))) && (ecEditor._.isEmpty(qsData.match(/math-text/g))))) {
-            content.theme['plugin-manifest'].plugin.push(this.katexTemplate.pluginManifest);
-            _.forEach(this.katexTemplate.manifest.media, function(media) {
-                content.theme.manifest.media.push(media)
-            });
-        }
-        }
-    return content;
-}
+    }
 }))()
 //# sourceURL=stagemanager.js
