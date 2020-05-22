@@ -15,7 +15,7 @@ node() {
                     branch_name = sh(script: 'git name-rev --name-only HEAD | rev | cut -d "/" -f1| rev', returnStdout: true).trim()
                     artifact_version = branch_name + "_" + commit_hash
                     println(ANSI_BOLD + ANSI_YELLOW + "github_release_tag not specified, using the latest commit hash: " + commit_hash + ANSI_NORMAL)
-                    sh "git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins"
+                    sh "git clone https://github.com/Dhirenaade/sunbird-content-plugins.git plugins"
                     sh "cd plugins && git checkout origin/${branch_name} -b ${branch_name}"
                 } else {
                     def scmVars = checkout scm
