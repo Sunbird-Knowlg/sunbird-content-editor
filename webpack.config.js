@@ -275,6 +275,7 @@ module.exports = (env, argv) => {
                         loader: 'file-loader',
                         options: {
                             name: '[name].[ext]',
+                            publicPath: './',
                             outputPath: './fonts/',
                             limit: 10000,
                             fallback: 'responsive-loader'
