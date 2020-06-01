@@ -103,6 +103,7 @@
     "postcss-cli": "*",
     "purify-css": "*",
     "purifycss-webpack": "0.7.0",
+    "responsive-loader": "^1.2.0",
     "sass-loader": "7.1.0",
     "string-replace-loader": "2.1",
     "svg-inline-loader": "*",

@@ -271,15 +271,19 @@ module.exports = (env, argv) => {
                 },
                 {
                     test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
-                    use: [{
-                        loader: 'url-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: './fonts/',
-                            limit: 10000,
-                            fallback: 'responsive-loader'
+                    use: [
+                        'file-loader',
+                        {
+                            loader: 'url-loader',
+                            options: {
+                                limit: 10000,
+                                outputPath: './fonts/',
+                                name: '[name].[ext]',
+                                fallback: 'responsive-loader'
+                            }
                         }
-                    }]
+                    ]
+                    
                 },
                 {
                     test: /\.(html)$/,

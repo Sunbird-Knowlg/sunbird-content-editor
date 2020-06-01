@@ -200,7 +200,8 @@ module.exports = {
 					options: {
 						limit: 50, // it's important
 						outputPath: './images/assets',
-						name: '[name].[ext]'
+						name: '[name].[ext]',
+						fallback: 'responsive-loader'
 					}
 				}
 			]
