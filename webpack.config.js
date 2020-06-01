@@ -272,10 +272,9 @@ module.exports = (env, argv) => {
                 {
                     test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
                     use: [{
-                        loader: 'file-loader',
+                        loader: 'url-loader',
                         options: {
                             name: '[name].[ext]',
-                            publicPath: './',
                             outputPath: './fonts/',
                             limit: 10000,
                             fallback: 'responsive-loader'
