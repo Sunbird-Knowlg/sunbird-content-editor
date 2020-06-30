@@ -268,7 +268,9 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 				pragma && ((instance.pragma === null) ? instance.pragma = [pragma] : ecEditor._.uniq(instance.pragma.push(pragma)))
 				var pluginMedia = plugin.getMedia()
 				instance.addMediaToMediaMap(mediaMap, pluginMedia, plugin.manifest)
-				stageAssets = _.concat(stageAssets, _.keys(pluginMedia))
+				if(plugin.manifest.id && plugin.manifest.id != 'org.ekstep.questionset'){
+					stageAssets = _.concat(stageAssets, _.keys(pluginMedia))
+				}
 			})
 			stageBody.manifest.media = _.map(_.uniq(stageAssets), function (asset) {
 				return { assetId: asset }
