@@ -49,7 +49,7 @@ jobs:
       
       - run: 
           name: Install sonar scanner
-          command: 'sudo npm install -g sonarqube-scanner'
+          command: 'sudo npm install -g sonarqube-scanner@2.5.0'
 
       - run: 
           name: Sonar scanner
