@@ -46,6 +46,18 @@ jobs:
           command: 'npm run test'
           
       - run: mkdir -p /tmp/coverage && cp /home/circleci/content-editor/coverage_framework/lcov/HeadlessChrome\ 59.0.3071\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage
+
+      - run:
+          name: install nvm
+          command: 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh|bash'
+
+      -run:
+          name: install node 8
+          command: 'nvm install 8'
+
+      -run:
+          name: use node 8
+          command: 'nvm use 8'
       
       - run: 
           name: Install sonar scanner
