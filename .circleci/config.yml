@@ -38,7 +38,7 @@ jobs:
       - run: cd app && bower cache clean --allow-root
       - run: cd app && bower prune -f --allow-root
       - run: cd app && bower install --force -V --allow-root
-      - run: gulp packageCorePlugins
+      # - run: gulp packageCorePlugins
       # - run: npm run build-plugins
       - run: npm run build
       
@@ -50,7 +50,7 @@ jobs:
           name: test-with-coverage
           command: 'npm run test'
           
-      - run: sudo mkdir -p /tmp/coverage && cp /home/circleci/content-editor/coverage_framework/lcov/HeadlessChrome\ 59.0.3071\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage
+      - run: mkdir -p /tmp/coverage && cp /home/circleci/content-editor/coverage_framework/lcov/HeadlessChrome\ 59.0.3071\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage
 
       - run:
           name: alter node version
