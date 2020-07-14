@@ -3,13 +3,18 @@ jobs:
   build:
     working_directory: ~/content-editor
     docker:
-      - image: circleci/node:6.10-browsers
+      # - image: circleci/node:6.10-browsers
+      - image: iliyan/docker-node-nvm
         environment:
            framework_version_number: $CIRCLE_BRANCH
            editorType: contentEditor
            editor_version_number: $CIRCLE_BRANCH
-           
+      
     steps:
+      - run: 
+          name: Change Node
+          command: 'source $NVM_DIR/nvm.sh && nvm install 6 && nvm use 6'
+
       - checkout:
           path: ~/content-editor
       
@@ -48,16 +53,8 @@ jobs:
       - run: mkdir -p /tmp/coverage && cp /home/circleci/content-editor/coverage_framework/lcov/HeadlessChrome\ 59.0.3071\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage
 
       - run:
-          name: install nvm
-          command: 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh|bash'
-
-      -run:
-          name: install node 8
-          command: 'nvm install 8'
-
-      -run:
-          name: use node 8
-          command: 'nvm use 8'
+          name: alter node version
+          command: 'source $NVM_DIR/nvm.sh && nvm install 8 && nvm use 8 && node -v'
       
       - run: 
           name: Install sonar scanner
