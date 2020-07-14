@@ -62,7 +62,7 @@ jobs:
 
       - run: 
           name: Sonar scanner
-          command: |
+          command: source ~/.nvm/nvm.sh && |
             sonar-scanner -Dsonar.projectKey=project-sunbird_sunbird-content-editor -Dsonar.organization=project-sunbird -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.language=js
             
       - store_artifacts:
