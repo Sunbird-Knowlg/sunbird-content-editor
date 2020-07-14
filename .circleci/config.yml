@@ -14,7 +14,7 @@ jobs:
       - run: 
           name: Change Node
           command: 'source $NVM_DIR/nvm.sh && nvm install 6 && nvm use 6'
-
+        
       - checkout:
           path: ~/content-editor
       
@@ -33,14 +33,14 @@ jobs:
       #       git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
       #       fi
       
-      - run: npm install -g bower@1.8.0 grunt-cli@1.2.0 gulp@3.9.1
-      - run: npm install
+      - run: source $NVM_DIR/nvm.sh && npm install -g bower@1.8.0 grunt-cli@1.2.0 gulp@3.9.1
+      - run: source $NVM_DIR/nvm.sh && npm install
       - run: cd app && bower cache clean --allow-root
       - run: cd app && bower prune -f --allow-root
       - run: cd app && bower install --force -V --allow-root
       - run: gulp packageCorePlugins
       # - run: npm run build-plugins
-      - run: npm run build
+      - run: source $NVM_DIR/nvm.sh && npm run build
       
       - save_cache:
           key: ce-dependency-cache-{{ checksum "package.json" }}
@@ -48,7 +48,7 @@ jobs:
       
       - run: 
           name: test-with-coverage
-          command: 'npm run test'
+          command: 'source $NVM_DIR/nvm.sh && npm run test'
           
       - run: mkdir -p /tmp/coverage && cp /home/circleci/content-editor/coverage_framework/lcov/HeadlessChrome\ 59.0.3071\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage
 
@@ -58,7 +58,7 @@ jobs:
       
       - run: 
           name: Install sonar scanner
-          command: 'npm install -g sonarqube-scanner'
+          command: 'source $NVM_DIR/nvm.sh && npm install -g sonarqube-scanner'
 
       - run: 
           name: Sonar scanner
