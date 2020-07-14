@@ -18,8 +18,8 @@ jobs:
       - checkout:
           path: ~/content-editor
       
-      - restore_cache:
-          key: ce-dependency-cache-{{ checksum "package.json" }}
+      # - restore_cache:
+      #     key: ce-dependency-cache-{{ checksum "package.json" }}
       
       # - run:
       #     name: clone plugins
