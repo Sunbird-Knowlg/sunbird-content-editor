@@ -35,10 +35,10 @@ jobs:
       
       - run: source $NVM_DIR/nvm.sh && npm install -g bower@1.8.0 grunt-cli@1.2.0 gulp@3.9.1
       - run: source $NVM_DIR/nvm.sh && npm install
-      - run: cd app && bower cache clean --allow-root
-      - run: cd app && bower prune -f --allow-root
-      - run: cd app && bower install --force -V --allow-root
-      - run: gulp packageCorePlugins
+      - run: cd app && source $NVM_DIR/nvm.sh bower cache clean --allow-root
+      - run: cd app && source $NVM_DIR/nvm.sh bower prune -f --allow-root
+      - run: cd app && source $NVM_DIR/nvm.sh bower install --force -V --allow-root
+      - run: source $NVM_DIR/nvm.sh gulp packageCorePlugins
       # - run: npm run build-plugins
       - run: source $NVM_DIR/nvm.sh && npm run build
       
