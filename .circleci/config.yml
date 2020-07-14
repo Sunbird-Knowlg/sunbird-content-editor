@@ -50,15 +50,15 @@ jobs:
 
       - run:
           name: Install NVM
-          command: 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh|bash && ENV NVM_DIR /home/node/.nvm'
+          command: 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh|bash'
 
       - run:
           name: alter node version
-          command: 'source $NVM_DIR/nvm.sh && nvm install 8 && nvm use 8 && node -v'
+          command: 'source ~/.nvm/nvm.sh && nvm install 8 && nvm use 8 && node -v'
       
       - run: 
           name: Install sonar scanner
-          command: 'source $NVM_DIR/nvm.sh && npm install -g sonarqube-scanner@2.5.0'
+          command: 'source ~/.nvm/nvm.sh && npm install -g sonarqube-scanner@2.5.0'
 
       - run: 
           name: Sonar scanner
