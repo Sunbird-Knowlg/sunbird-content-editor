@@ -3,8 +3,8 @@ jobs:
   build:
     working_directory: ~/content-editor
     docker:
-      # - image: circleci/node:6.10-browsers
-      - image: iliyan/docker-node-nvm
+      - image: circleci/node:6.10-browsers
+      # - image: iliyan/docker-node-nvm
         environment:
            framework_version_number: $CIRCLE_BRANCH
            editorType: contentEditor
