@@ -51,7 +51,7 @@ jobs:
 
       - run: cat /home/circleci/content-editor/coverage/lcov.info
 
-      - run: cat /home/circleci/content-editor/coverage/lcov-report
+      - run: cd /home/circleci/content-editor/coverage/lcov-report && ls -ltr
 
       - run: cat /home/circleci/content-editor/coverage/HeadlessChrome\ 59.0.3071\ \(Linux\ 0.0.0\)/lcov.info
 
