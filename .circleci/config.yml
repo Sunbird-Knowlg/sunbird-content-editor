@@ -51,7 +51,7 @@ jobs:
 
       - run: cat /home/circleci/content-editor/coverage/lcov.info
 
-      - run: cd /home/circleci/content-editor/coverage/HeadlessChrome\ 59.0.3071\ \(Linux\ 0.0.0\)/ && ls -ltr
+      - run: cd /home/circleci/content-editor/coverage/lcov && ls -ltr
 
       - run:
           name: Install NVM
