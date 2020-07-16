@@ -47,9 +47,7 @@ jobs:
           
       - run: mkdir -p /tmp/coverage && cp /home/circleci/content-editor/coverage/lcov.info /tmp/coverage
 
-      - run: sudo apt install tree && tree
-
-      - run: cat /tmp/coverage/lcov.info
+      - run: cat /home/circleci/content-editor/coverage/lcov.info
 
       - run: cat /tmp/coverage/lcov.info && cd /tmp/coverage/ && pwd && ls -ltr
 
