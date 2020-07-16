@@ -43,7 +43,7 @@ jobs:
       
       - run: 
           name: test-with-coverage
-          command: 'npm run test'
+          command: 'npm run test-with-coverage'
           
       - run: mkdir -p /tmp/coverage && cp /home/circleci/content-editor/coverage_framework/lcov/HeadlessChrome\ 59.0.3071\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage
 
@@ -61,7 +61,7 @@ jobs:
 
       - run: 
           name: Sonar scanner
-          command: source ~/.nvm/nvm.sh && sonar-scanner -Dsonar.projectKey=project-sunbird_sunbird-content-editor -Dsonar.organization=project-sunbird -Dsonar.sources=. -Dsonar.host.url=https://sonarcloud.io -Dsonar.javascript.lcov.reportPaths=coverage/lcov.info -Dsonar.language=js
+          command: source ~/.nvm/nvm.sh && sonar-scanner
             
       - store_artifacts:
           path: /tmp/coverage
