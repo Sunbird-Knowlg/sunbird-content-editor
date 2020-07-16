@@ -47,7 +47,7 @@ jobs:
           
       - run: mkdir -p /tmp/coverage && cp /home/circleci/content-editor/coverage/lcov.info /tmp/coverage
 
-      - run: cat /home/circleci/content-editor/coverage/lcov.info
+      - run: cd /home/circleci/content-editor/coverage/ && ls -ltr
 
       - run: cat /tmp/coverage/lcov.info && cd /tmp/coverage/ && pwd && ls -ltr
 
