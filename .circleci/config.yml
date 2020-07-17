@@ -47,10 +47,6 @@ jobs:
           
       - run: mkdir -p /tmp/coverage && cp /home/circleci/content-editor/coverage/lcov/HeadlessChrome\ 59.0.3071\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage
 
-      - run: cd /home/circleci/content-editor/coverage/ && ls -ltr
-
-      - run: cat /tmp/coverage/lcov.info
-
       - run:
           name: Install NVM
           command: 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh|bash'
