@@ -43,7 +43,7 @@ jobs:
       
       - run: 
           name: test-with-coverage
-          command: 'npm run test-with-coverage'
+          command: 'npm run test'
           
       - run: mkdir -p /tmp/coverage && cp /home/circleci/content-editor/coverage/lcov/HeadlessChrome\ 59.0.3071\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage
 

@@ -129,7 +129,7 @@ module.exports = function (config) {
 		// reporters: ['dots', 'coverage'],
 
 		// reporters configuration
-		reporters: ['mocha', 'coverage'],
+		reporters: ['mocha', 'coverage','progress'],
 
 		// reporter options
 		mochaReporter: {
