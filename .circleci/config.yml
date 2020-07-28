@@ -61,9 +61,9 @@ jobs:
           name: Install sonar scanner
           command: 'source ~/.nvm/nvm.sh && npm install -g sonarqube-scanner'
 
-      # - run: 
-      #     name: Sonar scanner
-      #     command: source ~/.nvm/nvm.sh && sonar-scanner -X
+      - run: 
+          name: Sonar scanner
+          command: source ~/.nvm/nvm.sh && sonar-scanner -X
             
       - store_artifacts:
           path: /tmp/coverage
