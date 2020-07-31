@@ -61,7 +61,7 @@ jobs:
 
       - run: 
           name: Sonar scanner
-          command: source ~/.nvm/nvm.sh && sonar-scanner -X
+          command: source ~/.nvm/nvm.sh && sonar-scanner
             
       - store_artifacts:
           path: /tmp/coverage
