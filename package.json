@@ -1,3 +1,6 @@
+// 20201124201117
+// https://raw.githubusercontent.com/project-sunbird/sunbird-content-editor/b6ea435b32e69a12a7f58a0853682894de5eed93/package.json
+
 {
   "name": "@project-sunbird/content-editor",
   "version": "1.0.0",
@@ -33,7 +36,8 @@
     "copy-webpack-plugin": "5.0.4",
     "cpy": "^7.0.1",
     "css-loader": "1.0.0",
-    "cssnano": "*",
+    "csso": "4.1.0",
+    "cssnano": "4.1.10",
     "eslint": "^5.4.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.14.0",
@@ -76,7 +80,7 @@
     "html-minifier-loader": "*",
     "image-webpack-loader": "^4.3.1",
     "imagemin-webpack-plugin": "^2.1.5",
-    "imports-loader": "*",
+    "imports-loader": "1.2.0",
     "jasmine": "2.5.2",
     "jasmine-core": "2.5.2",
     "jasmine-expect": "3.7.0",
@@ -100,12 +104,12 @@
     "on-build-webpack": "^0.1.0",
     "optimize-css-assets-webpack-plugin": "5.0.3",
     "phantomjs": "2.1.7",
-    "postcss-cli": "*",
-    "purify-css": "*",
+    "postcss-cli": "8.2.0",
+    "purify-css": "1.2.5",
     "purifycss-webpack": "0.7.0",
     "sass-loader": "7.1.0",
     "string-replace-loader": "2.1",
-    "svg-inline-loader": "*",
+    "svg-inline-loader": "0.8.2",
     "uglify-es": "*",
     "uglify-js": "^3.4.2",
     "uglifyjs-webpack-plugin": "1.2.5",
