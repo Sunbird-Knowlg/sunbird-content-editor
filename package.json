@@ -108,6 +108,7 @@
     "purifycss-webpack": "0.7.0",
     "sass-loader": "7.1.0",
     "string-replace-loader": "2.1",
+    "svgo": "1.0.5",
     "svg-inline-loader": "0.8.2",
     "uglify-es": "*",
     "uglify-js": "^3.4.2",
