@@ -33,7 +33,7 @@
     "copy-webpack-plugin": "5.0.4",
     "cpy": "^7.0.1",
     "css-loader": "1.0.0",
-    "csso": "4.1.0",
+    "csso": "3.5.1",
     "cssnano": "4.1.10",
     "eslint": "^5.4.0",
     "eslint-config-standard": "^11.0.0",
