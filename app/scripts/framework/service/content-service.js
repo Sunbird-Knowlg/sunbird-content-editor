@@ -94,7 +94,7 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 				}
 			}
 			if (body) {
-				content.compatibilityLevel = body.theme.compatibilityVersion
+				// content.compatibilityLevel = body.theme.compatibilityVersion
 				content['body'] = JSON.stringify(body)
 				update = true
 			}
