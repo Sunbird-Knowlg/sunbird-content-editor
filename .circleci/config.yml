@@ -29,7 +29,8 @@ jobs:
             fi
       
       - run: sudo npm install -g bower@1.8.0 grunt-cli@1.2.0 gulp@3.9.1
-      - run: npm cache clean --force
+      - run: npm uninstall -g node-sass
+      - run: npm install -g node-sass
       - run: sudo npm install
       - run: cd app && bower cache clean --allow-root
       - run: cd app && bower prune -f --allow-root
