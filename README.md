@@ -120,10 +120,23 @@ window.config = {
 ```  
 
 ## How to Setup Sunbird Content Editor in your Local Machine
+
+> The minimal version of Node.js required by Editor will be >= 8.
+>
+> For more information on installing Node.js, see [nodejs.org](https://nodejs.org/en/). If you are unsure what version of Node.js runs on your system, run node -v in a terminal window.
+
+
 1. Clone the sunbird-content-editor repo from [here](https://github.com/project-sunbird/sunbird-content-editor)
 2. Clone the sunbird-content-plugins repo from [here](https://github.com/project-sunbird/sunbird-content-plugins) 
 3. Go to the root directory sunbird-content-editor.
 4. Run `npm install` to install node modules.
+  
+      (Note: if you are facing any issue related to legacy peer dependecies Please configure npm with the `--legacy-peer-deps` functionality. This is especially helpful when using dependencies whose maintainers are no longer active but their projects support versions of peerDeps that are outside the version range specified.)
+
+      For example: `npm install --legacy-peer-deps=true`
+
+      Referenace link: (https://github.com/npm/rfcs/discussions/283)
+
 3. `cd app` and run `bower install` to install bower components
 5. Create a symlink to 'sunbird-content-plugins' (`ln -s ../sunbird-content-plugins plugins`)(Linux, mac)
 for windows: use `mklink`
