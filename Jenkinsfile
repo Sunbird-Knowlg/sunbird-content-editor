@@ -27,7 +27,7 @@ node() {
                         rm -rf ansible/content-editor.zip
                         rm -rf content-editor
                         node -v
-                        npm install
+                        npm install --legacy-peer-deps=true
                         cd app
                         bower cache clean
                         bower prune -f 
