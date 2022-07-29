@@ -35,7 +35,6 @@ jobs:
             && sudo dpkg -i /tmp/libpng12.deb \
             && rm /tmp/libpng12.deb
       - run: sudo npm install -g bower@1.8.0 grunt-cli@1.2.0 gulp@3.9.1
-      - run: sudo npm install --legacy-peer-deps=true
       - run: sudo npm install --legacy-peer-deps=true --unsafe-perm
       - run: cd app && bower cache clean --allow-root
       - run: cd app && bower prune -f --allow-root
