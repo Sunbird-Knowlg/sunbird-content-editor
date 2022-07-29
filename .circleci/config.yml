@@ -8,6 +8,7 @@ jobs:
            framework_version_number: $CIRCLE_BRANCH
            editorType: contentEditor
            editor_version_number: $CIRCLE_BRANCH
+           CHROME_BIN: /usr/bin/google-chrome
 
     steps:
       - checkout:
