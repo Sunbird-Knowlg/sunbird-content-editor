@@ -16,10 +16,6 @@ node() {
                 artifact_version = branch_name + '_' + commit_hash
                 sh "git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b ${branch_name}"
                 echo "artifact_version: " + artifact_version
-                sh """
-                    export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
-                    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-                   """
                 stage('Build') {
                     sh """
                         export framework_version_number=${artifact_version}
@@ -29,7 +25,6 @@ node() {
                         export CHROME_BIN=google-chrome
                         rm -rf ansible/content-editor.zip
                         rm -rf content-editor
-                        nvm install 10
                         npm cache clean --force
                         node -v
                         npm install
