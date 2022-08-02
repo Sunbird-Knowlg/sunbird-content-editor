@@ -26,6 +26,7 @@ node() {
                         export CHROME_BIN=google-chrome
                         rm -rf ansible/content-editor.zip
                         rm -rf content-editor
+                        curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
                         nvm ls
                         npm cache clean --force
                         node -v
