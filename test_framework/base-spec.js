@@ -13,7 +13,8 @@ org.ekstep.contenteditor.sidebarManager = {
 }
 
 org.ekstep.services.telemetryService = {
-	apiCall: function () {}
+	apiCall: function () {},
+	error: function () {}
 }
 
 var config = {

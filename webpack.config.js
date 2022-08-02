@@ -5,7 +5,7 @@ const EDITOR_VER = process.env.editor_version_number;
 const ZIP_FILE_NAME = 'content-editor.zip';
 const NPM_BUILD_FOLDER_NAME = 'content-editor'
 
-// Dependency files
+// Dependency files.
 const path = require('path');
 const webpack = require('webpack');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');

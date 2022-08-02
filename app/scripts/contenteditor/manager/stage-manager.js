@@ -10,6 +10,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	summary: [],
 	assets: [],
 	plugins_used: [],
+	summaryTemplate: {"manifest":{"media":[{"id":"org.ekstep.summary_template_js","plugin":"org.ekstep.summary","src":"/content-plugins/org.ekstep.summary-1.0/renderer/summary-template.js","type":"js","ver":"1.0"},{"id":"org.ekstep.summary_template_css","plugin":"org.ekstep.summary","src":"/content-plugins/org.ekstep.summary-1.0/renderer/style.css","type":"css","ver":"1.0"},{"id":"org.ekstep.summary","plugin":"org.ekstep.summary","src":"/content-plugins/org.ekstep.summary-1.0/renderer/plugin.js","type":"plugin","ver":"1.0"},{"id":"org.ekstep.summary_manifest","plugin":"org.ekstep.summary","src":"/content-plugins/org.ekstep.summary-1.0/manifest.json","type":"json","ver":"1.0"},{"assetId":"summaryImage","id":"org.ekstep.summary_summaryImage","preload":true,"src":"/content-plugins/org.ekstep.summary-1.0/assets/summary-icon.jpg","type":"image"}]},"pluginManifest":{"depends":"","id":"org.ekstep.summary","type":"plugin","ver":"1.0"},"stage":{"x":0,"y":0,"w":100,"h":100,"rotate":null,"config":{"__cdata":"{\"opacity\":100,\"strokeWidth\":1,\"stroke\":\"rgba(255, 255, 255, 0)\",\"autoplay\":false,\"visible\":true,\"color\":\"#FFFFFF\",\"genieControls\":false,\"instructions\":\"\"}"},"id":"summary_stage_id","manifest":{"media":[{"assetId":"summaryImage"}]},"org.ekstep.summary":[{"config":{"__cdata":"{\"opacity\":100,\"strokeWidth\":1,\"stroke\":\"rgba(255, 255, 255, 0)\",\"autoplay\":false,\"visible\":true}"},"id":"summary_plugin_id","rotate":0,"x":6.69,"y":-27.9,"w":77.45,"h":125.53,"z-index":0}]}},
 	init: function () {
 		var instance = this
 		fabric.Object.prototype.transparentCorners = false
@@ -235,6 +236,9 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	getPragma: function () {
 		return ecEditor._.uniq(this.pragma)
 	},
+
+	
+
 	toECML: function () {
 		var instance = this
 		var content = { theme: { id: 'theme', version: '1.0', startStage: this.stages[0].id, stage: [], manifest: { media: [] }, 'plugin-manifest': { plugin: [] } } }
@@ -264,7 +268,9 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 				pragma && ((instance.pragma === null) ? instance.pragma = [pragma] : ecEditor._.uniq(instance.pragma.push(pragma)))
 				var pluginMedia = plugin.getMedia()
 				instance.addMediaToMediaMap(mediaMap, pluginMedia, plugin.manifest)
-				stageAssets = _.concat(stageAssets, _.keys(pluginMedia))
+				if(plugin.manifest.id && plugin.manifest.id != 'org.ekstep.questionset'){
+					stageAssets = _.concat(stageAssets, _.keys(pluginMedia))
+				}
 			})
 			stageBody.manifest.media = _.map(_.uniq(stageAssets), function (asset) {
 				return { assetId: asset }
@@ -273,6 +279,11 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		})
 		
 		instance.manifestGenerator(content)
+
+		/* istanbul ignore else  */
+		if (this._isAssessment()) {
+			content = this._appendPluginStage(content, this.summaryTemplate);
+		} 
 		ecEditor._.each(content.theme['plugin-manifest'].plugin, function (p){
 			plugin_arr.push({ identifier: p.id, semanticVersion: p.ver})
         })
@@ -287,7 +298,15 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		content.theme.manifest.media = _.uniqBy(_.concat(content.theme.manifest.media, _.values(mediaMap)), 'id')
 		if (!_.isEmpty(org.ekstep.contenteditor.migration.patch)) {
 			content.theme['patch'] = org.ekstep.contenteditor.migration.patch.toString()
-		}
+        }
+        // check for math use
+        _.forEach(this.stages, function(stage,index){
+            _.forEach(stage.children, function(plugin){
+                if(!_.isUndefined(plugin._questions)){
+                    content = plugin._checkForMathText(content,plugin._questions)
+                }
+            });
+         });
 		return _.cloneDeep(content)
 	},
 	manifestGenerator: function (content) {
@@ -339,11 +358,14 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			if (index < (size - 1)) {
 				stage.addParam('next', instance.stages[index + 1].id)
 			}
-			if (size === index + 1) {
+			if (size === index + 1 && instance._isAssessment()) {
+				stage.addParam('next', 'summary_stage_id')
+			}  else if (size === index + 1) {
 				stage.deleteParam('next') // last stage should not have next param.
 			}
 		})
 	},
+
 	fromECML: function (contentBody, stageIcons) {
 		var instance = this
 		var startTime = (new Date()).getTime()
@@ -351,6 +373,11 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		org.ekstep.contenteditor.api.ngSafeApply(org.ekstep.contenteditor.api.getAngularScope())
 		org.ekstep.contenteditor.stageManager.contentLoading = true
 		org.ekstep.pluginframework.eventManager.enableEvents = false
+		
+		/* istanbul ignore else  */
+		if (this._isAssessment()) {
+			contentBody = this._removePluginStage(contentBody, 'org.ekstep.summary')
+		} 
 		this._loadMedia(contentBody)
 		this._loadPlugins(contentBody, function (err, res) {
 			if (!err) {
@@ -359,6 +386,8 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			}
 		})
 	},
+
+	
 	_loadMedia: function (contentBody) {
 		_.forEach(contentBody.theme.manifest.media, function (media) {
 			if (media.type === 'plugin' && org.ekstep.pluginframework.pluginManager.isPluginDefined(media.id)) {} else {
@@ -520,5 +549,45 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 			}
 		})
 		return summaryData
+	},
+
+	_isAssessment : function() {
+		return _.includes(_.mapValues(this._assessContentType(), _.method('toLowerCase')), _.toLower(this._getContentType()))
+	},
+
+	_assessContentType : function() {
+		return _.has(org.ekstep.contenteditor.config, 'assessContentType') ? org.ekstep.contenteditor.config.assessContentType : ['SelfAssess']; 
+	},
+
+	_getContentType: function () {
+		return ecEditor.getService('content').getContentMeta(org.ekstep.contenteditor.api.getContext('contentId')).contentType
+	},
+
+	// Append a plugin in stage
+	_appendPluginStage: function (content, pluginTemplate) {
+		content.theme.stage.push(pluginTemplate.stage)
+		content.theme['plugin-manifest'].plugin.push(pluginTemplate.pluginManifest)
+		_.forEach(pluginTemplate.manifest.media, function(media) {
+			content.theme.manifest.media.push(media)
+		});
+		return content
+	},
+
+	// Remove a plugin from stage
+	_removePluginStage: function (content, pluginName) {
+		/* istanbul ignore else  */
+		if (_.find(content.theme['plugin-manifest'].plugin, { id: pluginName})) 
+		{
+			content.theme.stage = _.filter(content.theme.stage, function(obj) {
+				return !_.has(obj, pluginName);
+			});
+			content.theme.manifest.media = _.filter(content.theme.manifest.media, function(obj) {
+				return obj.plugin !== pluginName
+			})
+			content.theme['plugin-manifest'].plugin = _.filter(content.theme['plugin-manifest'].plugin, function(obj) {
+				return obj.id !== pluginName
+			})
+		}
+		return content
 	}
 }))()

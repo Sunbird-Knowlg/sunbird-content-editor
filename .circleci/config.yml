@@ -8,50 +8,66 @@ jobs:
            framework_version_number: $CIRCLE_BRANCH
            editorType: contentEditor
            editor_version_number: $CIRCLE_BRANCH
-           
+
     steps:
       - checkout:
           path: ~/content-editor
-      
+
       - restore_cache:
           key: ce-dependency-cache-{{ checksum "package.json" }}
-      
+
       - run:
           name: clone plugins
           command: |
-            prnumber=$(echo $CI_PULL_REQUEST | awk -F'/' '{print $NF}')
-            prdata=$(curl -X GET -u $GITHUB_USER_TOKEN:x-oauth-basic https://api.github.com/repos/project-sunbird/sunbird-content-editor/pulls/$prnumber)
+            if [ -z $CIRCLE_PR_NUMBER ]; then
+            target_branch=$CIRCLE_BRANCH
+            git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
+            else
+            prdata=$(curl -X GET -u $GITHUB_USER_TOKEN:x-oauth-basic https://api.github.com/repos/project-sunbird/sunbird-content-editor/pulls/$CIRCLE_PR_NUMBER)
             target_branch=$(echo "${prdata}" | jq -r '.base.ref')
             git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
-      
-      - run: sudo npm install -g bower@1.8.0 grunt-cli@1.2.0 gulp@3.9.1 codacy-coverage
-      - run: npm install
+            fi
+
+      - run: sudo npm install -g bower@1.8.0 grunt-cli@1.2.0 gulp@3.9.1
+      - run: sudo npm install
       - run: cd app && bower cache clean --allow-root
       - run: cd app && bower prune -f --allow-root
       - run: cd app && bower install --force -V --allow-root
       - run: gulp packageCorePlugins
       - run: npm run build-plugins
       - run: npm run build
-      
+
       - save_cache:
           key: ce-dependency-cache-{{ checksum "package.json" }}
           paths: ./node_modules
-      
-      - run: 
+
+      - run:
           name: test-with-coverage
           command: 'npm run test-with-coverage'
-          
-      - run: mkdir -p /tmp/coverage && cp ./coverage/lcov.info /tmp/coverage
-      
+
+      - run: mkdir -p /tmp/coverage && cp /home/circleci/content-editor/coverage/lcov/HeadlessChrome\ 59.0.3071\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage
+
       - run:
-          name: Publishing report to Codacy
-          command: 'cat ./coverage/lcov.info | codacy-coverage '
-          when: always
-       
+          name: Install NVM
+          command: 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh|bash'
+
+      - run:
+          name: alter node version
+          command: 'source ~/.nvm/nvm.sh && nvm install 10 && nvm use 10 && nvm alias default 10 && node -v'
+
+      - run:
+          name: Install sonar scanner
+          command: 'source ~/.nvm/nvm.sh && npm install -g sonarqube-scanner'
+
+      - run:
+          name: Sonar scanner
+          command: source ~/.nvm/nvm.sh && sonar-scanner
+
       - store_artifacts:
           path: /tmp/coverage
           destination: coverage
-      
+
+
 workflows:
   version: 2.1
   build_and_test:

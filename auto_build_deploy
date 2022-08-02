@@ -1,3 +1,4 @@
+@Library('deploy-conf') _ 
 node() {
     try {
         String ANSI_GREEN = "\u001B[32m"
@@ -7,21 +8,29 @@ node() {
         String ANSI_YELLOW = "\u001B[33m"
 
         ansiColor('xterm') {
+            tag_name = env.JOB_NAME.split("/")[-1]
+            pre_checks()
             stage('Checkout') {
-                cleanWs()
-                def scmVars = checkout scm
-                checkout scm
-                commit_hash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
-                branch_name = params.github_release_tag.split('/')[-1]
-                artifact_version = branch_name + '_' + commit_hash
-                sh "git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b ${branch_name}"
+               cleanWs()
+               def scmVars = checkout scm
+               checkout scm: [$class: 'GitSCM', branches: [[name: "refs/tags/$tag_name"]], userRemoteConfigs: [[url: scmVars.GIT_URL]]]
+               commit_hash = sh(script: 'git rev-parse --short HEAD', returnStdout: true).trim()
+               artifact_version = tag_name
+               branch_name = tag_name.split('_')[0].split('\\.')[0] + "." + tag_name.split('_')[0].split('\\.')[1]
+               sh "git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins"
+                    sh """
+                        cd plugins
+                        checkout_tag=\$(git ls-remote --tags origin $branch_name* | grep -o "$branch_name.*" | sort -V | tail -n1)
+                        git checkout tags/\${checkout_tag} -b \${checkout_tag}
+                    """
+            } 
                 echo "artifact_version: " + artifact_version
 
-                stage('Build') {
+         //       stage Build
                     sh """
-                        export framework_version_number=${artifact_version}
+                        export framework_version_number=${branch_name}
                         export editorType="contentEditor"
-                        export editor_version_number=${artifact_version}
+                        export editor_version_number=${branch_name}
                         export build_number=${commit_hash}
                         export CHROME_BIN=google-chrome
                         rm -rf ansible/content-editor.zip
@@ -42,13 +51,13 @@ node() {
                         npm run build
                         #npm run test
                     """
-                }
+                
                 
                 //stage('Publish_test_results') {
                //cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage/PhantomJS*/cobertura-coverage.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false 
             //}
                 
-                stage('ArchiveArtifacts') {
+      //          stage ArchiveArtifacts
                     sh """
                         mkdir content-editor-artifacts
                         cp content-editor.zip content-editor-artifacts
@@ -58,12 +67,17 @@ node() {
                     sh """echo {\\"artifact_name\\" : \\"content-editor-artifacts.zip\\", \\"artifact_version\\" : \\"${artifact_version}\\", \\"node_name\\" : \\"${env.NODE_NAME}\\"} > metadata.json"""
                     archiveArtifacts artifacts: 'metadata.json', onlyIfSuccessful: true
                     currentBuild.description = "${artifact_version}"
-                }
-            }
+                
         }
+        currentBuild.result = "SUCCESS"    
+        slack_notify(currentBuild.result, tag_name)
+        email_notify()  
+        auto_build_deploy()
     }
     catch (err) {
         currentBuild.result = "FAILURE"
+        slack_notify(currentBuild.result, tag_name)
+        email_notify()
         throw err
     }
 
