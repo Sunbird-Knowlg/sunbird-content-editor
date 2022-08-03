@@ -32,7 +32,7 @@ node() {
                         npm run bower-install
                         #grunt compress
                         #zip -r ce-docs.zip docs
-                        gulp packageCorePlugins
+                        npm run package-core-plugins
                         #npm install 
                         npm run build-plugins
                         #cd ..

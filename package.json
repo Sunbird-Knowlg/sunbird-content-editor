@@ -126,6 +126,7 @@
   },
   "scripts": {
     "bower-install": "cd app && bower cache clean && bower prune -f && bower install --force -V && cd ..",
+    "package-core-plugins": "gulp packageCorePlugins",
     "build": "webpack",
     "build-plugins": "webpack --config webpack.plugin.config.js",
     "build-editor": "webpack --env.channel=NPM_PACKAGE",
