@@ -30,7 +30,7 @@ node() {
                         node -v
                         npm install
                         cd app
-                        npm install -g bower gulp
+                        sudo npm install -g bower gulp
                         bower cache clean
                         bower prune -f 
                         bower install --force -V
