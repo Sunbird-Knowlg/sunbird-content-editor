@@ -29,12 +29,7 @@ node() {
                         npm cache clean --force
                         node -v
                         npm install
-                        cd app
-                        sudo npm install -g bower gulp
-                        bower cache clean
-                        bower prune -f 
-                        bower install --force -V
-                        cd ..
+                        npm run bower-install
                         #grunt compress
                         #zip -r ce-docs.zip docs
                         gulp packageCorePlugins
