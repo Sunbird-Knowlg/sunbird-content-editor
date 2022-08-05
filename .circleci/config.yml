@@ -45,7 +45,7 @@ jobs:
           name: test-with-coverage
           command: 'npm run test-with-coverage'
 
-      - run: mkdir -p /tmp/coverage && cd /home/circleci/content-editor/coverage/lcov/ && ls -l
+      - run: mkdir -p /tmp/coverage && cd /home/circleci/content-editor/coverage/lcov/HeadlessChrome\ 71.0.3578\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage
 
       - run:
           name: Install NVM
