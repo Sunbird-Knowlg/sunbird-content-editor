@@ -48,20 +48,12 @@ jobs:
       - run: mkdir -p /tmp/coverage && cd /home/circleci/content-editor/coverage/lcov/HeadlessChrome\ 71.0.3578\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage
 
       - run:
-          name: Install NVM
-          command: 'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh|bash'
-
-      - run:
-          name: alter node version
-          command: 'source ~/.nvm/nvm.sh && nvm install 10 && nvm use 10 && nvm alias default 10 && node -v'
-
-      - run:
           name: Install sonar scanner
-          command: 'source ~/.nvm/nvm.sh && npm install -g sonarqube-scanner'
+          command: 'npm install -g sonarqube-scanner'
 
       - run:
           name: Sonar scanner
-          command: source ~/.nvm/nvm.sh && sonar-scanner
+          command: sonar-scanner
 
       - store_artifacts:
           path: /tmp/coverage
