@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/content-editor
     docker:
-      - image: circleci/node:14.18.2-browsers
+      - image: circleci/node:10.14.11-browsers
         environment:
            framework_version_number: $CIRCLE_BRANCH
            editorType: contentEditor
@@ -51,9 +51,9 @@ jobs:
           name: Install sonar scanner
           command: 'sudo npm install -g sonarqube-scanner'
 
-      - run:
-          name: Sonar scanner
-          command: sonar-scanner
+      # - run:
+      #     name: Sonar scanner
+      #     command: sonar-scanner
 
       - store_artifacts:
           path: /tmp/coverage
