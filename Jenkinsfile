@@ -16,7 +16,6 @@ node() {
                 artifact_version = branch_name + '_' + commit_hash
                 sh "git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b ${branch_name}"
                 echo "artifact_version: " + artifact_version
-
                 stage('Build') {
                     sh """
                         export framework_version_number=${artifact_version}
@@ -26,16 +25,14 @@ node() {
                         export CHROME_BIN=google-chrome
                         rm -rf ansible/content-editor.zip
                         rm -rf content-editor
+                        sudo apt-get install build-essential libpng-dev
+                        npm cache clean --force
                         node -v
                         npm install
-                        cd app
-                        bower cache clean
-                        bower prune -f 
-                        bower install --force -V
-                        cd ..
+                        npm run bower-install
                         #grunt compress
                         #zip -r ce-docs.zip docs
-                        gulp packageCorePlugins
+                        npm run package-core-plugins
                         #npm install 
                         npm run build-plugins
                         #cd ..
