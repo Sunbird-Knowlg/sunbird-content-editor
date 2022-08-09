@@ -18,7 +18,25 @@ org.ekstep.contenteditor.config = {
 	corePluginsPackaged: true,
 	dispatcher: 'local',
 	localDispatcherEndpoint: '/app/telemetry',
-	previewURL: '/content/preview/preview.html'
+	previewURL: '/content/preview/preview.html',
+	cloudStorage: {
+        "presigned_headers": {
+          'x-ms-blob-type': 'BlockBlob' // This header is specific to azure storage provider.
+          /* TODO: if more configurations comes for cloud service provider
+             than we have do in more generic way like below:
+             For example:
+             cloudStorage: {
+                provider: 'azure' // azure, aws, etc..
+                azure: {
+                  url: 'https://www.azureblogstorage.com'
+                  presigned_headers: {
+                    x-ms-blob-type: 'BlockBlob'
+                  }
+                }
+             }
+          */
+        }
+    }
 }
 
 org.ekstep.contenteditor.extendedConfig = {

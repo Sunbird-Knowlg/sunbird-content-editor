@@ -368,5 +368,14 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 	},
 	getComments: function (data, callback) {
 		this.postFromService(this.getBaseURL() + this.getAPISlug() + this.getConfig('getCommentURL', '/review/comment/v1/read/comment'), data, this.requestHeaders, callback)
+	},
+	appendCloudStorageHeaders: function (config) {
+		const headers =  _.get(ecEditor.getConfig('cloudStorage'), 'presigned_headers', {});
+		if (!_.isEmpty(headers)) {
+		  config.headers = {...config.headers, ...headers};
+		  return config;
+		} else {
+		  return config;
+		}
 	}
 }))()
