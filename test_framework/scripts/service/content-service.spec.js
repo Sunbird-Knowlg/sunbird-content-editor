@@ -259,12 +259,6 @@ describe('Content service test cases', function () {
 		})
 	})
 
-	it('Should append cloud storage headers if config exist', function () {
-		spyOn(org.ekstep.services.contentService, 'appendCloudStorageHeaders').and.callThrough();
-		const result = org.ekstep.services.contentService.appendCloudStorageHeaders({headers: {}});
-		expect(result).toEqual({headers: { 'x-ms-blob-type': 'BlockBlob' }});
-	})
-
 	describe('getContentVersionKey method', function () {
 		it('should return versionKey and set content meta data', function () {
 			var spyFn = jasmine.createSpy()
@@ -302,4 +296,10 @@ describe('Content service test cases', function () {
 			expect(org.ekstep.services.contentService._setContentMeta).not.toHaveBeenCalled()
 		})
 	})
+
+	it('Should append cloud storage headers if config exist', function () {
+		const result = org.ekstep.services.contentService.appendCloudStorageHeaders({headers: {}});
+		expect(result).toEqual({headers: { 'x-ms-blob-type': 'BlockBlob' }});
+	})
+
 })
