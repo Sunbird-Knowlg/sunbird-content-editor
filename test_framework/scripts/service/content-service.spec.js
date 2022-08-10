@@ -302,4 +302,22 @@ describe('Content service test cases', function () {
 		expect(result).toEqual({headers: { 'x-ms-blob-type': 'BlockBlob' }});
 	})
 
+	it('Should append cloud storage headers ', function () {
+		const config = { 
+			contentType: true,
+			headers: {
+				'uuid': '1234'
+			}
+		}
+		const expectedConfig = { 
+			contentType: true,
+			headers: {
+				'uuid': '1234',
+				'x-ms-blob-type': 'BlockBlob'
+			}
+		}
+		const result = org.ekstep.services.contentService.appendCloudStorageHeaders(config);
+		expect(result).toEqual(expectedConfig);
+	})
+
 })
