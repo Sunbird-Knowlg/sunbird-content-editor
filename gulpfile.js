@@ -15,8 +15,8 @@ var cleanCSS = require('clean-css');
 var replace = require('gulp-string-replace');
 const terser = require('gulp-terser');
 var git = require('gulp-git');
-var editorVersionNumber = process.env.editor_version_number || '1.0';
-var buildNumber = process.env.build_number || '1.0';
+var editorVersionNumber = process.env.editor_version_number;
+var buildNumber = process.env.build_number;
 var branchName = process.env.branch || 'master';
 
 if (!editorVersionNumber && !buildNumber) {
