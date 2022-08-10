@@ -39,5 +39,10 @@ org.ekstep.services.userService = new (org.ekstep.services.iService.extend({
      */
     updateCollaboratorsFromAdmin: function (contentID, request, callback) {
           this.patch(this.getBaseURL() + this.getAPISlug() + this.getConfig('collaborationUrl', '/system/v3/content/update/') + contentID, request, this.requestHeaders, callback)
-     }
+     },
+     appendCloudStorageHeaders: function (config) {
+		const headers =  _.get(ecEditor.getConfig('cloudStorage'), 'presigned_headers', {});
+		config.headers = Object.assign({}, config.headers, headers)
+		return config;
+	}
 }))()
