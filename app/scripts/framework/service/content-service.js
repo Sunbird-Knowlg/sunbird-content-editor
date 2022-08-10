@@ -372,7 +372,7 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 	appendCloudStorageHeaders: function (config) {
 		const headers =  _.get(ecEditor.getConfig('cloudStorage'), 'presigned_headers', {});
 		if (!_.isEmpty(headers)) {
-		  config.headers = {...config.headers, ...headers};
+		  config.headers = Object.assign({}, config.headers, headers)
 		  return config;
 		} else {
 		  return config;
