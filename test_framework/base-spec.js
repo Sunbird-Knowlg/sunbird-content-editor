@@ -17,6 +17,10 @@ org.ekstep.contenteditor.sidebarManager = {
 	loadCustomTemplate: function () {}
 }
 
+org.ekstep.contenteditor.contentService = {
+	getContent: function() {}
+}
+
 org.ekstep.services.telemetryService = {
 	apiCall: function () {},
 	error: function () {}
