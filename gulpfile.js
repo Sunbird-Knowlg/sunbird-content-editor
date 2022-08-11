@@ -13,7 +13,7 @@ var rename = require("gulp-rename");
 var merge = require('merge-stream');
 var cleanCSS = require('clean-css');
 var replace = require('gulp-string-replace');
-var uglify = require('gulp-uglify');
+const terser = require('gulp-terser');
 var git = require('gulp-git');
 var editorVersionNumber = process.env.editor_version_number;
 var buildNumber = process.env.build_number;
@@ -167,7 +167,7 @@ gulp.task('minifyallJS', function () {
             conservativeCollapse: true,
             minifyJS: true
         }))
-        .pipe(uglify())
+        .pipe(terser())
         .pipe(rename(cachebust))
         .pipe(gulp.dest('content-editor/scripts'));
 });
@@ -175,14 +175,14 @@ gulp.task('minifyallJS', function () {
 gulp.task('minifyBaseEditor', function () {
     return gulp.src(editorScripts)
         .pipe(concat('base-editor.min.js'))
-        .pipe(uglify())
+        .pipe(terser())
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
 gulp.task('minifyFramework', function () {
     return gulp.src(pluginFramework)
         .pipe(concat('plugin-framework.min.js'))
-        .pipe(uglify())
+        .pipe(terser())
         .pipe(gulp.dest('content-editor/scripts'));
 });
 
@@ -240,7 +240,7 @@ gulp.task('minifyJsBower', function () {
             conservativeCollapse: true,
             minifyJS: true
         }))
-        .pipe(uglify())
+        .pipe(terser())
         .pipe(rename(cachebust))
         .pipe(gulp.dest('content-editor/scripts/'));
 });

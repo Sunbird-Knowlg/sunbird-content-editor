@@ -26,4 +26,15 @@ describe('popup service', function () {
 		org.ekstep.services.popupService.loadNgModules(templatePath, controllerPath, allowTemplateCache)
 		expect(org.ekstep.services.popupService.loadModules).toHaveBeenCalledWith(templatePath, controllerPath, allowTemplateCache)
 	})
+
+	it('should return expected result', function () {
+		let expectedResult = org.ekstep.services.popupService.close('test');
+		expect(expectedResult).toEqual('test_4_test');
+	})
+
+	it('should return "test_4" result', function () {
+		let expectedResult = org.ekstep.services.popupService.close();
+		expect(expectedResult).toEqual('test_4');
+	})
+
 })
