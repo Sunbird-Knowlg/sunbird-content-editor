@@ -53,7 +53,7 @@ describe('User service', function () {
 			expect(org.ekstep.services.userService.postFromService.calls.count()).toBe(1)
 		})
 	})
-	xit('should return error on updateCollaborators method call', function () {
+	it('should return error on updateCollaborators method call', function () {
 		org.ekstep.services.userService.post = jasmine.createSpy().and.callFake(function (url, data, headers, cb) {
 			var error = 'no collaborators found for this content'
 			cb(error, undefined)
