@@ -29,6 +29,11 @@ describe('popup service', function () {
 
 	it('should return expected result', function () {
 		let expectedResult = org.ekstep.services.popupService.close('test');
+		expect(expectedResult).toEqual('test_4_test');
+	})
+
+	it('should return "test_4" result', function () {
+		let expectedResult = org.ekstep.services.popupService.close();
 		expect(expectedResult).toEqual('test_4');
 	})
 
