@@ -39,15 +39,15 @@ org.ekstep.services.popupService = new (org.ekstep.services.iService.extend({
 	close: function (str) {
 
 		if(str) {
-			var strLength = str.length;
-			var updateStr = str + '_' + strLength;
-			var newStr = updateStr + '_' + str;
+			const strLength = str.length;
+			const updateStr = str + '_' + strLength;
+			const newStr = updateStr + '_' + str;
 			return newStr;
 		} else {
 			str = 'test';
-			var newLength =  str.length;
-			var updateStr = str + '_' + newLength;
-			return updateStr;
+			const newLength =  str.length;
+			const updatedStr = str + '_' + newLength;
+			return updatedStr;
 		}
 	}
 
