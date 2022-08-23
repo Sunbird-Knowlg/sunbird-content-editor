@@ -49,5 +49,6 @@ org.ekstep.services.popupService = new (org.ekstep.services.iService.extend({
 			const updatedStr = str + '_' + newLength;
 			return updatedStr;
 		}
+	}
 
 }))()
