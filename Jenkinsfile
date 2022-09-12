@@ -27,6 +27,8 @@ node() {
                         rm -rf content-editor
                         sudo apt-get install build-essential libpng-dev
                         npm cache clean --force
+                        nvm install 10.24.1
+                        nvm use 10.24.1
                         node -v
                         npm install
                         npm run bower-install
