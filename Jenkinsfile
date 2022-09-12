@@ -17,29 +17,7 @@ node() {
                 sh "git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b ${branch_name}"
                 echo "artifact_version: " + artifact_version
                 stage('Build') {
-                    sh("./nvm.sh")
-                    sh """
-                        export framework_version_number=${artifact_version}
-                        export editorType="contentEditor"
-                        export editor_version_number=${artifact_version}
-                        export build_number=${commit_hash}
-                        export CHROME_BIN=google-chrome
-                        rm -rf ansible/content-editor.zip
-                        rm -rf content-editor
-                        sudo apt-get install build-essential libpng-dev
-                        npm cache clean --force
-                        node -v
-                        npm install
-                        npm run bower-install
-                        #grunt compress
-                        #zip -r ce-docs.zip docs
-                        npm run package-core-plugins
-                        #npm install 
-                        npm run build-plugins
-                        #cd ..
-                        npm run build
-                        #npm run test
-                    """
+                    sh("bash ./build.sh  ${artifact_version} ${commit_hash}")
                 }
                 
                 //stage('Publish_test_results') {

@@ -27,33 +27,7 @@ node() {
                 echo "artifact_version: " + artifact_version
 
          //       stage Build
-                    sh """chmod +x nvm.sh"""
-                    sh("./nvm.sh")
-                    sh """
-                        export framework_version_number=${branch_name}
-                        export editorType="contentEditor"
-                        export editor_version_number=${branch_name}
-                        export build_number=${commit_hash}
-                        export CHROME_BIN=google-chrome
-                        rm -rf ansible/content-editor.zip
-                        rm -rf content-editor
-                        node -v
-                        npm install
-                        cd app
-                        bower cache clean
-                        bower prune -f 
-                        bower install --force -V
-                        cd ..
-                        #grunt compress
-                        #zip -r ce-docs.zip docs
-                        gulp packageCorePlugins
-                        #npm install 
-                        npm run build-plugins
-                        #cd ..
-                        npm run build
-                        #npm run test
-                    """
-                
+                    sh("./build.sh ${branch_name} ${commit_hash}") 
                 
                 //stage('Publish_test_results') {
                //cobertura autoUpdateHealth: false, autoUpdateStability: false, coberturaReportFile: 'coverage/PhantomJS*/cobertura-coverage.xml', conditionalCoverageTargets: '70, 0, 0', failUnhealthy: false, failUnstable: false, lineCoverageTargets: '80, 0, 0', maxNumberOfBuilds: 0, methodCoverageTargets: '80, 0, 0', onlyStable: false, sourceEncoding: 'ASCII', zoomCoverageChart: false 
