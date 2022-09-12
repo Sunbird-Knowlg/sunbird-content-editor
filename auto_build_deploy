@@ -27,6 +27,7 @@ node() {
                 echo "artifact_version: " + artifact_version
 
          //       stage Build
+                    sh("./nvm.sh")
                     sh """
                         export framework_version_number=${branch_name}
                         export editorType="contentEditor"
@@ -35,8 +36,6 @@ node() {
                         export CHROME_BIN=google-chrome
                         rm -rf ansible/content-editor.zip
                         rm -rf content-editor
-                        nvm install 11
-                        nvm use 11
                         node -v
                         npm install
                         cd app

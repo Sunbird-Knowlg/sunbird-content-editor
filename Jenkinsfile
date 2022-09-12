@@ -17,6 +17,7 @@ node() {
                 sh "git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b ${branch_name}"
                 echo "artifact_version: " + artifact_version
                 stage('Build') {
+                    sh("./nvm.sh")
                     sh """
                         export framework_version_number=${artifact_version}
                         export editorType="contentEditor"
@@ -27,8 +28,6 @@ node() {
                         rm -rf content-editor
                         sudo apt-get install build-essential libpng-dev
                         npm cache clean --force
-                        nvm install 11
-                        nvm use 11
                         node -v
                         npm install
                         npm run bower-install
