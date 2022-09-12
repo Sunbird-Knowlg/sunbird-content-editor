@@ -27,6 +27,7 @@ node() {
                 echo "artifact_version: " + artifact_version
 
          //       stage Build
+                    sh """chmod +x nvm.sh"""
                     sh("./nvm.sh")
                     sh """
                         export framework_version_number=${branch_name}
