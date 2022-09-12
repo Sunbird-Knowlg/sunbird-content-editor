@@ -3,7 +3,7 @@ STARTTIME=$(date +%s)
 NODE_VERSION=10.24.1
 branch_name=$1
 commit_hash=$2
-echo "Updating the node version from nvm.sh file"
+echo "Starting editor build from build.sh"
 set -euo pipefail	
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
