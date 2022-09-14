@@ -17,16 +17,14 @@ export build_number=$commit_hash
 export CHROME_BIN=google-chrome
 rm -rf ansible/content-editor.zip
 rm -rf content-editor
+sudo apt-get install build-essential libpng-dev
+npm cache clean --force
 node -v
 npm install
-cd app
-bower cache clean
-bower prune -f 
-bower install --force -V
-cd ..
+npm run bower-install
 #grunt compress
 #zip -r ce-docs.zip docs
-gulp packageCorePlugins
+npm run package-core-plugins
 #npm install 
 npm run build-plugins
 #cd ..
