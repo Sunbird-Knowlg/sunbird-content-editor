@@ -27,6 +27,7 @@ node() {
                 echo "artifact_version: " + artifact_version
 
          //       stage Build
+                    sh('chmod 777 build.sh')
                     sh("./build.sh ${branch_name} ${commit_hash}") 
                 
                 //stage('Publish_test_results') {
