@@ -17,6 +17,7 @@ node() {
                 sh "git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b ${branch_name}"
                 echo "artifact_version: " + artifact_version
                 stage('Build') {
+                    sh('chmod 777 build.sh')
                     sh("bash ./build.sh  ${artifact_version} ${commit_hash}")
                 }
                 
