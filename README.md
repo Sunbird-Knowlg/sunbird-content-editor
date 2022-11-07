@@ -1,8 +1,10 @@
+# Content Editor
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9858d61b7adf494a9e30afedb7c06739)](https://app.codacy.com/app/sunbird-bot/sunbird-content-editor?utm_source=github.com&utm_medium=referral&utm_content=project-sunbird/sunbird-content-editor&utm_campaign=Badge_Grade_Settings)
 [![Build Status](https://travis-ci.org/project-sunbird/sunbird-content-editor.svg?branch=master)](https://travis-ci.org/project-sunbird/sunbird-content-editor)
 [![npm version](https://badge.fury.io/js/%40project-sunbird%2Fcontent-editor.svg)](https://badge.fury.io/js/%40project-sunbird%2Fcontent-editor)
 
-# Content Editor
+## Introduction
 	
 Sunbird's in-built content editor tool allows you to create Ekstep Content Markup Language(ECML) type of content.
 
