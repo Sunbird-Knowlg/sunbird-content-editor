@@ -6,11 +6,15 @@
 	
 Sunbird's in-built content editor tool allows you to create Ekstep Content Markup Language(ECML) type of content.
 
-## How to Configure the Sunbird Content Editor
+
+## Step 1: Installation
  
  Download the content editor using the following command: 
+```red
+Run npm i @project-sunbird/content-editor
+```
 
->Run npm i @project-sunbird/content-editor
+## Step 2: Configure the content editor
 
 **Required configuration**
 	
@@ -121,7 +125,8 @@ window.config = {
     });
 ```  
 
-## How to Setup Sunbird Content Editor in your Local Machine
+# How to Setup Sunbird Content Editor in your Local Machine
+
 1. Clone the sunbird-content-editor repo from [here](https://github.com/project-sunbird/sunbird-content-editor)
 2. Clone the sunbird-content-plugins repo from [here](https://github.com/project-sunbird/sunbird-content-plugins) 
 3. Go to the root directory sunbird-content-editor.
@@ -129,8 +134,9 @@ window.config = {
 3. `cd app` and run `bower install` to install bower components
 5. Create a symlink to 'sunbird-content-plugins' (`ln -s ../sunbird-content-plugins plugins`)(Linux, mac)
 for windows: use `mklink`
-6. Run `node app`
-7. Open Chrome and visit this link: http://localhost:3000/app?contentId={{content_id}}  
+6. Configure the content editor [here](https://github.com/project-sunbird/sunbird-content-editor#how-to-configure-the-sunbird-content-editor)
+7. Run `node app`
+8. Open Chrome and visit this link: http://localhost:3000/app?contentId={{content_id}}  
 *content_id*: Live/Draft content id created on Sunbird portal
 
 sample link: http://localhost:3000/app?contentId=do_1124674880571
