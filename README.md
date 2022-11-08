@@ -15,7 +15,6 @@ Sunbird's in-built content editor tool allows you to create Ekstep Content Marku
 **Required configuration**
 	
 ```js
-	
 window.context = {
 {
   "user": {
