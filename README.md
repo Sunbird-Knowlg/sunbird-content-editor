@@ -1,21 +1,26 @@
+# Content Editor
+
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9858d61b7adf494a9e30afedb7c06739)](https://app.codacy.com/app/sunbird-bot/sunbird-content-editor?utm_source=github.com&utm_medium=referral&utm_content=project-sunbird/sunbird-content-editor&utm_campaign=Badge_Grade_Settings)
 [![Build Status](https://travis-ci.org/project-sunbird/sunbird-content-editor.svg?branch=master)](https://travis-ci.org/project-sunbird/sunbird-content-editor)
 [![npm version](https://badge.fury.io/js/%40project-sunbird%2Fcontent-editor.svg)](https://badge.fury.io/js/%40project-sunbird%2Fcontent-editor)
 
-# Content Editor
+## Introduction
 	
 Sunbird's in-built content editor tool allows you to create Ekstep Content Markup Language(ECML) type of content.
 
-## How to Configure the Sunbird Content Editor
+
+## Step 1: Installation
  
  Download the content editor using the following command: 
+```red
+Run npm i @project-sunbird/content-editor
+```
 
->Run npm i @project-sunbird/content-editor
+## Step 2: Configure the content editor
 
 **Required configuration**
 	
 ```js
-	
 window.context = {
 {
   "user": {
@@ -97,6 +102,7 @@ window.config = {
 | `cloudStorage` |  It is `object` and which defines cloud storage configuration which contains presigned_headers for diff service provider for example: Azure, AWS | object | ``` cloudStorage: { presigned_headers: { 'x-ms-blob-type': 'BlockBlob' // This header is specific to azure storage provider. } } ``` | The default configuration can be overwrite by passing empty headers. ***For example:*** If you don't want to pass any headers for AWS than pass as empty headers as below: ``` cloudStorage: { presigned_headers: { } } ```
 
 
+## Step 3: Integration
 
 ```js
   openContentEditor() {
@@ -121,7 +127,8 @@ window.config = {
     });
 ```  
 
-## How to Setup Sunbird Content Editor in your Local Machine
+# How to Setup Sunbird Content Editor in your Local Machine
+
 1. Clone the sunbird-content-editor repo from [here](https://github.com/project-sunbird/sunbird-content-editor)
 2. Clone the sunbird-content-plugins repo from [here](https://github.com/project-sunbird/sunbird-content-plugins) 
 3. Go to the root directory sunbird-content-editor.
@@ -129,8 +136,9 @@ window.config = {
 3. `cd app` and run `bower install` to install bower components
 5. Create a symlink to 'sunbird-content-plugins' (`ln -s ../sunbird-content-plugins plugins`)(Linux, mac)
 for windows: use `mklink`
-6. Run `node app`
-7. Open Chrome and visit this link: http://localhost:3000/app?contentId={{content_id}}  
+6. Configure the content editor [here](https://github.com/project-sunbird/sunbird-content-editor#how-to-configure-the-sunbird-content-editor)
+7. Run `node app`
+8. Open Chrome and visit this link: http://localhost:3000/app?contentId={{content_id}}  
 *content_id*: Live/Draft content id created on Sunbird portal
 
 sample link: http://localhost:3000/app?contentId=do_1124674880571
