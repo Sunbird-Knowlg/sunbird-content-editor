@@ -93,7 +93,9 @@ window.config = {
 | `showHelp ` | Used to show the help icon in the editor | boolean|false |
 | `previewConfig ` | The configurations related to the content player preview. For details, refer [here](https://github.com/project-sunbird/sunbird-content-player) | string | false |
 | `enableTelemetryValidation ` | Used to validate the telemetry events that are generated in the editors | boolean| false |
-| `aws_s3_urls ` | If any content asset refers to any aws s3 url, configure the URLs here. The editor replaces those paths with `baseURL + assetReverseProxyUrl` |array| NA |"https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/" |  
+| `aws_s3_urls ` | If any content asset refers to any aws s3 url, configure the URLs here. The editor replaces those paths with `baseURL + assetReverseProxyUrl` |array| NA |"https://s3.ap-south-1.amazonaws.com/ekstep-public-dev/" | 
+| `cloudStorage` |  It is `object` and which defines cloud storage configuration which contains presigned_headers for diff service provider for example: Azure, AWS | object | ``` cloudStorage: { presigned_headers: { 'x-ms-blob-type': 'BlockBlob' // This header is specific to azure storage provider. } } ``` | The default configuration can be overwrite by passing empty headers. ***For example:*** If you don't want to pass any headers for AWS than pass as empty headers as below: ``` cloudStorage: { presigned_headers: { } } ```
+
 
 
 ```js

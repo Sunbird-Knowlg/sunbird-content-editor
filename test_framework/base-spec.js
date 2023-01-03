@@ -1,6 +1,11 @@
 org.ekstep.contenteditor = {}
 org.ekstep.contenteditor.config = org.ekstep.contenteditor.config || {}
 org.ekstep.contenteditor.config.basURL = 'https://dev.ekstep.in'
+org.ekstep.contenteditor.config.cloudStorage = {
+	"presigned_headers": {
+	  'x-ms-blob-type': 'BlockBlob' 
+	}
+}
 
 org.ekstep.contenteditor.toolbarManager = {
 	registerMenu: function () {},
@@ -13,7 +18,8 @@ org.ekstep.contenteditor.sidebarManager = {
 }
 
 org.ekstep.services.telemetryService = {
-	apiCall: function () {}
+	apiCall: function () {},
+	error: function () {}
 }
 
 var config = {
