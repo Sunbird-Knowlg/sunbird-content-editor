@@ -134,7 +134,11 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 	getContent: function (contentId, callback) {
 		var instance = this
 		if (contentId) {
-			var metaDataFields = '?mode=edit&fields=' + instance.contentFields
+			var fields = instance.contentFields
+			if(this.getConfig('contentFields')) {
+				fields = instance.contentFields.concat(",", this.getConfig('contentFields'))
+			}
+			var metaDataFields = '?mode=edit&fields=' + fields
 			instance.get(this.serviceURL() + this.getConfig('contentReadUrl', '/v3/read/') + contentId + metaDataFields, this.requestHeaders, function (err, res) {
 				/* istanbul ignore else */
 				if (res && res.data && res.data.responseCode === 'OK') {
