@@ -135,8 +135,8 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 		var instance = this
 		if (contentId) {
 			var fields = instance.contentFields
-			if(this.getConfig('contentFields')) {
-				fields = instance.contentFields.concat(",", this.getConfig('contentFields'))
+			if(ecEditor.getConfig("contentFields")) {
+				fields = instance.contentFields.concat(",", ecEditor.getConfig("contentFields"))
 			}
 			var metaDataFields = '?mode=edit&fields=' + fields
 			instance.get(this.serviceURL() + this.getConfig('contentReadUrl', '/v3/read/') + contentId + metaDataFields, this.requestHeaders, function (err, res) {
