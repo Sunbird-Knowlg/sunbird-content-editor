@@ -14,6 +14,7 @@
     "express": "^4.14.0",
     "express-http-proxy": "*",
     "global": "^4.4.0",
+    "gulp-gzip": "^1.4.2",
     "lodash": "^4.16.6",
     "promise": "^8.0.2",
     "request": "*",
