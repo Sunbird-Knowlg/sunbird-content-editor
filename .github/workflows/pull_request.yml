@@ -51,10 +51,10 @@ jobs:
       - name: Install npm dependencies
         working-directory: content-editor
         run: npm install
-        
-      - name: Clean bower cache
-        working-directory: content-editor/app
-        run: npx bower cache clean --allow-root
+
+      # - name: Clean bower cache
+      #   working-directory: content-editor/app
+      #   run: npx bower cache clean --allow-root
 
       - name: Prune bower dependencies
         working-directory: content-editor/app
