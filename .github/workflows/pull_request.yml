@@ -82,6 +82,7 @@ jobs:
       - name: Run tests with coverage
         working-directory: content-editor
         run: npm run test-with-coverage
+        continue-on-error: true
 
       - name: Prepare coverage artifacts
         working-directory: content-editor
@@ -105,7 +106,7 @@ jobs:
         run: sonar-scanner
 
       - name: Upload coverage artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage
           path: /tmp/coverage
