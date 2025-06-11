@@ -15,7 +15,6 @@ jobs:
       editor_version_number: ${{ github.ref_name }}
       build_number: ${{ github.run_number }}
      
-    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -27,6 +26,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '10.14.1'
+
+      - name: Setup Python 2.7
+        uses: actions/setup-python@v4
+        with:
+          python-version: '2.7'
+          architecture: 'x64'
+
+      - name: Configure node-gyp to use Python 2.7
+        run: |
+          echo "Setting Python for node-gyp..."
+          npm config set python $(which python)
+          echo "Python path: $(which python)"
+          echo "Python version: $(python --version)"
 
       - name: Cache dependencies
         uses: actions/cache@v3
@@ -50,11 +62,10 @@ jobs:
 
       - name: Install npm dependencies
         working-directory: content-editor
-        run: npm install
-
-      # - name: Clean bower cache
-      #   working-directory: content-editor/app
-      #   run: npx bower cache clean --allow-root
+        env:
+          PYTHON: $(which python)
+          NODE_GYP_FORCE_PYTHON: $(which python)
+        run: npm install --no-optional
 
       - name: Prune bower dependencies
         working-directory: content-editor/app
