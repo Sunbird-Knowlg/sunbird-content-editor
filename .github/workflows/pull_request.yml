@@ -48,28 +48,25 @@ jobs:
             git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
           fi
 
-      - name: Install global packages
-        run: sudo npm install -g bower@1.8.0 grunt-cli@1.2.0 gulp@3.9.1
-
       - name: Install npm dependencies
         working-directory: content-editor
         run: npm install
-
+        
       - name: Clean bower cache
         working-directory: content-editor/app
-        run: bower cache clean --allow-root
+        run: npx bower cache clean --allow-root
 
       - name: Prune bower dependencies
         working-directory: content-editor/app
-        run: bower prune -f --allow-root
+        run: npx bower prune -f --allow-root
 
       - name: Install bower dependencies
         working-directory: content-editor/app
-        run: bower install --force -V --allow-root
+        run: npx bower install --force -V --allow-root
 
       - name: Package core plugins
         working-directory: content-editor
-        run: gulp packageCorePlugins
+        run: npx gulp packageCorePlugins    
 
       - name: Build plugins
         working-directory: content-editor
@@ -111,4 +108,3 @@ jobs:
           name: coverage
           path: /tmp/coverage
           if-no-files-found: warn
-          
