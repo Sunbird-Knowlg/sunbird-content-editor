@@ -1,0 +1,113 @@
+name: Build and Test Content Editor
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    env:
+      framework_version_number: ${{ github.ref_name }}
+      editorType: contentEditor
+      editor_version_number: ${{ github.ref_name }}
+      build_number: ${{ github.run_number }}
+     
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          path: content-editor
+          fetch-depth: 0  
+
+      - name: Setup Node.js 10.14.1
+        uses: actions/setup-node@v4
+        with:
+          node-version: '10.14.1'
+
+      - name: Cache dependencies
+        uses: actions/cache@v3
+        with:
+          path: content-editor/node_modules
+          key: ce-dependency-cache-${{ hashFiles('content-editor/package.json') }}
+          restore-keys: |
+            ce-dependency-cache-
+
+      - name: Clone plugins
+        working-directory: content-editor
+        run: |
+          if [ -z "${{ github.event.number }}" ]; then
+            target_branch=${{ github.ref_name }}
+            git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
+          else
+            prdata=$(curl -X GET -u ${{ secrets.GITHUB_TOKEN }}:x-oauth-basic https://api.github.com/repos/project-sunbird/sunbird-content-editor/pulls/${{ github.event.number }})
+            target_branch=$(echo "${prdata}" | jq -r '.base.ref')
+            git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
+          fi
+
+      - name: Install global packages
+        run: sudo npm install -g bower@1.8.0 grunt-cli@1.2.0 gulp@3.9.1
+
+      - name: Install npm dependencies
+        working-directory: content-editor
+        run: npm install
+
+      - name: Clean bower cache
+        working-directory: content-editor/app
+        run: bower cache clean --allow-root
+
+      - name: Prune bower dependencies
+        working-directory: content-editor/app
+        run: bower prune -f --allow-root
+
+      - name: Install bower dependencies
+        working-directory: content-editor/app
+        run: bower install --force -V --allow-root
+
+      - name: Package core plugins
+        working-directory: content-editor
+        run: gulp packageCorePlugins
+
+      - name: Build plugins
+        working-directory: content-editor
+        run: npm run build-plugins
+
+      - name: Build project
+        working-directory: content-editor
+        run: npm run build
+
+      - name: Run tests with coverage
+        working-directory: content-editor
+        run: npm run test-with-coverage
+
+      - name: Prepare coverage artifacts
+        working-directory: content-editor
+        run: |
+          mkdir -p /tmp/coverage
+          cp coverage/lcov/HeadlessChrome\ 71.0.3578\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage/ || true
+
+      - name: Setup Node.js 14 for SonarQube
+        uses: actions/setup-node@v4
+        with:
+          node-version: '14'
+
+      - name: Install SonarQube scanner
+        run: npm install -g sonarqube-scanner
+
+      - name: Run SonarQube scanner
+        working-directory: content-editor
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: sonar-scanner
+
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: /tmp/coverage
+          if-no-files-found: warn
