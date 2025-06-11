@@ -27,10 +27,27 @@ jobs:
         with:
           node-version: '10.14.1'
 
-      - name: Setup Python 2.7
-        uses: actions/setup-python@v4
-        with:
-          python-version: '2.7'
+      - name: Install pyenv
+        run: |
+          curl https://pyenv.run | bash
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          eval "$(pyenv init --path)"
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
+      
+      - name: Install Python 2.7.18
+        run: |
+          export PATH="$HOME/.pyenv/bin:$PATH"
+          eval "$(pyenv init --path)"
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
+          pyenv install 2.7.18
+          pyenv global 2.7.18
+          python --version
+          npm install -g node-gyp
+          npm config set python "$(pyenv which python)"
+          # Ensure Python is accessible to node-gyp
+          export PYTHON="$(pyenv which python)"
 
       - name: Configure node-gyp to use Python 2.7
         run: |
@@ -118,4 +135,3 @@ jobs:
           name: coverage
           path: /tmp/coverage
           if-no-files-found: warn
-          
