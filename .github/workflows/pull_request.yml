@@ -2,8 +2,8 @@ name: Build and Test Content Editor
 
 on:
   push:
-    tags:
-      - '*' 
+    branches:
+      - '**'
 
 jobs:
   build:
