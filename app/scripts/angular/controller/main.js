@@ -251,7 +251,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 			$scope.contentService = org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE)
 			$scope.popupService = org.ekstep.contenteditor.api.getService(ServiceConstants.POPUP_SERVICE)
 			$scope.telemetryService = org.ekstep.contenteditor.api.getService(ServiceConstants.TELEMETRY_SERVICE)
-			$scope.menus = org.ekstep.contenteditor.toolbarManager.menuItems
+			$scope.menus = org.ekstep.contenteditor.toolbarManager.menuItems.filter(function(item) {
+    return item.id === "question-set" || item.id === "stage";
+});
 			$scope.contextMenus = org.ekstep.contenteditor.toolbarManager.contextMenuItems
 			$scope.stages = org.ekstep.contenteditor.api.getAllStages()
 			$scope.currentStage = org.ekstep.contenteditor.api.getCurrentStage()
