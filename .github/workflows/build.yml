@@ -1,12 +1,9 @@
 name: Build Content Editor
 
 on:
-  workflow_dispatch:
-    inputs:
-      github_release_tag:
-        description: 'GitHub release tag (e.g. refs/tags/release-1.0.0)'
-        required: true
-        type: string
+  push:
+    tags:
+      - 'release-*'
 
 jobs:
   build:
