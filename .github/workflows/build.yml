@@ -2,8 +2,9 @@ name: Build Content Editor
 
 on:
   push:
-    tags:
-      - 'release-*'
+    branches:
+      - '**'
+
 
 jobs:
   build:
