@@ -87,17 +87,7 @@ function packagePlugins () {
 				return dash
 			}))
 		} else {
-			try {
-				const result = uglifyjs.minify(pluginContent);
-				if (result.error) {
-					console.error('Error minifying plugin content:', result.error);
-					process.exit(1);
-				}
-				pluginContent = result;
-			} catch (error) {
-				console.error('Error during minification:', error);
-				process.exit(1);
-			}
+			pluginContent = uglifyjs.minify(pluginContent)
 		}
 
 		if (manifest.editor.dependencies) {
