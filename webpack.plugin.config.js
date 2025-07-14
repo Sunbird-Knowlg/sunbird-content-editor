@@ -115,14 +115,29 @@ function packagePlugins () {
 			})
 		}
 		// Ensure we have valid code to work with
-		const pluginCode = typeof pluginContent === 'string' ? pluginContent : 
-			(pluginContent.code || '');
-		
-		dependenciesArr.push('org.ekstep.pluginframework.pluginManager.registerPlugin(' + 
-		JSON.stringify(manifest) + ',' + 
-		pluginCode.toString().replace(/;\s*$/, '') + ')')
-		fs.appendFileSync('plugins/' + plugin + '/editor/plugin.dist.js', [...dependenciesArr].join('\n'))
-		pluginPackageArr.push('./plugins/' + plugin + '/editor/plugin.dist.js')
+		try {
+			const pluginCode = (typeof pluginContent === 'string' ? pluginContent : pluginContent.code || '').toString().trim();
+			
+			// Clean up the plugin code by removing trailing semicolons and whitespace
+			const cleanPluginCode = pluginCode.replace(/;\s*$/, '');
+			
+			// Create the plugin registration code
+			const registrationCode = `org.ekstep.pluginframework.pluginManager.registerPlugin(
+				${JSON.stringify(manifest, null, 2)},
+				${cleanPluginCode}
+			);`;
+
+			// Combine all dependencies and the registration code
+			const finalCode = [...dependenciesArr, registrationCode].join('\n\n');
+			
+			// Write the final file
+			const outputPath = `plugins/${plugin}/editor/plugin.dist.js`;
+			fs.writeFileSync(outputPath, finalCode, 'utf8');
+			pluginPackageArr.push(`./${outputPath}`);
+		} catch (error) {
+			console.error(`Error processing plugin ${plugin}:`, error);
+			throw error; // Re-throw to fail the build
+		}
 	})
 
 	return pluginPackageArr
