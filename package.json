@@ -20,16 +20,11 @@
     "xmlbuilder": "*"
   },
   "devDependencies": {
-    "@babel/core": "^7.15.0",
-    "@babel/plugin-proposal-optional-chaining": "^7.14.5",
-    "@babel/preset-env": "^7.15.0",
-    "babel-loader": "^8.2.2",
     "ajv": "*",
     "bluebird": "^3.4.6",
     "bower": "^1.8.14",
     "bower-resolve-webpack-plugin": "1.0.5",
     "brotli-gzip-webpack-plugin": "0.5.0",
-    "core-js": "^3.16.0",
     "chai": "^4.1.2",
     "clean-css": "^4.1.4",
     "clean-webpack-plugin": "^0.1.19",
