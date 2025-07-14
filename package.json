@@ -20,10 +20,11 @@
     "xmlbuilder": "*"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.0",
-    "@babel/preset-env": "^7.28.0",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-optional-chaining": "^7.14.5",
+    "@babel/preset-env": "^7.5.5",
     "ajv": "*",
-    "babel-loader": "^10.0.0",
+    "babel-loader": "^8.0.6",
     "bluebird": "^3.4.6",
     "bower": "^1.8.14",
     "bower-resolve-webpack-plugin": "1.0.5",
@@ -115,7 +116,7 @@
     "string-replace-loader": "2.1",
     "svg-inline-loader": "0.8.2",
     "svgo": "1.0.5",
-    "terser-webpack-plugin": "^5.3.14",
+    "terser-webpack-plugin": "^4.2.3",
     "uglify-es": "*",
     "uglify-js": "^3.4.2",
     "uglifyjs-webpack-plugin": "1.2.5",

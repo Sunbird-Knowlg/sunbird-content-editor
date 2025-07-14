@@ -278,10 +278,25 @@ module.exports = {
 		},
 		minimizer: [
 			new TerserPlugin({
+			  parallel: true,
 			  terserOptions: {
-				ecma: 2020, // ensures support for optional chaining
-				compress: true,
-				mangle: true
+				ecmaversion: 2020, // Use ecmaVersion for v4
+				parse: {
+					ecma: 2020
+				},
+				compress: {
+					ecma: 5,
+					warnings: false,
+					comparisons: false
+				},
+				mangle: {
+					safari10: true
+				},
+				output: {
+					ecma: 5,
+					comments: false,
+					ascii_only: true
+				}
 			  }
 			})
 		  ]
