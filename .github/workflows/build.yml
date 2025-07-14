@@ -43,7 +43,7 @@ jobs:
 
       - name: Clone plugins repo
         run: |
-          git clone https://github.com/yashashkumar/sunbird-content-plugins.git -b editor-rtl-support
+          git clone https://github.com/yashashkumar/sunbird-content-plugins.git plugins -b editor-rtl-support
 
       - name: Make build.sh executable
         run: chmod +x ./build.sh
