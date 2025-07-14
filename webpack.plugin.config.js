@@ -1,5 +1,4 @@
 const path = require('path')
-const TerserPlugin = require('terser-webpack-plugin');
 // eslint-disable-next-line
 const PLUGIN_PATH = process.env.CE_COREPLUGINS || './plugins'
 const webpack = require('webpack')
@@ -80,31 +79,15 @@ function packagePlugins () {
 			var count = 0
 			var len = (pluginContent.replace(/\b(loadNgModules)\b.*\)/g) || []).length
 
-			pluginContent = pluginContent.replace(/\b(loadNgModules)\b.*\)/g, function ($0) {
+			pluginContent = uglifyjs.minify(pluginContent.replace(/\b(loadNgModules)\b.*\)/g, function ($0) {
 				if (count === len) count = 0
 				var dash
 				dash = 'loadNgModules(' + templatePathArr[count] + ' , ' + controllerPathArr[count] + ', true)'
 				count++
 				return dash
-			})
-
-			// Minify the plugin content with error handling
-			const minified = uglifyjs.minify(pluginContent)
-			if (minified.error) {
-				console.error(`Error minifying plugin ${plugin}:`, minified.error)
-				pluginContent = { code: pluginContent } // Use original content if minification fails
-			} else {
-				pluginContent = minified
-			}
+			}))
 		} else {
-			// Handle minification with error checking
-			const minified = uglifyjs.minify(pluginContent);
-			if (minified.error) {
-				console.error(`Error minifying plugin ${plugin}:`, minified.error);
-				pluginContent = { code: pluginContent }; // Use original content if minification fails
-			} else {
-				pluginContent = minified;
-			}
+			pluginContent = uglifyjs.minify(pluginContent)
 		}
 
 		if (manifest.editor.dependencies) {
@@ -114,30 +97,9 @@ function packagePlugins () {
 				}
 			})
 		}
-		// Ensure we have valid code to work with
-		try {
-			const pluginCode = (typeof pluginContent === 'string' ? pluginContent : pluginContent.code || '').toString().trim();
-			
-			// Clean up the plugin code by removing trailing semicolons and whitespace
-			const cleanPluginCode = pluginCode.replace(/;\s*$/, '');
-			
-			// Create the plugin registration code
-			const registrationCode = `org.ekstep.pluginframework.pluginManager.registerPlugin(
-				${JSON.stringify(manifest, null, 2)},
-				${cleanPluginCode}
-			);`;
-
-			// Combine all dependencies and the registration code
-			const finalCode = [...dependenciesArr, registrationCode].join('\n\n');
-			
-			// Write the final file
-			const outputPath = `plugins/${plugin}/editor/plugin.dist.js`;
-			fs.writeFileSync(outputPath, finalCode, 'utf8');
-			pluginPackageArr.push(`./${outputPath}`);
-		} catch (error) {
-			console.error(`Error processing plugin ${plugin}:`, error);
-			throw error; // Re-throw to fail the build
-		}
+		dependenciesArr.push('org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',' + pluginContent.code.replace(/;\s*$/, '') + ')')
+		fs.appendFileSync('plugins/' + plugin + '/editor/plugin.dist.js', [...dependenciesArr].join('\n'))
+		pluginPackageArr.push('./plugins/' + plugin + '/editor/plugin.dist.js')
 	})
 
 	return pluginPackageArr
@@ -186,18 +148,7 @@ module.exports = {
 				loader: 'expose-loader',
 				options: 'E2EConverter'
 			}]
-		},
-		{
-			test: /\.m?js$/,
-			exclude: /node_modules/,
-			use: {
-			  loader: 'babel-loader',
-			  options: {
-				presets: ['@babel/preset-env']
-			  }
-			}
-		  },
-		{
+		}, {
 			test: require.resolve('./plugins/org.ekstep.assessmentbrowser-1.1/editor/libs/xml2json.js'),
 			use: [{
 				loader: 'expose-loader',
@@ -290,30 +241,6 @@ module.exports = {
 			maxAsyncRequests: 5,
 			maxInitialRequests: 3,
 			automaticNameDelimiter: '~'
-		},
-		minimizer: [
-			new TerserPlugin({
-			  parallel: true,
-			  terserOptions: {
-				ecmaversion: 2020, // Use ecmaVersion for v4
-				parse: {
-					ecma: 2020
-				},
-				compress: {
-					ecma: 5,
-					warnings: false,
-					comparisons: false
-				},
-				mangle: {
-					safari10: true
-				},
-				output: {
-					ecma: 5,
-					comments: false,
-					ascii_only: true
-				}
-			  }
-			})
-		  ]
+		}
 	}
 }

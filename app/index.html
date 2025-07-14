@@ -80,10 +80,10 @@
                                 <span class="stage-number">{{$index+1}}</span>
                                 <div ng-class="stage.isSelected ? 'ui fluid image selected-slide-image' : 'ui fluid image'">
                                     <div class="ui blue ribbon label thumbnail-ribbon" ng-if="stage.isSelected">
-                                        <div class="popup-item" data-content="Delete" data-variation="tiny inverted" data-position="bottom center">
+                                        <div class="popup-item" data-content="{{labels.frmelmnts.lbl.delete || 'Delete'}}" data-variation="tiny inverted" data-position="bottom center">
                                             <i class="fa fa-trash" ng-click="fireEvent(stage.ondelete)" style="margin-right:15px; cursor: pointer;"></i>
                                         </div>
-                                        <div class="popup-item" data-content="Copy" data-variation="tiny inverted" data-position="bottom center">
+                                        <div class="popup-item" data-content="{{labels.frmelmnts.lbl.copy || 'Copy'}}" data-variation="tiny inverted" data-position="bottom center">
                                             <i class="icon-duplicate link" ng-click="fireEvent(stage.duplicate)" style="cursor: pointer;"></i>
                                         </div>
                                     </div>
