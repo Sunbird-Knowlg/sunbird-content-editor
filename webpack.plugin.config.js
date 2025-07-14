@@ -96,7 +96,14 @@ function packagePlugins () {
 				pluginContent = minified
 			}
 		} else {
-			pluginContent = uglifyjs.minify(pluginContent)
+			// Handle minification with error checking
+			const minified = uglifyjs.minify(pluginContent);
+			if (minified.error) {
+				console.error(`Error minifying plugin ${plugin}:`, minified.error);
+				pluginContent = { code: pluginContent }; // Use original content if minification fails
+			} else {
+				pluginContent = minified;
+			}
 		}
 
 		if (manifest.editor.dependencies) {
@@ -106,7 +113,13 @@ function packagePlugins () {
 				}
 			})
 		}
-		dependenciesArr.push('org.ekstep.pluginframework.pluginManager.registerPlugin(' + JSON.stringify(manifest) + ',' + pluginContent.code.replace(/;\s*$/, '') + ')')
+		// Ensure we have valid code to work with
+		const pluginCode = typeof pluginContent === 'string' ? pluginContent : 
+			(pluginContent.code || '');
+		
+		dependenciesArr.push('org.ekstep.pluginframework.pluginManager.registerPlugin(' + 
+		JSON.stringify(manifest) + ',' + 
+		pluginCode.toString().replace(/;\s*$/, '') + ')')
 		fs.appendFileSync('plugins/' + plugin + '/editor/plugin.dist.js', [...dependenciesArr].join('\n'))
 		pluginPackageArr.push('./plugins/' + plugin + '/editor/plugin.dist.js')
 	})
