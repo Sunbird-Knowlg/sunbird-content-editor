@@ -79,13 +79,22 @@ function packagePlugins () {
 			var count = 0
 			var len = (pluginContent.replace(/\b(loadNgModules)\b.*\)/g) || []).length
 
-			pluginContent = uglifyjs.minify(pluginContent.replace(/\b(loadNgModules)\b.*\)/g, function ($0) {
+			pluginContent = pluginContent.replace(/\b(loadNgModules)\b.*\)/g, function ($0) {
 				if (count === len) count = 0
 				var dash
 				dash = 'loadNgModules(' + templatePathArr[count] + ' , ' + controllerPathArr[count] + ', true)'
 				count++
 				return dash
-			}))
+			})
+
+			// Minify the plugin content with error handling
+			const minified = uglifyjs.minify(pluginContent)
+			if (minified.error) {
+				console.error(`Error minifying plugin ${plugin}:`, minified.error)
+				pluginContent = { code: pluginContent } // Use original content if minification fails
+			} else {
+				pluginContent = minified
+			}
 		} else {
 			pluginContent = uglifyjs.minify(pluginContent)
 		}
