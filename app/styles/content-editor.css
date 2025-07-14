@@ -574,38 +574,4 @@ i.icon.custom-icon.dropdown-icon{
     text-transform: capitalize;
 }
 
-body[dir="rtl"] .ui.grid > .row > [class*="right aligned"].column.column,
-body[dir="rtl"] .ui.grid > [class*="right aligned"].column.column,
-body[dir="rtl"] .ui.grid > [class*="right aligned"].row > .column,
-body[dir="rtl"] .ui[class*="right aligned"].grid > .column,
-body[dir="rtl"] .ui[class*="right aligned"].grid > .row > .column {
-  text-align: left !important;
-}
 
-body[dir="rtl"] .ui.modal {
-  text-align: initial !important;
-}
-
-body[dir="rtl"] .ui.grid > .row > [class*="left aligned"].column.column,
-body[dir="rtl"] .ui.grid > [class*="left aligned"].column.column,
-body[dir="rtl"] .ui.grid > [class*="left aligned"].row > .column,
-body[dir="rtl"] .ui[class*="left aligned"].grid > .column,
-body[dir="rtl"] .ui[class*="left aligned"].grid > .row > .column {
-  text-align: right !important;
-}
-
-body[dir="rtl"] .ui.input input {
-  text-align: right !important;
-}
-
-body[dir="rtl"] .ui.buttons .button:last-child {
-  border-top-right-radius: 0 !important;
-  border-bottom-right-radius: 0 !important;
-}
-
-body[dir="rtl"] .ui.buttons .button:first-child {
-  border-left: none;
-  margin-left: 0;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  }
