@@ -1,4 +1,5 @@
 const path = require('path')
+const TerserPlugin = require('terser-webpack-plugin');
 // eslint-disable-next-line
 const PLUGIN_PATH = process.env.CE_COREPLUGINS || './plugins'
 const webpack = require('webpack')
@@ -170,7 +171,18 @@ module.exports = {
 				loader: 'expose-loader',
 				options: 'E2EConverter'
 			}]
-		}, {
+		},
+		{
+			test: /\.m?js$/,
+			exclude: /node_modules/,
+			use: {
+			  loader: 'babel-loader',
+			  options: {
+				presets: ['@babel/preset-env']
+			  }
+			}
+		  },
+		{
 			test: require.resolve('./plugins/org.ekstep.assessmentbrowser-1.1/editor/libs/xml2json.js'),
 			use: [{
 				loader: 'expose-loader',
@@ -263,6 +275,15 @@ module.exports = {
 			maxAsyncRequests: 5,
 			maxInitialRequests: 3,
 			automaticNameDelimiter: '~'
-		}
+		},
+		minimizer: [
+			new TerserPlugin({
+			  terserOptions: {
+				ecma: 2020, // ensures support for optional chaining
+				compress: true,
+				mangle: true
+			  }
+			})
+		  ]
 	}
 }
