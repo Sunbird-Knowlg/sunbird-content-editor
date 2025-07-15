@@ -21,7 +21,7 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
       
-      - name: Install libpng-dev and build dependencies
+      - name: Install the libpng-dev and build dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libpng-dev build-essential
