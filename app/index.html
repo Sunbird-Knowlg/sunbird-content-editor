@@ -65,11 +65,11 @@
                         <span ng-repeat="menu in contextMenus" ng-if="menu.state === 'SHOW'" ng-include="'templates/toolbar.html'" class="at-context-menu tool"></span>
                     </div>
                 </div>
-                <div class="ui three wide column" style="padding-top:0!important;">
+                <!-- <div class="ui three wide column" style="padding-top:0!important;">
                     <div class="ui icon menu sidebar-menu" style="height: 38px; display: flex; align-items: center;">
                         <span ng-repeat="menu in sidebarMenus" ng-if="menu.state == 'SHOW'" ng-include="'templates/toolbar.html'" class="at-config-menu tool"></span>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div ng-include="'templates/deleteStageDialog.html'"></div>
             <div id="mainContainerGrid" class="ui grid bottom attached celled">

@@ -33,7 +33,7 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 		$window.context = $window.context || window.parent.context
 
 		$scope.developerMode = $location.search().developerMode
-		var labels = ecEditor.getConfig('resourceBundles') || {};
+		var labels = window.parent.config.resourceBundles || {};
 		$scope.appLoadMessage = [
 			{ 'id': 1, 'message': labels.frmelmnts.lbl.gettingThingsReadyForYou || 'Getting things ready for you', 'status': false }
 		]
@@ -251,7 +251,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 			$scope.contentService = org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE)
 			$scope.popupService = org.ekstep.contenteditor.api.getService(ServiceConstants.POPUP_SERVICE)
 			$scope.telemetryService = org.ekstep.contenteditor.api.getService(ServiceConstants.TELEMETRY_SERVICE)
-			var labels = ecEditor.getConfig('resourceBundles') || {};
+			var labels = window.parent.config.resourceBundles || {};
+			$scope.labels = labels;
 			var tooltipMap = {
 				// Existing menu items
 				"stage": "frmelmnts.lbl.addSlide",
@@ -271,19 +272,6 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 				"sendbackward": "frmelmnts.lbl.sendBackward",
 				"sendback": "frmelmnts.lbl.sendToBack"
 			};
-			function applyTooltips(menuItems) {
-				return _.map(menuItems, function(menu) {
-					var menuCopy = _.cloneDeep(menu);
-					if (tooltipMap[menuCopy.id] && labels.frmelmnts.lbl[tooltipMap[menuCopy.id].split('.').pop()]) {
-						menuCopy.toolTip = labels.frmelmnts.lbl[tooltipMap[menuCopy.id].split('.').pop()];
-						menuCopy.title = menuCopy.toolTip; // Update title to match tooltip
-					}
-					if (menuCopy.submenu && Array.isArray(menuCopy.submenu)) {
-						menuCopy.submenu = applyTooltips(menuCopy.submenu);
-					}
-					return menuCopy;
-				});
-			}
 			$scope.menus =org.ekstep.contenteditor.toolbarManager.menuItems
 			.filter(function(item) {
 				return item.id === "question-set" || item.id === "stage";
@@ -297,12 +285,13 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 					menuCopy.submenu.forEach(function(subItem) {
 						if (tooltipMap[subItem.id] && labels.frmelmnts.lbl[tooltipMap[subItem.id].split('.').pop()]) {
 							subItem.toolTip = labels.frmelmnts.lbl[tooltipMap[subItem.id].split('.').pop()];
+							subItem.title = labels.frmelmnts.lbl[tooltipMap[subItem.id].split('.').pop()];
 						}
 					});
 				}
 				return menuCopy;
 			});
-			$scope.contextMenus = applyTooltips(org.ekstep.contenteditor.toolbarManager.contextMenuItems);
+			$scope.contextMenus = [] || org.ekstep.contenteditor.toolbarManager.contextMenuItems;
 			$scope.stages = org.ekstep.contenteditor.api.getAllStages()
 			$scope.currentStage = org.ekstep.contenteditor.api.getCurrentStage()
 			$scope.sidebarMenus = org.ekstep.contenteditor.sidebarManager.getSidebarMenu()

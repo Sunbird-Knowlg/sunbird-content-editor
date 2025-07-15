@@ -204,7 +204,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		org.ekstep.contenteditor.api.getService('popup').open({
 			template: 'deleteStageDialog.html',
 			controller: ['$scope', function ($scope) {
-				$scope.labels = ecEditor.getConfig('resourceBundles') || {};
+				$scope.labels = window.parent.config.resourceBundles || {};
 				$scope.delete = function () {
 					$scope.closeThisDialog()
 					instance.deleteStage(event, data)
@@ -216,7 +216,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	showLoadScreenMessage: function () {
 		var obj = _.find(org.ekstep.contenteditor.api.getAngularScope().appLoadMessage, { 'id': 3 })
 		if (_.isObject(obj)) {
-			var labels = ecEditor.getConfig('resourceBundles') || {};
+			var labels = window.parent.config.resourceBundles || {};
 			obj.message = labels.frmelmnts.lbl.loadingYourLesson || 'Loading your lesson'
 			obj.status = true
 		}
