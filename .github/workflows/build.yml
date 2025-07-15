@@ -1,0 +1,77 @@
+name: Build Content Editor
+
+on:
+  push:
+    branches:
+      - '**'
+
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      ANSI_GREEN: "\u001B[32m"
+      ANSI_NORMAL: "\u001B[0m"
+      ANSI_BOLD: "\u001B[1m"
+      ANSI_RED: "\u001B[31m"
+      ANSI_YELLOW: "\u001B[33m"
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      
+      - name: Install libpng-dev and build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libpng-dev build-essential
+      - name: Set up Git config
+        run: |
+          git config --global user.email "yashashk@sanketika.in"
+          git config --global user.name "yashashkumar"
+      - name: Extract commit hash and branch name
+        id: vars
+        run: |
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          BRANCH_NAME=$(echo "${{ inputs.github_release_tag }}" | awk -F '/' '{print $NF}')
+          ARTIFACT_VERSION="${BRANCH_NAME}_${COMMIT_HASH}"
+          echo "commit_hash=${COMMIT_HASH}" >> $GITHUB_OUTPUT
+          echo "branch_name=${BRANCH_NAME}" >> $GITHUB_OUTPUT
+          echo "artifact_version=${ARTIFACT_VERSION}" >> $GITHUB_OUTPUT
+      - name: Clone plugins repo
+        run: |
+          git clone https://github.com/yashashkumar/sunbird-content-plugins.git plugins -b editor-rtl-support
+      - name: Make build.sh executable
+        run: chmod +x ./build.sh
+
+      - name: Run build
+        run: |
+          ./build.sh "${{ steps.vars.outputs.artifact_version }}" "${{ steps.vars.outputs.commit_hash }}"
+      # Uncomment the below if you add Cobertura setup later
+      # - name: Publish test results (Cobertura)
+      #   uses: 5monkeys/cobertura-action@v1
+      #   with:
+      #     path: coverage/PhantomJS*/cobertura-coverage.xml
+      #     fail_below_threshold: false
+
+      - name: Archive artifacts
+        run: |
+          mkdir content-editor-artifacts
+          cp content-editor.zip content-editor-artifacts/
+          zip -j "content-editor-artifacts_${{ steps.vars.outputs.artifact_version }}.zip" content-editor-artifacts/*
+        shell: bash
+
+      - name: Upload artifact zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: content-editor-artifacts
+          path: content-editor-artifacts_*.zip
+
+      - name: Create metadata file
+        run: |
+          echo "{\"artifact_name\":\"content-editor-artifacts.zip\", \"artifact_version\":\"${{ steps.vars.outputs.artifact_version }}\", \"node_name\":\"github-hosted\"}" > metadata.json
+      - name: Upload metadata
+        uses: actions/upload-artifact@v4
+        with:
+          name: metadata
+          path: metadata.json
