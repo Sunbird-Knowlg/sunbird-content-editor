@@ -43,21 +43,16 @@ jobs:
           npm install
 
       - name: Install bower dependencies
+        working-directory: app
         run: |
-          cd app
           bower cache clean --allow-root
           bower prune -f --allow-root
           bower install --force -V --allow-root
-          cd ..
 
       - name: Build main project
         run: |
           npm install gulp-gzip --save-dev
           npm run build-npm-pkg
-          ls -l
-          cd content-editor
-          ls -l
-          cat index.html
 
       # --- Upload to Google Cloud Storage ---
       - name: Setup Google Cloud SDK
@@ -69,7 +64,7 @@ jobs:
       - name: Authenticate and Upload to Google Cloud Storage
         if: env.CLOUD_PROVIDER == 'gcp'
         run: |
-          echo "${{ secrets.GCP_SA_KEY }}" | base64 -d > /tmp/service-account-key.json
+          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | base64 -d > /tmp/service-account-key.json
           gcloud auth activate-service-account --key-file=/tmp/service-account-key.json
-          gsutil -m rsync -d -r content-editor/* gs://${{ secrets.GCP_BUCKET }}/content-editor-test/
+          gsutil -m rsync -d -r content-editor gs://${{ secrets.GCP_BUCKET }}/content-editor-test/
           rm -f /tmp/service-account-key.json
