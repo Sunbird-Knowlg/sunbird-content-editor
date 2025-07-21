@@ -16,7 +16,7 @@
  */
 
 html {
-  font-family: sans-serif; /* 1 */
+  font-family: 'Times New Roman', Times, Arial, sans-serif; /* 1 */
   -ms-text-size-adjust: 100%; /* 2 */
   -webkit-text-size-adjust: 100%; /* 2 */
 }
@@ -235,7 +235,7 @@ code,
 kbd,
 pre,
 samp {
-  font-family: monospace, monospace;
+  font-family: 'Times New Roman', Times, Arial, sans-serif, monospace, monospace;
   font-size: 1em;
 }
 
