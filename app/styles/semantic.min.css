@@ -382,6 +382,13 @@ body[dir="rtl"] .ui.buttons .button:last-child {
   border-bottom-right-radius: 0 !important;
 }
 
+
+body[dir="rtl"] .ui[class*="right floated"].button, .ui[class*="right floated"].buttons {
+    float: left;
+    margin-right: 0;
+    margin-left: .25em;
+    }
+
 body[dir="rtl"] .ui.buttons .button:first-child {
   border-left: none;
   margin-left: 0;
