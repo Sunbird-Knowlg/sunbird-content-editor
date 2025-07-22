@@ -78,22 +78,16 @@ jobs:
           rm -f /tmp/service-account-key.json
 
       # Microsoft Azure Upload
-      - name: Setup Azure CLI
+      - name: Upload to Azure Blob Storage
         if: env.CLOUD_PROVIDER == 'azure'
         uses: azure/CLI@v1
         with:
           azcliversion: latest
-
-      - name: Upload to Azure Blob Storage
-        if: env.CLOUD_PROVIDER == 'azure'
-        env:
-          AZURE_STORAGE_ACCOUNT: ${{ secrets.AZURE_STORAGE_ACCOUNT }}
-          AZURE_STORAGE_KEY: ${{ secrets.AZURE_STORAGE_KEY }}
-        run: |
-          az storage blob upload-batch \
-          --account-name ${{ env.AZURE_STORAGE_ACCOUNT }} \
-          --account-key ${{ env.AZURE_STORAGE_KEY }} \
-          --destination ${{ env.AZURE_CONTAINER }}/content-editor-test \
-          --source content-editor \
-          --overwrite \
-          --content-cache-control "public, max-age=2592000"
+          inlineScript: |
+            az storage blob upload-batch \
+              --account-name "${{ secrets.AZURE_STORAGE_ACCOUNT }}" \
+              --account-key "${{ secrets.AZURE_STORAGE_KEY }}" \
+              --destination "${{ vars.AZURE_CONTAINER }}/content-editor-test" \
+              --source content-editor \
+              --overwrite \
+              --content-cache-control "public, max-age=2592000"
