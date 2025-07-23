@@ -166,3 +166,66 @@ We have an open and active [issue tracker](https://project-sunbird.atlassian.net
 
 >For sunbird-content-editor demo, refer [here](https://staging.open-sunbird.org/workspace/content/create)   
 
+# Build and Upload Content Editor Workflow
+
+**Workflow Name:** `Build and Upload Content Editor`
+
+This GitHub Actions workflow builds the Content Editor and uploads the generated build artifacts to a cloud storage provider — **GCP**, **Azure**, or **AWS**.  
+It is triggered **whenever a new Git tag is pushed** to the repository.
+
+---
+
+## Prerequisites
+
+Before triggering this workflow, ensure the following:
+
+- A valid Git tag is pushed to start the workflow.
+- The pushed tag **must also exist** in the [`sunbird-content-plugins`](https://github.com/project-sunbird/sunbird-content-plugins) repository.
+- Required **GitHub Actions Variables** and **Secrets** are configured based on the selected cloud provider.
+
+You can set **Variables and Secrets** in GitHub under:  
+`Settings → Secrets and Variables → Actions`
+
+---
+
+## Cloud Provider Configuration
+
+The workflow uses the `CLOUD_PROVIDER` variable to determine where to upload the build artifacts. Based on the provider selected, configure the following:
+
+### GCP (Google Cloud Platform)
+
+**Repository Variable:**
+- `CLOUD_PROVIDER` = `gcp`
+- `GCP_BUCKET` — Name of the GCP bucket to upload to.
+
+**Repository Secret:**
+- `GCP_SERVICE_ACCOUNT_KEY` — Base64-encoded GCP service account key.
+
+---
+
+### Azure
+
+**Repository Variable:**
+- `CLOUD_PROVIDER` = `azure`
+- `AZURE_CONTAINER` — Name of the Azure Blob Storage container.
+
+**Repository Secrets:**
+- `AZURE_STORAGE_ACCOUNT` — Azure Storage account name.
+- `AZURE_STORAGE_KEY` — Azure Storage account key.
+
+---
+
+### AWS (Amazon Web Services)
+
+> **Note:** AWS upload is defined in the workflow but marked as **not tested**.
+
+**Repository Variable:**
+- `CLOUD_PROVIDER` = `aws`
+- `S3_BUCKET` — Name of the AWS S3 bucket.
+- `AWS_REGION` — AWS region where the bucket is located.
+
+**Repository Secrets:**
+- `AWS_ACCESS_KEY_ID` — AWS access key ID.
+- `AWS_SECRET_ACCESS_KEY` — AWS secret access key.
+
+---
