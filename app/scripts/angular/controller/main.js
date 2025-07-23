@@ -244,8 +244,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 		org.ekstep.contenteditor.init(context, config, $scope, $document, function () {
 
 			var obj = _.find($scope.appLoadMessage, { 'id': 1 })
+			var labels = window.parent.config.resourceBundles || {};
 			if (_.isObject(obj)) {
-				obj.message = 'Getting things ready for you'
+				obj.message = labels.frmelmnts.lbl.gettingThingsReadyForYou || 'Getting things ready for you'
 				obj.status = true
 			}
 			$scope.contentService = org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE)
@@ -274,7 +275,8 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 			};
 			$scope.menus =org.ekstep.contenteditor.toolbarManager.menuItems
 			.filter(function(item) {
-				return item.id === "question-set" || item.id === "stage";
+				// return item.id === "question-set" || item.id === "stage";
+				return item.id === "stage";
 			})
 			.map(function(menu) {
 				var menuCopy = _.cloneDeep(menu);

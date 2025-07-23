@@ -41,50 +41,12 @@ jobs:
       - name: Clone plugins repo
         run: |
           git clone https://github.com/yashashkumar/sunbird-content-plugins.git plugins -b editor-rtl-support
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '10.24.1'
-          cache: 'npm'
+      - name: Make build.sh executable
+        run: chmod +x ./build.sh
 
-      - name: Install system dependencies
+      - name: Run build
         run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential libpng-dev google-chrome-stable
-
-      - name: Set environment variables
-        run: |
-          echo "framework_version_number=${{ steps.vars.outputs.artifact_version }}" >> $GITHUB_ENV
-          echo "editorType=contentEditor" >> $GITHUB_ENV
-          echo "editor_version_number=${{ steps.vars.outputs.artifact_version }}" >> $GITHUB_ENV
-          echo "build_number=${{ steps.vars.outputs.commit_hash }}" >> $GITHUB_ENV
-          echo "CHROME_BIN=google-chrome" >> $GITHUB_ENV
-
-      - name: Clean previous builds
-        run: |
-          rm -rf ansible/content-editor.zip
-          rm -rf content-editor
-
-      - name: Install Node.js dependencies
-        run: |
-          npm cache clean --force
-          npm install
-
-      - name: Install Bower dependencies
-        run: |
-          cd app
-          npm install -g bower
-          bower install --allow-root
-          cd ..
-
-      - name: Package core plugins
-        run: npm run package-core-plugins
-
-      - name: Build plugins
-        run: npm run build-plugins
-
-      - name: Build application
-        run: npm run build
+          ./build.sh "${{ steps.vars.outputs.artifact_version }}" "${{ steps.vars.outputs.commit_hash }}"
       # Uncomment the below if you add Cobertura setup later
       # - name: Publish test results (Cobertura)
       #   uses: 5monkeys/cobertura-action@v1

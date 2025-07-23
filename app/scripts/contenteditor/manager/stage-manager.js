@@ -371,7 +371,8 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	fromECML: function (contentBody, stageIcons) {
 		var instance = this
 		var startTime = (new Date()).getTime()
-		org.ekstep.contenteditor.api.getAngularScope().appLoadMessage.push({ 'id': 3, 'message': 'Loading your lesson', 'status': false })
+		var labels = window.parent.config.resourceBundles || {};
+		org.ekstep.contenteditor.api.getAngularScope().appLoadMessage.push({ 'id': 3, 'message':  labels.frmelmnts.lbl.loadingYourLesson || 'Loading your lesson', 'status': false })
 		org.ekstep.contenteditor.api.ngSafeApply(org.ekstep.contenteditor.api.getAngularScope())
 		org.ekstep.contenteditor.stageManager.contentLoading = true
 		org.ekstep.pluginframework.eventManager.enableEvents = false

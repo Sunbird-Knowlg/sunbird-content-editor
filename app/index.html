@@ -229,6 +229,16 @@
     <script src="scripts/angular/directive/droppable-directive.js"></script>
     <script src="scripts/angular/directive/template-compiler-directive.js"></script>
     <!-- endinject -->
+    <script>
+        setTimeout(() => {
+        let config = this.window.ecEditor.getAllConfig();
+        if (config?.dir === 'rtl') {
+            document.body.setAttribute('dir', 'rtl');
+        } else {
+            document.body.setAttribute('dir', 'ltr');
+        }
+        }, 2000);
+     </script>
 </body>
 
 </html>
