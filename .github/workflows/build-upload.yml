@@ -2,8 +2,11 @@ name: Build and Upload Content Editor
 
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - '**'  # Trigger on any branch
+  pull_request:
+    branches:
+      - '**'  # Also trigger on pull requests
 
 jobs:
   build-and-upload:
@@ -43,7 +46,7 @@ jobs:
         run: npm install -g bower@1.8.14 gulp@3.9.1
 
       - name: Clone sunbird-content-plugins
-        run: git clone https://github.com/sanketika-labs/sunbird-content-plugins.git plugins -b ${{ github.ref_name }}
+        run: git clone https://github.com/sanketika-labs/sunbird-content-plugins.git plugins -b release-5.2.1
 
       - name: Clean npm cache and install dependencies
         run: |
@@ -62,32 +65,55 @@ jobs:
           npm install gulp-gzip --save-dev
           npm run build-npm-pkg
 
+      - name: List built folder contents
+        run: |
+          echo "=== Contents of content-editor folder ==="
+          if [ -d "content-editor" ]; then
+            find content-editor -type f | head -50
+            echo "=== Total files in content-editor: $(find content-editor -type f | wc -l) ==="
+            echo "=== Directory structure ==="
+            tree content-editor -L 3 || ls -la content-editor/
+          else
+            echo "content-editor folder not found"
+            echo "Available directories:"
+            ls -la
+          fi
+
+      - name: Create build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: content-editor-build-${{ github.sha }}
+          path: content-editor/
+          retention-days: 30
+
       - name: Setup Google Cloud SDK
         if: env.CLOUD_PROVIDER == 'gcp'
         uses: google-github-actions/setup-gcloud@v1
         with:
           install_components: 'gsutil'
-          
-      - name: Authenticate and Upload to Google Cloud Storage
-        if: env.CLOUD_PROVIDER == 'gcp'
-        run: |
-          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | base64 -d > /tmp/service-account-key.json
-          gcloud auth activate-service-account --key-file=/tmp/service-account-key.json
-          gsutil -m cp -r content-editor/* gs://${{ env.GCP_BUCKET }}/content-editor/
-          rm -f /tmp/service-account-key.json
 
-      - name: Upload to Azure Blob Storage
-        if: env.CLOUD_PROVIDER == 'azure'
-        uses: azure/CLI@v1
-        with:
-          azcliversion: latest
-          inlineScript: |
-            az storage blob upload-batch \
-              --account-name "${{ secrets.AZURE_STORAGE_ACCOUNT }}" \
-              --account-key "${{ secrets.AZURE_STORAGE_KEY }}" \
-              --destination "${{ vars.AZURE_CONTAINER }}/content-editor" \
-              --source content-editor \
-              --overwrite
+      
+          
+      # - name: Authenticate and Upload to Google Cloud Storage
+      #   if: env.CLOUD_PROVIDER == 'gcp'
+      #   run: |
+      #     echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | base64 -d > /tmp/service-account-key.json
+      #     gcloud auth activate-service-account --key-file=/tmp/service-account-key.json
+      #     gsutil -m cp -r content-editor/* gs://${{ env.GCP_BUCKET }}/content-editor/
+      #     rm -f /tmp/service-account-key.json
+
+      # - name: Upload to Azure Blob Storage
+      #   if: env.CLOUD_PROVIDER == 'azure'
+      #   uses: azure/CLI@v1
+      #   with:
+      #     azcliversion: latest
+      #     inlineScript: |
+      #       az storage blob upload-batch \
+      #         --account-name "${{ secrets.AZURE_STORAGE_ACCOUNT }}" \
+      #         --account-key "${{ secrets.AZURE_STORAGE_KEY }}" \
+      #         --destination "${{ vars.AZURE_CONTAINER }}/content-editor" \
+      #         --source content-editor \
+      #         --overwrite
 
 # Note: Publish to AWS S3 is not tested
 
