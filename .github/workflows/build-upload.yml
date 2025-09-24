@@ -75,6 +75,14 @@ jobs:
           gcloud auth activate-service-account --key-file=/tmp/service-account-key.json
           gsutil -m cp -r content-editor/* gs://${{ env.GCP_BUCKET }}/content-editor/
           rm -f /tmp/service-account-key.json
+      
+      - name: Validate secrets/vars presence
+        run: |
+          test -n "${{ secrets.AZURE_STORAGE_ACCOUNT }}" && echo "AZURE_STORAGE_ACCOUNT is set" || echo "AZURE_STORAGE_ACCOUNT is missing"
+          test -n "${{ secrets.AZURE_STORAGE_KEY }}" && echo "AZURE_STORAGE_KEY=${{ secrets.AZURE_STORAGE_KEY }}" || echo "AZURE_STORAGE_KEY is missing"
+          test -n "${{ vars.CLOUD_PROVIDER }}" && echo "CLOUD_PROVIDER=${{ vars.CLOUD_PROVIDER }}" || echo "CLOUD_PROVIDER is missing"
+          test -n "${{ vars.AZURE_CONTAINER }}" && echo "AZURE_CONTAINER=${{ vars.AZURE_CONTAINER }}" || echo "AZURE_CONTAINER is missing"
+          test -n "${{ env.CLOUD_PROVIDER }}" && echo "CLOUD_PROVIDER is set to ${env.CLOUD_PROVIDER}" || echo "CLOUD_PROVIDER is not set"
 
       - name: Upload to Azure Blob Storage
         if: env.CLOUD_PROVIDER == 'azure'
