@@ -94,21 +94,6 @@ jobs:
           mkdir -p /tmp/coverage
           cp coverage/lcov/HeadlessChrome\ 71.0.3578\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage/ || true
 
-      - name: Setup Node.js 14 for SonarQube
-        uses: actions/setup-node@v4
-        with:
-          node-version: '14'
-
-      - name: Install SonarQube scanner
-        run: npm install -g sonarqube-scanner
-
-      - name: Run SonarQube scanner
-        working-directory: content-editor
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: sonar-scanner
-
       - name: Upload coverage artifacts
         uses: actions/upload-artifact@v4
         with:
