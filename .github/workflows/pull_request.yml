@@ -49,9 +49,9 @@ jobs:
         run: |
           if [ -z "${{ github.event.number }}" ]; then
             target_branch=${{ github.ref_name }}
-            git clone https://github.com/SNT01/sunbird-content-plugins.git plugins -b $target_branch
+            git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
           else
-            prdata=$(curl -X GET -u ${{ secrets.GITHUB_TOKEN }}:x-oauth-basic https://api.github.com/repos/SNT01/sunbird-content-editor/pulls/${{ github.event.number }})
+            prdata=$(curl -X GET -u ${{ secrets.GITHUB_TOKEN }}:x-oauth-basic https://api.github.com/repos/project-sunbird/sunbird-content-editor/pulls/${{ github.event.number }})
             target_branch=$(echo "${prdata}" | jq -r '.base.ref')
             git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b $target_branch
           fi
