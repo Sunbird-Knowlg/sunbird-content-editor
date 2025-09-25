@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install system dependencies
         run: |
@@ -29,21 +29,21 @@ jobs:
           sudo apt-get install -y build-essential libpng-dev google-chrome-stable
 
       - name: Cache node modules
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: node_modules
           key: ${{ runner.os }}-node-${{ hashFiles('package.json') }}
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Install global npm tools
-        run: npm install -g bower@1.8.14 gulp@3.9.1
+        run: npm install -g bower@1.8.14 gulp@4.0.1
 
       - name: Clone sunbird-content-plugins
-        run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b ${{ github.ref_name }}
+        run: git clone https://github.com/SNT01/sunbird-content-plugins.git plugins -b ${{ github.ref_name }}
 
       - name: Clean npm cache and install dependencies
         run: |
@@ -78,7 +78,7 @@ jobs:
       
       - name: Upload to Azure Blob Storage
         if: env.CLOUD_PROVIDER == 'azure'
-        uses: azure/CLI@v1
+        uses: azure/CLI@v2
         with:
           azcliversion: latest
           inlineScript: |
