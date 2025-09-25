@@ -71,6 +71,7 @@ jobs:
       - name: Authenticate and Upload to Google Cloud Storage
         if: env.CLOUD_PROVIDER == 'gcp'
         run: |
+          umask 077
           echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | base64 -d > /tmp/service-account-key.json
           gcloud auth activate-service-account --key-file=/tmp/service-account-key.json
           gsutil -m cp -r content-editor/* gs://${{ env.GCP_BUCKET }}/content-editor/
