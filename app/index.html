@@ -133,6 +133,16 @@
     <!-- message for unsupported screen end -->
     <!-- inject:js -->
     <!-- endinject -->
+     <script>
+        setTimeout(() => {
+        let config = this.window.ecEditor.getAllConfig();
+        if (config?.dir === 'rtl') {
+            document.body.setAttribute('dir', 'rtl');
+        } else {
+            document.body.setAttribute('dir', 'ltr');
+        }
+        }, 2000);
+     </script>
 </body>
 
 </html>
