@@ -353,7 +353,91 @@
  * Released under the MIT license
  * http://opensource.org/licenses/MIT
  *
- */.ui.tab{display:none}.ui.tab.active,.ui.tab.open{display:block}.ui.tab.loading{position:relative;overflow:hidden;display:block;min-height:250px}.ui.tab.loading *{position:relative!important;left:-10000px!important}.ui.tab.loading.segment:before,.ui.tab.loading:before{position:absolute;content:'';top:100px;left:50%;margin:-1.25em 0 0 -1.25em;width:2.5em;height:2.5em;border-radius:500rem;border:.2em solid rgba(0,0,0,.1)}.ui.tab.loading.segment:after,.ui.tab.loading:after{position:absolute;content:'';top:100px;left:50%;margin:-1.25em 0 0 -1.25em;width:2.5em;height:2.5em;-webkit-animation:button-spin .6s linear;animation:button-spin .6s linear;-webkit-animation-iteration-count:infinite;animation-iteration-count:infinite;border-radius:500rem;border-color:#767676 transparent transparent;border-style:solid;border-width:.2em;box-shadow:0 0 0 1px transparent}/*!
+ */.ui.tab{display:none}.ui.tab.active,.ui.tab.open{display:block}.ui.tab.loading{position:relative;overflow:hidden;display:block;min-height:250px}.ui.tab.loading *{position:relative!important;left:-10000px!important}.ui.tab.loading.segment:before,.ui.tab.loading:before{position:absolute;content:'';top:100px;left:50%;margin:-1.25em 0 0 -1.25em;width:2.5em;height:2.5em;border-radius:500rem;border:.2em solid rgba(0,0,0,.1)}.ui.tab.loading.segment:after,.ui.tab.loading:after{position:absolute;content:'';top:100px;left:50%;margin:-1.25em 0 0 -1.25em;width:2.5em;height:2.5em;-webkit-animation:button-spin .6s linear;animation:button-spin .6s linear;-webkit-animation-iteration-count:infinite;animation-iteration-count:infinite;border-radius:500rem;border-color:#767676 transparent transparent;border-style:solid;border-width:.2em;box-shadow:0 0 0 1px transparent} body[dir="rtl"] .ui.grid > .row > [class*="right aligned"].column.column,
+body[dir="rtl"] .ui.grid > [class*="right aligned"].column.column,
+body[dir="rtl"] .ui.grid > [class*="right aligned"].row > .column,
+body[dir="rtl"] .ui[class*="right aligned"].grid > .column,
+body[dir="rtl"] .ui[class*="right aligned"].grid > .row > .column {
+  text-align: left !important;
+}
+
+body[dir="rtl"] .ui.modal {
+  text-align: initial !important;
+}
+
+body[dir="rtl"] .ui.grid > .row > [class*="left aligned"].column.column,
+body[dir="rtl"] .ui.grid > [class*="left aligned"].column.column,
+body[dir="rtl"] .ui.grid > [class*="left aligned"].row > .column,
+body[dir="rtl"] .ui[class*="left aligned"].grid > .column,
+body[dir="rtl"] .ui[class*="left aligned"].grid > .row > .column {
+  text-align: right !important;
+}
+
+body[dir="rtl"] .ui.input input {
+  text-align: right !important;
+}
+
+body[dir="rtl"] .ui.buttons .button:last-child {
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+}
+
+
+body[dir="rtl"] .ui[class*="right floated"].button, .ui[class*="right floated"].buttons {
+    float: left;
+    margin-right: 0;
+    margin-left: .25em;
+    }
+
+body[dir="rtl"] .ui.buttons .button:first-child {
+  border-left: none;
+  margin-left: 0;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  }
+
+  body[dir="rtl"] .ui[class*="right floated"].button, .ui[class*="right floated"].buttons {
+    float: left;
+    margin-right: 0;
+    margin-left: .25em;
+    }
+  
+  body[dir="rtl"] .ui.floated.header, .ui[class*="left floated"].header {
+    float: right;
+    margin-top: 0;
+    margin-right: .5em;
+    }
+  
+  body[dir="rtl"] .ui.right.floated.header.searcher {
+    margin-bottom: 0%;
+    height: 40px;
+    float: left;
+    }
+  
+  body[dir="rtl"] .search-reset-keyword-field {
+    margin-left: -2%;
+    margin-right: 0%;
+    border: 1px solid #e0e0e0;
+    border-radius: 30px;
+    width: 300px;
+    height: 36px;
+    padding-left: 1rem;
+    padding-top: 0.4rem;
+    }
+
+    body[dir="rtl"] #mainContainerGrid .thumbnail-ribbon {
+      top: 0.4rem !important;
+      padding-left: 20px;
+      opacity: 0.6;
+      height: 20px;
+      background: #2e9fd9;
+      display: flex;
+      -ms-align-items: center;
+      align-items: center;
+      gap: 1rem;
+      }
+
+  /*!
  * # Semantic UI 2.2.10 - Transition
  * http://github.com/semantic-org/semantic-ui/
  *

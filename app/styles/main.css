@@ -859,7 +859,7 @@
 ----------------------------------*/
 /* line 192, scss/partials/_jquery.ui.customize.scss */
 .ui-widget {
-  font-family: Verdana, Arial, sans-serif;
+  font-family: 'Times New Roman', Times, Arial, sans-serif, Verdana, Arial, sans-serif;
   font-size: 1.1em;
 }
 
@@ -873,7 +873,7 @@
 .ui-widget select,
 .ui-widget textarea,
 .ui-widget button {
-  font-family: Verdana, Arial, sans-serif;
+  font-family: 'Times New Roman', Times, Arial, sans-serif,Verdana, Arial, sans-serif;
   font-size: 1em;
 }
 
@@ -2030,7 +2030,7 @@
 /* line 15, scss/main.scss */
 body {
   color: #333;
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Times New Roman', Times, Arial, sans-serif, 'Open Sans', sans-serif;
 }
 
 /* line 20, scss/main.scss */
@@ -3502,7 +3502,7 @@ i[class^="icons-"] {
 }
 /* line 1247, scss/main.scss */
 .item-activity-container .activity-items-info {
-  font-family: Helvetica;
+  font-family: 'Times New Roman', Times, Arial, sans-serif,Helvetica;
   color: #757575;
 }
 /* line 1252, scss/main.scss */

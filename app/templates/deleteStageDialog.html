@@ -3,12 +3,12 @@
         <div style="margin: 30px 10px 25px 0px;">
             <div style=" display: inline;"><i class="huge warning sign yellow icon"></i></div>
             <div style="text-align: center;margin: 10px;font-size: 17px;color: #5f5c5c; display: inline;" class="meta">
-                Do you want to delete this slide?
+                {{labels.frmelmnts.lbl.doYouWantToDeleteThisSlide || "Do you want to delete this slide?"}}
             </div>
         </div>
         <div style="margin-left: 139px;">
-            <button class="ui  primary button" ng-click="delete()">Delete</button>
-            <button class="ui  secondary orange button" ng-click="closeThisDialog()">Cancel</button>
+            <button class="ui  primary button" ng-click="delete()">{{labels.frmelmnts.lbl.delete || "Delete"}}</button>
+            <button class="ui  secondary orange button" ng-click="closeThisDialog()">{{labels.frmelmnts.lbl.cancel || "Cancel"}}</button>
         </div>
     </div>
 </script>

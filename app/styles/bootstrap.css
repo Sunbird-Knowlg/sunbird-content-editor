@@ -1,5 +1,5 @@
 html {
-    font-family: sans-serif;
+    font-family: 'Times New Roman', Times, Arial, sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
 }
@@ -120,7 +120,7 @@ code,
 kbd,
 pre,
 samp {
-    font-family: monospace, monospace;
+    font-family: 'Times New Roman', Times, Arial, sans-serif, monospace, monospace;
     font-size: 1em;
 }
 
@@ -311,7 +311,7 @@ html {
 }
 
 body {
-    font-family: Open Sans;
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Open Sans;
     font-size: 14px;
     line-height: 1.715;
     color: #000000;
@@ -420,7 +420,7 @@ code,
 kbd,
 pre,
 samp {
-    font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Monaco, Menlo, Consolas, "Courier New", monospace;
 }
 
 code {
@@ -7307,7 +7307,7 @@ button.close {
     position: absolute;
     z-index: 1030;
     display: block;
-    font-family: Open Sans;
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Open Sans;
     font-size: 12px;
     font-weight: normal;
     line-height: 1.4;
@@ -7430,7 +7430,7 @@ button.close {
     display: none;
     max-width: 276px;
     padding: 1px;
-    font-family: Open Sans;
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Open Sans;
     font-size: 14px;
     font-weight: normal;
     line-height: 1.715;
@@ -7726,7 +7726,7 @@ button.close {
     height: 20px;
     margin-top: -10px;
     line-height: 1;
-    font-family: serif;
+    font-family: 'Times New Roman', Times, Arial, sans-serif, serif;
 }
 
 .carousel-control .icon-prev:before {

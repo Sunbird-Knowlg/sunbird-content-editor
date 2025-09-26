@@ -1818,7 +1818,7 @@ div#toolbar div#toolbar-back button.btn span.icon-back::before {
 ================================================================================*/
 
 html {
-    font-family: sans-serif;
+    font-family: 'Times New Roman', Times, Arial, sans-serif, sans-serif;
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%
 }
@@ -1939,7 +1939,7 @@ code,
 kbd,
 pre,
 samp {
-    font-family: monospace, monospace;
+    font-family:  'Times New Roman', Times, Arial, sans-serif, monospace, monospace;
     font-size: 1em
 }
 
@@ -2130,7 +2130,7 @@ html {
 }
 
 body {
-    font-family: Open Sans;
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Open Sans;
     font-size: 14px;
     line-height: 1.715;
     color: #000000;
@@ -2239,7 +2239,7 @@ code,
 kbd,
 pre,
 samp {
-    font-family: Monaco, Menlo, Consolas, "Courier New", monospace
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Monaco, Menlo, Consolas, "Courier New", monospace
 }
 
 code {
@@ -9126,7 +9126,7 @@ button.close {
     position: absolute;
     z-index: 1030;
     display: block;
-    font-family: Open Sans;
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Open Sans;
     font-size: 12px;
     font-weight: normal;
     line-height: 1.4;
@@ -9249,7 +9249,7 @@ button.close {
     display: none;
     max-width: 276px;
     padding: 1px;
-    font-family: Open Sans;
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Open Sans;
     font-size: 14px;
     font-weight: normal;
     line-height: 1.715;
@@ -9545,7 +9545,7 @@ button.close {
     height: 20px;
     margin-top: -10px;
     line-height: 1;
-    font-family: serif
+    font-family: 'Times New Roman', Times, Arial, sans-serif, serif
 }
 
 .carousel-control .icon-prev:before {
@@ -13766,7 +13766,7 @@ button.toast-close-button {
 .sourcecoast button,
 .sourcecoast select,
 .sourcecoast textarea {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif
+    font-family: 'Times New Roman', Times, Arial, sans-serif,"Helvetica Neue", Helvetica;
 }
 
 .sourcecoast label {
@@ -17178,7 +17178,7 @@ button.toast-close-button {
 .sourcecoast .navbar-search .search-query {
     margin-bottom: 0;
     padding: 4px 14px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: 'Times New Roman', Times, Arial, sans-serif, "Helvetica Neue", Helvetica;
     font-size: 13px;
     font-weight: normal;
     line-height: 1;
@@ -18121,7 +18121,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-    font-family: Open Sans;
+    font-family: 'Times New Roman', Times, Arial, sans-serif ,Open Sans;
     font-weight: 400;
     line-height: 1.1;
     color: #000000
@@ -18529,7 +18529,7 @@ code,
 kbd,
 pre,
 samp {
-    font-family: Monaco, Menlo, Consolas, "Courier New", monospace
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Monaco, Menlo, Consolas, "Courier New", monospace
 }
 
 .btn-actions {
@@ -19625,7 +19625,7 @@ input.invalid {
 
 .nav-tabs > li {
     margin-right: 24px;
-    font-family: Open Sans
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Open Sans
 }
 
 .nav-tabs > li > a {
@@ -19673,7 +19673,7 @@ input.invalid {
 }
 
 .nav-stacked > li {
-    font-family: Open Sans
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Open Sans
 }
 
 .nav-stacked > li > a {
@@ -19769,7 +19769,7 @@ input.invalid {
     color: #44494c;
     font-size: 16px;
     text-transform: uppercase;
-    font-family: Open Sans
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Open Sans
 }
 
 .pagination > li > a:hover,
@@ -20025,7 +20025,7 @@ input.invalid {
     margin-bottom: 0;
     border-radius: 0;
     margin-top: 0;
-    font-family: Open Sans
+    font-family: 'Times New Roman', Times, Arial, sans-serif,Open Sans
 }
 
 .scrollUp .t3-mainnav {
@@ -23081,7 +23081,7 @@ a.list-group-item.active:focus .list-group-item-text {
 
 .logo-text a {
     color: #ffffff;
-    font-family: Open Sans;
+    font-family: 'Times New Roman', Times, Arial, sans-serif,Open Sans;
     text-decoration: none;
     font-size: 21px;
     line-height: 50px
@@ -23178,7 +23178,7 @@ a.list-group-item.active:focus .list-group-item-text {
 
 .head-menu .nav > li {
     float: right;
-    font-family: Open Sans
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Open Sans
 }
 
 .head-menu .nav > li.active > a {
@@ -23627,7 +23627,7 @@ a.list-group-item.active:focus .list-group-item-text {
 .t3-footnav .t3-module ul > li > a {
     color: #d8e6e4;
     padding: 0;
-    font-family: Open Sans;
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Open Sans;
     text-transform: none
 }
 
@@ -28331,7 +28331,7 @@ html body div#fd .h3,
 html body div#fd .h4,
 html body div#fd .h5,
 html body div#fd .h6 {
-    font-family: Open Sans
+    font-family: 'Times New Roman', Times, Arial, sans-serif, Open Sans
 }
 
 html body div#fd hr {
@@ -28434,7 +28434,7 @@ html body div#fd .radio-inline input {
 }
 
 html body div#fd.es {
-    font-family: 'Questrial', sans-serif;
+    font-family: 'Times New Roman', Times, Arial, 'Questrial', sans-serif;
     line-height: 1.715;
     font-size: 14px
 }
@@ -28585,7 +28585,7 @@ html body div#fd.es .es-widget .widget-list .es-count-no {
 }
 
 html body div#fd.es.popbox-notifications {
-    font-family: Open Sans
+    font-family: 'Times New Roman', Times, Arial, sans-serif,Open Sans
 }
 
 html body div#fd.es.popbox-notifications .popbox-header {

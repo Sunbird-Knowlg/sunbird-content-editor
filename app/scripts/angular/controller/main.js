@@ -33,9 +33,9 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 		$window.context = $window.context || window.parent.context
 
 		$scope.developerMode = $location.search().developerMode
-
+		var labels = window.parent.config.resourceBundles || {};
 		$scope.appLoadMessage = [
-			{ 'id': 1, 'message': 'Getting things ready for you', 'status': false }
+			{ 'id': 1, 'message': labels.frmelmnts.lbl.gettingThingsReadyForYou || 'Getting things ready for you', 'status': false }
 		]
 		$scope.model = {
 			teacherInstructions: undefined
@@ -244,15 +244,56 @@ angular.module('editorApp').controller('MainCtrl', ['$scope', '$timeout', '$http
 		org.ekstep.contenteditor.init(context, config, $scope, $document, function () {
 
 			var obj = _.find($scope.appLoadMessage, { 'id': 1 })
+			var labels = window.parent.config.resourceBundles || {};
 			if (_.isObject(obj)) {
-				obj.message = 'Getting things ready for you'
+				obj.message = labels.frmelmnts.lbl.gettingThingsReadyForYou || 'Getting things ready for you'
 				obj.status = true
 			}
 			$scope.contentService = org.ekstep.contenteditor.api.getService(ServiceConstants.CONTENT_SERVICE)
 			$scope.popupService = org.ekstep.contenteditor.api.getService(ServiceConstants.POPUP_SERVICE)
 			$scope.telemetryService = org.ekstep.contenteditor.api.getService(ServiceConstants.TELEMETRY_SERVICE)
-			$scope.menus = org.ekstep.contenteditor.toolbarManager.menuItems
-			$scope.contextMenus = org.ekstep.contenteditor.toolbarManager.contextMenuItems
+			var labels = window.parent.config.resourceBundles || {};
+			$scope.labels = labels;
+			var tooltipMap = {
+				// Existing menu items
+				"stage": "frmelmnts.lbl.addSlide",
+				"question-set": "frmelmnts.lbl.addQuestionSet",
+				"beginning": "frmelmnts.lbl.beginning",
+				"end": "frmelmnts.lbl.end",
+				"front": "frmelmnts.lbl.afterCurrent",
+				"back": "frmelmnts.lbl.beforeCurrent",
+
+				// Context menu items
+				"copy": "frmelmnts.lbl.copy",
+				"paste": "frmelmnts.lbl.paste",
+				"delete": "frmelmnts.lbl.delete",
+				"reorder": "frmelmnts.lbl.arrange",
+				"bringforward": "frmelmnts.lbl.bringForward",
+				"bringfront": "frmelmnts.lbl.bringToFront",
+				"sendbackward": "frmelmnts.lbl.sendBackward",
+				"sendback": "frmelmnts.lbl.sendToBack"
+			};
+			$scope.menus =org.ekstep.contenteditor.toolbarManager.menuItems
+			.filter(function(item) {
+				// return item.id === "question-set" || item.id === "stage";
+				return item.id === "stage";
+			})
+			.map(function(menu) {
+				var menuCopy = _.cloneDeep(menu);
+				if (tooltipMap[menuCopy.id] && labels.frmelmnts.lbl[tooltipMap[menuCopy.id].split('.').pop()]) {
+					menuCopy.toolTip = labels.frmelmnts.lbl[tooltipMap[menuCopy.id].split('.').pop()];
+				}
+				if (menuCopy.submenu && Array.isArray(menuCopy.submenu)) {
+					menuCopy.submenu.forEach(function(subItem) {
+						if (tooltipMap[subItem.id] && labels.frmelmnts.lbl[tooltipMap[subItem.id].split('.').pop()]) {
+							subItem.toolTip = labels.frmelmnts.lbl[tooltipMap[subItem.id].split('.').pop()];
+							subItem.title = labels.frmelmnts.lbl[tooltipMap[subItem.id].split('.').pop()];
+						}
+					});
+				}
+				return menuCopy;
+			});
+			$scope.contextMenus = [] || org.ekstep.contenteditor.toolbarManager.contextMenuItems;
 			$scope.stages = org.ekstep.contenteditor.api.getAllStages()
 			$scope.currentStage = org.ekstep.contenteditor.api.getCurrentStage()
 			$scope.sidebarMenus = org.ekstep.contenteditor.sidebarManager.getSidebarMenu()

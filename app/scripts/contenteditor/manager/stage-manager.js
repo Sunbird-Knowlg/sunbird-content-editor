@@ -204,6 +204,7 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 		org.ekstep.contenteditor.api.getService('popup').open({
 			template: 'deleteStageDialog.html',
 			controller: ['$scope', function ($scope) {
+				$scope.labels = window.parent.config.resourceBundles || {};
 				$scope.delete = function () {
 					$scope.closeThisDialog()
 					instance.deleteStage(event, data)
@@ -215,7 +216,8 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	showLoadScreenMessage: function () {
 		var obj = _.find(org.ekstep.contenteditor.api.getAngularScope().appLoadMessage, { 'id': 3 })
 		if (_.isObject(obj)) {
-			obj.message = 'Loading your lesson'
+			var labels = window.parent.config.resourceBundles || {};
+			obj.message = labels.frmelmnts.lbl.loadingYourLesson || 'Loading your lesson'
 			obj.status = true
 		}
 		org.ekstep.contenteditor.api.ngSafeApply(org.ekstep.contenteditor.api.getAngularScope())
@@ -369,7 +371,8 @@ org.ekstep.contenteditor.stageManager = new (Class.extend({
 	fromECML: function (contentBody, stageIcons) {
 		var instance = this
 		var startTime = (new Date()).getTime()
-		org.ekstep.contenteditor.api.getAngularScope().appLoadMessage.push({ 'id': 3, 'message': 'Loading your lesson', 'status': false })
+		var labels = window.parent.config.resourceBundles || {};
+		org.ekstep.contenteditor.api.getAngularScope().appLoadMessage.push({ 'id': 3, 'message':  labels.frmelmnts.lbl.loadingYourLesson || 'Loading your lesson', 'status': false })
 		org.ekstep.contenteditor.api.ngSafeApply(org.ekstep.contenteditor.api.getAngularScope())
 		org.ekstep.contenteditor.stageManager.contentLoading = true
 		org.ekstep.pluginframework.eventManager.enableEvents = false

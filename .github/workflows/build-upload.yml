@@ -21,7 +21,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install system dependencies
         run: |
@@ -43,7 +43,7 @@ jobs:
         run: npm install -g bower@1.8.14 gulp@3.9.1
 
       - name: Clone sunbird-content-plugins
-        run: git clone https://github.com/project-sunbird/sunbird-content-plugins.git plugins -b ${{ github.ref_name }}
+        run: git clone https://github.com/sanketika-labs/sunbird-content-plugins.git plugins -b ${{ github.ref_name }}
 
       - name: Clean npm cache and install dependencies
         run: |

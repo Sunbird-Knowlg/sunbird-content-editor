@@ -27,6 +27,6 @@ npm run bower-install
 npm run package-core-plugins
 #npm install 
 npm run build-plugins
-#cd ..
+# cd ..
 npm run build
 #npm run test
