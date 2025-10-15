@@ -16,6 +16,9 @@ org.ekstep.services.iService = Class.extend({
 	getAPISlug: function () {
 		return org.ekstep.services.config.apislug
 	},
+	getFwAPISlug: function () {
+        return org.ekstep.services.config.fwApiSlug
+	},
 	getConfig: function (configKey, _default) {
 		return org.ekstep.services.config[configKey] || _default
 	},
