@@ -99,7 +99,7 @@ org.ekstep.services.assessmentService = new (org.ekstep.services.iService.extend
 		var instance = this
 		/* If assessment Id exists then delete the question */
 		if (assessmentId) {
-			instance.delete(this.assessmentURL() + '/v3/itemsets/retire/' + assessmentId, this.requestHeaders, function (err, res) {
+			instance.delete(this.assessmentURL() + '/v3/items/retire/' + assessmentId, this.requestHeaders, function (err, res) {
 				callback(err, res)
 			})
 		}
