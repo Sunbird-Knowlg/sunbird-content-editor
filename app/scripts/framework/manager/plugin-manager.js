@@ -25,7 +25,7 @@ org.ekstep.pluginframework.pluginManager = new (Class.extend({
 		this._registerPlugin(manifest.id, manifest.ver, plugin, manifest, repo)
 	},
 	loadCustomPlugin: function (dependency, callback, publishedTime) {
-		var instance = this
+		var instance = this;
 		org.ekstep.pluginframework.resourceManager.loadResource(dependency.src, 'text', function (err, data) {
 			if (err) {
 				org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:error', { plugin: dependency.id, version: dependency.ver, action: 'load', err: err })
@@ -57,7 +57,7 @@ org.ekstep.pluginframework.pluginManager = new (Class.extend({
 				if (err) {
 					org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:error', { plugin: manifest.id, version: manifest.ver, action: 'load', err: err })
 					// eslint-disable-next-line
-					instance.addError({error: 'Fails to load plugin!', plugin: manifest.id, version: manifest.ver, action: 'load', stackTrace: err })
+					instance.addError({ error: 'Fails to load plugin!', plugin: manifest.id, version: manifest.ver, action: 'load', stackTrace: err })
 					console.error('Unable to load editor plugin', 'plugin:' + manifest.id + '-' + manifest.ver, 'resource:' + manifest[scope].main, 'Error:', err)
 				} else {
 					try {
@@ -73,12 +73,12 @@ org.ekstep.pluginframework.pluginManager = new (Class.extend({
 						}
 					} catch (e) {
 						org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:error', { plugin: manifest.id, version: manifest.ver, action: 'load', err: e })
-						instance.addError({error: 'Fails to load plugin!', plugin: manifest.id, version: manifest.ver, action: 'load', stackTrace: e})
+						instance.addError({ error: 'Fails to load plugin!', plugin: manifest.id, version: manifest.ver, action: 'load', stackTrace: e })
 						console.error('Error while loading plugin', 'plugin:' + manifest.id + '-' + manifest.ver, 'Error:', e)
 					}
 				}
 			}, publishedTime)
-		}
+		} 
 	},
 	_registerNameSpace: function (pluginId, clazz) {
 		var names = pluginId.split('.')
@@ -323,7 +323,7 @@ org.ekstep.pluginframework.pluginManager = new (Class.extend({
 		var p = undefined
 		var plugin = this.plugins[id]
 		if (!plugin) {
-			this.addError({error: 'Plugin not found!', plugin: id, version: ' ', stackTrace: ' '})
+			this.addError({ error: 'Plugin not found!', plugin: id, version: ' ', stackTrace: ' '})
 		} else {
 			var pluginClass = override ? plugin.p.extend(override) : plugin.p
 			var pluginManifest = plugin.m
@@ -347,7 +347,7 @@ org.ekstep.pluginframework.pluginManager = new (Class.extend({
 				}
 			} catch (e) {
 				org.ekstep.pluginframework.eventManager.dispatchEvent('plugin:error', { plugin: pluginManifest.id, version: pluginManifest.ver, action: 'invoke', err: e })
-				instance.addError({error: 'Fails to invoke!', plugin: pluginManifest.id, version: pluginManifest.ver, action: 'invoke', stackTrace: e})
+				instance.addError({ error: 'Fails to invoke!', plugin: pluginManifest.id, version: pluginManifest.ver, action: 'invoke', stackTrace: e })
 				if (p) delete instance.pluginInstances[p.id]
 				// eslint-disable-next-line
 				throw 'Error: when instantiating plugin: ' + id
@@ -361,7 +361,7 @@ org.ekstep.pluginframework.pluginManager = new (Class.extend({
 		var p = undefined
 		var plugin = this.plugins[id]
 		if (!plugin) {
-			this.addError({error: 'Plugin not found!', plugin: id, version: ' ', stackTrace: ' '})
+			this.addError({ error: 'Plugin not found!', plugin: id, version: ' ', stackTrace: ' '})
 		} else {
 			try {
 				var pluginClass = plugin.p
@@ -412,6 +412,7 @@ org.ekstep.pluginframework.pluginManager = new (Class.extend({
 		}
 	},
 	addError: function (error) {
+		org.ekstep.services.telemetryService.error({ 'err': error.error, 'errtype': 'CONTENT', 'stacktrace': error.stackTrace, 'plugin': { 'id': error.plugin,'ver': error.version }});		
 		this.errors.push(error)
 	},
 	getErrors: function () {

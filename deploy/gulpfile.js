@@ -61,7 +61,7 @@ gulp.task('injectrenamedfiles', function() {
 });
 
 gulp.task('bower-package', function() {
-    return gulp.src(['**', '!node_modules', '!node_modules/**', '!scripts/base-editor.*.js', '!scripts/plugin-framework.*.js', '!gulpfile.js', '!package.json']).pipe(gulp.dest('build/'));
+    return gulp.src(['**', '!node_modules', '!node_modules/**', '!scripts/plugin-framework.*.js', '!gulpfile.js', '!package.json']).pipe(gulp.dest('build/'));
 });
 
 gulp.task('package', ['iframe-package', 'embed-package', 'coreplugins-package']);

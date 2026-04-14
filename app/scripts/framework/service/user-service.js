@@ -30,5 +30,14 @@ org.ekstep.services.userService = new (org.ekstep.services.iService.extend({
      */
 	updateCollaborators: function (contentID, request, callback) {
 		this.patch(this.getBaseURL() + this.getAPISlug() + this.getConfig('collaborationUrl', '/content/v1/collaborator/update/') + contentID, request, this.requestHeaders, callback)
-	}
+	},
+     /**
+     * updateCollaboratorsFromAdmin method helps to add Collaborators content using admin rights
+     * @param  {object}  request  request object will take all request parameters of updateCollaborators API
+     * @param  {Function} callback returns error and response as arguments
+     * @memberof org.ekstep.services.userService
+     */
+    updateCollaboratorsFromAdmin: function (contentID, request, callback) {
+          this.patch(this.getBaseURL() + this.getAPISlug() + this.getConfig('collaborationUrl', '/system/v3/content/update/') + contentID, request, this.requestHeaders, callback)
+     }
 }))()

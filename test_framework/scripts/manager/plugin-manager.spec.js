@@ -3,6 +3,7 @@ describe('plugin manager unit test cases', function () {
 	var em = org.ekstep.pluginframework.eventManager
 	var rm = org.ekstep.pluginframework.resourceManager
 	var publishedRepo = org.ekstep.pluginframework.publishedRepo
+	var tm = org.ekstep.services.telemetryService
 
 	beforeEach(function () {
 		pm.cleanUp()
@@ -66,6 +67,8 @@ describe('plugin manager unit test cases', function () {
 		it('should not load custom plugin for invalid path', function (done) {
 			spyOn(pm, '_registerPlugin')
 			spyOn(rm, 'loadResource').and.callThrough()
+			spyOn(tm, 'error').and.callThrough()
+			
 
 			var dependency = {
 				id: 'org.ekstep.two',
@@ -76,6 +79,7 @@ describe('plugin manager unit test cases', function () {
 			pm.loadCustomPlugin(dependency, function () {
 				expect(pm._registerPlugin).not.toHaveBeenCalled()
 				expect(rm.loadResource).toHaveBeenCalled()
+				expect(tm.error).toHaveBeenCalled()
 				done()
 			}, undefined)
 		})
@@ -83,6 +87,7 @@ describe('plugin manager unit test cases', function () {
 		it('should not load custom plugin, if plugin has compilation error', function (done) {
 			spyOn(pm, '_registerPlugin')
 			spyOn(rm, 'loadResource').and.callThrough()
+			spyOn(tm,'error')
 
 			var dependency = {
 				id: 'org.ekstep.two-invalid',
@@ -93,6 +98,7 @@ describe('plugin manager unit test cases', function () {
 			pm.loadCustomPlugin(dependency, function () {
 				expect(pm._registerPlugin).not.toHaveBeenCalled()
 				expect(rm.loadResource).toHaveBeenCalled()
+				expect(tm.error).toHaveBeenCalled()
 				done()
 			}, undefined)
 		})
@@ -125,13 +131,18 @@ describe('plugin manager unit test cases', function () {
 		it('should load and register plugin by manifest', function (done) {
 			var pluginManifest
 			var testPlugin = { id: 'org.ekstep.one', ver: '1.0' }
+			var spy = spyOn(tm, 'error').and.callThrough()
 
+			
 			spyOn(pm, 'registerPlugin')
 			spyOn(rm, 'getResource').and.callThrough()
+			
 			// eslint-disable-next-line
 			rm.discoverManifest(testPlugin.id, testPlugin.ver, function (err, data) {
 				pluginManifest = data.manifest
 				pm.loadPluginByManifest(pluginManifest, publishedRepo, 'plugin', undefined)
+				expect(tm).toBeDefined();
+				expect(spy);
 				expect(pm.registerPlugin).toHaveBeenCalled()
 				expect(rm.getResource).toHaveBeenCalled()
 				done()
@@ -144,12 +155,14 @@ describe('plugin manager unit test cases', function () {
 
 			spyOn(pm, 'registerPlugin')
 			spyOn(rm, 'getResource').and.callThrough()
+			spyOn(tm,'error')
 			// eslint-disable-next-line
 			rm.discoverManifest(testPlugin.id, testPlugin.ver, function (err, data) {
 				pluginManifest = data.manifest
 				pm.loadPluginByManifest(pluginManifest, publishedRepo, 'plugin', undefined)
 				expect(pm.registerPlugin).not.toHaveBeenCalled()
 				expect(rm.getResource).toHaveBeenCalled()
+				expect(tm.error).toHaveBeenCalled()
 				done()
 			})
 		})
@@ -266,15 +279,19 @@ describe('plugin manager unit test cases', function () {
 		})
 
 		it('should discover the plugin manifest and load the plugin', function (done) {
+			var spy = spyOn(tm, 'error').and.callThrough()
 			spyOn(rm, 'discoverManifest').and.callThrough()
 			spyOn(pm, 'loadManifestDependencies').and.callThrough()
 			spyOn(pm, 'loadPluginByManifest').and.callThrough()
+			
 
 			pm.loadPluginWithDependencies('org.ekstep.six', '1.0', 'plugin', undefined, [], function () {
 				expect(rm.discoverManifest).toHaveBeenCalled()
 				expect(rm.discoverManifest.calls.count()).toEqual(1)
 				expect(pm.loadManifestDependencies.calls.count()).toEqual(1)
 				expect(pm.loadManifestDependencies).toHaveBeenCalled()
+				expect(tm).toBeDefined();
+				expect(spy)
 				expect(pm.loadPluginByManifest).toHaveBeenCalled()
 				expect(pm.loadPluginByManifest.calls.count()).toEqual(1)
 				expect(pm.isPluginDefined('org.ekstep.six')).toBe(true)
@@ -390,6 +407,7 @@ describe('plugin manager unit test cases', function () {
 			spyOn(rm, 'discoverManifest').and.callThrough()
 			spyOn(pm, 'loadManifestDependencies').and.callThrough()
 			spyOn(pm, 'loadPluginByManifest').and.callThrough()
+			spyOn(tm, 'error')
 
 			pm.loadPluginWithDependencies('org.ekstep.invalidPlugin', '1.0', 'plugin', undefined, [], function () {
 				expect(rm.discoverManifest).toHaveBeenCalled()
@@ -399,6 +417,7 @@ describe('plugin manager unit test cases', function () {
 				expect(pm.loadPluginByManifest).not.toHaveBeenCalled()
 				expect(pm.loadPluginByManifest.calls.count()).toEqual(0)
 				expect(pm.isPluginDefined('org.ekstep.invalidPlugin')).toBe(false)
+				expect(tm.error).toHaveBeenCalled()
 				done()
 			})
 		})
@@ -764,12 +783,14 @@ describe('plugin manager unit test cases', function () {
 			})
 			spyOn(pm, 'addPluginInstance')
 			spyOn(em, 'dispatchEvent')
+			spyOn(tm,'error')
 			pm._registerPlugin(plugin.id, plugin.version, __plugin, { id: plugin.id, ver: plugin.version }, publishedRepo)
 			var throwableFn = function () {
 				instance = pm.invoke(plugin.id, {}, {}, undefined)
 			}
 			expect(throwableFn).toThrow('Error: when instantiating plugin: ' + plugin.id)
 			expect(pm.addPluginInstance).toHaveBeenCalled()
+			expect(tm.error).toHaveBeenCalled()
 			expect(instance).not.toBeDefined()
 			expect(em.dispatchEvent).not.toHaveBeenCalledWith('plugin:add', jasmine.objectContaining({ plugin: plugin.id, version: plugin.version }))
 			expect(em.dispatchEvent).not.toHaveBeenCalledWith(plugin.id + ':add')
@@ -778,9 +799,11 @@ describe('plugin manager unit test cases', function () {
 		it('should not create new instance for un-registered plugin', function () {
 			spyOn(pm, 'addPluginInstance')
 			spyOn(em, 'dispatchEvent')
+			spyOn(tm,'error')
 			var instance = pm.invoke(plugin.id, {}, {}, undefined)
 			expect(instance).not.toBeDefined()
 			expect(pm.addPluginInstance).not.toHaveBeenCalled()
+			expect(tm.error).toHaveBeenCalled()
 			expect(em.dispatchEvent).not.toHaveBeenCalledWith('plugin:add', jasmine.objectContaining({ plugin: plugin.id, version: plugin.version }))
 			expect(em.dispatchEvent).not.toHaveBeenCalledWith(plugin.id + ':add')
 		})
@@ -858,9 +881,11 @@ describe('plugin manager unit test cases', function () {
 		it('should not create new instance for un-registered plugin', function () {
 			spyOn(pm, 'addPluginInstance')
 			spyOn(em, 'dispatchEvent')
+			spyOn(tm, 'error')
 			var instance = pm.invokeRenderer(plugin.id, {}, {}, {}, {})
 			expect(instance).not.toBeDefined()
 			expect(pm.addPluginInstance).not.toHaveBeenCalled()
+			expect(tm.error).toHaveBeenCalled()
 			expect(em.dispatchEvent).not.toHaveBeenCalledWith('plugin:add', jasmine.objectContaining({ plugin: plugin.id, version: plugin.version }))
 			expect(em.dispatchEvent).not.toHaveBeenCalledWith(plugin.id + ':add')
 		})

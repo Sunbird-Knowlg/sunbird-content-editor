@@ -35,5 +35,20 @@ org.ekstep.services.popupService = new (org.ekstep.services.iService.extend({
 			this.openModal(config, callback)
 			org.ekstep.services.telemetryService.interact({ 'type': 'show', 'subtype': 'open', 'target': 'popup', 'pluginid': '', 'pluginver': '', 'objectid': '', 'stage': ecEditor.getCurrentStage().id })
 		}
+	},
+	close: function (str) {
+
+		if(str) {
+			const strLength = str.length;
+			const updateStr = str + '_' + strLength;
+			const newStr = updateStr + '_' + str;
+			return newStr;
+		} else {
+			str = 'test';
+			const newLength =  str.length;
+			const updatedStr = str + '_' + newLength;
+			return updatedStr;
+		}
 	}
+
 }))()

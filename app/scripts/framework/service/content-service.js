@@ -20,7 +20,8 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
      *
      * @memberof org.ekstep.services.contentService
      */
-	contentFields: 'body,collaborators,editorState,stageIcons,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType,owner,domain,code,visibility,createdBy,description,language,mediaType,mimeType,osId,languageCode,createdOn,lastUpdatedOn,audience,ageGroup,attributions,artifactUrl,board,subject,keywords,config,resourceType,medium,publisher,year,pkgVersion,framework,rejectReasons,rejectComment,topic,ownedBy,ownershipType,creators,contributors,reservedDialcodes,qrCodeProcessId,channel,purpose,assets,assetsMap,copyright,author',
+	contentFields: 'body,collaborators,editorState,stageIcons,templateId,languageCode,template,gradeLevel,status,concepts,versionKey,name,appIcon,contentType,owner,domain,code,visibility,createdBy,description,language,mediaType,mimeType,osId,languageCode,createdOn,lastUpdatedOn,audience,ageGroup,attributions,artifactUrl,board,subject,keywords,config,resourceType,medium,publisher,year,pkgVersion,framework,rejectReasons,rejectComment,topic,ownedBy,ownershipType,creators,contributors,reservedDialcodes,qrCodeProcessId,channel,purpose,assets,assetsMap,copyright,author,copyrightYear,origin,license,displayScore,courseType,licenseterms,primaryCategory,additionalCategories,maxAttempts,verticals,programs',
+	
 	/**
      *
      * sets content meta for the given content id
@@ -93,7 +94,7 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 				}
 			}
 			if (body) {
-				content.compatibilityLevel = body.theme.compatibilityVersion
+				// content.compatibilityLevel = body.theme.compatibilityVersion
 				content['body'] = JSON.stringify(body)
 				update = true
 			}
@@ -133,7 +134,11 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 	getContent: function (contentId, callback) {
 		var instance = this
 		if (contentId) {
-			var metaDataFields = '?mode=edit&fields=' + instance.contentFields
+			var fields = instance.contentFields
+			if(ecEditor.getConfig("contentFields")) {
+				fields = instance.contentFields.concat(",", ecEditor.getConfig("contentFields"))
+			}
+			var metaDataFields = '?mode=edit&fields=' + fields
 			instance.get(this.serviceURL() + this.getConfig('contentReadUrl', '/v3/read/') + contentId + metaDataFields, this.requestHeaders, function (err, res) {
 				/* istanbul ignore else */
 				if (res && res.data && res.data.responseCode === 'OK') {
@@ -367,5 +372,10 @@ org.ekstep.services.contentService = new (org.ekstep.services.iService.extend({
 	},
 	getComments: function (data, callback) {
 		this.postFromService(this.getBaseURL() + this.getAPISlug() + this.getConfig('getCommentURL', '/review/comment/v1/read/comment'), data, this.requestHeaders, callback)
+	},
+	appendCloudStorageHeaders: function (config) {
+		const headers =  _.get(ecEditor.getConfig('cloudStorage'), 'presigned_headers', {});
+		config.headers = Object.assign({}, config.headers, headers)
+		return config;
 	}
 }))()

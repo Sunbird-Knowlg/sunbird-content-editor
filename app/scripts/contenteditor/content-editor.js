@@ -23,7 +23,9 @@ org.ekstep.contenteditor._initServices = function () {
 	org.ekstep.services.config = {
 		baseURL: org.ekstep.contenteditor.config.baseURL,
 		apislug: org.ekstep.contenteditor.config.apislug,
-		searchCriteria: org.ekstep.contenteditor.config.searchCriteria || {}
+		searchCriteria: org.ekstep.contenteditor.config.searchCriteria || {},
+		fwApiSlug: org.ekstep.contenteditor.config.fwApiSlug || '/api',
+        getCategorysUrl: org.ekstep.contenteditor.config.getCategorysUrl || '/v1/read/'
 	}
 	org.ekstep.pluginframework.initialize({
 		env: 'editor',

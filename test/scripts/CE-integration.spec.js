@@ -148,6 +148,12 @@ describe('content editor integration test: ', function () {
 
 		var stageECML
 
+		var themeObjectWithSummaryPlugin
+
+		var themeObjectWithoutSummaryPlugin
+
+		var summaryTemplate
+
 		beforeAll(function () {
 			stageECML = {
 				'config': {
@@ -165,6 +171,22 @@ describe('content editor integration test: ', function () {
 				'rotate': ''
 			}
 			stageInstance = org.ekstep.contenteditor.api.instantiatePlugin(stagePlugin, _.cloneDeep(stageECML))
+
+			themeObjectWithSummaryPlugin =  {'theme':{'compatibilityVersion':2,'id':'theme','manifest':{'media':[{'id':'org.ekstep.summary_template_js','plugin':'org.ekstep.summary','src':'/content-plugins/org.ekstep.summary-1.0/renderer/summary-template.js','type':'js','ver':'1.0'},{'id':'org.ekstep.summary_template_css','plugin':'org.ekstep.summary','src':'/content-plugins/org.ekstep.summary-1.0/renderer/style.css','type':'css','ver':'1.0'},{'id':'org.ekstep.summary','plugin':'org.ekstep.summary','src':'/content-plugins/org.ekstep.summary-1.0/renderer/plugin.js','type':'plugin','ver':'1.0'},{'id':'org.ekstep.summary_manifest','plugin':'org.ekstep.summary','src':'/content-plugins/org.ekstep.summary-1.0/manifest.json','type':'json','ver':'1.0'},{'assetId':'summaryImage','id':'summaryImage','preload':true,'src':'/content-plugins/org.ekstep.summary-1.0/assets/summary-icon.jpg','type':'image'}]},'plugin-manifest':{'depends':'','id':'org.ekstep.summary','type':'plugin','ver':'1.0'},'stage':{'config':{'__cdata':'{\'opacity\':100,\'strokeWidth\':1,\'stroke\':\'rgba(255, 255, 255, 0)\',\'autoplay\':false,\'visible\':true,\'color\':\'#FFFFFF\',\'genieControls\':false,\'instructions\':\'\'}'},'h':100,'id':'summary_stage_id','manifest':{'media':[{'assetId':'summaryImage'}]},'org.ekstep.summary':[{'config':{'__cdata':'{\'opacity\':100,\'strokeWidth\':1,\'stroke\':\'rgba(255, 255, 255, 0)\',\'autoplay\':false,\'visible\':true}'},'h':125.53,'id':'9aa63c0a-095a-4d67-991d-97c92b7e815a','rotate':0,'w':77.45,'x':6.69,'y':-27.9,'z-index':0}],'rotate':null,'w':100,'x':0,'y':0}}}
+			themeObjectWithoutSummaryPlugin = {"theme":{"compatibilityVersion":2,"id":"theme","manifest":{"media":[]},"plugin-manifest":{"depends":"","id":"org.ekstep.summary","type":"plugin","ver":"1.0","plugin":[]},"stage":[]}}
+			summaryTemplate = {'manifest':{'media':[{'id':'org.ekstep.summary_template_js','plugin':'org.ekstep.summary','src':'/content-plugins/org.ekstep.summary-1.0/renderer/summary-template.js','type':'js','ver':'1.0'},{'id':'org.ekstep.summary_template_css','plugin':'org.ekstep.summary','src':'/content-plugins/org.ekstep.summary-1.0/renderer/style.css','type':'css','ver':'1.0'},{'id':'org.ekstep.summary','plugin':'org.ekstep.summary','src':'/content-plugins/org.ekstep.summary-1.0/renderer/plugin.js','type':'plugin','ver':'1.0'},{'id':'org.ekstep.summary_manifest','plugin':'org.ekstep.summary','src':'/content-plugins/org.ekstep.summary-1.0/manifest.json','type':'json','ver':'1.0'},{'assetId':'summaryImage','id':'org.ekstep.summary_summaryImage','preload':true,'src':'/content-plugins/org.ekstep.summary-1.0/assets/summary-icon.jpg','type':'image'}]},'pluginManifest':{'depends':'','id':'org.ekstep.summary','type':'plugin','ver':'1.0'},'stage':{'config':{'__cdata':'{\'opacity\':100,\'strokeWidth\':1,\'stroke\':\'rgba(255, 255, 255, 0)\',\'autoplay\':false,\'visible\':true,\'color\':\'#FFFFFF\',\'genieControls\':false,\'instructions\':\'\'}'},'h':100,'id':'summary_stage_id','manifest':{'media':[{'assetId':'summaryImage'}]},'org.ekstep.summary':[{'config':{'__cdata':'{\'opacity\':100,\'strokeWidth\':1,\'stroke\':\'rgba(255, 255, 255, 0)\',\'autoplay\':false,\'visible\':true}'},'h':125.53,'id':'9aa63c0a-095a-4d67-991d-97c92b7e815a','rotate':0,'w':77.45,'x':6.69,'y':-27.9,'z-index':0}],'rotate':null,'w':100,'x':0,'y':0}}
+		})
+
+		it('should add stage to theme', function () {
+			var noOfStages = themeObjectWithoutSummaryPlugin.theme.stage.length
+			var updatedThemeObj = org.ekstep.contenteditor.stageManager._appendPluginStage(themeObjectWithoutSummaryPlugin, summaryTemplate)
+			expect(updatedThemeObj.theme.stage.length).toBe(noOfStages + 1)
+			expect(updatedThemeObj.theme.stage[0]['org.ekstep.summary']).toBeDefined()
+		})
+
+		it('should remove stage from theme object', function () {
+			var updatedThemeObj = org.ekstep.contenteditor.stageManager._removePluginStage(themeObjectWithSummaryPlugin, 'org.ekstep.summary')
+			expect(updatedThemeObj.theme.stage[0]).not.toContain('org.ekstep.summary')
 		})
 
 		it('instance properties should be defined', function () {
@@ -273,6 +295,8 @@ describe('content editor integration test: ', function () {
 			org.ekstep.contenteditor.stageManager.addMediaToMediaMap({'plugin': {'type': 'plugin'}}, {'plugin': 'plugin'})
 			// expect(org.ekstep.contenteditor.stageManager.mergeMediaMap).toHaveBeenCalledTimes(1);
 		})
+
+		
 	})
 
 	describe('when test1 plugin instantiated', function () {

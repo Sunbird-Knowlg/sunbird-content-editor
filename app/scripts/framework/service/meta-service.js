@@ -42,7 +42,7 @@ org.ekstep.services.metaService = new (org.ekstep.services.iService.extend({
      * @memberof org.ekstep.services.metaService
      */
 	frameworkURL: function () {
-		return this.getBaseURL() + this.getAPISlug() + this.getConfig('frameworkEndPoint', '/framework')
+		return this.getBaseURL() + this.getFwAPISlug() + this.getConfig('frameworkEndPoint', '/framework')
 	},
 	/**
      * @member {string} channelURL

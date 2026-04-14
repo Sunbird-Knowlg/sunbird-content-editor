@@ -127,7 +127,8 @@ module.exports = function (config) {
 			reporters: [
 				{ type: 'html', dir: 'coverage_framework/' },
 				{ type: 'text-summary' },
-				{ type: 'cobertura' }
+				{ type: 'cobertura' },
+				{ type: 'lcov', dir: 'coverage_framework/lcov' }
 			]
 		}
 	})
