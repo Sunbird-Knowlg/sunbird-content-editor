@@ -8,7 +8,7 @@ const NPM_BUILD_FOLDER_NAME = 'content-editor'
 // Dependency files.
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 const expose = require('expose-loader');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const glob = require('glob-all');
@@ -259,12 +259,7 @@ module.exports = (env, argv) => {
                         {
                             loader: 'sass-loader',
                             options: {
-                                sourceMap: false,
-                                minimize: true,
-                                "preset": "advanced",
-                                discardComments: {
-                                    removeAll: true
-                                }
+                                sourceMap: false
                             }
                         }
                     ]
@@ -294,10 +289,10 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new CleanWebpackPlugin(['dist']),
-            new UglifyJsPlugin({
+            new TerserPlugin({
                 cache: false,
                 parallel: true,
-                uglifyOptions: {
+                terserOptions: {
                     compress: {
                         dead_code: true,
                         drop_console: false,

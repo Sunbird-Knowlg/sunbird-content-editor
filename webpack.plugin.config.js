@@ -10,7 +10,7 @@ const expose = require('expose-loader')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const fs = require('fs')
 const entryPlus = require('webpack-entry-plus')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 var corePlugins = [
 	'org.ekstep.assessmentbrowser-1.1',
@@ -182,12 +182,7 @@ module.exports = {
 				{
 					loader: 'sass-loader',
 					options: {
-						sourceMap: false,
-						minimize: true,
-						'preset': 'advanced',
-						discardComments: {
-							removeAll: true
-						}
+						sourceMap: false
 					}
 				}
 			]
@@ -214,10 +209,10 @@ module.exports = {
 		new webpack.ProvidePlugin({
 			E2EConverter: 'E2EConverter'
 		}),
-		new UglifyJsPlugin({
+		new TerserPlugin({
 			cache: false,
 			parallel: true,
-			uglifyOptions: {
+			terserOptions: {
 				compress: {
 					dead_code: true,
 					drop_console: false,
