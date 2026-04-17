@@ -52,7 +52,7 @@
     "grunt-jsdoc": "^2.4.1",
     "grunt-karma": "^4.0.2",
     "grunt-run": "^0.6.0",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.2",
     "gulp-cachebust": "0.0.6",
     "gulp-chug": "^0.5.1",
     "gulp-clean": "^0.3.2",

@@ -60,7 +60,7 @@ jobs:
       - name: Build main project
         run: |
           npm install gulp-gzip --save-dev
-          NODE_OPTIONS=--openssl-legacy-provider npm run build-npm-pkg
+          npm run build-npm-pkg
 
       - name: Setup Google Cloud SDK
         if: env.CLOUD_PROVIDER == 'gcp'

@@ -65,11 +65,11 @@ jobs:
 
       - name: Build plugins
         working-directory: content-editor
-        run: NODE_OPTIONS=--openssl-legacy-provider npm run build-plugins
+        run: npm run build-plugins
 
       - name: Build project
         working-directory: content-editor
-        run: NODE_OPTIONS=--openssl-legacy-provider npm run build
+        run: npm run build
 
       - name: Run tests with coverage
         working-directory: content-editor
