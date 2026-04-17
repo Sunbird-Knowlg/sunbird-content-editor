@@ -1,3 +1,4 @@
+if (!global.crypto) { global.crypto = require('node:crypto').webcrypto; }
 const path = require('path')
 // eslint-disable-next-line
 const PLUGIN_PATH = process.env.CE_COREPLUGINS || './plugins'
@@ -5,8 +6,6 @@ const webpack = require('webpack')
 // eslint-disable-next-line
 const glob = require('glob')
 const uglifyjs = require('uglify-js')
-// eslint-disable-next-line
-const expose = require('expose-loader')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const fs = require('fs')
 const entryPlus = require('webpack-entry-plus')
@@ -146,22 +145,19 @@ module.exports = {
 			test: require.resolve('./plugins/org.ekstep.viewecml-1.0/editor/libs/src/converter.js'),
 			use: [{
 				loader: 'expose-loader',
-				options: 'E2EConverter'
+				options: { exposes: 'E2EConverter' }
 			}]
 		}, {
 			test: require.resolve('./plugins/org.ekstep.assessmentbrowser-1.1/editor/libs/xml2json.js'),
 			use: [{
 				loader: 'expose-loader',
-				options: 'X2JS'
+				options: { exposes: 'X2JS' }
 			}]
 		},
 		{
 			test: /\.(html)$/,
 			use: {
-				loader: 'html-loader',
-				options: {
-					attrs: [':data-src']
-				}
+				loader: 'html-loader'
 			}
 		},
 		{
@@ -171,12 +167,7 @@ module.exports = {
 				{
 					loader: 'css-loader',
 					options: {
-						sourceMap: false,
-						minimize: true,
-						'preset': 'advanced',
-						discardComments: {
-							removeAll: true
-						}
+						sourceMap: false
 					}
 				},
 				{
@@ -188,17 +179,10 @@ module.exports = {
 			]
 		}, {
 			test: /\.(gif|png|jpe?g|svg)$/,
-			use: [
-				'file-loader',
-				{
-					loader: 'url-loader',
-					options: {
-						limit: 50, // it's important
-						outputPath: './images/assets',
-						name: '[name].[ext]'
-					}
-				}
-			]
+			type: 'asset/resource',
+			generator: {
+				filename: 'images/assets/[name][ext]'
+			}
 		}
 		]
 	},
@@ -210,7 +194,6 @@ module.exports = {
 			E2EConverter: 'E2EConverter'
 		}),
 		new TerserPlugin({
-			cache: false,
 			parallel: true,
 			terserOptions: {
 				compress: {
@@ -223,8 +206,7 @@ module.exports = {
 				},
 				ecma: 5,
 				mangle: true
-			},
-			sourceMap: true
+			}
 		})
 	],
 	optimization: {

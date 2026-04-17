@@ -9,7 +9,7 @@ jobs:
   build-and-upload:
     runs-on: ubuntu-latest
     env:
-      NODE_VERSION: 10.24.1
+      NODE_VERSION: 20
       CHROME_BIN: google-chrome
       editorType: contentEditor
       framework_version_number: ${{ github.ref_name }}
@@ -60,7 +60,7 @@ jobs:
       - name: Build main project
         run: |
           npm install gulp-gzip --save-dev
-          npm run build-npm-pkg
+          NODE_OPTIONS=--openssl-legacy-provider npm run build-npm-pkg
 
       - name: Setup Google Cloud SDK
         if: env.CLOUD_PROVIDER == 'gcp'
