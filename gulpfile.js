@@ -134,9 +134,7 @@ var pluginFramework = [
     "app/scripts/framework/service/lock-service.js",
     "app/scripts/framework/service/user-service.js",
     "app/scripts/framework/repo/irepo.js",
-    "app/scripts/framework/repo/published-repo.js",
-    "app/scripts/framework/repo/draft-repo.js",
-    "app/scripts/framework/repo/host-repo.js"
+    "app/scripts/framework/repo/published-repo.js"
 ];
 
 gulp.task('setup', function (done) {
@@ -312,16 +310,11 @@ gulp.task('replace', gulp.series('inject', function replaceTask() {
     ]);
 }));
 
-gulp.task('zip', gulp.series(
-    gulp.parallel('replace', 'packageCorePlugins'),
-    function zipTask() {
-        return gulp.src('content-editor/**')
-            .pipe(zip('content-editor.zip'))
-            .pipe(gulp.dest(''));
-    }
-));
-
-gulp.task('build', gulp.series('minify', 'inject', 'zip'));
+gulp.task('build', gulp.series('minify', 'inject', function buildTask() {
+    return gulp.src('content-editor/**')
+        .pipe(zip('content-editor.zip'))
+        .pipe(gulp.dest(''));
+}));
 
 //Minification for dev Start
 gulp.task('copyFilesDev', function () {

@@ -156,9 +156,7 @@ module.exports = {
 		},
 		{
 			test: /\.(html)$/,
-			use: {
-				loader: 'html-loader'
-			}
+			type: 'asset/source'
 		},
 		{
 			test: /\.(s*)css$/,
