@@ -1,6 +1,6 @@
 {
   "name": "@project-sunbird/content-editor",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Content Editor is tool. Which allows you to create ECML(Ekstep content markup language) type content",
   "main": "gulpfile.js",
   "eslintConfig": {

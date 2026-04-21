@@ -212,7 +212,8 @@ gulp.task('minifyCSS', function () {
         'app/styles/fonts/notosans-kannada/notosanskannada.css',
         'app/styles/fonts/notosans-oriya/notosansoriya.css',
         'app/styles/fonts/noto-nastaliqurdu/notonastaliqurdu.css',
-        'app/styles/fonts-override.css'
+        'app/styles/fonts-override.css',
+        'app/styles/sunbird-spark-theme.css'
     ])
         .pipe(concat('style.min.css'))
         .pipe(minify({
