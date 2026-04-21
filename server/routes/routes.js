@@ -6,15 +6,22 @@
  * @author Santhosh Vasabhaktula <santhosh@ilimi.in>
  */
 var ecmlBuilder = require('../helpers/ecmlBuilder');
-var request = require('request');
+var http = require('http');
+var https = require('https');
 var fs = require('fs');
 
 
 module.exports = function(app, dirname) {
-	
+
 	/** Content List Routes */
 	app.get('/app/image/get/:url', function(req, res) {
-		request.get(req.params.url).pipe(res);
+		var url = req.params.url;
+		var client = url.startsWith('https') ? https : http;
+		client.get(url, function(proxyRes) {
+			proxyRes.pipe(res);
+		}).on('error', function() {
+			res.status(500).end();
+		});
 	});
 
 	app.post('/app/ecml', function(req, res) {

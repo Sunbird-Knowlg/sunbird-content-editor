@@ -87,26 +87,7 @@ module.exports = function(grunt) {
             }
         },
 
-        aws_s3: {
-            options: {
-                accessKeyId: '', // Use the variables
-                secretAccessKey: '', // You can also use env variables
-                region: 'ap-south-1',
-                uploadConcurrency: 5, // 5 simultaneous uploads
-                downloadConcurrency: 5 // 5 simultaneous downloads
-            },
-            main: {
-                options: {
-                    bucket: 'ekstep-public-dev',
-                    differential: true, // Only uploads the files that have changed
-                    gzipRename: 'ext' // when uploading a gz file, keep the original extension
-                },
-                files: [
-                    { dest: 'v3/preview/', cwd: 'app/preview/', action: 'download' }
-                ]
-            }
-        },
-        // this is only used for deployment
+// this is only used for deployment
         compress: {
             main: {
                 options: {
@@ -144,7 +125,6 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-watch');
-    grunt.loadNpmTasks('grunt-aws-s3');
     grunt.loadNpmTasks('grunt-contrib-compress');
     grunt.loadNpmTasks('grunt-contrib-rename');
     grunt.loadNpmTasks('grunt-jsdoc');

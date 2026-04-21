@@ -1,3 +1,4 @@
+if (!global.crypto) { global.crypto = require('node:crypto').webcrypto; }
 const ENVIRONMENT = process.env.NODE_ENV;
 const BUILD_NUMBER = process.env.build_number;
 const EDITOR_VER = process.env.editor_version_number;
@@ -8,16 +9,12 @@ const NPM_BUILD_FOLDER_NAME = 'content-editor'
 // Dependency files.
 const path = require('path');
 const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const expose = require('expose-loader');
+const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const glob = require('glob-all');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ZipPlugin = require('zip-webpack-plugin');
-const ImageminPlugin = require('imagemin-webpack-plugin').default;
-const CleanWebpackPlugin = require('clean-webpack-plugin');
-const OnBuildSuccess = require('on-build-webpack');
 const extract = require('extract-zip');
 const cpy = require('cpy');
 
@@ -152,7 +149,8 @@ module.exports = (env, argv) => {
         },
         output: {
             filename: `[name].min.${VERSION}.js`,
-            path: path.resolve(__dirname, 'dist')
+            path: path.resolve(__dirname, 'dist'),
+            clean: true
         },
         resolve: {
             alias: {
@@ -164,6 +162,7 @@ module.exports = (env, argv) => {
             }
         },
         module: {
+            noParse: /bower_components\/fabric/,
             rules: [
                 {
                     test: /\.js$/,
@@ -182,63 +181,63 @@ module.exports = (env, argv) => {
                     test: require.resolve('./node_modules/@project-sunbird/telemetry-sdk/index.js'),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'EkTelemetry'
+                        options: { exposes: 'EkTelemetry' }
                     }]
                 },
                 {
                     test: require.resolve('./app/libs/ua-parser.min.js'),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'UAParser'
+                        options: { exposes: 'UAParser' }
                     }]
                 },
                 {
                     test: require.resolve('jquery'),
                     use: [{
                         loader: 'expose-loader',
-                        options: '$'
+                        options: { exposes: '$' }
                     }]
                 },
                 {
                     test: require.resolve('jquery'),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'jQuery'
+                        options: { exposes: 'jQuery' }
                     }]
                 },
                 {
                     test: require.resolve('./app/bower_components/async/dist/async.min.js'),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'async'
+                        options: { exposes: 'async' }
                     }]
                 },
                 {
                     test: require.resolve('./app/scripts/framework/libs/eventbus.min.js'),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'EventBus'
+                        options: { exposes: 'EventBus' }
                     }]
                 },
                 {
                     test: require.resolve('./node_modules/webfontloader/webfontloader.js'),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'WebFont'
+                        options: { exposes: 'WebFont' }
                     }]
                 },
                 {
                     test: require.resolve('./app/bower_components/uuid/index.js'),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'UUID'
+                        options: { exposes: 'UUID' }
                     }]
                 },
                 {
                     test: require.resolve('./app/bower_components/fingerprintjs2/fingerprint2.js'),
                     use: [{
                         loader: 'expose-loader',
-                        options: 'Fingerprint2'
+                        options: { exposes: 'Fingerprint2' }
                     }]
                 },
                 {
@@ -249,55 +248,36 @@ module.exports = (env, argv) => {
                             loader: 'css-loader',
                             options: {
                                 sourceMap: false,
-                                minimize: true,
-                                "preset": "advanced",
-                                discardComments: {
-                                    removeAll: true
-                                }
+                                url: { filter: (url) => !url.startsWith('data:') }
                             }
                         },
                         {
                             loader: 'sass-loader',
                             options: {
-                                sourceMap: false,
-                                minimize: true,
-                                "preset": "advanced",
-                                discardComments: {
-                                    removeAll: true
-                                }
+                                sourceMap: false
                             }
                         }
                     ]
                 },
                 {
                     test: /\.(woff|woff2|eot|ttf|otf|svg|png)$/,
-                    use: [{
-                        loader: 'file-loader',
-                        options: {
-                            name: '[name].[ext]',
-                            outputPath: './fonts/',
-                            limit: 10000,
-                            fallback: 'responsive-loader'
-                        }
-                    }]
+                    type: 'asset/resource',
+                    generator: {
+                        filename: 'fonts/[name].[contenthash:8][ext]'
+                    }
                 },
                 {
                     test: /\.(html)$/,
                     use: {
-                        loader: 'html-loader',
-                        options: {
-                            attrs: [':data-src']
-                        }
+                        loader: 'html-loader'
                     }
                 },
             ]
         },
         plugins: [
-            new CleanWebpackPlugin(['dist']),
-            new UglifyJsPlugin({
-                cache: false,
+            new TerserPlugin({
                 parallel: true,
-                uglifyOptions: {
+                terserOptions: {
                     compress: {
                         dead_code: true,
                         drop_console: false,
@@ -308,49 +288,41 @@ module.exports = (env, argv) => {
                     },
                     ecma: 5,
                     mangle: true
-                },
-                sourceMap: true
-            }),
-            // copy the index.html and templated to eidtor filder
-            new CopyWebpackPlugin([{
-                    from: './app/templates',
-                    to: './templates'
-                },
-                {
-                    from: './app/index.html',
-                    to: './[name].[ext]',
-                    toType: 'template'
-                },
-                {
-                    from: './app/images/geniecontrols.png',
-                    to: './images'
-                },
-                {
-                    from: './content-editor/scripts/*.js',
-                    to: './',
-                    flatten: true
-                },
-                {
-                    from: './app/styles/noto.css',
-                    to: './'
-                },
-                {
-                    from: './deploy/gulpfile.js',
-                    to: './'
-                },
-                {
-                    from: './deploy/package.json',
-                    to: './'
-                },
-
-            ]),
-            new ImageminPlugin({
-                test: /\.(jpe?g|png|gif|svg)$/i,
-                name: '[name].[ext]',
-                outputPath: './images',
-                pngquant: {
-                    quality: '65-70'
                 }
+            }),
+            // copy the index.html and templates to editor folder
+            new CopyWebpackPlugin({
+                patterns: [
+                    {
+                        from: './app/templates',
+                        to: './templates'
+                    },
+                    {
+                        from: './app/index.html',
+                        to: 'index.html'
+                    },
+                    {
+                        from: './app/images/geniecontrols.png',
+                        to: './images'
+                    },
+                    {
+                        from: './content-editor/scripts/*.js',
+                        to: '[name][ext]',
+                        noErrorOnMissing: true
+                    },
+                    {
+                        from: './app/styles/noto.css',
+                        to: './'
+                    },
+                    {
+                        from: './deploy/gulpfile.js',
+                        to: './'
+                    },
+                    {
+                        from: './deploy/package.json',
+                        to: './'
+                    }
+                ]
             }),
             new MiniCssExtractPlugin({
                 filename: `[name].min.${VERSION}.css`,
@@ -364,19 +336,6 @@ module.exports = (env, argv) => {
                 WebFont: 'webfontloader',
                 Ajv: 'ajv',
                 UAParser: 'UAParser'
-            }),
-            new webpack.optimize.OccurrenceOrderPlugin(),
-            new webpack.HotModuleReplacementPlugin(),
-            new OptimizeCssAssetsPlugin({
-                assetNameRegExp: /\.optimize\.css$/g,
-                cssProcessor: require('cssnano'),
-                cssProcessorOptions: {
-                    safe: true,
-                    discardComments: {
-                        removeAll: true
-                    }
-                },
-                canPrint: true
             }),
             new ZipPlugin({
                 path: path.join(__dirname, '.'),
@@ -405,13 +364,33 @@ module.exports = (env, argv) => {
                     forceZip64Format: false,
                 },
             }),
-            new OnBuildSuccess(function(stats) {
-                if (env && env.channel.toUpperCase() === 'NPM_PACKAGE') {
-                    build_npm_package();
+            {
+                apply: (compiler) => {
+                    compiler.hooks.done.tap('OnBuildSuccess', () => {
+                        if (env && env.channel && env.channel.toUpperCase() === 'NPM_PACKAGE') {
+                            build_npm_package();
+                        }
+                    });
                 }
-            }),
+            }
         ],
         optimization: {
+            minimizer: [
+                new TerserPlugin({
+                    parallel: true,
+                    terserOptions: {
+                        compress: {
+                            dead_code: true,
+                            drop_console: false,
+                            global_defs: { DEBUG: true },
+                            passes: 1
+                        },
+                        ecma: 5,
+                        mangle: true
+                    }
+                }),
+                new CssMinimizerPlugin()
+            ],
             splitChunks: {
                 chunks: 'async',
                 minSize: 30000,
@@ -419,7 +398,6 @@ module.exports = (env, argv) => {
                 maxAsyncRequests: 5,
                 maxInitialRequests: 3,
                 automaticNameDelimiter: '~',
-                name: true,
                 cacheGroups: {
                     styles: {
                         name: 'style',
@@ -427,7 +405,7 @@ module.exports = (env, argv) => {
                         chunks: 'all',
                         enforce: false
                     }
-                },
+                }
             }
         }
     }

@@ -22,19 +22,10 @@ jobs:
           path: content-editor
           fetch-depth: 0  
 
-      - name: Setup Node.js 10.14.1
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: '10.14.1'
-
-      - name: Install Python 2
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y python2
-          sudo ln -sf /usr/bin/python2 /usr/bin/python
-              
-      - name: Set npm python config
-        run: npm config set python /usr/bin/python2
+          node-version: '20'
 
       - name: Cache dependencies
         uses: actions/cache@v3
@@ -58,10 +49,7 @@ jobs:
 
       - name: Install npm dependencies
         working-directory: content-editor
-        env:
-          PYTHON: $(which python)
-          NODE_GYP_FORCE_PYTHON: $(which python)
-        run: npm install --no-optional
+        run: npm install --no-optional --legacy-peer-deps
 
       - name: Prune bower dependencies
         working-directory: content-editor/app
@@ -94,10 +82,10 @@ jobs:
           mkdir -p /tmp/coverage
           cp coverage/lcov/HeadlessChrome\ 71.0.3578\ \(Linux\ 0.0.0\)/lcov.info /tmp/coverage/ || true
       
-      - name: Setup Node.js 14 for SonarQube
+      - name: Setup Node.js 20 for SonarQube
         uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '20'
 
       - name: Install SonarQube scanner
         run: npm install -g sonarqube-scanner

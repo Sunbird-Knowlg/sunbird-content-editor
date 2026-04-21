@@ -1,0 +1,777 @@
+/* ============================================================
+   SUNBIRD SPARK THEME — Content Editor Overrides
+   Source: sunbird-spark-portal/frontend/src/app/globals.css
+            sunbird-spark-portal/frontend/tailwind.config.js
+   Strategy: loaded last in index.html — overrides Semantic UI
+             without touching Angular, plugin JS, or HTML
+   ============================================================ */
+
+/* ============================================================
+   1. DESIGN TOKENS
+   ============================================================ */
+:root {
+  /* Brand Colors */
+  --spark-brick:         #AC5139;
+  --spark-brick-dark:    #A85236;
+  --spark-ginger:        #CC8545;
+  --spark-yellow:        #FFD954;
+  --spark-sunflower:     #FFDB73;
+  --spark-ivory:         #FFFEF4;
+  --spark-teal:          #4A8C8C;
+  --spark-wave:          #70EDBF;
+  --spark-ink:           #376673;
+  --spark-jamun:         #540F3B;
+
+  /* Surfaces & Backgrounds */
+  --spark-bg:            #E9E8D9;
+  --spark-surface:       #FFFFFF;
+  --spark-card-alt:      #F3F3E5;
+  --spark-sidebar:       #F8F8F8;
+
+  /* Text Colors */
+  --spark-obsidian:      #222222;
+  --spark-charcoal:      #333333;
+  --spark-gray-75:       #757575;
+  --spark-gray-82:       #828282;
+  --spark-gray-b2:       #B2B2B2;
+
+  /* Border Colors */
+  --spark-border:        #D0D5DD;
+  --spark-border-light:  #E5E7EB;
+  --spark-border-card:   #F1F1F1;
+
+  /* Status Colors */
+  --spark-success:       #4CAF50;
+  --spark-success-bg:    #F0F4F0;
+  --spark-warning-bg:    #FFF1C7;
+  --spark-complete-bg:   #CAE5B6;
+  --spark-destructive:   #E53E3E;
+
+  /* Shadows */
+  --spark-shadow-sm:     0 0.125rem 0.625rem rgba(0, 0, 0, 0.05);
+  --spark-shadow-md:     0 0.875rem 0.875rem rgba(0, 0, 0, 0.05);
+  --spark-shadow-lg:     0 0.25rem 1.25rem 0 rgba(0, 0, 0, 0.1);
+  --spark-shadow-card:   0.125rem 0.125rem 1.25rem 0 rgba(0, 0, 0, 0.09);
+
+  /* Border Radius */
+  --spark-radius-xs:     0.625rem;
+  --spark-radius-sm:     0.75rem;
+  --spark-radius-md:     1rem;
+  --spark-radius-lg:     1.25rem;
+  --spark-radius-pill:   2.25rem;
+  --spark-radius-full:   9999px;
+
+  /* Typography */
+  --spark-font:          'Rubik', 'Noto Sans', sans-serif;
+  --spark-font-size-xs:  0.75rem;
+  --spark-font-size-sm:  0.875rem;
+  --spark-font-size-md:  1rem;
+  --spark-font-size-lg:  1.125rem;
+  --spark-font-size-xl:  1.25rem;
+  --spark-font-size-2xl: 1.625rem;
+  --spark-font-size-3xl: 1.875rem;
+}
+
+
+/* ============================================================
+   2. PAGE & BODY
+   ============================================================ */
+body,
+.ui.fluid.container,
+.maincontainer {
+  background-color: var(--spark-bg) !important;
+  color: var(--spark-obsidian) !important;
+  font-family: var(--spark-font) !important;
+}
+
+
+/* ============================================================
+   3. EDITOR LAYOUT SHELL
+   (maps to genericeditor.html + plugin.css)
+   ============================================================ */
+#genericEditorContainer {
+  background-color: var(--spark-bg) !important;
+}
+
+#genericEditorBody {
+  background: var(--spark-bg) !important;
+  border-top: 1px solid var(--spark-border-light) !important;
+}
+
+#genericEditorPreviewContainer {
+  border-right: 1px solid var(--spark-border-light) !important;
+  background: var(--spark-surface) !important;
+  border-radius: var(--spark-radius-md);
+  box-shadow: var(--spark-shadow-card);
+}
+
+#genericEditorSideBar {
+  background: var(--spark-sidebar) !important;
+  border-radius: var(--spark-radius-md);
+  box-shadow: var(--spark-shadow-sm);
+}
+
+
+/* ============================================================
+   4. HEADER / TOP BAR
+   ============================================================ */
+.ui.menu:not(.vertical),
+.editor-header,
+[ng-repeat="header in headers"] > .ui.menu {
+  background: var(--spark-surface) !important;
+  border-bottom: 1px solid var(--spark-border-light) !important;
+  box-shadow: var(--spark-shadow-sm) !important;
+  border-radius: 0 !important;
+  font-family: var(--spark-font) !important;
+}
+
+.ui.menu .item {
+  color: var(--spark-obsidian) !important;
+  font-family: var(--spark-font) !important;
+  font-size: var(--spark-font-size-sm) !important;
+  transition: color 0.2s ease, background 0.2s ease !important;
+}
+
+.ui.menu .item.active,
+.ui.menu .active.item {
+  color: var(--spark-brick) !important;
+  border-bottom: 2px solid var(--spark-brick) !important;
+  background: transparent !important;
+}
+
+.ui.menu .item:hover {
+  color: var(--spark-brick) !important;
+  background: rgba(172, 81, 57, 0.06) !important;
+}
+
+
+/* ============================================================
+   5. BUTTONS
+   ============================================================ */
+
+/* Primary — "Create New" brick style */
+.ui.button.primary,
+.ui.primary.button,
+.ui.button[class*="primary"] {
+  background-color: var(--spark-brick) !important;
+  color: #ffffff !important;
+  font-family: var(--spark-font) !important;
+  font-size: var(--spark-font-size-md) !important;
+  font-weight: 500 !important;
+  border-radius: var(--spark-radius-xs) !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0.625rem 1rem !important;
+  min-height: 3rem;
+  transition: background-color 0.2s ease !important;
+}
+
+.ui.button.primary:hover,
+.ui.primary.button:hover {
+  background-color: var(--spark-brick-dark) !important;
+}
+
+/* Secondary / Outline */
+.ui.button.basic,
+.ui.basic.button {
+  background: transparent !important;
+  border: 1px solid var(--spark-brick) !important;
+  color: var(--spark-brick) !important;
+  border-radius: var(--spark-radius-xs) !important;
+  font-family: var(--spark-font) !important;
+  box-shadow: none !important;
+  transition: background 0.2s ease !important;
+}
+
+.ui.button.basic:hover,
+.ui.basic.button:hover {
+  background: rgba(172, 81, 57, 0.06) !important;
+  color: var(--spark-brick-dark) !important;
+}
+
+/* Generic button base */
+.ui.button:not(.primary):not(.basic):not(.icon) {
+  font-family: var(--spark-font) !important;
+  border-radius: var(--spark-radius-xs) !important;
+}
+
+/* Icon-only buttons */
+.ui.icon.button,
+.ui.icon.button:hover {
+  border-radius: var(--spark-radius-xs) !important;
+}
+
+
+/* ============================================================
+   6. TABS — Pill style with count badges
+   ============================================================ */
+.ui.tabular.menu,
+.ui.pointing.menu,
+.ui.secondary.menu {
+  background: #F3F4F6 !important;
+  border: none !important;
+  border-radius: var(--spark-radius-sm) !important;
+  padding: 0.25rem !important;
+  display: inline-flex !important;
+  box-shadow: none !important;
+}
+
+.ui.tabular.menu .item,
+.ui.pointing.menu .item,
+.ui.secondary.menu .item {
+  background: transparent !important;
+  border: none !important;
+  color: var(--spark-gray-75) !important;
+  border-radius: var(--spark-radius-xs) !important;
+  font-family: var(--spark-font) !important;
+  font-size: var(--spark-font-size-sm) !important;
+  font-weight: 500 !important;
+  padding: 0.375rem 0.75rem !important;
+  transition: all 0.2s ease !important;
+  margin: 0 !important;
+}
+
+.ui.tabular.menu .active.item,
+.ui.pointing.menu .active.item,
+.ui.secondary.menu .active.item {
+  background: var(--spark-surface) !important;
+  color: var(--spark-obsidian) !important;
+  border-bottom: none !important;
+  border-top: none !important;
+  box-shadow: var(--spark-shadow-sm) !important;
+  margin-bottom: 0 !important;
+}
+
+/* Count badge inside tabs */
+.ui.menu .item .ui.label,
+.ui.menu .item .label {
+  background: var(--spark-brick) !important;
+  color: #ffffff !important;
+  border-radius: var(--spark-radius-full) !important;
+  font-size: var(--spark-font-size-xs) !important;
+  font-weight: 700 !important;
+  padding: 0.15rem 0.45rem !important;
+  margin-left: 0.35rem !important;
+  min-width: auto !important;
+}
+
+
+/* ============================================================
+   7. CARDS & PANELS
+   ============================================================ */
+.ui.card,
+.ui.cards > .card {
+  background: var(--spark-surface) !important;
+  border-radius: var(--spark-radius-lg) !important;
+  box-shadow: var(--spark-shadow-card) !important;
+  border: none !important;
+  transition: box-shadow 0.2s ease !important;
+}
+
+.ui.card:hover,
+.ui.cards > .card:hover {
+  box-shadow: var(--spark-shadow-lg) !important;
+  transform: translateY(-1px);
+}
+
+.ui.card > .content,
+.ui.cards > .card > .content {
+  font-family: var(--spark-font) !important;
+  color: var(--spark-obsidian) !important;
+  border-top: none !important;
+}
+
+/* Segments used as panels */
+.ui.segment:not(.vertical) {
+  background: var(--spark-surface) !important;
+  border-radius: var(--spark-radius-lg) !important;
+  box-shadow: var(--spark-shadow-card) !important;
+  border: 1px solid var(--spark-border-card) !important;
+}
+
+.ui.segment.vertical {
+  border-color: var(--spark-border-light) !important;
+}
+
+
+/* ============================================================
+   8. VERTICAL SIDEBAR NAVIGATION
+   ============================================================ */
+.ui.vertical.menu {
+  background: var(--spark-surface) !important;
+  border: none !important;
+  box-shadow: var(--spark-shadow-md) !important;
+  border-radius: var(--spark-radius-md) !important;
+  font-family: var(--spark-font) !important;
+}
+
+.ui.vertical.menu .item {
+  color: var(--spark-obsidian) !important;
+  font-size: var(--spark-font-size-sm) !important;
+  padding: 1rem 1.5rem !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid var(--spark-border-card) !important;
+  font-family: var(--spark-font) !important;
+  transition: background 0.2s ease, color 0.2s ease !important;
+}
+
+.ui.vertical.menu .active.item {
+  color: var(--spark-brick) !important;
+  background: rgba(172, 81, 57, 0.06) !important;
+  font-weight: 500 !important;
+  border-right: 3px solid var(--spark-brick);
+}
+
+.ui.vertical.menu .item:hover {
+  background: rgba(172, 81, 57, 0.04) !important;
+  color: var(--spark-brick) !important;
+}
+
+
+/* ============================================================
+   9. INPUTS & FORMS
+   ============================================================ */
+.ui.input > input,
+.ui.form input[type=text],
+.ui.form input[type=email],
+.ui.form input[type=search],
+.ui.form input[type=number],
+.ui.form input[type=password],
+.ui.form input[type=url],
+.ui.form input[type=tel],
+.ui.form textarea,
+.ui.form select {
+  font-family: var(--spark-font) !important;
+  font-size: var(--spark-font-size-md) !important;
+  border: 1px solid var(--spark-border) !important;
+  border-radius: var(--spark-radius-xs) !important;
+  color: var(--spark-obsidian) !important;
+  background: var(--spark-surface) !important;
+  min-height: 3rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.ui.input > input:focus,
+.ui.form input:focus,
+.ui.form textarea:focus {
+  border-color: var(--spark-brick) !important;
+  box-shadow: 0 0 0 2px rgba(172, 81, 57, 0.2) !important;
+  outline: none !important;
+}
+
+.ui.input > input::placeholder,
+.ui.form input::placeholder,
+.ui.form textarea::placeholder {
+  color: var(--spark-gray-b2) !important;
+}
+
+.ui.form .field > label {
+  font-family: var(--spark-font) !important;
+  font-size: var(--spark-font-size-sm) !important;
+  color: var(--spark-gray-75) !important;
+  font-weight: 400 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+
+/* ============================================================
+   10. DROPDOWNS
+   ============================================================ */
+.ui.dropdown,
+.ui.selection.dropdown {
+  font-family: var(--spark-font) !important;
+  border: 1px solid var(--spark-border) !important;
+  border-radius: var(--spark-radius-xs) !important;
+  color: var(--spark-obsidian) !important;
+  background: var(--spark-surface) !important;
+}
+
+.ui.selection.dropdown:focus,
+.ui.selection.active.dropdown,
+.ui.selection.active.dropdown:hover {
+  border-color: var(--spark-brick) !important;
+  box-shadow: 0 0 0 2px rgba(172, 81, 57, 0.2) !important;
+}
+
+.ui.dropdown .menu,
+.ui.selection.dropdown .menu {
+  border: 1px solid var(--spark-border-light) !important;
+  border-radius: 0 0 var(--spark-radius-xs) var(--spark-radius-xs) !important;
+  box-shadow: var(--spark-shadow-lg) !important;
+}
+
+.ui.dropdown .menu > .item,
+.ui.selection.dropdown .menu > .item {
+  font-family: var(--spark-font) !important;
+  font-size: var(--spark-font-size-sm) !important;
+  color: var(--spark-obsidian) !important;
+  transition: background 0.15s ease !important;
+}
+
+.ui.dropdown .menu > .item:hover,
+.ui.selection.dropdown .menu > .item:hover {
+  background: var(--spark-warning-bg) !important;
+  color: var(--spark-brick) !important;
+}
+
+.ui.dropdown .menu > .active.item,
+.ui.selection.dropdown .menu > .selected.item {
+  background: rgba(172, 81, 57, 0.08) !important;
+  color: var(--spark-brick) !important;
+  font-weight: 500 !important;
+}
+
+
+/* ============================================================
+   11. LABELS & BADGES
+   ============================================================ */
+.ui.label {
+  font-family: var(--spark-font) !important;
+  font-size: var(--spark-font-size-xs) !important;
+  font-weight: 600 !important;
+  border-radius: var(--spark-radius-pill) !important;
+  padding: 0.25rem 0.75rem !important;
+}
+
+.ui.label.primary,
+.ui.primary.label {
+  background: var(--spark-brick) !important;
+  color: #ffffff !important;
+  border-color: var(--spark-brick) !important;
+}
+
+/* Content-type badge (beige/ginger — matches portal card badges) */
+.ui.label.tag,
+.content-type-badge,
+.ui.teal.label,
+.ui.blue.label {
+  background: var(--spark-warning-bg) !important;
+  border: 1px solid var(--spark-ginger) !important;
+  color: var(--spark-obsidian) !important;
+}
+
+.ui.green.label {
+  background: var(--spark-complete-bg) !important;
+  color: var(--spark-charcoal) !important;
+  border-color: var(--spark-success) !important;
+}
+
+
+/* ============================================================
+   12. MODALS (ng-dialog)
+   ============================================================ */
+.ngdialog-content,
+.ngdialog.ngdialog-theme-default .ngdialog-content,
+.ngdialog.ngdialog-theme-plain .ngdialog-content,
+.qc-ngdialog-custome > .ngdialog-content {
+  font-family: var(--spark-font) !important;
+  border-radius: var(--spark-radius-lg) !important;
+  box-shadow: var(--spark-shadow-lg) !important;
+  background: var(--spark-surface) !important;
+  color: var(--spark-obsidian) !important;
+}
+
+.ngdialog-overlay {
+  background: rgba(34, 34, 34, 0.6) !important;
+}
+
+/* Semantic UI modals */
+.ui.modal {
+  border-radius: var(--spark-radius-lg) !important;
+  box-shadow: var(--spark-shadow-lg) !important;
+  font-family: var(--spark-font) !important;
+}
+
+.ui.modal > .header {
+  font-family: var(--spark-font) !important;
+  color: var(--spark-obsidian) !important;
+  border-bottom: 1px solid var(--spark-border-light) !important;
+  border-radius: var(--spark-radius-lg) var(--spark-radius-lg) 0 0 !important;
+}
+
+.ui.modal > .actions {
+  border-top: 1px solid var(--spark-border-light) !important;
+  border-radius: 0 0 var(--spark-radius-lg) var(--spark-radius-lg) !important;
+  background: var(--spark-sidebar) !important;
+}
+
+
+/* ============================================================
+   13. TABLES
+   ============================================================ */
+.ui.table {
+  font-family: var(--spark-font) !important;
+  border: 1px solid var(--spark-border-light) !important;
+  border-radius: var(--spark-radius-md) !important;
+  overflow: hidden;
+}
+
+.ui.table thead th {
+  background: var(--spark-card-alt) !important;
+  color: var(--spark-charcoal) !important;
+  font-size: var(--spark-font-size-sm) !important;
+  font-weight: 600 !important;
+  border-bottom: 1px solid var(--spark-border) !important;
+  font-family: var(--spark-font) !important;
+}
+
+.ui.table tbody tr:hover {
+  background: rgba(172, 81, 57, 0.03) !important;
+}
+
+.ui.table td {
+  color: var(--spark-obsidian) !important;
+  border-top: 1px solid var(--spark-border-card) !important;
+  font-size: var(--spark-font-size-sm) !important;
+}
+
+
+/* ============================================================
+   14. LOADERS & DIMMER
+   ============================================================ */
+.ui.loader,
+.ui.dimmer .loader {
+  color: var(--spark-brick) !important;
+}
+
+.ui.loader:before {
+  border-color: rgba(172, 81, 57, 0.2) !important;
+}
+
+.ui.loader:after {
+  border-color: var(--spark-brick) transparent transparent !important;
+}
+
+.ui.dimmer {
+  background: rgba(34, 34, 34, 0.6) !important;
+}
+
+
+/* ============================================================
+   15. ACCORDION
+   ============================================================ */
+.ui.accordion .title {
+  font-family: var(--spark-font) !important;
+  color: var(--spark-obsidian) !important;
+  font-size: var(--spark-font-size-md) !important;
+  font-weight: 500 !important;
+}
+
+.ui.accordion .title:hover {
+  color: var(--spark-brick) !important;
+}
+
+.ui.accordion .title.active {
+  color: var(--spark-brick) !important;
+}
+
+
+/* ============================================================
+   16. TOOLTIPS / POPUPS
+   ============================================================ */
+.ui.popup {
+  font-family: var(--spark-font) !important;
+  border-radius: var(--spark-radius-xs) !important;
+  border: 1px solid var(--spark-border-light) !important;
+  box-shadow: var(--spark-shadow-md) !important;
+  color: var(--spark-obsidian) !important;
+  font-size: var(--spark-font-size-sm) !important;
+}
+
+.ui.popup.inverted {
+  background: var(--spark-charcoal) !important;
+  color: #ffffff !important;
+  border: none !important;
+}
+
+.ui.popup.inverted:before {
+  background: var(--spark-charcoal) !important;
+}
+
+
+/* ============================================================
+   17. TOAST (iziToast)
+   ============================================================ */
+.iziToast {
+  font-family: var(--spark-font) !important;
+  border-radius: var(--spark-radius-sm) !important;
+  box-shadow: var(--spark-shadow-lg) !important;
+}
+
+.iziToast.iziToast-color-green {
+  background: var(--spark-success-bg) !important;
+  border-left: 4px solid var(--spark-success) !important;
+}
+
+.iziToast.iziToast-color-red {
+  border-left: 4px solid var(--spark-destructive) !important;
+}
+
+.iziToast-title {
+  color: var(--spark-obsidian) !important;
+  font-weight: 600 !important;
+}
+
+.iziToast-message {
+  color: var(--spark-gray-75) !important;
+}
+
+
+/* ============================================================
+   18. SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: var(--spark-bg);
+}
+
+::-webkit-scrollbar-track {
+  border-radius: var(--spark-radius-full);
+  background-color: var(--spark-bg);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: var(--spark-radius-full);
+  background-color: var(--spark-ginger);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--spark-brick);
+}
+
+
+/* ============================================================
+   19. HEADINGS TYPOGRAPHY
+   ============================================================ */
+h1, h2, h3, h4, h5, h6,
+.ui.header {
+  font-family: var(--spark-font) !important;
+  color: var(--spark-obsidian) !important;
+}
+
+h1 { font-size: var(--spark-font-size-3xl) !important; font-weight: 600 !important; }
+h2 { font-size: var(--spark-font-size-2xl) !important; font-weight: 500 !important; }
+h3 { font-size: var(--spark-font-size-xl)  !important; font-weight: 500 !important; }
+h4 { font-size: var(--spark-font-size-lg)  !important; font-weight: 500 !important; }
+h5 { font-size: var(--spark-font-size-md)  !important; font-weight: 500 !important; }
+h6 { font-size: var(--spark-font-size-sm)  !important; font-weight: 500 !important; }
+
+
+/* ============================================================
+   20. LOADING SCREEN (please-wait overlay)
+   ============================================================ */
+.pg-loading-screen {
+  background-color: var(--spark-bg) !important;
+}
+
+.pg-loading-logo-header {
+  font-family: var(--spark-font) !important;
+}
+
+.loading-message {
+  font-family: var(--spark-font) !important;
+  color: var(--spark-charcoal) !important;
+}
+
+/* ============================================================
+   21. CONTENT EDITOR SPECIFIC OVERRIDES
+   ============================================================ */
+
+/* Content editor main container */
+#contentEditorContainer,
+#contentEditor {
+  background-color: var(--spark-bg) !important;
+  font-family: var(--spark-font) !important;
+}
+
+/* Stage area */
+#stage,
+.stage-wrapper {
+  background: var(--spark-surface) !important;
+  border: 1px solid var(--spark-border-light) !important;
+  border-radius: var(--spark-radius-md) !important;
+  box-shadow: var(--spark-shadow-card) !important;
+}
+
+/* Plugin panel / right sidebar */
+.plugin-container,
+#pluginPanel {
+  background: var(--spark-surface) !important;
+  border-left: 1px solid var(--spark-border-light) !important;
+}
+
+/* Toolbar */
+.toolbar-container,
+.ui.grid.toolbar {
+  background: var(--spark-surface) !important;
+  border-bottom: 1px solid var(--spark-border-light) !important;
+}
+
+/* Primary action buttons in content editor */
+.primary.button-overrides,
+.ui.button.primary-overrides {
+  background: var(--spark-brick) !important;
+  color: #ffffff !important;
+  border-radius: var(--spark-radius-xs) !important;
+}
+
+/* Semantic UI primaryColor used in ekstep theme */
+.ui.button.primary,
+.ui.button.blue {
+  background-color: var(--spark-brick) !important;
+  color: #ffffff !important;
+}
+
+.ui.button.primary:hover,
+.ui.button.blue:hover {
+  background-color: var(--spark-brick-dark) !important;
+}
+
+/* ============================================================
+   22. REMAINING SEMANTIC UI BLUE OVERRIDES
+   ============================================================ */
+
+/* Logo column in content-editor header (compiled from $primaryColor in header.sass) */
+.custom-1-wide {
+  background-color: var(--spark-brick) !important;
+}
+
+/* Icon hover in toolbar (compiled from header.sass) */
+.icon-box:hover {
+  background-color: rgba(172, 81, 57, 0.08) !important;
+}
+
+/* Semantic UI checkbox/radio checked states (driven by @primaryColor in site.variables) */
+.ui.checkbox input:checked ~ label:before,
+.ui.radio.checkbox input:checked ~ label:before {
+  border-color: var(--spark-brick) !important;
+  background-color: var(--spark-brick) !important;
+}
+
+.ui.checkbox input:checked ~ label:after {
+  color: #ffffff !important;
+}
+
+.ui.radio.checkbox input:checked ~ label:after {
+  background-color: #ffffff !important;
+}
+
+.ui.checkbox input:focus ~ label:before {
+  border-color: var(--spark-brick) !important;
+  box-shadow: 0 0 0 2px rgba(172, 81, 57, 0.2) !important;
+}
+
+/* Semantic UI blue-colored links and text */
+a {
+  color: var(--spark-brick) !important;
+}
+
+a:hover {
+  color: var(--spark-brick-dark) !important;
+}
+
+/* Semantic UI progress bar */
+.ui.progress .bar {
+  background-color: var(--spark-brick) !important;
+}
