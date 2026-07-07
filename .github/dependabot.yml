@@ -1,0 +1,71 @@
+version: 2
+updates:
+  # Root package.json — main content editor source and build tooling
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:30"        # 30 min after dependency-submission workflow (03:00 UTC)
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      sunbird:
+        patterns:
+          - "@project-sunbird/*"
+      gulp-tools:
+        patterns:
+          - "gulp*"
+          - "grunt*"
+      webpack-tools:
+        patterns:
+          - "webpack*"
+          - "*-loader"
+          - "clean-webpack-plugin"
+          - "copy-webpack-plugin"
+          - "mini-css-extract-plugin"
+          - "html-webpack-plugin"
+          - "zip-webpack-plugin"
+          - "compression-webpack-plugin"
+      karma-testing:
+        patterns:
+          - "karma*"
+          - "jasmine*"
+      eslint:
+        patterns:
+          - "eslint*"
+
+  # deploy/ has its own package.json with gulp deployment tooling
+  - package-ecosystem: "npm"
+    directory: "/deploy"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:30"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      gulp-tools:
+        patterns:
+          - "gulp*"
+
+  # Keep GitHub Actions workflow action versions updated
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "03:30"
+      timezone: "UTC"
+    labels:
+      - "dependencies"
+    commit-message:
+      prefix: "chore(ci)"
